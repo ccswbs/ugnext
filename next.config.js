@@ -41,6 +41,17 @@ if (process.env.BACKEND_URL === undefined) {
 		process.env.IMAGE_DOMAIN ||
 		process.env.BACKEND_URL.replace(/^https?:\/\//, '');
 }
+
+/**
+ * PANTHEON_ENVIRONMENT is equal to `multi-demo` since that is the name of my branch. I will use this variable to create a `backendUrl` which points
+ * to my Multidev backend.
+ **/
+if (process.env.PANTHEON_ENVIRONMENT !== 'live') {
+    backendUrl = `https://${
+        process.env.PANTHEON_ENVIRONMENT
+    }-${backendUrl.replace(/^https?:\/\/[^-]*-/, '')}`;
+}
+
 // remove trailing slash if it exists
 imageDomain = imageDomain.replace(/\/$/, '');
 

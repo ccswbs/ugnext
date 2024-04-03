@@ -5,11 +5,11 @@ import { sortDate } from '@pantheon-systems/nextjs-kit';
 import {
 	getCurrentLocaleStore,
 	globalDrupalStateStores,
-} from '../../lib/stores';
+} from '../../lib/stores.js';
 
-import { ArticleGrid } from '../../components/grid';
-import PageHeader from '../../components/page-header';
-import Layout from '../../components/layout';
+import { ArticleGrid } from '../../components/grid.jsx';
+import PageHeader from '../../components/page-header.jsx';
+import Layout from '../../components/layout.jsx';
 
 export default function SSRArticlesListTemplate({
 	sortedArticles,
