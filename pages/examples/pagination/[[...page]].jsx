@@ -12,10 +12,10 @@ import Layout from '../../../components/layout';
 import styles from './pagination.module.css';
 
 // To use your configured backend, use:
-// const drupalUrl = DRUPAL_URL
+ const drupalUrl = process.env.BACKEND_URL 
 
 // Example paginated data set
-const drupalUrl = 'https://dev-ds-demo.pantheonsite.io';
+//const drupalUrl = 'https://dev-ds-demo.pantheonsite.io';
 
 export default function PaginationExampleTemplate({ data, footerMenu }) {
 	// configurable itemsPerPage
@@ -81,13 +81,13 @@ export async function getStaticPaths() {
 		const store = new DrupalState({
 			apiBase: drupalUrl,
 			apiPrefix: 'jsonapi',
-			defaultLocale: 'en',
+			defaultLocale: '',
 			debug: process.env.DEBUG_MODE || false,
 		});
 		const data = await store.getObject({
-			objectName: 'node--ds_example',
+			objectName: 'node--page',
 			all: true,
-			params: 'fields[node--ds_example]=title,body,id',
+			params: 'fields[node--page]=title,body,id',
 			anon: true,
 		});
 		const itemsPerPage = 10;
@@ -123,37 +123,57 @@ export async function getStaticProps(context) {
 		const exampleStore = new DrupalState({
 			apiBase: drupalUrl,
 			apiPrefix: 'jsonapi',
-			defaultLocale: 'en',
+			defaultLocale: '',
 			debug: process.env.DEBUG_MODE || false,
 		});
 		// drupal json api params
 		data = await exampleStore.getObject({
-			objectName: 'node--ds_example',
-			params: 'fields[node--ds_example]=title,body,id',
+			objectName: 'node--page',
+			params: 'fields[node--page]=title,body,id',
 			all: true,
 			refresh: !BUILD_MODE,
 			anon: true,
 		});
 
-		const store = getCurrentLocaleStore(
+		/*const store = getCurrentLocaleStore(
 			context.locale,
 			globalDrupalStateStores,
-		);
+		);*/
+		const store = new DrupalState({
+			apiBase: drupalUrl,
+			apiPrefix: 'jsonapi',
+			defaultLocale: '',
+			debug: process.env.DEBUG_MODE || false,
+		});
 		const footerMenu = await store.getObject({
-			objectName: 'menu_items--main',
+			objectName: 'menu--menu',
 			anon: true,
 		});
+		return {
+			props: {
+				data: data || null,
+				footerMenu,
+			},
+			revalidate: 60,
+		};
 	} catch (error) {
 		console.error('Something went wrong while getting pagination data:');
 		console.error(error.message);
 		console.error('Returning null for pagination example data...');
 	} finally {
-		const store = getCurrentLocaleStore(
+		/*const store = getCurrentLocaleStore(
 			context.locale,
 			globalDrupalStateStores,
-		);
+		);*/
+
+		const store = new DrupalState({
+			apiBase: drupalUrl,
+			apiPrefix: 'jsonapi',
+			defaultLocale: '',
+			debug: process.env.DEBUG_MODE || false,
+		});
 		const footerMenu = await store.getObject({
-			objectName: 'menu_items--main',
+			objectName: 'menu--menu',
 			anon: true,
 		});
 		return {

@@ -6,7 +6,7 @@ import umamiFooterMenu from '../data/umamiMenuItemsMainData.json';
 
 vi.mock('next/router', () => ({
 	useRouter: () => ({
-		locale: 'en',
+		locale: '',
 		pathname: 'test/path',
 		push: vi.fn(),
 		query: {
