@@ -1,0 +1,244 @@
+- student-type: ~
+  location: ~
+  degree-type: ~
+  field-of-study: ~
+  content: ''
+
+- student-type: ~
+  location: ~
+  degree-type: certificates
+  field-of-study: ~
+  content: '<h2>General Certificate Requirements</h2>'
+
+- student-type: ~
+  location: ~
+  degree-type: certificates
+  field-of-study: equine-welfare-certificate
+  content: '<h2>Specific Requirements</h2>'
+
+- student-type: high-school
+  location: ~
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <p>Important things to remember:</p>
+    <ul>
+      <li>
+        Estimated cut-off ranges are based on the admission averages from previous
+        years and are provided solely as a point of reference. Exact cut-offs for the
+        current cycle will be determined by the quantity and quality of applications
+        received and the number of places available in the program. Co-op averages
+        will often exceed the estimated cut-off ranges. Students not admissible to
+        co-op will be automatically considered for the regular program
+      </li>
+      <li>
+        The University of Guelph will treat courses previously completed through Summer School, Night School, 
+        or Correspondence in the same manner as those completed through day school. They will be considered equally in 
+        determining your admission average. The University of Guelph will use the highest grade reported for any 
+        repeated courses.
+      </li>
+      <li>The single asterisk * indicates that the program is offered with and without co-op.</li>
+      <li>The double asterisk ** indicates that the program has a mandatory co-op.</li>
+    </ul>
+
+- student-type: high-school
+  location: ontario
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+
+    <p>Undergraduate program applicants from Ontario must present the following:</p>
+
+    <ol>
+      <li>Ontario Secondary School Diploma (OSSD)</li>
+      <li>A minimum of six 4U and/or 4M courses</li>
+      <li>The specific subject requirements for the degree program of interest</li>
+      <li>ENG4U (required for all degree programs)</li>
+    </ol>
+
+    <p> The non-academic component of 4U or 4M co-op course is not accepted for admission purposes.</p>
+
+- student-type: high-school
+  location: alberta
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+
+    <p>
+      High school diploma with 5 academic courses at the 30 or 31 level (5 credit),
+      including required subjects.
+    </p>
+
+    <p>Note: Two 3 credit courses can be used to equal one 5 credit course.</p>
+
+    <a href="https://admission.uoguelph.ca/acceptable-courses-alberta">View a list of accepted courses from Alberta</a>
+
+- student-type: high-school
+  location: british-columbia
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>
+      High school diploma with 5 academic courses from the accepted list 
+      <a href="https://admission.uoguelph.ca/canadian/bc/grade12">here</a> 
+      (including required courses for the program you are applying to).
+    </p>
+
+- student-type: high-school
+  location: manitoba
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 5 academic courses at the 40 S level, including required subjects.</p>
+
+- student-type: high-school
+  location: new-brunswick
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>Grade 12 Diploma, including 5 academic courses numbered 120, 121, or 122 including required subjects.</p>
+
+- student-type: high-school
+  location: newfoundland-and-labrador
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 5 academic courses (2 credit) at 3000 level, including required subjects.</p>
+
+- student-type: high-school
+  location: northwest-territories
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 5 academic courses at the 30 or 31 level (5 credit), including required subjects.</p>
+    <p>Note: Two 3 credit courses can be used to equal one 5 credit course.</p>
+
+- student-type: high-school
+  location: nova-scotia
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 5 academic courses at the Grade 12 level, including required subjects.</p>
+
+- student-type: high-school
+  location: nunavut
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 5 academic courses at the 30 or 31 level (5 credit), including required subjects.</p>
+    <p>Note: Two 3 credit courses can be used to equal one 5 credit course.</p>
+
+- student-type: high-school
+  location: prince-edward-island
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 5 academic courses at the 611 or 621 level, including required subjects.</p>
+
+- student-type: high-school
+  location: quebec
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements (Grade 12)</h3>
+    <p>High school diploma with 6 academic (university preparation) courses, including required subjects.</p>
+
+    <h3>General Requirements (CEGEP)
+    <p>One year of CEGEP with 12 academic courses, including required subjects.</p>
+
+- student-type: high-school
+  location: saskatchewan
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 6 courses at the 30 level, including required subjects.</p>
+
+- student-type: high-school
+  location: yukon
+  degree-type: ~
+  field-of-study: ~
+  content: |
+    <h3>General Requirements</h3>
+    <p>High school diploma with 5 academic courses at the 30 or 31 level (5 credit), including required subjects.</p>
+
+- student-type: high-school
+  location: ontario
+  degree-type: bachelors-degree
+  field-of-study: bachelor-of-applied-science
+  content: |
+    <h3>Bachelor Degree Requirements:</h3>
+
+    <h4>Majors</h4>
+
+    <ul>
+      <li>Applied Human Nutrition</li>
+      <li>Child Studies</li>
+      <li>Family Studies and Human Development</li>
+    </ul>
+
+    <h4>Required Courses</h4>
+
+    <p>For Applied Human Nutrition:</p>
+    <ul>
+      <li>English (ENG4U)</li>
+      <li>1 4U math course</li>
+      <li>Biology (SBI4U)</li>
+      <li>Chemistry (SCH4U)</li>
+      <li>2 additional 4U or 4M courses</li>
+    </ul>
+
+    <p>For Child Studies & Family Studies and Human Development:</p>
+    <ul>
+      <li>English (ENG4U)</li>
+      <li>1 4U math course</li>
+      <li>1 of biology (SBI4U), chemistry (SCH4U) or introductory kinesiology (PSK4U)</li>
+      <li>3 additional 4U or 4M courses (4U biology is recommended)</li>
+    </ul>
+
+    <h4>Estimated Cut-off Ranges</h4>
+    <p>78 - 83%</p>
+
+- student-type: high-school
+  location: ontario
+  degree-type: bachelors-degree
+  field-of-study: bachelor-of-engineering
+  content: |
+    <h3>Bachelor Degree Requirements:</h3>
+
+    <h4>Majors</h4>
+
+    <ul>
+      <li>Biological Engineering*</li>
+      <li>Biomedical Engineering*</li>
+      <li>Computer Engineering*</li>
+      <li>Engineering Systems and Computing*</li>
+      <li>Environmental Engineering*</li>
+      <li>Mechanical Engineering*</li>
+      <li>Water Resources Engineering*</li>
+      <li>Undeclared (first year only)</li>
+    </ul>
+
+    <h4>Required Courses</h4>
+
+    <ul>
+      <li>English (ENG4U)</li>
+      <li>Advanced Functions (MHF4U)</li>
+      <li>Calculus and Vectors (MCV4U)</li>
+      <li>Chemistry (SCH4U)</li>
+      <li>Physics (SPH4U)</li>
+      <li>One additional 4U or 4M course</li>
+    </ul>
+
+    <h4>Estimated Cut-off Ranges</h4>
+    <p>84% - 89%</p>

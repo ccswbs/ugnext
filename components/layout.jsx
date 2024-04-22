@@ -1,31 +1,15 @@
-import { Footer, Header, PreviewRibbon } from '@pantheon-systems/nextjs-kit';
-import styles from './layout.module.css';
+import { PreviewRibbon } from '@pantheon-systems/nextjs-kit';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+import Head from 'next/head';
 
-export default function Layout({ children, footerMenu, preview = false }) {
-	const navItems = [
-		{ linkText: '🏠 Home', href: '/' },
-		{ linkText: '📰 Articles', href: '/articles' },
-		{ linkText: '📑 Pages', href: '/pages' },
-	];
-	/*const footerMenuItems = footerMenu?.map(({ title, url, parent }) => ({
-		linkText: title,
-		href: url,
-		parent: parent,
-	}));*/
-
+export default function Layout({ children, menu, preview = false }) {
 	return (
-		<div className={`${styles.layout} flex flex-col`}>
+		<div className="flex flex-col flex-1">
 			{preview && <PreviewRibbon />}
-			<Header navItems={navItems} />
+			<Header menu={menu} />
 			<main className="mb-auto">{children}</main>
-			{/*<Footer footerMenuItems={footerMenuItems}>*/}
-				<Footer>
-				<span className="my-0 mx-auto">
-					© {new Date().getFullYear()} Built with{' '}
-					<a href="https://nextjs.org/">Next.js</a> and{' '}
-					<a href="https://www.drupal.org/">Drupal</a>
-				</span>
-			</Footer>
+			<Footer />
 		</div>
 	);
 }

@@ -1,108 +1,63 @@
-<div align="center">
-	<picture>
-  	<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/pantheon-systems/decoupled-kit-js/canary/web/static/img/W_Fist-Tagline.png">
-  	<img height="120" alt="Pantheon.io logo featuring a fist capturing lighting. Pantheon™, The Platform for Extraordinary Websites." src="https://raw.githubusercontent.com/pantheon-systems/decoupled-kit-js/canary/web/static/img/B_Fist-Tagline.png">
-	</picture>
-	<a href="https://decoupledkit.pantheon.io/docs#next-drupal-starter">
-		<h1 style="margin:auto;" align="center">Next Drupal Starter</h1>
-	</a>
-</div>
+# Next + Netlify Starter
 
-For detailed documentation on the Decoupled Kit Starters, visit
-[the Decoupled Kit developer documentation](https://decoupledkit.pantheon.io).
+[![Netlify Status](https://api.netlify.com/api/v1/badges/46648482-644c-4c80-bafb-872057e51b6b/deploy-status)](https://app.netlify.com/sites/next-dev-starter/deploys)
 
-For more information on using the starter on Pantheon Front-End Sites, visit
-[the Pantheon.io platform documentation](https://docs.pantheon.io/guides/decoupled/).
+This is a [Next.js](https://nextjs.org/) v14 project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and set up to be instantly deployed to [Netlify](https://url.netlify.com/SyTBPVamO)!
+
+This project is a very minimal starter that includes 2 sample components, a global stylesheet, a `netlify.toml` for deployment, and a `jsconfig.json` for setting up absolute imports and aliases. With Netlify, you'll have access to features like Preview Mode, server-side rendering/incremental static regeneration via Netlify Functions, and internationalized routing on deploy automatically.
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/next-netlify-starter&utm_source=github&utm_medium=nextstarter-cs&utm_campaign=devex-cs)
+
+(If you click this button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify)
+
+## Table of Contents:
+
+- [Getting Started](#getting-started)
+- [Installation options](#installation-options)
+- [Testing](#testing)
+  - [Included Default Testing](#included-default-testing)
+  - [Removing Renovate](#removing-renovate)
 
 ## Getting Started
 
-The Next Drupal starter requires Node.js and is built and tested on the LTS
-version which can be found on the
-[Node.js downloads page](https://nodejs.org/en/download).
+First, run the development server:
 
-The starter kit supports npm, pnpm, and yarn. If you created the starer via the
-Pantheon Front-End Sites dashboard, it will use npm by default. To change this,
-delete the `package-lock.json` file and the `node-modules` folder, then run the
-install command of your preferred package manager.
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-If you created the starter via `create-pantheon-decoupled-kit`, it will detect
-the package manager used to run the command and use it install the starter's
-dependencies unless the `--noInstall` flag was used.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## `@pantheon-systems` npm Packages
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-## `@pantheon-systems/drupal-kit` npm package
+### Installation options
 
-The Pantheon
-[`@pantheon-systems/drupal-kit`](https://www.npmjs.com/package/@pantheon-systems/drupal-kit)
-is included as a dependency in this project. This allows developers to make use
-of utility functions to simplify the process of building and maintaining a
-Front-End site on Pantheon.
+**Option one:** One-click deploy
 
-API reference documentation can be found at
-https://decoupledkit.pantheon.io/docs/Packages/drupal-kit.
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/next-netlify-starter&utm_source=github&utm_medium=nextstarter-cs&utm_campaign=devex-cs)
 
-### `create-pantheon-decoupled-kit`
+**Option two:** Manual clone
 
-The `create-pantheon-decoupled-kit` npm package, or "the CLI", is the single
-source of truth for all of the JavaScript/TypeScript starter kit templates. See
-[Using the CLI](https://decoupledkit.pantheon.io/docs/frontend-starters/using-the-cli)
-for more information.
+1. Clone this repo: `git clone https://github.com/netlify-templates/next-netlify-starter.git`
+2. Navigate to the directory and run `npm install`
+3. Run `npm run dev`
+4. Make your changes
+5. Connect to [Netlify](https://url.netlify.com/Bk4UicocL) manually (the `netlify.toml` file is the one you'll need to make sure stays intact to make sure the export is done and pointed to the right stuff)
 
-In addition to scaffolding new projects, a number of add-ons are available which
-can be added to an existing project. For more detailed information on the
-available add-ons, see the
-[Decoupled Kit developer documentation](https://decoupledkit.pantheon.io/docs/frontend-starters/using-the-cli#add-ons).
+## Testing
 
-### `@pantheon-systems/decoupled-kit-health-check`
+### Included Default Testing
 
-To ensure the Decoupled Kit starter has what it needs to source data from a
-[Decoupled Kit Backend](https://decoupledkit.pantheon.io/docs/backend-starters),
-a health-check is run as a part of the the build command and will error in case
-a critical component is not met.
+We’ve included some tooling that helps us maintain these templates. This template currently uses:
 
-See a
-[detailed description of the health-check here](https://github.com/pantheon-systems/decoupled-kit-js/tree/canary/packages/decoupled-kit-health-check#what-does-it-do).
+- [Renovate](https://www.mend.io/free-developer-tools/renovate/) - to regularly update our dependencies
+- [Cypress](https://www.cypress.io/) - to run tests against how the template runs in the browser
+- [Cypress Netlify Build Plugin](https://github.com/cypress-io/netlify-plugin-cypress) - to run our tests during our build process
 
-To disable the health check, see
-[Disabling the decoupled kit health check](https://decoupledkit.pantheon.io/docs/frontend-starters/nextjs/nextjs-drupal/troubleshooting#disabling-the-decoupled-kit-health-check)
+If your team is not interested in this tooling, you can remove them with ease!
 
-## Local development
+### Removing Renovate
 
-### Lando
-
-To configure the starter for local development with Lando, see the
-[Decoupled Kit developer docs on Local Development](https://decoupledkit.pantheon.io/docs/backend-starters/decoupled-drupal/local-development).
-
-### Commands
-
-The Decoupled Kit starters include a number of scripts defined in the
-`package.json`. To list all of these scripts, `cd` into your starter's directory
-and in a terminal use the `npm run` command.
-
-Some commands include:
-
-### `dev`
-
-Runs the starter in developer mode.
-
-#### `build`
-
-Runs the build step for the starter. By default, the
-`@pantheon-systems/decoupled-kit-health-check` is run before the build. This
-command is required for Pantheon Front-End Sites.
-
-#### `start`
-
-Runs the starter in production mode. This command is required for Pantheon
-Front-End Sites.
-
-### `test`
-
-Runs the tests.
-
-### `update-snapshots`
-
-Updates the snapshots used for the snapshot tests. The starter comes with an
-example snapshot test that may need to be updating depending on your
-configuration.
+In order to keep our project up-to-date with dependencies we use a tool called [Renovate](https://github.com/marketplace/renovate). If you’re not interested in this tooling, delete the `renovate.json` file and commit that onto your main branch.

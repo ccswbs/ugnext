@@ -4,7 +4,7 @@
 	"semi": true,
 	"proseWrap": "always",
 	"trailingComma": "all",
-	"printWidth": 80,
+	"printWidth": 120,
 	"arrowParens": "always",
-	"bracketSameLine": false
+	"bracketSameLine": false,
 }
