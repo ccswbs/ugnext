@@ -3,6 +3,7 @@ import YAML from 'yaml';
 import Layout from '@/components/layout';
 import { hierarchy, Requirement } from '@/lib/admission-requirements';
 import HtmlParser from '@/components/html-parser';
+import Link from '@/components/link';
 
 export async function getStaticPaths() {
 	// For admission pages we don't want to prerender any pages, we will always generate them on demand.
@@ -16,6 +17,7 @@ export async function getStaticProps(context) {
 	// We want to check that the slug matches the possible values we have defined
 	const slug = context?.params?.slug ?? [];
 	const length = Math.min(hierarchy.length, slug.length);
+	let title = '';
 	let valid = false;
 
 	for (let i = 0; i < length; i++) {
@@ -54,10 +56,7 @@ export async function getStaticProps(context) {
 	const requirements = YAML.parse(data).map((el) => new Requirement(el));
 
 	// Find the closest requirement as a fallback in case the one the user is looking for isn't defined
-	const match = Requirement.findClosest(
-		toFind,
-		requirements,
-	);
+	const match = Requirement.findClosest(toFind, requirements);
 
 	if (!match) {
 		return { notFound: true };
@@ -65,17 +64,24 @@ export async function getStaticProps(context) {
 
 	return {
 		props: {
+			title: match.data.title,
 			content: match.data.content ?? '',
 			revalidate: 10, // Revalidate at most, every 10 seconds
 		},
 	};
 }
 
-export default function AdmissionRequirementsPage({ content }) {
+export default function AdmissionRequirementsPage({ title, content }) {
 	return (
-		<Layout>
-			<div className="flex flex-col prose text-base">
+		<Layout title="Admission Requirements">
+			<h1>{title}</h1>
+
+			<div className="">
 				<HtmlParser html={content} />
+			</div>
+
+			<div className="mt-auto">
+				<Link href="/admission/requirements/undergraduate">Go Back</Link>
 			</div>
 		</Layout>
 	);

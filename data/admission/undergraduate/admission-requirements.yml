@@ -2,24 +2,28 @@
   location: ~
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements
   content: ''
 
 - student-type: ~
   location: ~
   degree-type: certificates
   field-of-study: ~
+  title: Admission Requirements for Certificates
   content: '<h2>General Certificate Requirements</h2>'
 
 - student-type: ~
   location: ~
   degree-type: certificates
   field-of-study: equine-welfare-certificate
+  title: Admission Requirements for Certificate in Equine Welfare
   content: '<h2>Specific Requirements</h2>'
 
 - student-type: high-school
   location: ~
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students
   content: |
     <p>Important things to remember:</p>
     <ul>
@@ -45,6 +49,7 @@
   location: ontario
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Ontario
   content: |
     <h3>General Requirements</h3>
 
@@ -63,6 +68,7 @@
   location: alberta
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Alberta
   content: |
     <h3>General Requirements</h3>
 
@@ -79,6 +85,7 @@
   location: british-columbia
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from British Columbia
   content: |
     <h3>General Requirements</h3>
     <p>
@@ -99,6 +106,7 @@
   location: new-brunswick
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from New Brunswick
   content: |
     <h3>General Requirements</h3>
     <p>Grade 12 Diploma, including 5 academic courses numbered 120, 121, or 122 including required subjects.</p>
@@ -115,6 +123,7 @@
   location: northwest-territories
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from the Northwest Territories
   content: |
     <h3>General Requirements</h3>
     <p>High school diploma with 5 academic courses at the 30 or 31 level (5 credit), including required subjects.</p>
@@ -124,6 +133,7 @@
   location: nova-scotia
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Nova Scotia
   content: |
     <h3>General Requirements</h3>
     <p>High school diploma with 5 academic courses at the Grade 12 level, including required subjects.</p>
@@ -132,6 +142,7 @@
   location: nunavut
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Nunavut
   content: |
     <h3>General Requirements</h3>
     <p>High school diploma with 5 academic courses at the 30 or 31 level (5 credit), including required subjects.</p>
@@ -141,6 +152,7 @@
   location: prince-edward-island
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Prince Edward Island
   content: |
     <h3>General Requirements</h3>
     <p>High school diploma with 5 academic courses at the 611 or 621 level, including required subjects.</p>
@@ -149,6 +161,7 @@
   location: quebec
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Quebec
   content: |
     <h3>General Requirements (Grade 12)</h3>
     <p>High school diploma with 6 academic (university preparation) courses, including required subjects.</p>
@@ -160,6 +173,7 @@
   location: saskatchewan
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Saskatchewan
   content: |
     <h3>General Requirements</h3>
     <p>High school diploma with 6 courses at the 30 level, including required subjects.</p>
@@ -168,6 +182,7 @@
   location: yukon
   degree-type: ~
   field-of-study: ~
+  title: Admission Requirements for High School Graduates/Students from Yukon
   content: |
     <h3>General Requirements</h3>
     <p>High school diploma with 5 academic courses at the 30 or 31 level (5 credit), including required subjects.</p>
@@ -176,6 +191,7 @@
   location: ontario
   degree-type: bachelors-degree
   field-of-study: bachelor-of-applied-science
+  title: Bachelor of Applied Science Admission Requirements for High School Graduates/Students from Ontario
   content: |
     <h3>Bachelor Degree Requirements:</h3>
 
@@ -213,6 +229,7 @@
   location: ontario
   degree-type: bachelors-degree
   field-of-study: bachelor-of-engineering
+  title: Bachelor of Engineering Admission Requirements for High School Graduates/Students from Ontario
   content: |
     <h3>Bachelor Degree Requirements:</h3>
 
