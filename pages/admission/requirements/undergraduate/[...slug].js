@@ -76,12 +76,12 @@ export default function AdmissionRequirementsPage({ title, content }) {
 		<Layout title="Admission Requirements">
 			<h1>{title}</h1>
 
+			<Link href="/admission/requirements/undergraduate" className="btn btn-red">
+				View Other Requirements
+			</Link>
+
 			<div className="">
 				<HtmlParser html={content} />
-			</div>
-
-			<div className="mt-auto">
-				<Link href="/admission/requirements/undergraduate">Go Back</Link>
 			</div>
 		</Layout>
 	);

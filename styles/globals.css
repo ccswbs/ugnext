@@ -16,20 +16,29 @@
 		@apply flex-1;
 	}
 
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply mb-4 mt-4 font-bold leading-tight;
+	}
+
 	h1 {
-		@apply mb-4 mt-4 text-5xl font-bold leading-tight text-red;
+		@apply text-5xl text-red;
 	}
 
 	h2 {
-		@apply mb-4 mt-4 text-4xl font-bold leading-tight;
+		@apply text-4xl;
 	}
 
 	h3 {
-		@apply mb-4 mt-4 text-2xl font-bold leading-tight;
+		@apply text-2xl;
 	}
 
 	h4 {
-		@apply mb-4 mt-4 text-xl font-bold leading-tight;
+		@apply text-xl;
 	}
 
 	ol {
@@ -41,7 +50,7 @@
 	}
 
 	a {
-		@apply text-blue-600 underline transition-colors hover:text-blue-800 focus:text-blue-800 focus:ring-blue-800;
+		@apply rounded-sm text-blue-600 underline transition-colors hover:text-blue-800 focus:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2;
 	}
 }
 
@@ -51,7 +60,7 @@
 	}
 
 	.btn-red {
-		@apply bg-red text-white hover:bg-red-600 focus:bg-red-600 focus:ring-red;
+		@apply bg-red text-white no-underline hover:bg-red-600 hover:text-white focus:bg-red-600 focus:text-white focus:ring-red;
 	}
 
 	.btn-yellow {
