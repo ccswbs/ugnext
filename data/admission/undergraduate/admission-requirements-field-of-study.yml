@@ -107,7 +107,9 @@
   degree-type: undergraduate-and-diploma
 
 - id: fulltime-honours-bachelor-justice-studies
-  name: (Full-time) Honours Bachelor of Applied Science in Justice Studies + Diploma in Community and Justice Services or Police Foundations
+  name:
+    (Full-time) Honours Bachelor of Applied Science in Justice Studies + Diploma in Community and Justice Services or
+    Police Foundations
   degree-type: undergraduate-and-diploma
 
 - id: parttime-bachelor-justice-public-safety

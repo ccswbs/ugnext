@@ -13,7 +13,7 @@ export default function Layout({ children, menu, title = '', description = '', p
 
 			<div className="flex flex-1 flex-col">
 				<Header menu={menu} />
-				<main className="mb-auto text-base container-center">{children}</main>
+				<main className="container-center mb-auto text-base">{children}</main>
 				<Footer />
 			</div>
 		</>
