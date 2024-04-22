@@ -10,7 +10,7 @@ export default function Home() {
 	}, []);
 
 	return (
-		<Layout>
+		<Layout title="404: Not Found">
 			<div className="container-center">
 				<h1 className="text-red">HTTP 404 — File not found</h1>
 				<h2>Possible reasons for this error:</h2>
