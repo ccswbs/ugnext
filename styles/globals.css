@@ -3,30 +3,50 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply h-full;
-  }
+	html {
+		@apply h-full;
+	}
 
-  body,
-  #__next {
-    @apply flex min-h-full flex-col text-base;
-  }
+	body,
+	#__next {
+		@apply flex min-h-full flex-col text-base leading-relaxed;
+	}
 
-  #__next {
-    @apply flex-1;
-  }
+	#__next {
+		@apply flex-1;
+	}
+
+	h1 {
+		@apply mb-4 mt-4 text-5xl font-bold leading-tight;
+	}
+
+	h2 {
+		@apply mb-4 mt-4 text-4xl font-bold leading-tight;
+	}
+
+	ol {
+		@apply ml-[1em] list-decimal;
+	}
+
+	a {
+		@apply text-blue-600 underline transition-colors hover:text-blue-800 focus:text-blue-800 focus:ring-blue-800;
+	}
 }
 
 @layer components {
-  .btn {
-    @apply inline-flex items-center justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
-  }
+	.btn {
+		@apply inline-flex items-center justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
+	}
 
-  .btn-red {
-    @apply bg-red text-white hover:bg-red-600 focus:bg-red-600 focus:ring-red;
-  }
+	.btn-red {
+		@apply bg-red text-white hover:bg-red-600 focus:bg-red-600 focus:ring-red;
+	}
 
-  .btn-yellow {
-    @apply bg-yellow text-black hover:bg-yellow-600 focus:bg-yellow-600 focus:ring-yellow;
-  }
+	.btn-yellow {
+		@apply bg-yellow text-black hover:bg-yellow-600 focus:bg-yellow-600 focus:ring-yellow;
+	}
+
+	.container-center {
+		@apply container mx-auto px-4 pt-2 pb-4;
+	}
 }

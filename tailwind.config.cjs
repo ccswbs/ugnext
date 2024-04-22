@@ -47,7 +47,7 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				condensed: ['Roboto Condensed', 'Arial', 'sans-serif'],
-				sans: ['Roboto', 'sans-serif'],
+				sans: ['Roboto', 'Arial', 'sans-serif'],
 			},
 			colors: {
 				red: {
