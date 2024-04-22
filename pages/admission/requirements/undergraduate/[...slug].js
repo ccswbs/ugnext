@@ -13,15 +13,47 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-	const toFind = Requirement.parse(context?.params?.slug);
+	// We want to check that the slug matches the possible values we have defined
+	const slug = context?.params?.slug ?? [];
+	const length = Math.min(hierarchy.length, slug.length);
+	let valid = false;
+
+	for (let i = 0; i < length; i++) {
+		const key = hierarchy[hierarchy.length - 1 - i];
+		const toFind = slug[i];
+
+		try {
+			const path = process.cwd() + `/data/admission/undergraduate/admission-requirements-${key}.yml`;
+			const data = YAML.parse(await fs.readFile(path, 'utf8'));
+
+			if (!data.some((value) => value?.id === toFind)) {
+				break;
+			}
+		} catch (e) {
+			break;
+		}
+
+		// If we are on the last iteration that means we successfully validated the slug.
+		if (i === length - 1) {
+			valid = true;
+		}
+	}
+
+	if (!valid) {
+		return { notFound: true };
+	}
+
+	// Now that we validated the slug we get the content for the page.
+	const toFind = Requirement.parse(slug);
 
 	if (!toFind) {
 		return { notFound: true };
 	}
 
-	const data = await fs.readFile(process.cwd() + '/data/admission/admission-requirements.yml', 'utf8');
+	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/admission-requirements.yml', 'utf8');
 	const requirements = YAML.parse(data);
 
+	// Find the closest requirement as a fallback in case the one the user is looking for isn't defined
 	const match = Requirement.findClosest(
 		toFind,
 		requirements.map((el) => new Requirement(el)),
