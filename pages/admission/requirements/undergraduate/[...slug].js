@@ -51,12 +51,12 @@ export async function getStaticProps(context) {
 	}
 
 	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/admission-requirements.yml', 'utf8');
-	const requirements = YAML.parse(data);
+	const requirements = YAML.parse(data).map((el) => new Requirement(el));
 
 	// Find the closest requirement as a fallback in case the one the user is looking for isn't defined
 	const match = Requirement.findClosest(
 		toFind,
-		requirements.map((el) => new Requirement(el)),
+		requirements,
 	);
 
 	if (!match) {
@@ -65,7 +65,7 @@ export async function getStaticProps(context) {
 
 	return {
 		props: {
-			content: match?.content ?? '',
+			content: match.data.content ?? '',
 			revalidate: 10, // Revalidate at most, every 10 seconds
 		},
 	};
@@ -74,7 +74,7 @@ export async function getStaticProps(context) {
 export default function AdmissionRequirementsPage({ content }) {
 	return (
 		<Layout>
-			<div className="flex flex-col">
+			<div className="flex flex-col prose text-base">
 				<HtmlParser html={content} />
 			</div>
 		</Layout>
