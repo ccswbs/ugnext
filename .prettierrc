@@ -7,4 +7,5 @@
 	"printWidth": 120,
 	"arrowParens": "always",
 	"bracketSameLine": false,
+	"plugins": ["prettier-plugin-tailwindcss"]
 }
