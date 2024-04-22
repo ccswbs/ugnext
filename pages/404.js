@@ -13,7 +13,7 @@ export default function Home() {
 		<Layout>
 			<div className="container-center">
 				<h1 className="text-red">HTTP 404 — File not found</h1>
-				<h2 className="">Possible reasons for this error:</h2>
+				<h2>Possible reasons for this error:</h2>
 				<ol>
 					<li>
 						You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark to
