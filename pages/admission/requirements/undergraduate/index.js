@@ -3,7 +3,7 @@ import Layout from '@/components/layout';
 export default function AdmissionRequirementsHome() {
 	return (
 		<Layout>
-			<div className="flex flex-col"></div>
+			<h1>Admission Requirements</h1>
 		</Layout>
 	);
 }

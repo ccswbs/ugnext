@@ -17,15 +17,27 @@
 	}
 
 	h1 {
-		@apply mb-4 mt-4 text-5xl font-bold leading-tight;
+		@apply mb-4 mt-4 text-5xl font-bold leading-tight text-red;
 	}
 
 	h2 {
 		@apply mb-4 mt-4 text-4xl font-bold leading-tight;
 	}
 
+	h3 {
+		@apply mb-4 mt-4 text-2xl font-bold leading-tight;
+	}
+
+	h4 {
+		@apply mb-4 mt-4 text-xl font-bold leading-tight;
+	}
+
 	ol {
 		@apply ml-[1em] list-decimal;
+	}
+
+	ul {
+		@apply ml-[1em] list-disc;
 	}
 
 	a {
@@ -47,6 +59,6 @@
 	}
 
 	.container-center {
-		@apply container mx-auto px-4 pt-2 pb-4;
+		@apply container mx-auto px-4 pb-4 pt-2;
 	}
 }
