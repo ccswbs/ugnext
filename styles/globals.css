@@ -57,8 +57,4 @@
 	ul {
 		@apply list-disc;
 	}
-
-	a {
-		@apply text-blue-600 underline transition-colors hover:text-blue-800 focus:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2;
-	}
 }
