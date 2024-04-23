@@ -138,7 +138,6 @@ module.exports = {
 		},
 	},
 	plugins: [
-		require('@tailwindcss/typography'),
 		plugin(function ({ addBase }) {
 			addBase({
 				html: { fontSize: '10px' },
