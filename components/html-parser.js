@@ -19,7 +19,7 @@ const defaultInstructions = [
 	},
 ];
 
-export default function HtmlParser({ html, instructions }) {
+const HtmlParser = ({ html, instructions }) => {
 	const parsed = useMemo(() => {
 		return parser.parseWithInstructions(html, () => true, [
 			...(Array.isArray(instructions) ? instructions : []),
@@ -29,3 +29,5 @@ export default function HtmlParser({ html, instructions }) {
 
 	return <>{parsed}</>;
 }
+
+export default HtmlParser;

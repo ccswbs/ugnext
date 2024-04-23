@@ -1,6 +1,7 @@
 import Layout from '@/components/layout';
 import Container from '@/components/container';
-import Link from '@/components/link';
+import Link, { UnstyledLink } from '@/components/link';
+import Button from '@/components/button';
 
 export default function Home() {
 	return (
@@ -9,6 +10,8 @@ export default function Home() {
 				<h1>UGNext Home Page</h1>
 
 				<Link href="/test" color="blue" className="text-xl">Test Link</Link>
+
+				<Button href="/test" as={UnstyledLink} color="red">Test</Button>
 			</Container>
 		</Layout>
 	);

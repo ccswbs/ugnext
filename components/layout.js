@@ -2,7 +2,7 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Head from 'next/head';
 
-export default function Layout({ children, menu, title = '', description = '', preview = false }) {
+const Layout = ({ children, menu, title = '', description = '', preview = false }) => {
 	return (
 		<>
 			<Head>
@@ -22,3 +22,5 @@ export default function Layout({ children, menu, title = '', description = '', p
 		</>
 	);
 }
+
+export default Layout;

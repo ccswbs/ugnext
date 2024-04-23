@@ -20,3 +20,5 @@ const Heading = ({ level, children, className, ...rest }) => {
 		</Tag>
 	);
 };
+
+export default Heading;

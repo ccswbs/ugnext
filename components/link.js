@@ -1,12 +1,13 @@
 import NextLink from 'next/link';
-import { twJoin, twMerge } from 'tailwind-merge';
+import { twMerge } from 'tailwind-merge';
 
-const absoluteURLPattern = new RegExp('^(//|[a-z]+:)', 'i');
 
 export const UnstyledLink = ({ href, children, ...rest }) => {
-	const isAbsoluteOrHash = absoluteURLPattern.test(href);
+	const pattern = new RegExp('^(//|[a-z]+:)', 'i');
 
-	return isAbsoluteOrHash ? (
+	const isExternal = /^(\/\/|[a-z]+:)/.test(href);
+
+	return isExternal ? (
 		<a {...rest} href={href}>
 			{children}
 		</a>
@@ -17,7 +18,7 @@ export const UnstyledLink = ({ href, children, ...rest }) => {
 	);
 };
 
-export default function Link({ href, color, children, className, ...rest }) {
+const Link = ({ href, color, children, className, ...rest }) => {
 	const base = 'underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
 	const colors = {
@@ -34,3 +35,5 @@ export default function Link({ href, color, children, className, ...rest }) {
 		</UnstyledLink>
 	);
 }
+
+export default Link;

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function Header({ menu }) {
+const Header = ({ menu }) => {
 	useEffect(() => {
 		import('@uoguelph/web-components/uofg-header');
 	}, []);
@@ -33,3 +33,5 @@ export default function Header({ menu }) {
 		</uofg-header>
 	);
 }
+
+export default Header;
