@@ -1,10 +1,10 @@
-import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-const Container = ({ as = 'div', centered = false, children, ...rest }) => {
+const Container = ({ as = 'div', centered = false, children, className, ...rest }) => {
 	const Tag = as;
 
 	return (
-		<Tag {...rest} className={classNames('container px-4 pb-4 pt-2', { 'mx-auto': centered }, rest?.className ?? '')}>
+		<Tag {...rest} className={twMerge('container px-4 pb-4 pt-2', centered && 'mx-auto', className)}>
 			{children}
 		</Tag>
 	);

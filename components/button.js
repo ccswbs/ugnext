@@ -1,6 +1,6 @@
-import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-const Button = ({ as = 'button', color = 'none', outlined = false, children, ...rest }) => {
+const Button = ({ as = 'button', color = 'none', outlined = false, children, className, ...rest }) => {
 	const Tag = as;
 
 	const base =
@@ -31,10 +31,12 @@ const Button = ({ as = 'button', color = 'none', outlined = false, children, ...
 	return (
 		<Tag
 			{...rest}
-			className={classNames(
+			className={twMerge(
 				base,
-				{ [outlinedColors[color]]: outlined, [outlinedBase]: outlined, [colors[color]]: !outlined },
-				rest?.className ?? '',
+				!outlined && (colors[color] ?? colors['none']),
+				outlined && (outlinedColors[color] ?? outlinedColors['none']),
+				outlined && outlinedBase,
+				className,
 			)}
 		>
 			{children}
