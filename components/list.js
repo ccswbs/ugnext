@@ -3,9 +3,7 @@ import React from 'react';
 
 const List = ({ variant = 'unordered', children, className, ...rest }) => {
 	const Tag = variant === 'ordered' ? 'ol' : 'ul';
-
 	const classes = twJoin('flex flex-col gap-1 my-2', variant === 'ordered' && 'gap-2 [counter-reset:list-number]');
-
 	const itemClasses = twJoin(
 		'h-fit w-full',
 		variant !== 'ordered' &&
