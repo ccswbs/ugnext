@@ -1,7 +1,6 @@
 import NextLink from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
-
 export const UnstyledLink = ({ href, children, ...rest }) => {
 	const pattern = new RegExp('^(//|[a-z]+:)', 'i');
 
@@ -34,6 +33,6 @@ const Link = ({ href, color, children, className, ...rest }) => {
 			{children}
 		</UnstyledLink>
 	);
-}
+};
 
 export default Link;

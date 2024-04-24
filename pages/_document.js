@@ -4,11 +4,9 @@ export default function Document() {
 	return (
 		<Html lang="en">
 			<Head>
-				<link
-					href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
-					rel="stylesheet"
-				/>
+				<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet" />
 				<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+				<link href="https://kit.fontawesome.com/7993323d0c.css" rel="stylesheet" />
 			</Head>
 			<body>
 				<Main />

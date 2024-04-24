@@ -48,6 +48,7 @@ module.exports = {
 			fontFamily: {
 				condensed: ['Roboto Condensed', 'Arial', 'sans-serif'],
 				sans: ['Roboto', 'Arial', 'sans-serif'],
+				icon: ['"Font Awesome 6 Pro"'],
 			},
 			colors: {
 				red: {

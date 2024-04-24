@@ -4,15 +4,14 @@ import Link from '@/components/link';
 import Heading from '@/components/heading';
 import List from '@/components/list';
 
+const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
+
 const parser = new Parser();
 const definitions = new ProcessNodeDefinitions();
 const defaultInstructions = [
 	// h1, h2, ... h6 tags
 	{
-		shouldProcessNode: (node) => {
-			const valid = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
-			return valid.has(node.tagName);
-		},
+		shouldProcessNode: (node) => headingTags.has(node.tagName),
 		processNode: (node, children) => {
 			const level = /h(\d)/.exec(node.tagName)?.[1];
 			return (
@@ -22,7 +21,7 @@ const defaultInstructions = [
 			);
 		},
 	},
-	// Anchor tags
+	// Links
 	{
 		shouldProcessNode: (node) => node.tagName === 'a' && typeof node.attribs?.href === 'string',
 		processNode: (node, children) => (

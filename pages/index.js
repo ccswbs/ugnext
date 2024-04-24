@@ -13,13 +13,15 @@ export default function Home() {
 
 				<Link href="/test" color="blue" className="text-xl">Test Link</Link>
 
-				<Button href="/test" as={UnstyledLink} color="red">Test</Button>
+				<Button href="/test" color="red">Test</Button>
+
+				<i className="fa-solid fa-chevron-right"></i>
 
 				<HtmlParser html="<h3>testing</h3>" />
 
-				<List variant="unordered">
+				<List variant="ordered">
 					<span>test</span>
-					<>testingsdf</>
+					testingsdf
 					<li>testindagsdg</li>
 				</List>
 			</Container>

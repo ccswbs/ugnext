@@ -1,7 +1,8 @@
 import { twMerge } from 'tailwind-merge';
+import { UnstyledLink } from '@/components/link';
 
-const Button = ({ as = 'button', color = 'none', outlined = false, children, className, ...rest }) => {
-	const Tag = as;
+const Button = ({ as, color = 'none', outlined = false, href, children, className, ...rest }) => {
+	const Tag = as ? as : typeof href === 'string' ? UnstyledLink : 'button';
 
 	const base =
 		'inline-flex items-center justify-center px-4 py-3 text-base font-medium no-underline shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
@@ -31,6 +32,7 @@ const Button = ({ as = 'button', color = 'none', outlined = false, children, cla
 	return (
 		<Tag
 			{...rest}
+			href={href}
 			className={twMerge(
 				base,
 				!outlined && (colors[color] ?? colors['none']),
