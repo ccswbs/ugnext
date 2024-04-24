@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { twMerge } from 'tailwind-merge';
+import { twJoin, twMerge } from 'tailwind-merge';
 
 export const UnstyledLink = ({ href, children, ...rest }) => {
 	const pattern = new RegExp('^(//|[a-z]+:)', 'i');
@@ -18,18 +18,17 @@ export const UnstyledLink = ({ href, children, ...rest }) => {
 };
 
 const Link = ({ href, color, children, className, ...rest }) => {
-	const base = 'underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
-
-	const colors = {
-		blue: 'text-blue-600 hover:text-blue-800 focus:text-blue-800 focus:ring-blue',
-		red: 'text-red hover:text-red-800 focus:text-red-800 focus:ring-red',
-		yellow: 'text-yellow hover:text-yellow-600 focus:text-yellow-600 focus:ring-yellow',
-		green: '',
-		grey: 'text-grey hover:text-grey-600 focus:text-grey-600 focus:ring-grey focus:ring-grey',
-	};
+	const classes = twJoin(
+		'underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
+		color === 'blue' && 'text-blue-600 hover:text-blue-800 focus:text-blue-800 focus:ring-blue',
+		color === 'red' && 'text-red hover:text-red-800 focus:text-red-800 focus:ring-red',
+		color === 'yellow' && 'text-yellow hover:text-yellow-600 focus:text-yellow-600 focus:ring-yellow',
+		color === 'green' && '',
+		color === 'grey' && 'text-grey hover:text-grey-600 focus:text-grey-600 focus:ring-grey',
+	);
 
 	return (
-		<UnstyledLink {...rest} href={href} className={twMerge(base, colors[color] ?? colors['blue'], className)}>
+		<UnstyledLink {...rest} href={href} className={twMerge(classes, className)}>
 			{children}
 		</UnstyledLink>
 	);

@@ -122,19 +122,8 @@ module.exports = {
 					DEFAULT: '#dddddd',
 				},
 			},
-			width: {
-				'sm-container': '540px',
-				'md-container': '720px',
-				'lg-container': '960px',
-				'xl-container': '1140px',
-				'xxl-container': '1320px',
-			},
-			maxWidth: {
-				'sm-container': '540px',
-				'md-container': '720px',
-				'lg-container': '960px',
-				'xl-container': '1140px',
-				'xxl-container': '1320px',
+			content: {
+				'chevron-right': '"\\f054"',
 			},
 		},
 	},
