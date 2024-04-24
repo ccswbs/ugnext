@@ -15,46 +15,4 @@
 	#__next {
 		@apply flex-1;
 	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply mb-4 mt-4 font-bold leading-tight;
-	}
-
-	h1 {
-		@apply text-5xl text-red;
-	}
-
-	h2 {
-		@apply text-4xl;
-	}
-
-	h3 {
-		@apply text-2xl;
-	}
-
-	h4 {
-		@apply text-xl;
-	}
-
-	ul,
-	ol {
-		@apply my-2 ml-[1.25em];
-
-		> li {
-			@apply py-1.5;
-		}
-	}
-
-	ol {
-		@apply list-decimal;
-	}
-
-	ul {
-		@apply list-disc;
-	}
 }
