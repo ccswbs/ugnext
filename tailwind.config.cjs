@@ -128,6 +128,7 @@ module.exports = {
 		},
 	},
 	plugins: [
+		require('@headlessui/tailwindcss'),
 		plugin(function ({ addBase }) {
 			addBase({
 				html: { fontSize: '10px' },
