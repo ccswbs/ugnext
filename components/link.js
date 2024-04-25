@@ -2,8 +2,6 @@ import NextLink from 'next/link';
 import { twJoin, twMerge } from 'tailwind-merge';
 
 export const UnstyledLink = ({ href, children, ...rest }) => {
-	const pattern = new RegExp('^(//|[a-z]+:)', 'i');
-
 	const isExternal = /^(\/\/|[a-z]+:)/.test(href);
 
 	return isExternal ? (
