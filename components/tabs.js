@@ -7,7 +7,7 @@ export const Tab = ({ children, title }) => '';
 
 export const Tabs = ({ fullWidth = true, children, data }) => {
 	const tabs = React.Children.toArray(children).filter((child) => child?.type?.name === 'Tab');
-	const containerClasses = twJoin('flex gap-1 border-b-4 border-yellow', fullWidth && 'w-full', !fullWidth && 'w-fit');
+	const containerClasses = twJoin('flex gap-1 border-b-4 border-yellow', fullWidth ? 'w-full' : 'w-fit');
 	const tabClasses = twJoin(
 		'mb-1 rounded-t-sm bg-gray-200 px-4 py-3 text-lg font-bold text-black transition-colors hover:bg-gray-300 focus:bg-grey-300 focus:outline-none ui-selected:mb-0 ui-selected:border-2 ui-selected:border-yellow ui-selected:bg-yellow',
 		fullWidth && 'flex-1',
