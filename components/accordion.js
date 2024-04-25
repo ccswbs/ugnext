@@ -4,20 +4,13 @@ const Accordion = ({ text, children }) => {
 	const container = useRef(null);
 	const panel = useRef(null);
 
-	const updateHeight = (open) => {
+	const updateHeight = (reflow) => {
 		if (container.current && panel.current) {
-
-			if(!open) {
+			if (reflow) {
 				container.current.style.removeProperty('display');
 				container.current.hidden = false;
 				panel.current.style.removeProperty('display');
 				panel.current.hidden = false;
-			}
-
-			let hasVarClass = container.current.classList.contains('h-[var(--accordion-height,auto)]');
-
-			if(hasVarClass) {
-				container.current.classList.remove('h-[var(--accordion-height,auto)]')
 			}
 
 			const height = container.current.offsetHeight;
@@ -25,11 +18,7 @@ const Accordion = ({ text, children }) => {
 				container.current?.style?.setProperty('--accordion-height', `${height}px`);
 			}
 
-			if(hasVarClass) {
-				container.current.classList.add('h-[var(--accordion-height,auto)]')
-			}
-
-			if (!open) {
+			if (reflow) {
 				container.current.style.setProperty('display', 'none');
 				container.current.hidden = true;
 				panel.current.style.setProperty('display', 'none');
@@ -46,10 +35,7 @@ const Accordion = ({ text, children }) => {
 		<Disclosure>
 			{({ open }) => (
 				<>
-					<Disclosure.Button
-						onClick={() => console.log(open)}
-						className="mb-1 inline-flex w-full cursor-pointer items-center justify-between text-xl font-semibold text-neutral-800"
-					>
+					<Disclosure.Button className="mb-1 inline-flex w-full cursor-pointer items-center justify-between text-xl font-semibold text-neutral-800">
 						{text}
 					</Disclosure.Button>
 
@@ -62,7 +48,7 @@ const Accordion = ({ text, children }) => {
 						leaveTo="h-0 invisible"
 						unmount={false}
 						ref={container}
-						onTransitionEnd={() => {open && updateHeight(false); open && console.log('updating height')}}
+						beforeLeave={() => updateHeight(false)}
 					>
 						<Disclosure.Panel unmount={false} ref={panel}>
 							{children}

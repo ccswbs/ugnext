@@ -16,6 +16,11 @@ export default function Home() {
 
 				<Accordion text="Accordion 1">
 					<p>Accordion 1 content</p>
+					<Accordion text="Nested Accordion">
+						<p>Accordion 1 content</p>
+						<p>Accordion 1 content</p>
+						<p>Accordion 1 content</p>
+					</Accordion>
 					<p>Accordion 1 content</p>
 					<p>Accordion 1 content</p>
 				</Accordion>
