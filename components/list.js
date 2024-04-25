@@ -3,13 +3,13 @@ import React from 'react';
 
 const List = ({ variant = 'unordered', children, className, ...rest }) => {
 	const Tag = variant === 'ordered' ? 'ol' : 'ul';
-	const classes = twJoin('flex flex-col gap-1 my-2', variant === 'ordered' && 'gap-2 [counter-reset:list-number]');
+	const classes = twJoin('my-2 flex flex-col gap-1', variant === 'ordered' && 'gap-2 [counter-reset:list-number]');
 	const itemClasses = twJoin(
 		'h-fit w-full',
 		variant !== 'ordered' &&
-			'flex before:font-black before:inline-flex before:shrink-0 before:items-center before:justify-center gap-2 before:w-6 before:h-6 before:text-yellow before:content-chevron-right before:font-icon',
+			'flex gap-2 before:inline-flex before:h-6 before:w-6 before:shrink-0 before:items-center before:justify-center before:font-icon before:font-black before:text-yellow before:content-chevron-right',
 		variant === 'ordered' &&
-			'flex before:font-black before:inline-flex before:shrink-0 before:items-center before:justify-center before:[counter-increment:list-number] before:content-[counter(list-number)] gap-2 before:w-6 before:h-6 before:bg-yellow before:text-black',
+			'flex gap-2 before:inline-flex before:h-6 before:w-6 before:shrink-0 before:items-center before:justify-center before:bg-yellow before:font-black before:text-black before:content-[counter(list-number)] before:[counter-increment:list-number]',
 	);
 
 	return (

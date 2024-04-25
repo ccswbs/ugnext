@@ -32,6 +32,6 @@ const Header = ({ menu }) => {
 			})}
 		</uofg-header>
 	);
-}
+};
 
 export default Header;

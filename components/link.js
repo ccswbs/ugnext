@@ -17,10 +17,11 @@ export const UnstyledLink = ({ href, children, ...rest }) => {
 	);
 };
 
-const Link = ({ href, color, children, className, ...rest }) => {
+const Link = ({ href, color = 'none', children, className, ...rest }) => {
 	const classes = twJoin(
-		'underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
-		color === 'blue' && 'text-blue-600 hover:text-blue-800 focus:text-blue-800 focus:ring-blue',
+		'p-1 underline transition-colors hover:decoration-transparent focus:outline-none focus:ring-2 focus:ring-offset-2',
+		color === 'none' && 'text-black hover:text-black focus:text-black focus:ring-black',
+		color === 'blue' && 'text-blue-600 hover:bg-blue hover:text-white focus:text-blue-800 focus:ring-blue',
 		color === 'red' && 'text-red hover:text-red-800 focus:text-red-800 focus:ring-red',
 		color === 'yellow' && 'text-yellow hover:text-yellow-600 focus:text-yellow-600 focus:ring-yellow',
 		color === 'green' && 'text-green hover:text-green-800 focus:text-green-800 focus:ring-green',

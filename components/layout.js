@@ -21,6 +21,6 @@ const Layout = ({ children, menu, title = '', description = '', preview = false 
 			</div>
 		</>
 	);
-}
+};
 
 export default Layout;
