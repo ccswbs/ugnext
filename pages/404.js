@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Container from '@/components/container';
 import Heading from '@/components/heading';
 import Link from '@/components/link';
+import List from '@/components/list';
 
 export default function Home() {
 	const [searchLink, setSearchLink] = useState('https://www.uoguelph.ca/search');
@@ -18,7 +19,7 @@ export default function Home() {
 				<Heading level={1}>HTTP 404 — File not found</Heading>
 				<Heading level={2}>Possible reasons for this error:</Heading>
 
-				<ol>
+				<List variant="ordered">
 					<li>
 						You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark to
 						avoid this error in the future.
@@ -35,17 +36,14 @@ export default function Home() {
 						The university has removed this page (either on purpose or by mistake) -{' '}
 						<Link href="mailto:ithelp@uoguelph.ca">please let us know!</Link>
 					</li>
-				</ol>
+				</List>
 
 				<Heading level={2}>Try one of these links instead:</Heading>
 
-				<p>
+				<List>
 					<Link href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</Link>
-				</p>
-
-				<p>
 					<Link href={searchLink}>Search on the University of Guelph</Link>
-				</p>
+				</List>
 			</Container>
 		</Layout>
 	);

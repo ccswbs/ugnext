@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin');
 const defaultTheme = require('tailwindcss/defaultTheme');
 const scaled = (input, scale) => {
 	if (input == null) {
@@ -80,17 +79,17 @@ module.exports = {
 					DEFAULT: '#ffc72a',
 				},
 				blue: {
-					'50': '#f0f8ff',
-					'100': '#e0f0fe',
-					'200': '#b9e2fe',
-					'300': '#7ccbfd',
-					'400': '#36b2fa',
-					'500': '#0c99eb',
-					'600': '#0074c1',
-					'700': '#015fa3',
-					'800': '#065186',
-					'900': '#0b446f',
-					'950': '#072b4a',
+					50: '#f0f8ff',
+					100: '#e0f0fe',
+					200: '#b9e2fe',
+					300: '#7ccbfd',
+					400: '#36b2fa',
+					500: '#0c99eb',
+					600: '#0074c1',
+					700: '#015fa3',
+					800: '#065186',
+					900: '#0b446f',
+					950: '#072b4a',
 					DEFAULT: '#0074c1',
 				},
 				green: {
@@ -127,14 +126,7 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [
-		require('@headlessui/tailwindcss'),
-		plugin(function ({ addBase }) {
-			addBase({
-				html: { fontSize: '10px' },
-			});
-		}),
-	],
+	plugins: [require('@headlessui/tailwindcss')],
 	corePlugins: {
 		preflight: true,
 	},

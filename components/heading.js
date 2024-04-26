@@ -6,8 +6,8 @@ const Heading = ({ level, children, className, ...rest }) => {
 	const Tag = `h${headingLevel}`;
 	const classes = twJoin(
 		'mb-4 mt-4 font-bold leading-tight',
-		headingLevel === 1 && 'text-5xl text-red',
-		headingLevel === 2 && 'text-4xl',
+		headingLevel === 1 && 'text-4xl text-red',
+		headingLevel === 2 && 'text-3xl',
 		headingLevel === 3 && 'text-2xl',
 		headingLevel === 4 && 'text-xl',
 		(headingLevel === 5 || headingLevel === 6) && 'text-lg',

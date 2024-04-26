@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+	:root {
+		font-size: 62.5%;
+	}
+
 	html {
 		@apply h-full;
 	}
