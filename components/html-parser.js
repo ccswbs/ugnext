@@ -1,8 +1,10 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
 import Link from '@/components/link';
 import Heading from '@/components/heading';
 import List from '@/components/list';
+import '@/lib/font-awesome';
+import { dom } from '@fortawesome/fontawesome-svg-core';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -39,6 +41,12 @@ const defaultInstructions = [
 			</List>
 		),
 	},
+	{
+		shouldProcessNode: (node, children) => node.tagName === 'i' && node.attribs?.classname?.includes('fa-'),
+		processNode: (node, children) => (
+			<span className="contents" dangerouslySetInnerHTML={{ __html: `<i class="${node.attribs?.classname}"></i>` }} />
+		),
+	},
 	// Fallback
 	{
 		shouldProcessNode: () => true,
@@ -47,6 +55,8 @@ const defaultInstructions = [
 ];
 
 const HtmlParser = ({ html, instructions }) => {
+	const ref = useRef(null);
+
 	const parsed = useMemo(() => {
 		return parser.parseWithInstructions(html, () => true, [
 			...(Array.isArray(instructions) ? instructions : []),
@@ -54,7 +64,15 @@ const HtmlParser = ({ html, instructions }) => {
 		]);
 	}, [html, instructions]);
 
-	return <>{parsed}</>;
+	useEffect(() => {
+		dom.i2svg({ node: ref.current });
+	}, [parsed]);
+
+	return (
+		<div ref={ref} className="contents">
+			{parsed}
+		</div>
+	);
 };
 
 export default HtmlParser;
