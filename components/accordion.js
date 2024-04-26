@@ -6,7 +6,7 @@ import { faCircleMinus, faCirclePlus } from '@awesome.me/kit-7993323d0c/icons/cl
 const Accordion = ({ text, children }) => {
 	const containerClasses = twJoin('my-2');
 	const buttonClasses = twJoin(
-		'mb-1 inline-flex w-full cursor-pointer items-center justify-between p-2.5 px-5 text-xl transition-colors hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2 focus:outline-none'
+		'mb-1 inline-flex w-full cursor-pointer items-center justify-between p-2.5 px-5 text-xl transition-colors hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2',
 	);
 	const iconClasses = twJoin('h-[1em] text-yellow transition-transform');
 	const panelClasses = twJoin('border-l-4 border-yellow py-2 pl-3');
