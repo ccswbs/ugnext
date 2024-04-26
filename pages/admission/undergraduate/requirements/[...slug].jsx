@@ -3,6 +3,7 @@ import YAML from 'yaml';
 import Layout from '@/components/layout';
 import { hierarchy, Requirement } from '@/lib/admission-requirements';
 import HtmlParser from '@/components/html-parser';
+import Container from '@/components/container';
 
 export async function getStaticPaths() {
 	// For admission pages we don't want to prerender any pages, we will always generate them on demand.
@@ -19,7 +20,7 @@ export async function getStaticProps(context) {
 		return { notFound: true };
 	}
 
-	const data = await fs.readFile(process.cwd() + '/data/admission/admission-requirements.yml', 'utf8');
+	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/requirements/admission-requirements.yml', 'utf8');
 	const requirements = YAML.parse(data);
 
 	const match = Requirement.findClosest(
@@ -42,7 +43,9 @@ export async function getStaticProps(context) {
 export default function AdmissionRequirementsPage({ content }) {
 	return (
 		<Layout>
-			<HtmlParser html={content} />
+			<Container centered>
+				<HtmlParser html={content} />
+			</Container>
 		</Layout>
 	);
 }
