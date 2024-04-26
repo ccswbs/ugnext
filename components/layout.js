@@ -2,7 +2,7 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Head from 'next/head';
 
-const Layout = ({ children, menu, title = '', description = '', preview = false }) => {
+const Layout = ({ children, menu, footerLinks, title = '', description = '', preview = false }) => {
 	return (
 		<>
 			<Head>
@@ -17,7 +17,7 @@ const Layout = ({ children, menu, title = '', description = '', preview = false 
 				)}
 				<Header menu={menu} />
 				<main className="mb-auto text-base">{children}</main>
-				<Footer />
+				<Footer links={footerLinks} />
 			</div>
 		</>
 	);
