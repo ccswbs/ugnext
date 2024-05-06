@@ -2,10 +2,7 @@ import React from 'react';
 import { Tab as HUITab } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 
-// This is a dummy component to be used in Tabs component, it does nothing as the Tabs component will handle the rendering, we just use this to hold the data associated with the tab (it's title and content).
-export const Tab = ({ children, title }) => '';
-
-export const Tabs = ({ fullWidth = true, children, data }) => {
+const Tabs = ({ fullWidth = true, children }) => {
 	const tabs = React.Children.toArray(children).filter((child) => child?.type?.name === 'Tab');
 	const containerClasses = twJoin('flex gap-1 border-b-4 border-yellow', fullWidth ? 'w-full' : 'w-fit');
 	const tabClasses = twJoin(
@@ -34,4 +31,8 @@ export const Tabs = ({ fullWidth = true, children, data }) => {
 	);
 };
 
+// This is a dummy component to be used in Tabs component, it does nothing as the Tabs component will handle the rendering, we just use this to hold the data associated with the tab (it's title and content).
+const Tab = ({ children, title }) => '';
+
+Tabs.Tab = Tab;
 export default Tabs;
