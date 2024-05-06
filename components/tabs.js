@@ -2,7 +2,7 @@ import React from 'react';
 import { Tab as HUITab } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 
-// THis is a dummy component to be used in Tabs component, it does nothing as the Tabs component will handle the rendering, we just use this to hold the data associated with the tab (it's title and content).
+// This is a dummy component to be used in Tabs component, it does nothing as the Tabs component will handle the rendering, we just use this to hold the data associated with the tab (it's title and content).
 export const Tab = ({ children, title }) => '';
 
 export const Tabs = ({ fullWidth = true, children, data }) => {
