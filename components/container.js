@@ -10,4 +10,5 @@ const Container = ({ as = 'div', centered = false, children, className, ...rest 
 		</Tag>
 	);
 };
+
 export default Container;

@@ -3,6 +3,7 @@ import AnimateHeight from 'react-animate-height';
 import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleMinus, faCirclePlus } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
+
 const Accordion = ({ text, children }) => {
 	const containerClasses = twJoin('my-2');
 	const buttonClasses = twJoin(

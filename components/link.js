@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import { twJoin, twMerge } from 'tailwind-merge';
 
-export const UnstyledLink = ({ href, children, ...rest }) => {
+const UnstyledLink = ({ href, children, ...rest }) => {
 	const isExternal = /^(\/\/|[a-z]+:)/.test(href);
 
 	return isExternal ? (
@@ -33,3 +33,4 @@ const Link = ({ href, color = 'blue', children, className, ...rest }) => {
 };
 
 export default Link;
+export { UnstyledLink };
