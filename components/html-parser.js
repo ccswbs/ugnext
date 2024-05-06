@@ -5,6 +5,7 @@ import Heading from '@/components/heading';
 import List from '@/components/list';
 import '@/lib/font-awesome';
 import { dom } from '@fortawesome/fontawesome-svg-core';
+import Divider from '@/components/divider';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -46,6 +47,11 @@ const defaultInstructions = [
 		processNode: (node, children) => (
 			<span className="contents" dangerouslySetInnerHTML={{ __html: `<i class="${node.attribs?.classname}"></i>` }} />
 		),
+	},
+	// Divider
+	{
+		shouldProcessNode: (node) => node.tagName === 'hr',
+		processNode: (node) => <Divider />,
 	},
 	// Fallback
 	{
