@@ -21,14 +21,16 @@ const Select = ({ onChange, children }) => {
 		onChange?.(option);
 	};
 
-	const containerClasses = twJoin('relative');
+	const containerClasses = twJoin('group relative');
 	const buttonClasses = twJoin(
-		'flex w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue ui-open:rounded-b-none',
+		'flex w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 shadow-sm group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none',
 	);
 	const buttonIconClasses = twJoin('h-5 w-5 text-gray-400 transition-transform ui-open:rotate-180');
-	const optionsContainerClasses = twJoin('absolute z-10 w-full rounded-b-md bg-white shadow-md');
+	const optionsContainerClasses = twJoin(
+		'absolute z-10 w-full rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md group-focus-within:border-blue group-focus-within:outline-none',
+	);
 	const optionClasses = twJoin(
-		'relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue ui-active:bg-gray-100',
+		'relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100',
 	);
 
 	return (
@@ -39,11 +41,11 @@ const Select = ({ onChange, children }) => {
 			</Listbox.Button>
 			<Transition
 				enter="transition duration-100 ease-out"
-				enterFrom="transform scale-95 opacity-0"
-				enterTo="transform scale-100 opacity-100"
+				enterFrom="opacity-0"
+				enterTo="opacity-100"
 				leave="transition duration-75 ease-out"
-				leaveFrom="transform scale-100 opacity-100"
-				leaveTo="transform scale-95 opacity-0"
+				leaveFrom="opacity-100"
+				leaveTo="opacity-0"
 			>
 				<Listbox.Options className={optionsContainerClasses}>
 					{options.map((option, index) => (
