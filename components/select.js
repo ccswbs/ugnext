@@ -32,7 +32,7 @@ const Select = ({ onChange, children, multiple = false, placeholder = 'Select a 
 	const placeholderClasses = twJoin('text-gray-600');
 	const buttonIconClasses = twJoin('h-5 w-5 text-gray-400 transition-transform ui-open:rotate-180');
 	const optionsContainerClasses = twJoin(
-		'md:absolute max-h-[20rem] overflow-auto z-10 w-full rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md group-focus-within:border-blue group-focus-within:outline-none ui-open:border-blue',
+		'z-10 max-h-[20rem] w-full overflow-auto rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md group-focus-within:border-blue group-focus-within:outline-none ui-open:border-blue md:absolute',
 	);
 	const optionClasses = twJoin(
 		'relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100',
