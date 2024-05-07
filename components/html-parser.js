@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
-import Link from '@/components/link';
-import Heading from '@/components/heading';
-import List from '@/components/list';
-import Divider from '@/components/divider';
+import { Link } from '@/components/link';
+import { Heading } from '@/components/heading';
+import { List } from '@/components/list';
+import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
 const parser = new Parser();
-const definitions = new ProcessNodeDefinitions();
-const defaultInstructions = [
+export const DEFAULT_PROCESSOR = (new ProcessNodeDefinitions()).processDefaultNode;
+export const DEFAULT_INSTRUCTIONS = [
 	// h1, h2, ... h6 tags
 	{
 		shouldProcessNode: (node) => headingTags.has(node.tagName),
@@ -56,7 +56,7 @@ const defaultInstructions = [
 	// Fallback
 	{
 		shouldProcessNode: () => true,
-		processNode: definitions.processDefaultNode,
+		processNode: DEFAULT_PROCESSOR,
 	},
 ];
 
@@ -64,10 +64,11 @@ export const HtmlParser = ({ html, instructions }) => {
 	const ref = useRef(null);
 
 	const parsed = useMemo(() => {
-		return parser.parseWithInstructions(html, () => true, [
-			...(Array.isArray(instructions) ? instructions : []),
-			...defaultInstructions,
-		]);
+		return parser.parseWithInstructions(
+			html,
+			() => true,
+			Array.isArray(instructions) ? instructions : DEFAULT_INSTRUCTIONS,
+		);
 	}, [html, instructions]);
 
 	useEffect(() => {
