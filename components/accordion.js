@@ -4,7 +4,7 @@ import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleMinus, faCirclePlus } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 
-const Accordion = ({ text, children }) => {
+const Accordion = ({ title, children }) => {
 	const containerClasses = twJoin('my-2');
 	const buttonClasses = twJoin(
 		'mb-1 inline-flex w-full cursor-pointer items-center justify-between p-2.5 px-5 text-xl transition-colors hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2',
@@ -17,7 +17,7 @@ const Accordion = ({ text, children }) => {
 			{({ open }) => (
 				<div className={containerClasses}>
 					<Disclosure.Button className={twJoin(buttonClasses, open ? 'bg-blue text-white' : 'bg-grey-50 text-blue')}>
-						<span>{text}</span>
+						<span>{title}</span>
 						{open ? (
 							<FontAwesomeIcon icon={faCircleMinus} className={iconClasses} />
 						) : (
