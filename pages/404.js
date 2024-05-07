@@ -1,10 +1,10 @@
 import Head from 'next/head';
-import Layout from '@/components/layout';
+import { Layout } from '@/components/layout';
 import { useEffect, useState } from 'react';
-import Container from '@/components/container';
-import Heading from '@/components/heading';
-import Link from '@/components/link';
-import List from '@/components/list';
+import { Container } from '@/components/container';
+import { Heading } from '@/components/heading';
+import { Link } from '@/components/link';
+import { List, ListItem } from '@/components/list';
 
 export default function Home() {
 	const [searchLink, setSearchLink] = useState('https://www.uoguelph.ca/search');
@@ -20,29 +20,35 @@ export default function Home() {
 				<Heading level={2}>Possible reasons for this error:</Heading>
 
 				<List variant="ordered">
-					<li>
+					<ListItem>
 						You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark to
 						avoid this error in the future.
-					</li>
+					</ListItem>
 
-					<li>You have mis-typed the web address into the URL bar. Please check your spelling of the URL.</li>
+					<ListItem>
+						You have mis-typed the web address into the URL bar. Please check your spelling of the URL.
+					</ListItem>
 
-					<li>
+					<ListItem>
 						The search engine has an out-of-date listing for this page -{' '}
 						<Link href="mailto:ithelp@uoguelph.ca">please let us know!</Link>
-					</li>
+					</ListItem>
 
-					<li>
+					<ListItem>
 						The university has removed this page (either on purpose or by mistake) -{' '}
 						<Link href="mailto:ithelp@uoguelph.ca">please let us know!</Link>
-					</li>
+					</ListItem>
 				</List>
 
 				<Heading level={2}>Try one of these links instead:</Heading>
 
 				<List>
-					<Link href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</Link>
-					<Link href={searchLink}>Search on the University of Guelph</Link>
+					<ListItem>
+						<Link href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</Link>
+					</ListItem>
+					<ListItem>
+						<Link href={searchLink}>Search on the University of Guelph</Link>
+					</ListItem>
 				</List>
 			</Container>
 		</Layout>

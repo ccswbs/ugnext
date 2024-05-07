@@ -1,16 +1,17 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
-import Link from '@/components/link';
-import Heading from '@/components/heading';
-import List from '@/components/list';
+import { Link } from '@/components/link';
+import { Heading } from '@/components/heading';
+import { List, ListItem } from '@/components/list';
+import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
 const parser = new Parser();
-const definitions = new ProcessNodeDefinitions();
-const defaultInstructions = [
+export const DEFAULT_PROCESSOR = new ProcessNodeDefinitions().processDefaultNode;
+export const DEFAULT_INSTRUCTIONS = [
 	// h1, h2, ... h6 tags
 	{
 		shouldProcessNode: (node) => headingTags.has(node.tagName),
@@ -37,7 +38,9 @@ const defaultInstructions = [
 		shouldProcessNode: (node) => node.tagName === 'ul' || node.tagName === 'ol',
 		processNode: (node, children) => (
 			<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
-				{children}
+				{children.map((child, index) => (
+					<ListItem key={index}>{child}</ListItem>
+				))}
 			</List>
 		),
 	},
@@ -47,21 +50,27 @@ const defaultInstructions = [
 			<span className="contents" dangerouslySetInnerHTML={{ __html: `<i class="${node.attribs?.classname}"></i>` }} />
 		),
 	},
+	// Divider
+	{
+		shouldProcessNode: (node) => node.tagName === 'hr',
+		processNode: (node) => <Divider />,
+	},
 	// Fallback
 	{
 		shouldProcessNode: () => true,
-		processNode: definitions.processDefaultNode,
+		processNode: DEFAULT_PROCESSOR,
 	},
 ];
 
-const HtmlParser = ({ html, instructions }) => {
+export const HtmlParser = ({ html, instructions }) => {
 	const ref = useRef(null);
 
 	const parsed = useMemo(() => {
-		return parser.parseWithInstructions(html, () => true, [
-			...(Array.isArray(instructions) ? instructions : []),
-			...defaultInstructions,
-		]);
+		return parser.parseWithInstructions(
+			html,
+			() => true,
+			Array.isArray(instructions) ? instructions : DEFAULT_INSTRUCTIONS,
+		);
 	}, [html, instructions]);
 
 	useEffect(() => {
@@ -74,5 +83,3 @@ const HtmlParser = ({ html, instructions }) => {
 		</div>
 	);
 };
-
-export default HtmlParser;
