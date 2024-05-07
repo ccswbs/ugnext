@@ -15,7 +15,7 @@ const Checkbox = ({ checked = false, label, description }) => {
 					className="group flex size-4 items-center justify-center rounded border bg-white p-3 transition-colors ui-checked:bg-blue-500"
 				>
 					<FontAwesomeIcon
-						className="h-5 w-5 opacity-0 transition-opacity group-data-[checked]:opacity-100"
+						className="h-5 w-5 opacity-0 transition-opacity text-white group-data-[checked]:opacity-100"
 						icon={faCheck}
 					/>
 				</HUICheckbox>
