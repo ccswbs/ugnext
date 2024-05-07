@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-const Footer = ({ links }) => {
+
+export const Footer = ({ links }) => {
 	useEffect(() => {
 		import('@uoguelph/web-components/uofg-footer');
 	}, []);
@@ -19,5 +20,3 @@ const Footer = ({ links }) => {
 		</uofg-footer>
 	);
 };
-
-export default Footer;

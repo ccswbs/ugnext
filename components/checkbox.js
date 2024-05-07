@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 import { twJoin } from 'tailwind-merge';
 
-const Checkbox = ({ checked = false, label, description, color = 'red', disabled = false }) => {
+export const Checkbox = ({ checked = false, label, description, color = 'red', disabled = false }) => {
 	const [enabled, setEnabled] = useState(checked);
 
 	const boxClasses = twJoin(
@@ -38,5 +38,3 @@ const Checkbox = ({ checked = false, label, description, color = 'red', disabled
 		</Field>
 	);
 };
-
-export default Checkbox;

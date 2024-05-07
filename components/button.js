@@ -1,7 +1,7 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import { UnstyledLink } from '@/components/link';
 
-const Button = ({ as, color = 'none', outlined = false, href, children, className, ...rest }) => {
+export const Button = ({ as, color = 'none', outlined = false, href, children, className, ...rest }) => {
 	const Tag = as ? as : typeof href === 'string' ? UnstyledLink : 'button';
 
 	const solidClasses = twJoin(
@@ -41,4 +41,3 @@ const Button = ({ as, color = 'none', outlined = false, href, children, classNam
 		</Tag>
 	);
 };
-export default Button;

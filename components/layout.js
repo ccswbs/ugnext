@@ -1,9 +1,9 @@
 import '@uoguelph/web-components/stylesheet';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 import Head from 'next/head';
 
-const Layout = ({ children, menu, footerLinks, title = '', description = '', preview = false }) => {
+export const Layout = ({ children, menu, footerLinks, title = '', description = '', preview = false }) => {
 	return (
 		<>
 			<Head>
@@ -23,5 +23,3 @@ const Layout = ({ children, menu, footerLinks, title = '', description = '', pre
 		</>
 	);
 };
-
-export default Layout;

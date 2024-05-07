@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import { twJoin, twMerge } from 'tailwind-merge';
 
-const UnstyledLink = ({ href, children, ...rest }) => {
+export const UnstyledLink = ({ href, children, ...rest }) => {
 	const isExternal = /^(\/\/|[a-z]+:)/.test(href);
 
 	return isExternal ? (
@@ -15,7 +15,7 @@ const UnstyledLink = ({ href, children, ...rest }) => {
 	);
 };
 
-const Link = ({ href, color = 'blue', children, className, ...rest }) => {
+export const Link = ({ href, color = 'blue', children, className, ...rest }) => {
 	const classes = twJoin(
 		'-ml-0.5 px-0.5 py-1 underline transition-colors hover:decoration-transparent focus:outline-none focus:ring-2 focus:ring-offset-2',
 		color === 'blue' && 'text-blue-600 hover:bg-blue hover:text-white focus:text-blue-800 focus:ring-blue',
@@ -32,5 +32,3 @@ const Link = ({ href, color = 'blue', children, className, ...rest }) => {
 	);
 };
 
-export default Link;
-export { UnstyledLink };

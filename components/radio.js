@@ -1,3 +1,2 @@
-const Radio = () => {};
+export const Radio = () => {};
 
-export default Radio;

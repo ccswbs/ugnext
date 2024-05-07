@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 import { Description, Field, Input, Label } from '@headlessui/react';
 
-const TextInput = ({ value, type = 'text', placeholder = '', onInput, className, label, description, ...rest }) => {
+export const TextInput = ({ value, type = 'text', placeholder = '', onInput, className, label, description, ...rest }) => {
 	return (
 		<Field className="flex flex-col gap-0.5">
 			{label && <Label>{label}</Label>}
@@ -23,4 +23,3 @@ const TextInput = ({ value, type = 'text', placeholder = '', onInput, className,
 	);
 };
 
-export default TextInput;

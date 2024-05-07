@@ -60,7 +60,7 @@ const defaultInstructions = [
 	},
 ];
 
-const HtmlParser = ({ html, instructions }) => {
+export const HtmlParser = ({ html, instructions }) => {
 	const ref = useRef(null);
 
 	const parsed = useMemo(() => {
@@ -80,5 +80,3 @@ const HtmlParser = ({ html, instructions }) => {
 		</div>
 	);
 };
-
-export default HtmlParser;
