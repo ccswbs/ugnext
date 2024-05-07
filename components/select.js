@@ -78,6 +78,7 @@ const Select = ({ onChange, children, multiple = false, placeholder = 'Select a 
 	);
 };
 
+// This is a dummy component to be used in Select component, it does nothing as the Select component will handle the rendering, we just use this to hold the data associated with the option.
 const Option = ({ value, children, selected = false, disabled = false }) => '';
 
 Select.Option = Option;
