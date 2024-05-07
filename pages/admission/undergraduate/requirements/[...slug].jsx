@@ -1,9 +1,9 @@
 import { promises as fs } from 'fs';
 import YAML from 'yaml';
-import Layout from '@/components/layout';
+import { Layout } from '@/components/layout';
 import { hierarchy, Requirement } from '@/lib/admission-requirements';
-import HtmlParser from '@/components/html-parser';
-import Container from '@/components/container';
+import { HtmlParser } from '@/components/html-parser';
+import { Container } from '@/components/container';
 
 export async function getStaticPaths() {
 	// For admission pages we don't want to prerender any pages, we will always generate them on demand.
