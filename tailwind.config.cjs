@@ -72,7 +72,7 @@ const colors = {
 		950: '#282828',
 		DEFAULT: '#dddddd',
 	},
-}
+};
 
 const scaled = (input, scale) => {
 	if (input == null) {

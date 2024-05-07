@@ -1,5 +1,3 @@
-const Radio = () => {
-
-}
+const Radio = () => {};
 
 export default Radio;
