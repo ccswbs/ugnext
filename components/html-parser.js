@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
 import { Link } from '@/components/link';
 import { Heading } from '@/components/heading';
-import { List } from '@/components/list';
+import { List, ListItem } from '@/components/list';
 import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
 import { dom } from '@fortawesome/fontawesome-svg-core';
@@ -38,7 +38,9 @@ export const DEFAULT_INSTRUCTIONS = [
 		shouldProcessNode: (node) => node.tagName === 'ul' || node.tagName === 'ol',
 		processNode: (node, children) => (
 			<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
-				{children}
+				{children.map((child, index) => (
+					<ListItem key={index}>{child}</ListItem>
+				))}
 			</List>
 		),
 	},
