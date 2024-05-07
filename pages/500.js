@@ -1,5 +1,5 @@
-import Layout from '@/components/layout';
-import Container from '@/components/container';
+import { Layout } from '@/components/layout';
+import { Container } from '@/components/container';
 
 export default function ServerError() {
 	return (
