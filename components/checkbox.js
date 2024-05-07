@@ -26,7 +26,7 @@ const Checkbox = ({ checked = false, label, description, color = 'red', disabled
 	);
 
 	return (
-		<Field>
+		<Field className="flex flex-col gap-0.5">
 			<div className="flex items-center gap-2">
 				<HUICheckbox checked={enabled} onChange={setEnabled} disabled={disabled} className={boxClasses}>
 					<FontAwesomeIcon className={iconClasses} icon={faCheck} />
