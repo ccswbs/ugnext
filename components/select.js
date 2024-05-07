@@ -1,11 +1,20 @@
 import React, { useMemo } from 'react';
 import { useState } from 'react';
-import { Description, Field, Label, Listbox, Transition } from '@headlessui/react';
+import {
+	Description,
+	Field,
+	Label,
+	Listbox,
+	ListboxButton,
+	ListboxOption,
+	ListboxOptions,
+	Transition,
+} from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 
-const Select = ({ onChange, children, multiple = false, label, description, placeholder = 'Select a value...' }) => {
+export const Select = ({ onChange, children, multiple = false, label, description, placeholder = 'Select a value...' }) => {
 	const options = useMemo(() => {
 		return React.Children.toArray(children)
 			.filter((child) => child?.type?.name === 'Option')
@@ -52,30 +61,35 @@ const Select = ({ onChange, children, multiple = false, label, description, plac
 				className={containerClasses}
 				multiple={multiple}
 			>
-				<Listbox.Button className={buttonClasses}>
+				<ListboxButton className={buttonClasses}>
 					{buttonText ? <span>{buttonText}</span> : <span className={placeholderClasses}>{placeholder}</span>}
 					<FontAwesomeIcon className={buttonIconClasses} icon={faChevronDown} />
-				</Listbox.Button>
+				</ListboxButton>
 				<Transition
-					enter="transition duration-100 ease-out"
+					enter="transition-opacity duration-100 ease-out"
 					enterFrom="opacity-0"
 					enterTo="opacity-100"
-					leave="transition duration-75 ease-out"
+					leave="transition-opacity duration-100 ease-out"
 					leaveFrom="opacity-100"
 					leaveTo="opacity-0"
 				>
-					<Listbox.Options className={optionsContainerClasses}>
+					<ListboxOptions className={optionsContainerClasses}>
 						{options.map((option, index) => (
-							<Listbox.Option className={optionClasses} key={option?.value} value={option} disabled={option?.disabled}>
-								{option?.children}
-								{(selected?.some?.((opt) => opt?.value === option?.value) || selected?.value === option?.value) && (
-									<span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
-										<FontAwesomeIcon icon={faCheck} className="h-5 w-5" />
-									</span>
+							<ListboxOption className={optionClasses} key={option?.value} value={option} disabled={option?.disabled}>
+								{({ focus, selected }) => (
+									<>
+										{option?.children}
+
+										{selected && (
+											<span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-blue-600 ui-selected:flex">
+												<FontAwesomeIcon icon={faCheck} className="h-5 w-5" />
+											</span>
+										)}
+									</>
 								)}
-							</Listbox.Option>
+							</ListboxOption>
 						))}
-					</Listbox.Options>
+					</ListboxOptions>
 				</Transition>
 			</Listbox>
 
@@ -85,8 +99,4 @@ const Select = ({ onChange, children, multiple = false, label, description, plac
 };
 
 // This is a dummy component to be used in Select component, it does nothing as the Select component will handle the rendering, we just use this to hold the data associated with the option.
-const Option = ({ value, children, selected = false, disabled = false }) => '';
-
-Select.Option = Option;
-
-export default Select;
+export const Option = ({ value, children, selected = false, disabled = false }) => '';

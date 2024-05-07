@@ -1,8 +1,8 @@
 import React from 'react';
-import { Tab as HUITab } from '@headlessui/react';
+import { Tab as HUITab, TabGroup, TabPanel, TabPanels, TabList } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 
-const Tabs = ({ fullWidth = true, children }) => {
+export const Tabs = ({ fullWidth = true, children }) => {
 	const tabs = React.Children.toArray(children).filter((child) => child?.type?.name === 'Tab');
 	const containerClasses = twJoin('flex gap-1 border-b-4 border-yellow', fullWidth ? 'w-full' : 'w-fit');
 	const tabClasses = twJoin(
@@ -12,27 +12,24 @@ const Tabs = ({ fullWidth = true, children }) => {
 	const tabPanelClasses = twJoin('py-4');
 
 	return (
-		<HUITab.Group>
-			<HUITab.List className={containerClasses}>
+		<TabGroup>
+			<TabList className={containerClasses}>
 				{tabs.map((child, index) => (
 					<HUITab key={index} className={tabClasses}>
 						{child?.props.title}
 					</HUITab>
 				))}
-			</HUITab.List>
-			<HUITab.Panels>
+			</TabList>
+			<TabPanels>
 				{tabs.map((child, index) => (
-					<HUITab.Panel key={index} className={tabPanelClasses}>
+					<TabPanel key={index} className={tabPanelClasses}>
 						{child?.props.children}
-					</HUITab.Panel>
+					</TabPanel>
 				))}
-			</HUITab.Panels>
-		</HUITab.Group>
+			</TabPanels>
+		</TabGroup>
 	);
 };
 
 // This is a dummy component to be used in Tabs component, it does nothing as the Tabs component will handle the rendering, we just use this to hold the data associated with the tab (it's title and content).
-const Tab = ({ children, title }) => '';
-
-Tabs.Tab = Tab;
-export default Tabs;
+export const Tab = ({ children, title }) => null;
