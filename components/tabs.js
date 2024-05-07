@@ -1,35 +1,28 @@
 import React from 'react';
-import { Tab as HUITab, TabGroup, TabPanel, TabPanels, TabList } from '@headlessui/react';
+import { Tab, TabGroup, TabPanel, TabPanels, TabList } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 
-export const Tabs = ({ fullWidth = true, children }) => {
-	const tabs = React.Children.toArray(children).filter((child) => child?.type?.name === 'Tab');
-	const containerClasses = twJoin('flex gap-1 border-b-4 border-yellow', fullWidth ? 'w-full' : 'w-fit');
-	const tabClasses = twJoin(
-		'mb-1 rounded-t-sm bg-gray-200 px-4 py-3 text-lg font-bold text-black transition-colors hover:bg-gray-300 focus:bg-grey-300 focus:outline-none ui-selected:mb-0 ui-selected:border-2 ui-selected:border-yellow ui-selected:bg-yellow',
-		fullWidth && 'flex-1',
-	);
-	const tabPanelClasses = twJoin('py-4');
-
-	return (
-		<TabGroup>
-			<TabList className={containerClasses}>
-				{tabs.map((child, index) => (
-					<HUITab key={index} className={tabClasses}>
-						{child?.props.title}
-					</HUITab>
-				))}
-			</TabList>
-			<TabPanels>
-				{tabs.map((child, index) => (
-					<TabPanel key={index} className={tabPanelClasses}>
-						{child?.props.children}
-					</TabPanel>
-				))}
-			</TabPanels>
-		</TabGroup>
-	);
-};
-
-// This is a dummy component to be used in Tabs component, it does nothing as the Tabs component will handle the rendering, we just use this to hold the data associated with the tab (it's title and content).
-export const Tab = ({ children, title }) => null;
+export const Tabs = ({ fullWidth = true, tabs }) => (
+	<TabGroup>
+		<TabList className={twJoin('flex gap-1 border-b-4 border-yellow', fullWidth ? 'w-full' : 'w-fit')}>
+			{tabs.map((tab, index) => (
+				<Tab
+					key={index}
+					className={twJoin(
+						'mb-1 rounded-t-sm bg-gray-200 px-4 py-3 text-lg font-bold text-black transition-colors hover:bg-gray-300 focus:bg-grey-300 focus:outline-none ui-selected:mb-0 ui-selected:border-2 ui-selected:border-yellow ui-selected:bg-yellow',
+						fullWidth && 'flex-1',
+					)}
+				>
+					{tab?.title}
+				</Tab>
+			))}
+		</TabList>
+		<TabPanels>
+			{tabs.map((tab, index) => (
+				<TabPanel key={index} className="py-4">
+					{tab?.content}
+				</TabPanel>
+			))}
+		</TabPanels>
+	</TabGroup>
+);
