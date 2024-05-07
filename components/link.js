@@ -15,20 +15,22 @@ export const UnstyledLink = ({ href, children, ...rest }) => {
 	);
 };
 
-export const Link = ({ href, color = 'blue', children, className, ...rest }) => {
-	const classes = twJoin(
-		'-ml-0.5 px-0.5 py-1 underline transition-colors hover:decoration-transparent focus:outline-none focus:ring-2 focus:ring-offset-2',
-		color === 'blue' && 'text-blue-600 hover:bg-blue hover:text-white focus:text-blue-800 focus:ring-blue',
-		color === 'red' && 'text-red hover:text-red-800 focus:text-red-800 focus:ring-red',
-		color === 'yellow' && 'text-yellow hover:text-yellow-600 focus:text-yellow-600 focus:ring-yellow',
-		color === 'green' && 'text-green hover:text-green-800 focus:text-green-800 focus:ring-green',
-		color === 'grey' && 'text-grey hover:text-grey-600 focus:text-grey-600 focus:ring-grey',
-	);
-
-	return (
-		<UnstyledLink {...rest} href={href} className={twMerge(classes, className)}>
-			{children}
-		</UnstyledLink>
-	);
-};
-
+export const Link = ({ href, color = 'blue', children, className, ...rest }) => (
+	<UnstyledLink
+		{...rest}
+		href={href}
+		className={twMerge(
+			twJoin(
+				'-ml-0.5 px-0.5 py-1 underline transition-colors hover:decoration-transparent focus:outline-none focus:ring-2 focus:ring-offset-2',
+				color === 'blue' && 'text-blue-600 hover:bg-blue hover:text-white focus:text-blue-800 focus:ring-blue',
+				color === 'red' && 'text-red hover:text-red-800 focus:text-red-800 focus:ring-red',
+				color === 'yellow' && 'text-yellow hover:text-yellow-600 focus:text-yellow-600 focus:ring-yellow',
+				color === 'green' && 'text-green hover:text-green-800 focus:text-green-800 focus:ring-green',
+				color === 'grey' && 'text-grey hover:text-grey-600 focus:text-grey-600 focus:ring-grey',
+			),
+			className,
+		)}
+	>
+		{children}
+	</UnstyledLink>
+);
