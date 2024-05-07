@@ -10,7 +10,7 @@ import { dom } from '@fortawesome/fontawesome-svg-core';
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
 const parser = new Parser();
-export const DEFAULT_PROCESSOR = (new ProcessNodeDefinitions()).processDefaultNode;
+export const DEFAULT_PROCESSOR = new ProcessNodeDefinitions().processDefaultNode;
 export const DEFAULT_INSTRUCTIONS = [
 	// h1, h2, ... h6 tags
 	{
