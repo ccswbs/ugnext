@@ -21,7 +21,7 @@ export const TextInput = ({
 			onInput={(e) => onInput(e?.target?.value)}
 			{...rest}
 			className={twMerge(
-				'w-full rounded-md border border-gray-300 px-4 py-2 transition-colors focus:border-blue focus:outline-none',
+				'rounded-md border border-gray-300 px-4 py-2 transition-colors focus:border-blue focus:outline-none',
 				className,
 			)}
 		/>
