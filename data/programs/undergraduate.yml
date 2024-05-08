@@ -88,7 +88,8 @@
   url: https://www.uoguelph.ca/programs/bachelor-of-arts-and-sciences/
   degrees:
     - Bachelor of Arts and Sciences
-  types: []
+  types:
+    - major
   tags:
     - science
     - arts
@@ -1016,7 +1017,8 @@
   url: https://www.uoguelph.ca/sedrd/landscape-architecture/bachelor-landscape-architecture
   degrees:
     - Bachelor of Landscape Architecture
-  types: []
+  types:
+    - major
   tags:
     - architecture
     - design
@@ -1564,7 +1566,8 @@
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/veterinary-medicine-vm/
   degrees:
     - Doctor of Veterinary Medicine
-  types: []
+  types:
+    - major
   tags:
     - health
     - science
