@@ -2,51 +2,49 @@ import { TextInput } from '@/components/text-input';
 import { Select } from '@/components/select';
 import { toTitleCase } from '@/lib/string-utils';
 import { useSearch } from '@/lib/use-search';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { UnstyledLink } from '@/components/link';
 
 export const ProgramSearch = ({ programs, children, filterer, sidebar }) => {
 	const [input, setInput] = useState('');
-	const types = Array.from(new Set(programs.flatMap((program) => program.types)));
-	const [type, setType] = useState('any');
+	const types = Array.from(new Set(programs.flatMap((program) => program.types))).map((type) => ({
+		value: type,
+		label: type === 'co-op' ? 'Co-op' : toTitleCase(type?.replaceAll('-', ' ')),
+		selected: true,
+	}));
+	const [selectedTypes, setSelectedTypes] = useState(types);
 
-	const filtered = useSearch(programs, input);
+	const matching = useSearch(programs, input);
+	const filtered = useMemo(
+		() =>
+			matching
+				?.filter((program) => selectedTypes.some((type) => program.types.includes(type.value)))
+				?.map((program) => (
+					<UnstyledLink className="block" href={program.url} key={program.id}>
+						{program.title}
+					</UnstyledLink>
+				)),
+		[input, matching, selectedTypes],
+	);
 
 	return (
 		<>
-			<div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-				<div className="flex-[2_1_auto]">
-					<TextInput onInput={(value) => setInput(value)} label="What would you like to study?" />
-				</div>
+			<div className="flex flex-col gap-4 sm:grid sm:grid-cols-[75%_25%] sm:gap-6">
+				<TextInput onInput={(value) => setInput(value)} label="What would you like to study?" />
 
-				<div className="flex-[1_1_auto]">
-					<Select
-						options={[
-							{ value: 'any', label: 'Any', selected: true },
-							...types?.map((type) => ({
-								value: type,
-								label: type === 'co-op' ? 'Co-op' : toTitleCase(type?.replaceAll('-', ' ')),
-							})),
-						]}
-						onChange={(option) => {
-							console.log(option?.value);
-							setType(option?.value);
-						}}
-						label="Filter by type"
-					/>
-				</div>
+				<Select
+					multiple
+					options={types}
+					onChange={(options) => {
+						setSelectedTypes(options);
+					}}
+					label="Filter by type"
+				/>
 			</div>
 
 			<div className="flex flex-col justify-between">{children}</div>
 
-			<div>
-				{filtered
-					.filter((program) => !(type !== 'any' && !program.types.includes(type)))
-					.map((program) => (
-						<a href={program.url} key={program.id}>
-							{program.title}
-						</a>
-					))}
-			</div>
+			<div className="mt-5">{filtered}</div>
 		</>
 	);
 };
