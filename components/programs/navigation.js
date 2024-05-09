@@ -6,9 +6,9 @@ export const ProgramNavigation = () => (
 	<Navigation
 		aria-label=""
 		links={[
-			{ href: '/programs/undergraduate', label: 'Undergraduate' },
-			{ href: '/programs/graduate', label: 'Graduate' },
-			{ href: '/programs/certificate-and-diploma', label: 'Certificate and Diploma' },
+			{ href: '/programs/undergraduate', label: 'Undergraduate Programs' },
+			{ href: '/programs/graduate', label: 'Graduate Programs' },
+			{ href: '/programs/certificate-and-diploma', label: 'Certificate and Diplomas' },
 			{ href: '/programs/continuing-education', label: 'Continuing Education' },
 		]}
 	/>
