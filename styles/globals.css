@@ -5,6 +5,7 @@
 @layer base {
 	:root {
 		font-size: 62.5%;
+		--max-content-width: 1500px;
 	}
 
 	html {

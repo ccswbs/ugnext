@@ -15,13 +15,13 @@ export default function Document() {
 				<link href="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css" rel="stylesheet" />
 
 				<Script
-					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-header.esm.js"
+					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.2.3-rc.0/dist/uofg-web-components/uofg-header.esm.js"
 					type="module"
 					strategy="beforeInteractive"
 				/>
 
 				<Script
-					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-footer.esm.js"
+					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.2.3-rc.0/dist/uofg-web-components/uofg-footer.esm.js"
 					type="module"
 					strategy="beforeInteractive"
 				/>
