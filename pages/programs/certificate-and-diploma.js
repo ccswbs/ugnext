@@ -5,6 +5,7 @@ import { Heading } from '@/components/heading';
 import { join } from 'path';
 import { readYamlFile } from '@/lib/file-utils';
 import { ProgramSearch } from '@/components/programs/search';
+import { ProgramNavigation } from '@/components/programs/navigation';
 
 export async function getStaticProps() {
 	const path = join(process.cwd(), 'data', 'programs', 'certificate-and-diploma.yml');
@@ -26,6 +27,8 @@ export default function ProgramsCertificateAndDiploma({ programs }) {
 		<Layout>
 			<Container centered>
 				<Heading level={1}>Certificate and Diplomas at the University of Guelph</Heading>
+
+				<ProgramNavigation />
 
 				<ProgramSearch programs={programs} />
 			</Container>
