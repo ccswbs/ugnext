@@ -20,7 +20,11 @@ export const ProgramSearch = ({ programs, children, filterer, sidebar }) => {
 			matching
 				?.filter((program) => selectedTypes.some((type) => program.types.includes(type.value)))
 				?.map((program) => (
-					<UnstyledLink className="flex items-center bg-light-blue-50 p-5 " href={program.url} key={program.id}>
+					<UnstyledLink
+						className="focus:visible:ring-offset-2 flex items-center bg-light-blue-50 p-5 transition hover:scale-105 hover:bg-light-blue-100 focus:scale-105 focus:bg-light-blue-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-light-blue"
+						href={program.url}
+						key={program.id}
+					>
 						{program.title}
 					</UnstyledLink>
 				)),
