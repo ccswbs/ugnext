@@ -20,7 +20,7 @@ export const ProgramSearch = ({ programs, children, filterer, sidebar }) => {
 			matching
 				?.filter((program) => selectedTypes.some((type) => program.types.includes(type.value)))
 				?.map((program) => (
-					<UnstyledLink className="block" href={program.url} key={program.id}>
+					<UnstyledLink className="flex items-center bg-light-blue-50 p-4" href={program.url} key={program.id}>
 						{program.title}
 					</UnstyledLink>
 				)),
@@ -29,22 +29,26 @@ export const ProgramSearch = ({ programs, children, filterer, sidebar }) => {
 
 	return (
 		<>
-			<div className="flex flex-col gap-4 sm:grid sm:grid-cols-[75%_25%] sm:gap-6">
-				<TextInput onInput={(value) => setInput(value)} label="What would you like to study?" />
+			<div className="flex flex-col gap-4 sm:flex-row">
+				<div className="flex-1">
+					<TextInput onInput={(value) => setInput(value)} label="What would you like to study?" />
+				</div>
 
-				<Select
-					multiple
-					options={types}
-					onChange={(options) => {
-						setSelectedTypes(options);
-					}}
-					label="Filter by type"
-				/>
+				<div className="sm:w-1/3 md:w-1/4">
+					<Select
+						multiple
+						options={types}
+						onChange={(options) => {
+							setSelectedTypes(options);
+						}}
+						label="Filter by type"
+					/>
+				</div>
 			</div>
 
 			<div className="flex flex-col justify-between">{children}</div>
 
-			<div className="mt-5">{filtered}</div>
+			<div className="mt-5 grid grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))] gap-5">{filtered}</div>
 		</>
 	);
 };
