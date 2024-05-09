@@ -9,7 +9,10 @@ export default function Document() {
 					href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
 					rel="stylesheet"
 				/>
+
 				<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+				<link href="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css" rel="stylesheet" />
 
 				<Script
 					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-header.esm.js"
