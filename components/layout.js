@@ -16,7 +16,7 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 				<div className="h-fit w-full bg-red p-2 text-center text-base font-bold text-white">Preview Mode</div>
 			)}
 			<Header menu={menu} />
-			<main className="mb-auto text-base">{children}</main>
+			<main className="mb-auto pb-4 text-base">{children}</main>
 			<Footer links={footerLinks} />
 		</div>
 	</>
