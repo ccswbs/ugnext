@@ -24,7 +24,7 @@ export async function getStaticProps() {
 
 export default function ProgramsCertificateAndDiploma({ programs }) {
 	return (
-		<Layout>
+		<Layout title="Certificate and Diplomas">
 			<Container centered>
 				<Heading level={1}>Certificate and Diplomas at the University of Guelph</Heading>
 
