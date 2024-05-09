@@ -144,6 +144,9 @@ module.exports = {
 			backgroundImage: {
 				divider: `linear-gradient(90deg,#000,#000 56%,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 57%,${colors.red.DEFAULT} 0,${colors.red.DEFAULT} 85%,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 86%,${colors.yellow.DEFAULT} 0)`,
 			},
+			aria: {
+				'page-current': 'current="page"',
+			},
 		},
 	},
 	plugins: [require('@headlessui/tailwindcss')],
