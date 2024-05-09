@@ -28,7 +28,7 @@ export const ProgramSearch = ({ programs, children, filterer, sidebar }) => {
 						{program.title}
 					</UnstyledLink>
 				)),
-		[input, matching, selectedTypes],
+		[matching, selectedTypes],
 	);
 
 	return (
