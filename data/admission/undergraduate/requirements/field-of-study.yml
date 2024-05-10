@@ -1,0 +1,322 @@
+prompt: "I am interested in studying:"
+values:
+  - id: bachelor-of-applied-sciences
+    name: Bachelor of Applied Sciences
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-arts
+    name: Bachelor of Arts
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-arts-and-sciences
+    name: Bachelor of Arts and Sciences
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-bio-resource-management
+    name: Bachelor of Bio-Resource Management
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-commerce
+    name: Bachelor of Commerce
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-computing
+    name: Bachelor of Computing
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-creative-arts-health-and-wellness
+    name: Bachelor of Creative Arts, Health and Wellness
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-engineering
+    name: Bachelor of Engineering
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-indigenous-environmental-science-and-practice
+    name: Bachelor of Indigenous Environmental Science and Practice
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-landscape-architecture
+    name: Bachelor of Landscape Architecture
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-mathematics
+    name: Bachelor of Mathematics
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-one-health
+    name: Bachelor of One Health
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-science
+    name: Bachelor of Science
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-science-in-agriculture
+    name: Bachelor of Science in Agriculture
+    degree-type: bachelors-degree
+
+  - id: bachelor-of-science-in-environmental-sciences
+    name: Bachelor of Science in Environmental Sciences
+    degree-type: bachelors-degree
+
+  - id: doctor-of-veterinary-medicine
+    name: Doctor of Veterinary Medicine
+    degree-type: bachelors-degree
+
+  - id: associate-diploma-in-agriculture
+    name: Associate Diploma in Agriculture
+    degree-type: associate-diplomas
+
+  - id: associate-diploma-in-environmental-technician
+    name: Associate Diploma in Environmental Technician
+    degree-type: associate-diplomas
+
+  - id: associate-diploma-in-equine-care-and-management
+    name: Associate Diploma in Equine Care and Management
+    degree-type: associate-diplomas
+
+  - id: associate-diploma-in-horticulture
+    name: Associate Diploma in Horticulture
+    degree-type: associate-diplomas
+
+  - id: associate-diploma-in-veterinary-technology
+    name: Associate Diploma in Veterinary Technology
+    degree-type: associate-diplomas
+
+  - id: honours-bachelor-business-administration
+    name: Honours Bachelor of Business Administration + Diploma in Business Administration
+    degree-type: undergraduate-and-diploma
+
+  - id: honours-bachelor-community-social-services
+    name: Honours Bachelor of Applied Science in Community Social Services + Social Service Worker Diploma
+    degree-type: undergraduate-and-diploma
+
+  - id: honours-bachelor-early-childhood-studies
+    name: Honours Bachelor of Applied Science in Early Childhood Studies + Diploma in Early Childhood Education
+    degree-type: undergraduate-and-diploma
+
+  - id: honours-bachelor-kinesiology
+    name: Honours Bachelor of Applied Science in Kinesiology + Diploma in Fitness & Health Promotion
+    degree-type: undergraduate-and-diploma
+
+  - id: honours-bachelor-media-communication-studies
+    name: Honours Bachelor of Applied Arts in Media and Communication Studies + Diploma in Media Communications
+    degree-type: undergraduate-and-diploma
+
+  - id: honours-bachelor-psychology
+    name: Honours Bachelor of Applied Science in Psychology + Diploma in General Arts and Science
+    degree-type: undergraduate-and-diploma
+
+  - id: fulltime-honours-bachelor-justice-studies
+    name:
+      (Full-time) Honours Bachelor of Applied Science in Justice Studies + Diploma in Community and Justice Services or
+      Police Foundations
+    degree-type: undergraduate-and-diploma
+
+  - id: parttime-bachelor-justice-public-safety
+    name: (Part-time) Bachelor of Applied Arts Specialization in Justice and Public Safety
+    degree-type: undergraduate-and-diploma
+
+  - id: historical-perspective-of-911-HIST-2160
+    name: 9/11 in Historical Perspective (HIST*2160)
+    degree-type: open-education
+
+  - id: administration-of-programs-for-children-FRHD-3190
+    name: Administration of Programs for Children (FRHD*3190)
+    degree-type: open-education
+
+  - id: advanced-equine-behaviour-2200015
+    name: Advanced Equine Behaviour (2200015)
+    degree-type: open-education
+
+  - id: advanced-marketing-MCS-3000
+    name: Advanced Marketing (MCS*3000)
+    degree-type: open-education
+
+  - id: animals-and-society-HIST-2120
+    name: Animals and Society (HIST*2120)
+    degree-type: open-education
+
+  - id: apiculture-and-honey-bee-biology-ENVS-2210
+    name: Apiculture and Honey Bee Biology (ENVS*2210)
+    degree-type: open-education
+
+  - id: arboriculture-3101025
+    name: Arboriculture (3101025)
+    degree-type: open-education
+
+  - id: business-and-consumer-law-MCS-3040
+    name: Business and Consumer Law (MCS*3040)
+    degree-type: open-education
+
+  - id: business-communication-MCS-2000
+    name: Business Communication (MCS*2000)
+    degree-type: open-education
+
+  - id: business-principles-in-horticulture-3101005
+    name: Business Principles in Horticulture (3101005)
+    degree-type: open-education
+
+  - id: canada-and-the-second-world-war-HIST-3490
+    name: Canada and the Second World War (HIST*3490)
+    degree-type: open-education
+
+  - id: cannabis-regulations-and-quality-assurance-3101021
+    name: Cannabis Regulations and Quality Assurance (3101021)
+    degree-type: open-education
+
+  - id: diploma-in-equine-studies
+    name: Diploma in Equine Studies
+    degree-type: diplomas
+
+  - id: diploma-in-human-resources-management
+    name: Diploma in Human Resources Management
+    degree-type: diplomas
+
+  - id: diploma-in-school-board-administration
+    name: Diploma in School Board Administration
+    degree-type: diplomas
+
+  - id: horticulture-diploma
+    name: Horticulture Diploma
+    degree-type: diplomas
+
+  - id: landscape-design-diploma
+    name: Landscape Design Diploma
+    degree-type: diplomas
+
+  - id: certificate-in-accounting
+    name: Certificate in Accounting
+    degree-type: certificates
+
+  # Degree Credit Certificates
+  - id: certificate-in-business
+    name: Certificate in Business
+    degree-type: certificates
+
+  - id: certificate-in-environmental-citizenship
+    name: Certificate in Environmental Citizenship
+    degree-type: certificates
+
+  - id: certificate-in-environmental-conservation
+    name: Certificate in Environmental Conservation
+    degree-type: certificates
+
+  - id: certificate-in-food-science
+    name: Certificate in Food Science
+    degree-type: certificates
+
+  - id: certificate-in-hospitality-studies
+    name: Certificate in Hospitality Studies
+    degree-type: certificates
+
+  - id: certificate-in-leadership
+    name: Certificate in Leadership
+    degree-type: certificates
+
+  - id: certificate-in-public-policy-and-administration
+    name: Certificate in Public Policy and Administration
+    degree-type: certificates
+
+  # Certificates
+
+  - id: advanced-certificate-in-couple-and-family-therapy-studies
+    name: Advanced Certificate in Couple and Family Therapy Studies
+    degree-type: certificates
+
+  - id: certificate-in-advanced-interpersonal-skills-for-psw-practice
+    name: Certificate in Advanced Interpersonal Skills for PSW Practice
+    degree-type: certificates
+
+  - id: certificate-in-disability-management
+    name: Certificate in Disability Management
+    degree-type: certificates
+
+  - id: certificate-in-equine-business-management
+    name: Certificate in Equine Business Management
+    degree-type: certificates
+
+  - id: certificate-in-facilities-management
+    name: Certificate in Facilities Management
+    degree-type: certificates
+
+  - id: certificate-in-human-resources-management-for-school-board-administration
+    name: Certificate in Human Resources Management for School Board Administration
+    degree-type: certificates
+
+  - id: certificate-in-information-management-privacy-and-access
+    name: Certificate in Information Management, Privacy, and Access
+    degree-type: certificates
+
+  - id: certificate-in-information-and-communication-technology-management
+    name: Certificate in Information and Communication Technology Management
+    degree-type: certificates
+
+  - id: certificate-in-knowledge-mobilization
+    name: Certificate in Knowledge Mobilization
+    degree-type: certificates
+
+  - id: certificate-in-pupil-transportation-management
+    name: Certificate in Pupil Transportation Management
+    degree-type: certificates
+
+  - id: certificate-in-supply-chain-management-for-public-procurement
+    name: Certificate in Supply Chain Management for Public Procurement
+    degree-type: certificates
+
+  - id: cheese-maker-certificate
+    name: Cheese Maker Certificate
+    degree-type: certificates
+
+  - id: creative-writing-certificate
+    name: Creative Writing Certificate
+    degree-type: certificates
+
+  - id: data-science-certificate
+    name: Data Science Certificate
+    degree-type: certificates
+
+  - id: maintaining-golf-courses-certificate
+    name: Maintaining Golf Courses Certificate
+    degree-type: certificates
+
+  - id: plant-based-nutrition-certificate
+    name: Plant-Based Nutrition Certificate
+    degree-type: certificates
+
+  - id: sustainable-urban-agriculture-certificate
+    name: Sustainable Urban Agriculture Certificate
+    degree-type: certificates
+
+  - id: sustainable-urban-horticulture-certificate
+    name: Sustainable Urban Horticulture Certificate
+    degree-type: certificates
+
+  - id: turf-managers-short-course-certificate
+    name: Turf Managers' Short Course Certificate
+    degree-type: certificatess
+
+  - id: equine-science-certificate
+    name: Equine Science Certificate
+    degree-type: certificates
+
+  - id: equine-welfare-certificate
+    name: Equine Welfare Certificate
+    degree-type: certificates
+
+  - id: horticulture-certificate
+    name: Horticulture Certificate
+    degree-type: certificates
+
+  - id: landscape-design-certificate
+    name: Landscape Design Certificate
+    degree-type: certificates
+
+  - id: gapp
+    name: Guelph Arts Apprenticeship Program
+    degree-type: apprenticeship-programs
+
+  - id: herds
+    name: Dairy Herdsperson Apprenticeship
+    degree-type: apprenticeship-programs
