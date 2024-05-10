@@ -18,8 +18,19 @@ export const Select = ({ onChange, options, multiple = false, label, description
 	const [selected, setSelected] = useState(
 		multiple ? options.filter((option) => option?.selected) ?? [] : options.find((option) => option?.selected) ?? null,
 	);
+
+	// Create a map of the indices of the options by their value for faster lookup when sorting the selected options
+	const indices = useMemo(
+		() => options.reduce((acc, option, index) => acc.set(option?.value, index), new Map()),
+		[options],
+	);
 	const handleOnChange = (option) => {
-		setSelected(multiple ? [...option] : option);
+		const selected = multiple
+			? // Sort the selected options by their original order as was passed in the options prop
+				[...option].sort((a, b) => (indices.get(a?.value) ?? 0) - (indices.get(b?.value) ?? 0))
+			: option;
+
+		setSelected(selected);
 		onChange?.(option);
 	};
 
@@ -36,8 +47,13 @@ export const Select = ({ onChange, options, multiple = false, label, description
 				multiple={multiple}
 			>
 				<ListboxButton className="flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
-					<span className={twJoin((!selected || selected?.length === 0) && 'text-gray-400')}>
-						{selected?.[0]?.label ?? selected?.label ?? placeholder}
+					<span className={twJoin('truncate', (!selected || selected?.length === 0) && 'text-gray-400')}>
+						{selected?.reduce(
+							(acc, option, index) => `${acc}${option?.label}${index < selected?.length - 1 ? ', ' : ''}`,
+							'',
+						) ||
+							selected?.label ||
+							placeholder}
 					</span>
 					<FontAwesomeIcon
 						className="h-5 w-5 text-gray-400 transition-transform ui-open:rotate-180"
