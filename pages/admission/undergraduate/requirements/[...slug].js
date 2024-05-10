@@ -20,7 +20,7 @@ export async function getStaticProps(context) {
 		return { notFound: true };
 	}
 
-	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/requirements/admission-requirements.yml', 'utf8');
+	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/requirements/requirements.yml', 'utf8');
 	const requirements = YAML.parse(data);
 
 	const match = Requirement.findClosest(
