@@ -1,17 +1,31 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import { UnstyledLink } from '@/components/link';
 
-export const Button = ({ as, color = 'none', outlined = false, href, children, className, ...rest }) => {
+export const Button = ({
+	as,
+	color = 'none',
+	outlined = false,
+	href,
+	children,
+	className,
+	disabled = false,
+	type = 'button',
+	...rest
+}) => {
 	const Tag = as ? as : typeof href === 'string' ? UnstyledLink : 'button';
 
 	return (
 		<Tag
 			{...rest}
 			href={href}
+			type={href ? undefined : type}
 			className={twMerge(
-				'inline-flex items-center justify-center px-4 py-3 text-base font-medium no-underline shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
+				'inline-flex items-center justify-center px-4 py-3 text-base font-medium no-underline shadow-sm transition-colors focus:outline-none',
+				!disabled && 'cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2',
 				outlined &&
+					!disabled &&
 					twJoin(
+						'border',
 						color === 'red' &&
 							'border-red text-red hover:bg-red hover:text-white focus:bg-red focus:text-white focus:ring-red',
 						color === 'yellow' &&
@@ -24,6 +38,7 @@ export const Button = ({ as, color = 'none', outlined = false, href, children, c
 							'border-grey-300 text-black hover:bg-grey-300 hover:text-black focus:bg-grey focus:text-white focus:ring-grey',
 					),
 				!outlined &&
+					!disabled &&
 					twJoin(
 						color === 'red' &&
 							'bg-red text-white hover:bg-red-800 hover:text-white focus:bg-red-800 focus:text-white focus:ring-red',
@@ -35,6 +50,12 @@ export const Button = ({ as, color = 'none', outlined = false, href, children, c
 							'bg-green text-white hover:bg-green-800 hover:text-white focus:bg-green-800 focus:text-white focus:ring-green',
 						color === 'grey' &&
 							'bg-grey text-black hover:bg-grey-400 hover:text-black focus:bg-grey-400 focus:text-black focus:ring-grey',
+					),
+				disabled &&
+					twJoin(
+						'cursor-not-allowed border-gray-300 text-gray-400',
+						outlined && 'border border-gray-300',
+						!outlined && 'bg-gray-300',
 					),
 				className,
 			)}
