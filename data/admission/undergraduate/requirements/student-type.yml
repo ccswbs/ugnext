@@ -9,5 +9,5 @@ values:
   - id: college
     name: College Student/Graduate
 
-  - id: uofg
+  - id: internal
     name: Current/Previous U of G Student
