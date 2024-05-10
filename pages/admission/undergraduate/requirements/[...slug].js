@@ -20,7 +20,7 @@ export async function getStaticProps(context) {
 		return { notFound: true };
 	}
 
-	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/requirements/requirements.yml', 'utf8');
+	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/requirements/admission-requirements.yml', 'utf8');
 	const requirements = YAML.parse(data);
 
 	const match = Requirement.findClosest(
@@ -35,7 +35,7 @@ export async function getStaticProps(context) {
 	return {
 		props: {
 			content: match?.content ?? '',
-			revalidate: 10, // Revalidate at most, every 10 seconds
+			// revalidate: 300, // Revalidate at most, every 5 minutes
 		},
 	};
 }

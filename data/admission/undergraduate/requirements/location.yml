@@ -1,4 +1,4 @@
-prompt: "I studied in:"
+prompt: "I study/studied in:"
 values:
   - id: ontario
     name: Ontario

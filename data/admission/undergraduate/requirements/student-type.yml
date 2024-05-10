@@ -1,25 +1,13 @@
-prompt: "I am a(n):"
+prompt: 'I am a(n):'
 values:
   - id: high-school
-    name: High School Student
-  
-  - id: internal-transfer
-    name: Transfer Student - Internal
-  
-  - id: external-transfer
-    name: Transfer Student - External
-  
-  - id: home-school
-    name: Home Schooled Student
-  
-  - id: ib-ap
-    name: International Baccalaureate & Advanced Placement
-  
-  - id: mature-student
-    name: Mature Student
-  
-  - id: visiting-student
-    name: Visiting Student
-  
-  - id: post-degree
-    name: Post Degree Applicant
+    name: High School Student/Graduate
+
+  - id: university
+    name: University Student/Graduate
+
+  - id: college
+    name: College Student/Graduate
+
+  - id: uofg
+    name: Current/Previous U of G Student

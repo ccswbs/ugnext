@@ -26,19 +26,23 @@ export default function AdmissionRequirementsHome(props) {
 
 	return (
 		<Layout>
-			<Container className="flex flex-col gap-4" centered>
+			<Container centered>
 				<Heading level={1}>Undergraduate Admission Requirements</Heading>
 
-				{Object.getOwnPropertyNames(props).reverse().map((key) => (
-					<Select
-						key={key}
-						label={props[key]?.prompt}
-						options={props[key]?.values?.map(({ id, name }) => ({
-							value: id,
-							label: name,
-						}))}
-					/>
-				))}
+				<div className="flex w-2/3 flex-col gap-4">
+					{Object.getOwnPropertyNames(props)
+						.reverse()
+						.map((key) => (
+							<Select
+								key={key}
+								label={props[key]?.prompt}
+								options={props[key]?.values?.map(({ id, name }) => ({
+									value: id,
+									label: name,
+								}))}
+							/>
+						))}
+				</div>
 			</Container>
 		</Layout>
 	);
