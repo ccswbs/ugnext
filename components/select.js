@@ -14,7 +14,15 @@ import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 
-export const Select = ({ onChange, options, multiple = false, label, description, placeholder = 'Select a value' }) => {
+export const Select = ({
+	onChange,
+	options,
+	multiple = false,
+	label,
+	name,
+	description,
+	placeholder = 'Select a value',
+}) => {
 	const [selected, setSelected] = useState(
 		multiple ? options.filter((option) => option?.selected) ?? [] : options.find((option) => option?.selected) ?? null,
 	);
@@ -39,6 +47,7 @@ export const Select = ({ onChange, options, multiple = false, label, description
 			{label && <Label>{label}</Label>}
 
 			<Listbox
+				name={name}
 				value={selected}
 				by="value"
 				onChange={handleOnChange}
