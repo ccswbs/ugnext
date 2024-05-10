@@ -48,7 +48,7 @@ export const Select = ({ onChange, options, multiple = false, label, description
 			>
 				<ListboxButton className="flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
 					<span className={twJoin('truncate', (!selected || selected?.length === 0) && 'text-gray-400')}>
-						{selected?.reduce(
+						{selected?.reduce?.(
 							(acc, option, index) => `${acc}${option?.label}${index < selected?.length - 1 ? ', ' : ''}`,
 							'',
 						) ||
