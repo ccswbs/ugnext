@@ -44,7 +44,7 @@ export default function ProgramsGraduate({ programs }) {
 						</UnstyledLink>
 					)}
 				>
-					<div className="ml-auto sm:w-1/3 md:w-1/4">
+					<div className="sm:ml-auto sm:w-1/3 md:w-1/4">
 						<Select
 							label="Filter by degree type"
 							multiple
