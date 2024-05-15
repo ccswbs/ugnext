@@ -35,12 +35,12 @@ export default function ProgramsGraduate({ programs }) {
 					filterer={filter}
 					render={(program) => (
 						<UnstyledLink
-							className="focus:visible:ring-offset-2 flex flex-col justify-center transition hover:scale-105 hover:bg-light-blue-100 focus:scale-105 focus:bg-light-blue-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-light-blue"
+							className="group focus:visible:ring-offset-2 flex flex-col justify-center transition hover:scale-105 focus:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-light-blue"
 							href={program.url}
 							key={program.id + program.url}
 						>
-							<span className="bg-light-blue-50 p-5">{program.title}</span>
-							<span className="bg-light-blue-100 px-5 py-2">{program?.degrees?.join(', ')}</span>
+							<span className="bg-light-blue-50 p-5 transition-colors group-hover:bg-light-blue-100">{program.title}</span>
+							<span className="bg-light-blue-100 transition-colors px-5 py-2 border-t border-t-blue-200">{program?.degrees?.join(', ')}</span>
 						</UnstyledLink>
 					)}
 				>

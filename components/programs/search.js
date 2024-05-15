@@ -62,9 +62,11 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 							label="Filter by type"
 						/>
 					</div>
+
+					{children}
 				</div>
 
-				<div className="flex flex-col justify-between">{children}</div>
+				<div className="flex flex-col justify-between"></div>
 			</div>
 			<div className="mt-5 grid grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))] gap-5">{filtered}</div>
 		</>
