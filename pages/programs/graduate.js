@@ -50,13 +50,13 @@ export default function ProgramsGraduate({ programs }) {
 							multiple
 							options={[
 								{
-									value: 'phd',
-									label: 'PhD',
+									value: 'masters',
+									label: 'Masters',
 									selected: true,
 								},
 								{
-									value: 'masters',
-									label: 'Masters',
+									value: 'doctor',
+									label: 'Doctoral/PhD',
 									selected: true,
 								},
 								{
@@ -75,16 +75,16 @@ export default function ProgramsGraduate({ programs }) {
 
 								for (const option of selected) {
 									switch (option.value) {
-										case 'phd':
-											predicates.push((program) => program?.degrees?.includes('PhD'));
-											break;
-										case 'masters':
+										case 'doctor':
 											predicates.push(
 												(program) =>
-													program?.degrees?.length > 1 ||
-													(program?.degrees?.length === 1 &&
-														!program?.degrees?.includes('PhD') &&
-														!program?.degrees?.includes('GDip')),
+													program?.degrees?.includes('PhD') ||
+													program.degrees.some((degree) => degree.startsWith('D') || degree.startsWith('d')),
+											);
+											break;
+										case 'masters':
+											predicates.push((program) =>
+												program.degrees.some((degree) => degree.startsWith('M') || degree.startsWith('m')),
 											);
 											break;
 										case 'diploma':
