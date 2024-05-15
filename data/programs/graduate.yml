@@ -268,7 +268,8 @@
   url: https://graduatestudies.uoguelph.ca/programs/engl
   degrees:
     - MA
-  types: []
+  types:
+    - research-based
   tags:
     - arts
     - humanities
@@ -299,7 +300,9 @@
     - MAN
     - MSc
     - PhD
-  types: []
+  types:
+    - course-based
+    - research-based
   tags:
     - health
     - food
@@ -478,7 +481,8 @@
   url: https://graduatestudies.uoguelph.ca/programs/sets
   degrees:
     - PhD
-  types: []
+  types:
+    - research-based
   tags:
     - arts
     - humanities
@@ -641,7 +645,9 @@
   degrees:
     - MSc
     - PhD
-  types: []
+  types:
+    - course-based
+    - research-based
   tags:
     - physics
     - science
@@ -779,7 +785,8 @@
     - MP
     - MRFT
     - MA
-  types: []
+  types:
+    - course-based
   tags:
     - health
     - medical
@@ -932,7 +939,8 @@
   url: https://graduatestudies.uoguelph.ca/programs/vets
   degrees:
     - DVSc
-  types: []
+  types:
+    - course-based
   tags:
     - biology
     - science
