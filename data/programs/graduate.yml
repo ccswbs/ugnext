@@ -50,6 +50,7 @@
     - science
     - mathematics
     - programming
+    - ai
 - title: Bioinformatics
   url: https://graduatestudies.uoguelph.ca/programs/binf
   degrees:
@@ -242,6 +243,8 @@
     - statistics
     - mathematics
     - programming
+    - artificial intelligence
+    - ai
 - title: Economics
   url: https://graduatestudies.uoguelph.ca/programs/econ
   degrees:
@@ -264,6 +267,8 @@
   tags:
     - technology
     - engineering
+    - artificial intelligence
+    - ai
 - title: English
   url: https://graduatestudies.uoguelph.ca/programs/engl
   degrees:
@@ -525,6 +530,9 @@
   tags:
     - mathematics
     - statistics
+    - artificial intelligence
+    - ai
+    - data
 - title: Molecular and Cellular Biology
   url: https://graduatestudies.uoguelph.ca/programs/mcb
   degrees:

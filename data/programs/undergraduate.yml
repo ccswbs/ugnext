@@ -184,20 +184,6 @@
   tags:
     - biology
     - science
-- title: Biological and Medical Physics
-  acronym: BMPH
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/biological-medical-physics-bmph/
-  degrees:
-    - Bachelor of Science
-  types:
-    - major
-    - co-op
-  tags:
-    - biology
-    - health
-    - medical
-    - physics
-    - science
 - title: Biological and Pharmaceutical Chemistry
   acronym: BPCH
   url: https://www.uoguelph.ca/programs/biological-and-pharmaceutical-chemistry/
@@ -364,18 +350,6 @@
     - business
     - finance
     - economics
-- title: Chemical Physics
-  acronym: CHPY
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/chemical-physics-chpy/
-  degrees:
-    - Bachelor of Science
-  types:
-    - major
-    - co-op
-  tags:
-    - chemistry
-    - physics
-    - science
 - title: Chemistry
   acronym: CHEM
   url: https://www.uoguelph.ca/programs/chemistry/
@@ -388,6 +362,8 @@
   tags:
     - chemistry
     - science
+    - chemical physics
+    - nanoscience
 - title: Child Studies
   acronym: CSTU
   url: https://www.uoguelph.ca/programs/child-studies/
@@ -436,6 +412,8 @@
     - programming
     - computer science
     - artificial intelligence
+    - ai
+    - design
 - title: Computer Science
   acronym: CS
   url: https://www.uoguelph.ca/programs/computer-science/
@@ -453,8 +431,11 @@
     - software
     - web development
     - artificial intelligence
+    - ai
     - mathematics
     - software design
+    - data
+    - analytics
 - title: Computing and Information Science
   acronym: CIS
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/computing-information-science-cis/
@@ -561,6 +542,9 @@
     - software
     - software engineering
     - artificial intelligence
+    - ai
+    - web development
+    - software design
 - title: English
   acronym: ENGL
   url: https://www.uoguelph.ca/programs/english/
@@ -1125,6 +1109,10 @@
     - minor
   tags:
     - mathematics
+    - artificial intelligence
+    - ai
+    - data
+    - analytics
 - title: Mathematics
   acronym: MATH
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/mathematics-math/
@@ -1145,6 +1133,7 @@
     - co-op
   tags:
     - robotics
+    - design
 - title: Media and Cinema Studies
   acronym: MCST
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/media-cinema-studies-mcst/
@@ -1247,18 +1236,6 @@
     - humanities
     - arts
     - culture
-- title: Nanoscience
-  acronym: NANO
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/nanoscience-nano/
-  degrees:
-    - Bachelor of Science
-  types:
-    - major
-    - co-op
-  tags:
-    - science
-    - chemistry
-    - physics
 - title: Neuroscience
   acronym: NEUR
   url: https://www.uoguelph.ca/programs/neuroscience/
@@ -1363,6 +1340,10 @@
     - quantum
     - quantum mechanics
     - medical physics
+    - theoretical physics
+    - chemical physics
+    - nanoscience
+    - bio medical physics
 - title: Plant Science
   acronym: PLSC
   url: https://www.uoguelph.ca/programs/plant-science/
@@ -1481,6 +1462,8 @@
     - web development
     - computer science
     - artificial intelligence
+    - ai
+    - software design
 - title: Spanish and Hispanic Studies
   acronym: SPAH
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/spanish-hispanic-studies-spah/
@@ -1551,16 +1534,6 @@
     - humanities
     - arts
     - culture
-- title: Theoretical Physics
-  acronym: THPY
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/theoretical-physics-thpy/
-  degrees:
-    - Bachelor of Science
-  types:
-    - major
-  tags:
-    - physics
-    - science
 - title: Veterinary Medicine
   acronym: VM
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/veterinary-medicine-vm/
