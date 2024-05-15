@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from '@/components/container';
 import { Layout } from '@/components/layout';
 import { Heading } from '@/components/heading';
@@ -20,6 +20,8 @@ export async function getStaticProps() {
 }
 
 export default function ProgramsGraduate({ programs }) {
+	const [filter, setFilter] = useState(null);
+
 	return (
 		<Layout title="Graduate Programs">
 			<Container centered>
@@ -27,28 +29,40 @@ export default function ProgramsGraduate({ programs }) {
 
 				<ProgramNavigation />
 
-				<ProgramSearch programs={programs}>
-					<div className="ml-auto sm:w-1/3 md:w-1/4">
-						<Radio
-							label="Filter by PhD or Masters"
-							inline
-							options={[
-								{
-									value: 'phd',
-									label: 'PhD',
-								},
-								{
-									value: 'masters',
-									label: 'Masters',
-								},
-								{
-									value: 'both',
-									label: 'Both',
-									selected: true,
-								},
-							]}
-						/>
-					</div>
+				<ProgramSearch programs={programs} filterer={filter}>
+					<Radio
+						label="Filter by PhD or Masters"
+						inline
+						options={[
+							{
+								value: 'phd',
+								label: 'PhD',
+							},
+							{
+								value: 'masters',
+								label: 'Masters',
+							},
+							{
+								value: 'both',
+								label: 'Both',
+								selected: true,
+							},
+						]}
+						onChange={(value) => {
+							setFilter(() => {
+								switch (value.value) {
+									case 'phd':
+										return (program) => program?.degrees?.includes('PhD');
+									case 'masters':
+										return (program) =>
+											program?.degrees?.length > 1 ||
+											(program?.degrees?.length === 1 && !program?.degrees?.includes('PhD'));
+									case 'both':
+										return null;
+								}
+							});
+						}}
+					/>
 				</ProgramSearch>
 			</Container>
 		</Layout>

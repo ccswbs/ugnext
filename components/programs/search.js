@@ -7,6 +7,7 @@ import { UnstyledLink } from '@/components/link';
 
 export const ProgramSearch = ({ programs, children, filterer }) => {
 	const [input, setInput] = useState('');
+
 	const types = useMemo(
 		() =>
 			Array.from(new Set(programs.flatMap((program) => program.types))).map((type) => ({
@@ -18,23 +19,24 @@ export const ProgramSearch = ({ programs, children, filterer }) => {
 	);
 	const [selectedTypes, setSelectedTypes] = useState(types);
 
-	const matching = useSearch(programs, input);
-	const filtered = useMemo(
-		() =>
-			matching
-				?.filter((program) => selectedTypes.some((type) => program.types.includes(type.value)))
-				?.filter((program) => (typeof filterer === 'function' ? filterer(program) : () => true))
-				?.map((program) => (
-					<UnstyledLink
-						className="focus:visible:ring-offset-2 flex items-center bg-light-blue-50 p-5 transition hover:scale-105 hover:bg-light-blue-100 focus:scale-105 focus:bg-light-blue-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-light-blue"
-						href={program.url}
-						key={program.id}
-					>
-						{program.title}
-					</UnstyledLink>
-				)),
-		[filterer, matching, selectedTypes],
-	);
+	const results = useSearch(programs, input);
+	const filtered = useMemo(() => {
+		let filtered = results?.filter((program) => selectedTypes.some((type) => program.types.includes(type.value)));
+
+		if (typeof filterer === 'function') {
+			filtered = filtered?.filter((program) => filterer(program));
+		}
+
+		return filtered?.map((program) => (
+			<UnstyledLink
+				className="focus:visible:ring-offset-2 flex items-center bg-light-blue-50 p-5 transition hover:scale-105 hover:bg-light-blue-100 focus:scale-105 focus:bg-light-blue-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-light-blue"
+				href={program.url}
+				key={program.id + program.url}
+			>
+				{program.title}
+			</UnstyledLink>
+		));
+	}, [filterer, results, selectedTypes]);
 
 	return (
 		<>
