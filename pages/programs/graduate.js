@@ -6,7 +6,7 @@ import { join } from 'path';
 import { readYamlFile } from '@/lib/file-utils';
 import { ProgramSearch } from '@/components/programs/search';
 import { ProgramNavigation } from '@/components/programs/navigation';
-import { Select } from '@/components/select';
+import { Radio } from '@/components/radio';
 
 export async function getStaticProps() {
 	const path = join(process.cwd(), 'data', 'programs', 'graduate.yml');
@@ -29,21 +29,24 @@ export default function ProgramsGraduate({ programs }) {
 
 				<ProgramSearch programs={programs}>
 					<div className="ml-auto sm:w-1/3 md:w-1/4">
-						<Select
-							multiple
+						<Radio
+							label="Filter by PhD or Masters"
+							inline
 							options={[
 								{
 									value: 'phd',
 									label: 'PhD',
-									selected: true,
 								},
 								{
 									value: 'masters',
 									label: 'Masters',
+								},
+								{
+									value: 'both',
+									label: 'Both',
 									selected: true,
 								},
 							]}
-							label="Filter by type"
 						/>
 					</div>
 				</ProgramSearch>
