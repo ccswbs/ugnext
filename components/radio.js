@@ -4,7 +4,7 @@ import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 
-export const Radio = ({ options, label, name, inline = false }) => {
+export const Radio = ({ options, label, name, inline = false, onChange }) => {
 	let [selected, setSelected] = useState(options.find((option) => option?.selected) ?? null);
 
 	return (
@@ -15,7 +15,10 @@ export const Radio = ({ options, label, name, inline = false }) => {
 				name={name}
 				by="value"
 				value={selected}
-				onChange={setSelected}
+				onChange={(value) => {
+					setSelected(value);
+					onChange?.(value);
+				}}
 				className={twJoin('flex gap-2', !inline && 'flex-col')}
 			>
 				{options?.map((item, index) => (
