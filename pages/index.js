@@ -3,6 +3,7 @@ import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { Divider } from '@/components/divider';
 import { graphql } from '@/lib/drupal';
+import Image from 'next/image';
 
 export async function getStaticProps() {
 	const { data } = await graphql(`
@@ -15,8 +16,6 @@ export async function getStaticProps() {
 						captionAlignment
 						image {
 							... on MediaImage {
-								id
-								name
 								image {
 									width
 									url
@@ -43,8 +42,6 @@ export async function getStaticProps() {
 						rank
 						image {
 							... on MediaImage {
-								id
-								name
 								image {
 									width
 									url
@@ -67,14 +64,13 @@ export async function getStaticProps() {
 
 	return {
 		props: {
-			data: data,
+			cards: data?.cards?.results ?? [],
+			hero: data?.hero?.results?.[0] ?? null,
 		},
 	};
 }
 
-export default function Home(data) {
-	console.log(data);
-
+export default function Home({ cards, hero }) {
 	return (
 		<Layout title="Home">
 			<Container centered>
