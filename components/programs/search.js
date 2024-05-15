@@ -42,8 +42,6 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 		);
 	}, [filterer, render, results, selectedTypes]);
 
-	console.log(results.length, filtered.length);
-
 	return (
 		<>
 			<div className="flex flex-col gap-3">
