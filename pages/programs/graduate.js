@@ -83,12 +83,12 @@ export default function ProgramsGraduate({ programs }) {
 											predicates.push(
 												(program) =>
 													program?.degrees?.includes('PhD') ||
-													program.degrees.some((degree) => degree.startsWith('D') || degree.startsWith('d')),
+													program.degrees.some((degree) => degree.startsWith('D')),
 											);
 											break;
 										case 'masters':
 											predicates.push((program) =>
-												program.degrees.some((degree) => degree.startsWith('M') || degree.startsWith('m')),
+												program.degrees.some((degree) => degree.startsWith('M')),
 											);
 											break;
 										case 'diploma':
