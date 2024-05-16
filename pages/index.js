@@ -77,9 +77,21 @@ export default function Home({ cards, hero }) {
 			<Container centered>
 				<TagLine />
 
-				<div className="pt-2">
+				<div className="pt-1">
 					<Heading level={2}>Our Latest News and Events</Heading>
 					<SpotlightCards cards={cards} />
+				</div>
+
+				<div className="pt-1">
+					<Heading level={2}>Study Here</Heading>
+				</div>
+
+				<div className="pt-1">
+					<Heading level={2}>How We Rank Among the World</Heading>
+				</div>
+
+				<div className="pt-1">
+					<Heading level={2}>Our Three Campuses</Heading>
 				</div>
 			</Container>
 		</Layout>
