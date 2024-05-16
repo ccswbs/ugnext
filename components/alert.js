@@ -22,7 +22,7 @@ export const Alert = ({ type = 'danger', title, subtitle, message, footer }) => 
 		</div>
 
 		{footer && (
-			<div className="flex bg-grey px-4 py-4">
+			<div className="flex bg-grey px-4 py-2">
 				<span>{footer}</span>
 			</div>
 		)}
