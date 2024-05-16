@@ -4,6 +4,7 @@ import { Heading } from '@/components/heading';
 import { graphql } from '@/lib/drupal';
 import { SpotlightCards } from '@/components/home/spotlight-cards';
 import { TagLine } from '@/components/home/tag-line';
+import { Rankings } from '@/components/home/rankings';
 
 export async function getStaticProps() {
 	const { data } = await graphql(`
@@ -88,6 +89,8 @@ export default function Home({ cards, hero }) {
 
 				<div className="pt-1">
 					<Heading level={2}>How We Rank Among the World</Heading>
+
+					<Rankings />
 				</div>
 
 				<div className="pt-1">
