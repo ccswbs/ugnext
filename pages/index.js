@@ -7,6 +7,7 @@ import { TagLine } from '@/components/home/tag-line';
 import { Rankings } from '@/components/home/rankings';
 import { ThreeCampuses } from '@/components/home/three-campuses';
 import { Hero } from '@/components/hero';
+import { SpotlightHero } from '@/components/home/spotlight-hero';
 
 export async function getStaticProps() {
 	const { data } = await graphql(`
@@ -72,18 +73,7 @@ export async function getStaticProps() {
 export default function Home({ cards, hero }) {
 	return (
 		<Layout title="Home">
-			<Hero
-				title={hero.title}
-				caption={hero.caption}
-				href={hero.url.url}
-				button={hero.url.title}
-				src={hero.image.image.url}
-				alt={hero.image.image.alt}
-				height={hero.image.image.height}
-				width={hero.image.image.width}
-				crop={hero.thumbnailImageCropping}
-				alignment={hero.captionAlignment}
-			/>
+			<SpotlightHero hero={hero} />
 
 			<Container centered>
 				<TagLine />

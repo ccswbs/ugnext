@@ -7,7 +7,7 @@ export const Hero = ({ src, height, width, alt, crop, title, caption, alignment,
 		<div className="relative flex w-full flex-col overflow-hidden">
 			<Image
 				className={twJoin(
-					'aspect-[16/9] w-full object-cover md:aspect-[2.625] max-h-[80vh]',
+					'aspect-[16/9] max-h-[80vh] w-full object-cover md:aspect-[2.625]',
 					crop === 'right' && 'object-right',
 					crop === 'left' && 'object-left',
 					crop === 'center' && 'object-center',
@@ -16,6 +16,7 @@ export const Hero = ({ src, height, width, alt, crop, title, caption, alignment,
 				alt={alt}
 				width={width}
 				height={height}
+				priority
 			/>
 
 			<div className="flex items-center lg:container lg:absolute lg:bottom-0 lg:left-1/2 lg:-translate-x-1/2 lg:p-4">
