@@ -21,8 +21,6 @@ export async function getStaticProps() {
 								image {
 									width
 									url
-									title
-									mime
 									height
 									alt
 								}
@@ -47,8 +45,6 @@ export async function getStaticProps() {
 								image {
 									width
 									url
-									title
-									mime
 									height
 									alt
 								}
@@ -73,7 +69,6 @@ export async function getStaticProps() {
 }
 
 export default function Home({ cards, hero }) {
-	console.log(cards);
 	return (
 		<Layout title="Home">
 			<Container centered>
@@ -90,13 +85,11 @@ export default function Home({ cards, hero }) {
 
 				<div className="pt-1">
 					<Heading level={2}>How We Rank Among the World</Heading>
-
 					<Rankings />
 				</div>
 
 				<div className="pt-1">
 					<Heading level={2}>Our Three Campuses</Heading>
-
 					<ThreeCampuses />
 				</div>
 			</Container>
