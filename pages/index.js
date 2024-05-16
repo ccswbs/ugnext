@@ -1,9 +1,9 @@
 import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
-import { Divider } from '@/components/divider';
 import { graphql } from '@/lib/drupal';
-import Image from 'next/image';
+import { SpotlightCards } from '@/components/home/spotlight-cards';
+import { TagLine } from '@/components/home/tag-line';
 
 export async function getStaticProps() {
 	const { data } = await graphql(`
@@ -64,19 +64,23 @@ export async function getStaticProps() {
 
 	return {
 		props: {
-			cards: data?.cards?.results ?? [],
+			cards: data?.cards?.results?.slice(0, 4) ?? [],
 			hero: data?.hero?.results?.[0] ?? null,
 		},
 	};
 }
 
 export default function Home({ cards, hero }) {
+	console.log(cards);
 	return (
 		<Layout title="Home">
 			<Container centered>
-				<Heading level={1}>UG Next Home Page</Heading>
+				<TagLine />
 
-				<Divider />
+				<div className="pt-2">
+					<Heading level={2}>Our Latest News and Events</Heading>
+					<SpotlightCards cards={cards} />
+				</div>
 			</Container>
 		</Layout>
 	);
