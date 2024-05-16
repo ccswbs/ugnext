@@ -5,6 +5,7 @@ import { graphql } from '@/lib/drupal';
 import { SpotlightCards } from '@/components/home/spotlight-cards';
 import { TagLine } from '@/components/home/tag-line';
 import { Rankings } from '@/components/home/rankings';
+import { ThreeCampuses } from '@/components/home/three-campuses';
 
 export async function getStaticProps() {
 	const { data } = await graphql(`
@@ -95,6 +96,8 @@ export default function Home({ cards, hero }) {
 
 				<div className="pt-1">
 					<Heading level={2}>Our Three Campuses</Heading>
+
+					<ThreeCampuses />
 				</div>
 			</Container>
 		</Layout>
