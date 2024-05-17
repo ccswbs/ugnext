@@ -10,6 +10,7 @@ export const StudyHere = () => {
 			image: {
 				caption: 'Leah Weller - Environmental Engineering',
 				url: undergraduate,
+				alt: 'Leah Weller and another student in lab coats looking at a computer screen.',
 			},
 			title: 'Undergraduate Programs',
 			url: 'https://admission.uoguelph.ca/programs',
@@ -18,6 +19,7 @@ export const StudyHere = () => {
 			image: {
 				caption: 'Caroline Pottruff - Landscape Architecture',
 				url: graduate,
+				alt: 'Caroline Pottruff working in a forest with a hard hat on',
 			},
 			title: 'Graduate Programs',
 			url: 'https://graduatestudies.uoguelph.ca/',
@@ -26,6 +28,7 @@ export const StudyHere = () => {
 			image: {
 				caption: 'Ryan Ahlers - Theatre Studies',
 				url: international,
+				alt: 'Ryan Ahlers adjusting a spotlight in a theatre',
 			},
 			title: 'International',
 			url: 'https://www.uoguelph.ca/study-in-canada/',
@@ -34,6 +37,7 @@ export const StudyHere = () => {
 			image: {
 				caption: 'Kathryn Knowles & Jenna Schamowski - Environmental Sciences',
 				url: lifelong,
+				alt: 'Kathryn Knowles & Jenna Schamowski working with bee hives',
 			},
 			title: 'Lifelong Learning',
 			url: 'https://opened.uoguelph.ca/',
