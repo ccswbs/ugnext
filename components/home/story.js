@@ -6,12 +6,15 @@ import { Story } from '@/components/story';
 export const HomeStory = () => (
 	<>
 		<Story
-			foregroundImage={<Image src={foreground} alt="Kiana Gibson and David Sahai, co-founders of MealCare Guelph" />}
+			foregroundImage={
+				<Image src={foreground} alt="Kiana Gibson and David Sahai, co-founders of MealCare Guelph" sizes="50vw" />
+			}
 			backgroundImage={
 				<Image
 					className="h-full w-full object-cover lg:[object-position:left_40px]"
 					src={background}
 					alt="Student volunteers"
+					sizes="100vw"
 				/>
 			}
 			quote="Change happens at the community level. Small groups put in small efforts and those efforts add up to something big."

@@ -33,6 +33,7 @@ export const ThreeCampuses = () => {
 					href={campus.url}
 					centered
 					image={<Image className="aspect-[3/2] w-full" src={campus.image.src} alt={campus.image.alt} />}
+					sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 				/>
 			))}
 		</div>
