@@ -17,6 +17,7 @@ export const Hero = ({ src, height, width, alt, crop, title, caption, alignment,
 				width={width}
 				height={height}
 				priority
+				sizes="100vw"
 			/>
 
 			<div className="flex items-center lg:container lg:absolute lg:bottom-0 lg:left-1/2 lg:-translate-x-1/2 lg:p-4">
