@@ -25,8 +25,6 @@ export async function getStaticProps(context) {
 		},
 	);
 
-	console.log('/node/' + context.params.slug.join('/'));
-
 	if (errors) {
 		throw new Error(errors);
 	}
