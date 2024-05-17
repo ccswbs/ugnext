@@ -8,6 +8,7 @@ import { Rankings } from '@/components/home/rankings';
 import { ThreeCampuses } from '@/components/home/three-campuses';
 import { SpotlightHero } from '@/components/home/spotlight-hero';
 import { HomeStory } from '@/components/home/story';
+import { StudyHere } from '@/components/home/study-here';
 
 export async function getStaticProps() {
 	const { data } = await graphql(`
@@ -85,6 +86,7 @@ export default function Home({ cards, hero }) {
 
 				<div className="pt-1">
 					<Heading level={2}>Study Here</Heading>
+					<StudyHere />
 				</div>
 
 				<div className="pt-1">
