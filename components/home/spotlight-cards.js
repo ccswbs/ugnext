@@ -24,6 +24,7 @@ export const SpotlightCards = ({ cards }) => (
 						alt={card.image.image.alt}
 						width={card.image.image.width}
 						height={card.image.image.height}
+						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
 					/>
 				}
 			/>
