@@ -6,8 +6,8 @@ import { SpotlightCards } from '@/components/home/spotlight-cards';
 import { TagLine } from '@/components/home/tag-line';
 import { Rankings } from '@/components/home/rankings';
 import { ThreeCampuses } from '@/components/home/three-campuses';
-import { Hero } from '@/components/hero';
 import { SpotlightHero } from '@/components/home/spotlight-hero';
+import { HomeStory } from '@/components/home/story';
 
 export async function getStaticProps() {
 	const { data } = await graphql(`
@@ -97,6 +97,8 @@ export default function Home({ cards, hero }) {
 					<ThreeCampuses />
 				</div>
 			</Container>
+
+			<HomeStory />
 		</Layout>
 	);
 }
