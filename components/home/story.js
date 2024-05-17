@@ -9,7 +9,7 @@ export const HomeStory = () => (
 			foregroundImage={<Image src={foreground} alt="Kiana Gibson and David Sahai, co-founders of MealCare Guelph" />}
 			backgroundImage={
 				<Image
-					className="h-full w-full object-cover lg:[object-position:left_30px]"
+					className="h-full w-full object-cover lg:[object-position:left_40px]"
 					src={background}
 					alt="Student volunteers"
 				/>
