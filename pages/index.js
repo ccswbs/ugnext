@@ -10,64 +10,123 @@ import { SpotlightHero } from '@/components/home/spotlight-hero';
 import { HomeStory } from '@/components/home/story';
 import { StudyHere } from '@/components/home/study-here';
 
-export async function getStaticProps() {
-	const { data } = await graphql(`
-		query {
-			hero: spotlightHero {
-				results {
-					... on NodeSpotlight {
-						title
-						thumbnailImageCropping
-						caption
-						captionAlignment
-						image {
-							... on MediaImage {
-								image {
-									width
-									url
-									height
-									alt
-								}
-							}
-						}
-						url {
+export async function getStaticProps(context) {
+	const isPreview = context?.preview || process.env.NODE_ENV !== 'production';
+
+	let result;
+
+	if (isPreview) {
+		result = await graphql(`
+			query {
+				hero: previewSpotlightHero {
+					results {
+						... on NodeSpotlight {
 							title
-							url
-						}
-					}
-				}
-			}
-			cards: spotlightCards {
-				results {
-					... on NodeSpotlight {
-						id
-						title
-						thumbnailImageCropping
-						rank
-						image {
-							... on MediaImage {
-								image {
-									width
-									url
-									height
-									alt
+							thumbnailImageCropping
+							caption
+							captionAlignment
+							image {
+								... on MediaImage {
+									image {
+										width
+										url
+										height
+										alt
+									}
 								}
 							}
+							url {
+								title
+								url
+							}
 						}
-						url {
-							url
+					}
+				}
+				cards: previewSpotlightCards {
+					results {
+						... on NodeSpotlight {
+							id
+							title
+							thumbnailImageCropping
+							rank
+							image {
+								... on MediaImage {
+									image {
+										width
+										url
+										height
+										alt
+									}
+								}
+							}
+							url {
+								url
+							}
 						}
 					}
 				}
 			}
-		}
-	`);
+		`);
+	} else {
+		result = await graphql(`
+			query {
+				hero: spotlightHero {
+					results {
+						... on NodeSpotlight {
+							title
+							thumbnailImageCropping
+							caption
+							captionAlignment
+							image {
+								... on MediaImage {
+									image {
+										width
+										url
+										height
+										alt
+									}
+								}
+							}
+							url {
+								title
+								url
+							}
+						}
+					}
+				}
+				cards: spotlightCards {
+					results {
+						... on NodeSpotlight {
+							id
+							title
+							thumbnailImageCropping
+							rank
+							image {
+								... on MediaImage {
+									image {
+										width
+										url
+										height
+										alt
+									}
+								}
+							}
+							url {
+								url
+							}
+						}
+					}
+				}
+			}
+		`);
+	}
 
 	return {
 		props: {
-			cards: data?.cards?.results?.slice(0, 4) ?? [],
-			hero: data?.hero?.results?.[0] ?? null,
+			cards: result?.data?.cards?.results?.slice(0, 4) ?? [],
+			hero: result?.data?.hero?.results?.[0] ?? null,
 		},
+		revalidate: 60,
 	};
 }
 
