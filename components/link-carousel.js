@@ -1,33 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UnstyledLink } from '@/components/link';
 import Image from 'next/image';
-import { Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
+import { twJoin } from 'tailwind-merge';
 
 export const LinkCarousel = ({ links }) => {
 	const [activeLink, setActiveLink] = useState(links[0]);
 
 	return (
 		<div className="relative w-full">
-			<div className="absolute left-0 top-0 z-0 h-full w-full">
-				{links.map((link, index) => (
-					<Transition
+			<div className="absolute left-0 top-0 z-0 h-full w-full md:bg-black">
+				{links.map((link) => (
+					<Image
 						key={link.url}
-						show={link === activeLink}
-						enter="transition-opacity duration-300"
-						enterFrom="opacity-0"
-						enterTo="opacity-100"
-						leave="transition-opacity duration-300"
-						leaveFrom="opacity-100"
-						leaveTo="opacity-0"
-					>
-						<Image
-							className="absolute left-0 top-0 hidden h-full object-cover object-left md:block"
-							src={link.image.url}
-							alt={link.image?.alt}
-						/>
-					</Transition>
+						className={twJoin(
+							'absolute left-0 top-0 h-full object-cover object-left opacity-0 transition-opacity',
+							link === activeLink && 'md:opacity-100',
+						)}
+						src={link.image.url}
+						alt={link.image?.alt}
+					/>
 				))}
 			</div>
 
