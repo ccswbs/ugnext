@@ -125,7 +125,7 @@ export async function getStaticProps(context) {
 		props: {
 			cards: result?.data?.cards?.results?.slice(0, 4) ?? [],
 			hero: result?.data?.hero?.results?.[0] ?? null,
-		}
+		},
 	};
 }
 
