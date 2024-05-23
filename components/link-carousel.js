@@ -11,16 +11,14 @@ export const LinkCarousel = ({ links }) => {
 
 	return (
 		<div className="relative w-full">
-			<div className="absolute left-0 top-0 z-0 h-full w-full md:bg-black">
+			<div className="absolute left-0 top-0 z-0 h-full w-full">
 				{links.map((link) => (
 					<Image
 						key={link.url}
 						className={twJoin(
-							'absolute left-0 top-0 hidden h-full object-cover object-left md:block',
-							link !== activeLink && link !== previousActiveLink.current && '-z-10',
-							link === activeLink && 'z-10',
-							link === activeLink && previousActiveLink.current !== null && 'animate-fade',
-							link === previousActiveLink.current && 'z-0',
+							'absolute left-0 top-0 hidden h-full object-cover object-left',
+							link === activeLink && 'animate-fade z-10 md:block',
+							link === previousActiveLink.current && 'z-0 md:block',
 						)}
 						src={link.image.url}
 						alt={link.image?.alt}
