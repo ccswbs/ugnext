@@ -9,9 +9,9 @@ export const Story = ({ backgroundImage, foregroundImage, quote, ctaText, ctaBut
 
 			<div className="container z-10 flex w-full flex-col items-center gap-6 px-6 pt-6 lg:flex-row">
 				<blockquote className="my-auto block h-fit w-5/6 text-center text-3xl font-thin italic text-white sm:text-4xl lg:w-1/2 lg:text-3xl xl:text-4xl">
-					<FontAwesomeIcon icon={faQuoteLeft} className="inline-block h-[1em] text-yellow mr-[0.2em]" />
+					<FontAwesomeIcon icon={faQuoteLeft} className="mr-[0.2em] inline-block h-[1em] text-yellow" />
 					{quote}
-					<FontAwesomeIcon icon={faQuoteRight} className="inline-block h-[1em] text-yellow ml-[0.2em]" />
+					<FontAwesomeIcon icon={faQuoteRight} className="ml-[0.2em] inline-block h-[1em] text-yellow" />
 				</blockquote>
 				<div className="w-full lg:w-1/2">{foregroundImage}</div>
 			</div>
