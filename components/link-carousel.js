@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { UnstyledLink } from '@/components/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +7,7 @@ import { twJoin } from 'tailwind-merge';
 
 export const LinkCarousel = ({ links }) => {
 	const [activeLink, setActiveLink] = useState(links[0]);
+	const previousActiveLink = useRef(null);
 
 	return (
 		<div className="relative w-full">
@@ -15,8 +16,11 @@ export const LinkCarousel = ({ links }) => {
 					<Image
 						key={link.url}
 						className={twJoin(
-							'absolute left-0 top-0 h-full object-cover object-left opacity-0 transition-opacity',
-							link === activeLink && 'md:opacity-100',
+							'absolute left-0 top-0 hidden h-full object-cover object-left md:block',
+							link !== activeLink && link !== previousActiveLink.current && '-z-10',
+							link === activeLink && 'z-10',
+							link === activeLink && previousActiveLink.current !== null && 'animate-fade',
+							link === previousActiveLink.current && 'z-0',
 						)}
 						src={link.image.url}
 						alt={link.image?.alt}
@@ -33,7 +37,12 @@ export const LinkCarousel = ({ links }) => {
 			<div className="relative z-10 ml-auto flex w-full flex-col gap-2 md:w-1/3">
 				{links.map((link, index) => (
 					<UnstyledLink
-						onMouseEnter={() => setActiveLink(link)}
+						onMouseEnter={() => {
+							setActiveLink((previous) => {
+								previousActiveLink.current = previous;
+								return link;
+							});
+						}}
 						key={index}
 						href={link.url}
 						className="flex flex-1 items-center justify-between bg-black/60 p-7 text-xl text-white backdrop-blur transition-colors hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus-visible:outline-none"
