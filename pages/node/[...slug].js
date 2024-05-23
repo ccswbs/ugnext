@@ -8,7 +8,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-	const { data, errors } = await graphql(
+	// We want to redirect requests for /node/{ID} to the appropriate place.
+
+	// Check the type of the node
+	const { data } = await graphql(
 		`
 			query ($url: String!) {
 				route(path: $url) {
@@ -25,23 +28,21 @@ export async function getStaticProps(context) {
 		},
 	);
 
-	if (errors) {
-		throw new Error(errors);
+	switch (data.route?.entity?.__typename) {
+		// For spotlight, we want to redirect to the homepage, as that's where they appear
+		case 'NodeSpotlight':
+			return {
+				redirect: {
+					destination: '/',
+					permanent: true,
+				},
+			};
+		// Fallback to showing 404 if we haven't defined redirect logic for a node type.
+		default:
+			return {
+				notFound: true,
+			};
 	}
-
-	// Redirect the preview of Spotlight to the home page
-	if (data.route?.entity?.__typename === 'NodeSpotlight') {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: true,
-			},
-		};
-	}
-
-	return {
-		notFound: true,
-	};
 }
 
 export default function Node() {
