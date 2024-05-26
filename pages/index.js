@@ -25,7 +25,7 @@ export async function getStaticProps(context) {
 								id
 								caption
 								captionAlignment
-								thumbnailImageCropping
+								thumbnailImageCrop
 								title
 								url {
 									url
@@ -120,7 +120,7 @@ export async function getStaticProps(context) {
 									}
 									rank
 									title
-									thumbnailImageCropping
+									thumbnailImageCrop
 									url {
 										url
 										title
