@@ -1,8 +1,6 @@
 import { Field, Fieldset, Legend, Label, Radio as HUIRadio, RadioGroup } from '@headlessui/react';
 import { useState, Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 
 export const Radio = ({ options, label, name, inline = false, onChange }) => {
 	let [selected, setSelected] = useState(options.find((option) => option?.selected) ?? null);
