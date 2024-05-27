@@ -156,6 +156,9 @@ module.exports = {
 					'100%': { opacity: 1 },
 				},
 			},
+			spacing: {
+				'max-content': '1320px',
+			},
 		},
 	},
 	plugins: [require('@headlessui/tailwindcss')],
