@@ -26,7 +26,7 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 					</div>
 				)}
 				<Header menu={menu} />
-				<main className="mb-auto pb-4 text-base">{children}</main>
+				<main className="flex-1 pb-4 text-base">{children}</main>
 				<Footer links={footerLinks} />
 			</div>
 		</>
