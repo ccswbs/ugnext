@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 export const Footer = ({ links }) => (
 	<uofg-footer>
 		{Array.isArray(links) &&
