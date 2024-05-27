@@ -20,7 +20,7 @@ export const SpotlightCards = ({ cards }) => (
 							card.thumbnailImageCropping === 'left' && 'object-left',
 							card.thumbnailImageCropping === 'center' && 'object-center',
 						)}
-						src={card.image.image.url}
+						src={card.image.image.variations[0].url}
 						alt={card.image.image.alt}
 						width={card.image.image.width}
 						height={card.image.image.height}

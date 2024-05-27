@@ -36,8 +36,10 @@ export async function getStaticProps(context) {
 										image {
 											height
 											alt
-											url
 											width
+											variations(styles: SPOTLIGHT_HERO_IMAGE) {
+												url
+											}
 										}
 									}
 								}
@@ -114,7 +116,9 @@ export async function getStaticProps(context) {
 												alt
 												height
 												width
-												url
+												variations(styles: SPOTLIGHT_CARD_IMAGE) {
+													url
+												}
 											}
 										}
 									}
