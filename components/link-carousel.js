@@ -22,6 +22,8 @@ export const LinkCarousel = ({ links }) => {
 						)}
 						src={link.image.url}
 						alt={link.image?.alt}
+						placeholder={link.image?.placeholder ? 'blur' : 'empty'}
+						blurDataURL={link.image?.placeholder}
 					/>
 				))}
 			</div>
