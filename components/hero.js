@@ -20,7 +20,7 @@ export const Hero = ({ src, height, width, alt, crop, title, caption, alignment,
 				sizes="100vw"
 			/>
 
-			<div className="flex items-center lg:container lg:absolute lg:bottom-0 lg:left-1/2 lg:-translate-x-1/2 lg:p-4">
+			<div className="flex items-center lg:container lg:max-w-max-content lg:absolute lg:bottom-0 lg:left-1/2 lg:-translate-x-1/2 lg:p-4">
 				<div className="flex w-full bg-black p-7 text-white lg:max-w-[50%] lg:bg-black/80 lg:backdrop-blur">
 					<div className="container mx-auto flex flex-col gap-5">
 						<h1 className="font-condensed text-3xl font-bold">{title}</h1>
