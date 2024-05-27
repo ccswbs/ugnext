@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { UnstyledLink } from '@/components/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,6 +22,8 @@ export const LinkCarousel = ({ links }) => {
 						)}
 						src={link.image.url}
 						alt={link.image?.alt}
+						placeholder={link.image?.placeholder ? 'blur' : 'empty'}
+						blurDataURL={link.image?.placeholder}
 					/>
 				))}
 			</div>
