@@ -145,7 +145,7 @@ export default function Page({ data }) {
 	return (
 		<Layout>
 			{isFallback && (
-				<div className="flex flex-1 w-full items-center justify-center">
+				<div className="m-auto">
 					<FontAwesomeIcon className="w-[5em] animate-spin" icon={faSpinner} />
 				</div>
 			)}
