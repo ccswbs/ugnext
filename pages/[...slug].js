@@ -145,8 +145,8 @@ export default function Page({ data }) {
 	return (
 		<Layout>
 			{isFallback && (
-				<div className="m-auto">
-					<FontAwesomeIcon className="w-[5em] animate-spin" icon={faSpinner} />
+				<div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-red">
+					<FontAwesomeIcon className="w-[5em] animate-spin opacity-45" icon={faSpinner} />
 				</div>
 			)}
 			<Container className={twJoin(isFallback && 'hidden')} centered>
