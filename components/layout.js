@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Button } from '@/components/button';
 
 export const Layout = ({ children, menu, footerLinks, title = '', description = '' }) => {
-	const { isPreview } = useRouter();
+	const { isPreview, isFallback } = useRouter();
 
 	return (
 		<>
@@ -27,7 +27,7 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 				)}
 				<Header menu={menu} />
 				<main className="flex-1 pb-4 text-base">{children}</main>
-				<Footer links={footerLinks} />
+				{!isFallback && <Footer links={footerLinks} />}
 			</div>
 		</>
 	);
