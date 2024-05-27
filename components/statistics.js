@@ -10,7 +10,7 @@ export const Statistics = ({ data }) => {
 	return (
 		<dl
 			className={twJoin(
-				'container flex flex-col flex-wrap sm:flex-row',
+				'mx-auto flex flex-col flex-wrap sm:flex-row',
 				divisibleByFour && 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
 				divisibleByThree && !divisibleByFour && 'grid grid-cols-1 lg:grid-cols-3',
 				divisibleByTwo && !divisibleByFour && 'grid grid-cols-1 sm:grid-cols-2',

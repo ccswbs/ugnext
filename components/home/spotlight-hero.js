@@ -6,7 +6,7 @@ export const SpotlightHero = ({ hero }) => (
 		caption={hero.caption}
 		href={hero.url.url}
 		button={hero.url.title}
-		src={hero.image.image.url}
+		src={hero.image.image.variations[0].url}
 		alt={hero.image.image.alt}
 		height={hero.image.image.height}
 		width={hero.image.image.width}
