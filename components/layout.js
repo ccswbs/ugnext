@@ -17,7 +17,7 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 
 			<div className="flex flex-1 flex-col text-base">
 				{isPreview && (
-					<div className="flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
+					<div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
 						<span>You are currently in Preview Mode.</span>
 
 						<Button color="yellow" className="p-2" href="/api/exit-preview">
@@ -26,7 +26,7 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 					</div>
 				)}
 				<Header menu={menu} />
-				<main className="mb-auto pb-4 text-base">{children}</main>
+				<main className="flex-1 pb-4 text-base">{children}</main>
 				<Footer links={footerLinks} />
 			</div>
 		</>
