@@ -8,10 +8,43 @@ import { faSpinner } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 import { twJoin } from 'tailwind-merge';
 
 export async function getStaticPaths() {
+	// Here we can decide which pages get pre-rendered.
 	let paths = [];
+	let page = 0;
+	let pageSize = 100;
+	let hasNextPage = true;
+
+	while (hasNextPage) {
+		const results = (
+			await graphql(
+				`
+					query GetPages($page: Int = 0, $pageSize: Int = 100) {
+						content(filter: { type: "page", status: true }, page: $page, pageSize: $pageSize) {
+							results {
+								... on NodePage {
+									path
+								}
+							}
+						}
+					}
+				`,
+				{
+					page: page,
+					pageSize: pageSize,
+				},
+			)
+		)?.data?.content?.results;
+
+		results?.length === pageSize ? page++ : (hasNextPage = false);
+		paths = [...paths, ...results];
+	}
 
 	return {
-		paths: paths,
+		paths: paths.map((node) => ({
+			params: {
+				slug: node?.path?.split('/').filter(Boolean),
+			},
+		})),
 		fallback: true,
 	};
 }
@@ -140,15 +173,9 @@ export async function getStaticProps(context) {
 
 export default function Page({ data }) {
 	const { isFallback } = useRouter();
-	console.log(data);
 
 	return (
 		<Layout>
-			{isFallback && (
-				<div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-red">
-					<FontAwesomeIcon className="w-[5em] animate-spin opacity-45" icon={faSpinner} />
-				</div>
-			)}
 			<Container className={twJoin(isFallback && 'hidden')} centered>
 				<Heading level={1}>{data?.title}</Heading>
 			</Container>
