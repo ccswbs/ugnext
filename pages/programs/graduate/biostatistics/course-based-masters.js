@@ -4,7 +4,7 @@ import { Heading } from '@/components/heading';
 import { join } from 'path';
 import { readYamlFile } from '@/lib/file-utils';
 import { GraduateProgramHero } from '@/components/programs/graduate/hero'
-import { GraduateProgramNavigation } from '@/components/programs/graduate/navigation';
+import { ButtonNavigation } from '@/components/programs/graduate/navigation-buttons';
 import { GraduateProgramSummary } from '@/components/programs/graduate/summary';
 import { GraduateProgramInfo } from '@/components/programs/graduate/information';
 
@@ -20,13 +20,17 @@ export async function getStaticProps() {
 	};
 }
 
+/*
+@TODO: Send links for button navigation
+*/
+
 export default function ProgramGraduate() {
 	return (
 		<Layout title="Graduate Program">
 			<GraduateProgramHero />
 			<Container centered>
-				<Heading level={1}>Biostatistics - Master of Science (MSc)</Heading>
-				<GraduateProgramNavigation />
+				<Heading level={1}>Biostatistics | Master of Science - Course-based (MSc)</Heading>
+				<ButtonNavigation label="Program Navigation" />
 
 				<div className="pt-1 grid xl:grid-cols-12 xl:gap-x-10">
 					<div className='xl:col-span-9'>
