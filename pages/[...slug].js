@@ -3,18 +3,17 @@ import { graphql } from '@/lib/drupal';
 import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 import { twJoin } from 'tailwind-merge';
 
 export async function getStaticPaths() {
 	// Here we can decide which pages get pre-rendered.
 	let paths = [];
 	let page = 0;
-	let pageSize = 100;
+	const pageSize = 100;
 	let hasNextPage = true;
+	const limit = 1500; // Add a limit to the number of pages we prebuild
 
-	while (hasNextPage) {
+	while (hasNextPage && paths.length < limit) {
 		const results = (
 			await graphql(
 				`
@@ -49,31 +48,117 @@ export async function getStaticPaths() {
 	};
 }
 
-export async function getStaticProps(context) {
-	const isPreview = context?.preview || process.env.NODE_ENV !== 'production';
-	const status = isPreview ? null : true;
+async function getPageID(url) {
+	const { data } = await graphql(
+		`
+			query GetPageID($url: String!) {
+				route(path: $url) {
+					... on RouteInternal {
+						entity {
+							... on NodePage {
+								id
+							}
+						}
+					}
+				}
+			}
+		`,
+		{
+			url: url,
+		},
+	);
 
-	// Try to get the ID of the page the user is requesting.
-	const id = (
-		await graphql(
-			`
-				query GetPageID($url: String!) {
-					route(path: $url) {
-						... on RouteInternal {
-							entity {
-								... on NodePage {
-									id
+	return data?.route?.entity?.id;
+}
+
+async function getPageContent(id, status) {
+	const { data } = await graphql(
+		`
+			query GetPage($id: String = "", $status: Boolean = false) {
+				contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
+					results {
+						... on NodePage {
+							primaryNavigation {
+								... on TermPrimaryNavigation {
+									name
+								}
+							}
+							image {
+								... on MediaImage {
+									image {
+										alt
+										height
+										width
+										url
+									}
+								}
+							}
+							title
+						}
+					}
+				}
+			}
+		`,
+		{
+			id: id,
+			status: status,
+		},
+	);
+
+	return data?.contentRevisions?.results[0];
+}
+
+async function getPageMenu(page) {
+	const name = page?.primaryNavigation?.name?.toUpperCase()?.replaceAll('-', '_');
+
+	if (!name) {
+		return null;
+	}
+
+	const { data } = await graphql(
+		`
+			fragment MenuItemContent on MenuItem {
+				url
+				title
+			}
+
+			query GetMenu($menu: MenuAvailable!) {
+				menu(name: $menu) {
+					items {
+						...MenuItemContent
+						children {
+							...MenuItemContent
+							children {
+								...MenuItemContent
+								children {
+									...MenuItemContent
+									children {
+										...MenuItemContent
+										children {
+											...MenuItemContent
+										}
+									}
 								}
 							}
 						}
 					}
 				}
-			`,
-			{
-				url: '/' + context.params.slug.join('/'),
-			},
-		)
-	)?.data?.route?.entity?.id;
+			}
+		`,
+		{
+			menu: menuName,
+		},
+	);
+
+	return data?.menu?.items;
+}
+
+export async function getStaticProps(context) {
+	const isPreview = context?.preview || process.env.NODE_ENV !== 'production';
+	const status = isPreview ? null : true;
+
+	// Try to get the ID of the page the user is requesting.
+	const id = await getPageID('/' + context.params.slug.join('/'));
 
 	// If we couldn't resolve an id, then that means this page doesn't exist on content hub, show a 404.
 	if (!id) {
@@ -83,88 +168,8 @@ export async function getStaticProps(context) {
 	}
 
 	// Now that we have the ID for the page we can request its content from its latest revision.
-	const page = (
-		await graphql(
-			`
-				query GetPage($id: String = "", $status: Boolean = false) {
-					contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
-						results {
-							... on NodePage {
-								primaryNavigation {
-									... on TermPrimaryNavigation {
-										name
-									}
-								}
-								image {
-									... on MediaImage {
-										image {
-											alt
-											height
-											width
-											url
-										}
-									}
-								}
-								title
-							}
-						}
-					}
-				}
-			`,
-			{
-				id: id,
-				status: status,
-			},
-		)
-	)?.data?.contentRevisions?.results[0];
-
-	// Get the menu name if the page has one.
-	const menuName = page?.primaryNavigation?.name?.toUpperCase().replaceAll('-', '_');
-
-	delete page.primaryNavigation;
-
-	// We have to request the menu links separately.
-	if (menuName) {
-		// Since graphql doesn't allow recursive queries, we limit the depth of a menu to 6.
-		const menu = (
-			await graphql(
-				`
-					fragment MenuItemContent on MenuItem {
-						url
-						title
-					}
-
-					query GetMenu($menu: MenuAvailable!) {
-						menu(name: $menu) {
-							items {
-								...MenuItemContent
-								children {
-									...MenuItemContent
-									children {
-										...MenuItemContent
-										children {
-											...MenuItemContent
-											children {
-												...MenuItemContent
-												children {
-													...MenuItemContent
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				`,
-				{
-					menu: menuName,
-				},
-			)
-		)?.data?.menu?.items;
-
-		page.menu = menu;
-	}
+	const page = await getPageContent(id, status);
+	page.menu = await getPageMenu(page);
 
 	return {
 		props: { data: page },
