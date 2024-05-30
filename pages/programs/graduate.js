@@ -42,7 +42,7 @@ export default function ProgramsGraduate({ programs }) {
 									<span className="font-bold">{program.title}</span>
 								</div>
 							}
-							footer={program?.degrees?.map((type) => toTitleCase(type)).join(', ')}
+							footer={program?.degrees?.join(', ')}
 						/>
 					)}
 				>
