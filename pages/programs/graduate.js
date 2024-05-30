@@ -28,8 +28,6 @@ export default function ProgramsGraduate({ programs }) {
 			<Container centered>
 				<Heading level={1}>Graduate Programs at the University of Guelph</Heading>
 
-				<ProgramNavigation />
-
 				<ProgramSearch
 					programs={programs}
 					filterer={filter}

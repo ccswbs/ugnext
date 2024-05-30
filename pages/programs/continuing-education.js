@@ -24,8 +24,6 @@ export default function ProgramsContinuingEducation({ programs }) {
       <Container centered>
         <Heading level={1}>Continuing Education at the University of Guelph</Heading>
 
-        <ProgramNavigation />
-
         <ProgramSearch programs={programs} />
       </Container>
     </Layout>

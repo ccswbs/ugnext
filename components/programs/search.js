@@ -2,8 +2,10 @@ import { TextInput } from '@/components/text-input';
 import { Select } from '@/components/select';
 import { toTitleCase } from '@/lib/string-utils';
 import { useSearch } from '@/lib/use-search';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { UnstyledLink } from '@/components/link';
+import { ProgramNavigation } from '@/components/programs/navigation';
+import { Card } from '@/components/card';
 
 export const ProgramSearch = ({ programs, children, filterer, render }) => {
 	const [input, setInput] = useState('');
@@ -30,15 +32,7 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 		return filtered?.map(
 			typeof render === 'function'
 				? render
-				: (program) => (
-						<UnstyledLink
-							className="focus:visible:ring-offset-2 flex items-center bg-light-blue-50 p-5 transition hover:scale-105 hover:bg-light-blue-100 focus:scale-105 focus:bg-light-blue-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-light-blue"
-							href={program.url}
-							key={program.id + program.url}
-						>
-							{program.title}
-						</UnstyledLink>
-					),
+				: (program) => <Card href={program.url} title={<span className="flex items-center">{program.title}</span>} />,
 		);
 	}, [filterer, render, results, selectedTypes]);
 
@@ -63,6 +57,8 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 
 					{children}
 				</div>
+
+				<ProgramNavigation />
 
 				<div className="flex flex-col justify-between"></div>
 			</div>

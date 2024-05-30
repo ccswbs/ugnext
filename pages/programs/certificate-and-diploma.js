@@ -24,8 +24,6 @@ export default function ProgramsCertificateAndDiploma({ programs }) {
 			<Container centered>
 				<Heading level={1}>Certificate and Diplomas at the University of Guelph</Heading>
 
-				<ProgramNavigation />
-
 				<ProgramSearch programs={programs} />
 			</Container>
 		</Layout>
