@@ -8,6 +8,8 @@ import { ProgramSearch } from '@/components/programs/search';
 import { ProgramNavigation } from '@/components/programs/navigation';
 import { UnstyledLink } from '@/components/link';
 import { Select } from '@/components/select';
+import { toTitleCase } from '@/lib/string-utils';
+import { Card } from '@/components/card';
 
 export async function getStaticProps() {
 	const path = join(process.cwd(), 'data', 'programs', 'graduate.yml');
@@ -32,18 +34,16 @@ export default function ProgramsGraduate({ programs }) {
 					programs={programs}
 					filterer={filter}
 					render={(program) => (
-						<UnstyledLink
-							className="focus:visible:ring-offset-2 group flex flex-col justify-center transition hover:scale-105 focus:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-light-blue"
+						<Card
 							href={program.url}
 							key={program.id + program.url}
-						>
-							<span className="bg-light-blue-50 p-5 transition-colors group-hover:bg-light-blue-100">
-								{program.title}
-							</span>
-							<span className="border-t border-t-blue-200 bg-light-blue-100 px-5 py-2 transition-colors">
-								{program?.degrees?.join(', ')}
-							</span>
-						</UnstyledLink>
+							title={
+								<div className="flex flex-col justify-center text-lg">
+									<span className="font-bold">{program.title}</span>
+								</div>
+							}
+							footer={program?.degrees?.map((type) => toTitleCase(type)).join(', ')}
+						/>
 					)}
 				>
 					<div className="sm:ml-auto sm:w-1/3 md:w-1/4">
@@ -80,14 +80,11 @@ export default function ProgramsGraduate({ programs }) {
 										case 'doctor':
 											predicates.push(
 												(program) =>
-													program?.degrees?.includes('PhD') ||
-													program.degrees.some((degree) => degree.startsWith('D')),
+													program?.degrees?.includes('PhD') || program.degrees.some((degree) => degree.startsWith('D')),
 											);
 											break;
 										case 'masters':
-											predicates.push((program) =>
-												program.degrees.some((degree) => degree.startsWith('M')),
-											);
+											predicates.push((program) => program.degrees.some((degree) => degree.startsWith('M')));
 											break;
 										case 'diploma':
 											predicates.push((program) => program?.degrees?.includes('GDip'));

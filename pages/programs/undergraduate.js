@@ -5,8 +5,6 @@ import { Heading } from '@/components/heading';
 import { join } from 'path';
 import { readYamlFile } from '@/lib/file-utils';
 import { ProgramSearch } from '@/components/programs/search';
-import { ProgramNavigation } from '@/components/programs/navigation';
-import { UnstyledLink } from '@/components/link';
 import { toTitleCase } from '@/lib/string-utils';
 import { Card } from '@/components/card';
 
@@ -33,8 +31,21 @@ export default function ProgramsUndergraduate({ programs }) {
 						<Card
 							href={program.url}
 							key={program.id + program.url}
-							title={<span className="flex items-center">{program.title}</span>}
-							footer={program?.types?.map((type) => toTitleCase(type)).join(', ')}
+							title={
+								<div className="flex flex-col justify-center">
+									<span className="text-lg font-bold">{program.title}</span>
+									{program?.degrees?.map((degree, index) => (
+										<span key={index} className="text-sm text-black/65">
+											{degree}
+										</span>
+									))}
+								</div>
+							}
+							footer={
+								<span className="overflow-hidden text-ellipsis whitespace-nowrap">
+									{program?.types?.map((type) => toTitleCase(type)).join(', ')}
+								</span>
+							}
 						/>
 					)}
 				/>

@@ -32,7 +32,17 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 		return filtered?.map(
 			typeof render === 'function'
 				? render
-				: (program) => <Card href={program.url} title={<span className="flex items-center">{program.title}</span>} />,
+				: (program) => (
+						<Card
+							href={program.url}
+							title={<span className="flex items-center text-lg font-bold">{program.title}</span>}
+							footer={
+								<span className="overflow-hidden text-ellipsis whitespace-nowrap">
+									{program?.types?.map((type) => toTitleCase(type)).join(', ')}
+								</span>
+							}
+						/>
+					),
 		);
 	}, [filterer, render, results, selectedTypes]);
 

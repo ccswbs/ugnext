@@ -8,24 +8,24 @@ import { ProgramSearch } from '@/components/programs/search';
 import { ProgramNavigation } from '@/components/programs/navigation';
 
 export async function getStaticProps() {
-  const path = join(process.cwd(), 'data', 'programs', 'continuing-education.yml');
-  const programs = await readYamlFile(path);
+	const path = join(process.cwd(), 'data', 'programs', 'continuing-education.yml');
+	const programs = await readYamlFile(path);
 
-  return {
-    props: {
-      programs: programs,
-    },
-  };
+	return {
+		props: {
+			programs: programs,
+		},
+	};
 }
 
 export default function ProgramsContinuingEducation({ programs }) {
-  return (
-    <Layout title="Continuing Education">
-      <Container centered>
-        <Heading level={1}>Continuing Education at the University of Guelph</Heading>
+	return (
+		<Layout title="Continuing Education">
+			<Container centered>
+				<Heading level={1}>Continuing Education at the University of Guelph</Heading>
 
-        <ProgramSearch programs={programs} />
-      </Container>
-    </Layout>
-  );
+				<ProgramSearch programs={programs} />
+			</Container>
+		</Layout>
+	);
 }
