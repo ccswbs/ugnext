@@ -5,7 +5,6 @@ import { Heading } from '@/components/heading';
 import { join } from 'path';
 import { readYamlFile } from '@/lib/file-utils';
 import { ProgramSearch } from '@/components/programs/search';
-import { ProgramNavigation } from '@/components/programs/navigation';
 
 export async function getStaticProps() {
 	const path = join(process.cwd(), 'data', 'programs', 'continuing-education.yml');

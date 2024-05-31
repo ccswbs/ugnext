@@ -5,10 +5,7 @@ import { Heading } from '@/components/heading';
 import { join } from 'path';
 import { readYamlFile } from '@/lib/file-utils';
 import { ProgramSearch } from '@/components/programs/search';
-import { ProgramNavigation } from '@/components/programs/navigation';
-import { UnstyledLink } from '@/components/link';
 import { Select } from '@/components/select';
-import { toTitleCase } from '@/lib/string-utils';
 import { Card } from '@/components/card';
 
 export async function getStaticProps() {
