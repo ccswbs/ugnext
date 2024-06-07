@@ -45,7 +45,7 @@ export default function ProgramsGraduate({ programs }) {
 				>
 					<div className="sm:ml-auto sm:w-1/3 md:w-1/4">
 						<Select
-							label="Filter by degree type"
+							label={<span className="text-xl font-bold">Filter by degree type</span>}
 							multiple
 							options={[
 								{

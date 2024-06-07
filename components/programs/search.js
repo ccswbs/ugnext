@@ -51,7 +51,10 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 			<div className="flex flex-col gap-3">
 				<div className="flex flex-col gap-4 sm:flex-row">
 					<div className="flex-1">
-						<TextInput onInput={(value) => setInput(value)} label="What would you like to study?" />
+						<TextInput
+							onInput={(value) => setInput(value)}
+							label={<span className="font-bold text-xl">What would you like to study?</span>}
+						/>
 					</div>
 
 					<div className="sm:w-1/3 md:w-1/4">
@@ -61,7 +64,7 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 							onChange={(options) => {
 								setSelectedTypes(options);
 							}}
-							label="Filter by type"
+							label={<span className="font-bold text-xl">Filter by type</span>}
 						/>
 					</div>
 
