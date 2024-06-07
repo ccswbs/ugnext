@@ -74,7 +74,7 @@ async function getPageID(url) {
 async function getPageContent(id, status) {
 	const { data } = await graphql(
 		`
-			query GetPage($id: String = "", $status: Boolean = false) {
+			query GetPage($id: String = "", $status: Boolean = null) {
 				contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
 					results {
 						... on NodePage {
