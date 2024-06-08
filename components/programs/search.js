@@ -54,6 +54,7 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 						<TextInput
 							onInput={(value) => setInput(value)}
 							label={<span className="font-bold text-xl">What would you like to study?</span>}
+							placeholder="ex. programming, engineering, psychology, etc."
 						/>
 					</div>
 
