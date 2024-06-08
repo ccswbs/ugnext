@@ -3,7 +3,6 @@ import { Select } from '@/components/select';
 import { editDistance, strncmp, toTitleCase } from '@/lib/string-utils';
 import { useSearch } from '@/lib/use-search';
 import React, { useMemo, useState } from 'react';
-import { UnstyledLink } from '@/components/link';
 import { ProgramNavigation } from '@/components/programs/navigation';
 import { Card } from '@/components/card';
 import { stemmer } from 'stemmer';
