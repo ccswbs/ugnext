@@ -1,0 +1,94 @@
+title: Biostatistics
+slug: biostatistics
+url: #
+types:
+  - thesis-based
+  - course-based
+tags:
+  - biology
+  - science
+  - health
+  - medical
+degrees:
+  - id: PHD.BST
+    degree_type: PhD
+    degree_name: Doctor of Philosophy
+    program_type: thesis-based
+    delivery_method: In person
+    program_length: 48 Months
+    part_time_available: Yes
+    intake_term_domestic:
+      - name: Summer
+        deadline: May 1, 2024
+      - name: Fall
+        deadline: September 1, 2024
+      - name: Winter
+        deadline: January 1, 2025
+    intake_term_international:
+      - name: Fall
+        deadline: May 1, 2024
+    admission_average: A- (80-84%)
+    collaborative_specializations:
+      - Neuroscience
+      - Regenerative Medicine
+      - One Health
+      - Toxicology
+    overview_html: |
+      <p>Biostatistics is a research oriented department with dynamic hands on educational programs for both undergraduates and graduate students. Research and teaching programs in MBST revolve around the basic sciences relevant to animal development and wellbeing. Our department receives $6-7million in research funding each year, which is used in part to support approximately 130 graduate students at any one time enrolled in MSc and PhD programs. Our graduate student population represents over 20 different countries, which reflects our many international connections and collaborations.</p> 
+    fields_of_study:
+      - Clinical Pharmacology
+      - Comparative Medicine
+      - Small Animal Medicine
+      - Small Animal Surgery
+      - Large Animal Medicine
+      - Large Animal Surgery
+      - Emergency Medicine and Critical Care
+      - Anesthesiology
+      - Radiology
+      - Neurology
+      - Oncology
+      - Clinical Nutrition
+      - Clinical Pathology
+      - Anatomic Pathology
+      - Laboratory-Animal Science
+      - Clinical Microbiology
+      - Wildlife and Zoo Animal Medicine and Pathology
+      - Avian and Exotic Medicine and Pathology
+      - Fish Pathology
+      - Clinical Epidemiology
+      - Ruminant Health Management
+      - Swine Health Management
+      - Theriogenology
+  - id: MSC.BST
+    degree_type: MSc
+    degree_name: Master of Science
+    program_type: thesis-based
+    delivery_method: In person
+    program_length: 16 - 24 Months
+    part_time_available: No
+    intake_term_domestic:
+      - name: Summer
+        deadline: May 1, 2024
+      - name: Fall
+        deadline: September 1, 2024
+      - name: Winter
+        deadline: January 1, 2025
+    intake_term_international:
+      - name: Fall
+        deadline: May 1, 2024
+      - name: Winter
+        deadline: June 1, 2025
+    admission_average: B+ (77-79%)
+    collaborative_specializations:
+      - Artificial Intelligence
+      - Regenerative Medicine
+      - One Health
+      - Toxicology
+      - International Development Studies
+      - Neuroscience
+    overview_html: |
+      <p>Biostatistics is a research oriented department with dynamic hands on educational programs for both undergraduates and graduate students. Research and teaching programs in MBST revolve around the basic sciences relevant to animal development and wellbeing. Our department receives $6-7million in research funding each year, which is used in part to support approximately 130 graduate students at any one time enrolled in MSc and PhD programs. Our graduate student population represents over 20 different countries, which reflects our many international connections and collaborations.</p> 
+    fields_of_study:
+      - Theriogenology
+      - Clinical Epidemiology
+
