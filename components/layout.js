@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGryphonStatue } from '@awesome.me/kit-7993323d0c/icons/kit/custom';
 import { Transition } from '@headlessui/react';
 import { faSpinner } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
+import { twMerge } from 'tailwind-merge';
 
-export const Layout = ({ children, menu, footerLinks, title = '', description = '' }) => {
+export const Layout = ({ children, className, menu, footerLinks, title = '', description = '' }) => {
 	const { isPreview, isFallback } = useRouter();
 
 	return (
@@ -50,7 +51,7 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 				)}
 
 				<Header menu={menu} />
-				<main className="flex-1 pb-4 text-base">{children}</main>
+				<main className={twMerge('flex-1 pb-4 text-base', className)}>{children}</main>
 				<Footer links={footerLinks} />
 			</div>
 		</>

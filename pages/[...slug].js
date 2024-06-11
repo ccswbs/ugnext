@@ -4,6 +4,7 @@ import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { twJoin } from 'tailwind-merge';
+import { Hero } from '@/components/hero';
 
 export async function getStaticPaths() {
 	// Here we can decide which pages get pre-rendered.
@@ -126,15 +127,15 @@ async function getPageMenu(page) {
 				menu(name: $menu) {
 					items {
 						...MenuItemContent
-						children {
+						links: children {
 							...MenuItemContent
-							children {
+							links: children {
 								...MenuItemContent
-								children {
+								links: children {
 									...MenuItemContent
-									children {
+									links: children {
 										...MenuItemContent
-										children {
+										links: children {
 											...MenuItemContent
 										}
 									}
@@ -150,11 +151,13 @@ async function getPageMenu(page) {
 		},
 	);
 
-	return data?.menu?.items;
+	const menu = data?.menu?.items ?? null
+
+	return data?.menu?.items ?? null;
 }
 
 export async function getStaticProps(context) {
-	const isPreview = context?.preview || process.env.NODE_ENV !== 'production';
+	const isPreview = context?.preview;
 	const status = isPreview ? null : true;
 
 	// Try to get the ID of the page the user is requesting.
@@ -171,6 +174,12 @@ export async function getStaticProps(context) {
 	const page = await getPageContent(id, status);
 	page.menu = await getPageMenu(page);
 
+	// Get rid of any data that doesn't need to be passed to the page.
+	delete page.primaryNavigation;
+
+	// Flatten image prop
+	page.image = page?.image?.image ?? null;
+
 	return {
 		props: { data: page },
 	};
@@ -179,11 +188,24 @@ export async function getStaticProps(context) {
 export default function Page({ data }) {
 	const { isFallback } = useRouter();
 
+	console.log(data.menu ?? null);
+
 	return (
-		<Layout>
-			<Container className={twJoin(isFallback && 'hidden')} centered>
-				<Heading level={1}>{data?.title}</Heading>
-			</Container>
+		<Layout className={twJoin(isFallback && 'hidden')}>
+			{data?.image ? (
+				<Hero
+					variant="ch"
+					src={data.image.url}
+					height={data.image.height}
+					width={data.image.width}
+					alt={data.image.alt}
+					title={data.title}
+				/>
+			) : (
+				<Container centered>
+					<Heading level={1}>{data?.title}</Heading>
+				</Container>
+			)}
 		</Layout>
 	);
 }
