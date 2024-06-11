@@ -146,7 +146,7 @@ async function getPageMenu(page) {
 			}
 		`,
 		{
-			menu: menuName,
+			menu: name,
 		},
 	);
 
