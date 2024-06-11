@@ -127,15 +127,15 @@ async function getPageMenu(page) {
 				menu(name: $menu) {
 					items {
 						...MenuItemContent
-						links: children {
+						children {
 							...MenuItemContent
-							links: children {
+							children {
 								...MenuItemContent
-								links: children {
+								children {
 									...MenuItemContent
-									links: children {
+									children {
 										...MenuItemContent
-										links: children {
+										children {
 											...MenuItemContent
 										}
 									}
@@ -151,7 +151,7 @@ async function getPageMenu(page) {
 		},
 	);
 
-	const menu = data?.menu?.items ?? null
+	const menu = data?.menu?.items ?? null;
 
 	return data?.menu?.items ?? null;
 }
