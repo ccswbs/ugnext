@@ -1,18 +1,14 @@
 import { useRouter } from 'next/router';
-import { Layout } from '@/components/layout';
-import { Container } from '@/components/container';
-import { Heading } from '@/components/heading';
-import { twJoin } from 'tailwind-merge';
 import { getAllGraduatePrograms } from '@/lib/get-all-graduate-programs';
 import { getGraduateProgram } from '@/lib/get-graduate-program';
-import { GraduateProgramHero } from '@/components/programs/graduate/hero'
-import { GraduateProgramSummary } from '@/components/programs/graduate/summary';
-import { GraduateProgramInfo } from '@/components/programs/graduate/information';
+import { GraduateProgramDegreePage } from '@/components/programs/graduate/program-degree';
+import { GraduateProgramPage } from '@/components/programs/graduate/program';
 
 export async function getStaticProps(context) {
-	// Try to get data of the program the user is requesting.
-	const data = await getGraduateProgram(context?.params?.slug);
-  // const data = await getGraduateProgram("thesis-based-phd","biostatistics");
+  // Try to get data of the program the user is requesting.
+  // Path of the data must match slug (e.g., biostatistics.yml must live under data/programs/graduate)
+  const path = context?.params?.slug.join('/');
+	const data = await getGraduateProgram(path);
 
 	return {
 		props: { data },
@@ -20,7 +16,6 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  let paths = [];
 
   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
     return {
@@ -48,24 +43,13 @@ export async function getStaticPaths() {
 export default function Program({data}) {
 	const { isFallback } = useRouter();
 
-	return (
-		<Layout title="Graduate Programs">
-			{/* <GraduateProgramHero /> */}
-			<Container className={twJoin(isFallback && 'hidden')} centered>
+  if(data?.program_parent){
+    return (
+      <GraduateProgramDegreePage data={data} isFallback={isFallback} />
+    );
+  }
 
-
-
-        <Heading level={1}> {data?.title} | Master of Science - Course-based (MSc)</Heading>
-        <div className="pt-1 grid xl:grid-cols-12 xl:gap-x-10">
-            <div className='xl:col-span-9'>
-              <GraduateProgramInfo />
-            </div>
-
-            <div className='xl:col-span-3'>
-              <GraduateProgramSummary />
-            </div>
-          </div>
-			</Container>
-		</Layout>
+  return (
+		<GraduateProgramPage data={data} isFallback={isFallback} />
 	);
 }
