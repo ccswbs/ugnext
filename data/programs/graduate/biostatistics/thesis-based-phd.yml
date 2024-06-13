@@ -1,0 +1,107 @@
+id: PHD.BST
+slug: biostatistics/thesis-based-phd
+degree_type: PhD
+degree_name: Doctor of Philosophy
+program_type: thesis-based
+delivery_method: In person
+program_length: 48 Months
+part_time_available: Yes
+intake_term_domestic:
+  - name: Summer
+    deadline: May 1, 2024
+  - name: Fall
+    deadline: September 1, 2024
+  - name: Winter
+    deadline: January 1, 2025
+intake_term_international:
+  - name: Fall
+    deadline: May 1, 2024
+admission_average: A- (80-84%)
+collaborative_specializations:
+  - Neuroscience
+  - Regenerative Medicine
+  - One Health
+  - Toxicology
+overview_html: |
+  <p>Biostatistics is a research oriented department with dynamic hands on educational programs for both undergraduates and graduate students. Research and teaching programs in MBST revolve around the basic sciences relevant to animal development and wellbeing. Our department receives $6-7million in research funding each year, which is used in part to support approximately 130 graduate students at any one time enrolled in MSc and PhD programs. Our graduate student population represents over 20 different countries, which reflects our many international connections and collaborations.</p> 
+fields_of_study:
+  - Clinical Pharmacology
+  - Comparative Medicine
+  - Small Animal Medicine
+  - Small Animal Surgery
+  - Large Animal Medicine
+  - Large Animal Surgery
+  - Emergency Medicine and Critical Care
+  - Anesthesiology
+  - Radiology
+  - Neurology
+  - Oncology
+  - Clinical Nutrition
+  - Clinical Pathology
+  - Anatomic Pathology
+  - Laboratory-Animal Science
+  - Clinical Microbiology
+  - Wildlife and Zoo Animal Medicine and Pathology
+  - Avian and Exotic Medicine and Pathology
+  - Fish Pathology
+  - Clinical Epidemiology
+  - Ruminant Health Management
+  - Swine Health Management
+  - Theriogenology
+application_document_list:
+  - Transcripts
+  - Statement of Interest
+  - Writing Sample
+  - Resume
+  - Academic References
+  - English Language Proficiency (International)"
+application_document_deadline_domestic:
+  - name: Summer
+    deadline: May 15, 2024
+  - name: Fall
+    deadline: September 15, 2024
+  - name: Winter
+    deadline: January 15, 2025
+application_document_deadline_international:
+  - name: Fall
+    deadline: September 15, 2024
+application_instructions: |
+  <h3>Transcripts:</h3>
+  <ul>
+    <li>Unofficial transcripts from all post-secondary institutions in English, including transcript/grading legends.</li>
+    <li>Include transcripts for non-degree courses and exchange programs.</li>
+    <li>Official transcripts required only if offered admission.</li>
+    <li>WES evaluations not accepted.</li>
+    <li>University of Guelph graduates can upload an unofficial transcript (screen capture from WebAdvisor).</li>
+  </ul>
+  <h3>Statement of Interest</h3>
+    <li>Explain your background and interest in the degree and a public health career.</li>
+    <li>If combining MPH with IDS specialization, indicate experience in international development.</li>
+    <li>One page, 12 pt. font, single-spaced, 1-inch margin.</li>
+  <h3>Resume</h3>
+    <li>Focus on previous public health experience and interactions.</li>
+  <h3>Two Letters of Reference:</h3>
+    <li>Both academic and professional references are acceptable; at least one academic reference is recommended.</li>
+    <li>Referees should expand on ratings and discuss your academic suitability, likelihood of success, and interest in public health.</li>
+    <li>Referees must submit their responses directly via the provided electronic link.</li>
+    <li>Use the Referee Request GryphForm for revisions. Application considered complete only when all documents are received.</li>
+  <h3>Proof of English Proficiency</h3>
+    <li>Required if your first language is not English. Upload an acceptable test score to WebAdvisor.</li>
+    <li>If requesting a waiver, upload a letter detailing the reason.</li>
+    <li>Failure to upload either an English test score or waiver request will prevent the application from moving forward.</li>
+admission_requirements: |
+  <p>Completion of an honours (four-year) baccalaureate degree or equivalent in the social or applied human arts or sciences (e.g. family relations, sociology, psychology, social work), with a minimum 75% average in the last two years of study.</p>
+  <p>Completion of a social science research methods course with a grade of 70% or higher. Note: Applicants who demonstrate relevant work or volunteer experience are preferred, however, we will not accept applicants who are regulated in Ontario to practice the profession of psychotherapy or its equivalent.</p>
+admission_review_timeline: |
+  <p>All information in your application package will be reviewed by the MPH Admissions Committee. Applications will be ranked using admissions criteria (academic background and performance, transcripts, statement of interest, referee assessments, and relevant experience). Annually, 25 applicants are offered admission. It is not expected that the program will increase in size from its current target of 25 full-time students, as this is central to the teaching delivery (didactic lecture integrated with discussion through case-based teaching and community-engaged learning). Successful domestic and international applicants will hear back mid to late April via WebAdvisor. If you do not receive communication about your application by that time, you can infer that you were not selected.</p>
+admission_contact:
+  - name: Dr. Jeff Caswell
+    title: Graduate Program Coordinator
+    phone: 519-824-4120 ext 54555
+    email: jcaswell@uoguelph.ca
+  - name: Jessie Beer
+    title: Graduate Program Assistant
+    phone: 519-824-4120 ext 54725
+    email: pathgrad@uoguelph.ca
+secure_supervisor: |
+  <p>As part of the application requirements, you are required to secure a faculty advisor to supervise your program. Our faculty profiles on the Department of Biostatistics website describe research programs in more detail. Contact the faculty member you are interested in working with to discuss potential research opportunities. We recommend connecting via email.</p>
