@@ -18,7 +18,7 @@ export const GraduateProgramDegreePage = ({ data, isFallback }) => (
             </div>
 
             <div className='xl:col-span-3'>
-              <GraduateProgramSummary />
+              <GraduateProgramSummary data={data} />
             </div>
           </div>
 			</Container>
