@@ -188,8 +188,6 @@ export async function getStaticProps(context) {
 export default function Page({ data }) {
 	const { isFallback } = useRouter();
 
-	console.log(data.menu ?? null);
-
 	return (
 		<Layout className={twJoin(isFallback && 'hidden')}>
 			{data?.image ? (
