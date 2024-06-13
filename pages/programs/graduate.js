@@ -39,7 +39,11 @@ export default function ProgramsGraduate({ programs }) {
 									<span className="font-bold">{program.title}</span>
 								</div>
 							}
-							footer={program?.degrees?.join(', ')}
+							footer={
+								program?.types?.includes('collaborative-specialization')
+									? 'Collaborative Specialization'
+									: program?.degrees?.join(', ')
+							}
 						/>
 					)}
 				>
