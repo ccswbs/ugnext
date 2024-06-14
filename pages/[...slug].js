@@ -4,7 +4,7 @@ import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { twJoin } from 'tailwind-merge';
 import { Hero } from '@/components/hero';
-import { getPageContent, getPageID, getPageMenu, getPaths } from '@/lib/data/drupal/basic-pages';
+import { getBreadcrumbs, getPageContent, getPageID, getPageMenu, getPaths } from '@/lib/data/drupal/basic-pages';
 
 export async function getStaticPaths() {
 	return {
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 	};
 }
 export async function getStaticProps(context) {
-	const preview = context?.preview ? null : true;
+	const status = context?.preview ? null : true;
 
 	// Try to get the ID of the page the user is requesting.
 	const id = await getPageID('/' + context.params.slug.join('/'));
@@ -26,7 +26,7 @@ export async function getStaticProps(context) {
 	}
 
 	// Now that we have the ID for the page we can request its content from its latest revision.
-	const page = await getPageContent(id, preview);
+	const page = await getPageContent(id, status);
 	page.menu = await getPageMenu(page);
 
 	// Get rid of any data that doesn't need to be passed to the page.
@@ -34,6 +34,7 @@ export async function getStaticProps(context) {
 
 	// Flatten image prop
 	page.image = page?.image?.image ?? null;
+	page.breadcrumbs = await getBreadcrumbs(context.params.slug, status);
 
 	return {
 		props: { data: page },
