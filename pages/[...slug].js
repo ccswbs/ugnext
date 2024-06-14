@@ -8,7 +8,7 @@ import { getBreadcrumbs, getPageContent, getPageID, getPageMenu, getPaths } from
 
 export async function getStaticPaths() {
 	return {
-		paths: await getPaths(),
+		paths: [],
 		fallback: true,
 	};
 }
