@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { getAllGraduatePrograms } from '@/lib/get-all-graduate-programs';
-import { getGraduateProgram } from '@/lib/get-graduate-program';
+import { getAllGraduatePrograms } from '@/lib/yaml/get-all-graduate-programs';
+import { getGraduateProgram } from '@/lib/yaml/get-graduate-program';
 import { GraduateProgramDegreePage } from '@/components/programs/graduate/program-degree';
 import { GraduateProgramPage } from '@/components/programs/graduate/program';
 
