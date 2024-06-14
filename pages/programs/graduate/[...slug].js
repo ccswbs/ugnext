@@ -6,7 +6,8 @@ import { GraduateProgramPage } from '@/components/programs/graduate/program';
 
 export async function getStaticProps(context) {
   // Try to get data of the program the user is requesting.
-  // Path of the data must match slug (e.g., biostatistics.yml must live under data/programs/graduate)
+  // Path of the data must match slug
+  // (e.g., programs/graduate/biostatistics data matches data/programs/graduate/biostatistics.yml)
   const path = context?.params?.slug.join('/');
 	const data = await getGraduateProgram(path);
 
