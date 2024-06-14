@@ -13,8 +13,7 @@ export async function getStaticPaths() {
 	};
 }
 export async function getStaticProps(context) {
-	const isPreview = context?.preview;
-	const status = isPreview ? null : true;
+	const preview = context?.preview ? null : true;
 
 	// Try to get the ID of the page the user is requesting.
 	const id = await getPageID('/' + context.params.slug.join('/'));
@@ -27,7 +26,7 @@ export async function getStaticProps(context) {
 	}
 
 	// Now that we have the ID for the page we can request its content from its latest revision.
-	const page = await getPageContent(id, status);
+	const page = await getPageContent(id, preview);
 	page.menu = await getPageMenu(page);
 
 	// Get rid of any data that doesn't need to be passed to the page.
