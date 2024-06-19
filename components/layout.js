@@ -9,14 +9,33 @@ import { Transition } from '@headlessui/react';
 import { faSpinner } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 import { twMerge } from 'tailwind-merge';
 
-export const Layout = ({ children, className, menu, footerLinks, title = '', description = '' }) => {
+export const Layout = ({ children, className, menu, footerLinks, title = '', description = '', image = null }) => {
 	const { isPreview, isFallback } = useRouter();
+	const pageTitle = title ? `${title} | University of Guelph` : 'University of Guelph';
+	const pageDescription =
+		description ||
+		'The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life';
+	const pageImage = image ?? {
+		src: 'https://www.uoguelph.ca/img/ug-social-thumb.jpg',
+		alt: 'University of Guelph logo',
+	};
 
 	return (
 		<>
 			<Head>
-				<title>{`${title} | University of Guelph`}</title>
-				<meta name="description" content={description} />
+				<title>{pageTitle}</title>
+				<meta name="description" content={pageDescription} />
+				<meta property="og:title" content={pageTitle} />
+				<meta property="og:description" content={pageDescription} />
+				<meta property="og:type" content="website" />
+				<meta property="og:image" content={pageImage.src} />
+				<meta property="og:image:alt" content={pageImage.alt} />
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:creator" content="@uofg" />
+				<meta name="twitter:description" content={pageDescription} />
+				<meta name="twitter:title" content={pageTitle} />
+				<meta name="twitter:image" content={pageImage.src} />
+				<meta name="twitter:image:alt" content={pageImage.alt} />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 

@@ -45,7 +45,7 @@ export default function Page({ data }) {
 	const { isFallback } = useRouter();
 
 	return (
-		<Layout className={twJoin(isFallback && 'hidden')}>
+		<Layout className={twJoin(isFallback && 'hidden')} title={data?.title}>
 			{data?.image ? (
 				<Hero
 					variant="ch"
