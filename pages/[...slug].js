@@ -4,7 +4,14 @@ import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { twJoin } from 'tailwind-merge';
 import { Hero } from '@/components/hero';
-import { getBreadcrumbs, getPageContent, getPageID, getPageMenu, getPaths } from '@/lib/data/drupal/basic-pages';
+import {
+	getBreadcrumbs,
+	getPageContent,
+	getPageID,
+	getPageMenu,
+	getPaths,
+	menuToNavigation,
+} from '@/lib/data/drupal/basic-pages';
 
 export async function getStaticPaths() {
 	return {
@@ -44,7 +51,7 @@ export default function Page({ data }) {
 	const { isFallback } = useRouter();
 
 	return (
-		<Layout className={twJoin(isFallback && 'hidden')} title={data?.title}>
+		<Layout className={twJoin(isFallback && 'hidden')} title={data?.title} menu={data?.menu}>
 			{data?.image ? (
 				<Hero
 					variant="ch"
