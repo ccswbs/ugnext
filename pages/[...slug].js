@@ -34,7 +34,6 @@ export async function getStaticProps(context) {
 
 	// Flatten image prop
 	page.image = page?.image?.image ?? null;
-	page.breadcrumbs = await getBreadcrumbs(context.params.slug, status);
 
 	return {
 		props: { data: page },
