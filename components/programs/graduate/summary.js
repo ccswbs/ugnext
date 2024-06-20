@@ -6,36 +6,59 @@ export const GraduateProgramSummary = ({ data }) => {
     return <div>No data to see here :(</div>;
   }
 
-  // Helper function to render deadline lists
-  const renderDeadlines = (termName, domesticDeadline, internationalDeadline) => (
-    <>
-      <Heading level={4}>{termName} Entry</Heading>
-      <ul>
-        {domesticDeadline && <li>Domestic: {domesticDeadline}</li>}
-        {internationalDeadline && <li>International: {internationalDeadline}</li>}
-      </ul>
-    </>
-  );
-
-  // Find deadlines for each term
-  const findDeadline = (term, intakeArray) => intakeArray.find(item => item.name === term)?.deadline;
-
-  return (
-    <div>
-      <Heading level={2}>Program Summary</Heading>
+  return (<>
+    {/* <Heading level={2}>Program Summary</Heading> */}
+    <div className="mx-auto p-5 bg-gray-900">      
       <dl>
-        <dt>Degree:</dt><dd>{data.degree_type} - {data.degree_name}</dd>
-        <dt>Program type:</dt> <dd>{data.program_type}</dd>
-        <dt>Duration:</dt><dd>{data.program_length}</dd>
-        <dt>Delivery:</dt><dd>{data.delivery_method}</dd>
-        <dt>Part-time available:</dt><dd>{data.part_time_available ? 'Yes' : 'No'}</dd>
-        <dt>Admission Average:</dt><dd>{data.admission_average}</dd>
+        <dt className="text-yellow-400 font-bold">Degree</dt>
+        <dd className="text-white leading-relaxed">{data.degree_type} - {data.degree_name}</dd>
+
+        <dt className="text-yellow-400 font-bold">Delivery</dt>
+        <dd className="text-white">{data.delivery_method}</dd>
+        
+        <dt className="text-yellow-400 font-bold">Duration</dt>
+        <dd className="text-white">
+          {data.program_length}
+          {data.part_time_available && (
+            <>
+              <br />
+              part-time is available
+            </>
+          )}
+        </dd>
+        
+        <dt className="text-yellow-400 font-bold">Admission Average</dt>
+        <dd className="text-white">{data.admission_average}</dd>
+
+        <dt className="text-yellow-400 font-bold">Program type</dt>
+        <dd className="text-white">{data.program_type}</dd>
       </dl>
-      <Heading level={3}>Program Entry & Deadlines</Heading>
-      {renderDeadlines('Summer', findDeadline('Summer', data.intake_term_domestic), findDeadline('Summer', data.intake_term_international))}
-      {renderDeadlines('Fall', findDeadline('Fall', data.intake_term_domestic), findDeadline('Fall', data.intake_term_international))}
-      {renderDeadlines('Winter', findDeadline('Winter', data.intake_term_domestic), findDeadline('Winter', data.intake_term_international))}
+      <Heading level={3} className="text-yellow-400">Intake Terms</Heading>
+      <p className="text-white">Domestic: Summer, Fall, Winter</p>
+      <p className="text-white">International: Summer, Fall, Winter</p>
+      <Heading level={3} className="text-yellow-400">Intake Deadline</Heading>
+      {data.intake_term_domestic && <>
+      <Heading level={4} className="text-yellow-400">Domestic</Heading>
+      <ul>
+        {data.intake_term_domestic.map(term => (
+        <li key={term.name} className="text-white">
+          {term.deadline} ({term.name})
+        </li>
+        ))}
+      </ul>
+      </>}
+      
+      {data.intake_term_international && <>
+      <Heading level={4} className="text-yellow-400">International</Heading>
+      <ul>
+        {data.intake_term_international.map(term => (
+        <li key={term.name} className="text-white">
+          {term.deadline} ({term.name})
+        </li>
+        ))}
+      </ul>
+      </>}
     </div>
-  );
+  </>);
 };
 
