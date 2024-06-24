@@ -1,5 +1,6 @@
 import React from 'react';
 import { Heading } from '@/components/heading';
+import { HtmlParser } from '@/components/html-parser';
 import { Link } from '@/components/link';
 import { List, ListItem } from '@/components/list';
 
@@ -36,7 +37,7 @@ export const GraduateProgramSummary = ({ data }) => {
         </dl>
         <div id="intake-terms-deadlines">
           <Heading level={3} className="mb-2 mt-4 text-xl text-yellow-400">
-            Intake Terms &amp; Deadlines
+            Intake Terms & Deadlines
           </Heading>
           {data.intake_term_domestic && (
             <div id="intake-domestic">
@@ -67,15 +68,20 @@ export const GraduateProgramSummary = ({ data }) => {
             </div>
           )}
         </div>
-        <div id="program-resource-links" className="!leading-relaxed">
-          <ul>
-            <li><Link href="#" className="text-light-blue-300">Collaborative Specializations</Link></li>
-            <li><Link href="#" className="text-light-blue-300">Graduate Calendar</Link></li>
-            <li><Link href="#" className="text-light-blue-300">Express Your Interest</Link></li>
-            <li><Link href="#" className="text-light-blue-300">Print this Summary</Link></li>
-            <li><Link href="#" className="text-light-blue-300">Download the Graduate &amp; Postdoctoral Studies Viewbook</Link></li>
-          </ul>
-        </div>
+        {data.resource_links && (
+          <div id="program-resource-links" className="!leading-relaxed">
+            <ul>
+              {data.resource_links.map((resource) => (
+                <li key={resource.name}>
+                  <HtmlParser html={resource.icon} />{' '}
+                  <Link href={resource.url} className="text-light-blue-300">
+                    {resource.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </>
   );
