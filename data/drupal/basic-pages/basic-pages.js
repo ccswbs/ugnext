@@ -2,6 +2,7 @@ import { graphql } from '@/lib/drupal';
 import { toTitleCase } from '@/lib/string-utils';
 import getPageIDQuery from './get-page-id.graphql';
 import getPageQuery from './get-page-content.graphql';
+import getPageMenuQuery from 'get-page-menu.graphql';
 
 export const getPaths = async () => {
 	// Here we can decide which pages get pre-rendered.
@@ -67,40 +68,9 @@ export const getPageMenu = async (page) => {
 		return null;
 	}
 
-	const { data } = await graphql(
-		`
-			fragment MenuItemContent on MenuItem {
-				url
-				title
-			}
-
-			query GetMenu($menu: MenuAvailable!) {
-				menu(name: $menu) {
-					items {
-						...MenuItemContent
-						children {
-							...MenuItemContent
-							children {
-								...MenuItemContent
-								children {
-									...MenuItemContent
-									children {
-										...MenuItemContent
-										children {
-											...MenuItemContent
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		`,
-		{
-			menu: name,
-		},
-	);
+	const { data } = await graphql(getPageMenuQuery, {
+		menu: name,
+	});
 
 	return data?.menu?.items ?? null;
 };

@@ -1,31 +1,5 @@
-query GetPage($id: String = "", $status: Boolean = false) {
-	contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
-		results {
-			... on NodePage {
-				primaryNavigation {
-					...Navigation
-				}
-				image {
-					...Image
-				}
-				title
-				widgets {
-					...Accordion
-					...GeneralText
-					...Buttons
-					...Links
-					...MediaText
-					...ButtonSection
-					...Tabs
-					...Statistics
-					...Section
-				}
-				changed {
-					timestamp
-				}
-			}
-		}
-	}
+fragment Tag on TermTag {
+	name
 }
 
 fragment Navigation on TermPrimaryNavigation {
@@ -75,7 +49,7 @@ fragment Audio on MediaAudio {
 fragment Accordion on ParagraphAccordionBlock {
 	__typename
 	headingLevel
-	title
+	accordionTitle: title
 	text {
 		processed
 	}
@@ -116,6 +90,9 @@ fragment Links on ParagraphLinksWidget {
 			}
 			image {
 				...Image
+				...Video
+				...RemoteVideo
+				...Audio
 			}
 			description
 		}
@@ -203,5 +180,84 @@ fragment Section on ParagraphSection {
 		...ButtonSection
 		...Tabs
 		...Statistics
+	}
+}
+
+fragment Testimonial on NodeTestimonial {
+	body {
+		processed
+		summary
+	}
+	profile {
+		url
+		title
+	}
+	type {
+		... on TermTestimonialType {
+			name
+		}
+	}
+	title
+}
+
+fragment TestimonialSlider on ParagraphTestimonialSlider {
+	__typename
+	title
+	byTitle {
+		...Testimonial
+	}
+	byTags {
+		...Tag
+	}
+}
+
+fragment Story on ParagraphStoryWidget {
+	__typename
+	content {
+		...Statistics
+		... on ParagraphStoryImageCutoutBackground {
+			backgroundImage {
+				...Image
+			}
+			foregroundImage {
+				...Image
+			}
+			title
+			text {
+				processed
+			}
+		}
+	}
+}
+
+query GetPage($id: String = "", $status: Boolean = false) {
+	contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
+		results {
+			... on NodePage {
+				primaryNavigation {
+					...Navigation
+				}
+				image {
+					...Image
+				}
+				title
+				widgets {
+					...Accordion
+					...GeneralText
+					...Buttons
+					...Links
+					...MediaText
+					...ButtonSection
+					...Tabs
+					...Statistics
+					...TestimonialSlider
+					...Story
+					...Section
+				}
+				changed {
+					timestamp
+				}
+			}
+		}
 	}
 }
