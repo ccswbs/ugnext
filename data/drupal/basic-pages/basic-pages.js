@@ -1,6 +1,8 @@
 import { graphql } from '@/lib/drupal';
 import { toTitleCase } from '@/lib/string-utils';
+import getPathsQuery from './get-paths.graphql';
 import getPageIDQuery from './get-page-id.graphql';
+import getPageTitleQuery from './get-page-title.graphql';
 import getPageQuery from './get-page-content.graphql';
 import getPageMenuQuery from 'get-page-menu.graphql';
 
@@ -14,23 +16,10 @@ export const getPaths = async () => {
 
 	while (hasNextPage && paths.length < limit) {
 		const results = (
-			await graphql(
-				`
-					query GetPages($page: Int = 0, $pageSize: Int = 100) {
-						content(filter: { type: "page", status: true }, page: $page, pageSize: $pageSize) {
-							results {
-								... on NodePage {
-									path
-								}
-							}
-						}
-					}
-				`,
-				{
-					page: page,
-					pageSize: pageSize,
-				},
-			)
+			await graphql(getPathsQuery, {
+				page: page,
+				pageSize: pageSize,
+			})
 		)?.data?.content?.results;
 
 		results?.length === pageSize ? page++ : (hasNextPage = false);
@@ -75,36 +64,15 @@ export const getPageMenu = async (page) => {
 	return data?.menu?.items ?? null;
 };
 
-export const getPageTitle = async (id, status) => {
-	const { data } = await graphql(
-		`
-			query GetPage($id: String = "", $status: Boolean = null) {
-				contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
-					results {
-						... on NodePage {
-							title
-						}
-					}
-				}
-			}
-		`,
-		{
-			id: id,
-			status: status,
-		},
-	);
-
-	return data?.contentRevisions?.results[0]?.title ?? null;
-};
-
 export const getBreadcrumbs = async (slug, status) => {
 	const crumbs = [];
 	const stack = slug.slice(0, -1);
 
 	while (stack.length > 0) {
 		const url = '/' + stack.join('/');
-		const id = await getPageID(url);
-		const title = await getPageTitle(id, status);
+		const title = await graphql(getPageTitleQuery, {
+			url: url,
+		})?.data?.route?.entity?.title;
 
 		crumbs.unshift({
 			title: title ? title : toTitleCase(stack[stack.length - 1]),
