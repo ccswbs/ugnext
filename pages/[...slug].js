@@ -11,7 +11,7 @@ import {
 	getPageMenu,
 	getPaths,
 	menuToNavigation,
-} from '@/lib/data/drupal/basic-pages';
+} from '@/data/drupal/basic-pages/basic-pages';
 
 export async function getStaticPaths() {
 	return {

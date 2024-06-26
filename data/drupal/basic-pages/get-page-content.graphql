@@ -1,0 +1,207 @@
+query GetPage($id: String = "", $status: Boolean = false) {
+	contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
+		results {
+			... on NodePage {
+				primaryNavigation {
+					...Navigation
+				}
+				image {
+					...Image
+				}
+				title
+				widgets {
+					...Accordion
+					...GeneralText
+					...Buttons
+					...Links
+					...MediaText
+					...ButtonSection
+					...Tabs
+					...Statistics
+					...Section
+				}
+				changed {
+					timestamp
+				}
+			}
+		}
+	}
+}
+
+fragment Navigation on TermPrimaryNavigation {
+	menuName
+}
+
+fragment Image on MediaImage {
+	__typename
+	image {
+		alt
+		height
+		width
+		url
+	}
+}
+
+fragment Video on MediaVideo {
+	video {
+		name
+		url
+		mime
+	}
+}
+
+fragment RemoteVideo on MediaRemoteVideo {
+	height
+	width
+	url
+	name
+	cc {
+		url
+		name
+	}
+	transcript {
+		name
+		url
+	}
+}
+
+fragment Audio on MediaAudio {
+	audio {
+		name
+		url
+	}
+}
+
+fragment Accordion on ParagraphAccordionBlock {
+	__typename
+	headingLevel
+	title
+	text {
+		processed
+	}
+}
+
+fragment GeneralText on ParagraphGeneralText {
+	__typename
+	body {
+		processed
+	}
+}
+
+fragment Buttons on ParagraphButtonWidget {
+	ctaHeading {
+		processed
+	}
+	fontAwesomeIcon
+	formattedTitle {
+		processed
+	}
+	link {
+		title
+		url
+	}
+	fontAwesomeIconColour {
+		... on TermColourVariable {
+			name
+		}
+	}
+}
+
+fragment Links on ParagraphLinksWidget {
+	links {
+		... on ParagraphLinkItem {
+			url {
+				title
+				url
+			}
+			image {
+				...Image
+			}
+			description
+		}
+	}
+}
+
+fragment MediaText on ParagraphMediaText {
+	__typename
+	heading: title
+	media {
+		...Image
+	}
+	mediaAlignment
+	mediaImageSize
+	sectionColumn {
+		... on TermSectionColumn {
+			name
+		}
+	}
+	headingLevel
+	description {
+		processed
+	}
+	background {
+		... on TermBgColor {
+			name
+		}
+	}
+}
+
+fragment ButtonSection on ParagraphSectionButton {
+	__typename
+	buttons {
+		...Buttons
+	}
+}
+
+fragment Tabs on ParagraphSectionTab {
+	__typename
+	tabs {
+		... on ParagraphTabContent {
+			body {
+				processed
+			}
+			title
+		}
+	}
+	sectionColumn {
+		... on TermSectionColumn {
+			name
+		}
+	}
+}
+
+fragment Statistics on ParagraphStatisticWidget {
+	__typename
+	content {
+		... on ParagraphStatisticItem {
+			image {
+				...Image
+			}
+			fontAwesomeIcon
+			represents {
+				processed
+			}
+			value
+		}
+	}
+	style {
+		... on TermStatisticStyle {
+			name
+		}
+	}
+}
+
+fragment Section on ParagraphSection {
+	heading: title
+	headingLevel
+	content {
+		...Accordion
+		...GeneralText
+		...Buttons
+		...Links
+		...MediaText
+		...ButtonSection
+		...Tabs
+		...Statistics
+	}
+}
