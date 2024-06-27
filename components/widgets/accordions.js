@@ -2,6 +2,7 @@ import { Accordion } from '@/components/accordion';
 import { HtmlParser } from '@/components/html-parser';
 import { Heading } from '@/components/heading';
 import { getHeadingLevel } from '@/lib/string-utils';
+
 export const Accordions = ({ data }) => {
 	const level = getHeadingLevel(data.headingLevel);
 

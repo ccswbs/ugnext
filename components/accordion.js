@@ -21,7 +21,7 @@ export const Accordion = ({ title, children }) => (
 					/>
 				</DisclosureButton>
 				<AnimateHeight height={open ? 'auto' : 0} duration={200} easing={'ease-in-out'}>
-					<DisclosurePanel static className="border-l-4 border-yellow py-2 pl-3">
+					<DisclosurePanel static className="border-l-4 border-yellow py-3 pl-5">
 						{children}
 					</DisclosurePanel>
 				</AnimateHeight>
