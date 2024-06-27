@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
 import { Link } from '@/components/link';
 import { Heading } from '@/components/heading';
 import { List, ListItem } from '@/components/list';
 import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
-import { dom } from '@fortawesome/fontawesome-svg-core';
 import { getHeadingLevel } from '@/lib/string-utils';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
@@ -32,30 +31,34 @@ export const DEFAULT_INSTRUCTIONS = [
 	// Links
 	{
 		shouldProcessNode: (node) => node.tagName === 'a' && typeof node.attribs?.href === 'string',
-		processNode: (node, children) => (
-			<Link {...node.attribs} href={node.attribs?.href ?? ''}>
-				{children}
-			</Link>
-		),
+		processNode: (node, children) => {
+			node.attribs.className = node.attribs.class;
+			delete node.attribs.class;
+
+			return (
+				<Link {...node.attribs} href={node.attribs?.href ?? ''}>
+					{children}
+				</Link>
+			);
+		},
 	},
 	// Lists
 	{
 		shouldProcessNode: (node) => node.tagName === 'ul' || node.tagName === 'ol',
-		processNode: (node, children) => (
-			<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
-				{children
-					.filter((child) => child.type === 'li')
-					.map((child, index) => (
-						<ListItem key={index}>{child.props.children}</ListItem>
-					))}
-			</List>
-		),
-	},
-	{
-		shouldProcessNode: (node, children) => node.tagName === 'i' && node.attribs?.classname?.includes('fa-'),
-		processNode: (node, children) => (
-			<span className="contents" dangerouslySetInnerHTML={{ __html: `<i class="${node.attribs?.classname}"></i>` }} />
-		),
+		processNode: (node, children) => {
+			node.attribs.className = node.attribs.class;
+			delete node.attribs.class;
+
+			return (
+				<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
+					{children
+						.filter((child) => child.type === 'li')
+						.map((child, index) => (
+							<ListItem key={index}>{child.props.children}</ListItem>
+						))}
+				</List>
+			);
+		},
 	},
 	// Divider
 	{
@@ -79,10 +82,6 @@ export const HtmlParser = ({ html, instructions }) => {
 			Array.isArray(instructions) ? instructions : DEFAULT_INSTRUCTIONS,
 		);
 	}, [html, instructions]);
-
-	useEffect(() => {
-		dom.i2svg({ node: ref.current });
-	}, [parsed]);
 
 	return (
 		<div ref={ref} className="contents">
