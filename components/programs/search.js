@@ -153,11 +153,13 @@ const programSearchFunc = (data) => {
 		);
 	};
 
-	const nodes = data.map((program) => ({
-		data: program,
-		keywords: parse(program.title),
-		tags: program.tags?.map((tag) => (tag.includes(' ') ? tag.split(' ') : tag)) ?? [],
-	}));
+	const nodes = data
+		.map((program) => ({
+			data: program,
+			keywords: parse(program.title),
+			tags: program.tags?.map((tag) => (tag.includes(' ') ? tag.split(' ') : tag)) ?? [],
+		}))
+		.sort((a, b) => a?.title?.localeCompare(b?.title));
 
 	return (input) => {
 		const parsed = parse(input);
