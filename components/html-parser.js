@@ -6,6 +6,7 @@ import { List, ListItem } from '@/components/list';
 import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
 import { getHeadingLevel } from '@/lib/string-utils';
+import Image from 'next/image';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -64,6 +65,21 @@ export const DEFAULT_INSTRUCTIONS = [
 	{
 		shouldProcessNode: (node) => node.tagName === 'hr',
 		processNode: (node) => <Divider />,
+	},
+	// Images
+	{
+		shouldProcessNode: (node) =>
+			node.tagName === 'img' && node.attribs.src && node.attribs.width && node.attribs.height,
+		processNode: (node) => (
+			<Image
+				src={node.attribs.src}
+				alt={node.attribs.alt ?? null}
+				loading="lazy"
+				className={node.attribs.class}
+				width={node.attribs.width}
+				height={node.attribs.height}
+			/>
+		),
 	},
 	// Fallback
 	{
