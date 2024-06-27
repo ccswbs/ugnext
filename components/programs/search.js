@@ -185,7 +185,7 @@ const enumerateProgramTypes = (programs) => {
 			if (!types.has(type))
 				types.set(type, {
 					value: type,
-					label: type === 'co-op' ? 'Co-op' : toTitleCase(type?.replaceAll('-', ' ')),
+					label: toTitleCase(type),
 					selected: true,
 				});
 		}

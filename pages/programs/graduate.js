@@ -7,6 +7,7 @@ import { readYamlFile } from '@/lib/file-utils';
 import { ProgramSearch } from '@/components/programs/search';
 import { Select } from '@/components/select';
 import { Card } from '@/components/card';
+import { toTitleCase } from '@/lib/string-utils';
 
 export async function getStaticProps() {
 	const path = join(process.cwd(), 'data', 'programs', 'graduate.yml');
@@ -37,6 +38,9 @@ export default function ProgramsGraduate({ programs }) {
 							title={
 								<div className="flex flex-col justify-center text-lg">
 									<span className="font-bold">{program.title}</span>
+									<span className="text-sm text-black/65">
+										{program?.types?.map((type) => toTitleCase(type)).join(', ')}
+									</span>
 								</div>
 							}
 							footer={
