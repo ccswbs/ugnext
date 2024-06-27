@@ -39,7 +39,7 @@ export default function ProgramsGraduate({ programs }) {
 								<div className="flex flex-col justify-center text-lg">
 									<span className="font-bold">{program.title}</span>
 									<span className="text-sm text-black/65">
-										{program?.types?.map((type) => toTitleCase(type)).join(', ')}
+										{program?.types?.filter(type => type !== 'collaborative-specialization')?.map((type) => toTitleCase(type)).join(', ')}
 									</span>
 								</div>
 							}
