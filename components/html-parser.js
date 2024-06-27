@@ -4,7 +4,6 @@ import { Link } from '@/components/link';
 import { Heading } from '@/components/heading';
 import { List, ListItem } from '@/components/list';
 import { Divider } from '@/components/divider';
-import '@/lib/font-awesome';
 import { getHeadingLevel } from '@/lib/string-utils';
 import Image from 'next/image';
 import Script from 'next/script';
