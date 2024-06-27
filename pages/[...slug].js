@@ -4,14 +4,8 @@ import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { twJoin } from 'tailwind-merge';
 import { Hero } from '@/components/hero';
-import {
-	getBreadcrumbs,
-	getPageContent,
-	getPageID,
-	getPageMenu,
-	getPaths,
-	menuToNavigation,
-} from '@/data/drupal/basic-pages/basic-pages';
+import { getPageContent, getPageID, getPageMenu } from '@/data/drupal/basic-pages/basic-pages';
+import { WidgetSelector } from '@/components/widgets/widget-selector';
 
 export async function getStaticPaths() {
 	return {
@@ -20,7 +14,7 @@ export async function getStaticPaths() {
 	};
 }
 export async function getStaticProps(context) {
-	const status = context?.preview ? null : true;
+	const status = context?.preview || process.env.NODE_ENV !== 'production' ? null : true;
 
 	// Try to get the ID of the page the user is requesting.
 	const id = await getPageID('/' + context.params.slug.join('/'));
@@ -34,6 +28,13 @@ export async function getStaticProps(context) {
 
 	// Now that we have the ID for the page we can request its content from its latest revision.
 	const page = await getPageContent(id, status);
+
+	if (!page) {
+		return {
+			notFound: true,
+		};
+	}
+
 	page.menu = await getPageMenu(page);
 
 	// Get rid of any data that doesn't need to be passed to the page.
@@ -66,6 +67,12 @@ export default function Page({ data }) {
 					<Heading level={1}>{data?.title}</Heading>
 				</Container>
 			)}
+
+			<Container centered>
+				{data?.widgets?.map((widget, index) => (
+					<WidgetSelector key={index} data={widget} />
+				))}
+			</Container>
 		</Layout>
 	);
 }
