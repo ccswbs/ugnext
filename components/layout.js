@@ -11,7 +11,11 @@ import { twMerge } from 'tailwind-merge';
 
 export const Layout = ({ children, className, menu, footerLinks, title = '', description = '', image = null }) => {
 	const { isPreview, isFallback } = useRouter();
-	const pageTitle = title ? `${title} | University of Guelph` : 'University of Guelph';
+	const pageTitle = title
+		? `${title} | University of Guelph`
+		: isFallback
+			? 'Loading... | University of Guelph'
+			: 'University of Guelph';
 	const pageDescription =
 		description ||
 		'The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life';
@@ -51,7 +55,7 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 				<div className="fixed left-0 top-0 z-20 flex h-screen w-screen flex-col items-center justify-center gap-6 bg-white text-red">
 					<FontAwesomeIcon className="text-9xl" icon={faGryphonStatue} />
 
-					<div className="flex gap-2">
+					<div className="flex items-center gap-2">
 						<FontAwesomeIcon className="w-[1.5em] animate-spin" icon={faSpinner} />
 						<span className="font-condensed text-3xl">Loading</span>
 					</div>
