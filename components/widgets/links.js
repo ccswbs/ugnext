@@ -36,8 +36,8 @@ export const Links = ({ data }) => {
 	return (
 		<List>
 			{data?.links?.map((link, index) => (
-				<ListItem>
-					<Link key={link.url.title + index} href={link.url.url}>
+				<ListItem key={link.url.title + index}>
+					<Link href={link.url.url}>
 						{link.url.title}
 					</Link>
 				</ListItem>
