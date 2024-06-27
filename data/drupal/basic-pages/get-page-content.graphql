@@ -7,7 +7,6 @@ fragment Navigation on TermPrimaryNavigation {
 }
 
 fragment Image on MediaImage {
-	__typename
 	image {
 		alt
 		height
@@ -46,17 +45,21 @@ fragment Audio on MediaAudio {
 	}
 }
 
-fragment Accordion on ParagraphAccordionBlock {
-	__typename
+fragment Accordion on ParagraphAccordionSection {
 	headingLevel
-	accordionTitle: title
-	text {
-		processed
+	accordionSectionTitle: title
+	items {
+		... on ParagraphAccordionBlock {
+			headingLevel
+			accordionTitle: title
+			text {
+				processed
+			}
+		}
 	}
 }
 
 fragment GeneralText on ParagraphGeneralText {
-	__typename
 	body {
 		processed
 	}
@@ -100,10 +103,12 @@ fragment Links on ParagraphLinksWidget {
 }
 
 fragment MediaText on ParagraphMediaText {
-	__typename
 	heading: title
 	media {
+		__typename
 		...Image
+		...RemoteVideo
+		...Video
 	}
 	mediaAlignment
 	mediaImageSize
@@ -124,14 +129,12 @@ fragment MediaText on ParagraphMediaText {
 }
 
 fragment ButtonSection on ParagraphSectionButton {
-	__typename
 	buttons {
 		...Buttons
 	}
 }
 
 fragment Tabs on ParagraphSectionTab {
-	__typename
 	tabs {
 		... on ParagraphTabContent {
 			body {
@@ -148,7 +151,6 @@ fragment Tabs on ParagraphSectionTab {
 }
 
 fragment Statistics on ParagraphStatisticWidget {
-	__typename
 	content {
 		... on ParagraphStatisticItem {
 			image {
@@ -201,7 +203,6 @@ fragment Testimonial on NodeTestimonial {
 }
 
 fragment TestimonialSlider on ParagraphTestimonialSlider {
-	__typename
 	title
 	byTitle {
 		...Testimonial
@@ -213,7 +214,6 @@ fragment TestimonialSlider on ParagraphTestimonialSlider {
 
 fragment Story on ParagraphStoryWidget {
 	#incomplete
-	__typename
 	content {
 		...Statistics
 		... on ParagraphStoryImageCutoutBackground {
@@ -243,6 +243,7 @@ query GetPage($id: String = "", $status: Boolean = false) {
 				}
 				title
 				widgets {
+					__typename
 					...Accordion
 					...GeneralText
 					...Buttons
