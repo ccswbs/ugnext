@@ -38,13 +38,6 @@ fragment RemoteVideo on MediaRemoteVideo {
 	}
 }
 
-fragment Audio on MediaAudio {
-	audio {
-		name
-		url
-	}
-}
-
 fragment Accordion on ParagraphAccordionSection {
 	headingLevel
 	accordionSectionTitle: title
@@ -93,9 +86,6 @@ fragment Links on ParagraphLinksWidget {
 			}
 			image {
 				...Image
-				...Video
-				...RemoteVideo
-				...Audio
 			}
 			description
 		}
