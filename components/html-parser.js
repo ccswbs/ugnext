@@ -6,6 +6,7 @@ import { List, ListItem } from '@/components/list';
 import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
 import { dom } from '@fortawesome/fontawesome-svg-core';
+import { getHeadingLevel } from '@/lib/string-utils';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -16,7 +17,11 @@ export const DEFAULT_INSTRUCTIONS = [
 	{
 		shouldProcessNode: (node) => headingTags.has(node.tagName),
 		processNode: (node, children) => {
-			const level = /h(\d)/.exec(node.tagName)?.[1];
+			const level = getHeadingLevel(node.tagName);
+
+			node.attribs.className = node.attribs.class;
+			delete node.attribs.class;
+
 			return (
 				<Heading {...node.attribs} level={level}>
 					{children}
@@ -38,9 +43,11 @@ export const DEFAULT_INSTRUCTIONS = [
 		shouldProcessNode: (node) => node.tagName === 'ul' || node.tagName === 'ol',
 		processNode: (node, children) => (
 			<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
-				{children.map((child, index) => (
-					<ListItem key={index}>{child}</ListItem>
-				))}
+				{children
+					.filter((child) => child.type === 'li')
+					.map((child, index) => (
+						<ListItem key={index}>{child.props.children}</ListItem>
+					))}
 			</List>
 		),
 	},
