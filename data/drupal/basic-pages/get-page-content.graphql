@@ -212,6 +212,7 @@ fragment TestimonialSlider on ParagraphTestimonialSlider {
 }
 
 fragment Story on ParagraphStoryWidget {
+	#incomplete
 	__typename
 	content {
 		...Statistics

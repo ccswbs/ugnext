@@ -4,7 +4,7 @@ import getPathsQuery from './get-paths.graphql';
 import getPageIDQuery from './get-page-id.graphql';
 import getPageTitleQuery from './get-page-title.graphql';
 import getPageQuery from './get-page-content.graphql';
-import getPageMenuQuery from 'get-page-menu.graphql';
+import getPageMenuQuery from './get-page-menu.graphql';
 
 export const getPaths = async () => {
 	// Here we can decide which pages get pre-rendered.
