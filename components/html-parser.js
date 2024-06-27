@@ -7,6 +7,7 @@ import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
 import { getHeadingLevel } from '@/lib/string-utils';
 import Image from 'next/image';
+import Script from 'next/script';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -80,6 +81,11 @@ export const DEFAULT_INSTRUCTIONS = [
 				height={node.attribs.height}
 			/>
 		),
+	},
+	// Scripts
+	{
+		shouldProcessNode: (node) => node.tagName === 'script',
+		processNode: (node) => <Script src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />,
 	},
 	// Fallback
 	{
