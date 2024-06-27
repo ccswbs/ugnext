@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
 import { Link } from '@/components/link';
 import { Heading } from '@/components/heading';
@@ -94,20 +94,11 @@ export const DEFAULT_INSTRUCTIONS = [
 	},
 ];
 
-export const HtmlParser = ({ html, instructions }) => {
-	const ref = useRef(null);
-
-	const parsed = useMemo(() => {
+export const HtmlParser = ({ html, instructions }) =>
+	useMemo(() => {
 		return parser.parseWithInstructions(
 			html,
 			() => true,
 			Array.isArray(instructions) ? instructions : DEFAULT_INSTRUCTIONS,
 		);
 	}, [html, instructions]);
-
-	return (
-		<div ref={ref} className="contents">
-			{parsed}
-		</div>
-	);
-};
