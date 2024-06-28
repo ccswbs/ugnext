@@ -12,7 +12,7 @@ export const GraduateProgramSummary = ({ data }) => {
   return (
     <>
       {/* <Heading level={2}>Program Summary</Heading> */}
-      <div id="program-summary" className="mx-auto bg-gray-900 p-5 md:grid md:grid-cols-2 xl:block">
+      <div id="program-summary" className="mx-auto bg-gray-900 p-5 md:grid md:grid-cols-3 xl:block">
         <dl className="!leading-loose">
           <dt className="font-bold text-yellow-400">Program type</dt>
           <dd className="text-white">{data.program_type}</dd>
@@ -36,7 +36,7 @@ export const GraduateProgramSummary = ({ data }) => {
           <dd className="text-white">{data.admission_average}</dd>
         </dl>
         <div id="intake-terms-deadlines">
-          <Heading level={3} className="mb-2 mt-4 text-xl text-yellow-400">
+          <Heading level={3} className="mb-2 mt-4 md:mt-0 text-xl text-yellow-400">
             Intake Terms & Deadlines
           </Heading>
           {data.intake_term_domestic && (
