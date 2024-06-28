@@ -11,16 +11,9 @@ export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 		<Layout title="Graduate Programs">
 			<GraduateProgramHero />
 			<Container className={twJoin(isFallback && 'hidden')} centered>
-        <Heading level={1}> {data?.program_parent} | {data?.degree_name} - {toTitleCase(data?.program_type)} ({data?.degree_type})</Heading>
-        <div className="pt-1 grid xl:grid-cols-12 xl:gap-x-10">
-            <div className='xl:col-span-9'>
-              <GraduateProgramInfo />
-            </div>
-
-            <div className='xl:col-span-3'>
-              <GraduateProgramSummary data={data} />
-            </div>
-          </div>
+                <Heading level={1}> {data?.program_parent} | {data?.degree_name} - {toTitleCase(data?.program_type)} ({data?.degree_type})</Heading>
+                <GraduateProgramInfo />
+                <GraduateProgramSummary data={data} />
 			</Container>
 		</Layout>
 );
