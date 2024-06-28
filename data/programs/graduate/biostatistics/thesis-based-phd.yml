@@ -24,6 +24,9 @@ collaborative_specializations:
   - One Health
   - Toxicology
 resource_links:
+  - name: Current Student Info
+    url: https://www.uoguelph.ca
+    icon: <i class="fa-light fa-kit fa-ug-mark text-light-blue-300"></i>
   - name: Graduate Calendar
     url: https://www.uoguelph.ca
     icon: <i class="fa-light fa-calendar-days text-light-blue-300"></i>
