@@ -20,4 +20,18 @@
 	#__next {
 		@apply flex-1;
 	}
+
+	p {
+		@apply mb-2.5;
+	}
+}
+
+@layer components {
+	.vcard {
+		@apply text-base mb-2 bg-light-blue-50 p-4;
+	}
+
+	.author {
+		@apply border-l-4 border-l-red pl-4;
+	}
 }
