@@ -28,7 +28,7 @@
 
 @layer components {
 	.vcard {
-		@apply text-base mb-2 bg-light-blue-50 p-4;
+		@apply mb-2 bg-grey-50 p-4;
 	}
 
 	.author {
