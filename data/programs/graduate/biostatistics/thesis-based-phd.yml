@@ -23,6 +23,20 @@ collaborative_specializations:
   - Regenerative Medicine
   - One Health
   - Toxicology
+resource_links:
+  - name: Current Student Info
+    url: https://www.uoguelph.ca
+    icon: <i class="fa-light fa-kit fa-ug-mark text-light-blue-300"></i>
+  - name: Graduate Calendar
+    url: https://www.uoguelph.ca
+    icon: <i class="fa-light fa-calendar-days text-light-blue-300"></i>
+  - name: Express Your Interest
+    url: https://www.uoguelph.ca
+    icon: <i class="fa-light fa-comment-heart text-light-blue-300"></i>
+  - name: Print this Summary
+    url: https://www.uoguelph.ca
+    icon: <i class="fa-light fa-print text-light-blue-300"></i>
+viewbook: https://www.uoguelph.ca
 overview_html: |
   <p>Biostatistics is a research oriented department with dynamic hands on educational programs for both undergraduates and graduate students. Research and teaching programs in MBST revolve around the basic sciences relevant to animal development and wellbeing. Our department receives $6-7million in research funding each year, which is used in part to support approximately 130 graduate students at any one time enrolled in MSc and PhD programs. Our graduate student population represents over 20 different countries, which reflects our many international connections and collaborations.</p> 
 fields_of_study:
