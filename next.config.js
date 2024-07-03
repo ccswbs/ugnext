@@ -18,6 +18,12 @@ const nextConfig = {
 				port: '',
 				pathname: '/sites/default/files/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'api.liveugconthub.uoguelph.dev',
+				port: '',
+				pathname: '/sites/default/files/**',
+			},
 		],
 	},
 };
