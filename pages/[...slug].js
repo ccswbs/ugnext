@@ -4,12 +4,12 @@ import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { twJoin } from 'tailwind-merge';
 import { Hero } from '@/components/hero';
-import { getPageContent, getPageID, getPageMenu } from '@/data/drupal/basic-pages/basic-pages';
+import { getPageContent, getPageID, getPageMenu, getPaths } from '@/data/drupal/basic-pages/basic-pages';
 import { WidgetSelector } from '@/components/widgets/widget-selector';
 
 export async function getStaticPaths() {
 	return {
-		paths: [],
+		paths: [], //await getPaths(),
 		fallback: true,
 	};
 }
