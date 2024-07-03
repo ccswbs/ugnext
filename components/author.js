@@ -1,11 +1,11 @@
 import { twJoin } from 'tailwind-merge';
 
-export const Author = ({ name, info, variant = 'light' }) => (
+export const Author = ({ name, info, variant = 'red' }) => (
 	<div
 		className={twJoin(
 			'flex flex-col gap-2 border-l-4 pl-4',
-			variant === 'light' && 'border-l-yellow text-white',
-			variant === 'dark' && 'border-l-red text-black',
+			variant === 'yellow' && 'border-l-yellow',
+			variant === 'red' && 'border-l-red',
 		)}
 	>
 		<span className={twJoin('font-bold')}>{name}</span>
