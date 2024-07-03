@@ -36,7 +36,7 @@ export const GraduateProgramSummary = ({ data }) => {
           <dd className="text-white">{data.admission_average}</dd>
         </dl>
         <div id="intake-terms-deadlines">
-          <Heading level={3} className="mb-2 mt-4 md:mt-0 text-xl text-yellow-400">
+          <Heading level={3} className="mb-2 mt-4 text-xl text-yellow-400 md:mt-0">
             Intake Terms & Deadlines
           </Heading>
           {data.intake_term_domestic && (
@@ -80,6 +80,12 @@ export const GraduateProgramSummary = ({ data }) => {
                 </li>
               ))}
             </ul>
+            {data.viewbook && (
+              <p className="max-w-48 !leading-loose text-light-blue-300">
+                [Viewbook image placement] <br />
+                <a href={data.viewbook}>Download the Graduate & Postdoctoral Studies Viewbook</a>
+              </p>
+            )}
           </div>
         )}
       </div>
