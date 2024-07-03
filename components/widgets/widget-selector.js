@@ -2,6 +2,7 @@ import { GeneralText } from '@/components/widgets/general-text';
 import { Accordions } from '@/components/widgets/accordions';
 import { Links } from '@/components/widgets/links';
 import { Tabs } from '@/components/widgets/tabs';
+import { Section } from '@/components/widgets/section';
 
 export const WidgetSelector = ({ data }) => {
 	switch (data.__typename) {
@@ -13,7 +14,9 @@ export const WidgetSelector = ({ data }) => {
 			return <Links data={data} />;
 		case 'ParagraphSectionTab':
 			return <Tabs data={data} />;
+		case 'ParagraphSection':
+			return <Section data={data} />;
 		default:
-			return <span>{data.__typename} is not yet implemented</span>;
+			return <div>{data.__typename} is not yet implemented</div>;
 	}
 };
