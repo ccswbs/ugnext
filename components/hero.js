@@ -77,7 +77,7 @@ const CHHero = ({ src, height, width, alt, title, blurred }) => (
 		/>
 
 		<Container centered className="absolute bottom-0 left-1/2 h-fit w-full -translate-x-1/2 p-0">
-			<Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-5xl">
+			<Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">
 				{title}
 			</Heading>
 		</Container>
