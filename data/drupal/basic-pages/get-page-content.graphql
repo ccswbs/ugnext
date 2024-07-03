@@ -2,6 +2,10 @@ fragment Tag on TermTag {
 	name
 }
 
+fragment SectionColumn on TermSectionColumn {
+	name
+}
+
 fragment Navigation on TermPrimaryNavigation {
 	menuName
 }
@@ -50,9 +54,15 @@ fragment Accordion on ParagraphAccordionSection {
 			}
 		}
 	}
+	sectionColumn {
+		...SectionColumn
+	}
 }
 
 fragment GeneralText on ParagraphGeneralText {
+	sectionColumn {
+		...SectionColumn
+	}
 	body {
 		processed
 	}
@@ -103,9 +113,7 @@ fragment MediaText on ParagraphMediaText {
 	mediaAlignment
 	mediaImageSize
 	sectionColumn {
-		... on TermSectionColumn {
-			name
-		}
+		...SectionColumn
 	}
 	headingLevel
 	description {
@@ -134,9 +142,7 @@ fragment Tabs on ParagraphSectionTab {
 		}
 	}
 	sectionColumn {
-		... on TermSectionColumn {
-			name
-		}
+		...SectionColumn
 	}
 }
 
@@ -164,6 +170,7 @@ fragment Section on ParagraphSection {
 	heading: title
 	headingLevel
 	content {
+		__typename
 		...Accordion
 		...GeneralText
 		...Buttons
