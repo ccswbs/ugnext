@@ -264,6 +264,14 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 					),
 				)}
 			</div>
+
+			{filtered?.length === 0 && (
+				<div className="flex w-full items-center justify-center">
+					<span className="text-xl font-bold text-black/50">
+						No programs matching your criteria were found.
+					</span>
+				</div>
+			)}
 		</>
 	);
 };
