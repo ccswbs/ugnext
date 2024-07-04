@@ -92,7 +92,7 @@ export default function ProgramsGraduate({ programs }) {
 											predicates.push((program) => program.degrees.some((degree) => degree.startsWith('M')));
 											break;
 										case 'diploma':
-											predicates.push((program) => program?.degrees?.includes('GDip'));
+											predicates.push((program) => program?.degrees?.includes('Graduate Diploma'));
 											break;
 									}
 								}
