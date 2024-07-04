@@ -39,6 +39,13 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 			</Transition>
 
 			<div className="flex flex-1 flex-col text-base">
+				<a
+					className="pointer-events-none absolute z-50 opacity-0 focus:pointer-events-auto focus:visible focus:opacity-100"
+					href="#main"
+				>
+					Skip to content
+				</a>
+
 				{isPreview && (
 					<div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
 						<span>You are currently in Preview Mode.</span>
@@ -50,7 +57,9 @@ export const Layout = ({ children, menu, footerLinks, title = '', description = 
 				)}
 
 				<Header menu={menu} />
-				<main className="flex-1 pb-4 text-base">{children}</main>
+				<main id="main" className="flex-1 pb-4 text-base">
+					{children}
+				</main>
 				<Footer links={footerLinks} />
 			</div>
 		</>
