@@ -1,6 +1,6 @@
 import { twJoin } from 'tailwind-merge';
 
-export const Statistics = ({ data }) => {
+export const StatisticsGradient = ({ data }) => {
 	const divisibleByTwo = data.length % 2 === 0;
 	const divisibleByThree = data.length % 3 === 0;
 	const divisibleByFour = data.length % 4 === 0;
@@ -37,4 +37,17 @@ export const Statistics = ({ data }) => {
 			})}
 		</dl>
 	);
+};
+
+export const Statistics = ({ data, variant = 'gradient' }) => {
+	switch (variant) {
+		case 'solid-colors':
+			return <></>;
+		case 'left-border':
+			return <></>;
+		case 'light-blue':
+			return <></>;
+		default:
+			return <StatisticsGradient data={data} />;
+	}
 };
