@@ -159,6 +159,9 @@ module.exports = {
 			spacing: {
 				'max-content': '1320px',
 			},
+			borderWidth: {
+				'1rem': '1rem',
+			  },
 		},
 	},
 	plugins: [require('@headlessui/tailwindcss')],
