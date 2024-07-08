@@ -86,6 +86,9 @@ const colors = {
 		950: '#282828',
 		DEFAULT: '#dddddd',
 	},
+	'uog-blue-muted': {
+		DEFAULT: '#f5f7fa',
+	},
 };
 
 const scaled = (input, scale) => {
