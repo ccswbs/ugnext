@@ -120,3 +120,26 @@ admission_contact:
     email: pathgrad@uoguelph.ca
 secure_supervisor: |
   <p>As part of the application requirements, you are required to secure a faculty advisor to supervise your program. Our faculty profiles on the Department of Biostatistics website describe research programs in more detail. Contact the faculty member you are interested in working with to discuss potential research opportunities. We recommend connecting via email.</p>
+courses:
+  - Scientific Communication
+  - Modelling Metabolic Processes
+  - Quantitative Genetics and Animal Models
+  - Advanced Animal Nutrition and Metabolism
+  - Assessing Animal Welfare in Pratice
+  - Animal Biotechnology
+  - Computational Biology and Bioinformatics
+  - Other courses
+spot_light_cards:
+  - id: 1
+    title: Neuroscience
+    url: 
+      - url: https://www.uoguelph.ca/.netlify/images?w=1680&h=640&fit=cover&position=center&fm=webp&q=75&url=https%3A%2F%2Fapi.liveugconthub.uoguelph.dev%2Fsites%2Fdefault%2Ffiles%2F2023-11%2Fneurons.png&cd=8dfd138c8c72b1dc278fe26f0e7f1411
+    thumbnailImageCropping: https://www.uoguelph.ca/.netlify/images?w=1680&h=640&fit=cover&position=center&fm=webp&q=75&url=https%3A%2F%2Fapi.liveugconthub.uoguelph.dev%2Fsites%2Fdefault%2Ffiles%2F2023-11%2Fneurons.png&cd=8dfd138c8c72b1dc278fe26f0e7f1411
+    image:
+      - image:
+          - alt: Neuroscience image
+            width: 1680
+            height: 640
+            variations:
+              - url: https://www.uoguelph.ca
+  

@@ -6,6 +6,5 @@ export const GraduateProgramInfo = ({data}) => (
 	<div className='md:w-3/4'>
 	<WhatIsBiostatistics />
 	<CourseAndCareer data={data}/>
-
 	</div>
 );
