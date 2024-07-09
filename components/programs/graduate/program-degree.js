@@ -19,7 +19,7 @@ export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 				{/* add test breadcrumbs, will replace breadcrumbs code here once merge with basic page branch*/}
 				<div>
 					<p>
-						Academics &gt; Graduate &gt; Biostatistics &gt; Master's Degree(Thesis-Based)
+					<i class="fa-solid fa-house"></i> &gt; Academics &gt; Graduate &gt; Biostatistics &gt; Master's Degree(Thesis-Based)
 					</p>
 				</div>
 				<Heading level={1}> {data?.program_parent} | {data?.degree_name} - {toTitleCase(data?.program_type)} ({data?.degree_type})</Heading>
