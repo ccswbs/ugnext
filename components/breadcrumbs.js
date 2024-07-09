@@ -6,7 +6,7 @@ import { Container } from '@/components/container';
 
 export const Breadcrumbs = ({ links }) => (
 	<Container centered>
-		<ol className="flex items-center gap-2">
+		<ol className="flex items-center gap-2 flex-wrap w-full">
 			<li>
 				<Link href="/">
 					<FontAwesomeIcon icon={faHome} className="h-[1em] fill-black" />
