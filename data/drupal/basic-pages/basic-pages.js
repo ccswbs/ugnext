@@ -66,7 +66,7 @@ export const getPageMenu = async (page) => {
 
 export const getBreadcrumbs = async (slug, status) => {
 	const crumbs = [];
-	const stack = slug.slice(0, -1);
+	const stack = [...slug];
 
 	while (stack.length > 0) {
 		const url = '/' + stack.join('/');

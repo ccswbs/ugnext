@@ -4,8 +4,9 @@ import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { twJoin } from 'tailwind-merge';
 import { Hero } from '@/components/hero';
-import { getPageContent, getPageID, getPageMenu, getPaths } from '@/data/drupal/basic-pages/basic-pages';
+import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from '@/data/drupal/basic-pages/basic-pages';
 import { WidgetSelector } from '@/components/widgets/widget-selector';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 
 export async function getStaticPaths() {
 	return {
@@ -43,6 +44,8 @@ export async function getStaticProps(context) {
 	// Flatten image prop
 	page.image = page?.image?.image ?? null;
 
+	page.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
+
 	return {
 		props: { data: page },
 	};
@@ -67,6 +70,8 @@ export default function Page({ data }) {
 					<Heading level={1}>{data?.title}</Heading>
 				</Container>
 			)}
+
+			<Breadcrumbs links={data?.breadcrumbs} />
 
 			<Container centered>
 				{data?.widgets?.map((widget, index) => (

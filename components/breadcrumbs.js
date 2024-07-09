@@ -1,17 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faChevronRight } from '@awesome.me/kit-7993323d0c/icons/sharp/thin';
+import { faHome } from '@awesome.me/kit-7993323d0c/icons/sharp/light';
+import { faChevronRight } from '@awesome.me/kit-7993323d0c/icons/classic/light';
 import Link from 'next/link';
+import { Container } from '@/components/container';
 
 export const Breadcrumbs = ({ links }) => (
-	<ul className="flex gap-2">
-		<Link href="/">
-			<FontAwesomeIcon icon={faHome} />
-		</Link>
-		{links.map((link, index) => (
-			<li key={index}>
-				<FontAwesomeIcon icon={faChevronRight} />
-				{index === links.length - 1 ? <span>{link.title}</span> : <Link href={link.url}>{link.title}</Link>}
+	<Container centered>
+		<ol className="flex items-center gap-2">
+			<li>
+				<Link href="/">
+					<FontAwesomeIcon icon={faHome} className="h-[1em] fill-black" />
+				</Link>
 			</li>
-		))}
-	</ul>
+			{links?.map((link, index) => (
+				<li key={index} className="flex items-center gap-2">
+					<FontAwesomeIcon icon={faChevronRight} className="h-[.75em]" />
+					{index === links.length - 1 ? <span>{link.title}</span> : <Link href={link.url}>{link.title}</Link>}
+				</li>
+			))}
+		</ol>
+	</Container>
 );
