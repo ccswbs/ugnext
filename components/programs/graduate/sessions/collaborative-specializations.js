@@ -15,7 +15,7 @@ export const CollaborativeSpecializations = ({data}) => {
 					"width": 462,
 					"variations": [
 						{
-							"url": "https://rm-nextjs-chug.pantheonsite.io/sites/default/files/styles/medium/public/2023-11/neurons.png?itok=fNz5J69f"
+							"url": "https://placehold.co/462x456/png"
 						}
 					]
 				}
@@ -37,7 +37,7 @@ export const CollaborativeSpecializations = ({data}) => {
 					"width": 1680,
 					"variations": [
 						{
-							"url": "https://rm-nextjs-chug.pantheonsite.io/sites/default/files/styles/spotlight_card_image/public/2024-02/u-of-g-stuents-laughing-together.jpg.webp?itok=k_9HEax1"
+							"url": "https://placehold.co/462x456/png"
 						}
 					]
 				}
@@ -59,7 +59,7 @@ export const CollaborativeSpecializations = ({data}) => {
 					"width": 1680,
 					"variations": [
 						{
-							"url": "https://rm-nextjs-chug.pantheonsite.io/sites/default/files/styles/medium/public/2023-10/honeybees.png"
+							"url": "https://placehold.co/462x456/png"
 						}
 					]
 				}
@@ -81,7 +81,7 @@ export const CollaborativeSpecializations = ({data}) => {
 					"width": 1680,
 					"variations": [
 						{
-							"url": "https://rm-nextjs-chug.pantheonsite.io/sites/default/files/styles/medium/public/2022-08/Biomedical-Toxicology.jpg?itok=DDyfA3oj"
+							"url": "https://placehold.co/462x456/png"
 						}
 					]
 				}
