@@ -4,7 +4,7 @@ import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { twJoin } from 'tailwind-merge';
 import { Hero } from '@/components/hero';
-import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from '@/data/drupal/basic-pages/basic-pages';
+import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from '@/data/drupal/basic-pages';
 import { WidgetSelector } from '@/components/widgets/widget-selector';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 
