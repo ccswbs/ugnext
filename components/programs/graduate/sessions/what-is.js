@@ -2,7 +2,7 @@ import React from 'react';
 import { Heading } from '@/components/heading';
 import { Columns } from '@/components/columns';
 
-export const WhatIsBiostatistics = () => {	
+export const WhatIs = () => {	
 	return (
 	<div>
 		<Heading className='text-red' level={2}>What is Biostatistics</Heading>

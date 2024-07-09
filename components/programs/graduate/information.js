@@ -1,10 +1,10 @@
 import React from 'react';
 import { CourseAndCareer } from '@/components/programs/graduate/sessions/course-career';
-import { WhatIsBiostatistics } from '@/components/programs/graduate/sessions/what-is-biostatistics';
+import { WhatIs} from '@/components/programs/graduate/sessions/what-is';
 
 export const GraduateProgramInfo = ({data}) => (
 	<div className='md:w-3/4'>
-	<WhatIsBiostatistics />
+	<WhatIs />
 	<CourseAndCareer data={data}/>
 	</div>
 );
