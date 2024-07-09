@@ -1,0 +1,29 @@
+query SpotlightHero($status: Boolean = null) {
+	spotlightRevisions(pageSize: 1, filter: { rank: ["1"], status: $status }) {
+		results {
+			... on NodeSpotlight {
+				id
+				caption
+				captionAlignment
+				thumbnailImageCrop
+				title
+				url {
+					url
+					title
+				}
+				image {
+					... on MediaImage {
+						image {
+							height
+							alt
+							width
+							variations(styles: SPOTLIGHT_HERO_IMAGE) {
+								url
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
