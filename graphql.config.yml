@@ -1,0 +1,4 @@
+schema:
+  - ${NEXT_PUBLIC_DRUPAL_BASE_URL}/graphql:
+      headers:
+        api-key: ${DRUPAL_API_KEY}

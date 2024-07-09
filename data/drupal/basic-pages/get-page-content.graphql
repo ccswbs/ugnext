@@ -1,0 +1,262 @@
+fragment Tag on TermTag {
+	name
+}
+
+fragment SectionColumn on TermSectionColumn {
+	name
+}
+
+fragment Navigation on TermPrimaryNavigation {
+	menuName
+}
+
+fragment Image on MediaImage {
+	image {
+		alt
+		height
+		width
+		url
+	}
+}
+
+fragment Video on MediaVideo {
+	video {
+		name
+		url
+		mime
+	}
+}
+
+fragment RemoteVideo on MediaRemoteVideo {
+	height
+	width
+	url
+	name
+	cc {
+		url
+		name
+	}
+	transcript {
+		name
+		url
+	}
+}
+
+fragment Accordion on ParagraphAccordionSection {
+	headingLevel
+	accordionSectionTitle: title
+	items {
+		... on ParagraphAccordionBlock {
+			headingLevel
+			accordionTitle: title
+			text {
+				processed
+			}
+		}
+	}
+	sectionColumn {
+		...SectionColumn
+	}
+}
+
+fragment GeneralText on ParagraphGeneralText {
+	sectionColumn {
+		...SectionColumn
+	}
+	body {
+		processed
+	}
+}
+
+fragment Buttons on ParagraphButtonWidget {
+	ctaHeading {
+		processed
+	}
+	fontAwesomeIcon
+	formattedTitle {
+		processed
+	}
+	link {
+		title
+		url
+	}
+	fontAwesomeIconColour {
+		... on TermColourVariable {
+			name
+		}
+	}
+}
+
+fragment Links on ParagraphLinksWidget {
+	links {
+		... on ParagraphLinkItem {
+			url {
+				title
+				url
+			}
+			image {
+				...Image
+			}
+			description
+		}
+	}
+}
+
+fragment MediaText on ParagraphMediaText {
+	heading: title
+	media {
+		__typename
+		...Image
+		...RemoteVideo
+		...Video
+	}
+	mediaAlignment
+	mediaImageSize
+	sectionColumn {
+		...SectionColumn
+	}
+	headingLevel
+	description {
+		processed
+	}
+	background {
+		... on TermBgColor {
+			name
+		}
+	}
+}
+
+fragment ButtonSection on ParagraphSectionButton {
+	buttons {
+		...Buttons
+	}
+}
+
+fragment Tabs on ParagraphSectionTab {
+	tabs {
+		... on ParagraphTabContent {
+			body {
+				processed
+			}
+			title
+		}
+	}
+	sectionColumn {
+		...SectionColumn
+	}
+}
+
+fragment Statistics on ParagraphStatisticWidget {
+	content {
+		... on ParagraphStatisticItem {
+			image {
+				...Image
+			}
+			fontAwesomeIcon
+			represents {
+				processed
+			}
+			value
+		}
+	}
+	style {
+		... on TermStatisticStyle {
+			name
+		}
+	}
+}
+
+fragment Section on ParagraphSection {
+	heading: title
+	headingLevel
+	content {
+		__typename
+		...Accordion
+		...GeneralText
+		...Buttons
+		...Links
+		...MediaText
+		...ButtonSection
+		...Tabs
+		...Statistics
+	}
+}
+
+fragment Testimonial on NodeTestimonial {
+	body {
+		processed
+		summary
+	}
+	profile {
+		url
+		title
+	}
+	type {
+		... on TermTestimonialType {
+			name
+		}
+	}
+	title
+}
+
+fragment TestimonialSlider on ParagraphTestimonialSlider {
+	title
+	byTitle {
+		...Testimonial
+	}
+	byTags {
+		...Tag
+	}
+}
+
+fragment Story on ParagraphStoryWidget {
+	#incomplete
+	content {
+		...Statistics
+		... on ParagraphStoryImageCutoutBackground {
+			backgroundImage {
+				...Image
+			}
+			foregroundImage {
+				...Image
+			}
+			title
+			text {
+				processed
+			}
+		}
+	}
+}
+
+query GetPage($id: String = "", $status: Boolean = false) {
+	contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
+		results {
+			... on NodePage {
+				primaryNavigation {
+					...Navigation
+				}
+				image {
+					...Image
+				}
+				title
+				widgets {
+					__typename
+					...Accordion
+					...GeneralText
+					...Buttons
+					...Links
+					...MediaText
+					...ButtonSection
+					...Tabs
+					...Statistics
+					...TestimonialSlider
+					...Story
+					...Section
+				}
+				changed {
+					timestamp
+				}
+			}
+		}
+	}
+}

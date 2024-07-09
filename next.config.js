@@ -2,7 +2,16 @@
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+		config.module.rules.push({
+			test: /\.gql|.graphql$/,
+			// This is the asset module.
+			type: 'asset/source',
+		});
+		return config;
+	},
 	images: {
+		domains: ['placehold.co'],
 		remotePatterns: [
 			{
 				protocol: 'https',
@@ -12,9 +21,9 @@ const nextConfig = {
 			},
 			{
 				protocol: 'https',
-				hostname: 'placehold.co',
+				hostname: 'api.liveugconthub.uoguelph.dev',
 				port: '',
-				pathname: '/**',
+				pathname: '/sites/default/files/**',
 			},
 		],
 	},

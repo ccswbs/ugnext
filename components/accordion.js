@@ -10,7 +10,7 @@ export const Accordion = ({ title, children }) => (
 			<div className="my-2">
 				<DisclosureButton
 					className={twJoin(
-						'mb-1 inline-flex w-full cursor-pointer items-center justify-between p-2.5 px-5 text-lg transition-colors hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2',
+						'mb-1 inline-flex w-full cursor-pointer items-center justify-between p-2.5 px-5 text-xl transition-colors hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2',
 						open ? 'bg-blue text-white' : 'bg-grey-50 text-blue',
 					)}
 				>
@@ -21,7 +21,7 @@ export const Accordion = ({ title, children }) => (
 					/>
 				</DisclosureButton>
 				<AnimateHeight height={open ? 'auto' : 0} duration={200} easing={'ease-in-out'}>
-					<DisclosurePanel static className="border-l-4 border-yellow py-2 pl-3">
+					<DisclosurePanel static className="border-l-4 border-yellow py-3 pl-5">
 						{children}
 					</DisclosurePanel>
 				</AnimateHeight>
