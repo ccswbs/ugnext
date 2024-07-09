@@ -8,7 +8,7 @@ export const Story = ({ backgroundImage, foregroundImage, quote, ctaText, ctaBut
 
 			<div className="container z-10 flex w-full max-w-max-content flex-col items-center gap-6 px-6 pt-6 lg:flex-row">
 				<Quote>{quote}</Quote>
-				<div className="w-full lg:w-1/2">{foregroundImage}</div>
+				<div className="flex justify-center w-full lg:w-1/2">{foregroundImage}</div>
 			</div>
 		</div>
 
