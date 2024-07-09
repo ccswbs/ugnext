@@ -14,19 +14,34 @@ export const WhatIsBiostatistics = () => {
 		</p>
 		<Columns cols={3} className='pt-2'>
 			<div>
-				<Heading level={3} className="text-lg mb-1 mt-1">90% of Employment Rate</Heading>
+				<Heading level={3} className="text-lg mb-1 mt-1">
+					<span class="inline-flex items-center justify-center rounded-full bg-green-500 w-6 h-6 mr-2">
+						<i class="text-white fas fa-check text-sm"></i>
+					</span> 
+					90% of Employment Rate
+				</Heading>
 				<p>
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 				</p>
 			</div>
 			<div>
-				<Heading level={3} className="text-lg mb-1 mt-1">State-of-the-art Facilities</Heading>
+				<Heading level={3} className="text-lg mb-1 mt-1">
+					<span class="inline-flex items-center justify-center rounded-full bg-green-500 w-6 h-6 mr-2">
+						<i class="text-white fas fa-check text-sm"></i>
+					</span> 
+					State-of-the-art Facilities
+				</Heading>
 				<p>
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 				</p>
 			</div>
 			<div>
-				<Heading level={3} className="text-lg mb-1 mt-1">World-class Faculty</Heading>
+				<Heading level={3} className="text-lg mb-1 mt-1">
+					<span class="inline-flex items-center justify-center rounded-full bg-green-500 w-6 h-6 mr-2">
+						<i class="text-white fas fa-check text-sm"></i>
+					</span> 
+					World-class Faculty
+				</Heading>
 				<p>
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 				</p>

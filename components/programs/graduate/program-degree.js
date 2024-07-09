@@ -6,7 +6,9 @@ import { toTitleCase } from "@/lib/string-utils";
 import { GraduateProgramHero } from '@/components/programs/graduate/hero'
 import { GraduateProgramSummary } from '@/components/programs/graduate/summary';
 import { GraduateProgramInfo } from '@/components/programs/graduate/information';
-import { FundYourEducation } from '@/components/programs/graduate/biostatistics/fund-your-education';
+import { CollaborativeSpecializations } from '@/components/programs/graduate/sessions/collaborative-specializations';
+import { FundYourEducation } from '@/components/programs/graduate/sessions/fund-your-education';
+
 
 export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 		<Layout title="Graduate Programs">
@@ -17,6 +19,7 @@ export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 					<GraduateProgramInfo data={data} />					
 					<GraduateProgramSummary data={data} />					
 				</div>
+				<CollaborativeSpecializations data={data}/>
 				<FundYourEducation />
 			</Container>
 		</Layout>
