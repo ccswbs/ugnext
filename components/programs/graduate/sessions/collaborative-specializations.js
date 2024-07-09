@@ -33,8 +33,8 @@ export const CollaborativeSpecializations = ({data}) => {
 			"image": {
 				"image": {
 					"alt": "Regenerative",
-					"height": 640,
-					"width": 1680,
+					"height": 456,
+					"width": 462,
 					"variations": [
 						{
 							"url": "https://placehold.co/462x456/png"
@@ -55,8 +55,8 @@ export const CollaborativeSpecializations = ({data}) => {
 			"image": {
 				"image": {
 					"alt": "One Health",
-					"height": 640,
-					"width": 1680,
+					"height": 456,
+					"width": 462,
 					"variations": [
 						{
 							"url": "https://placehold.co/462x456/png"
@@ -77,8 +77,8 @@ export const CollaborativeSpecializations = ({data}) => {
 			"image": {
 				"image": {
 					"alt": "Toxicology",
-					"height": 640,
-					"width": 1680,
+					"height": 456,
+					"width": 462,
 					"variations": [
 						{
 							"url": "https://placehold.co/462x456/png"
