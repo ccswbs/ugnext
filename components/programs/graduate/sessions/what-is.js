@@ -15,9 +15,7 @@ export const WhatIs = () => {
 		<Columns cols={3} className='pt-2'>
 			<div>
 				<Heading level={3} className="text-lg mb-1 mt-1">
-					<span class="inline-flex items-center justify-center rounded-full bg-green-500 w-6 h-6 mr-2">
-						<i class="text-white fas fa-check text-sm"></i>
-					</span> 
+					<i class="fa-solid fa-circle-check text-green-500">&nbsp;</i>
 					90% of Employment Rate
 				</Heading>
 				<p>
@@ -25,10 +23,8 @@ export const WhatIs = () => {
 				</p>
 			</div>
 			<div>
-				<Heading level={3} className="text-lg mb-1 mt-1">
-					<span class="inline-flex items-center justify-center rounded-full bg-green-500 w-6 h-6 mr-2">
-						<i class="text-white fas fa-check text-sm"></i>
-					</span> 
+				<Heading level={3} className="text-lg mb-1 mt-1">					
+					<i class="fa-solid fa-circle-check text-green-500">&nbsp;</i>
 					State-of-the-art Facilities
 				</Heading>
 				<p>
@@ -37,9 +33,7 @@ export const WhatIs = () => {
 			</div>
 			<div>
 				<Heading level={3} className="text-lg mb-1 mt-1">
-					<span class="inline-flex items-center justify-center rounded-full bg-green-500 w-6 h-6 mr-2">
-						<i class="text-white fas fa-check text-sm"></i>
-					</span> 
+					<i class="fa-solid fa-circle-check text-green-500">&nbsp;</i> 
 					World-class Faculty
 				</Heading>
 				<p>
