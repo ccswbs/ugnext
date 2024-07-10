@@ -10,6 +10,7 @@ import { CollaborativeSpecializations } from '@/components/programs/graduate/ses
 import { ProgramTestimonial } from '@/components/programs/graduate/sessions/program-testimonial';
 import { HowToApply } from '@/components/programs/graduate/sessions/how-to-apply';
 import { FundYourEducation } from '@/components/programs/graduate/sessions/fund-your-education';
+import { ApplyNow } from '@/components/programs/graduate/sessions/apply-now';
 
 
 export const GraduateProgramDegreePage = ({ data, isFallback }) => (
@@ -42,6 +43,9 @@ export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 				</div>				
 				<div className='session md:px-20 max-w-1680 mx-auto px-4'>
 					<FundYourEducation />
+				</div>
+				<div className='session md:px-20 max-w-1680 mx-auto px-4'>
+					<ApplyNow />
 				</div>
 				
 				
