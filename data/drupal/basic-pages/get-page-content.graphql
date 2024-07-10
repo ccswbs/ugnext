@@ -166,15 +166,39 @@ fragment Statistics on ParagraphStatisticWidget {
 	}
 }
 
+fragment ModalVideo on ParagraphModalVideoWidget {
+	video {
+		...RemoteVideo
+	}
+}
+
+fragment StoryModalVideo on ParagraphStoryModalVideo {
+	title {
+		processed
+	}
+	video {
+		...RemoteVideo
+	}
+}
+
+fragment StoryQuote on ParagraphStoryQuote {
+	quoteContent: content
+	quoteSource: source
+	quoteDescription: description
+	image {
+		...Image
+	}
+}
+
 fragment ImageOverlay on ParagraphImageOverlay {
 	backgroundImage {
 		...Image
 	}
-	content {
+	imageOverlayContent: content {
 		...GeneralText
 		...ButtonSection
-		# Testimonial
-		# Modal Video
+		...StoryQuote
+		...StoryModalVideo
 	}
 	imageOverlayStyle: style {
 		... on TermImageOverlayStyle {
@@ -269,6 +293,7 @@ query GetPage($id: String = "", $status: Boolean = false) {
 					...TestimonialSlider
 					...Story
 					...ImageOverlay
+					...ModalVideo
 					...Section
 				}
 				changed {
