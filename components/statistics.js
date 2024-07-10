@@ -1,5 +1,6 @@
 import { twJoin } from 'tailwind-merge';
 import useResizeObserver from 'use-resize-observer';
+import Image from 'next/image';
 
 export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 	const divisibleByTwo = data.length % 2 === 0;
@@ -66,21 +67,31 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 		>
 			{data.map((statistic, index) => {
 				const color = colors[index % colors.length];
-				const { represents, value } = statistic;
+				const { represents, value, image } = statistic;
 
 				return (
 					<div
 						key={index}
 						className={twJoin(
-							'relative flex flex-1 flex-col justify-around gap-2 p-6',
+							'relative flex flex-1 flex-col justify-around gap-2',
 							variant === 'gradient-of-solid-colours' && gradientClasses,
 							color,
 						)}
 					>
-						<dt className="hyphens-auto break-words text-center text-xl font-bold leading-tight md:text-3xl">
+						<dt className="hyphens-auto break-words p-6 pb-0 text-center text-xl font-bold leading-tight md:text-3xl">
 							{value}
 						</dt>
-						<dd className="text-normal text-center font-normal md:text-lg">{represents}</dd>
+						<dd className="text-normal p-6 pt-0 text-center font-normal md:text-lg">{represents}</dd>
+
+						{image && (
+							<Image
+								width={image.image.width}
+								height={image.image.height}
+								src={image.image.url}
+								alt={image.image.alt}
+								className="w-full"
+							/>
+						)}
 					</div>
 				);
 			})}
