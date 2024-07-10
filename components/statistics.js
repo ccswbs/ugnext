@@ -44,7 +44,7 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 
 				return (
 					<div key={index} className={twJoin('relative flex flex-1 flex-col justify-around gap-2 p-6 ', color)}>
-						<dt className="hyphens-auto break-words text-center text-xl font-normal leading-tight md:text-3xl">
+						<dt className="hyphens-auto break-words text-center text-xl font-bold leading-tight md:text-3xl">
 							{value}
 						</dt>
 						<dd className="text-normal text-center font-normal md:text-lg">{represents}</dd>
