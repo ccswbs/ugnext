@@ -7,7 +7,7 @@ import { GraduateProgramHero } from '@/components/programs/graduate/hero'
 import { GraduateProgramSummary } from '@/components/programs/graduate/summary';
 import { GraduateProgramInfo } from '@/components/programs/graduate/information';
 import { CollaborativeSpecializations } from '@/components/programs/graduate/sessions/collaborative-specializations';
-import { Testimonial } from '@/components/programs/graduate/sessions/testimonial';
+import { ProgramTestimonial } from '@/components/programs/graduate/sessions/program-testimonial';
 import { HowToApply } from '@/components/programs/graduate/sessions/how-to-apply';
 import { FundYourEducation } from '@/components/programs/graduate/sessions/fund-your-education';
 
@@ -27,7 +27,7 @@ export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 					<GraduateProgramInfo data={data} />					
 					<GraduateProgramSummary data={data} />					
 				</div>
-				<Testimonial data={data}/>
+				<ProgramTestimonial data={data}/>
 				<CollaborativeSpecializations data={data}/>
 				<HowToApply />
 				<FundYourEducation />
