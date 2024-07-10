@@ -57,21 +57,27 @@ export default function Page({ data }) {
 	return (
 		<Layout className={twJoin(isFallback && 'hidden')} title={data?.title} menu={data?.menu}>
 			{data?.image ? (
-				<Hero
-					variant="ch"
-					src={data.image.url}
-					height={data.image.height}
-					width={data.image.width}
-					alt={data.image.alt}
-					title={data.title}
-				/>
+				<>
+					<Hero
+						variant="ch"
+						src={data.image.url}
+						height={data.image.height}
+						width={data.image.width}
+						alt={data.image.alt}
+						title={data.title}
+					/>
+
+					<Breadcrumbs links={data?.breadcrumbs} />
+				</>
 			) : (
 				<Container centered>
-					<Heading level={1}>{data?.title}</Heading>
+					<Breadcrumbs links={data?.breadcrumbs} />
+
+					<Heading level={1} className="mb-0">
+						{data?.title}
+					</Heading>
 				</Container>
 			)}
-
-			<Breadcrumbs links={data?.breadcrumbs} />
 
 			<Container centered>
 				{data?.widgets?.map((widget, index) => (
