@@ -8,9 +8,9 @@ export const ApplyNow = () => {
 		<Heading level={3}>Are you ready to Improve Life?</Heading>
 		<Button 
 			href='#'
-			children='Apply Now'
+			children='APPLY NOW'
 			color='red'
-			className='w-400px py-4'
+			className='w-1/3 py-4 text-xl'
 		/>
 
 	</div>
