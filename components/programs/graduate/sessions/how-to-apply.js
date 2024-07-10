@@ -52,7 +52,7 @@ export const HowToApply = ({data}) => {
 						Jake Harwood
 					</p>
 					<p>
-						<i class="fa-solid fa-at mr-2"></i>
+						<i className="fa-solid fa-at mr-2"></i>
 						<Link 
 							children='harwood@uoguelph.ca'
 							href='mailto:harwood@uoguelph.ca'
@@ -71,7 +71,7 @@ export const HowToApply = ({data}) => {
 						Leigh West
 					</p>
 					<p>
-						<i class="fa-solid fa-at mr-2"></i>
+						<i className="fa-solid fa-at mr-2"></i>
 						<Link 
 							children='lewest@uoguelph.ca'
 							href='mailto:lewest@uoguelph.ca'

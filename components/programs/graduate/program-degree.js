@@ -15,22 +15,35 @@ import { FundYourEducation } from '@/components/programs/graduate/sessions/fund-
 export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 		<Layout title="Graduate Programs">			
 			<GraduateProgramHero />					
-			<Container className={twJoin(isFallback && 'hidden', 'md:px-20 max-w-1680 mx-auto')} centered>				
+			<Container className={twJoin(isFallback && 'hidden','px-0')} centered>				
 				{/* add test breadcrumbs, will replace breadcrumbs code here once merge with basic page branch*/}
-				<div>
+				<div className='session md:px-20 max-w-1680 mx-auto px-4'>
 					<p>
-					<i class="fa-solid fa-house"></i> &gt; Academics &gt; Graduate &gt; Biostatistics &gt; Master's Degree(Thesis-Based)
+					<i className="fa-solid fa-house"></i> &gt; Academics &gt; Graduate &gt; Biostatistics &gt; Master's Degree(Thesis-Based)
 					</p>
 				</div>
-				<Heading level={1}> {data?.program_parent} | {data?.degree_name} - {toTitleCase(data?.program_type)} ({data?.degree_type})</Heading>
-				<div className='mx-auto mt-4 md:flex gap-8'>
-					<GraduateProgramInfo data={data} />					
-					<GraduateProgramSummary data={data} />					
+				<div className='session md:px-20 max-w-1680 mx-auto px-4'>
+					<Heading level={1}> {data?.program_parent} | {data?.degree_name} - {toTitleCase(data?.program_type)} ({data?.degree_type})</Heading>
+				</div>				
+				<div className='session md:px-20 max-w-1680 mx-auto px-4 pb-10'>
+					<div className='mx-auto mt-4 md:flex gap-8'>
+						<GraduateProgramInfo data={data} />					
+						<GraduateProgramSummary data={data} />			
+					</div>
 				</div>
-				<ProgramTestimonial data={data}/>
-				<CollaborativeSpecializations data={data}/>
-				<HowToApply />
-				<FundYourEducation />
+				<div className='session w-full mx-auto'>
+					<ProgramTestimonial data={data}/>
+				</div>				
+				<div className='session md:px-20 max-w-1680 mx-auto px-4'>
+					<CollaborativeSpecializations data={data}/>
+				</div>				
+				<div className='session md:px-20 max-w-1680 mx-auto px-4'>
+					<HowToApply />
+				</div>				
+				<div className='session md:px-20 max-w-1680 mx-auto px-4'>
+					<FundYourEducation />
+				</div>
+				
 				
 			</Container>
 		</Layout>

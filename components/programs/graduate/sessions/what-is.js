@@ -15,7 +15,7 @@ export const WhatIs = () => {
 		<Columns cols={3} className='pt-2'>
 			<div>
 				<Heading level={3} className="text-lg mb-1 mt-1">
-					<i class="fa-solid fa-circle-check text-green-500">&nbsp;</i>
+					<i className="fa-solid fa-circle-check text-green-500">&nbsp;</i>
 					90% of Employment Rate
 				</Heading>
 				<p>
@@ -24,7 +24,7 @@ export const WhatIs = () => {
 			</div>
 			<div>
 				<Heading level={3} className="text-lg mb-1 mt-1">					
-					<i class="fa-solid fa-circle-check text-green-500">&nbsp;</i>
+					<i className="fa-solid fa-circle-check text-green-500">&nbsp;</i>
 					State-of-the-art Facilities
 				</Heading>
 				<p>
@@ -33,7 +33,7 @@ export const WhatIs = () => {
 			</div>
 			<div>
 				<Heading level={3} className="text-lg mb-1 mt-1">
-					<i class="fa-solid fa-circle-check text-green-500">&nbsp;</i> 
+					<i className="fa-solid fa-circle-check text-green-500">&nbsp;</i> 
 					World-class Faculty
 				</Heading>
 				<p>

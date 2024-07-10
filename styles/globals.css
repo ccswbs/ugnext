@@ -35,3 +35,8 @@
 		@apply border-l-4 border-l-red pl-4;
 	}
 }
+/*  testimonial style */
+/* hide slick icons */
+.slick-prev:before, .slick-next:before {
+	opacity:0 !important;
+  }
