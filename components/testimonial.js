@@ -55,28 +55,8 @@ const Card = ({ img, title, name, description }) => {
   );
 };
 
-export const Testimonials = () => {
-  const testimonial_data = [
-    {
-      img: "https://www.tutorialrepublic.com/examples/images/clients/1.jpg",
-      title: 'Professor, Department of Biostatics',
-      name: 'Dr. Gwendolyn Patterson',
-      description: '1st Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
-    },
-    {
-      img: "https://www.tutorialrepublic.com/examples/images/clients/2.jpg",
-      title: 'Professor, Department of Biostatics',
-      name: 'Dr. Montgomery Smith',
-      description: '2nd Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
-    },
-    {
-      img: "https://www.tutorialrepublic.com/examples/images/clients/3.jpg",
-      title: 'Professor, Department of Biostatics',
-      name: 'Dr. Ryan D',
-      description: '3rd Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
-    }
-  ];
-  
+export const Testimonials = ({testimonialData}) => {
+    
   const settings = {
     prevArrow: <PreviousBtn />,
     nextArrow: <NextBtn />,
@@ -98,7 +78,7 @@ export const Testimonials = () => {
     <div className='testimonial w-full flex justify-center'>
       <div className='text-center mx-auto' style={{width:'90%'}}>
         <Slider className='px-5' {...settings}>
-          {testimonial_data.map((item, index) => (
+          {testimonialData.map((item, index) => (
             <Card
               key={index}
               img={item.img}
