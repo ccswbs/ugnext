@@ -1,42 +1,43 @@
 {
-	"name": "ugnext",
-	"version": "0.5.0",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"export": "next build && next export",
-		"format": "prettier -w ./"
-	},
-	"dependencies": {
-		"@awesome.me/kit-7993323d0c": "^1.0.8",
-		"@fortawesome/fontawesome-svg-core": "^6.5.2",
-		"@fortawesome/react-fontawesome": "^0.2.0",
-		"@netlify/plugin-nextjs": "^5.2.2",
-		"@next/bundle-analyzer": "^14.2.3",
-		"cross-fetch": "^4.0.0",
-		"fast-blurhash": "^1.1.2",
-		"next": "^14.2.3",
-		"next-drupal": "^1.6.0",
-		"react": "^18.2.0",
-		"react-animate-height": "^3.2.3",
-		"react-dom": "^18.2.0",
-		"stemmer": "^2.0.1",
-		"sharp": "^0.33.4"
-	},
-	"devDependencies": {
-		"@headlessui/react": "^2.0.1",
-		"@headlessui/tailwindcss": "^0.2.0",
-		"autoprefixer": "^10.4.19",
-		"eslint": "^8.57.0",
-		"eslint-config-next": "^14.2.2",
-		"html-to-react": "^1.7.0",
-		"postcss": "^8.4.38",
-		"prettier": "^3.2.5",
-		"prettier-plugin-tailwindcss": "^0.5.14",
-		"tailwind-merge": "^2.3.0",
-		"tailwindcss": "^3.4.3",
-		"yaml": "^2.4.1"
-	}
+  "name": "ugnext",
+  "version": "0.5.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export",
+    "format": "prettier -w ./"
+  },
+  "dependencies": {
+    "@awesome.me/kit-7993323d0c": "^1.0.8",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@netlify/plugin-nextjs": "^5.2.2",
+    "@next/bundle-analyzer": "^14.2.3",
+    "cross-fetch": "^4.0.0",
+    "fast-blurhash": "^1.1.2",
+    "next": "^14.2.3",
+    "next-drupal": "^1.6.0",
+    "react": "^18.2.0",
+    "react-animate-height": "^3.2.3",
+    "react-dom": "^18.2.0",
+    "sharp": "^0.33.4",
+    "stemmer": "^2.0.1",
+    "yaml-loader": "^0.8.1"
+  },
+  "devDependencies": {
+    "@headlessui/react": "^2.0.1",
+    "@headlessui/tailwindcss": "^0.2.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.2",
+    "html-to-react": "^1.7.0",
+    "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss": "^3.4.3",
+    "yaml": "^2.4.1"
+  }
 }

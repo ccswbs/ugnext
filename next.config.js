@@ -4,9 +4,8 @@ const nextConfig = {
 	swcMinify: true,
 	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
 		config.module.rules.push({
-			test: /\.yml|.yaml$/,
-			// This is the asset module.
-			type: 'asset/source',
+			test: /\.ya?ml$/,
+			use: 'yaml-loader',
 		});
 		return config;
 	},
