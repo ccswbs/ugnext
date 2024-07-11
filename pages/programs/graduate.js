@@ -2,20 +2,16 @@ import React, { useState } from 'react';
 import { Container } from '@/components/container';
 import { Layout } from '@/components/layout';
 import { Heading } from '@/components/heading';
-import { join } from 'path';
-import { readYamlFile } from '@/lib/file-utils';
 import { ProgramSearch } from '@/components/programs/search';
 import { Select } from '@/components/select';
 import { Card } from '@/components/card';
 import { toTitleCase } from '@/lib/string-utils';
+import { getGraduatePrograms } from '@/data/yaml/programs';
 
 export async function getStaticProps() {
-	const path = join(process.cwd(), 'data', 'programs', 'graduate.yml');
-	const programs = await readYamlFile(path);
-
 	return {
 		props: {
-			programs: programs,
+			programs: getGraduatePrograms(),
 		},
 	};
 }
@@ -39,7 +35,10 @@ export default function ProgramsGraduate({ programs }) {
 								<div className="flex flex-col justify-center text-lg">
 									<span className="font-bold">{program.title}</span>
 									<span className="text-sm text-black/65">
-										{program?.types?.filter(type => type !== 'collaborative-specialization')?.map((type) => toTitleCase(type)).join(', ')}
+										{program?.types
+											?.filter((type) => type !== 'collaborative-specialization')
+											?.map((type) => toTitleCase(type))
+											.join(', ')}
 									</span>
 								</div>
 							}
