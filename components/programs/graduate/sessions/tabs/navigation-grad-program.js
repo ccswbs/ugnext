@@ -1,12 +1,10 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import { twJoin } from 'tailwind-merge';
 
-export const NavigationGraduateProgram = ({ fullWidth = true, links, label, activeTab,setActiveTab }) => {
-	//const { pathname } = useRouter();
+export const NavigationTab = ({ fullWidth = true, links, label, activeTab,setActiveTab }) => {
 	const handleTabClick = (id, e) => {
-    e.preventDefault(); // Prevents the default action of following the link
-    setActiveTab(id); // Update active tab state based on clicked tab id
+    e.preventDefault();
+    setActiveTab(id);
   };
 //console.log(activeTab);
 	return (

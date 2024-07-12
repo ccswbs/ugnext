@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { NavigationGraduateProgram } from '@/components/programs/graduate/sessions/tabs/navigation-grad-program';
+import { NavigationTab } from '@/components/programs/graduate/sessions/tabs/navigation-grad-program';
 
 export const CourseCareerNavigation = ({ activeTab,setActiveTab }) => {
   
   return (
     <div className="my-5">
-      <NavigationGraduateProgram
+      <NavigationTab
         aria-label="Course and Career Navigation"
         links={[
           { href: '#courses', label: 'COURSES' },
