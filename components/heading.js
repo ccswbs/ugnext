@@ -1,9 +1,9 @@
 import { clamp } from '@/lib/math-utils';
 import { twJoin, twMerge } from 'tailwind-merge';
 
-export const Heading = ({ level, children, className, ...rest }) => {
+export const Heading = ({ level, children, className, as, ...rest }) => {
 	const headingLevel = clamp(level || 1, 1, 6);
-	const Tag = `h${headingLevel}`;
+	const Tag = as ?? `h${headingLevel}`;
 
 	return (
 		<Tag
