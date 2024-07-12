@@ -1,0 +1,38 @@
+- id: ontario
+  name: Ontario
+
+- id: alberta
+  name: Alberta
+
+- id: british-columbia
+  name: British Columbia
+
+- id: manitoba
+  name: Manitoba
+
+- id: new-brunswick
+  name: New Brunswick
+
+- id: newfoundland-and-labrador
+  name: Newfoundland and Labrador
+
+- id: nova-scotia
+  name: Nova Scotia
+
+- id: prince-edward-island
+  name: Prince Edward Island
+
+- id: quebec
+  name: Quebec
+
+- id: saskatchewan
+  name: Saskatchewan
+
+- id: northwest-territories
+  name: Northwest Territories
+
+- id: nunavut
+  name: Nunavut
+
+- id: yukon
+  name: Yukon
