@@ -1,6 +1,6 @@
 import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
-import { getLocations, getStudentTypes } from '@/data/yaml/admission/undergraduate/requirements';
+import { getLocations, getPrograms, getStudentTypes } from '@/data/yaml/admission/undergraduate/requirements';
 import { Select } from '@/components/select';
 import { Heading } from '@/components/heading';
 import { useState } from 'react';
@@ -11,11 +11,12 @@ export async function getStaticProps(context) {
 		props: {
 			locations: getLocations(),
 			studentTypes: getStudentTypes(),
+			programs: getPrograms() ?? [],
 		},
 	};
 }
 
-export default function UndergraduateAdmissionRequirementsHome({ locations, studentTypes }) {
+export default function UndergraduateAdmissionRequirementsHome({ locations, studentTypes, programs }) {
 	const [requirement, setRequirement] = useState({
 		studentType: null,
 		location: null,
@@ -26,6 +27,8 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 
 	const complete = requirement.studentType && requirement.location && requirement.degree;
 
+	console.log(requirement)
+
 	return (
 		<Layout title="Undergraduate Admission Requirements">
 			<Container centered>
@@ -35,7 +38,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 					<Select
 						label={
 							<Heading level={5} as="h2" className="mb-1 mt-0">
-								I am a(n)
+								I am a
 							</Heading>
 						}
 						options={studentTypes.map((type) => ({
@@ -46,7 +49,6 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 							setRequirement({ ...requirement, studentType: selection.value });
 						}}
 					/>
-
 					<Select
 						label={
 							<Heading level={5} as="h2" className="mb-1 mt-0">
@@ -54,9 +56,9 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 							</Heading>
 						}
 						options={[
-							...locations.canada.map((type) => ({
-								label: type.name,
-								value: type.id,
+							...locations.canada.map((location) => ({
+								label: location.name,
+								value: location.id,
 							})),
 							{
 								label: 'Outside of Canada',
@@ -73,7 +75,6 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 							}
 						}}
 					/>
-
 					{international && (
 						<Select
 							label={
@@ -81,16 +82,30 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 									Country/System of study:
 								</Heading>
 							}
-							options={locations.international.map((type) => ({
-								label: type.name,
-								value: type.id,
+							options={locations.international.map((location) => ({
+								label: location.name,
+								value: location.id,
 							}))}
 							onChange={(selection) => {
 								setRequirement({ ...requirement, location: selection.value });
 							}}
 						/>
 					)}
-
+					<Select
+						label={
+							<Heading level={5} as="h2" className="mb-1 mt-0">
+								I am interested in studying
+							</Heading>
+						}
+						options={programs?.map((program) => ({
+							label: program.title,
+							value: program,
+							key: program.title
+						}))}
+						onChange={(selection) => {
+							setRequirement({ ...requirement, program: selection.value });
+						}}
+					/>
 					<Button type="submit" disabled={!complete} outlined={!complete}>
 						View Requirements
 					</Button>

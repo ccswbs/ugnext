@@ -81,7 +81,7 @@ export const Select = ({
 						{options.map((option, index) => (
 							<ListboxOption
 								className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
-								key={option?.value}
+								key={typeof option?.value === 'string' ? option?.value : option?.value?.key ?? index}
 								value={option}
 								disabled={option?.disabled}
 							>
