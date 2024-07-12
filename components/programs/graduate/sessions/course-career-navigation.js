@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Navigation } from '@/components/navigation';
+import { NavigationGraduateProgram } from '@/components/programs/graduate/sessions/tabs/navigation-grad-program';
 
-export const CourseCareerNavigation = ({ setActiveTab }) => {
-  /*const handleTabClick = (id, e) => {
-    //e.preventDefault(); // Prevents the default action of following the link
-    //setActiveTab(id); // Update active tab state based on clicked tab id
-    //console.log('clicked'); // Log statement to verify if function is called
-
-    //it does not work because Navigation component, have to replace it with custome code
-  };*/
-
+export const CourseCareerNavigation = ({ activeTab,setActiveTab }) => {
+  
   return (
     <div className="my-5">
-      <Navigation
+      <NavigationGraduateProgram
         aria-label="Course and Career Navigation"
         links={[
           { href: '#courses', label: 'COURSES' },
@@ -21,6 +14,8 @@ export const CourseCareerNavigation = ({ setActiveTab }) => {
           { href: '#careers', label: 'CAREERS' },
           { href: '#partners', label: 'PARTNERS'  },
         ]}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
     </div>
   );
