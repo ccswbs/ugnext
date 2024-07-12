@@ -4,6 +4,7 @@ import { getLocations, getStudentTypes } from '@/data/yaml/admission/undergradua
 import { Select } from '@/components/select';
 import { Heading } from '@/components/heading';
 import { useState } from 'react';
+import { Button } from '@/components/button';
 
 export async function getStaticProps(context) {
 	return {
@@ -23,7 +24,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 
 	const [international, setInternational] = useState(false);
 
-	console.log(requirement);
+	const complete = requirement.studentType && requirement.location && requirement.degree;
 
 	return (
 		<Layout title="Undergraduate Admission Requirements">
@@ -89,6 +90,10 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 							}}
 						/>
 					)}
+
+					<Button type="submit" disabled={!complete} outlined={!complete}>
+						View Requirements
+					</Button>
 				</form>
 			</Container>
 		</Layout>
