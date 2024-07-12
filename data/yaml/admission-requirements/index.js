@@ -1,4 +1,5 @@
-import locations from './locations.yml';
+import canada from './canada.yml';
+import international from './international.yml';
 import studentTypes from './student-types.yml';
 import allPrograms from '@/data/yaml/programs/undergraduate.yml';
 
@@ -19,7 +20,10 @@ export const getStudentTypes = () => {
 };
 
 export const getLocations = () => {
-	return locations;
+	return {
+		canada: canada,
+		international: international
+	};
 };
 
 export const getPrograms = () => {
