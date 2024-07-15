@@ -225,4 +225,55 @@ INSERT INTO programs_certificate_and_diplomas VALUES('Spanish Language and Cultu
 INSERT INTO programs_certificate_and_diplomas VALUES('Applied Statistics','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/statistics-stat#diplomatext','["diploma"]','["mathematics","statistics"]');
 INSERT INTO programs_certificate_and_diplomas VALUES('Turfgrass Management','https://www.uoguelph.ca/programs/turfgrass-management/','["associate-diploma","co-op"]','["landscaping","botany","plant"]');
 INSERT INTO programs_certificate_and_diplomas VALUES('Veterinary Technology','https://www.ridgetownc.com/future/dvt/','["associate-diploma"]','["animal","vet","biology"]');
+CREATE TABLE programs_continuing_education
+(
+    name    TEXT PRIMARY KEY NOT NULL,
+    url     TEXT             NOT NULL,
+    types   TEXT             NOT NULL,
+    tags    TEXT
+);
+INSERT INTO programs_continuing_education VALUES('Dairy Herdsperson Apprenticeship','https://www.ridgetownc.com/future/adh/','["apprenticeship"]','["agriculture","botany","animal"]');
+INSERT INTO programs_continuing_education VALUES('Ice Cream Technology','https://www.uoguelph.ca/foodscience/ice-cream-technology-short-course','["short-course"]','["food","business","management"]');
+INSERT INTO programs_continuing_education VALUES('Cheese Making Technology','https://www.uoguelph.ca/foodscience/cheese-making-courses','["short-course"]','["food","business","management"]');
+INSERT INTO programs_continuing_education VALUES('Beer Brewing','https://www.uoguelph.ca/foodscience/brewing','["short-course"]','["food","business","management"]');
+INSERT INTO programs_continuing_education VALUES('Chocolate Science','https://www.uoguelph.ca/foodscience/chocolate','["short-course"]','["food","business","management"]');
+INSERT INTO programs_continuing_education VALUES('Canadian Feed Industry Education Program','https://courses.opened.uoguelph.ca/contentManagement.do?method=load&code=CM000063','["short-course"]','["livestock","animal","agriculture"]');
+INSERT INTO programs_continuing_education VALUES('Counselling and Human Sexuality','https://courses.opened.uoguelph.ca/contentManagement.do?method=load&code=CM000025','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Creative Writing','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=583604','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Equine Studies','https://courses.opened.uoguelph.ca/contentManagement.do?method=load&code=CM000020','["diploma"]','["horse","animal"]');
+INSERT INTO programs_continuing_education VALUES('Equine Science','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=610688','["certificate"]','["horse","animal"]');
+INSERT INTO programs_continuing_education VALUES('Equine Welfare','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=611375','["certificate"]','["horse","animal"]');
+INSERT INTO programs_continuing_education VALUES('English Language Programs','https://opened.uoguelph.ca/student-resources/guelph-elp','["certificate","short-course"]','["language"]');
+INSERT INTO programs_continuing_education VALUES('Environmental Citizenship','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=625466','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Environmental Conservation','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=626394','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('DNA Barcoding','https://courses.opened.uoguelph.ca/public/category/programStream.do?method=load&selectedProgramAreaId=16994&selectedProgramStreamId=12732257','["short-course"]','[]');
+INSERT INTO programs_continuing_education VALUES('Advanced Principles of Toxicology','https://courses.opened.uoguelph.ca/search/publicCourseSearchDetails.do?method=load&courseId=17780&selectedProgramAreaId=16994&selectedProgramStreamId=17127','["short-course"]','[]');
+INSERT INTO programs_continuing_education VALUES('Food Science','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=655668','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Geographical Epidemiology','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=655668','["short-course"]','[]');
+INSERT INTO programs_continuing_education VALUES('Plant-Based Nutrition','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=29839235','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Horticulture (Diploma)','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=18118724&selectedProgramAreaId=16989&selectedProgramStreamId=','["diploma"]','[]');
+INSERT INTO programs_continuing_education VALUES('Landscape Design (Diploma)','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=18143026&selectedProgramAreaId=16989&selectedProgramStreamId=','["diploma"]','[]');
+INSERT INTO programs_continuing_education VALUES('Horticulture (Certificate)','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=15952899&selectedProgramAreaId=16989&selectedProgramStreamId=','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Landscape Design (Certificate)','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=18143158&selectedProgramAreaId=16989&selectedProgramStreamId=','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Maintaining Golf Courses','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=701097&selectedProgramAreaId=16989&selectedProgramStreamId=','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Sustainable Urban Agriculture','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=615989&selectedProgramAreaId=16975&selectedProgramStreamId=17124','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Sustainable Urban Horticulture','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=702165&selectedProgramAreaId=16989&selectedProgramStreamId=','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Turf Managers','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=14958241','["short-course","certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Accounting','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=26779164','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Business','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=621077','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Disability Management','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129861','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Hospitality Studies','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=627258','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Information Management, Privacy and Access','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129924','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Leadership','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=646478','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Supply Chain Management for Public Procurement','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=474252','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Data Science','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=8353906','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Human Resources Management','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=590230','["diploma"]','[]');
+INSERT INTO programs_continuing_education VALUES('Advanced Interpersonal Skills for PSW Practice','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=34640456','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Facilities Management','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129911','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Human Resources Management for School Board Administration','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129911','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Information and Communication Technology Management','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129941','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Pupil Transportation Management','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=465245','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('School Board Administration','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=605466','["diploma"]','[]');
+INSERT INTO programs_continuing_education VALUES('Knowledge Mobilization','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=453705','["certificate"]','[]');
+INSERT INTO programs_continuing_education VALUES('Public Policy and Administration','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=654157','["diploma"]','[]');
 COMMIT;
