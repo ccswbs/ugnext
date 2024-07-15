@@ -38,7 +38,8 @@ export const getPrograms = async () => {
 		await db.all(SQL`
 			SELECT
 				title,
-				degrees
+				degrees,
+				tags
 			FROM
 				programs_undergraduate
 			WHERE
@@ -51,7 +52,7 @@ export const getPrograms = async () => {
 						value = 'major'
 				)
 		`)
-	).map((row) => parseJSONColumns(row, 'degrees'));
+	).map((row) => parseJSONColumns(row, 'degrees', 'tags'));
 };
 
 export const getDegrees = async () => {
