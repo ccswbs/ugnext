@@ -199,4 +199,30 @@ INSERT INTO programs_graduate VALUES('Veterinary Medicine / Public Health','http
 INSERT INTO programs_graduate VALUES('Veterinary Science','https://graduatestudies.uoguelph.ca/programs/vets','["DVSc"]','["course-based"]','["biology","science","health","medical"]');
 INSERT INTO programs_graduate VALUES('Wildlife Biology','https://calendar.uoguelph.ca/graduate-calendar/graduate-programs/wildlife-biology/','["MWB"]','["course-based"]','["biol*","science*","life*","living","research*","natur*","eco*","wild*","biodivers*","conserva*","animal*","enviro*","fish*","sustain*","mammal*"]');
 INSERT INTO programs_graduate VALUES('Plant Agriculture','https://graduatestudies.uoguelph.ca/programs/plnt','["MSc","PhD","MPAg"]','["course-based"]','["crops","crop science","biochemistry","plant genetics"]');
+CREATE TABLE programs_certificate_and_diplomas
+(
+    name    TEXT PRIMARY KEY NOT NULL,
+    url     TEXT             NOT NULL,
+    types   TEXT             NOT NULL,
+    tags    TEXT
+);
+INSERT INTO programs_certificate_and_diplomas VALUES('Accounting','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/accounting-acct/','["certificate"]','["business","finance"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Agriculture','https://www.ridgetownc.com/future/dagr/','["associate-diploma","co-op"]','["agriculture","botany"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Business','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-bus/','["certificate"]','["business","finance"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Environmental Citizenship','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-citizenship-ect/','["certificate"]','["humanities","science"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Environmental Conservation','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-conservation-ecv/','["certificate"]','["biology","science"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Environmental Technician','https://www.ridgetownc.com/future/denm/','["associate-diploma","co-op"]','["agriculture","botany","environment"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Equine Care & Management','https://www.ridgetownc.com/future/denm/','["associate-diploma","co-op"]','["business","nutrition","animal","management"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Food Science','https://www.uoguelph.ca/programs/food-science/','["certificate"]','["food","science"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('German Language and Culture','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/german-germ/','["certificate"]','["humanities","language"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Horticulture','https://www.ridgetownc.com/future/dhrt/','["associate-diploma","co-op"]','["landscaping","botany","plant"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Hospitality and Tourism Management','https://www.uoguelph.ca/programs/hospitality-and-tourism-management/','["certificate"]','["business","tourism","management"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Indigenous Environmental Governance','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/indigenous-environmental-governance-ieg/','["certificate"]','["humanities","culture"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Leadership','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/leadership-lead/','["certificate"]','["humanities","management"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Organic Agriculture','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/organic-agriculture-oagr/','["certificate"]','["agriculture","biology","science"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Public Policy and Administration','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/public-policy-administration-ppa#certificatetext','["certificate"]','["humanities","politics","law"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Spanish Language and Culture','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/spanish-hispanic-studies-spah#certificatetext','["certificate"]','["humanities","language","culture"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Applied Statistics','https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/statistics-stat#diplomatext','["diploma"]','["mathematics","statistics"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Turfgrass Management','https://www.uoguelph.ca/programs/turfgrass-management/','["associate-diploma","co-op"]','["landscaping","botany","plant"]');
+INSERT INTO programs_certificate_and_diplomas VALUES('Veterinary Technology','https://www.ridgetownc.com/future/dvt/','["associate-diploma"]','["animal","vet","biology"]');
 COMMIT;
