@@ -2,7 +2,7 @@ PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 CREATE TABLE programs_undergraduate
 (
-    name    TEXT PRIMARY KEY NOT NULL,
+    title    TEXT PRIMARY KEY NOT NULL,
     acronym TEXT,
     url     TEXT             NOT NULL,
     degrees TEXT,
@@ -119,7 +119,7 @@ INSERT INTO programs_undergraduate VALUES('Wildlife Biology and Conservation','W
 INSERT INTO programs_undergraduate VALUES('Zoology','ZOO','https://www.uoguelph.ca/programs/zoology/','["Bachelor of Science"]','["major","minor"]','["biol*","science*","life*","living","research*","natur*","ecol*","wild*","biodivers*","conserva*","animal*","enviro*","fish*","sustain*","mammal*","evolution*","dna"]');
 CREATE TABLE programs_graduate
 (
-    name    TEXT PRIMARY KEY NOT NULL,
+    title    TEXT PRIMARY KEY NOT NULL,
     url     TEXT             NOT NULL,
     degrees TEXT,
     types   TEXT             NOT NULL,
@@ -201,7 +201,7 @@ INSERT INTO programs_graduate VALUES('Wildlife Biology','https://calendar.uoguel
 INSERT INTO programs_graduate VALUES('Plant Agriculture','https://graduatestudies.uoguelph.ca/programs/plnt','["MSc","PhD","MPAg"]','["course-based"]','["crops","crop science","biochemistry","plant genetics"]');
 CREATE TABLE programs_certificate_and_diplomas
 (
-    name    TEXT PRIMARY KEY NOT NULL,
+    title    TEXT PRIMARY KEY NOT NULL,
     url     TEXT             NOT NULL,
     types   TEXT             NOT NULL,
     tags    TEXT
@@ -227,7 +227,7 @@ INSERT INTO programs_certificate_and_diplomas VALUES('Turfgrass Management','htt
 INSERT INTO programs_certificate_and_diplomas VALUES('Veterinary Technology','https://www.ridgetownc.com/future/dvt/','["associate-diploma"]','["animal","vet","biology"]');
 CREATE TABLE programs_continuing_education
 (
-    name    TEXT PRIMARY KEY NOT NULL,
+    title    TEXT PRIMARY KEY NOT NULL,
     url     TEXT             NOT NULL,
     types   TEXT             NOT NULL,
     tags    TEXT
