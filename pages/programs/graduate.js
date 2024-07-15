@@ -6,12 +6,12 @@ import { ProgramSearch } from '@/components/programs/search';
 import { Select } from '@/components/select';
 import { Card } from '@/components/card';
 import { toTitleCase } from '@/lib/string-utils';
-import { getGraduatePrograms } from '@/data/yaml/programs';
+import { getGraduatePrograms } from '@/data/sqlite/programs';
 
 export async function getStaticProps() {
 	return {
 		props: {
-			programs: getGraduatePrograms(),
+			programs: await getGraduatePrograms(),
 		},
 	};
 }
