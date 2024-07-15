@@ -117,4 +117,86 @@ INSERT INTO undergraduate_programs VALUES('Veterinary Medicine','VM','https://ca
 INSERT INTO undergraduate_programs VALUES('Water Resources Engineering','WRE','https://www.uoguelph.ca/programs/water-resources-engineering/','["Bachelor of Engineering"]','["major","co-op"]','["engineering"]');
 INSERT INTO undergraduate_programs VALUES('Wildlife Biology and Conservation','WBC','https://www.uoguelph.ca/programs/wildlife-biology-and-conservation/','["Bachelor of Science"]','["major","co-op"]','["biol*","science*","life*","living","research*","natur*","ecol*","wild*","biodivers*","conserva*","animal*","enviro*","ocean*","aqua*","fish*","sustain*","mammal*","sea*","water*","evolution*"]');
 INSERT INTO undergraduate_programs VALUES('Zoology','ZOO','https://www.uoguelph.ca/programs/zoology/','["Bachelor of Science"]','["major","minor"]','["biol*","science*","life*","living","research*","natur*","ecol*","wild*","biodivers*","conserva*","animal*","enviro*","fish*","sustain*","mammal*","evolution*","dna"]');
+CREATE TABLE graduate_programs
+(
+    name    TEXT PRIMARY KEY NOT NULL,
+    url     TEXT             NOT NULL,
+    degrees TEXT,
+    types   TEXT             NOT NULL,
+    tags    TEXT
+);
+INSERT INTO graduate_programs VALUES('Accounting','https://graduatestudies.uoguelph.ca/programs/accounting','["Graduate Diploma"]','["course-based"]','["business","finance"]');
+INSERT INTO graduate_programs VALUES('Animal Biosciences','https://graduatestudies.uoguelph.ca/programs/aps','["MSc","PhD"]','["thesis-based","course-based"]','["biology","science"]');
+INSERT INTO graduate_programs VALUES('Applied Nutrition','https://graduatestudies.uoguelph.ca/programs/applied-nutrition','["MAN"]','["course-based"]','["health","food"]');
+INSERT INTO graduate_programs VALUES('Art History and Visual Culture','https://graduatestudies.uoguelph.ca/programs/avc','["MA"]','["thesis-based","course-based"]','["arts","culture","history"]');
+INSERT INTO graduate_programs VALUES('Artificial Intelligence','https://graduatestudies.uoguelph.ca/programs/csai','["MSc","MASc"]','["collaborative-specialization"]','["technology","science","mathematics","programming","ai"]');
+INSERT INTO graduate_programs VALUES('Bioinformatics','https://graduatestudies.uoguelph.ca/programs/binf','["MBINF","MSc","PhD"]','["course-based"]','["biol*","science*","life*","living","research*","informat*","data","statistic*","programming","analys*"]');
+INSERT INTO graduate_programs VALUES('Biomedical Sciences','https://graduatestudies.uoguelph.ca/programs/biom','["MBS","MSc","PhD","DVSc"]','["course-based"]','["biology","science","health","medical"]');
+INSERT INTO graduate_programs VALUES('Biophysics','https://graduatestudies.uoguelph.ca/programs/biop','["MSc","PhD"]','["thesis-based"]','["biology","physics","science"]');
+INSERT INTO graduate_programs VALUES('Biotechnology','https://graduatestudies.uoguelph.ca/programs/biotechnology','["MBIOT"]','["course-based"]','["biology","science","technology"]');
+INSERT INTO graduate_programs VALUES('Business Administration','https://graduatestudies.uoguelph.ca/programs/bus','["MBA"]','["course-based"]','["business"]');
+INSERT INTO graduate_programs VALUES('Capacity Development and Extension','https://graduatestudies.uoguelph.ca/programs/cde','["MSc"]','["thesis-based","course-based"]','["humanities"]');
+INSERT INTO graduate_programs VALUES('Chemistry','https://graduatestudies.uoguelph.ca/programs/chbi','["MSc","PhD"]','["thesis-based"]','["chemistry","science"]');
+INSERT INTO graduate_programs VALUES('Clinical Studies','https://graduatestudies.uoguelph.ca/programs/clin','["MSc","DVSc"]','["thesis-based","course-based"]','["biology","science","health","medical"]');
+INSERT INTO graduate_programs VALUES('Computational Sciences','https://graduatestudies.uoguelph.ca/programs/computational-science-phd','["PhD"]','["course-based"]','["technology","science","mathematics"]');
+INSERT INTO graduate_programs VALUES('Computer Science','https://graduatestudies.uoguelph.ca/programs/cis','["MSc","PhD"]','["thesis-based"]','["technology","science","mathematics","programming"]');
+INSERT INTO graduate_programs VALUES('Conservation Leadership','https://graduatestudies.uoguelph.ca/Programs/ConservationLeadership','["MCL"]','["course-based"]','["geograph*","environment","climat*","conserv*","natur*","resource","land","water","sustain*","science"]');
+INSERT INTO graduate_programs VALUES('Creative Writing','https://graduatestudies.uoguelph.ca/programs/crwr','["MFA"]','["course-based"]','["arts","humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Criminology and Criminal Justice Policy','https://graduatestudies.uoguelph.ca/programs/ccjp','["MA"]','["course-based","thesis-based"]','["poli*","crim*","govern*","law","power","public","affairs","socio*"]');
+INSERT INTO graduate_programs VALUES('Critical Studies in Improvisation','https://graduatestudies.uoguelph.ca/programs/impr','["MA","PhD"]','["course-based"]','["arts","humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Cybersecurity and Threat Intelligence','https://graduatestudies.uoguelph.ca/programs/mcti','["MCTI"]','["course-based"]','["technology","science","mathematics","programming"]');
+INSERT INTO graduate_programs VALUES('Data Science','https://graduatestudies.uoguelph.ca/programs/data-science','["MDS"]','["course-based"]','["technology","statistics","mathematics","programming","artificial intelligence","ai"]');
+INSERT INTO graduate_programs VALUES('Economics','https://graduatestudies.uoguelph.ca/programs/econ','["MA","PhD"]','["course-based"]','["business","economics","finance"]');
+INSERT INTO graduate_programs VALUES('Engineering','https://graduatestudies.uoguelph.ca/programs/engg','["MEng","MASc","PhD"]','["course-based"]','["technology","engineering","artificial intelligence","ai"]');
+INSERT INTO graduate_programs VALUES('English','https://graduatestudies.uoguelph.ca/programs/engl','["MA"]','["thesis-based"]','["arts","humanities","language"]');
+INSERT INTO graduate_programs VALUES('Environmental Sciences','https://graduatestudies.uoguelph.ca/programs/envs','["MES","MSc","PhD"]','["course-based"]','["biology","science"]');
+INSERT INTO graduate_programs VALUES('European Studies','https://graduatestudies.uoguelph.ca/programs/eurs','["MA"]','["course-based"]','["humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Family Relations and Applied Nutrition','https://graduatestudies.uoguelph.ca/programs/fran','["MAN","MSc","PhD"]','["course-based","thesis-based"]','["health","food","humanities","science"]');
+INSERT INTO graduate_programs VALUES('Food Safety and Quality Assurance','https://graduatestudies.uoguelph.ca/programs/fsqu','["MSc","Graduate Diploma"]','["course-based"]','["food","science"]');
+INSERT INTO graduate_programs VALUES('Food Science','https://graduatestudies.uoguelph.ca/programs/food','["MSc","PhD"]','["thesis-based"]','["food","science","nutrition"]');
+INSERT INTO graduate_programs VALUES('Food, Agricultural and Resource Economics','https://graduatestudies.uoguelph.ca/programs/fare','["MFARE","MSc","PhD"]','["course-based"]','["food","business","agriculture","economics"]');
+INSERT INTO graduate_programs VALUES('French','https://graduatestudies.uoguelph.ca/programs/fren','["MA"]','["course-based"]','["humanities","language"]');
+INSERT INTO graduate_programs VALUES('Geography','https://graduatestudies.uoguelph.ca/programs/geog','["MA","MSc","PhD"]','["course-based","thesis-based"]','["geography","science"]');
+INSERT INTO graduate_programs VALUES('History','https://graduatestudies.uoguelph.ca/programs/hist','["MA","PhD"]','["thesis-based"]','["humanities","history"]');
+INSERT INTO graduate_programs VALUES('Human Health and Nutritional Sciences','https://graduatestudies.uoguelph.ca/programs/hhns','["MSc","PhD"]','["thesis-based","course-based"]','["biol*","science*","life*","living","research*","biomedic*","health*","cell*","medic*","biomolecu*","physi*","kinesio*","disease","gene*","clinic*","patho*","exercise","nutri*","sports","biomechanic*","athlet*","movement","rehab*","anatom*","micro*","immun*","virolog*","virus","infect*","dna","pharma*","cogniti*","diet*"]');
+INSERT INTO graduate_programs VALUES('Integrative Biology','https://graduatestudies.uoguelph.ca/programs/ibio','["MSc","PhD"]','["thesis-based"]','["biol*","science*","life*","living","research*","natur*","eco*","wild*","biodivers*","conserva*","animal*","enviro*","sustain*","mammal*","evolution*"]');
+INSERT INTO graduate_programs VALUES('International Development Studies','https://graduatestudies.uoguelph.ca/programs/idev','["PhD","MSc","MA"]','["collaborative-specialization"]','["humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Landscape Architecture','https://graduatestudies.uoguelph.ca/programs/ldar','["MLA"]','["course-based"]','["architecture","design"]');
+INSERT INTO graduate_programs VALUES('Latin American and Caribbean Studies','https://graduatestudies.uoguelph.ca/programs/lacs','["MA"]','["course-based"]','["humanities","culture","history"]');
+INSERT INTO graduate_programs VALUES('Leadership','https://graduatestudies.uoguelph.ca/programs/lead','["MA"]','["course-based"]','["humanities","business"]');
+INSERT INTO graduate_programs VALUES('Literary Studies/Theatre Studies in English','https://graduatestudies.uoguelph.ca/programs/sets','["PhD"]','["thesis-based"]','["arts","humanities"]');
+INSERT INTO graduate_programs VALUES('Management','https://graduatestudies.uoguelph.ca/programs/mgmt','["MSc","PhD"]','["course-based"]','["business","management"]');
+INSERT INTO graduate_programs VALUES('Market Research','https://graduatestudies.uoguelph.ca/programs/marketresearch','["Graduate Diploma"]','["course-based"]','["business","marketing"]');
+INSERT INTO graduate_programs VALUES('Marketing and Consumer Studies','https://graduatestudies.uoguelph.ca/programs/cost','["MSc","Graduate Diploma"]','["thesis-based"]','["business","marketing"]');
+INSERT INTO graduate_programs VALUES('Mathematics and Statistics','https://graduatestudies.uoguelph.ca/programs/math','["MSc","PhD"]','["thesis-based"]','["mathematics","statistics","artificial intelligence","ai","data"]');
+INSERT INTO graduate_programs VALUES('Molecular and Cellular Biology','https://graduatestudies.uoguelph.ca/programs/mcb','["MSc","PhD"]','["thesis-based"]','["biol*","science*","life*","living","research*","biochem*","biomedic*","health*","molecu*","cell*","medic*","biomolecu*","disease","gene*","clinic*","patho*","micro*","bacteria*","immun*","virolog*","virus","evolution*","infect*","dna","pharma*"]');
+INSERT INTO graduate_programs VALUES('Neuroscience','https://graduatestudies.uoguelph.ca/programs/neur','["MSc","PhD","MBS"]','["collaborative-specialization"]','["biol*","science*","life*","living","research*","neuro*","brain","cogniti*"]');
+INSERT INTO graduate_programs VALUES('One Health','https://graduatestudies.uoguelph.ca/programs/onehealth','["MSc","PhD","MES","MA","MASc","MEng"]','["collaborative-specialization"]','["biol*","science*","life*","living","research*","natur*","eco*","wild*","biodivers*","conserva*","animal*","enviro*","sustain*","mammal*","evolution*","health*","medic*","disease","gene*","clinic*","patho*","micro*","bacteria*","immun*","virolog*","virus","infect*","dna","pharma*"]');
+INSERT INTO graduate_programs VALUES('Pathobiology','https://graduatestudies.uoguelph.ca/programs/path','["MSc","PhD","DVSc","Graduate Diploma"]','["thesis-based"]','["biology","science","health","medical"]');
+INSERT INTO graduate_programs VALUES('Philosophy','https://graduatestudies.uoguelph.ca/programs/phil','["MA","PhD"]','["course-based"]','["humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Physics','https://graduatestudies.uoguelph.ca/programs/phys','["MSc","PhD"]','["course-based","thesis-based"]','["physics","science"]');
+INSERT INTO graduate_programs VALUES('Planning','https://www.uoguelph.ca/programs/master-of-planning','["MPlan"]','["course-based"]','["humanities","geography","rural","environmental design"]');
+INSERT INTO graduate_programs VALUES('Political Science','https://graduatestudies.uoguelph.ca/programs/pols','["MA","PhD"]','["course-based","thesis-based"]','["humanities","politics"]');
+INSERT INTO graduate_programs VALUES('Population Medicine','https://graduatestudies.uoguelph.ca/programs/popmed','["MSc","PhD","DVSc"]','["thesis-based"]','["biology","science","health","medical"]');
+INSERT INTO graduate_programs VALUES('Project Management','https://graduatestudies.uoguelph.ca/programs/project-management','["MPM","Graduate Diploma"]','["course-based"]','["business","management"]');
+INSERT INTO graduate_programs VALUES('Psychology','https://graduatestudies.uoguelph.ca/programs/psyc','["MA","MSc","PhD"]','["thesis-based"]','["humanities"]');
+INSERT INTO graduate_programs VALUES('Public Health','https://graduatestudies.uoguelph.ca/programs/phlt','["MPH","DVM/MPH Combined Degree","Graduate Diploma"]','["course-based"]','["health","medical","science","biology"]');
+INSERT INTO graduate_programs VALUES('Public Issues Anthropology','https://graduatestudies.uoguelph.ca/programs/pia','["MA"]','["thesis-based"]','["poli*","cultur*","human","antho*","affairs","socio*"]');
+INSERT INTO graduate_programs VALUES('Regenerative Medicine','https://graduatestudies.uoguelph.ca/programs/regenerative-medicine','["MSc","PhD","DVSc","MASc","MBS"]','["collaborative-specialization"]','["biol*","science*","life*","living","research*","biochem*","biomedic*","health*","molecu*","cell*","medic*","biomolecu*","disease","gene*","clinic*","patho*","micro*","bacteria*","immun*","virolog*","virus","evolution*","infect*","dna","pharma*"]');
+INSERT INTO graduate_programs VALUES('Relational and Psychotherapy Training Program','https://graduatestudies.uoguelph.ca/programs/relational-and-psychotherapy-training-program','["MP","MRFT","MA"]','["course-based"]','["health","medical","psychology"]');
+INSERT INTO graduate_programs VALUES('Rural Planning and Development','https://graduatestudies.uoguelph.ca/programs/rpdprof','["MSc","MPLAN"]','["course-based"]','["humanities"]');
+INSERT INTO graduate_programs VALUES('Rural Studies','https://graduatestudies.uoguelph.ca/programs/rpdprof-stu','["PhD"]','["thesis-based","course-based"]','["humanities"]');
+INSERT INTO graduate_programs VALUES('Sexuality, Genders and Bodies','https://graduatestudies.uoguelph.ca/programs/Sexualities-Genders-And-Bodies','["MA","PhD","MSc"]','["collaborative-specialization"]','["poli*","indigen*","justice","feminis*","decolon*","interdisciplinary"]');
+INSERT INTO graduate_programs VALUES('Social Practice and Transformational Change','https://graduatestudies.uoguelph.ca/programs/sptc','["PhD"]','["thesis-based"]','["poli*","indigen*","justice","feminis*","decolon*","interdisciplinary","sex*","disab*","gender","lgb*","psych*","queer","socio*","anthro*","geograph*","family","relation*","critical"]');
+INSERT INTO graduate_programs VALUES('Sociology','https://graduatestudies.uoguelph.ca/programs/soca','["MA","PhD"]','["thesis-based"]','["humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Studio Art','https://graduatestudies.uoguelph.ca/programs/sart','["MFA"]','["course-based"]','["arts","humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Sustainable Agriculture','https://www.uoguelph.ca/programs/master-sustainable-agriculture/','["MSAg"]','["course-based"]','["agriculture","biology","science"]');
+INSERT INTO graduate_programs VALUES('Theatre Studies','https://graduatestudies.uoguelph.ca/programs/thst','["MA"]','["thesis-based","course-based"]','["arts","humanities","culture"]');
+INSERT INTO graduate_programs VALUES('Tourism and Hospitality','https://graduatestudies.uoguelph.ca/programs/trmh','["MSc","Graduate Diploma"]','["thesis-based","course-based"]','["business","marketing"]');
+INSERT INTO graduate_programs VALUES('Tourism Research','https://graduatestudies.uoguelph.ca/programs/tres','["Graduate Diploma"]','["course-based"]','["business","marketing"]');
+INSERT INTO graduate_programs VALUES('Toxicology','https://graduatestudies.uoguelph.ca/programs/tox','["MSc","PhD","MBS"]','["collaborative-specialization"]','["biology","science","health","medical"]');
+INSERT INTO graduate_programs VALUES('Veterinary Medicine / Public Health','https://graduatestudies.uoguelph.ca/programs/DVMMPH','["DVM","MPH"]','["course-based"]','["biology","science","health","medical"]');
+INSERT INTO graduate_programs VALUES('Veterinary Science','https://graduatestudies.uoguelph.ca/programs/vets','["DVSc"]','["course-based"]','["biology","science","health","medical"]');
+INSERT INTO graduate_programs VALUES('Wildlife Biology','https://calendar.uoguelph.ca/graduate-calendar/graduate-programs/wildlife-biology/','["MWB"]','["course-based"]','["biol*","science*","life*","living","research*","natur*","eco*","wild*","biodivers*","conserva*","animal*","enviro*","fish*","sustain*","mammal*"]');
+INSERT INTO graduate_programs VALUES('Plant Agriculture','https://graduatestudies.uoguelph.ca/programs/plnt','["MSc","PhD","MPAg"]','["course-based"]','["crops","crop science","biochemistry","plant genetics"]');
 COMMIT;
