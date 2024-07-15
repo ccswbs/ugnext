@@ -33,4 +33,4 @@ yarn-error.log*
 
 .idea
 
-data/sqlite/db.sqlite
+data/sqlite/db.sqlite3
