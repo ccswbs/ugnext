@@ -276,4 +276,13 @@ INSERT INTO programs_continuing_education VALUES('Pupil Transportation Managemen
 INSERT INTO programs_continuing_education VALUES('School Board Administration','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=605466','["diploma"]','[]');
 INSERT INTO programs_continuing_education VALUES('Knowledge Mobilization','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=453705','["certificate"]','[]');
 INSERT INTO programs_continuing_education VALUES('Public Policy and Administration','https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=654157','["diploma"]','[]');
+CREATE TABLE admissions_student_types
+(
+    id    TEXT PRIMARY KEY NOT NULL,
+    name  TEXT             NOT NULL
+);
+INSERT INTO admissions_student_types VALUES('high-school','High School Student/Graduate');
+INSERT INTO admissions_student_types VALUES('university','University Student/Graduate');
+INSERT INTO admissions_student_types VALUES('college','College Student/Graduate');
+INSERT INTO admissions_student_types VALUES('internal','Current University of Guelph Student/Graduate');
 COMMIT;
