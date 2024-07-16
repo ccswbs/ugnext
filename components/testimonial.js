@@ -4,11 +4,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Avatar } from "@material-ui/core";
 import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
+import { twJoin, twMerge } from 'tailwind-merge';
 
 const PreviousBtn = (props) => {
   const { className, onClick } = props;
   return (
-    <div className={className} onClick={onClick} style={{ top:'33%' }} >
+    <div 
+      className={twMerge(twJoin('z-10'), className)}
+      onClick={onClick} style={{ top:'33%', left:'0px' }} >
       <ArrowBackIos className='text-yellow-400' style={{ fontSize: "45px" }} />
     </div>
   );
@@ -17,7 +20,9 @@ const PreviousBtn = (props) => {
 const NextBtn = (props) => {
   const { className, onClick } = props;
   return (
-    <div className={className} onClick={onClick} style={{ top:'33%' }} >
+    <div 
+      className={twMerge(twJoin('z-10'), className)}
+      onClick={onClick} style={{ top:'33%', right:'10px' }} >
       <ArrowForwardIos className='text-yellow-400' style={{ fontSize: "45px" }} />
     </div>
   );
@@ -65,7 +70,7 @@ export const Testimonials = ({testimonialData}) => {
     slidesToScroll: 1,
     responsive: [      
       {
-        breakpoint: 480,
+        breakpoint: 767,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1
@@ -75,8 +80,8 @@ export const Testimonials = ({testimonialData}) => {
   };
 
   return (
-    <div className='testimonial w-full flex justify-center'>
-      <div className='text-center mx-auto' style={{width:'90%'}}>
+    <div className='testimonial w-full flex md:flex md:justify-center'>
+      <div className='text-center mx-auto md:px-5' style={{ width: "90%" }}>
         <Slider className='px-5' {...settings}>
           {testimonialData.map((item, index) => (
             <Card
