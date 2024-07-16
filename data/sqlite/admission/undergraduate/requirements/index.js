@@ -24,11 +24,11 @@ export const getLocations = async () => {
 			FROM
 				countries
 		`),
-		systemsOfStudy: await db.all(SQL`
+		curriculums: await db.all(SQL`
 			SELECT
 				*
 			FROM
-				systems_of_study
+				curriculums
 		`),
 	};
 };
