@@ -152,13 +152,30 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 						</>
 					}
 					secondary={
-						<div className="flex flex-col px-6">
-							<Heading level={3} as="h2" className="">
+						<div className="flex flex-col pl-8">
+							<Heading level={3} as="h2" className="mb-1">
 								More Information
 							</Heading>
-							<Button variant="outlined" color="blue" href="https://www.uoguelph.ca/apply/">
-								Apply Now
-							</Button>
+							<List className="text-lg">
+								<ListItem>
+									<Link className="block pt-0 w-fit" href="https://www.uoguelph.ca/apply/">
+										How to apply
+									</Link>
+								</ListItem>
+								<ListItem>
+									<Link className="block pt-0 w-fit" href="/programs/undergraduate">
+										Search for a program
+									</Link>
+								</ListItem>
+								<ListItem>
+									<Link
+										className="block pt-0 w-fit"
+										href="https://admission.uoguelph.ca/2c042408-ce57-40b8-9689-192f685e8909"
+									>
+										English Proficiency Requirements
+									</Link>
+								</ListItem>
+							</List>
 						</div>
 					}
 				/>
