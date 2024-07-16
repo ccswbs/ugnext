@@ -8,6 +8,7 @@ import { Button } from '@/components/button';
 import { Section } from '@/components/section';
 import { List, ListItem } from '@/components/list';
 import { Link } from '@/components/link';
+import { useRouter } from 'next/router';
 
 export async function getStaticProps(context) {
 	return {
@@ -26,8 +27,12 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 	const [showCountries, setShowCountries] = useState(false);
 	const [showCurriculums, setShowCurriculums] = useState(false);
 	const complete = (studentType && location && program) || (studentType === 'internal' && program);
+	const router = useRouter();
 
-	console.log(studentType);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(studentType, location, program);
+	};
 
 	return (
 		<Layout title="Undergraduate Admission Requirements">
@@ -37,7 +42,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 						<>
 							<Heading level={1}>Undergraduate Admission Requirements</Heading>
 
-							<form className="flex flex-col gap-8">
+							<form className="flex flex-col gap-8" onSubmit={handleSubmit}>
 								<Select
 									label={
 										<Heading level={5} as="h2" className="mb-1 mt-0">
