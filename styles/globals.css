@@ -26,6 +26,12 @@
 	}
 }
 
+@layer utilities {
+	.break-auto {
+		word-break: auto-phrase;
+	}
+}
+
 @layer components {
 	.vcard {
 		@apply mb-2 bg-grey-50 p-4;

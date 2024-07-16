@@ -65,14 +65,17 @@ export const getPageMenu = async (page) => {
 };
 
 export const getBreadcrumbs = async (slug, status) => {
+	// NEED TO IMPROVE THIS TO LOWER THE AMOUNT OF QUERYING
 	const crumbs = [];
-	const stack = slug.slice(0, -1);
+	const stack = [...slug];
 
 	while (stack.length > 0) {
 		const url = '/' + stack.join('/');
-		const title = await graphql(getPageTitleQuery, {
-			url: url,
-		})?.data?.route?.entity?.title;
+		const title = (
+			await graphql(getPageTitleQuery, {
+				url: url,
+			})
+		)?.data?.route?.entity?.title;
 
 		crumbs.unshift({
 			title: title ? title : toTitleCase(stack[stack.length - 1]),

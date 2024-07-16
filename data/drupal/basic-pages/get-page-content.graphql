@@ -11,6 +11,7 @@ fragment Navigation on TermPrimaryNavigation {
 }
 
 fragment Image on MediaImage {
+	__typename
 	image {
 		alt
 		height
@@ -20,6 +21,7 @@ fragment Image on MediaImage {
 }
 
 fragment Video on MediaVideo {
+	__typename
 	video {
 		name
 		url
@@ -28,6 +30,7 @@ fragment Video on MediaVideo {
 }
 
 fragment RemoteVideo on MediaRemoteVideo {
+	__typename
 	height
 	width
 	url
@@ -43,6 +46,7 @@ fragment RemoteVideo on MediaRemoteVideo {
 }
 
 fragment Accordion on ParagraphAccordionSection {
+	__typename
 	headingLevel
 	accordionSectionTitle: title
 	items {
@@ -60,6 +64,7 @@ fragment Accordion on ParagraphAccordionSection {
 }
 
 fragment GeneralText on ParagraphGeneralText {
+	__typename
 	sectionColumn {
 		...SectionColumn
 	}
@@ -69,6 +74,7 @@ fragment GeneralText on ParagraphGeneralText {
 }
 
 fragment Buttons on ParagraphButtonWidget {
+	__typename
 	ctaHeading {
 		processed
 	}
@@ -88,6 +94,7 @@ fragment Buttons on ParagraphButtonWidget {
 }
 
 fragment Links on ParagraphLinksWidget {
+	__typename
 	links {
 		... on ParagraphLinkItem {
 			url {
@@ -103,6 +110,7 @@ fragment Links on ParagraphLinksWidget {
 }
 
 fragment MediaText on ParagraphMediaText {
+	__typename
 	heading: title
 	media {
 		__typename
@@ -127,12 +135,14 @@ fragment MediaText on ParagraphMediaText {
 }
 
 fragment ButtonSection on ParagraphSectionButton {
+	__typename
 	buttons {
 		...Buttons
 	}
 }
 
 fragment Tabs on ParagraphSectionTab {
+	__typename
 	tabs {
 		... on ParagraphTabContent {
 			body {
@@ -147,6 +157,7 @@ fragment Tabs on ParagraphSectionTab {
 }
 
 fragment Statistics on ParagraphStatisticWidget {
+	__typename
 	content {
 		... on ParagraphStatisticItem {
 			image {
@@ -166,7 +177,53 @@ fragment Statistics on ParagraphStatisticWidget {
 	}
 }
 
+fragment ModalVideo on ParagraphModalVideoWidget {
+	__typename
+	video {
+		...RemoteVideo
+	}
+}
+
+fragment StoryModalVideo on ParagraphStoryModalVideo {
+	__typename
+	title {
+		processed
+	}
+	video {
+		...RemoteVideo
+	}
+}
+
+fragment StoryQuote on ParagraphStoryQuote {
+	__typename
+	quoteContent: content
+	quoteSource: source
+	quoteDescription: description
+	image {
+		...Image
+	}
+}
+
+fragment ImageOverlay on ParagraphImageOverlay {
+	__typename
+	backgroundImage {
+		...Image
+	}
+	imageOverlayContent: content {
+		...GeneralText
+		...ButtonSection
+		...StoryQuote
+		...StoryModalVideo
+	}
+	imageOverlayStyle: style {
+		... on TermImageOverlayStyle {
+			name
+		}
+	}
+}
+
 fragment Section on ParagraphSection {
+	__typename
 	heading: title
 	headingLevel
 	content {
@@ -183,6 +240,7 @@ fragment Section on ParagraphSection {
 }
 
 fragment Testimonial on NodeTestimonial {
+	__typename
 	body {
 		processed
 		summary
@@ -200,6 +258,7 @@ fragment Testimonial on NodeTestimonial {
 }
 
 fragment TestimonialSlider on ParagraphTestimonialSlider {
+	__typename
 	title
 	byTitle {
 		...Testimonial
@@ -210,7 +269,7 @@ fragment TestimonialSlider on ParagraphTestimonialSlider {
 }
 
 fragment Story on ParagraphStoryWidget {
-	#incomplete
+	__typename
 	content {
 		...Statistics
 		... on ParagraphStoryImageCutoutBackground {
@@ -223,6 +282,10 @@ fragment Story on ParagraphStoryWidget {
 			title
 			text {
 				processed
+			}
+			storyContent: content {
+				...StoryModalVideo
+				...StoryQuote
 			}
 		}
 	}
@@ -240,7 +303,6 @@ query GetPage($id: String = "", $status: Boolean = false) {
 				}
 				title
 				widgets {
-					__typename
 					...Accordion
 					...GeneralText
 					...Buttons
@@ -251,6 +313,8 @@ query GetPage($id: String = "", $status: Boolean = false) {
 					...Statistics
 					...TestimonialSlider
 					...Story
+					...ImageOverlay
+					...ModalVideo
 					...Section
 				}
 				changed {
