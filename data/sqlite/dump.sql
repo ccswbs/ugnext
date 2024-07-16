@@ -395,11 +395,11 @@ CREATE TABLE systems_of_study
 (
     name TEXT PRIMARY KEY NOT NULL
 );
-INSERT INTO systems_of_study VALUES('Advanced Placement');
-INSERT INTO systems_of_study VALUES('American Curriculum');
-INSERT INTO systems_of_study VALUES('Chinese Curriculum');
-INSERT INTO systems_of_study VALUES('European Baccalaureate');
-INSERT INTO systems_of_study VALUES('French Baccalaureate');
-INSERT INTO systems_of_study VALUES('International Baccalaureate');
-INSERT INTO systems_of_study VALUES('British Patterned Education (GCE)');
+INSERT INTO curriculums VALUES('Advanced Placement');
+INSERT INTO curriculums VALUES('American Curriculum');
+INSERT INTO curriculums VALUES('Chinese Curriculum');
+INSERT INTO curriculums VALUES('European Baccalaureate');
+INSERT INTO curriculums VALUES('French Baccalaureate');
+INSERT INTO curriculums VALUES('International Baccalaureate');
+INSERT INTO curriculums VALUES('British Patterned Education (GCE)');
 COMMIT;
