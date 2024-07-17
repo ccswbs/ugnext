@@ -6,7 +6,7 @@ export const getStudentTypes = async () => {
 		SELECT
 			*
 		FROM
-			admissions_student_types
+			admission_requirements_student_types
 	`);
 };
 
@@ -16,19 +16,19 @@ export const getLocations = async () => {
 			SELECT
 				*
 			FROM
-				provinces
+				admission_requirements_provinces
 		`),
 		countries: await db.all(SQL`
 			SELECT
 				*
 			FROM
-				countries
+				admission_requirements_countries
 		`),
 		curriculums: await db.all(SQL`
 			SELECT
 				*
 			FROM
-				curriculums
+				admission_requirements_curriculums
 		`),
 	};
 };
