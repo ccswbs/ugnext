@@ -112,6 +112,10 @@ fragment Links on ParagraphLinksWidget {
 fragment MediaText on ParagraphMediaText {
 	__typename
 	heading: title
+	mediaImageSize
+	buttonSection {
+        ...ButtonSection
+      }
 	media {
 		__typename
 		...Image

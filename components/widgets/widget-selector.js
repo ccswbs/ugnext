@@ -4,6 +4,7 @@ import { Links } from '@/components/widgets/links';
 import { Tabs } from '@/components/widgets/tabs';
 import { Section } from '@/components/widgets/section';
 import { Statistics } from '@/components/widgets/statistics';
+import { MediaText } from "@/components/widgets/mediaText";
 
 export const WidgetSelector = ({ data }) => {
 	switch (data.__typename) {
@@ -19,6 +20,8 @@ export const WidgetSelector = ({ data }) => {
 			return <Statistics data={data} />
 		case 'ParagraphSection':
 			return <Section data={data} />;
+		case "ParagraphMediaText":
+      		return <MediaText data={data} />;
 		default:
 			return <div>{data.__typename} is not yet implemented</div>;
 	}
