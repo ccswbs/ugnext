@@ -284,7 +284,7 @@ CREATE TABLE admission_requirements_student_types
 INSERT INTO admission_requirements_student_types VALUES('high-school','High School Student/Graduate');
 INSERT INTO admission_requirements_student_types VALUES('university','University Student/Graduate');
 INSERT INTO admission_requirements_student_types VALUES('college','College Student/Graduate');
-INSERT INTO admission_requirements_student_types VALUES('internal','Current University of Guelph Student/Graduate');
+INSERT INTO admission_requirements_student_types VALUES('internal','Current or Previous University of Guelph Student');
 CREATE TABLE admission_requirements_provinces
 (
     name TEXT PRIMARY KEY NOT NULL
