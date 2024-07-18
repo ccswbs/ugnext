@@ -1,5 +1,8 @@
 import { twJoin } from 'tailwind-merge';
 import { extractVideoID } from '@/lib/ug-utils';
+import Image from 'next/image';
+import { Heading } from '@/components/heading';
+import { HtmlParser } from '@/components/html-parser';
 
 export const MediaText = ({ data }) => {
 	const mediaTitle = data.heading;
@@ -8,7 +11,9 @@ export const MediaText = ({ data }) => {
 	
 	const mediaSize = data?.mediaImageSize;
 	const imageURL = data?.media?.image?.url;
-	const imageAlt = data?.media?.image?.alt;	
+	const imageAlt = data?.media?.image?.alt;
+	const imageWidth = data?.media?.image?.width;
+	const imageHeight = data?.media?.image?.height;
 	const mediaAlignment = data?.mediaAlignment;
     
     const videoTitle = data?.media?.name;
@@ -27,6 +32,26 @@ export const MediaText = ({ data }) => {
 	
 	
 	return (
-		<div>test</div>
+		<div>
+			{mediaTitle && 
+				<Heading level={2} className="mb-7 mt-7 font-bold text-3xl text-red">
+					{mediaTitle}
+				</Heading>
+			}
+			{mediaDescription &&
+					<HtmlParser html={mediaDescription} />
+			}
+			{imageURL &&
+				<Image 
+					className={twJoin(
+						'w-1/2'
+					)}
+					src={imageURL}
+					alt={imageAlt}
+					width={imageWidth}
+					height={imageHeight}
+				/>
+			}
+		</div>
 	)
 };
