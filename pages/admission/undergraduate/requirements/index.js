@@ -24,7 +24,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 	const [studentType, setStudentType] = useState(null);
 	const [location, setLocation] = useState(null);
 	const [program, setProgram] = useState(null);
-	const [showCountries, setShowCountries] = useState(false);
+	const [showInternational, setShowInternational] = useState(false);
 	const [showCurriculums, setShowCurriculums] = useState(false);
 	const complete = (studentType && location && program) || (studentType === 'internal' && program);
 	const router = useRouter();
@@ -66,7 +66,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 												</Heading>
 											}
 											options={[
-												...locations.provinces.map((location) => ({
+												...locations.domestic.map((location) => ({
 													label: location.name,
 													value: location.name,
 												})),
@@ -76,37 +76,37 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 												},
 												{
 													label: 'Other Curriculum',
-													value: 'system-of-study',
+													value: 'curriculum',
 												},
 											]}
 											onChange={(selection) => {
 												switch (selection.value) {
 													case 'international':
-														setShowCountries(true);
+														setShowInternational(true);
 														setShowCurriculums(false);
 														setLocation(null);
 														break;
-													case 'system-of-study':
-														setShowCountries(false);
+													case 'curriculum':
+														setShowInternational(false);
 														setShowCurriculums(true);
 														setLocation(null);
 														break;
 													default:
-														setShowCountries(false);
+														setShowInternational(false);
 														setShowCurriculums(false);
 														setLocation(selection.value);
 												}
 											}}
 										/>
 
-										{showCountries && (
+										{showInternational && (
 											<Select
 												label={
 													<Heading level={5} as="h2" className="mb-1 mt-0">
 														My country is/was
 													</Heading>
 												}
-												options={locations.countries.map((location) => ({
+												options={locations.international.map((location) => ({
 													label: location.name,
 													value: location.name,
 												}))}

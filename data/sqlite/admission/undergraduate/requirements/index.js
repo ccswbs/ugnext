@@ -12,23 +12,29 @@ export const getStudentTypes = async () => {
 
 export const getLocations = async () => {
 	return {
-		provinces: await db.all(SQL`
+		domestic: await db.all(SQL`
 			SELECT
 				*
 			FROM
-				admission_requirements_provinces
+				admission_requirements_locations
+			WHERE
+				type = 'domestic'
 		`),
-		countries: await db.all(SQL`
+		international: await db.all(SQL`
 			SELECT
 				*
 			FROM
-				admission_requirements_countries
+				admission_requirements_locations
+			WHERE
+				type = 'international'
 		`),
 		curriculums: await db.all(SQL`
 			SELECT
 				*
 			FROM
-				admission_requirements_curriculums
+				admission_requirements_locations
+			WHERE
+				type = 'curriculum'
 		`),
 	};
 };
