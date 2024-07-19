@@ -288,7 +288,7 @@ INSERT INTO admission_requirements_student_types VALUES('university','University
 INSERT INTO admission_requirements_student_types VALUES('college','College Student/Graduate',1,1);
 INSERT INTO admission_requirements_student_types VALUES('internal','Current or Previous University of Guelph Student',0,1);
 INSERT INTO admission_requirements_student_types VALUES('mature','Mature Student',0,0);
-INSERT INTO admission_requirements_student_types VALUES('home-schooled','Home Schooled',0,0);
+INSERT INTO admission_requirements_student_types VALUES('home-schooled','Home Schooled Student',0,0);
 CREATE TABLE IF NOT EXISTS "admission_requirements_locations"
 (
     name TEXT PRIMARY KEY not null,
