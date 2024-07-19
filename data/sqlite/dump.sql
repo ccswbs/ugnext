@@ -279,12 +279,16 @@ INSERT INTO programs_continuing_education VALUES('Public Policy and Administrati
 CREATE TABLE admission_requirements_student_types
 (
     id    TEXT PRIMARY KEY NOT NULL,
-    name  TEXT             NOT NULL
+    name  TEXT             NOT NULL,
+    location_dependent INTEGER check (location_dependent in (TRUE, FALSE)) NOT NULL,
+    program_dependent INTEGER check (program_dependent IN (TRUE, FALSE)) NOT NULL
 );
-INSERT INTO admission_requirements_student_types VALUES('high-school','High School Student/Graduate');
-INSERT INTO admission_requirements_student_types VALUES('university','University Student/Graduate');
-INSERT INTO admission_requirements_student_types VALUES('college','College Student/Graduate');
-INSERT INTO admission_requirements_student_types VALUES('internal','Current or Previous University of Guelph Student');
+INSERT INTO admission_requirements_student_types VALUES('high-school','High School Student/Graduate',1,1);
+INSERT INTO admission_requirements_student_types VALUES('university','University Student/Graduate',1,1);
+INSERT INTO admission_requirements_student_types VALUES('college','College Student/Graduate',1,1);
+INSERT INTO admission_requirements_student_types VALUES('internal','Current or Previous University of Guelph Student',0,1);
+INSERT INTO admission_requirements_student_types VALUES('mature','Mature Student',0,0);
+INSERT INTO admission_requirements_student_types VALUES('home-schooled','Home Schooled',0,0);
 CREATE TABLE IF NOT EXISTS "admission_requirements_locations"
 (
     name TEXT PRIMARY KEY not null,

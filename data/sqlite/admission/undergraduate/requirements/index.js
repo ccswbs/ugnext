@@ -2,12 +2,18 @@ import { db, parseJSONColumns } from '@/data/sqlite';
 import SQL from 'sql-template-strings';
 
 export const getStudentTypes = async () => {
-	return await db.all(SQL`
-		SELECT
-			*
-		FROM
-			admission_requirements_student_types
-	`);
+	return (
+		await db.all(SQL`
+			SELECT
+				*
+			FROM
+				admission_requirements_student_types
+		`)
+	).map((type) => ({
+		...type,
+		location_dependent: Boolean(type.location_dependent),
+		program_dependent: Boolean(type.program_dependent),
+	}));
 };
 
 export const getLocations = async () => {
@@ -44,7 +50,7 @@ export const getPrograms = async () => {
 		await db.all(SQL`
 			SELECT
 				title,
-				degrees,
+				DEGREES,
 				tags
 			FROM
 				programs_undergraduate
