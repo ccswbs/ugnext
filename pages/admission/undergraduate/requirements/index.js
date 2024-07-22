@@ -137,7 +137,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 											<Select
 												label={
 													<Heading level={5} as="h2" className="mb-1 mt-0">
-														My country is/was
+														I study/studied in
 													</Heading>
 												}
 												options={locations.international.map((location) => ({
@@ -155,7 +155,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 											<Select
 												label={
 													<Heading level={5} as="h2" className="mb-1 mt-0">
-														My curriculum is/was
+														My curriculum of study is/was
 													</Heading>
 												}
 												options={locations.curriculums.map((location) => ({
