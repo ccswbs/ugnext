@@ -2,6 +2,7 @@ import { twJoin } from 'tailwind-merge';
 import { extractVideoID } from '@/lib/ug-utils';
 import Image from 'next/image';
 import { Heading } from '@/components/heading';
+import { Video } from '@/components/video';
 import { HtmlParser } from '@/components/html-parser';
 
 export const MediaText = ({ data }) => {
@@ -27,8 +28,8 @@ export const MediaText = ({ data }) => {
 	const mediaButtons = data.buttonSection;
     //const mediaRelationships = data.widgetData?.relationships.field_media_text_media?.relationships;
 
-	console.log(mediaTitle,mediaDescription,mediaBgColor,imageURL,imageAlt,mediaAlignment,mediaSize)
-	console.log(videoTitle, videoTranscript,videoURL,videoHeight,videoWidth,videoType,videoID,mediaButtons)
+	//console.log(mediaTitle,mediaDescription,mediaBgColor,imageURL,imageAlt,mediaAlignment,mediaSize)
+	//console.log(videoType)
 	
 	
 	return (
@@ -50,6 +51,17 @@ export const MediaText = ({ data }) => {
 					alt={imageAlt}
 					width={imageWidth}
 					height={imageHeight}
+				/>
+			}
+
+			{videoURL &&
+				<Video 
+					videoTitle = {videoTitle}
+					videoTranscript = {videoTranscript}
+					videoHeight = {videoHeight}
+					videoWidth = {videoWidth}
+					videoType = {videoType}
+					videoID = {videoID}			
 				/>
 			}
 		</div>
