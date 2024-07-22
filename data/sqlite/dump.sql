@@ -400,8 +400,12 @@ INSERT INTO admission_requirements_locations VALUES('International Baccalaureate
 INSERT INTO admission_requirements_locations VALUES('British Patterned Education (GCE)','curriculum');
 CREATE TABLE admission_requirements_undergraduate
 (
-    student_type REFERENCES admission_requirements_student_types(id),
-    location REFERENCES admission_requirements_locations(name),
-    program REFERENCES programs_undergraduate(title)
+    student_type TEXT NULL,
+    location TEXT NULL,
+    program TEXT NULL,
+    content TEXT NOT NULL,
+    FOREIGN KEY(student_type) REFERENCES admission_requirements_student_types(id),
+    FOREIGN KEY(location) REFERENCES admission_requirements_locations(name),
+    FOREIGN KEY(program) REFERENCES programs_undergraduate(title)
 );
 COMMIT;
