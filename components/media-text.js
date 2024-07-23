@@ -77,12 +77,14 @@ console.log(region)
                         textCol = "md:w-1/2";
                     break;
                     case "large":
-                        mediaCol = "md:w-3/4";
-                        textCol = "md:w-1/4";
+                        mediaCol = "md:w-full";
+                        textCol = "md:w-full";
+						disableFlex = true;
                     break;
                     default:
-                        mediaCol = "md:w-1/4";
-                        textCol = "md:w-3/4";
+                        mediaCol = "md:w-full";
+                        textCol = "md:w-full";
+						disableFlex = true;
                     break;
                 }
             } else {
@@ -98,10 +100,12 @@ console.log(region)
                     case "large":
                         mediaCol = "md:w-full";
                         textCol = "md:w-full";
+						disableFlex = true;
                     break;
                     default:
-                        mediaCol = "md:w-1/4";
-                        textCol = "md:w-3/4";
+                        mediaCol = "md:w-full";
+                        textCol = "md:w-full";
+						disableFlex = true;
                     break;
                 }
             }
@@ -122,8 +126,9 @@ console.log(region)
 						disableFlex = true;
                     break;
                     default:
-                        mediaCol = "md:w-1/4";
-                        textCol = "md:w-3/4";
+                        mediaCol = "md:w-full";
+                        textCol = "md:w-full";
+						disableFlex = true;
                     break;
             }
         }
@@ -149,24 +154,17 @@ console.log(region)
             headingColor
         	)}>
 
-			<div 
-				className={twJoin("",mediaCol, leftDivClasses)}	
-			>
-				{videoURL &&
-					
+			<div className={twJoin("",mediaCol, leftDivClasses)}>
+				{videoURL &&					
 					<Video
-						className={twJoin(
-							'w-full'
-						)}
+						className={twJoin('w-full')}
 						videoData={videoData}		
 					/>
 				}
 
 				{imageURL &&
 					<Image 
-						className={twJoin(
-							'w-full'
-						)}
+						className={twJoin('w-full')}
 						src={imageURL}
 						alt={imageAlt}
 						width={imageWidth}
@@ -177,21 +175,17 @@ console.log(region)
 			</div>
 
 			{textOrButtons && 
-				<div 
-					className={twJoin(
-						textCol, rightDivClasses, 'p-5'
-					)}
-				>
+				<div className={twJoin(textCol, rightDivClasses, 'p-5')} >
 					{mediaTitle && 
 						<Heading 
-						level={2}
-						className={twJoin("font-bold text-3xl",headingColor)}							
+							level={2}
+							className={twJoin("font-bold text-3xl",headingColor)}							
 						>
 							{mediaTitle}
 						</Heading>
 					}
 					{mediaDescription &&
-							<HtmlParser html={mediaDescription} />
+						<HtmlParser html={mediaDescription} />
 					}
 				</div>
 			}				
