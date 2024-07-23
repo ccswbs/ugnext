@@ -406,6 +406,7 @@ CREATE TABLE admission_requirements_undergraduate
     content TEXT NOT NULL,
     FOREIGN KEY(student_type) REFERENCES admission_requirements_student_types(id),
     FOREIGN KEY(location) REFERENCES admission_requirements_locations(name),
-    FOREIGN KEY(program) REFERENCES programs_undergraduate(title)
+    FOREIGN KEY(program) REFERENCES programs_undergraduate(title),
+    PRIMARY KEY(student_type, location, program)
 );
 COMMIT;
