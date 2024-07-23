@@ -284,8 +284,8 @@ CREATE TABLE admission_requirements_student_types
     program_dependent INTEGER check (program_dependent IN (TRUE, FALSE)) NOT NULL
 );
 INSERT INTO admission_requirements_student_types VALUES('high-school','High School Student/Graduate',1,1);
-INSERT INTO admission_requirements_student_types VALUES('university','University Student/Graduate',1,1);
-INSERT INTO admission_requirements_student_types VALUES('college','College Student/Graduate',1,1);
+INSERT INTO admission_requirements_student_types VALUES('university','University Student/Graduate',0,1);
+INSERT INTO admission_requirements_student_types VALUES('college','College Student/Graduate',0,1);
 INSERT INTO admission_requirements_student_types VALUES('internal','Current or Previous University of Guelph Student',0,1);
 INSERT INTO admission_requirements_student_types VALUES('mature','Mature Student',0,0);
 INSERT INTO admission_requirements_student_types VALUES('home-schooled','Home Schooled Student',0,0);
