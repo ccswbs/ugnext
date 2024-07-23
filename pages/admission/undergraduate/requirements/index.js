@@ -84,7 +84,12 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 										key: type.id,
 									}))}
 									onChange={(selection) => {
-										setStudentType(selection.value);
+										setStudentType(selection?.value);
+
+										if(!selection) {
+											setLocation(null);
+											setProgram(null);
+										}
 									}}
 								/>
 
@@ -114,7 +119,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 												},
 											]}
 											onChange={(selection) => {
-												switch (selection.value) {
+												switch (selection?.value) {
 													case 'international':
 														setShowInternational(true);
 														setShowCurriculums(false);
@@ -128,13 +133,14 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 													default:
 														setShowInternational(false);
 														setShowCurriculums(false);
-														setLocation(selection.value);
+														setLocation(selection?.value);
 												}
 											}}
 										/>
 
 										{showInternational && (
 											<Select
+												autocomplete
 												label={
 													<Heading level={5} as="h2" className="mb-1 mt-0">
 														I study/studied in
@@ -146,13 +152,14 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 													key: location.name,
 												}))}
 												onChange={(selection) => {
-													setLocation(selection.value);
+													setLocation(selection?.value);
 												}}
 											/>
 										)}
 
 										{showCurriculums && (
 											<Select
+												autocomplete
 												label={
 													<Heading level={5} as="h2" className="mb-1 mt-0">
 														My curriculum of study is/was
@@ -164,7 +171,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 													key: location.name,
 												}))}
 												onChange={(selection) => {
-													setLocation(selection.value);
+													setLocation(selection?.value);
 												}}
 											/>
 										)}
@@ -173,6 +180,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 
 								{programDependentStudentTypes.has(studentType?.id) && (
 									<Select
+										autocomplete
 										label={
 											<Heading level={5} as="h2" className="mb-1 mt-0">
 												I am interested in studying
@@ -184,7 +192,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 											key: program.title,
 										}))}
 										onChange={(selection) => {
-											setProgram(selection.value);
+											setProgram(selection?.value);
 										}}
 									/>
 								)}
