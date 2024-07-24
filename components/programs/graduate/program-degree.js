@@ -27,10 +27,8 @@ export const GraduateProgramDegreePage = ({ data, isFallback }) => (
 					<Heading level={1}> {data?.program_parent} | {data?.degree_name} - {toTitleCase(data?.program_type)} ({data?.degree_type})</Heading>
 				</div>				
 				<div className='session md:px-20 max-w-1680 mx-auto px-4 pb-10'>
-					<div className='mx-auto mt-4 md:flex gap-8'>
-						<GraduateProgramInfo data={data} />					
-						<GraduateProgramSummary data={data} />			
-					</div>
+                    <GraduateProgramInfo data={data} />					
+                    <GraduateProgramSummary data={data} />			
 				</div>
 				<div className='session w-full mx-auto'>
 					<ProgramTestimonial data={data}/>
