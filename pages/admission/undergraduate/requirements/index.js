@@ -159,7 +159,6 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 
 										{showCurriculums && (
 											<Select
-												autocomplete
 												label={
 													<Heading level={5} as="h2" className="mb-1 mt-0">
 														My curriculum of study is/was
