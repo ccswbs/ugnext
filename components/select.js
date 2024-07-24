@@ -26,7 +26,7 @@ export const Select = ({
 	label,
 	name,
 	description,
-	placeholder = 'Select a value',
+	placeholder,
 	autocomplete = false,
 }) => {
 	const ContainerTag = autocomplete ? Combobox : Listbox;
@@ -65,10 +65,12 @@ export const Select = ({
 	const [query, setQuery] = useState('');
 
 	const filterer = (option) => {
-		if(!autocomplete) return true;
+		if (!autocomplete) return true;
 
 		return option.label.toLowerCase().includes(query.toLowerCase());
 	};
+
+	placeholder ??= autocomplete ? 'Select or search for a value' : 'Select a value';
 
 	return (
 		<Field className="flex flex-col gap-0.5">
