@@ -1,5 +1,5 @@
 import { db, parseJSONColumns } from '@/data/sqlite';
-import SQL from 'sql-template-strings';
+import SQL, { SQL } from 'sql-template-strings';
 
 export const getStudentTypes = async () => {
 	return (
@@ -67,19 +67,6 @@ export const getPrograms = async () => {
 	).map((row) => parseJSONColumns(row, 'degrees', 'tags'));
 };
 
-export const getDegrees = async () => {
-	return await db.all(SQL`
-		WITH
-			degree_set AS (
-				SELECT
-					JSON_EACH.value AS degree
-				FROM
-					programs_undergraduate,
-					json_each(programs_undergraduate.degrees)
-			)
-		SELECT DISTINCT
-			degree
-		FROM
-			degree_set;
-	`);
-};
+export const validateRequirementsSlug = async (slug) => {
+
+}
