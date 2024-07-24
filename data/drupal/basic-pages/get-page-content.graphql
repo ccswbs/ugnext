@@ -91,6 +91,12 @@ fragment Buttons on ParagraphButtonWidget {
 			name
 		}
 	}
+	style {
+        ... on TermButtonStyle {
+          name
+        }
+    }
+	  
 }
 
 fragment Links on ParagraphLinksWidget {
@@ -143,6 +149,9 @@ fragment ButtonSection on ParagraphSectionButton {
 	buttons {
 		...Buttons
 	}
+	sectionColumn {
+       ...SectionColumn
+    }
 }
 
 fragment Tabs on ParagraphSectionTab {

@@ -1,9 +1,10 @@
 import { twJoin } from 'tailwind-merge';
-import { extractVideoID } from '@/lib/ug-utils';
+import { extractVideoID, computeLayout } from '@/lib/ug-utils';
 import Image from 'next/image';
 import { Heading } from '@/components/heading';
 import { Video } from '@/components/video';
 import { HtmlParser } from '@/components/html-parser';
+import { Button } from '@/components/button';
 
 export const MediaText = ({ data }) => {
 	const region = data.sectionColumn.name;
@@ -32,108 +33,29 @@ console.log(region)
 	let textOrButtons = mediaDescription || mediaButtons ? true : false;
     //const mediaRelationships = data.widgetData?.relationships.field_media_text_media?.relationships;
 
-	let mediaCol = '';
-    let textCol = '';
-	let textColBg = 'bg-black';
-    let headingColor = 'text-white';
-	let leftDivClasses = '';
-	let rightDivClasses = '';
-	let disableFlex = false;
-
-	if (mediaAlignment === "left") {
-        leftDivClasses += "order-1"; // Align left content to the start
-        rightDivClasses += "order-2"; // Align right content to the end
-    } else if (mediaAlignment === "right") {
-        leftDivClasses += "order-2"; // Align left content to the end
-        rightDivClasses += "order-1"; // Align right content to the start
-    }
-	//console.log(mediaTitle,mediaDescription,mediaBgColor,imageURL,imageAlt,mediaAlignment,mediaSize)
-	//console.log(mediaBgColor)
-	switch(mediaBgColor) {
-        case "Light Blue":
-            textColBg = 'bg-uog-blue-muted';
-            headingColor = 'text-black';            
-        break;
-        case "Dark Gray":
-            textColBg = 'bg-grey-950';
-            headingColor = 'text-white';
-        break;
-        default:
-            textColBg = 'bg-grey-950';            
-        break;
-    }
-
-	if (region === "Primary") {
-        // For images
-        if (imageURL) {
-            if (mediaDescription || mediaButtons) {
-                switch(mediaSize) {
-                    case "small":
-                        mediaCol = "md:w-1/4";
-                        textCol = "md:w-3/4";
-                    break;
-                    case "medium":
-                        mediaCol = "md:w-1/2";
-                        textCol = "md:w-1/2";
-                    break;
-                    case "large":
-                        mediaCol = "md:w-full";
-                        textCol = "md:w-full";
-						disableFlex = true;
-                    break;
-                    default:
-                        mediaCol = "md:w-full";
-                        textCol = "md:w-full";
-						disableFlex = true;
-                    break;
-                }
-            } else {
-                switch(mediaSize) {
-					case "small":
-                        mediaCol = "md:w-1/4";
-                        textCol = "md:w-3/4";
-                    break;
-                    case "medium":
-                        mediaCol = "md:w-1/2";
-                        textCol = "md:w-1/2";
-                    break;
-                    case "large":
-                        mediaCol = "md:w-full";
-                        textCol = "md:w-full";
-						disableFlex = true;
-                    break;
-                    default:
-                        mediaCol = "md:w-full";
-                        textCol = "md:w-full";
-						disableFlex = true;
-                    break;
-                }
-            }
-        // For videos in Primary section, text and/or buttons will always appear underneath
-        } else {
-            switch(mediaSize) {
-                case "small":
-                        mediaCol = "md:w-1/4";
-                        textCol = "md:w-3/4";
-                    break;
-                    case "medium":
-                        mediaCol = "md:w-1/2";
-                        textCol = "md:w-1/2";
-                    break;
-                    case "large":
-                        mediaCol = "md:w-full";
-                        textCol = "md:w-full";
-						disableFlex = true;
-                    break;
-                    default:
-                        mediaCol = "md:w-full";
-                        textCol = "md:w-full";
-						disableFlex = true;
-                    break;
-            }
-        }
-    // Everything in the Secondary column is stacked
-    }
+const computeLayoutData = {
+	region : region,
+	mediaDescription : mediaDescription,
+	mediaBgColor : mediaBgColor,
+	mediaSize : mediaSize,
+	imageURL : imageURL,
+	videoURL : videoURL,
+	mediaButtons : mediaButtons,
+	mediaAlignment : mediaAlignment
+}
+const {
+      textColBg,
+      headingClass,
+      mediaCol,
+      textCol,
+      textColPadding,
+      textColHeight,
+      wrapperCol,
+      leftDivClasses,
+      rightDivClasses,
+      disableFlex,
+      headingColor
+} = computeLayout(computeLayoutData);
 
 	const videoData = {
 					videoTitle : videoTitle,
@@ -149,10 +71,13 @@ console.log(region)
 		<div className={twJoin(
             'mx-auto',
             'mt-4',
-            disableFlex ? '' : 'md:flex',
+            'md:flex',
             textColBg,
-            headingColor
-        	)}>
+            headingColor,
+			headingClass
+        	)}
+			data-title="media"
+			>
 
 			<div className={twJoin("",mediaCol, leftDivClasses)}>
 				{videoURL &&					
@@ -179,7 +104,7 @@ console.log(region)
 					{mediaTitle && 
 						<Heading 
 							level={2}
-							className={twJoin("font-bold text-3xl",headingColor)}							
+							className={twJoin("font-bold text-3xl",headingColor,headingClass)}							
 						>
 							{mediaTitle}
 						</Heading>
@@ -187,6 +112,15 @@ console.log(region)
 					{mediaDescription &&
 						<HtmlParser html={mediaDescription} />
 					}
+					{mediaButtons && mediaButtons.buttons.map((buttonData, index) => (
+						<Button 
+							key={index} // Assuming index can serve as a unique key, ideally use a unique identifier from buttonData if available
+							href={buttonData?.link?.url} // Replace with actual href from buttonData if available
+							children={buttonData?.link?.title} // Assuming buttonData has a label field, adjust as needed
+							color={buttonData?.fontAwesomeIconColour?.name=='Default Colours'?'red':'white'} // Example color, adjust as needed
+							className='w-1/3 py-4 text-xl' // Example className, adjust as needed
+						/>
+					))}
 				</div>
 			}				
 

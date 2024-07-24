@@ -2,11 +2,10 @@ import React from 'react';
 import { twJoin } from 'tailwind-merge';
 
 export function Video ({videoData, className}) {
-    console.log(videoData);
+    //console.log(videoData);
     const { videoTitle, videoTranscript, videoHeight, videoWidth, videoType, videoID } = videoData;
     let ratio = videoWidth / videoHeight;
     ratio = +ratio.toFixed(2);
-    console.log(ratio,videoWidth,videoHeight);
     
     const aspectRatio = (ratio === 2.34 ? "21by9" : "16by9");
     let embedResponsive = "embed-responsive embed-responsive-" + aspectRatio;
