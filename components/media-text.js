@@ -1,5 +1,5 @@
 import { twJoin } from 'tailwind-merge';
-import { extractVideoID, computeLayout } from '@/lib/ug-utils';
+import { extractVideoID, computeLayoutMediaText } from '@/lib/ug-utils';
 import Image from 'next/image';
 import { Heading } from '@/components/heading';
 import { Video } from '@/components/video';
@@ -55,7 +55,7 @@ const {
       rightDivClasses,
       disableFlex,
       headingColor
-} = computeLayout(computeLayoutData);
+} = computeLayoutMediaText(computeLayoutData);
 
 	const videoData = {
 					videoTitle : videoTitle,
