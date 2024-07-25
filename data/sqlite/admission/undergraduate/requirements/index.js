@@ -1,5 +1,5 @@
 import { db, parseJSONColumns } from '@/data/sqlite';
-import SQL, { SQL } from 'sql-template-strings';
+import SQL from 'sql-template-strings';
 
 export const getStudentTypes = async () => {
 	return (
@@ -69,4 +69,5 @@ export const getPrograms = async () => {
 
 export const validateRequirementsSlug = async (slug) => {
 
+	return false;
 }

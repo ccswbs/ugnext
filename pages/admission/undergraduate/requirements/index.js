@@ -57,7 +57,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 		}
 
 		if (studentType.location_dependent) {
-			slug += `/${slugify(location.name)}`;
+			slug += `/${location.id}`;
 		}
 
 		router.push(`/admission/undergraduate/requirements/${slug}`).catch((e) => console.error(e));
@@ -105,7 +105,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 												...locations.domestic.map((location) => ({
 													label: location.name,
 													value: location,
-													key: location.name,
+													key: location.id,
 												})),
 												{
 													label: 'Outside of Canada',
@@ -149,7 +149,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 												options={locations.international.map((location) => ({
 													label: location.name,
 													value: location,
-													key: location.name,
+													key: location.id,
 												}))}
 												onChange={(selection) => {
 													setLocation(selection?.value);
@@ -167,7 +167,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 												options={locations.curriculums.map((location) => ({
 													label: location.name,
 													value: location,
-													key: location.name,
+													key: location.id,
 												}))}
 												onChange={(selection) => {
 													setLocation(selection?.value);
