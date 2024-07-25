@@ -30,10 +30,10 @@ export default function ProgramsGraduate({ programs }) {
 					render={(program) => (
 						<Card
 							href={program.url}
-							key={program.id + program.url}
+							key={program.id}
 							title={
 								<div className="flex flex-col justify-center text-lg">
-									<span className="font-bold">{program.title}</span>
+									<span className="font-bold">{program.name}</span>
 									<span className="text-sm text-black/65">
 										{program?.types
 											?.filter((type) => type !== 'collaborative-specialization')

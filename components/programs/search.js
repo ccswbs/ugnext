@@ -156,10 +156,10 @@ const programSearchFunc = (data) => {
 	const nodes = data
 		.map((program) => ({
 			data: program,
-			keywords: parse(program.title),
+			keywords: parse(program.name),
 			tags: program.tags?.map((tag) => (tag.includes(' ') ? tag.split(' ') : tag)) ?? [],
 		}))
-		.sort((a, b) => a?.title?.localeCompare(b?.title));
+		.sort((a, b) => a?.name?.localeCompare(b?.name));
 
 	return (input) => {
 		const parsed = parse(input);
@@ -171,7 +171,7 @@ const programSearchFunc = (data) => {
 				if (a.rank > b.rank) return -1;
 				if (a.rank < b.rank) return 1;
 
-				return a?.title?.localeCompare(b?.title);
+				return a?.name?.localeCompare(b?.name);
 			})
 			?.map((node) => node.data);
 	};
@@ -197,7 +197,7 @@ const enumerateProgramTypes = (programs) => {
 const ProgramCard = ({ program }) => (
 	<Card
 		href={program.url}
-		title={<span className="flex items-center text-lg font-bold">{program.title}</span>}
+		title={<span className="flex items-center text-lg font-bold">{program.name}</span>}
 		footer={
 			<span className="overflow-hidden text-ellipsis whitespace-nowrap">
 				{program?.types?.map((type) => toTitleCase(type)).join(', ')}
@@ -260,7 +260,7 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 					typeof render === 'function' ? (
 						render(program)
 					) : (
-						<ProgramCard key={program.url + program.title} program={program} />
+						<ProgramCard key={program.id} program={program} />
 					),
 				)}
 			</div>
