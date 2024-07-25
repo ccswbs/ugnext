@@ -27,10 +27,10 @@ export default function ProgramsUndergraduate({ programs }) {
 					render={(program) => (
 						<Card
 							href={program.url}
-							key={program.id + program.url}
+							key={program.id}
 							title={
 								<div className="flex flex-col justify-center">
-									<span className="text-lg font-bold">{program.title}</span>
+									<span className="text-lg font-bold">{program.name}</span>
 									{program?.degrees?.map((degree, index) => (
 										<span key={index} className="text-sm text-black/65">
 											{degree}
