@@ -86,7 +86,7 @@ export const Select = ({
 				multiple={multiple}
 			>
 				{autocomplete ? (
-					<div className="flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
+					<div className="flex relative w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
 						<ComboboxInput
 							className="flex-1 focus:outline-none h-6"
 							placeholder={placeholder}
@@ -94,7 +94,7 @@ export const Select = ({
 							onChange={(e) => setQuery(e.target.value)}
 						/>
 
-						<ButtonTag className="">
+						<ButtonTag className="flex w-full left-0 items-center justify-end absolute px-4 py-2">
 							<FontAwesomeIcon
 								className="h-5 w-5 text-gray-400 transition-transform ui-open:rotate-180"
 								icon={faChevronDown}
