@@ -133,9 +133,54 @@ export const isValidRequirement = async (studentType, program, location) => {
 };
 
 export const getRequirementTitle = async (studentType, program, location) => {
+	const studentTypeName = (
+		await db.get(SQL`
+			SELECT
+				name
+			FROM
+				admission_requirements_student_types
+			WHERE
+				id = ${studentType}
+		`)
+	)?.name;
+
+	if (!program && !location) {
+		return `Undergraduate Admission Requirements for ${studentTypeName}s`;
+	}
+
+	const programName = (
+		await db.get(SQL`
+				SELECT
+					name
+				FROM
+					programs_undergraduate
+				WHERE
+					id = ${program}
+			`)
+	)?.name;
+
+	const locationName = (
+		await db.get(SQL`
+				SELECT
+					name
+				FROM
+					admission_requirements_locations
+				WHERE
+					id = ${location}
+			`)
+	)?.name;
+
+	if(program && !location) {
+		return `${programName} Admission Requirements for ${studentTypeName}s`;
+	}
+
+	if(program && location) {
+		return `${programName} Admission Requirements for ${studentTypeName}s in ${locationName}`;
+	}
+
 	return '';
 };
 
 export const getRequirementContent = async (studentType, program, location) => {
-	return '';
+	return '<div>Quam esse explicabo optio harum sit. Adipisci reprehenderit amet libero. Fuga dicta veritatis adipisci eius nisi corrupti blanditiis cumque. Suscipit autem quis debitis.</div>';
 };
