@@ -4,6 +4,10 @@ import {
 	isValidRequirement,
 	getRequirementContent,
 } from '@/data/sqlite/admission/undergraduate/requirements';
+import { Layout } from '@/components/layout';
+import { Container } from '@/components/container';
+import { Heading } from '@/components/heading';
+import { HtmlParser } from '@/components/html-parser';
 
 export async function getStaticPaths() {
 	return {
@@ -29,4 +33,14 @@ export async function getStaticProps(context) {
 	};
 }
 
-export default function UndergraduateAdmissionRequirements(props) {}
+export default function UndergraduateAdmissionRequirements({ title, content }) {
+	return (
+		<Layout title={title || 'Undergraduate Admission Requirements'}>
+			<Container centered>
+				<Heading level={1}>{title || 'Undergraduate Admission Requirements'}</Heading>
+
+				<HtmlParser html={content} />
+			</Container>
+		</Layout>
+	);
+}
