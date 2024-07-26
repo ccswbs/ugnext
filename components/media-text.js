@@ -8,8 +8,6 @@ import { Button } from '@/components/button';
 
 export const MediaText = ({ data }) => {
 	const region = data.sectionColumn.name;
-	//const region = 'Primary';
-console.log(region)
 	const mediaTitle = data?.heading;
 	const mediaDescription = data?.description?.processed;
 	const mediaBgColor = data?.background?.name;
@@ -33,28 +31,28 @@ console.log(region)
 	let textOrButtons = mediaDescription || mediaButtons ? true : false;
     //const mediaRelationships = data.widgetData?.relationships.field_media_text_media?.relationships;
 
-const computeLayoutData = {
-	region : region,
-	mediaDescription : mediaDescription,
-	mediaBgColor : mediaBgColor,
-	mediaSize : mediaSize,
-	imageURL : imageURL,
-	videoURL : videoURL,
-	mediaButtons : mediaButtons,
-	mediaAlignment : mediaAlignment
-}
-const {
-      textColBg,
-      headingClass,
-      mediaCol,
-      textCol,
-      textColPadding,
-      textColHeight,
-      wrapperCol,
-      leftDivClasses,
-      rightDivClasses,
-      headingColor
-} = computeLayoutMediaText(computeLayoutData);
+	const computeLayoutData = {
+		region : region,
+		mediaDescription : mediaDescription,
+		mediaBgColor : mediaBgColor,
+		mediaSize : mediaSize,
+		imageURL : imageURL,
+		videoURL : videoURL,
+		mediaButtons : mediaButtons,
+		mediaAlignment : mediaAlignment
+	}
+	const {
+		textColBg,
+		headingClass,
+		mediaCol,
+		textCol,
+		textColPadding,
+		textColHeight,
+		wrapperCol,
+		leftDivClasses,
+		rightDivClasses,
+		headingColor
+	} = computeLayoutMediaText(computeLayoutData);
 
 	const videoData = {
 					videoTitle : videoTitle,
@@ -121,8 +119,7 @@ const {
 						/>
 					))}
 				</div>
-			}				
-
+			}
 		
 		</div>
 		
