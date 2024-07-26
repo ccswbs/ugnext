@@ -182,5 +182,5 @@ export const getRequirementTitle = async (studentType, program, location) => {
 };
 
 export const getRequirementContent = async (studentType, program, location) => {
-	return '<div>Quam esse explicabo optio harum sit. Adipisci reprehenderit amet libero. Fuga dicta veritatis adipisci eius nisi corrupti blanditiis cumque. Suscipit autem quis debitis.</div>';
+	return '';
 };
