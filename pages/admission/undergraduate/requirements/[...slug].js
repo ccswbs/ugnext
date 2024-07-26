@@ -40,7 +40,7 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 	return (
 		<Layout title={title || 'Undergraduate Admission Requirements'}>
 			<Container centered>
-				<Heading className="text-red" level={2} as="h1">
+				<Heading level={1}>
 					{title || 'Undergraduate Admission Requirements'}
 				</Heading>
 
