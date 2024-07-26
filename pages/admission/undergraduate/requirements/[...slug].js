@@ -1,4 +1,9 @@
-import { validateRequirementsSlug } from '@/data/sqlite/admission/undergraduate/requirements';
+import {
+	getRequirementTitle,
+	slugToRequirement,
+	isValidRequirement,
+	getRequirementContent,
+} from '@/data/sqlite/admission/undergraduate/requirements';
 
 export async function getStaticPaths() {
 	return {
@@ -8,16 +13,19 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-	const isValid = await validateRequirementsSlug(context.params.slug);
+	const { studentType, program, location } = slugToRequirement(context.params.slug);
 
-	if (!isValid) {
+	if (!(await isValidRequirement(studentType, program, location))) {
 		return {
 			notFound: true,
 		};
 	}
 
 	return {
-		props: {},
+		props: {
+			title: await getRequirementTitle(studentType, program, location),
+			content: await getRequirementContent(studentType, program, location),
+		},
 	};
 }
 

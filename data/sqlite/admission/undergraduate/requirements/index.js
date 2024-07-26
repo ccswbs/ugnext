@@ -64,11 +64,15 @@ export const getPrograms = async () => {
 	`);
 };
 
-export const validateRequirementsSlug = async (slug) => {
-	const studentType = slug[0];
-	const program = slug.length !== 1 ? slug[1] : null;
-	const location = slug.length === 3 ? slug[2] : null;
+export const slugToRequirement = (slug) => {
+	return {
+		studentType: slug[0],
+		program: slug.length !== 1 ? slug[1] : null,
+		location: slug.length === 3 ? slug[2] : null,
+	};
+};
 
+export const isValidRequirement = async (studentType, program, location) => {
 	const studentTypeQuery = await db.get(SQL`
 		SELECT
 			COUNT(*),
@@ -85,28 +89,13 @@ export const validateRequirementsSlug = async (slug) => {
 		return false;
 	}
 
-	// if the student type is location independent, then the slug shouldn't contain a location id
-	if (!studentTypeQuery.location_dependent && location) {
-		return false;
-	}
-
 	// if the student type is location independent, then the slug shouldn't contain a program id
 	if (!studentTypeQuery.program_dependent && program) {
 		return false;
 	}
 
-	const locationQuery = await db.get(SQL`
-		SELECT
-			COUNT(*)
-		FROM
-			admission_requirements_locations
-		WHERE
-			id = ${location}
-	`);
-
-	// If the student type is location-dependent, and we weren't able to retrieve a location,
-	// then the slug is invalid.
-	if (studentTypeQuery.location_dependent && locationQuery['COUNT(*)'] === 0) {
+	// if the student type is location independent, then the slug shouldn't contain a location id
+	if (!studentTypeQuery.location_dependent && location) {
 		return false;
 	}
 
@@ -125,5 +114,28 @@ export const validateRequirementsSlug = async (slug) => {
 		return false;
 	}
 
+	const locationQuery = await db.get(SQL`
+		SELECT
+			COUNT(*)
+		FROM
+			admission_requirements_locations
+		WHERE
+			id = ${location}
+	`);
+
+	// If the student type is location-dependent, and we weren't able to retrieve a location,
+	// then the slug is invalid.
+	if (studentTypeQuery.location_dependent && locationQuery['COUNT(*)'] === 0) {
+		return false;
+	}
+
 	return true;
+};
+
+export const getRequirementTitle = async (studentType, program, location) => {
+	return '';
+};
+
+export const getRequirementContent = async (studentType, program, location) => {
+	return '';
 };
