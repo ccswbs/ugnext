@@ -49,7 +49,10 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 					<span>View Other Requirements</span>
 				</Button>
 
-				<HtmlParser html={content} />
+				<div className="py-6">
+					<HtmlParser html={content} />
+				</div>
+
 			</Container>
 		</Layout>
 	);
