@@ -9,7 +9,6 @@ import { Section } from '@/components/section';
 import { List, ListItem } from '@/components/list';
 import { Link } from '@/components/link';
 import { useRouter } from 'next/router';
-import { slugify } from '@/lib/string-utils';
 
 export async function getStaticProps(context) {
 	return {
@@ -20,6 +19,20 @@ export async function getStaticProps(context) {
 		},
 	};
 }
+
+const requirementToSlug = (studentType, program, location) => {
+	let slug = `${studentType}`;
+
+	if (program) {
+		slug += `/${program}`;
+	}
+
+	if (location) {
+		slug += `/${location}`;
+	}
+
+	return slug;
+};
 
 export default function UndergraduateAdmissionRequirementsHome({ locations, studentTypes, programs }) {
 	const [studentType, setStudentType] = useState(null);
@@ -50,15 +63,11 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 
 		if (!isComplete) return;
 
-		let slug = `${studentType.id}`;
-
-		if (studentType.program_dependent) {
-			slug += `/${program.id}`;
-		}
-
-		if (studentType.location_dependent) {
-			slug += `/${location.id}`;
-		}
+		const slug = requirementToSlug(
+			studentType.id,
+			studentType.program_dependent ? program.id : null,
+			studentType.location_dependent ? location.id : null,
+		);
 
 		router.push(`/admission/undergraduate/requirements/${slug}`).catch((e) => console.error(e));
 	};
@@ -86,7 +95,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 									onChange={(selection) => {
 										setStudentType(selection?.value);
 
-										if(!selection) {
+										if (!selection) {
 											setLocation(null);
 											setProgram(null);
 										}
