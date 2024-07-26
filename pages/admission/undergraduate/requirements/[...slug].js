@@ -8,6 +8,9 @@ import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
 import { HtmlParser } from '@/components/html-parser';
+import { Button } from '@/components/button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeftToBracket } from '@awesome.me/kit-7993323d0c/icons/sharp/solid';
 
 export async function getStaticPaths() {
 	return {
@@ -37,7 +40,14 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 	return (
 		<Layout title={title || 'Undergraduate Admission Requirements'}>
 			<Container centered>
-				<Heading level={1}>{title || 'Undergraduate Admission Requirements'}</Heading>
+				<Heading className="text-red" level={2} as="h1">
+					{title || 'Undergraduate Admission Requirements'}
+				</Heading>
+
+				<Button className="flex gap-2 w-fit" color="red" href="/admission/undergraduate/requirements/">
+					<FontAwesomeIcon icon={faArrowLeftToBracket} />
+					<span>View Other Requirements</span>
+				</Button>
 
 				<HtmlParser html={content} />
 			</Container>
