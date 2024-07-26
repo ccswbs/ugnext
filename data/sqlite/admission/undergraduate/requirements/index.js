@@ -65,5 +65,65 @@ export const getPrograms = async () => {
 };
 
 export const validateRequirementsSlug = async (slug) => {
-	return false;
+	const studentType = slug[0];
+	const program = slug.length !== 1 ? slug[1] : null;
+	const location = slug.length === 3 ? slug[2] : null;
+
+	const studentTypeQuery = await db.get(SQL`
+		SELECT
+			COUNT(*),
+			location_dependent,
+			program_dependent
+		FROM
+			admission_requirements_student_types
+		WHERE
+			id = ${studentType}
+	`);
+
+	// Check if there exists a student type with the id (retrieved from the slug) in the database
+	if (studentTypeQuery['COUNT(*)'] === 0) {
+		return false;
+	}
+
+	// if the student type is location independent, then the slug shouldn't contain a location id
+	if (!studentTypeQuery.location_dependent && location) {
+		return false;
+	}
+
+	// if the student type is location independent, then the slug shouldn't contain a program id
+	if (!studentTypeQuery.program_dependent && program) {
+		return false;
+	}
+
+	const locationQuery = await db.get(SQL`
+		SELECT
+			COUNT(*)
+		FROM
+			admission_requirements_locations
+		WHERE
+			id = ${location}
+	`);
+
+	// If the student type is location-dependent, and we weren't able to retrieve a location,
+	// then the slug is invalid.
+	if (studentTypeQuery.location_dependent && locationQuery['COUNT(*)'] === 0) {
+		return false;
+	}
+
+	const programQuery = await db.get(SQL`
+		SELECT
+			COUNT(*)
+		FROM
+			programs_undergraduate
+		WHERE
+			id = ${program}
+	`);
+
+	// If the student type is program-dependent, and we weren't able to retrieve a program,
+	// then the slug is invalid.
+	if (studentTypeQuery.program_dependent && programQuery['COUNT(*)'] === 0) {
+		return false;
+	}
+
+	return true;
 };
