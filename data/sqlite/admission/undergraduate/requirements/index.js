@@ -46,28 +46,24 @@ export const getLocations = async () => {
 };
 
 export const getPrograms = async () => {
-	return (
-		await db.all(SQL`
-			SELECT
-				title,
-				DEGREES,
-				tags
-			FROM
-				programs_undergraduate
-			WHERE
-				EXISTS (
-					SELECT
-						1
-					FROM
-						json_each(types)
-					WHERE
-						value = 'major'
-				)
-		`)
-	).map((row) => parseJSONColumns(row, 'degrees', 'tags'));
+	return await db.all(SQL`
+		SELECT
+			id,
+			name
+		FROM
+			programs_undergraduate
+		WHERE
+			EXISTS (
+				SELECT
+					1
+				FROM
+					json_each(types)
+				WHERE
+					value = 'major'
+			)
+	`);
 };
 
 export const validateRequirementsSlug = async (slug) => {
-
 	return false;
-}
+};

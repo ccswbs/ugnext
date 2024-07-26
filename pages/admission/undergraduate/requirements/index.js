@@ -53,7 +53,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 		let slug = `${studentType.id}`;
 
 		if (studentType.program_dependent) {
-			slug += `/${slugify(program.title)}`;
+			slug += `/${program.id}`;
 		}
 
 		if (studentType.location_dependent) {
@@ -186,9 +186,9 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 											</Heading>
 										}
 										options={programs?.map((program) => ({
-											label: program.title,
+											label: program.name,
 											value: program,
-											key: program.title,
+											key: program.id,
 										}))}
 										onChange={(selection) => {
 											setProgram(selection?.value);
