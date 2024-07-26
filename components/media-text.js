@@ -53,7 +53,6 @@ const {
       wrapperCol,
       leftDivClasses,
       rightDivClasses,
-      disableFlex,
       headingColor
 } = computeLayoutMediaText(computeLayoutData);
 
