@@ -1,5 +1,5 @@
 import { twJoin } from 'tailwind-merge';
-import { extractVideoID, computeLayoutMediaText } from '@/lib/ug-utils';
+import { extractVideoID, computeLayoutMediaText, buttonStyle } from '@/lib/ug-utils';
 import Image from 'next/image';
 import { Heading } from '@/components/heading';
 import { Video } from '@/components/video';
@@ -112,13 +112,14 @@ const {
 					{mediaDescription &&
 						<HtmlParser html={mediaDescription} />
 					}
-					{mediaButtons && mediaButtons.buttons.map((buttonData, index) => (
+					{mediaButtons && mediaButtons.buttons.map((buttonData, index) => (						
 						<Button 
 							key={index} // Assuming index can serve as a unique key, ideally use a unique identifier from buttonData if available
 							href={buttonData?.link?.url} // Replace with actual href from buttonData if available
 							children={buttonData?.link?.title} // Assuming buttonData has a label field, adjust as needed
-							color={buttonData?.fontAwesomeIconColour?.name=='Default Colours'?'red':'white'} // Example color, adjust as needed
-							className='w-1/3 py-4 text-xl' // Example className, adjust as needed
+							//color={buttonData?.fontAwesomeIconColour?.name=='Default Colours'?'red':'white'} // Example color, adjust as needed
+							className= {'w-1/3 py-4 text-xl'} // Example className, adjust as needed
+							color={buttonStyle(buttonData?.style?.name)}
 						/>
 					))}
 				</div>

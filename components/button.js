@@ -36,6 +36,8 @@ export const Button = ({
 							'border-green text-green hover:bg-green hover:text-white focus:bg-green focus:text-white focus:ring-green',
 						color === 'grey' &&
 							'border-grey-300 text-black hover:bg-grey-300 hover:text-black focus:bg-grey focus:text-white focus:ring-grey',
+						color === 'white' &&
+							'border-white text-black hover:bg-white hover:text-black focus:bg-grey-light focus:text-white focus:ring-white',
 					),
 				!outlined &&
 					!disabled &&
@@ -50,6 +52,8 @@ export const Button = ({
 							'bg-green text-white hover:bg-green-800 hover:text-white focus:bg-green-800 focus:text-white focus:ring-green',
 						color === 'grey' &&
 							'bg-grey text-black hover:bg-grey-400 hover:text-black focus:bg-grey-400 focus:text-black focus:ring-grey',
+						color === 'white' &&
+							'border-white bg-white text-black hover:bg-grey-light hover:text-black focus:bg-white focus:text-black focus:ring-white',
 					),
 				disabled &&
 					twJoin(
