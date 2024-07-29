@@ -28,6 +28,8 @@ export default function Document() {
 					type="module"
 					strategy="beforeInteractive"
 				/>
+
+				<Script src="https://kit.fontawesome.com/7993323d0c.js" crossorigin="anonymous" strategy="lazyOnload" />
 			</Head>
 			<body>
 				<Main />
