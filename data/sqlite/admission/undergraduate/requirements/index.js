@@ -1,4 +1,4 @@
-import { db, parseJSONColumns } from '@/data/sqlite';
+import { db } from '@/data/sqlite';
 import SQL from 'sql-template-strings';
 
 export const getStudentTypes = async () => {
@@ -184,5 +184,16 @@ export const getRequirementTitle = async (studentType, program, location) => {
 };
 
 export const getRequirementContent = async (studentType, program, location) => {
-	return '';
+	return (
+		await db.get(SQL`
+			SELECT
+				content
+			FROM
+				admission_requirements_undergraduate
+			WHERE
+				student_type IS ${studentType ?? null}
+				AND program IS ${program ?? null}
+				AND location IS ${location ?? null}
+		`)
+	)?.content ?? '';
 };
