@@ -293,17 +293,6 @@ INSERT INTO admission_requirements_student_types VALUES('college','College Stude
 INSERT INTO admission_requirements_student_types VALUES('internal','Current or Previous University of Guelph Student',0,1);
 INSERT INTO admission_requirements_student_types VALUES('mature','Mature Student',0,0);
 INSERT INTO admission_requirements_student_types VALUES('home-schooled','Home Schooled Student',0,0);
-CREATE TABLE admission_requirements_undergraduate
-(
-    student_type TEXT NULL,
-    location TEXT NULL,
-    program TEXT NULL,
-    content TEXT NOT NULL,
-    FOREIGN KEY(student_type) REFERENCES admission_requirements_student_types(id),
-    FOREIGN KEY(location) REFERENCES admission_requirements_locations(name),
-    FOREIGN KEY(program) REFERENCES programs_undergraduate(title),
-    PRIMARY KEY(student_type, location, program)
-);
 CREATE TABLE IF NOT EXISTS "admission_requirements_locations"
 (
     name TEXT not null,
@@ -415,4 +404,16 @@ INSERT INTO admission_requirements_locations VALUES('European Baccalaureate','cu
 INSERT INTO admission_requirements_locations VALUES('French Baccalaureate','curriculum','french-baccalaureate');
 INSERT INTO admission_requirements_locations VALUES('International Baccalaureate','curriculum','international-baccalaureate');
 INSERT INTO admission_requirements_locations VALUES('British Patterned Education (GCE)','curriculum','british-patterned-education');
+CREATE TABLE IF NOT EXISTS "admission_requirements_undergraduate"
+(
+    student_type TEXT
+        references admission_requirements_student_types,
+    location     TEXT
+        references admission_requirements_locations,
+    program      TEXT
+        references programs_undergraduate,
+    content      TEXT not null,
+    primary key (student_type, location, program)
+);
+INSERT INTO admission_requirements_undergraduate VALUES('mature',NULL,NULL,'<h2>General Requirements</h2><strong>Mature applicants will only be considered for admission to the fall entrypoint.</strong><p>Admission requirements vary by program.To be considered for admission, mature applicants must:<ul><li>present the specific 4U/4M Subject Requirements for their program(s) of interest and<li>present a minimum admission average of 75%</ul><p>Your complete academic record including attempted or previously completed post-secondary studies will be taken into consideration.<h2>Required Documents</h2><h3>Transcripts</h3><h4>Ontario high school student?</h4><p>Your school will submit grades to the OUAC on your behalf. We receive grade data on an ongoing basis throughout the admission cycle and all grades must be received by April 25, 2024.<p>If you have taken a year off or have returned to high school, you may have to request that your official transcripts be sent directly to the University of Guelph on your behalf. It is your responsibility to ensure that all official transcripts are received in Admission Services by the document deadline.<h4>Out-of-Province high school student (within Canada)?</h4><p>Please have your school forward official transcripts showing completed Grade 11 and 12 courses, and all in-progress Grade 12 courses. All course and grade information must be sent to Admission Services at <a href=mailto:applicant@uoguelph.ca rel="noreferrer noopener"target=_blank>applicant@uoguelph.ca</a> by April 15, 2024. Earlier submission is recommended.<p>Notes:<ul><li><p>British Columbia schools submit grade data electronically to the OUAC. We will automatically receive grade data from the OUAC on an ongoing basis.<li><p>in order for us to consider a transcript as ‘official’, we must receive it directly from the issuing institution.</ul><h3>Associate Diploma in Turfgrass Management</h3><p><a href=//admission.uoguelph.ca/sites/default/files/docs/2024%20DTM%20BIF.pdf>Turfgrass Background Information Form (BIF)</a><p><strong>Deadline: February 16, 2024</strong><p>Applications and documents received after this date will be considered as space allows.<h3>Bachelor of Landscape Architecture</h3><p><a href=//admission.uoguelph.ca/sites/default/files/uploads/2024_BLA_BIF.pdf>BLA Background Information Form (BIF)</a><p><strong>Deadline: March 1, 2024</strong><h2>Optional</h2><h3>Student Profile Form (SPF)</h3><p>The <a href=https://www.uoguelph.ca/registrar/forms/spf/ rel="noopener noreferrer"target=_blank>Student Profile Form (SPF)</a> is your opportunity to tell Admission Services about activities in which you have been involved that have helped you develop leadership and citizenship qualities. Factors beyond your control that have negatively affected your academic performance, such as illness or extenuating circumstances, will also be considered.<p>If your admission average in May does not meet the cut-off for the program(s) to which you applied, your SPF may be considered if your average falls within a discretionary range of the final cutoff (up to 5%). <strong>Submission is optional but strongly encouraged.</strong><p><strong>Deadline:</strong> <strong>March 1, 2024</strong><p>See the <a href=//admission.uoguelph.ca/spf>Student Profile Form</a> page for frequently asked questions.<h3>Supplemental Information Form for Students with Disabilities (SIF-D)</h3><p>The University of Guelph strives to provide equal opportunity for academically qualified students with disabilities. If you believe that your admission average does not reflect your true academic ability as a result of a disability, you are encouraged to complete the <a href=https://uoguelph.eu.qualtrics.com/jfe/form/SV_aaP0rgWgnth54Oy rel="noreferrer noopener">Supplemental Information Form for Students with Disabilities</a>.<p>This form is considered along with your admission average in determining admission. You are encouraged to contact Student Accessibility Services as early as possible to discuss your needs and academic background.<p>Available: November, 2023</p><strong>Deadline: March 1, 2024</strong><h2>Other</h2><h3>Education Declaration</h3><p>If you see “<a href=//admission.uoguelph.ca/mature/suppdocs rel="noreferrer noopener">Education Declaration Form</a>” listed in the Documents section of your WebAdvisor account, we need to confirm whether you have completed additional studies beyond what you declared on your application. Please complete the PDF form and submit it through your WebAdvisor account.');
 COMMIT;
