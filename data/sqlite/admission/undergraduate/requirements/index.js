@@ -142,40 +142,42 @@ export const getRequirementTitle = async (studentType, program, location) => {
 			WHERE
 				id = ${studentType}
 		`)
-	)?.name;
+	)?.name
+		?.replace('Student', 'Students')
+		?.replace('Graduate', 'Graduates');
 
 	if (!program && !location) {
-		return `Undergraduate Admission Requirements for ${studentTypeName}s`;
+		return `Undergraduate Admission Requirements for ${studentTypeName}`;
 	}
 
 	const programName = (
 		await db.get(SQL`
-				SELECT
-					name
-				FROM
-					programs_undergraduate
-				WHERE
-					id = ${program}
-			`)
+			SELECT
+				name
+			FROM
+				programs_undergraduate
+			WHERE
+				id = ${program}
+		`)
 	)?.name;
 
 	const locationName = (
 		await db.get(SQL`
-				SELECT
-					name
-				FROM
-					admission_requirements_locations
-				WHERE
-					id = ${location}
-			`)
+			SELECT
+				name
+			FROM
+				admission_requirements_locations
+			WHERE
+				id = ${location}
+		`)
 	)?.name;
 
-	if(program && !location) {
-		return `${programName} Admission Requirements for ${studentTypeName}s`;
+	if (program && !location) {
+		return `${programName} Admission Requirements for ${studentTypeName}`;
 	}
 
-	if(program && location) {
-		return `${programName} Admission Requirements for ${studentTypeName}s in ${locationName}`;
+	if (program && location) {
+		return `${programName} Admission Requirements for ${studentTypeName} in ${locationName}`;
 	}
 
 	return '';
