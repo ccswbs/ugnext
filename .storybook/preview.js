@@ -4,6 +4,9 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
 /** @type { import('@storybook/react').Preview } */
 const preview = {
 	parameters: {
+		storySort: {
+			method: 'alphabetical',
+		},
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
