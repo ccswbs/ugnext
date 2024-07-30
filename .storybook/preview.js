@@ -1,4 +1,6 @@
+import '@/styles/globals.css';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+
 /** @type { import('@storybook/react').Preview } */
 const preview = {
 	parameters: {
