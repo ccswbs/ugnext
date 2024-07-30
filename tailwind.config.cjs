@@ -120,7 +120,7 @@ module.exports = {
 		'./public/**/*.{html,js,jsx,ts,tsx}',
 		'./stories/**/*.{html,js,jsx,ts,tsx}',
 	],
-	darkMode: ['selector', '[data-mode="dark"]'],
+	darkMode: 'selector',
 	theme: {
 		borderRadius: scaled(defaultTheme.borderRadius, scale),
 		columns: scaled(defaultTheme.columns, scale),

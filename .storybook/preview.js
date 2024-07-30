@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import { withThemeByClassName } from '@storybook/addon-themes';
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
@@ -16,14 +16,12 @@ const preview = {
 	},
 
 	decorators: [
-		withThemeByDataAttribute({
+		withThemeByClassName({
 			themes: {
-				// nameOfTheme: 'dataAttributeForTheme',
 				light: '',
 				dark: 'dark',
 			},
 			defaultTheme: 'light',
-			dataAttribute: 'data-theme',
 		}),
 	],
 };
