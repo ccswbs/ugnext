@@ -5,6 +5,9 @@ const config = {
 	component: Button,
 	parameters: {
 		layout: 'centered',
+		docs: {
+			toc: true,
+		},
 	},
 	tags: ['autodocs'],
 	argTypes: {

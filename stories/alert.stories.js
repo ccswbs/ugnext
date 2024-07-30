@@ -5,6 +5,9 @@ const config = {
 	component: Alert,
 	parameters: {
 		layout: 'padded',
+		docs: {
+			toc: true,
+		},
 	},
 	tags: ['autodocs'],
 	argTypes: {

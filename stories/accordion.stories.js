@@ -5,6 +5,9 @@ const config = {
 	component: Accordion,
 	parameters: {
 		layout: 'padded',
+		docs: {
+			toc: true,
+		},
 	},
 	tags: ['autodocs'],
 	argTypes: {

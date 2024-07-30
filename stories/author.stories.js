@@ -5,6 +5,9 @@ const config = {
 	component: Author,
 	parameters: {
 		layout: 'padded',
+		docs: {
+			toc: true,
+		},
 	},
 	tags: ['autodocs'],
 };

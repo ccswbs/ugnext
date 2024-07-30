@@ -6,6 +6,9 @@ const config = {
 	component: Checkbox,
 	parameters: {
 		layout: 'centered',
+		docs: {
+			toc: true,
+		},
 	},
 	tags: ['autodocs'],
 	args: {
