@@ -1,6 +1,7 @@
-import { withThemeByDataAttribute } from "@storybook/addon-themes";/** @type { import('@storybook/react').Preview } */
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
+/** @type { import('@storybook/react').Preview } */
 const preview = {
-    parameters: {
+	parameters: {
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
@@ -9,15 +10,17 @@ const preview = {
 		},
 	},
 
-    decorators: [withThemeByDataAttribute({
-        themes: {
-            // nameOfTheme: 'dataAttributeForTheme',
-            light: '',
-            dark: 'dark',
-        },
-        defaultTheme: 'light',
-        dataAttribute: 'data-theme',
-    })]
+	decorators: [
+		withThemeByDataAttribute({
+			themes: {
+				// nameOfTheme: 'dataAttributeForTheme',
+				light: '',
+				dark: 'dark',
+			},
+			defaultTheme: 'light',
+			dataAttribute: 'data-theme',
+		}),
+	],
 };
 
 export default preview;

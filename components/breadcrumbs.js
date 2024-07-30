@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 export const Breadcrumbs = ({ links }) => (
 	<Container centered>
-		<ol className="flex items-center gap-2 flex-wrap w-full">
+		<ol className="flex w-full flex-wrap items-center gap-2">
 			<li>
 				<Link href="/">
 					<FontAwesomeIcon icon={faHome} className="h-[1em] fill-black" />

@@ -5,7 +5,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
 
 			<div className="container z-10 flex w-full max-w-max-content flex-col items-center gap-6 px-6 pt-6 lg:flex-row">
 				<div className="flex w-full justify-center lg:w-1/2">{content}</div>
-				<div className="flex w-full justify-center lg:w-1/2 lg:mt-auto">{foregroundImage}</div>
+				<div className="flex w-full justify-center lg:mt-auto lg:w-1/2">{foregroundImage}</div>
 			</div>
 		</div>
 

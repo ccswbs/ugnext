@@ -30,7 +30,7 @@ export const ListItem = ({ className, children }) => {
 	return (
 		<li
 			className={twMerge(
-				'pl-8 h-fit w-full has-[ol]:before:content-none has-[ul]:before:content-none relative before:absolute before:shrink-0 before:items-center before:justify-center',
+				'relative h-fit w-full pl-8 before:absolute before:shrink-0 before:items-center before:justify-center has-[ol]:before:content-none has-[ul]:before:content-none',
 				variant !== 'ordered' &&
 					'before:left-[.5rem] before:top-[0.35rem] before:block before:h-[1.8rem] before:w-[1.1rem] before:text-yellow before:content-[url("/icons/chevron-right.svg")]',
 				variant === 'ordered' &&

@@ -17,7 +17,7 @@ export const LinkCarousel = ({ links }) => {
 						key={link.url}
 						className={twJoin(
 							'absolute left-0 top-0 hidden h-full object-cover object-left',
-							link === activeLink && 'animate-fade z-10 md:block',
+							link === activeLink && 'z-10 animate-fade md:block',
 							link === previousActiveLink.current && 'z-0 md:block',
 						)}
 						src={link.image.url}

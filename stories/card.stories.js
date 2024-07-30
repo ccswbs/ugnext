@@ -44,7 +44,7 @@ export const WithImage = {
 	args: {
 		title: 'Example Title',
 		className: 'w-96',
-		image: <img className="w-full aspect-[3/2]" src="https://picsum.photos/300/200" />,
+		image: <img className="aspect-[3/2] w-full" src="https://picsum.photos/300/200" />,
 		children: (
 			<div>
 				Iusto possimus possimus delectus et. Et aspernatur culpa quis sint at nam voluptatibus. Occaecati perspiciatis
@@ -59,7 +59,7 @@ export const WithFooter = {
 	args: {
 		title: 'Example Title',
 		className: 'w-96',
-		image: <img className="w-full aspect-[3/2]" src="https://picsum.photos/300/200" />,
+		image: <img className="aspect-[3/2] w-full" src="https://picsum.photos/300/200" />,
 		children: (
 			<div>
 				Iusto possimus possimus delectus et. Et aspernatur culpa quis sint at nam voluptatibus. Occaecati perspiciatis
@@ -75,7 +75,7 @@ export const AsALink = {
 	args: {
 		title: 'Example Title',
 		className: 'w-96',
-		image: <img className="w-full aspect-[3/2]" src="https://picsum.photos/300/200" />,
+		image: <img className="aspect-[3/2] w-full" src="https://picsum.photos/300/200" />,
 		children: (
 			<div>
 				Iusto possimus possimus delectus et. Et aspernatur culpa quis sint at nam voluptatibus. Occaecati perspiciatis
