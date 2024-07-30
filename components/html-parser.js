@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
 import { Link } from '@/components/link';
 import { Heading } from '@/components/heading';
 import { List, ListItem } from '@/components/list';
 import { Divider } from '@/components/divider';
-import '@/lib/font-awesome';
-import { dom } from '@fortawesome/fontawesome-svg-core';
+import { getHeadingLevel } from '@/lib/string-utils';
+import Image from 'next/image';
+import Script from 'next/script';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -16,7 +17,11 @@ export const DEFAULT_INSTRUCTIONS = [
 	{
 		shouldProcessNode: (node) => headingTags.has(node.tagName),
 		processNode: (node, children) => {
-			const level = /h(\d)/.exec(node.tagName)?.[1];
+			const level = getHeadingLevel(node.tagName);
+
+			node.attribs.className = node.attribs.class;
+			delete node.attribs.class;
+
 			return (
 				<Heading {...node.attribs} level={level}>
 					{children}
@@ -27,33 +32,59 @@ export const DEFAULT_INSTRUCTIONS = [
 	// Links
 	{
 		shouldProcessNode: (node) => node.tagName === 'a' && typeof node.attribs?.href === 'string',
-		processNode: (node, children) => (
-			<Link {...node.attribs} href={node.attribs?.href ?? ''}>
-				{children}
-			</Link>
-		),
+		processNode: (node, children) => {
+			node.attribs.className = node.attribs.class;
+			delete node.attribs.class;
+
+			return (
+				<Link {...node.attribs} href={node.attribs?.href ?? ''}>
+					{children}
+				</Link>
+			);
+		},
 	},
 	// Lists
 	{
 		shouldProcessNode: (node) => node.tagName === 'ul' || node.tagName === 'ol',
-		processNode: (node, children) => (
-			<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
-				{children.map((child, index) => (
-					<ListItem key={index}>{child}</ListItem>
-				))}
-			</List>
-		),
-	},
-	{
-		shouldProcessNode: (node, children) => node.tagName === 'i' && node.attribs?.classname?.includes('fa-'),
-		processNode: (node, children) => (
-			<span className="contents" dangerouslySetInnerHTML={{ __html: `<i class="${node.attribs?.classname}"></i>` }} />
-		),
+		processNode: (node, children) => {
+			node.attribs.className = node.attribs.class;
+			delete node.attribs.class;
+
+			return (
+				<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
+					{children
+						.filter((child) => child.type === 'li')
+						.map((child, index) => (
+							<ListItem key={index}>{child.props.children}</ListItem>
+						))}
+				</List>
+			);
+		},
 	},
 	// Divider
 	{
 		shouldProcessNode: (node) => node.tagName === 'hr',
 		processNode: (node) => <Divider />,
+	},
+	// Images
+	{
+		shouldProcessNode: (node) =>
+			node.tagName === 'img' && node.attribs.src && node.attribs.width && node.attribs.height,
+		processNode: (node) => (
+			<Image
+				src={node.attribs.src}
+				alt={node.attribs.alt ?? null}
+				loading="lazy"
+				className={node.attribs.class}
+				width={node.attribs.width}
+				height={node.attribs.height}
+			/>
+		),
+	},
+	// Scripts
+	{
+		shouldProcessNode: (node) => node.tagName === 'script',
+		processNode: (node) => <Script src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />,
 	},
 	// Fallback
 	{
@@ -62,24 +93,11 @@ export const DEFAULT_INSTRUCTIONS = [
 	},
 ];
 
-export const HtmlParser = ({ html, instructions }) => {
-	const ref = useRef(null);
-
-	const parsed = useMemo(() => {
+export const HtmlParser = ({ html, instructions }) =>
+	useMemo(() => {
 		return parser.parseWithInstructions(
 			html,
 			() => true,
 			Array.isArray(instructions) ? instructions : DEFAULT_INSTRUCTIONS,
 		);
 	}, [html, instructions]);
-
-	useEffect(() => {
-		dom.i2svg({ node: ref.current });
-	}, [parsed]);
-
-	return (
-		<div ref={ref} className="contents">
-			{parsed}
-		</div>
-	);
-};
