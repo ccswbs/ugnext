@@ -1,6 +1,7 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import { UnstyledLink } from '@/components/link';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const Card = ({ href, image, title, footer, className, centered, children }) => {
 	const Tag = href ? UnstyledLink : 'div';
@@ -58,4 +59,17 @@ export const Card = ({ href, image, title, footer, className, centered, children
 			)}
 		</Tag>
 	);
+};
+
+Card.propTypes = {
+	href: PropTypes.string,
+	image: PropTypes.node,
+	title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+	footer: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	/**
+	 * Add custom styles using tailwind
+	 */
+	className: PropTypes.string,
+	centered: PropTypes.bool,
+	children: PropTypes.node,
 };
