@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const Footer = ({ links }) => (
 	<uofg-footer>
 		{Array.isArray(links) &&
@@ -12,3 +14,12 @@ export const Footer = ({ links }) => (
 			})}
 	</uofg-footer>
 );
+
+Footer.propTypes = {
+	links: PropTypes.arrayOf(
+		PropTypes.exact({
+			href: PropTypes.string.isRequired,
+			text: PropTypes.string.isRequired,
+		}),
+	),
+};

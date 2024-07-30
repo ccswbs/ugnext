@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const flatten = (node) => {
 	if (Array.isArray(node?.children) && node?.children.length > 0) {
 		return [{ title: node?.title, url: node?.url }, ...node.children.map((child) => flatten(child))];
@@ -47,4 +49,15 @@ export const Header = ({ menu }) => {
 			})}
 		</uofg-header>
 	);
+};
+
+const itemType = {
+	title: PropTypes.string,
+	url: PropTypes.string,
+};
+
+itemType.children = PropTypes.arrayOf(PropTypes.exact(itemType));
+
+Header.propTypes = {
+	menu: PropTypes.arrayOf(PropTypes.exact(itemType)),
 };

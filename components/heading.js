@@ -1,5 +1,6 @@
 import { clamp } from '@/lib/math-utils';
 import { twJoin, twMerge } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const Heading = ({ level, children, className, as, ...rest }) => {
 	const headingLevel = clamp(level || 1, 1, 6);
@@ -23,4 +24,14 @@ export const Heading = ({ level, children, className, as, ...rest }) => {
 			{children}
 		</Tag>
 	);
+};
+
+Heading.propTypes = {
+	level: PropTypes.number,
+	children: PropTypes.node,
+	className: PropTypes.string,
+	/**
+	 * What element to render this button as
+	 */
+	as: PropTypes.string,
 };
