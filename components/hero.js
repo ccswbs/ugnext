@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { twJoin } from 'tailwind-merge';
+import { twJoin, twMerge } from 'tailwind-merge';
 import { Button } from '@/components/button';
 import { Heading } from '@/components/heading';
 import { Container } from '@/components/container';
@@ -9,12 +9,10 @@ export const Hero = ({ variant = 'spotlight', image, title, caption, button, ali
 	return (
 		<div className={twJoin('relative flex w-full flex-col overflow-hidden', variant !== 'spotlight' && ' h-fit')}>
 			<Image
-				className={twJoin(
+				className={twMerge(
 					'aspect-[16/9] w-full object-cover md:aspect-[2.625]',
-					image?.crop === 'right' && 'object-right',
-					image?.crop === 'left' && 'object-left',
-					(image?.crop === 'center' || !image?.crop) && 'object-center',
 					variant === 'spotlight' ? 'max-h-[80vh] ' : 'max-h-[calc(85vh-14rem)]',
+					image?.className,
 				)}
 				src={image?.src}
 				alt={image?.alt}
@@ -84,7 +82,7 @@ Hero.propTypes = {
 		height: PropTypes.number.isRequired,
 		width: PropTypes.number.isRequired,
 		alt: PropTypes.string.isRequired,
-		crop: PropTypes.oneOf(['left', 'center', 'right']),
+		className: PropTypes.string,
 		blurred: PropTypes.string,
 	}).isRequired,
 	title: PropTypes.string.isRequired,
