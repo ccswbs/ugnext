@@ -20,7 +20,7 @@ export const LinkCarousel = ({ links }) => {
 							'absolute left-0 top-0 hidden h-full object-cover object-left',
 							link === activeLink && 'z-10 animate-fade md:block',
 							link === previousActiveLink.current && 'z-0 md:block',
-							image?.className,
+							link.image?.className,
 						)}
 						src={link.image.src}
 						alt={link.image.alt}
@@ -30,11 +30,15 @@ export const LinkCarousel = ({ links }) => {
 				))}
 			</div>
 
-			<div className="absolute bottom-0 left-0 z-10 hidden w-full px-4 py-4 text-white md:block">
-				{activeLink?.caption}
-			</div>
+			{activeLink?.caption && (
+				<>
+					<div className="absolute bottom-0 left-0 z-10 hidden w-full px-4 py-4 text-white md:block">
+						{activeLink.caption}
+					</div>
 
-			<div className="absolute bottom-0 left-0 z-0 hidden h-1/2 w-full bg-gradient-to-t from-black/60 to-black/0 md:block"></div>
+					<div className="absolute bottom-0 left-0 z-0 hidden h-1/2 w-full bg-gradient-to-t from-black/60 to-black/0 md:block"></div>
+				</>
+			)}
 
 			<div className="relative z-10 ml-auto flex w-full flex-col gap-2 md:w-1/3">
 				{links.map((link, index) => (
@@ -72,7 +76,7 @@ LinkCarousel.propTypes = {
 				className: PropTypes.string,
 				blurred: PropTypes.string,
 			}).isRequired,
-			caption: PropTypes.string.isRequired,
+			caption: PropTypes.string,
 		}),
 	).isRequired,
 };
