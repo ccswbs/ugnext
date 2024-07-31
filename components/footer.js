@@ -17,7 +17,7 @@ export const Footer = ({ links }) => (
 
 Footer.propTypes = {
 	links: PropTypes.arrayOf(
-		PropTypes.exact({
+		PropTypes.shape({
 			href: PropTypes.string.isRequired,
 			text: PropTypes.string.isRequired,
 		}),

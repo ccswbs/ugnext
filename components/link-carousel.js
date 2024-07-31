@@ -60,7 +60,7 @@ export const LinkCarousel = ({ links }) => {
 
 LinkCarousel.propTypes = {
 	links: PropTypes.arrayOf(
-		PropTypes.exact({
+		PropTypes.shape({
 			url: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
 			image: PropTypes.shape({

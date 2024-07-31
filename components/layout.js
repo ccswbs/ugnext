@@ -89,7 +89,7 @@ Layout.propTypes = {
 	footerLinks: PropTypes.array,
 	title: PropTypes.string,
 	description: PropTypes.string,
-	image: PropTypes.exact({
+	image: PropTypes.shape({
 		src: PropTypes.string,
 		alt: PropTypes.string,
 	}),

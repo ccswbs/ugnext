@@ -25,7 +25,7 @@ export const Breadcrumbs = ({ links }) => (
 
 Breadcrumbs.propTypes = {
 	links: PropTypes.arrayOf(
-		PropTypes.exact({
+		PropTypes.shape({
 			title: PropTypes.string.isRequired,
 			url: PropTypes.string.isRequired,
 		}),

@@ -155,7 +155,7 @@ export const Select = ({
 Select.propTypes = {
 	onChange: PropTypes.func,
 	options: PropTypes.arrayOf(
-		PropTypes.exact({
+		PropTypes.shape({
 			label: PropTypes.string,
 			value: PropTypes.any,
 			key: PropTypes.string,

@@ -56,8 +56,8 @@ const itemType = {
 	url: PropTypes.string,
 };
 
-itemType.children = PropTypes.arrayOf(PropTypes.exact(itemType));
+itemType.children = PropTypes.arrayOf(PropTypes.shape(itemType));
 
 Header.propTypes = {
-	menu: PropTypes.arrayOf(PropTypes.exact(itemType)),
+	menu: PropTypes.arrayOf(PropTypes.shape(itemType)),
 };
