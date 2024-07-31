@@ -82,15 +82,37 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 	);
 };
 
+const itemType = {
+	title: PropTypes.string,
+	url: PropTypes.string,
+};
+
+itemType.children = PropTypes.arrayOf(PropTypes.shape(itemType));
+
 Layout.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
-	menu: PropTypes.object,
-	footerLinks: PropTypes.array,
+	menu: PropTypes.arrayOf(PropTypes.shape(itemType)),
+	footerLinks: PropTypes.arrayOf(
+		PropTypes.shape({
+			href: PropTypes.string.isRequired,
+			text: PropTypes.string.isRequired,
+		}),
+	),
 	title: PropTypes.string,
 	description: PropTypes.string,
 	image: PropTypes.shape({
 		src: PropTypes.string,
 		alt: PropTypes.string,
 	}),
+};
+
+Layout.defaultProps = {
+	title: 'University of Guelph',
+	description:
+		'The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life',
+	image: {
+		src: 'https://www.uoguelph.ca/img/ug-social-thumb.jpg',
+		alt: 'University of Guelph logo',
+	},
 };
