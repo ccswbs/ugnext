@@ -4,7 +4,7 @@ const config = {
 	title: 'Components/Author',
 	component: Author,
 	parameters: {
-		layout: 'padded',
+		layout: 'centered',
 		docs: {
 			toc: true,
 		},
