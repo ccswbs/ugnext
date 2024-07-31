@@ -74,9 +74,6 @@ export const Hero = ({ variant = 'spotlight', image, title, caption, button, ali
 
 Hero.propTypes = {
 	variant: PropTypes.oneOf(['spotlight', 'content-hub']),
-	/**
-	 * The hero image, crop determines how the image will be cropped when displayed on smaller devices, and blurred is A data uri for an image to display while the main image is loading.
-	 */
 	image: PropTypes.shape({
 		src: PropTypes.string.isRequired,
 		height: PropTypes.number.isRequired,
