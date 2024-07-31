@@ -28,5 +28,5 @@ Modal.propTypes = {
 	role: PropTypes.string,
 	labelledBy: PropTypes.string,
 	centered: PropTypes.bool,
-	children: PropTypes.node
+	children: PropTypes.node,
 };

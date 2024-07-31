@@ -33,7 +33,7 @@ Tabs.propTypes = {
 	tabs: PropTypes.arrayOf(
 		PropTypes.shape({
 			title: PropTypes.string.isRequired,
-			content: PropTypes.node.isRequired
-		})
-	).isRequired
+			content: PropTypes.node.isRequired,
+		}),
+	).isRequired,
 };

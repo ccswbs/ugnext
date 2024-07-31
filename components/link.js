@@ -38,14 +38,11 @@ export const Link = ({ href, color = 'blue', children, className, ...rest }) => 
 
 UnstyledLink.propTypes = {
 	href: PropTypes.string.isRequired,
-	children: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.node),
-		PropTypes.node
-	]).isRequired
+	children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 Link.propTypes = {
 	...UnstyledLink.propTypes,
 	color: PropTypes.oneOf(['blue', 'red', 'yellow', 'green', 'grey']),
-	className: PropTypes.string
+	className: PropTypes.string,
 };

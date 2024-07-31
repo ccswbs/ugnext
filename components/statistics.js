@@ -98,17 +98,14 @@ Statistics.propTypes = {
 	data: PropTypes.arrayOf(
 		PropTypes.shape({
 			represents: PropTypes.string.isRequired,
-			value: PropTypes.oneOfType([
-				PropTypes.string,
-				PropTypes.number,
-			]).isRequired,
+			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 			image: PropTypes.shape({
 				width: PropTypes.number,
 				height: PropTypes.number,
 				url: PropTypes.string,
 				alt: PropTypes.string,
 			}),
-		})
+		}),
 	).isRequired,
 	variant: PropTypes.oneOf(['gradient-of-solid-colours', 'solid-colours', 'light-blue', 'left-border']),
 };

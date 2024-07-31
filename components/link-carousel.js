@@ -66,8 +66,8 @@ LinkCarousel.propTypes = {
 			image: PropTypes.shape({
 				url: PropTypes.string.isRequired,
 				alt: PropTypes.string,
-				placeholder: PropTypes.string
+				placeholder: PropTypes.string,
 			}).isRequired,
-		})
-	).isRequired
+		}),
+	).isRequired,
 };

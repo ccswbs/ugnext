@@ -24,5 +24,5 @@ TextInput.propTypes = {
 	placeholder: PropTypes.string,
 	onInput: PropTypes.func,
 	label: PropTypes.string,
-	description: PropTypes.string
+	description: PropTypes.string,
 };

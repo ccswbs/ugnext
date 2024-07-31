@@ -20,17 +20,13 @@ export default config;
 export const Default = {
 	args: {
 		centered: false,
-		children: (
-			<div>Whatever content you want here</div>
-		),
+		children: <div>Whatever content you want here</div>,
 	},
 };
 
 export const Centered = {
 	args: {
 		centered: true,
-		children: (
-			<div>Whatever content you want here</div>
-		),
+		children: <div>Whatever content you want here</div>,
 	},
 };

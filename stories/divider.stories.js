@@ -14,5 +14,4 @@ const config = {
 
 export default config;
 
-export const Default = {
-};
+export const Default = {};
