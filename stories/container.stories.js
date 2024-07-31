@@ -1,5 +1,4 @@
 import { Container } from '@/components/container';
-import { Button } from '@/components/button';
 
 const config = {
 	title: 'Components/Container',
