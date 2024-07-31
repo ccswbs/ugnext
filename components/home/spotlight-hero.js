@@ -2,15 +2,20 @@ import { Hero } from '@/components/hero';
 
 export const SpotlightHero = ({ hero }) => (
 	<Hero
+		variant="spotlight"
 		title={hero.title}
+		image={{
+			src: hero.image.image.variations[0].url,
+			alt: hero.image.image.alt,
+			width: hero.image.image.width,
+			height: hero.image.image.height,
+			crop: hero.thumbnailImageCropping,
+		}}
 		caption={hero.caption}
-		href={hero.url.url}
-		button={hero.url.title}
-		src={hero.image.image.variations[0].url}
-		alt={hero.image.image.alt}
-		height={hero.image.image.height}
-		width={hero.image.image.width}
-		crop={hero.thumbnailImageCropping}
+		button={{
+			body: hero.url.title,
+			href: hero.url.href,
+		}}
 		alignment={hero.captionAlignment}
 	/>
 );

@@ -5,38 +5,25 @@ import { Heading } from '@/components/heading';
 import { Container } from '@/components/container';
 import PropTypes from 'prop-types';
 
-export const Hero = ({
-	variant = 'spotlight',
-	src,
-	height,
-	width,
-	alt,
-	crop = 'center',
-	title,
-	caption,
-	alignment = 'left',
-	blurred,
-	href,
-	button,
-}) => {
+export const Hero = ({ variant = 'spotlight', image, title, caption, button, alignment }) => {
 	return (
 		<div className={twJoin('relative flex w-full flex-col overflow-hidden', variant !== 'spotlight' && ' h-fit')}>
 			<Image
 				className={twJoin(
 					'aspect-[16/9] w-full object-cover md:aspect-[2.625]',
-					crop === 'right' && 'object-right',
-					crop === 'left' && 'object-left',
-					crop === 'center' && 'object-center',
+					image?.crop === 'right' && 'object-right',
+					image?.crop === 'left' && 'object-left',
+					(image?.crop === 'center' || !image?.crop) && 'object-center',
 					variant === 'spotlight' ? 'max-h-[80vh] ' : 'max-h-[calc(85vh-14rem)]',
 				)}
-				src={src}
-				alt={alt}
-				width={width}
-				height={height}
+				src={image?.src}
+				alt={image?.alt}
+				width={image?.width}
+				height={image?.height}
 				priority
 				sizes="100vw"
-				placeholder={blurred ? 'blur' : 'empty'}
-				blurDataURL={blurred}
+				placeholder={image?.blurred ? 'blur' : 'empty'}
+				blurDataURL={image?.blurred}
 			/>
 
 			{variant === 'spotlight' && (
@@ -61,14 +48,14 @@ export const Hero = ({
 							{button && (
 								<Button
 									color="yellow"
-									href={href}
+									href={button?.href}
 									className={twJoin(
 										'w-fit text-lg',
 										alignment === 'center' && 'lg:mx-auto',
 										alignment === 'right' && 'lg:ml-auto',
 									)}
 								>
-									{button}
+									{button?.body}
 								</Button>
 							)}
 						</div>
@@ -89,36 +76,31 @@ export const Hero = ({
 
 Hero.propTypes = {
 	variant: PropTypes.oneOf(['spotlight', 'content-hub']),
-	src: PropTypes.string.isRequired,
-	height: PropTypes.number.isRequired,
-	width: PropTypes.number.isRequired,
-	alt: PropTypes.string.isRequired,
 	/**
-	 * How the image will be cropped when displayed on smaller devices
+	 * The hero image, crop determines how the image will be cropped when displayed on smaller devices, and blurred is A data uri for an image to display while the main image is loading.
 	 */
-	crop: PropTypes.oneOf(['left', 'center', 'right']),
-	/**
-	 * The main title displayed in the hero's caption box
-	 */
+	image: PropTypes.shape({
+		src: PropTypes.string.isRequired,
+		height: PropTypes.number.isRequired,
+		width: PropTypes.number.isRequired,
+		alt: PropTypes.string.isRequired,
+		crop: PropTypes.oneOf(['left', 'center', 'right']),
+		blurred: PropTypes.string,
+	}).isRequired,
 	title: PropTypes.string.isRequired,
 	/**
-	 * A short paragraph to display in the hero's caption box (does nothing for content-hub variant)
+	 * A short paragraph to display underneath the title (does nothing for content-hub variant)
 	 */
 	caption: PropTypes.string,
 	/**
-	 * Determines where the caption box will be displayed (does nothing for content-hub variant)
+	 * Determines the position of the title, caption and button within the hero (does nothing for content-hub variant)
 	 */
 	alignment: PropTypes.oneOf(['left', 'center', 'right', 'fullWidth']),
 	/**
-	 * A data uri for an image to display while the main hero image is loading.
+	 * A button link to display underneath the caption/title (does nothing for content-hub variant)
 	 */
-	blurred: PropTypes.string,
-	/**
-	 * The url the button displayed in the hero caption navigates to (does nothing for content-hub variant)
-	 */
-	href: PropTypes.string,
-	/**
-	 * The text for the button that is displayed in the hero caption (does nothing for content-hub variant)
-	 */
-	button: PropTypes.string,
+	button: PropTypes.shape({
+		href: PropTypes.string,
+		body: PropTypes.string,
+	}),
 };

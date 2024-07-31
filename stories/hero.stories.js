@@ -14,81 +14,113 @@ const config = {
 
 export default config;
 
-export const SpotlightHeroLeftCaption = {
+export const SpotlightHero = {
 	args: {
 		variant: 'spotlight',
-		src: 'https://picsum.photos/1680/640',
-		height: 1680,
-		width: 640,
-		alt: 'Placeholder image',
-		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption:
-			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
-		alignment: 'left',
-		href: '/example-page',
-		button: 'Lorem Ipsum',
+		image: {
+			src: 'https://picsum.photos/1680/640',
+			height: 1680,
+			width: 640,
+			alt: 'Placeholder image',
+			crop: 'center',
+		},
+		alignment: 'left'
 	},
 };
 
-export const SpotlightHeroCenterCaption = {
+export const SpotlightHeroWithCaption = {
 	args: {
 		variant: 'spotlight',
-		src: 'https://picsum.photos/1680/640',
-		height: 1680,
-		width: 640,
-		alt: 'Placeholder image',
-		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption:
-			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
-		alignment: 'center',
-		href: '/example-page',
-		button: 'Lorem Ipsum',
+		image: {
+			src: 'https://picsum.photos/1680/640',
+			height: 1680,
+			width: 640,
+			alt: 'Placeholder image',
+			crop: 'center',
+		},
+		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		alignment: 'left'
 	},
 };
 
-export const SpotlightHeroRightCaption = {
+export const SpotlightHeroWithCaptionAndButton = {
 	args: {
 		variant: 'spotlight',
-		src: 'https://picsum.photos/1680/640',
-		height: 1680,
-		width: 640,
-		alt: 'Placeholder image',
-		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption:
-			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
-		alignment: 'right',
-		href: '/example-page',
-		button: 'Lorem Ipsum',
+		image: {
+			src: 'https://picsum.photos/1680/640',
+			height: 1680,
+			width: 640,
+			alt: 'Placeholder image',
+			crop: 'center',
+		},
+		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		button: { body: 'Lorem Ipsum', href: '/example-page' },
+		alignment: 'left'
 	},
 };
 
-export const SpotlightHeroFullWidthCaption = {
+export const SpotlightHeroCenterAligned = {
 	args: {
 		variant: 'spotlight',
-		src: 'https://picsum.photos/1680/640',
-		height: 1680,
-		width: 640,
-		alt: 'Placeholder image',
-		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption:
-			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
-		alignment: 'fullWidth',
-		href: '/example-page',
-		button: 'Lorem Ipsum',
+		image: {
+			src: 'https://picsum.photos/1680/640',
+			height: 1680,
+			width: 640,
+			alt: 'Placeholder image',
+			crop: 'center',
+		},
+		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		button: { body: 'Lorem Ipsum', href: '/example-page' },
+		alignment: 'center'
+	},
+};
+
+export const SpotlightHeroRightAligned = {
+	args: {
+		title: 'Lorem Ipsum',
+		image: {
+			src: 'https://picsum.photos/1680/640',
+			height: 1680,
+			width: 640,
+			alt: 'Placeholder image',
+			crop: 'center',
+		},
+		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		button: { body: 'Lorem Ipsum', href: '/example-page' },
+		alignment: 'right'
+	},
+};
+
+export const SpotlightHeroFullWidth = {
+	args: {
+		title: 'Lorem Ipsum',
+		image: {
+			src: 'https://picsum.photos/1680/640',
+			height: 1680,
+			width: 640,
+			alt: 'Placeholder image',
+			crop: 'center',
+		},
+		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		button: { body: 'Lorem Ipsum', href: '/example-page' },
+		alignment: 'fullWidth'
 	},
 };
 
 export const ContentHubHero = {
 	args: {
 		variant: 'content-hub',
-		src: 'https://picsum.photos/1680/640',
-		height: 1680,
-		width: 640,
-		alt: 'Placeholder image',
 		title: 'Lorem Ipsum',
+		image: {
+			src: 'https://picsum.photos/1680/640',
+			height: 1680,
+			width: 640,
+			alt: 'Placeholder image',
+			crop: 'center',
+		},
 	},
 };
