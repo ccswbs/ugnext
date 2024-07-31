@@ -23,11 +23,12 @@ export const SpotlightHeroLeftCaption = {
 		alt: 'Placeholder image',
 		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		caption:
+			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
 		alignment: 'left',
 		href: '/example-page',
 		button: 'Lorem Ipsum',
-	}
+	},
 };
 
 export const SpotlightHeroCenterCaption = {
@@ -39,11 +40,12 @@ export const SpotlightHeroCenterCaption = {
 		alt: 'Placeholder image',
 		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		caption:
+			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
 		alignment: 'center',
 		href: '/example-page',
 		button: 'Lorem Ipsum',
-	}
+	},
 };
 
 export const SpotlightHeroRightCaption = {
@@ -55,11 +57,12 @@ export const SpotlightHeroRightCaption = {
 		alt: 'Placeholder image',
 		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		caption:
+			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
 		alignment: 'right',
 		href: '/example-page',
 		button: 'Lorem Ipsum',
-	}
+	},
 };
 
 export const SpotlightHeroFullWidthCaption = {
@@ -71,11 +74,12 @@ export const SpotlightHeroFullWidthCaption = {
 		alt: 'Placeholder image',
 		crop: 'left',
 		title: 'Lorem Ipsum',
-		caption: 'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
+		caption:
+			'Repudiandae sit blanditiis minima harum laborum. Ipsa impedit eum eum sapiente explicabo accusantium tempore nihil.',
 		alignment: 'fullWidth',
 		href: '/example-page',
 		button: 'Lorem Ipsum',
-	}
+	},
 };
 
 export const ContentHubHero = {
@@ -86,5 +90,5 @@ export const ContentHubHero = {
 		width: 640,
 		alt: 'Placeholder image',
 		title: 'Lorem Ipsum',
-	}
+	},
 };

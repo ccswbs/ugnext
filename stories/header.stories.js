@@ -49,7 +49,7 @@ export const WithMenu = {
 						title: 'Example Link 6',
 					},
 				],
-			}
+			},
 		],
 	},
 };
