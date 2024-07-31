@@ -1,6 +1,7 @@
 import { twJoin } from 'tailwind-merge';
 import useResizeObserver from 'use-resize-observer';
 import Image from 'next/image';
+import PropTypes from 'prop-types';
 
 export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 	const divisibleByTwo = data.length % 2 === 0;
@@ -91,4 +92,27 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 			})}
 		</dl>
 	);
+};
+
+Statistics.propTypes = {
+	data: PropTypes.arrayOf(
+		PropTypes.shape({
+			represents: PropTypes.string.isRequired,
+			value: PropTypes.oneOfType([
+				PropTypes.string,
+				PropTypes.number,
+			]).isRequired,
+			image: PropTypes.shape({
+				width: PropTypes.number,
+				height: PropTypes.number,
+				url: PropTypes.string,
+				alt: PropTypes.string,
+			}),
+		})
+	).isRequired,
+	variant: PropTypes.oneOf(['gradient-of-solid-colours', 'solid-colours', 'light-blue', 'left-border']),
+};
+
+Statistics.defaultProps = {
+	variant: 'gradient-of-solid-colours',
 };

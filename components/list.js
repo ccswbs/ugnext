@@ -1,5 +1,6 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import { useContext, createContext } from 'react';
+import PropTypes from 'prop-types';
 
 const ListContext = createContext(null);
 
@@ -41,4 +42,15 @@ export const ListItem = ({ className, children }) => {
 			{children}
 		</li>
 	);
+};
+
+List.propTypes = {
+	variant: PropTypes.oneOf(['unordered', 'ordered']),
+	children: PropTypes.node,
+	className: PropTypes.string,
+};
+
+ListItem.propTypes = {
+	className: PropTypes.string,
+	children: PropTypes.node,
 };

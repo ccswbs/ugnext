@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tab, TabGroup, TabPanel, TabPanels, TabList } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const Tabs = ({ fullWidth = true, tabs }) => (
 	<TabGroup>
@@ -26,3 +27,13 @@ export const Tabs = ({ fullWidth = true, tabs }) => (
 		</TabPanels>
 	</TabGroup>
 );
+
+Tabs.propTypes = {
+	fullWidth: PropTypes.bool,
+	tabs: PropTypes.arrayOf(
+		PropTypes.shape({
+			title: PropTypes.string.isRequired,
+			content: PropTypes.node.isRequired
+		})
+	).isRequired
+};

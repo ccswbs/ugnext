@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const Story = ({ backgroundImage, foregroundImage, content, footer }) => (
 	<div className="flex w-full flex-col">
 		<div className="relative flex w-full items-center justify-center overflow-hidden">
@@ -14,3 +16,10 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
 		</div>
 	</div>
 );
+
+Story.propTypes = {
+	backgroundImage: PropTypes.node.isRequired,
+	foregroundImage: PropTypes.node.isRequired,
+	content: PropTypes.node.isRequired,
+	footer: PropTypes.string.isRequired,
+};

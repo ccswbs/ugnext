@@ -1,5 +1,6 @@
 import { Dialog, DialogPanel, Transition } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const Modal = ({ open, onClose, role = 'dialog', labelledBy, centered, children }) => (
 	<Transition
@@ -20,3 +21,12 @@ export const Modal = ({ open, onClose, role = 'dialog', labelledBy, centered, ch
 		</Dialog>
 	</Transition>
 );
+
+Modal.propTypes = {
+	open: PropTypes.bool,
+	onClose: PropTypes.func,
+	role: PropTypes.string,
+	labelledBy: PropTypes.string,
+	centered: PropTypes.bool,
+	children: PropTypes.node
+};

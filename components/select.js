@@ -18,6 +18,8 @@ import {
 import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
+import PropTypes from 'prop-types';
+import * as propTypes from 'prop-types';
 
 export const Select = ({
 	onChange,
@@ -124,7 +126,7 @@ export const Select = ({
 						{options.filter(filterer).map((option, index) => (
 							<OptionTag
 								className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
-								key={typeof option?.value === 'string' ? option?.value : option?.value?.key ?? index}
+								key={typeof option?.value === 'string' ? option?.value : option?.key ?? index}
 								value={option}
 								disabled={option?.disabled}
 							>
@@ -148,4 +150,21 @@ export const Select = ({
 			{description && <Description className="text-sm text-gray-500">{description}</Description>}
 		</Field>
 	);
+};
+
+Select.propTypes = {
+	onChange: PropTypes.func,
+	options: PropTypes.arrayOf(
+		PropTypes.exact({
+			label: PropTypes.string,
+			value: PropTypes.any,
+			key: PropTypes.string,
+		}),
+	).isRequired,
+	multiple: PropTypes.bool,
+	label: PropTypes.string,
+	name: PropTypes.string,
+	description: PropTypes.string,
+	placeholder: PropTypes.string,
+	autocomplete: PropTypes.bool,
 };

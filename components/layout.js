@@ -8,6 +8,7 @@ import { faGryphonStatue } from '@awesome.me/kit-7993323d0c/icons/kit/custom';
 import { Transition } from '@headlessui/react';
 import { faSpinner } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 import { twMerge } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const Layout = ({ children, className, menu, footerLinks, title = '', description = '', image = null }) => {
 	const { isPreview, isFallback } = useRouter();
@@ -79,4 +80,17 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 			</div>
 		</>
 	);
+};
+
+Layout.propTypes = {
+	children: PropTypes.node,
+	className: PropTypes.string,
+	menu: PropTypes.object,
+	footerLinks: PropTypes.array,
+	title: PropTypes.string,
+	description: PropTypes.string,
+	image: PropTypes.exact({
+		src: PropTypes.string,
+		alt: PropTypes.string,
+	}),
 };

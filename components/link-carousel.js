@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 import { twJoin } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const LinkCarousel = ({ links }) => {
 	const [activeLink, setActiveLink] = useState(links[0]);
@@ -55,4 +56,18 @@ export const LinkCarousel = ({ links }) => {
 			</div>
 		</div>
 	);
+};
+
+LinkCarousel.propTypes = {
+	links: PropTypes.arrayOf(
+		PropTypes.exact({
+			url: PropTypes.string.isRequired,
+			title: PropTypes.string.isRequired,
+			image: PropTypes.shape({
+				url: PropTypes.string.isRequired,
+				alt: PropTypes.string,
+				placeholder: PropTypes.string
+			}).isRequired,
+		})
+	).isRequired
 };

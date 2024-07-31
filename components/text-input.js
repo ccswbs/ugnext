@@ -1,4 +1,5 @@
 import { Description, Field, Input, Label } from '@headlessui/react';
+import PropTypes from 'prop-types';
 
 export const TextInput = ({ value, type = 'text', placeholder = '', onInput, label, description, ...rest }) => (
 	<Field className="flex flex-col gap-0.5">
@@ -16,3 +17,12 @@ export const TextInput = ({ value, type = 'text', placeholder = '', onInput, lab
 		{description && <Description className="text-sm text-gray-500">{description}</Description>}
 	</Field>
 );
+
+TextInput.propTypes = {
+	value: PropTypes.string,
+	type: PropTypes.oneOf(['text', 'password']),
+	placeholder: PropTypes.string,
+	onInput: PropTypes.func,
+	label: PropTypes.string,
+	description: PropTypes.string
+};

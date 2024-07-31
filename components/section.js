@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { twJoin } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const SectionContext = createContext(null);
 
@@ -13,3 +14,9 @@ export const Section = ({ primary, secondary, equal = false }) => (
 		</SectionContext.Provider>
 	</div>
 );
+
+Section.propTypes = {
+	primary: PropTypes.node.isRequired,
+	secondary: PropTypes.node.isRequired,
+	equal: PropTypes.bool,
+};

@@ -1,5 +1,6 @@
 import NextLink from 'next/link';
 import { twJoin, twMerge } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const UnstyledLink = ({ href, children, ...rest }) => {
 	const isExternal = /^(\/\/|[a-z]+:)/.test(href);
@@ -34,3 +35,17 @@ export const Link = ({ href, color = 'blue', children, className, ...rest }) => 
 		{children}
 	</UnstyledLink>
 );
+
+UnstyledLink.propTypes = {
+	href: PropTypes.string.isRequired,
+	children: PropTypes.oneOfType([
+		PropTypes.arrayOf(PropTypes.node),
+		PropTypes.node
+	]).isRequired
+};
+
+Link.propTypes = {
+	...UnstyledLink.propTypes,
+	color: PropTypes.oneOf(['blue', 'red', 'yellow', 'green', 'grey']),
+	className: PropTypes.string
+};

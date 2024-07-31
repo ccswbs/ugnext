@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { twJoin } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const Navigation = ({ fullWidth = true, links, label }) => {
 	const { pathname } = useRouter();
@@ -27,4 +28,15 @@ export const Navigation = ({ fullWidth = true, links, label }) => {
 			</ul>
 		</nav>
 	);
+};
+
+Navigation.propTypes = {
+	fullWidth: PropTypes.bool,
+	links: PropTypes.arrayOf(
+		PropTypes.shape({
+			href: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+		})
+	).isRequired,
+	label: PropTypes.string.isRequired,
 };
