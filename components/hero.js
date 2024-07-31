@@ -76,8 +76,8 @@ Hero.propTypes = {
 	variant: PropTypes.oneOf(['spotlight', 'content-hub']),
 	image: PropTypes.shape({
 		src: PropTypes.string.isRequired,
-		height: PropTypes.number.isRequired,
-		width: PropTypes.number.isRequired,
+		height: PropTypes.number,
+		width: PropTypes.number,
 		alt: PropTypes.string.isRequired,
 		className: PropTypes.string,
 		blurred: PropTypes.string,

@@ -75,8 +75,8 @@ Card.propTypes = {
 	href: PropTypes.string,
 	image: PropTypes.shape({
 		src: PropTypes.string.isRequired,
-		height: PropTypes.number.isRequired,
-		width: PropTypes.number.isRequired,
+		height: PropTypes.number,
+		width: PropTypes.number,
 		alt: PropTypes.string.isRequired,
 		blurred: PropTypes.string,
 		className: PropTypes.string,
