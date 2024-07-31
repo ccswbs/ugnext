@@ -11,10 +11,10 @@ export const Hero = ({
 	height,
 	width,
 	alt,
-	crop,
+	crop = 'center',
 	title,
 	caption,
-	alignment,
+	alignment = 'left',
 	blurred,
 	href,
 	button,
@@ -88,16 +88,37 @@ export const Hero = ({
 };
 
 Hero.propTypes = {
-	variant: PropTypes.oneOf(['spotlight', 'ch-hero']),
+	variant: PropTypes.oneOf(['spotlight', 'content-hub']),
 	src: PropTypes.string.isRequired,
 	height: PropTypes.number.isRequired,
 	width: PropTypes.number.isRequired,
 	alt: PropTypes.string.isRequired,
-	crop: PropTypes.string,
+	/**
+	 * How the image will be cropped when displayed on smaller devices
+	 */
+	crop: PropTypes.oneOf(['left', 'center', 'right']),
+	/**
+	 * The main title displayed in the hero's caption box
+	 */
 	title: PropTypes.string.isRequired,
+	/**
+	 * A short paragraph to display in the hero's caption box (does nothing for content-hub variant)
+	 */
 	caption: PropTypes.string,
-	alignment: PropTypes.string,
-	blurred: PropTypes.bool,
+	/**
+	 * Determines where the caption box will be displayed (does nothing for content-hub variant)
+	 */
+	alignment: PropTypes.oneOf(['left', 'center', 'right', 'fullWidth']),
+	/**
+	 * A data uri for an image to display while the main hero image is loading.
+	 */
+	blurred: PropTypes.string,
+	/**
+	 * The url the button displayed in the hero caption navigates to (does nothing for content-hub variant)
+	 */
 	href: PropTypes.string,
+	/**
+	 * The text for the button that is displayed in the hero caption (does nothing for content-hub variant)
+	 */
 	button: PropTypes.string,
 };
