@@ -17,12 +17,14 @@ export const LinkCarousel = ({ links }) => {
 					<Image
 						key={link.url}
 						className={twMerge(
-							'absolute left-0 top-0 hidden h-full object-cover object-left',
+							'absolute left-0 top-0 hidden h-full object-cover object-left w-full',
 							link === activeLink && 'z-10 animate-fade md:block',
 							link === previousActiveLink.current && 'z-0 md:block',
 							link.image?.className,
 						)}
 						src={link.image.src}
+						width={link.image?.width}
+						height={link.image?.height}
 						alt={link.image.alt}
 						placeholder={link.image?.blurred ? 'blur' : 'empty'}
 						blurDataURL={link.image?.blurred}
