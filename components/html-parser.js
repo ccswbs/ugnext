@@ -7,6 +7,7 @@ import { Divider } from '@/components/divider';
 import { getHeadingLevel } from '@/lib/string-utils';
 import Image from 'next/image';
 import Script from 'next/script';
+import PropTypes from 'prop-types';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -93,11 +94,38 @@ export const DEFAULT_INSTRUCTIONS = [
 	},
 ];
 
-export const HtmlParser = ({ html, instructions }) =>
-	useMemo(() => {
+/**
+ * Parses an HTML string into React nodes.
+ */
+export const HtmlParser = ({ html, instructions }) => {
+	const parsed = useMemo(() => {
 		return parser.parseWithInstructions(
 			html,
 			() => true,
-			Array.isArray(instructions) ? instructions : DEFAULT_INSTRUCTIONS,
+			Array.isArray(instructions)
+				? [
+						...instructions,
+						{
+							shouldProcessNode: () => true,
+							processNode: DEFAULT_PROCESSOR,
+						},
+					]
+				: DEFAULT_INSTRUCTIONS,
 		);
 	}, [html, instructions]);
+
+	return <>{parsed}</>;
+};
+
+HtmlParser.propTypes = {
+	html: PropTypes.string.isRequired,
+	/**
+	 * Custom parsing instructions
+	 */
+	instructions: PropTypes.arrayOf(
+		PropTypes.shape({
+			shouldProcessNode: PropTypes.func.isRequired,
+			processNode: PropTypes.func.isRequired,
+		}),
+	),
+};
