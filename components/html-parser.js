@@ -7,6 +7,7 @@ import { Divider } from '@/components/divider';
 import { getHeadingLevel } from '@/lib/string-utils';
 import Image from 'next/image';
 import Script from 'next/script';
+import { v4 as uuidv4 } from 'uuid';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -23,7 +24,7 @@ export const DEFAULT_INSTRUCTIONS = [
 			delete node.attribs.class;
 
 			return (
-				<Heading {...node.attribs} level={level}>
+				<Heading {...node.attribs} level={level} key={uuidv4()}>
 					{children}
 				</Heading>
 			);
@@ -51,7 +52,7 @@ export const DEFAULT_INSTRUCTIONS = [
 			delete node.attribs.class;
 
 			return (
-				<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
+				<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'} key={uuidv4()}>
 					{children
 						.filter((child) => child.type === 'li')
 						.map((child, index) => (
@@ -64,7 +65,7 @@ export const DEFAULT_INSTRUCTIONS = [
 	// Divider
 	{
 		shouldProcessNode: (node) => node.tagName === 'hr',
-		processNode: (node) => <Divider />,
+		processNode: (node) => <Divider key={uuidv4()} />,
 	},
 	// Images
 	{
