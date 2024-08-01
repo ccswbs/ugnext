@@ -119,8 +119,8 @@ export const WithImages = {
 				value: 'Statistics 1 Value',
 				image: {
 					src: 'https://picsum.photos/seed/first/300/200',
-					height: 300,
-					width: 200,
+					height: 200,
+					width: 300,
 					alt: 'Placeholder image',
 				},
 			},
@@ -129,8 +129,8 @@ export const WithImages = {
 				value: 'Statistics 2 Value',
 				image: {
 					src: 'https://picsum.photos/seed/second/300/200',
-					height: 300,
-					width: 200,
+					height: 200,
+					width: 300,
 					alt: 'Placeholder image',
 				},
 			},
@@ -139,8 +139,8 @@ export const WithImages = {
 				value: 'Statistics 3 Value',
 				image: {
 					src: 'https://picsum.photos/seed/third/300/200',
-					height: 300,
-					width: 200,
+					height: 200,
+					width: 300,
 					alt: 'Placeholder image',
 				},
 			},
@@ -149,8 +149,8 @@ export const WithImages = {
 				value: 'Statistics 4 Value',
 				image: {
 					src: 'https://picsum.photos/seed/fourth/300/200',
-					height: 300,
-					width: 200,
+					height: 200,
+					width: 300,
 					alt: 'Placeholder image',
 				},
 			},
