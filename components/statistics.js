@@ -1,31 +1,31 @@
-import { twJoin } from 'tailwind-merge';
+import { twJoin, twMerge } from 'tailwind-merge';
 import useResizeObserver from 'use-resize-observer';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 
-export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
+export const Statistics = ({ data, variant = 'gradient-of-solid-colors' }) => {
 	const divisibleByTwo = data.length % 2 === 0;
 	const divisibleByThree = data.length % 3 === 0;
 	const divisibleByFour = data.length % 4 === 0;
 
 	const colors = [
 		twJoin(
-			(variant === 'gradient-of-solid-colours' || variant === 'solid-colours') && 'bg-black text-white',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-black text-white',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-black',
 		),
 		twJoin(
-			(variant === 'gradient-of-solid-colours' || variant === 'solid-colours') && 'bg-red text-white',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-red text-white',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-red',
 		),
 		twJoin(
-			(variant === 'gradient-of-solid-colours' || variant === 'solid-colours') && 'bg-yellow text-black',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-yellow text-black',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-yellow',
 		),
 		twJoin(
-			(variant === 'gradient-of-solid-colours' || variant === 'solid-colours') && 'bg-light-blue text-black',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-light-blue text-black',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-light-blue',
 		),
@@ -61,10 +61,10 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 				divisibleByFour && 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
 				divisibleByThree && !divisibleByFour && 'grid grid-cols-1 lg:grid-cols-3',
 				divisibleByTwo && !divisibleByFour && 'grid grid-cols-1 sm:grid-cols-2',
-				variant !== 'gradient-of-solid-colours' && 'gap-4',
+				variant !== 'gradient-of-solid-colors' && 'gap-4',
 			)}
-			style={variant === 'gradient-of-solid-colours' ? { '--statistic-bg-width': width + 'px' } : undefined}
-			ref={variant === 'gradient-of-solid-colours' ? ref : undefined}
+			style={variant === 'gradient-of-solid-colors' ? { '--statistic-bg-width': width + 'px' } : undefined}
+			ref={variant === 'gradient-of-solid-colors' ? ref : undefined}
 		>
 			{data.map((statistic, index) => {
 				const color = colors[index % colors.length];
@@ -75,7 +75,7 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 						key={index}
 						className={twJoin(
 							'relative flex flex-1 flex-col justify-around gap-2',
-							variant === 'gradient-of-solid-colours' && gradientClasses,
+							variant === 'gradient-of-solid-colors' && gradientClasses,
 							color,
 						)}
 					>
@@ -85,7 +85,13 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colours' }) => {
 						<dd className="text-normal p-6 pt-0 text-center font-normal md:text-lg">{represents}</dd>
 
 						{image && (
-							<Image width={image.width} height={image.height} src={image.url} alt={image.alt} className="w-full" />
+							<Image
+								width={image.width}
+								height={image.height}
+								src={image.src}
+								alt={image.alt}
+								className={twMerge('w-full', image?.className)}
+							/>
 						)}
 					</div>
 				);
@@ -102,14 +108,15 @@ Statistics.propTypes = {
 			image: PropTypes.shape({
 				width: PropTypes.number,
 				height: PropTypes.number,
-				url: PropTypes.string,
-				alt: PropTypes.string,
+				src: PropTypes.string.isRequired,
+				alt: PropTypes.string.isRequired,
+				className: PropTypes.string,
 			}),
 		}),
 	).isRequired,
-	variant: PropTypes.oneOf(['gradient-of-solid-colours', 'solid-colours', 'light-blue', 'left-border']),
+	variant: PropTypes.oneOf(['gradient-of-solid-colors', 'solid-colors', 'light-blue', 'left-border']),
 };
 
 Statistics.defaultProps = {
-	variant: 'gradient-of-solid-colours',
+	variant: 'gradient-of-solid-colors',
 };
