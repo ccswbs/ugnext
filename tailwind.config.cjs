@@ -147,6 +147,18 @@ module.exports = {
 			aria: {
 				'page-current': 'current="page"',
 			},
+			animation: {
+				fade: 'fade 250ms ease-in-out 1 both',
+			},
+			keyframes: {
+				fade: {
+					'0%': { opacity: 0 },
+					'100%': { opacity: 1 },
+				},
+			},
+			spacing: {
+				'max-content': '1320px',
+			},
 		},
 	},
 	plugins: [require('@headlessui/tailwindcss')],

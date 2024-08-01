@@ -1,50 +1,66 @@
-import { promises as fs } from 'fs';
-import YAML from 'yaml';
+import {
+	getRequirementTitle,
+	slugToRequirement,
+	isValidRequirement,
+	getRequirementContent,
+} from '@/data/sqlite/admission/undergraduate/requirements';
 import { Layout } from '@/components/layout';
-import { hierarchy, Requirement } from '@/lib/admission-requirements';
-import { HtmlParser } from '@/components/html-parser';
 import { Container } from '@/components/container';
+import { Heading } from '@/components/heading';
+import { HtmlParser } from '@/components/html-parser';
+import { Button } from '@/components/button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeftToBracket } from '@awesome.me/kit-7993323d0c/icons/sharp/solid';
+import { Section } from '@/components/section';
+import { List, ListItem } from '@/components/list';
+import { Link } from '@/components/link';
+import { Sidebar } from '@/components/admission/undergraduate/requirements/sidebar';
 
 export async function getStaticPaths() {
-	// For admission pages we don't want to prerender any pages, we will always generate them on demand.
 	return {
 		paths: [],
-		fallback: 'blocking',
+		fallback: true,
 	};
 }
 
 export async function getStaticProps(context) {
-	const toFind = Requirement.parse(context?.params?.slug);
+	const { studentType, program, location } = slugToRequirement(context.params.slug);
 
-	if (!toFind) {
-		return { notFound: true };
-	}
-
-	const data = await fs.readFile(process.cwd() + '/data/admission/undergraduate/requirements/admission-requirements.yml', 'utf8');
-	const requirements = YAML.parse(data);
-
-	const match = Requirement.findClosest(
-		toFind,
-		requirements.map((el) => new Requirement(el)),
-	);
-
-	if (!match) {
-		return { notFound: true };
+	if (!(await isValidRequirement(studentType, program, location))) {
+		return {
+			notFound: true,
+		};
 	}
 
 	return {
 		props: {
-			content: match?.content ?? '',
-			// revalidate: 300, // Revalidate at most, every 5 minutes
+			title: await getRequirementTitle(studentType, program, location),
+			content: await getRequirementContent(studentType, program, location),
 		},
 	};
 }
 
-export default function AdmissionRequirementsPage({ content }) {
+export default function UndergraduateAdmissionRequirements({ title, content }) {
 	return (
-		<Layout>
+		<Layout title={title || 'Undergraduate Admission Requirements'}>
 			<Container centered>
-				<HtmlParser html={content} />
+				<Section
+					primary={
+						<>
+							<Heading level={1}>{title || 'Undergraduate Admission Requirements'}</Heading>
+
+							<Button className="flex gap-2 w-fit" color="red" href="/admission/undergraduate/requirements/">
+								<FontAwesomeIcon icon={faArrowLeftToBracket} />
+								<span>View Other Requirements</span>
+							</Button>
+
+							<div className="flex flex-col gap-3 py-6">
+								<HtmlParser html={content} />
+							</div>
+						</>
+					}
+					secondary={<Sidebar />}
+				/>
 			</Container>
 		</Layout>
 	);

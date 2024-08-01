@@ -1,63 +1,224 @@
 import { Layout } from '@/components/layout';
-import { Heading } from '@/components/heading';
 import { Container } from '@/components/container';
-import { readYamlFile } from '@/lib/file-utils';
-import { join } from 'path';
-import { hierarchy } from '@/lib/admission-requirements';
-import { useEffect, useRef, useState } from 'react';
+import { getLocations, getPrograms, getStudentTypes } from '@/data/sqlite/admission/undergraduate/requirements';
 import { Select } from '@/components/select';
+import { Heading } from '@/components/heading';
+import { useMemo, useState } from 'react';
 import { Button } from '@/components/button';
+import { Section } from '@/components/section';
+import { List, ListItem } from '@/components/list';
+import { Link } from '@/components/link';
 import { useRouter } from 'next/router';
+import { Sidebar } from '@/components/admission/undergraduate/requirements/sidebar';
 
 export async function getStaticProps(context) {
-	const path = join(process.cwd(), 'data/admission/undergraduate/requirements');
-
-	const props = {};
-
-	for (let i = hierarchy.length - 1; i >= 0; i--) {
-		const attribute = hierarchy[i];
-		props[attribute] = await readYamlFile(join(path, `${attribute}.yml`));
-	}
-
-	return { props: props };
+	return {
+		props: {
+			locations: await getLocations(),
+			studentTypes: await getStudentTypes(),
+			programs: (await getPrograms()) ?? [],
+		},
+	};
 }
 
-export default function AdmissionRequirementsHome(props) {
+const requirementToSlug = (studentType, program, location) => {
+	let slug = `${studentType}`;
+
+	if (program) {
+		slug += `/${program}`;
+	}
+
+	if (location) {
+		slug += `/${location}`;
+	}
+
+	return slug;
+};
+
+export default function UndergraduateAdmissionRequirementsHome({ locations, studentTypes, programs }) {
+	const [studentType, setStudentType] = useState(null);
+	const [location, setLocation] = useState(null);
+	const [program, setProgram] = useState(null);
+
+	const [showInternational, setShowInternational] = useState(false);
+	const [showCurriculums, setShowCurriculums] = useState(false);
+
+	const isLocationRequirementMet = (studentType?.location_dependent && location) || !studentType?.location_dependent;
+	const isProgramRequirementMet = (studentType?.program_dependent && program) || !studentType?.program_dependent;
+	const isComplete = studentType && isLocationRequirementMet && isProgramRequirementMet;
+
+	const locationDependentStudentTypes = useMemo(
+		() => new Set(studentTypes.filter((type) => type.location_dependent).map((type) => type.id)),
+		[studentTypes],
+	);
+
+	const programDependentStudentTypes = useMemo(
+		() => new Set(studentTypes.filter((type) => type.program_dependent).map((type) => type.id)),
+		[studentTypes],
+	);
+
 	const router = useRouter();
-	const [values, setValues] = useState({});
-	const reversed = [...hierarchy].reverse();
-	const slug = reversed.reduce((acc, value) => (!values[value] || acc === null ? null : `${acc}/${values[value]}`), '');
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		if (!isComplete) return;
+
+		const slug = requirementToSlug(
+			studentType.id,
+			studentType.program_dependent ? program.id : null,
+			studentType.location_dependent ? location.id : null,
+		);
+
+		router.push(`/admission/undergraduate/requirements/${slug}`).catch((e) => console.error(e));
+	};
 
 	return (
-		<Layout>
+		<Layout title="Undergraduate Admission Requirements">
 			<Container centered>
-				<Heading level={1}>Undergraduate Admission Requirements</Heading>
+				<Section
+					primary={
+						<>
+							<Heading level={1}>Undergraduate Admission Requirements</Heading>
 
-				<form
-					method="get"
-					onSubmit={(e) => {
-						e.preventDefault();
-						router.push(`/admission/undergraduate/requirements${slug}`);
-					}}
-					className="flex flex-col gap-4 md:w-2/3 lg:w-1/2"
-				>
-					{Object.getOwnPropertyNames(props)?.map((key) => (
-						<Select
-							key={key}
-							name={key}
-							onChange={(option) => setValues((prev) => ({ ...prev, [key]: option?.value }))}
-							label={props[key]?.prompt}
-							options={props[key]?.values?.map(({ id, name }) => ({
-								value: id,
-								label: name,
-							}))}
-						/>
-					))}
+							<form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+								<Select
+									label={
+										<Heading level={5} as="h2" className="mb-1 mt-0">
+											I am a
+										</Heading>
+									}
+									options={studentTypes.map((type) => ({
+										label: type.name,
+										value: type,
+										key: type.id,
+									}))}
+									onChange={(selection) => {
+										setStudentType(selection?.value);
 
-					<Button type="submit" className="lg:w-1/3" disabled={!slug} color="red">
-						View Requirements
-					</Button>
-				</form>
+										if (!selection) {
+											setLocation(null);
+											setProgram(null);
+										}
+									}}
+								/>
+
+								{locationDependentStudentTypes.has(studentType?.id) && (
+									<>
+										<Select
+											label={
+												<Heading level={5} as="h2" className="mb-1 mt-0">
+													I attend/attended high school in
+												</Heading>
+											}
+											options={[
+												...locations.domestic.map((location) => ({
+													label: location.name,
+													value: location,
+													key: location.id,
+												})),
+												{
+													label: 'Outside of Canada',
+													value: 'international',
+													key: 'international',
+												},
+												{
+													label: 'Another Curriculum of Study',
+													value: 'curriculum',
+													key: 'curriculum',
+												},
+											]}
+											onChange={(selection) => {
+												switch (selection?.value) {
+													case 'international':
+														setShowInternational(true);
+														setShowCurriculums(false);
+														setLocation(null);
+														break;
+													case 'curriculum':
+														setShowInternational(false);
+														setShowCurriculums(true);
+														setLocation(null);
+														break;
+													default:
+														setShowInternational(false);
+														setShowCurriculums(false);
+														setLocation(selection?.value);
+												}
+											}}
+										/>
+
+										{showInternational && (
+											<Select
+												autocomplete
+												label={
+													<Heading level={5} as="h2" className="mb-1 mt-0">
+														I study/studied in
+													</Heading>
+												}
+												options={locations.international.map((location) => ({
+													label: location.name,
+													value: location,
+													key: location.id,
+												}))}
+												onChange={(selection) => {
+													setLocation(selection?.value);
+												}}
+											/>
+										)}
+
+										{showCurriculums && (
+											<Select
+												label={
+													<Heading level={5} as="h2" className="mb-1 mt-0">
+														My curriculum of study is/was
+													</Heading>
+												}
+												options={locations.curriculums.map((location) => ({
+													label: location.name,
+													value: location,
+													key: location.id,
+												}))}
+												onChange={(selection) => {
+													setLocation(selection?.value);
+												}}
+											/>
+										)}
+									</>
+								)}
+
+								{programDependentStudentTypes.has(studentType?.id) && (
+									<Select
+										autocomplete
+										label={
+											<Heading level={5} as="h2" className="mb-1 mt-0">
+												I am interested in studying
+											</Heading>
+										}
+										options={programs?.map((program) => ({
+											label: program.name,
+											value: program,
+											key: program.id,
+										}))}
+										onChange={(selection) => {
+											setProgram(selection?.value);
+										}}
+									/>
+								)}
+								<Button
+									className="w-full sm:w-fit"
+									color="red"
+									type="submit"
+									disabled={!isComplete}
+									outlined={!isComplete}
+								>
+									View Requirements
+								</Button>
+							</form>
+						</>
+					}
+					secondary={<Sidebar />}
+				/>
 			</Container>
 		</Layout>
 	);

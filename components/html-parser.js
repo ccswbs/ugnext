@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
 import { Link } from '@/components/link';
 import { Heading } from '@/components/heading';
 import { List, ListItem } from '@/components/list';
 import { Divider } from '@/components/divider';
 import '@/lib/font-awesome';
-import { dom } from '@fortawesome/fontawesome-svg-core';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -38,16 +37,12 @@ export const DEFAULT_INSTRUCTIONS = [
 		shouldProcessNode: (node) => node.tagName === 'ul' || node.tagName === 'ol',
 		processNode: (node, children) => (
 			<List {...node.attribs} variant={node.tagName === 'ol' ? 'ordered' : 'unordered'}>
-				{children.map((child, index) => (
-					<ListItem key={index}>{child}</ListItem>
-				))}
+				{children
+					.filter((child) => child.type === 'li')
+					.map((child, index) => (
+						<ListItem key={index}>{child.props?.children}</ListItem>
+					))}
 			</List>
-		),
-	},
-	{
-		shouldProcessNode: (node, children) => node.tagName === 'i' && node.attribs?.classname?.includes('fa-'),
-		processNode: (node, children) => (
-			<span className="contents" dangerouslySetInnerHTML={{ __html: `<i class="${node.attribs?.classname}"></i>` }} />
 		),
 	},
 	// Divider
@@ -63,23 +58,11 @@ export const DEFAULT_INSTRUCTIONS = [
 ];
 
 export const HtmlParser = ({ html, instructions }) => {
-	const ref = useRef(null);
-
-	const parsed = useMemo(() => {
+	return useMemo(() => {
 		return parser.parseWithInstructions(
 			html,
 			() => true,
 			Array.isArray(instructions) ? instructions : DEFAULT_INSTRUCTIONS,
 		);
 	}, [html, instructions]);
-
-	useEffect(() => {
-		dom.i2svg({ node: ref.current });
-	}, [parsed]);
-
-	return (
-		<div ref={ref} className="contents">
-			{parsed}
-		</div>
-	);
 };

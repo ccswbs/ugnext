@@ -1,0 +1,190 @@
+- name: Afghanistan
+  id: afghanistan
+- name: Argentina
+  id: argentina
+- name: Austria
+  id: austria
+- name: Azerbaijan
+  id: azerbaijan
+- name: Bahrain
+  id: bahrain
+- name: Bahamas
+  id: bahamas
+- name: Bangladesh
+  id: bangladesh
+- name: Barbados
+  id: barbados
+- name: Bermuda
+  id: bermuda
+- name: Bolivia
+  id: bolivia
+- name: Botswana
+  id: botswana
+- name: Brazil
+  id: brazil
+- name: Cameroon
+  id: cameroon
+- name: Caribbean
+  id: caribbean
+- name: Chile
+  id: chile
+- name: China
+  id: china
+- name: Colombia
+  id: colombia
+- name: Costa Rica
+  id: costa-rica
+- name: Dominican Republic
+  id: dominican-republic
+- name: Ecuador
+  id: ecuador
+- name: Egypt
+  id: egypt
+- name: El Savador
+  id: el-savador
+- name: England
+  id: england
+- name: Ethiopia
+  id: ethiopia
+- name: France
+  id: france
+- name: Germany
+  id: germany
+- name: Ghana
+  id: ghana
+- name: Greece
+  id: greece
+- name: Guatemala
+  id: guatemala
+- name: Hong Kong
+  id: hong-kong
+- name: Haiti
+  id: haiti
+- name: India
+  id: india
+- name: Indonesia
+  id: indonesia
+- name: Iran
+  id: iran
+- name: Iraq
+  id: iraq
+- name: Ireland
+  id: ireland
+- name: Italy
+  id: italy
+- name: Japan
+  id: japan
+- name: Jamaica
+  id: jamaica
+- name: Jordan
+  id: jordan
+- name: Kazakhstan
+  id: kazakhstan
+- name: Kenya
+  id: kenya
+- name: Kuwait
+  id: kuwait
+- name: Latvia
+  id: latvia
+- name: Lebanon
+  id: lebanon
+- name: Libya
+  id: libya
+- name: Malaysia
+  id: malaysia
+- name: Mauritius
+  id: mauritius
+- name: Mexico
+  id: mexico
+- name: Middle East
+  id: middle-east
+- name: Netherlands
+  id: netherlands
+- name: New Zealand
+  id: new-zealand
+- name: Nigeria
+  id: nigeria
+- name: Norway
+  id: norway
+- name: Oman
+  id: oman
+- name: Pakistan
+  id: pakistan
+- name: Palestine
+  id: palestine
+- name: Panama
+  id: panama
+- name: Peru
+  id: peru
+- name: Philippines
+  id: philippines
+- name: Poland
+  id: poland
+- name: Portugal
+  id: portugal
+- name: Qatar
+  id: qatar
+- name: Russia
+  id: russia
+- name: Saudia Arabia
+  id: saudia-arabia
+- name: Singapore
+  id: singapore
+- name: South Africa
+  id: south-africa
+- name: South Korea
+  id: south-korea
+- name: Sri Lanka
+  id: sri-lanka
+- name: Sweden
+  id: sweden
+- name: Switzerland
+  id: switzerland
+- name: Syria
+  id: syria
+- name: Taiwan
+  id: taiwan
+- name: Tanzania
+  id: tanzania
+- name: Thailand
+  id: thailand
+- name: Trinidad
+  id: trinidad
+- name: Turkey
+  id: turkey
+- name: UAE
+  id: uae
+- name: Uganda
+  id: uganda
+- name: Ukraine
+  id: ukraine
+- name: United States of America
+  id: united-states-of-america
+- name: United Kingdom
+  id: united-kingdom
+- name: Uzbekistan
+  id: uzbekistan
+- name: Venezuela
+  id: venezuela
+- name: Vietnam
+  id: vietnam
+- name: Yemen
+  id: yemen
+- name: Zambia
+  id: zambia
+- name: Zimbabwe
+  id: zimbabwe
+- name: Advanced Placement (AP)
+  id: ap
+- name: American Curriculum
+  id: american-curriculum
+- name: British Patterned Education (General Certificate of Education [GCE])
+  id: gce
+- name: Chinese Curriculum
+  id: chinese-curriculum
+- name: European Baccalaureate
+  id: european-baccalaureate
+- name: French Baccalaureate
+  id: french-baccalaureate
+- name: International Baccalaureate
+  id: international-baccalaureate

@@ -1,73 +1,52 @@
-# Next + Netlify Starter
+# UGNext
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/46648482-644c-4c80-bafb-872057e51b6b/deploy-status)](https://app.netlify.com/sites/next-dev-starter/deploys)
+## Package Manager
 
-This is a [Next.js](https://nextjs.org/) v14 project bootstrapped with
-[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and set up to be instantly
-deployed to [Netlify](https://url.netlify.com/SyTBPVamO)!
+UGNext uses bun as its runtime/package manager.
 
-This project is a very minimal starter that includes 2 sample components, a global stylesheet, a `netlify.toml` for
-deployment, and a `jsconfig.json` for setting up absolute imports and aliases. With Netlify, you'll have access to
-features like Preview Mode, server-side rendering/incremental static regeneration via Netlify Functions, and
-internationalized routing on deploy automatically.
+To get started:
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/next-netlify-starter&utm_source=github&utm_medium=nextstarter-cs&utm_campaign=devex-cs)
+1. Install bun https://bun.sh/docs/installation
+2. Ensure you have a .env file with the appropriate environment variables set
+3. Run `bun install` in your terminal
+4. Start the development server using `bun run dev`
 
-(If you click this button, it will create a new repo for you that looks exactly like this one, and sets that repo up
-immediately for deployment on Netlify)
+## SQLite
 
-## Table of Contents:
+UGNext uses SQLite to embedded a database in a local file that is used to build some pages; as a result you must have
+sqlite3 installed on your machine.
 
-- [Getting Started](#getting-started)
-- [Installation options](#installation-options)
-- [Testing](#testing)
-  - [Included Default Testing](#included-default-testing)
-  - [Removing Renovate](#removing-renovate)
+### Handling changes with Git and backing up the database
 
-## Getting Started
+Typically, Git does not handle SQLite's binary database file very well. To address this we need some way to view changes
+to the database in a textual format.
 
-First, run the development server:
+SQLite has a feature that can help us with this, the dump command allows us to create a SQL script file which can be
+used to recreate our database exactly. As this dump file is just text, it means that Git is able to handle it just like
+any other file.
+
+Whenever we make changes to the database, we create a dump file (located at /data/sqlite/dump.sql), which can be used to
+recreate the database. As this dump file is a text file rather than a binary, git is able to keep track of changes made
+to the database with it.
+
+We can create this dump file easily using the following command:
 
 ```bash
-npm run dev
-# or
-yarn dev
+bun run backup-db
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**IMPORTANT** This command must be run whenever you make changes to the database, otherwise those changes will be lost
+whenever the database is restored.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Restoring the database
 
-### Installation options
+As stated previously, the dump file that is created (as described previously), allows us to recreate the database with
+it. We can do this with the following command:
 
-**Option one:** One-click deploy
+```bash
+bun run restore-db
+```
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/next-netlify-starter&utm_source=github&utm_medium=nextstarter-cs&utm_campaign=devex-cs)
-
-**Option two:** Manual clone
-
-1. Clone this repo: `git clone https://github.com/netlify-templates/next-netlify-starter.git`
-2. Navigate to the directory and run `npm install`
-3. Run `npm run dev`
-4. Make your changes
-5. Connect to [Netlify](https://url.netlify.com/Bk4UicocL) manually (the `netlify.toml` file is the one you'll need to
-   make sure stays intact to make sure the export is done and pointed to the right stuff)
-
-## Testing
-
-### Included Default Testing
-
-We’ve included some tooling that helps us maintain these templates. This template currently uses:
-
-- [Renovate](https://www.mend.io/free-developer-tools/renovate/) - to regularly update our dependencies
-- [Cypress](https://www.cypress.io/) - to run tests against how the template runs in the browser
-- [Cypress Netlify Build Plugin](https://github.com/cypress-io/netlify-plugin-cypress) - to run our tests during our
-  build process
-
-If your team is not interested in this tooling, you can remove them with ease!
-
-### Removing Renovate
-
-In order to keep our project up-to-date with dependencies we use a tool called
-[Renovate](https://github.com/marketplace/renovate). If you’re not interested in this tooling, delete the
-`renovate.json` file and commit that onto your main branch.
+Note, this command is automatically run whenever the dev server is started, or the project is built.
+Despite this it is still recommended
+that you run this command manually whenever you merge any changes that have updated the dump file.
