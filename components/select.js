@@ -156,15 +156,26 @@ Select.propTypes = {
 	onChange: PropTypes.func,
 	options: PropTypes.arrayOf(
 		PropTypes.shape({
-			label: PropTypes.string,
-			value: PropTypes.any,
+			label: PropTypes.string.isRequired,
+			value: PropTypes.any.isRequired,
 			key: PropTypes.string,
+			disabled: PropTypes.bool,
+			selected: PropTypes.bool,
 		}),
 	).isRequired,
+	/**
+	 * Determines whether to allow the user to select multiple options
+	 */
 	multiple: PropTypes.bool,
 	label: PropTypes.string,
 	name: PropTypes.string,
 	description: PropTypes.string,
+	/**
+	 * Help text to display when the user has not selected any options
+	 */
 	placeholder: PropTypes.string,
+	/**
+	 * Determines whether the Select should act as a search bar which filters the options displayed to the user.
+	 */
 	autocomplete: PropTypes.bool,
 };
