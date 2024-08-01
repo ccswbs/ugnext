@@ -31,6 +31,9 @@ export const Navigation = ({ fullWidth = true, links, label }) => {
 };
 
 Navigation.propTypes = {
+	/**
+	 * Determines whether the navigation will take up the full width of its container
+	 */
 	fullWidth: PropTypes.bool,
 	links: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -38,5 +41,8 @@ Navigation.propTypes = {
 			label: PropTypes.string.isRequired,
 		}),
 	).isRequired,
+	/**
+	 * A label for screen readers to announce when focused in the navigation
+	 */
 	label: PropTypes.string.isRequired,
 };
