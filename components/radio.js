@@ -51,7 +51,13 @@ Radio.propTypes = {
 		}),
 	).isRequired,
 	label: PropTypes.string,
-	name: PropTypes.string.isRequired,
+	/**
+	 * The name of the radio when inside a HTML form
+	 */
+	name: PropTypes.string,
+	/**
+	 * Whether to display the Radios next to each other
+	 */
 	inline: PropTypes.bool,
 	onChange: PropTypes.func,
 };
