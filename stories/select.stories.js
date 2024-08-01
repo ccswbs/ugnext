@@ -1,4 +1,5 @@
 import { Select } from '@/components/select';
+import { fn } from '@storybook/test';
 
 const config = {
 	title: 'Components/Select',
@@ -10,6 +11,9 @@ const config = {
 		},
 	},
 	tags: ['autodocs'],
+	args: {
+		onChange: fn()
+	},
 	decorators: [
 		(Story) => (
 			<div className="w-96">
