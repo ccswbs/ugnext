@@ -5,30 +5,25 @@ import { Story } from '@/components/story';
 import { Button } from '@/components/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft, faQuoteRight } from '@awesome.me/kit-7993323d0c/icons/sharp/solid';
+import { Blockquote } from '@/components/blockquote';
 
 export const HomeStory = () => (
 	<>
 		<Story
-			foregroundImage={
-				<Image src={foreground} alt="Kiana Gibson and David Sahai, co-founders of MealCare Guelph" sizes="50vw" />
-			}
-			backgroundImage={
-				<Image
-					className="h-full w-full object-cover lg:[object-position:left_40px]"
-					src={background}
-					alt="Student volunteers"
-					sizes="100vw"
-				/>
-			}
+			foregroundImage={{
+				src: foreground,
+				alt: 'Kiana Gibson and David Sahai, co-founders of MealCare Guelph',
+			}}
+			backgroundImage={{
+				src: background,
+				alt: 'tudent volunteers',
+				className: 'h-full w-full object-cover lg:[object-position:left_40px]',
+			}}
 			content={
-				<blockquote className="block w-full text-center text-3xl font-thin italic text-white sm:text-4xl lg:text-3xl xl:text-4xl">
-					<FontAwesomeIcon icon={faQuoteLeft} className="mr-[0.2em] inline-block h-[1em] text-yellow" />
-					<span>
-						Change happens at the community level. Small groups put in small efforts and those efforts add up to
-						something big.
-					</span>
-					<FontAwesomeIcon icon={faQuoteRight} className="ml-[0.2em] inline-block h-[1em] text-yellow" />
-				</blockquote>
+				<Blockquote className="text-white">
+					Change happens at the community level. Small groups put in small efforts and those efforts add up to something
+					big.
+				</Blockquote>
 			}
 			footer={
 				<>
