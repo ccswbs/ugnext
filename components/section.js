@@ -18,5 +18,8 @@ export const Section = ({ primary, secondary, equal = false }) => (
 Section.propTypes = {
 	primary: PropTypes.node.isRequired,
 	secondary: PropTypes.node.isRequired,
+	/**
+	 * Determines whether both columns are equal in width
+	 */
 	equal: PropTypes.bool,
 };
