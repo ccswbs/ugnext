@@ -2,7 +2,7 @@ import { Dialog, DialogPanel, Transition } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 import PropTypes from 'prop-types';
 
-export const Modal = ({ open, onClose, role = 'dialog', labelledBy, centered, children }) => (
+export const Modal = ({ open, onClose = () => {}, role = 'dialog', labelledBy, centered, children }) => (
 	<Transition
 		show={open}
 		enter="duration-200 ease-out"
