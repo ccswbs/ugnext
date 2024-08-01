@@ -1,5 +1,6 @@
 fragment Accordion on ParagraphAccordionSection {
   __typename
+  id
   headingLevel
   accordionSectionTitle: title
   items {
@@ -18,11 +19,14 @@ fragment Accordion on ParagraphAccordionSection {
 
 fragment ButtonSection on ParagraphSectionButton {
   __typename
+  id
   buttons {
     ...Buttons
   }
   sectionColumn {
+    __typename
     ...SectionColumn
+    ...SpecialRegions
   }
 }
 
@@ -32,17 +36,18 @@ fragment Buttons on ParagraphButtonWidget {
     processed
   }
   fontAwesomeIcon
-  formattedTitle {
-    processed
-  }
-  link {
-    title
-    url
-  }
   fontAwesomeIconColour {
     ... on TermColourVariable {
       name
     }
+  }
+  formattedTitle {
+    processed
+  }
+  id
+  link {
+    title
+    url
   }
   style {
     ... on TermButtonStyle {
@@ -53,6 +58,7 @@ fragment Buttons on ParagraphButtonWidget {
 
 fragment GeneralText on ParagraphGeneralText {
   __typename
+  id
   sectionColumn {
     ...SectionColumn
   }
@@ -163,6 +169,7 @@ fragment RemoteVideo on MediaRemoteVideo {
 
 fragment Section on ParagraphSection {
   __typename
+  id
   heading: title
   headingLevel
   content {
@@ -179,6 +186,10 @@ fragment Section on ParagraphSection {
 }
 
 fragment SectionColumn on TermSectionColumn {
+  name
+}
+
+fragment SpecialRegions on TermSpecialRegion {
   name
 }
 
@@ -248,6 +259,7 @@ fragment StoryQuote on ParagraphStoryQuote {
 
 fragment Tabs on ParagraphSectionTab {
   __typename
+  id
   tabs {
     ... on ParagraphTabContent {
       body {
