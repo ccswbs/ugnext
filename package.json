@@ -30,7 +30,8 @@
     "sharp": "^0.33.4",
     "slick-carousel": "^1.8.1",
     "stemmer": "^2.0.1",
-    "use-resize-observer": "^9.1.0"
+    "use-resize-observer": "^9.1.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@headlessui/react": "^2.1.2",
