@@ -12,9 +12,9 @@ function setButtonStyle(buttonStyle) {
     case 'Secondary (Outline)':
       return 'border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white';
     case 'Info':
-      return 'bg-blue text-white';
+      return 'bg-blue text-white hover:bg-blue-900';
     case 'Info (Outline)':
-      return 'border-2 border-blue text-blue';
+      return 'border-2 border-blue text-blue hover:bg-blue hover:text-white';
     default:
       return 'bg-blue text-white';
   }
@@ -69,10 +69,7 @@ export const Button = ({ buttonCol, buttonData }) => {
     'block',
   );
 
-  //null is actually a placeholder for the "Call to Action" option, not yet being fetched via GraphQL
-  if (buttonCol == null) {
-    buttonClasses = twJoin(buttonClasses, 'text-center', 'md:inline-block');
-  } else if (buttonCol !== 'right' && buttonCol !== 'Secondary') {
+  if (buttonCol !=='right' && buttonCol !=='Secondary') {
     buttonClasses = twJoin(buttonClasses, 'md:inline-block');
   }
 
@@ -83,5 +80,5 @@ export const Button = ({ buttonCol, buttonData }) => {
         {buttonLinkTitle}
       </a>
     </>
-  );
+    );
 };

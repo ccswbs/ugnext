@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { Button } from '@/components/widgets/button-widget';
+import ConditionalWrap from 'conditional-wrap';
 
 export const ButtonSection = ({ data }) => {
   const buttonsData = data?.buttons;
@@ -9,11 +10,11 @@ export const ButtonSection = ({ data }) => {
   return (
     <>
       {buttonsData?.length > 0 && (
-        <>
-          {buttonsData.map((button, index) => (
-            <Button key={index} buttonCol={buttonCol} buttonData={button} />
+        <ConditionalWrap condition={buttonCol === 'Call to Action'} wrap={children => <div className='md:flex md:justify-center'>{children}</div>}>
+          {buttonsData.map((button) => (            
+              <Button key={button.id} buttonCol={buttonCol} buttonData={button} />            
           ))}
-        </>
+        </ConditionalWrap>
       )}
     </>
   );
