@@ -19,7 +19,7 @@ const config = {
 export default config;
 
 export const H1 = {
-	storyName: 'H1',
+	name: 'H1',
 	args: {
 		level: 1,
 		children: 'Example H1 heading',
@@ -27,7 +27,7 @@ export const H1 = {
 };
 
 export const H2 = {
-	storyName: 'H2',
+	name: 'H2',
 	args: {
 		level: 2,
 		children: 'Example H2 heading',
@@ -35,7 +35,7 @@ export const H2 = {
 };
 
 export const H3 = {
-	storyName: 'H3',
+	name: 'H3',
 	args: {
 		level: 3,
 		children: 'Example H3 heading',
@@ -43,7 +43,7 @@ export const H3 = {
 };
 
 export const H4 = {
-	storyName: 'H4',
+	name: 'H4',
 	args: {
 		level: 4,
 		children: 'Example H4 heading',
@@ -51,7 +51,7 @@ export const H4 = {
 };
 
 export const H5 = {
-	storyName: 'H5',
+	name: 'H5',
 	args: {
 		level: 5,
 		children: 'Example H5 heading',
@@ -59,7 +59,7 @@ export const H5 = {
 };
 
 export const H6 = {
-	storyName: 'H6',
+	name: 'H6',
 	args: {
 		level: 6,
 		children: 'Example H6 heading',
@@ -67,7 +67,7 @@ export const H6 = {
 };
 
 export const H3StylesAsH1 = {
-	storyName: 'H3 Styles As H1',
+	name: 'H3 Styles As H1',
 	args: {
 		level: 3,
 		children: 'Example H1 heading with H3 styles',
