@@ -29,6 +29,9 @@ export const Tabs = ({ fullWidth = true, tabs }) => (
 );
 
 Tabs.propTypes = {
+	/**
+	 * Determines whether the tabs will take up the full width of its container
+	 */
 	fullWidth: PropTypes.bool,
 	tabs: PropTypes.arrayOf(
 		PropTypes.shape({
