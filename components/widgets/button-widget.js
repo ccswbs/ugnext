@@ -1,5 +1,6 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import classNames from 'classnames';
+import ConditionalWrap from 'conditional-wrap';
 
 function setButtonStyle(buttonStyle) {
   switch (buttonStyle) {
@@ -47,6 +48,7 @@ export const Button = ({ buttonCol, buttonData }) => {
     'pe-3',
     'text-4xl',
     'inline-block',
+    'align-middle',
     buttonIconColour ? fontAwesomeIconColour(buttonIconColour) : null,
   );
   /*
@@ -77,7 +79,9 @@ export const Button = ({ buttonCol, buttonData }) => {
     <>
       <a className={buttonClasses} href={urlLink}>
         {buttonIcon && setButtonIcon(buttonIcon, buttonIconClasses)}
-        {buttonLinkTitle}
+        <ConditionalWrap condition={buttonIcon} wrap={children => <span className='align-middle inline-block'>{children}</span>}>
+          {buttonLinkTitle}
+        </ConditionalWrap>
       </a>
     </>
     );
