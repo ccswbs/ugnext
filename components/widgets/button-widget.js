@@ -1,6 +1,5 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import classNames from 'classnames';
-import ConditionalWrap from 'conditional-wrap';
 
 function setButtonStyle(buttonStyle) {
   switch (buttonStyle) {
@@ -40,7 +39,7 @@ function fontAwesomeIconColour(colourChoice) {
 
 export const Button = ({ buttonCol, buttonData }) => {
   let urlLink = buttonData?.link?.url;
-  let buttonLinkTitle = buttonData?.link?.title;
+  let buttonLinkTitle = buttonData?.formattedTitle ? buttonData.formattedTitle.processed : (buttonData.link?.title ? buttonData.link.title : 'No title entered');
   let buttonIcon = buttonData?.fontAwesomeIcon;
   let buttonIconColour = buttonData?.fontAwesomeIconColour?.name;
   let buttonStyle = buttonData?.style?.name;
@@ -54,7 +53,6 @@ export const Button = ({ buttonCol, buttonData }) => {
   /*
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
-    let buttonTitleClasses = classNames('align-middle','lh-sm'); 
   */
 
   let buttonClasses = twJoin(
@@ -79,9 +77,7 @@ export const Button = ({ buttonCol, buttonData }) => {
     <>
       <a className={buttonClasses} href={urlLink}>
         {buttonIcon && setButtonIcon(buttonIcon, buttonIconClasses)}
-        <ConditionalWrap condition={buttonIcon} wrap={children => <span className='align-middle inline-block'>{children}</span>}>
-          {buttonLinkTitle}
-        </ConditionalWrap>
+        <span className='align-middle inline-block' dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
       </a>
     </>
     );
