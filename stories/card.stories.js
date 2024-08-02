@@ -45,11 +45,11 @@ export const WithImage = {
 		title: 'Example Title',
 		className: 'w-96',
 		image: {
-			src: "https://picsum.photos/300/200",
+			src: 'https://picsum.photos/300/200',
 			width: 300,
 			height: 200,
 			alt: 'Placeholder image',
-			className: "aspect-[3/2] w-full",
+			className: 'aspect-[3/2] w-full',
 		},
 		children: (
 			<div>
@@ -66,11 +66,11 @@ export const WithFooter = {
 		title: 'Example Title',
 		className: 'w-96',
 		image: {
-			src: "https://picsum.photos/300/200",
+			src: 'https://picsum.photos/300/200',
 			width: 300,
 			height: 200,
 			alt: 'Placeholder image',
-			className: "aspect-[3/2] w-full",
+			className: 'aspect-[3/2] w-full',
 		},
 		children: (
 			<div>
@@ -88,11 +88,11 @@ export const AsALink = {
 		title: 'Example Title',
 		className: 'w-96',
 		image: {
-			src: "https://picsum.photos/300/200",
+			src: 'https://picsum.photos/300/200',
 			width: 300,
 			height: 200,
 			alt: 'Placeholder image',
-			className: "aspect-[3/2] w-full",
+			className: 'aspect-[3/2] w-full',
 		},
 		children: (
 			<div>

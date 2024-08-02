@@ -47,6 +47,5 @@ it. We can do this with the following command:
 bun run restore-db
 ```
 
-Note, this command is automatically run whenever the dev server is started, or the project is built.
-Despite this it is still recommended
-that you run this command manually whenever you merge any changes that have updated the dump file.
+Note, this command is automatically run whenever the dev server is started, or the project is built. Despite this it is
+still recommended that you run this command manually whenever you merge any changes that have updated the dump file.

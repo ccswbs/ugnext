@@ -12,7 +12,7 @@ const config = {
 	},
 	tags: ['autodocs'],
 	args: {
-		onChange: fn()
+		onChange: fn(),
 	},
 	decorators: [
 		(Story) => (

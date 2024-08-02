@@ -185,15 +185,17 @@ export const getRequirementTitle = async (studentType, program, location) => {
 
 export const getRequirementContent = async (studentType, program, location) => {
 	return (
-		await db.get(SQL`
-			SELECT
-				content
-			FROM
-				admission_requirements_undergraduate
-			WHERE
-				student_type IS ${studentType ?? null}
-				AND program IS ${program ?? null}
-				AND location IS ${location ?? null}
-		`)
-	)?.content ?? '';
+		(
+			await db.get(SQL`
+				SELECT
+					content
+				FROM
+					admission_requirements_undergraduate
+				WHERE
+					student_type IS ${studentType ?? null}
+					AND program IS ${program ?? null}
+					AND location IS ${location ?? null}
+			`)
+		)?.content ?? ''
+	);
 };

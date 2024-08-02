@@ -55,7 +55,7 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 							</Button>
 
 							<div className="flex flex-col gap-3 py-6">
-								<HtmlParser html={content} />
+								<HtmlParser html={content ?? ''} />
 							</div>
 						</>
 					}

@@ -3,15 +3,17 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-		config.module.rules.push({
-			test: /\.gql|.graphql$/,
-			// This is the asset module.
-			type: 'asset/source',
-		},
+		config.module.rules.push(
+			{
+				test: /\.gql|.graphql$/,
+				// This is the asset module.
+				type: 'asset/source',
+			},
 			{
 				test: /\.ya?ml$/,
 				use: 'yaml-loader',
-			});
+			},
+		);
 		return config;
 	},
 	images: {
