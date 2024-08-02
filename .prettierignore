@@ -1,3 +1,4 @@
 .next
 coverage/pages/admission/requirements/undergraduate/\[...slug\].js
 /data/sqlite/db.sqlite3
+/data/sqlite/dump.sql
