@@ -6,8 +6,6 @@ import { Heading } from '@/components/heading';
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/button';
 import { Section } from '@/components/section';
-import { List, ListItem } from '@/components/list';
-import { Link } from '@/components/link';
 import { useRouter } from 'next/router';
 import { Sidebar } from '@/components/admission/undergraduate/requirements/sidebar';
 
