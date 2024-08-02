@@ -32,8 +32,11 @@ export const ThreeCampuses = () => {
 					title={<span className="my-auto w-full text-center text-xl font-bold">{`${campus.title} Campus`}</span>}
 					href={campus.url}
 					centered
-					image={<Image className="aspect-[3/2] w-full" src={campus.image.src} alt={campus.image.alt} />}
-					sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+					image={{
+						...campus.image,
+						className: 'aspect-[3/2] w-full',
+						sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+					}}
 				/>
 			))}
 		</div>
