@@ -1,7 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 import { twJoin } from 'tailwind-merge';
+import PropTypes from 'prop-types';
+import { Accordion } from '@/components/accordion';
 
+/**
+ * A simple way to inform the user of something, works best within a Modal
+ */
 export const Alert = ({ type = 'danger', title, subtitle, message, footer }) => (
 	<div className="flex flex-col">
 		<div
@@ -28,3 +33,11 @@ export const Alert = ({ type = 'danger', title, subtitle, message, footer }) => 
 		)}
 	</div>
 );
+
+Alert.propTypes = {
+	type: PropTypes.oneOf(['danger', 'warning', 'info']),
+	title: PropTypes.node.isRequired,
+	subtitle: PropTypes.node.isRequired,
+	message: PropTypes.node.isRequired,
+	footer: PropTypes.node,
+};

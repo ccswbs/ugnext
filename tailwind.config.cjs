@@ -118,7 +118,9 @@ module.exports = {
 		'./components/**/*.{html,js,jsx,ts,tsx}',
 		'./pages/**/*.{html,js,jsx,ts,tsx}',
 		'./public/**/*.{html,js,jsx,ts,tsx}',
+		'./stories/**/*.{html,js,jsx,ts,tsx}',
 	],
+	darkMode: 'selector',
 	theme: {
 		borderRadius: scaled(defaultTheme.borderRadius, scale),
 		columns: scaled(defaultTheme.columns, scale),

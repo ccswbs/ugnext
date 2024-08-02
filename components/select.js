@@ -18,6 +18,8 @@ import {
 import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
+import PropTypes from 'prop-types';
+import * as propTypes from 'prop-types';
 
 export const Select = ({
 	onChange,
@@ -35,9 +37,7 @@ export const Select = ({
 	const OptionTag = autocomplete ? ComboboxOption : ListboxOption;
 
 	const [selected, setSelected] = useState(
-		multiple
-			? (options.filter((option) => option?.selected) ?? [])
-			: (options.find((option) => option?.selected) ?? null),
+		multiple ? options.filter((option) => option?.selected) ?? [] : options.find((option) => option?.selected) ?? null,
 	);
 
 	// Create a map of the indices of the options by their value for faster lookup when sorting the selected options
@@ -86,15 +86,15 @@ export const Select = ({
 				multiple={multiple}
 			>
 				{autocomplete ? (
-					<div className="flex relative w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
+					<div className="relative flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
 						<ComboboxInput
-							className="flex-1 focus:outline-none h-6"
+							className="h-6 flex-1 focus:outline-none"
 							placeholder={placeholder}
 							displayValue={() => displayText ?? ''}
 							onChange={(e) => setQuery(e.target.value)}
 						/>
 
-						<ButtonTag className="flex w-full left-0 items-center justify-end absolute px-4 py-2">
+						<ButtonTag className="absolute left-0 flex w-full items-center justify-end px-4 py-2">
 							<FontAwesomeIcon
 								className="h-5 w-5 text-gray-400 transition-transform ui-open:rotate-180"
 								icon={faChevronDown}
@@ -126,7 +126,7 @@ export const Select = ({
 						{options.filter(filterer).map((option, index) => (
 							<OptionTag
 								className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
-								key={typeof option?.value === 'string' ? option?.value : (option?.value?.key ?? index)}
+								key={typeof option?.value === 'string' ? option?.value : option?.key ?? index}
 								value={option}
 								disabled={option?.disabled}
 							>
@@ -150,4 +150,32 @@ export const Select = ({
 			{description && <Description className="text-sm text-gray-500">{description}</Description>}
 		</Field>
 	);
+};
+
+Select.propTypes = {
+	onChange: PropTypes.func,
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string.isRequired,
+			value: PropTypes.any.isRequired,
+			key: PropTypes.string,
+			disabled: PropTypes.bool,
+			selected: PropTypes.bool,
+		}),
+	).isRequired,
+	/**
+	 * Determines whether to allow the user to select multiple options
+	 */
+	multiple: PropTypes.bool,
+	label: PropTypes.string,
+	name: PropTypes.string,
+	description: PropTypes.string,
+	/**
+	 * Help text to display when the user has not selected any options
+	 */
+	placeholder: PropTypes.string,
+	/**
+	 * Determines whether the Select should act as a search bar which filters the options displayed to the user.
+	 */
+	autocomplete: PropTypes.bool,
 };

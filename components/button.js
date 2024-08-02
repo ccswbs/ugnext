@@ -1,8 +1,12 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import { UnstyledLink } from '@/components/link';
+import PropTypes from 'prop-types';
 
+/**
+ * A basic button which can be used as a link or a normal button.
+ */
 export const Button = ({
-	as,
+	as = 'button',
 	color = 'none',
 	outlined = false,
 	href,
@@ -63,4 +67,36 @@ export const Button = ({
 			{children}
 		</Tag>
 	);
+};
+
+Button.propTypes = {
+	/**
+	 * What element to render this button as
+	 */
+	as: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	/**
+	 * What background color to use
+	 */
+	color: PropTypes.oneOf(['red', 'yellow', 'blue', 'green', 'grey', 'none']),
+	/**
+	 * What style of button to use
+	 */
+	outlined: PropTypes.bool,
+	/**
+	 * The url of the page this button will navigate to.
+	 */
+	href: PropTypes.string,
+	/**
+	 *
+	 */
+	disabled: PropTypes.bool,
+	children: PropTypes.node,
+	/**
+	 * Add custom styles using tailwind
+	 */
+	className: PropTypes.string,
+	/**
+	 * The type of this button when present within a HTML form
+	 */
+	type: PropTypes.oneOf(['button', 'submit']),
 };

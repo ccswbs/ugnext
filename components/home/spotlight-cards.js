@@ -12,21 +12,19 @@ export const SpotlightCards = ({ cards }) => (
 				title={<span className="my-auto w-full text-center text-xl font-bold">{card.title}</span>}
 				href={card.url.url}
 				centered
-				image={
-					<Image
-						className={twJoin(
-							'aspect-[3/2] w-full',
-							card.thumbnailImageCropping === 'right' && 'object-right',
-							card.thumbnailImageCropping === 'left' && 'object-left',
-							card.thumbnailImageCropping === 'center' && 'object-center',
-						)}
-						src={card.image.image.variations[0].url}
-						alt={card.image.image.alt}
-						width={card.image.image.width}
-						height={card.image.image.height}
-						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-					/>
-				}
+				image={{
+					src: card.image.image.variations[0].url,
+					alt: card.image.image.alt,
+					width: card.image.image.width,
+					height: card.image.image.height,
+					className: twJoin(
+						'aspect-[3/2] w-full',
+						card.thumbnailImageCropping === 'right' && 'object-right',
+						card.thumbnailImageCropping === 'left' && 'object-left',
+						card.thumbnailImageCropping === 'center' && 'object-center',
+					),
+					sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw',
+				}}
 			/>
 		))}
 	</div>

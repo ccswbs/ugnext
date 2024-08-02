@@ -1,5 +1,6 @@
 import { clamp } from '@/lib/math-utils';
 import { twJoin, twMerge } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const Heading = ({ level, children, className, as, ...rest }) => {
 	const headingLevel = clamp(level || 1, 1, 6);
@@ -10,12 +11,12 @@ export const Heading = ({ level, children, className, as, ...rest }) => {
 			{...rest}
 			className={twMerge(
 				twJoin(
-					'font-condensed font-bold leading-tight',
-					headingLevel === 1 && 'mb-7 mt-7 text-5xl text-red',
-					headingLevel === 2 && 'mb-3 mt-3 text-4xl',
-					headingLevel === 3 && 'mb-3 mt-3 text-3xl',
-					headingLevel === 4 && 'mb-3 mt-3 text-2xl',
-					(headingLevel === 5 || headingLevel === 6) && 'mb-3 mt-3 text-xl',
+					'mb-7 mt-7 font-bold leading-tight',
+					headingLevel === 1 && 'text-4xl text-red',
+					headingLevel === 2 && 'text-3xl text-red',
+					headingLevel === 3 && 'text-2xl',
+					headingLevel === 4 && 'text-xl',
+					(headingLevel === 5 || headingLevel === 6) && 'text-xl',
 				),
 				className,
 			)}
@@ -23,4 +24,14 @@ export const Heading = ({ level, children, className, as, ...rest }) => {
 			{children}
 		</Tag>
 	);
+};
+
+Heading.propTypes = {
+	level: PropTypes.number,
+	children: PropTypes.node,
+	className: PropTypes.string,
+	/**
+	 * What element to render this button as
+	 */
+	as: PropTypes.string,
 };

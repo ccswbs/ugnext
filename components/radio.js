@@ -1,6 +1,7 @@
 import { Field, Fieldset, Legend, Label, Radio as HUIRadio, RadioGroup } from '@headlessui/react';
 import { useState, Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 export const Radio = ({ options, label, name, inline = false, onChange }) => {
 	let [selected, setSelected] = useState(options.find((option) => option?.selected) ?? null);
@@ -39,4 +40,24 @@ export const Radio = ({ options, label, name, inline = false, onChange }) => {
 			</RadioGroup>
 		</Fieldset>
 	);
+};
+
+Radio.propTypes = {
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			selected: PropTypes.bool,
+			label: PropTypes.string,
+			value: PropTypes.any,
+		}),
+	).isRequired,
+	label: PropTypes.string,
+	/**
+	 * The name of the radio when inside a HTML form
+	 */
+	name: PropTypes.string,
+	/**
+	 * Whether to display the Radios next to each other
+	 */
+	inline: PropTypes.bool,
+	onChange: PropTypes.func,
 };
