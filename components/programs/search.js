@@ -257,19 +257,13 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 			{/* Search results */}
 			<div className="mt-5 grid grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))] gap-5">
 				{filtered?.map((program) =>
-					typeof render === 'function' ? (
-						render(program)
-					) : (
-						<ProgramCard key={program.id} program={program} />
-					),
+					typeof render === 'function' ? render(program) : <ProgramCard key={program.id} program={program} />,
 				)}
 			</div>
 
 			{filtered?.length === 0 && (
 				<div className="flex w-full items-center justify-center">
-					<span className="text-xl font-bold text-black/50">
-						No programs matching your criteria were found.
-					</span>
+					<span className="text-xl font-bold text-black/50">No programs matching your criteria were found.</span>
 				</div>
 			)}
 		</>

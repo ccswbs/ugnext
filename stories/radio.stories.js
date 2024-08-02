@@ -61,7 +61,7 @@ export const WithLabel = {
 				label: 'Option 3',
 			},
 		],
-		label: "Example Radio"
+		label: 'Example Radio',
 	},
 };
 

@@ -61,7 +61,7 @@ export const SolidColors = {
 		],
 		variant: 'solid-colors',
 	},
-}
+};
 
 export const LightBlue = {
 	args: {
@@ -85,7 +85,7 @@ export const LightBlue = {
 		],
 		variant: 'light-blue',
 	},
-}
+};
 
 export const LeftBorder = {
 	args: {
@@ -109,7 +109,7 @@ export const LeftBorder = {
 		],
 		variant: 'left-border',
 	},
-}
+};
 
 export const WithImages = {
 	args: {
@@ -157,4 +157,4 @@ export const WithImages = {
 		],
 		variant: 'solid-colors',
 	},
-}
+};

@@ -16,7 +16,7 @@ export async function getStaticProps() {
 }
 
 export default function ProgramsUndergraduate({ programs }) {
-	console.log(programs)
+	console.log(programs);
 	return (
 		<Layout title="Undergraduate Programs">
 			<Container centered>

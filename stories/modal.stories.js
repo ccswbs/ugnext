@@ -20,6 +20,6 @@ export default config;
 export const Default = {
 	args: {
 		children: <div>Whatever content you want here</div>,
-		open: false
+		open: false,
 	},
 };

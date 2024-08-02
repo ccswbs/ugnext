@@ -23,7 +23,7 @@ export const Default = {
 					height: 1680,
 					width: 640,
 					alt: 'Placeholder image',
-					className: 'w-full'
+					className: 'w-full',
 				},
 				title: 'Example Link 1',
 				url: 'https://admission.uoguelph.ca/programs',
@@ -71,7 +71,7 @@ export const WithCaptions = {
 					height: 1680,
 					width: 640,
 					alt: 'Placeholder image',
-					className: 'w-full'
+					className: 'w-full',
 				},
 				title: 'Example Link 1',
 				url: 'https://admission.uoguelph.ca/programs',

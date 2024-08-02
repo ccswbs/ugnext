@@ -8,11 +8,11 @@ export const db = await sqlite.open({
 });
 
 export const parseJSONColumns = (row, ...cols) => {
-	const parsed = {...row};
+	const parsed = { ...row };
 
-	for(const col of cols) {
+	for (const col of cols) {
 		parsed[col] = JSON.parse(row[col]);
 	}
 
 	return parsed;
-}
+};
