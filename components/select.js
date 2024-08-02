@@ -167,7 +167,7 @@ Select.propTypes = {
 	 * Determines whether to allow the user to select multiple options
 	 */
 	multiple: PropTypes.bool,
-	label: PropTypes.string,
+	label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	name: PropTypes.string,
 	description: PropTypes.string,
 	/**
