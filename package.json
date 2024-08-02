@@ -10,10 +10,10 @@
 		"start": "next start",
 		"export": "next build && next export",
 		"format": "prettier -w ./",
-    "backup-db": "sqlite3 ./data/sqlite/db.sqlite3 .dump > ./data/sqlite/dump.sql",
-    "restore-db": "rm -f ./data/sqlite/db.sqlite3 && sqlite3 ./data/sqlite/db.sqlite3",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"backup-db": "sqlite3 ./data/sqlite/db.sqlite3 .dump > ./data/sqlite/dump.sql",
+		"restore-db": "rm -f ./data/sqlite/db.sqlite3 && sqlite3 ./data/sqlite/db.sqlite3 < ./data/sqlite/dump.sql"
 	},
 	"dependencies": {
 		"@awesome.me/kit-7993323d0c": "^1.0.8",
