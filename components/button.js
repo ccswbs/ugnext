@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
  * A basic button which can be used as a link or a normal button.
  */
 export const Button = ({
-	as = 'button',
+	as,
 	color = 'none',
 	outlined = false,
 	href,
