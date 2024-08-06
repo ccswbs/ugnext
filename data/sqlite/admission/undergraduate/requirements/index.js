@@ -184,60 +184,88 @@ export const getRequirementTitle = async (studentType, program, location) => {
 };
 
 export const getRequirementContent = async (studentType, program, location) => {
-	let content = (
-		await db.get(SQL`
-			SELECT
-				content
-			FROM
-				admission_requirements_undergraduate
-			WHERE
-				(
-					student_type IS ${studentType}
-					OR student_type IS NULL
-					OR (
-						JSON_VALID(student_type)
-						AND EXISTS (
-							SELECT
-								1
-							FROM
-								JSON_EACH(student_type)
-							WHERE
-								value = ${studentType}
-						)
+	const requirements = await db.all(SQL`
+		SELECT
+			student_type,
+			program,
+			location,
+			content
+		FROM
+			admission_requirements_undergraduate
+		WHERE
+			(
+				student_type IS ${studentType}
+				OR student_type IS NULL
+				OR (
+					JSON_VALID(student_type)
+					AND EXISTS (
+						SELECT
+							1
+						FROM
+							JSON_EACH(student_type)
+						WHERE
+							value = ${studentType}
 					)
 				)
-				AND (
-					program IS ${program}
-					OR program IS NULL
-					OR (
-						JSON_VALID(program)
-						AND EXISTS (
-							SELECT
-								1
-							FROM
-								JSON_EACH(program)
-							WHERE
-								value = ${program}
-						)
+			)
+			AND (
+				program IS ${program}
+				OR program IS NULL
+				OR (
+					JSON_VALID(program)
+					AND EXISTS (
+						SELECT
+							1
+						FROM
+							JSON_EACH(program)
+						WHERE
+							value = ${program}
 					)
 				)
-				AND (
-					location IS ${location}
-					OR location IS NULL
-					OR (
-						JSON_VALID(location)
-						AND EXISTS (
-							SELECT
-								1
-							FROM
-								JSON_EACH(location)
-							WHERE
-								value = ${location}
-						)
+			)
+			AND (
+				location IS ${location}
+				OR location IS NULL
+				OR (
+					JSON_VALID(location)
+					AND EXISTS (
+						SELECT
+							1
+						FROM
+							JSON_EACH(location)
+						WHERE
+							value = ${location}
 					)
-				);
-		`)
-	)?.content;
+				)
+			);
+	`);
+
+	const content = requirements
+		?.map((requirement) => {
+			let rank = 0;
+
+			if (!requirement.studentType) {
+				rank += 2;
+			} else if (requirement.studentType.includes('[')) {
+				rank += 1;
+			}
+
+			if (!requirement.program) {
+				rank += 2;
+			} else if (requirement.program.includes('[')) {
+				rank += 1;
+			}
+
+			if (!requirement.location) {
+				rank += 2;
+			} else if (requirement.location.includes('[')) {
+				rank += 1;
+			}
+
+			return { ...requirement, rank: rank };
+		})
+		?.sort((a, b) => a.rank - b.rank)
+		?.reduce((acc, value) => acc.concat(value.content), '');
 
 	if (!content) {
 		return '';
