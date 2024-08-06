@@ -184,18 +184,64 @@ export const getRequirementTitle = async (studentType, program, location) => {
 };
 
 export const getRequirementContent = async (studentType, program, location) => {
-	return (
-		(
-			await db.get(SQL`
-				SELECT
-					content
-				FROM
-					admission_requirements_undergraduate
-				WHERE
-					student_type IS ${studentType ?? null}
-					AND program IS ${program ?? null}
-					AND location IS ${location ?? null}
-			`)
-		)?.content ?? ''
-	);
+	let content = (
+		await db.get(SQL`
+			SELECT
+				content
+			FROM
+				admission_requirements_undergraduate
+			WHERE
+				(
+					student_type IS ${studentType}
+					OR student_type IS NULL
+					OR (
+						JSON_VALID(student_type)
+						AND EXISTS (
+							SELECT
+								1
+							FROM
+								JSON_EACH(student_type)
+							WHERE
+								value = ${studentType}
+						)
+					)
+				)
+				AND (
+					program IS ${program}
+					OR program IS NULL
+					OR (
+						JSON_VALID(program)
+						AND EXISTS (
+							SELECT
+								1
+							FROM
+								JSON_EACH(program)
+							WHERE
+								value = ${program}
+						)
+					)
+				)
+				AND (
+					location IS ${location}
+					OR location IS NULL
+					OR (
+						JSON_VALID(location)
+						AND EXISTS (
+							SELECT
+								1
+							FROM
+								JSON_EACH(location)
+							WHERE
+								value = ${location}
+						)
+					)
+				);
+		`)
+	)?.content;
+
+	if (!content) {
+		return '';
+	}
+
+	return content;
 };
