@@ -12,8 +12,6 @@ import { Button } from '@/components/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftToBracket } from '@awesome.me/kit-7993323d0c/icons/sharp/solid';
 import { Section } from '@/components/section';
-import { List, ListItem } from '@/components/list';
-import { Link } from '@/components/link';
 import { Sidebar } from '@/components/admission/undergraduate/requirements/sidebar';
 
 export async function getStaticPaths() {
