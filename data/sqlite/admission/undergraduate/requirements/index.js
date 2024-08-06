@@ -245,15 +245,15 @@ export const getRequirementContent = async (studentType, program, location) => {
 			let rank = 0;
 
 			if (!requirement.studentType) {
-				rank += 2;
+				rank += 6;
 			} else if (requirement.studentType.includes('[')) {
-				rank += 1;
+				rank += 3;
 			}
 
 			if (!requirement.program) {
-				rank += 2;
+				rank += 4;
 			} else if (requirement.program.includes('[')) {
-				rank += 1;
+				rank += 2;
 			}
 
 			if (!requirement.location) {
