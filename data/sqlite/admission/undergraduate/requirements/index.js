@@ -189,6 +189,7 @@ export const getRequirementContent = async (studentType, program, location) => {
 			student_type,
 			program,
 			location,
+			admission_requirements_undergraduate.rank,
 			content
 		FROM
 			admission_requirements_undergraduate
@@ -237,35 +238,15 @@ export const getRequirementContent = async (studentType, program, location) => {
 							value = ${location}
 					)
 				)
-			);
+			)
+		ORDER BY
+			admission_requirements_undergraduate.rank,
+			student_type,
+			program,
+			location;
 	`);
 
-	const content = requirements
-		?.map((requirement) => {
-			let rank = 0;
-
-			if (!requirement.studentType) {
-				rank += 2;
-			} else if (requirement.studentType.includes('[')) {
-				rank += 1;
-			}
-
-			if (!requirement.program) {
-				rank += 4;
-			} else if (requirement.program.includes('[')) {
-				rank += 2;
-			}
-
-			if (!requirement.location) {
-				rank += 6;
-			} else if (requirement.location.includes('[')) {
-				rank += 3;
-			}
-
-			return { ...requirement, rank: rank };
-		})
-		?.sort((a, b) => a.rank - b.rank)
-		?.reduce((acc, value) => acc.concat(value.content), '');
+	const content = requirements?.reduce((acc, value) => acc.concat(value.content), '');
 
 	if (!content) {
 		return '';
