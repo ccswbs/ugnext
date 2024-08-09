@@ -52,7 +52,7 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 								<span>View Other Requirements</span>
 							</Button>
 
-							<div className="flex flex-col gap-3 py-6">
+							<div className="flex flex-col [&_p]:py-2 py-6">
 								<HtmlParser html={content ?? ''} />
 							</div>
 						</>
