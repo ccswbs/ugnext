@@ -26,6 +26,6 @@ TextInput.propTypes = {
 	type: PropTypes.oneOf(['text', 'password']),
 	placeholder: PropTypes.string,
 	onInput: PropTypes.func,
-	label: PropTypes.string,
+	label: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
 	description: PropTypes.string,
 };
