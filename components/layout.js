@@ -106,13 +106,3 @@ Layout.propTypes = {
 		alt: PropTypes.string,
 	}),
 };
-
-Layout.defaultProps = {
-	title: 'University of Guelph',
-	description:
-		'The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life',
-	image: {
-		src: 'https://www.uoguelph.ca/img/ug-social-thumb.jpg',
-		alt: 'University of Guelph logo',
-	},
-};
