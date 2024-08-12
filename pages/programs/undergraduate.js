@@ -5,7 +5,7 @@ import { Heading } from '@/components/heading';
 import { ProgramSearch } from '@/components/programs/search';
 import { toTitleCase } from '@/lib/string-utils';
 import { Card } from '@/components/card';
-import { getUndergraduatePrograms } from '@/data/sqlite/programs';
+import { getUndergraduatePrograms } from '@/data/yaml/programs';
 
 export async function getStaticProps() {
 	return {
@@ -16,7 +16,6 @@ export async function getStaticProps() {
 }
 
 export default function ProgramsUndergraduate({ programs }) {
-	console.log(programs);
 	return (
 		<Layout title="Undergraduate Programs">
 			<Container centered>

@@ -35,3 +35,5 @@ yarn-error.log*
 
 data/sqlite/db.sqlite3
 *storybook.log!/data/sqlite/db.sqlite3
+
+.fleet
