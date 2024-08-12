@@ -1,4 +1,4 @@
-- title: Agriculture
+- name: Agriculture
   acronym: AGRS
   url: https://www.uoguelph.ca/programs/bachelor-of-science-in-agriculture/
   degrees:
@@ -11,7 +11,7 @@
     - agriculture
     - botany
     - bioscience
-- title: Animal Biology
+- name: Animal Biology
   acronym: ABIO
   url: https://www.uoguelph.ca/programs/animal-biology/
   degrees:
@@ -21,7 +21,7 @@
   tags:
     - biology
     - science
-- title: Animal Science
+- name: Animal Science
   acronym: ANSC
   url: https://www.uoguelph.ca/programs/animal-science/
   degrees:
@@ -32,7 +32,7 @@
   tags:
     - biology
     - science
-- title: Anthropology
+- name: Anthropology
   acronym: ANTH
   url: https://www.uoguelph.ca/programs/anthropology/
   degrees:
@@ -51,7 +51,7 @@
     - public
     - affairs
     - socio*
-- title: Applied Geomatics
+- name: Applied Geomatics
   acronym: AG
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/applied-geomatics-ag/
   degrees: []
@@ -60,7 +60,7 @@
   tags:
     - geography
     - technology
-- title: Applied Human Nutrition
+- name: Applied Human Nutrition
   acronym: AHN
   url: https://www.uoguelph.ca/programs/applied-human-nutrition/
   degrees:
@@ -72,7 +72,7 @@
     - diet*
     - nutrition*
     - food
-- title: Art History
+- name: Art History
   acronym: ARTH
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/art-history-arth/
   degrees:
@@ -83,7 +83,7 @@
   tags:
     - arts
     - history
-- title: Arts and Sciences
+- name: Arts and Sciences
   acronym: AS
   url: https://www.uoguelph.ca/programs/bachelor-of-arts-and-sciences/
   degrees:
@@ -93,7 +93,7 @@
   tags:
     - science
     - arts
-- title: Arts Management
+- name: Arts Management
   acronym: AM
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/arts-management-am/
   degrees: []
@@ -102,7 +102,7 @@
   tags:
     - arts
     - business
-- title: Bio-Medical Science
+- name: Bio-Medical Science
   acronym: BIOM
   url: https://www.uoguelph.ca/programs/biomedical-science/
   degrees:
@@ -147,7 +147,7 @@
     - pharma*
     - cogniti*
     - diet*
-- title: Biochemistry
+- name: Biochemistry
   acronym: BIOC
   url: https://www.uoguelph.ca/programs/biochemistry/
   degrees:
@@ -174,7 +174,7 @@
     - clinic*
     - patho*
     - pharma*
-- title: Biological and Pharmaceutical Chemistry
+- name: Biological and Pharmaceutical Chemistry
   acronym: BPCH
   url: https://www.uoguelph.ca/programs/biological-and-pharmaceutical-chemistry/
   degrees:
@@ -188,7 +188,7 @@
     - health
     - medical
     - science
-- title: Biological Engineering
+- name: Biological Engineering
   acronym: BIOE
   url: https://www.uoguelph.ca/programs/biological-engineering/
   degrees:
@@ -201,7 +201,7 @@
     - engineering
     - science
     - chemistry
-- title: Biological Science
+- name: Biological Science
   acronym: BIOS
   url: https://www.uoguelph.ca/programs/biological-science/
   degrees:
@@ -255,7 +255,7 @@
     - pharma*
     - cogniti*
     - diet*
-- title: Biology
+- name: Biology
   acronym: BIOL
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/biology-biol/
   degrees: []
@@ -264,7 +264,7 @@
   tags:
     - biology
     - science
-- title: Biomedical Engineering
+- name: Biomedical Engineering
   acronym: BME
   url: https://www.uoguelph.ca/programs/biomedical-engineering/
   degrees:
@@ -276,7 +276,7 @@
     - biology
     - engineering
     - science
-- title: Biomedical Toxicology
+- name: Biomedical Toxicology
   acronym: BTOX
   url: https://www.uoguelph.ca/programs/biomedical-toxicology/
   degrees:
@@ -291,7 +291,7 @@
     - science
     - biochemistry
     - pharmacology
-- title: Biotechnology
+- name: Biotechnology
   acronym: BIOT
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/biotechnology-biot/
   degrees: []
@@ -301,7 +301,7 @@
     - biology
     - science
     - technology
-- title: Black Canadian Studies
+- name: Black Canadian Studies
   acronym: BLCK
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/black-canadian-studies-blck/
   degrees: []
@@ -311,7 +311,7 @@
     - humanities
     - history
     - culture
-- title: Business
+- name: Business
   acronym: BUS
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-bus/
   degrees: []
@@ -320,7 +320,7 @@
   tags:
     - business
     - finance
-- title: Business Data Analytics
+- name: Business Data Analytics
   acronym: BDA
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-data-analytics-bda/
   degrees: []
@@ -330,7 +330,7 @@
     - business
     - finance
     - statistics
-- title: Business Economics
+- name: Business Economics
   acronym: BECN
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-economics-becn/
   degrees: []
@@ -340,7 +340,7 @@
     - business
     - finance
     - economics
-- title: Chemistry
+- name: Chemistry
   acronym: CHEM
   url: https://www.uoguelph.ca/programs/chemistry/
   degrees:
@@ -354,7 +354,7 @@
     - science
     - chemical physics
     - nanoscience
-- title: Child Studies
+- name: Child Studies
   acronym: CSTU
   url: https://www.uoguelph.ca/programs/child-studies/
   degrees:
@@ -376,7 +376,7 @@
     - health
     - family
     - pedagog*
-- title: Classical Studies
+- name: Classical Studies
   acronym: CLAS
   url: https://www.uoguelph.ca/programs/classical-studies/
   degrees:
@@ -388,7 +388,7 @@
     - humanities
     - history
     - culture
-- title: Computer Engineering
+- name: Computer Engineering
   acronym: CENG
   url: https://www.uoguelph.ca/programs/computer-engineering/
   degrees:
@@ -404,7 +404,7 @@
     - artificial intelligence
     - ai
     - design
-- title: Computer Science
+- name: Computer Science
   acronym: CS
   url: https://www.uoguelph.ca/programs/computer-science/
   degrees:
@@ -426,7 +426,7 @@
     - software design
     - data
     - analytics
-- title: Creative Writing
+- name: Creative Writing
   acronym: CW
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/creative-writing-cw/
   degrees:
@@ -436,7 +436,7 @@
     - minor
   tags:
     - arts
-- title: Criminal Justice and Public Policy
+- name: Criminal Justice and Public Policy
   acronym: CJPP
   url: https://www.uoguelph.ca/programs/criminal-justice-and-public-policy/
   degrees:
@@ -453,7 +453,7 @@
     - power
     - affairs
     - socio*
-- title: Crop Science
+- name: Crop Science
   acronym: CRSC
   url: https://www.uoguelph.ca/programs/crop-science/
   degrees:
@@ -466,7 +466,7 @@
     - botany
     - bioscience
     - science
-- title: Culture and Technology Studies
+- name: Culture and Technology Studies
   acronym: CTS
   url: https://www.uoguelph.ca/programs/culture-and-technology-studies/
   degrees:
@@ -479,7 +479,7 @@
     - humanities
     - technology
     - culture
-- title: Ecology
+- name: Ecology
   acronym: ECOL
   url: https://www.uoguelph.ca/programs/ecology/
   degrees:
@@ -491,7 +491,7 @@
   tags:
     - biology
     - science
-- title: Economics
+- name: Economics
   acronym: ECON
   url: https://www.uoguelph.ca/programs/economics/
   degrees:
@@ -504,7 +504,7 @@
     - business
     - finance
     - economics
-- title: Engineering Systems and Computing
+- name: Engineering Systems and Computing
   acronym: ESC
   url: https://www.uoguelph.ca/programs/engineering-systems-and-computing/
   degrees:
@@ -522,7 +522,7 @@
     - ai
     - web development
     - software design
-- title: English
+- name: English
   acronym: ENGL
   url: https://www.uoguelph.ca/programs/english/
   degrees:
@@ -534,7 +534,7 @@
   tags:
     - humanities
     - language
-- title: Entrepreneurship
+- name: Entrepreneurship
   acronym: ENT
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/entrepreneurship-ent/
   degrees: []
@@ -543,7 +543,7 @@
   tags:
     - business
     - finance
-- title: Environment and Resource Management
+- name: Environment and Resource Management
   acronym: ERM
   url: https://www.uoguelph.ca/programs/environment-and-resource-management/
   degrees:
@@ -562,7 +562,7 @@
     - water
     - sustain*
     - science
-- title: Environmental Biology
+- name: Environmental Biology
   acronym: ENVB
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-biology-envb/
   degrees:
@@ -572,7 +572,7 @@
   tags:
     - biology
     - science
-- title: Environmental Economics and Policy
+- name: Environmental Economics and Policy
   acronym: EEP
   url: https://www.uoguelph.ca/programs/environmental-economics-and-policy/
   degrees:
@@ -585,7 +585,7 @@
     - finance
     - economics
     - science
-- title: Environmental Engineering
+- name: Environmental Engineering
   acronym: ENVE
   url: https://www.uoguelph.ca/programs/environmental-engineering/
   degrees:
@@ -597,7 +597,7 @@
   tags:
     - engineering
     - science
-- title: Environmental Geomatics
+- name: Environmental Geomatics
   acronym: EG
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-geomatics-eg/
   degrees:
@@ -609,7 +609,7 @@
     - geography
     - technology
     - science
-- title: Environmental Governance
+- name: Environmental Governance
   acronym: EGOV
   url: https://www.uoguelph.ca/programs/environmental-governance/
   degrees:
@@ -628,7 +628,7 @@
     - water
     - sustain*
     - poli*
-- title: Environmental Management
+- name: Environmental Management
   acronym: EM
   url: https://www.uoguelph.ca/programs/environmental-management/
   degrees:
@@ -638,7 +638,7 @@
     - co-op
   tags:
     - business
-- title: Environmental Sciences
+- name: Environmental Sciences
   acronym: ENVS
   url: https://www.uoguelph.ca/programs/environmental-sciences/
   degrees:
@@ -649,7 +649,7 @@
   tags:
     - biology
     - science
-- title: Equine Management
+- name: Equine Management
   acronym: EQM
   url: https://www.uoguelph.ca/programs/equine-management/
   degrees:
@@ -660,7 +660,7 @@
   tags:
     - biology
     - science
-- title: European Culture and Civilization
+- name: European Culture and Civilization
   acronym: ECC
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/european-culture-civilization-ecc/
   degrees: []
@@ -670,7 +670,7 @@
     - humanities
     - history
     - culture
-- title: European Studies
+- name: European Studies
   acronym: EURS
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/european-studies-eurs/
   degrees:
@@ -681,7 +681,7 @@
     - humanities
     - history
     - culture
-- title: Family and Child Studies
+- name: Family and Child Studies
   acronym: FCS
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/family-child-studies-fcs/
   degrees: []
@@ -689,7 +689,7 @@
     - minor
   tags:
     - humanities
-- title: Family Studies and Human Development
+- name: Family Studies and Human Development
   acronym: FSHD
   url: https://www.uoguelph.ca/programs/family-studies-and-human-development/
   degrees:
@@ -710,7 +710,7 @@
     - aging
     - sex*
     - health
-- title: Food and Agricultural Business
+- name: Food and Agricultural Business
   acronym: FAB
   url: https://www.uoguelph.ca/programs/food-and-agricultural-business/
   degrees:
@@ -722,7 +722,7 @@
     - agriculture
     - food
     - business
-- title: Food Engineering
+- name: Food Engineering
   acronym: FENG
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/food-engineering-feng/
   degrees: []
@@ -731,7 +731,7 @@
   tags:
     - food
     - engineering
-- title: Food Industry Management
+- name: Food Industry Management
   acronym: FIM
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/food-industry-management-fim/
   degrees:
@@ -743,7 +743,7 @@
     - food
     - business
     - management
-- title: Food Science
+- name: Food Science
   acronym: FOOD
   url: https://www.uoguelph.ca/programs/food-science/
   degrees:
@@ -754,7 +754,7 @@
   tags:
     - food
     - science
-- title: Food, Agricultural and Resource Economics
+- name: Food, Agricultural and Resource Economics
   acronym: FARE
   url: https://www.uoguelph.ca/programs/food-agricultural-resource-economics/
   degrees:
@@ -767,7 +767,7 @@
     - food
     - business
     - economics
-- title: French Studies
+- name: French Studies
   acronym: FREN
   url: https://www.uoguelph.ca/programs/french-studies/
   degrees:
@@ -779,7 +779,7 @@
   tags:
     - humanities
     - language
-- title: Geography
+- name: Geography
   acronym: GEOG
   url: https://www.uoguelph.ca/programs/geography/
   degrees:
@@ -800,7 +800,7 @@
     - water
     - sustain*
     - science
-- title: German
+- name: German
   acronym: GERM
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/german-germ/
   degrees: []
@@ -809,7 +809,7 @@
   tags:
     - humanities
     - language
-- title: Government, Economics and Management
+- name: Government, Economics and Management
   acronym: GEM
   url: https://www.uoguelph.ca/programs/government-economics-and-management/
   degrees:
@@ -823,7 +823,7 @@
     - politics
     - management
     - law
-- title: History
+- name: History
   acronym: HIST
   url: https://www.uoguelph.ca/programs/history/
   degrees:
@@ -836,7 +836,7 @@
   tags:
     - humanities
     - history
-- title: Horticulture
+- name: Horticulture
   acronym: HRT
   url: https://www.uoguelph.ca/programs/horticulture/
   degrees:
@@ -849,7 +849,7 @@
     - botany
     - bioscience
     - science
-- title: Hospitality and Tourism Management
+- name: Hospitality and Tourism Management
   acronym: HTM
   url: https://www.uoguelph.ca/programs/hospitality-and-tourism-management/
   degrees:
@@ -861,7 +861,7 @@
     - business
     - tourism
     - management
-- title: Human Kinetics
+- name: Human Kinetics
   acronym: HK
   url: https://www.uoguelph.ca/programs/human-kinetics/
   degrees:
@@ -898,7 +898,7 @@
     - infect*
     - dna
     - diet*
-- title: Human Resources
+- name: Human Resources
   acronym: HR
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/human-resources-hr/
   degrees: []
@@ -907,7 +907,7 @@
   tags:
     - business
     - management
-- title: Indigenous Environmental Science and Practice
+- name: Indigenous Environmental Science and Practice
   acronym: IESP
   url: https://www.uoguelph.ca/programs/bachelor-of-indigenous-environmental-science-and-practice/
   degrees:
@@ -918,7 +918,7 @@
     - humanities
     - culture
     - science
-- title: International Business
+- name: International Business
   acronym: IB
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/international-business-ib/
   degrees: []
@@ -926,7 +926,7 @@
     - minor
   tags:
     - business
-- title: International Development Studies
+- name: International Development Studies
   acronym: IDS
   url: https://www.uoguelph.ca/programs/international-development-studies/
   degrees:
@@ -947,7 +947,7 @@
     - water
     - sustain*
     - govern*
-- title: Italian
+- name: Italian
   acronym: ITAL
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/italian-ital/
   degrees: []
@@ -956,7 +956,7 @@
   tags:
     - humanities
     - language
-- title: Justice and Legal Studies
+- name: Justice and Legal Studies
   acronym: JLS
   url: https://www.uoguelph.ca/programs/justice-and-legal-studies/
   degrees:
@@ -973,7 +973,7 @@
     - public
     - affairs
     - socio*
-- title: Landscape Architecture
+- name: Landscape Architecture
   acronym: LA
   url: https://www.uoguelph.ca/programs/bachelor-of-landscape-architecture/
   degrees:
@@ -983,7 +983,7 @@
   tags:
     - architecture
     - design
-- title: Linguistics
+- name: Linguistics
   acronym: LING
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/linguistics-ling/
   degrees: []
@@ -992,7 +992,7 @@
   tags:
     - humanities
     - language
-- title: Management
+- name: Management
   acronym: MGMT
   url: https://www.uoguelph.ca/programs/management/
   degrees:
@@ -1003,7 +1003,7 @@
   tags:
     - business
     - management
-- title: Management Economics and Finance
+- name: Management Economics and Finance
   acronym: MEF
   url: https://www.uoguelph.ca/programs/management-economics-and-finance/
   degrees:
@@ -1015,7 +1015,7 @@
     - business
     - finance
     - economics
-- title: Marine and Freshwater Biology
+- name: Marine and Freshwater Biology
   acronym: MFB
   url: https://www.uoguelph.ca/programs/marine-and-freshwater-biology/
   degrees:
@@ -1044,7 +1044,7 @@
     - sea*
     - water*
     - evolution*
-- title: Marketing
+- name: Marketing
   acronym: MKTG
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/marketing-mktg/
   degrees: []
@@ -1053,7 +1053,7 @@
   tags:
     - business
     - marketing
-- title: Marketing Management
+- name: Marketing Management
   acronym: MKMN
   url: https://www.uoguelph.ca/programs/marketing-management/
   degrees:
@@ -1064,7 +1064,7 @@
   tags:
     - business
     - marketing
-- title: Mathematical Economics
+- name: Mathematical Economics
   acronym: MAEC
   url: https://www.uoguelph.ca/programs/mathematical-economics/
   degrees:
@@ -1076,7 +1076,7 @@
     - business
     - economics
     - mathematics
-- title: Bachelor of Mathematics
+- name: Bachelor of Mathematics
   acronym: BMATH
   url: https://www.uoguelph.ca/programs/bachelor-of-mathematics/
   degrees:
@@ -1090,7 +1090,7 @@
     - ai
     - data
     - analytics
-- title: Mathematics
+- name: Mathematics
   acronym: MATH
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/mathematics-math/
   degrees:
@@ -1100,7 +1100,7 @@
     - area-of-concentration
   tags:
     - mathematics
-- title: Mechanical Engineering
+- name: Mechanical Engineering
   acronym: MECH
   url: https://www.uoguelph.ca/programs/mechanical-engineering/
   degrees:
@@ -1111,7 +1111,7 @@
   tags:
     - robotics
     - design
-- title: Media and Cinema Studies
+- name: Media and Cinema Studies
   acronym: MCST
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/media-cinema-studies-mcst/
   degrees: []
@@ -1121,7 +1121,7 @@
     - humanities
     - arts
     - culture
-- title: Microbiology
+- name: Microbiology
   acronym: MICR
   url: https://www.uoguelph.ca/programs/microbiology/
   degrees:
@@ -1154,7 +1154,7 @@
     - evolution*
     - infect*
     - dna
-- title: Molecular Biology and Genetics
+- name: Molecular Biology and Genetics
   acronym: MBG
   url: https://www.uoguelph.ca/programs/molecular-biology-and-genetics/
   degrees:
@@ -1189,7 +1189,7 @@
     - infect*
     - dna
     - pharma*
-- title: Museum Studies
+- name: Museum Studies
   acronym: MS
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/museum-studies-ms/
   degrees: []
@@ -1200,7 +1200,7 @@
     - arts
     - culture
     - history
-- title: Music
+- name: Music
   acronym: MUSC
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/music-musc/
   degrees:
@@ -1213,7 +1213,7 @@
     - humanities
     - arts
     - culture
-- title: Neuroscience
+- name: Neuroscience
   acronym: NEUR
   url: https://www.uoguelph.ca/programs/neuroscience/
   degrees:
@@ -1229,7 +1229,7 @@
     - cogni*
     - human
     - behav*
-- title: Nutritional and Nutraceutical Sciences
+- name: Nutritional and Nutraceutical Sciences
   acronym: NANS
   url: https://www.uoguelph.ca/programs/nutritional-and-nutraceutical-sciences/
   degrees:
@@ -1261,7 +1261,7 @@
     - nutraceut*
     - food
     - supplement*
-- title: One Health
+- name: One Health
   acronym: ONEH
   url: https://www.uoguelph.ca/programs/bachelor-of-one-health/
   degrees:
@@ -1273,7 +1273,7 @@
     - health
     - science
     - biology
-- title: Philosophy
+- name: Philosophy
   acronym: PHIL
   url: https://www.uoguelph.ca/programs/philosophy/
   degrees:
@@ -1284,7 +1284,7 @@
     - area-of-concentration
   tags:
     - humanities
-- title: Physical Science
+- name: Physical Science
   acronym: PSCI
   url: https://www.uoguelph.ca/programs/physical-science/
   degrees:
@@ -1300,7 +1300,7 @@
     - quantum
     - quantum mechanics
     - medical physics
-- title: Physics
+- name: Physics
   acronym: PHYS
   url: https://www.uoguelph.ca/programs/physics/
   degrees:
@@ -1321,7 +1321,7 @@
     - chemical physics
     - nanoscience
     - bio medical physics
-- title: Plant Science
+- name: Plant Science
   acronym: PLSC
   url: https://www.uoguelph.ca/programs/plant-science/
   degrees:
@@ -1334,7 +1334,7 @@
     - agriculture
     - biology
     - science
-- title: Political Science
+- name: Political Science
   acronym: POLS
   url: https://www.uoguelph.ca/programs/political-science/
   degrees:
@@ -1353,7 +1353,7 @@
     - justice
     - affairs
     - socio*
-- title: Project Management
+- name: Project Management
   acronym: PM
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/project-management-pm/
   degrees: []
@@ -1362,7 +1362,7 @@
   tags:
     - business
     - management
-- title: Psychology
+- name: Psychology
   acronym: PSYC
   url: https://www.uoguelph.ca/programs/psychology/
   degrees:
@@ -1380,7 +1380,7 @@
     - human
     - behav*
     - cultur*
-- title: Real Estate
+- name: Real Estate
   acronym: RE
   url: https://www.uoguelph.ca/programs/real-estate/
   degrees:
@@ -1393,7 +1393,7 @@
     - business
     - finance
     - economics
-- title: Sexualities, Genders and Social Change
+- name: Sexualities, Genders and Social Change
   acronym: SXGN
   url: https://www.uoguelph.ca/programs/sexualities-genders-and-social-change/
   degrees:
@@ -1404,7 +1404,7 @@
   tags:
     - humanities
     - culture
-- title: Sociology
+- name: Sociology
   acronym: SOC
   url: https://www.uoguelph.ca/programs/sociology/
   degrees:
@@ -1424,7 +1424,7 @@
     - socio*
     - justice
     - public
-- title: Software Engineering
+- name: Software Engineering
   acronym: SENG
   url: https://www.uoguelph.ca/programs/software-engineering/
   degrees:
@@ -1441,7 +1441,7 @@
     - artificial intelligence
     - ai
     - software design
-- title: Spanish and Hispanic Studies
+- name: Spanish and Hispanic Studies
   acronym: SPAH
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/spanish-hispanic-studies-spah/
   degrees:
@@ -1454,7 +1454,7 @@
     - humanities
     - language
     - culture
-- title: Sport and Event Management
+- name: Sport and Event Management
   acronym: SPMT
   url: https://www.uoguelph.ca/programs/sport-and-event-management/
   degrees:
@@ -1467,7 +1467,7 @@
     - business
     - management
     - sports
-- title: Statistics
+- name: Statistics
   acronym: STAT
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/statistics-stat/
   degrees:
@@ -1478,7 +1478,7 @@
   tags:
     - mathematics
     - statistics
-- title: Studio Art
+- name: Studio Art
   acronym: SART
   url: https://www.uoguelph.ca/programs/studio-art/
   degrees:
@@ -1490,7 +1490,7 @@
     - humanities
     - arts
     - culture
-- title: Sustainable Business
+- name: Sustainable Business
   acronym: SB
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/sustainable-business-sb/
   degrees: []
@@ -1498,7 +1498,7 @@
     - minor
   tags:
     - business
-- title: Theatre Studies
+- name: Theatre Studies
   acronym: THST
   url: https://www.uoguelph.ca/programs/theatre-studies/
   degrees:
@@ -1511,7 +1511,7 @@
     - humanities
     - arts
     - culture
-- title: Veterinary Medicine
+- name: Veterinary Medicine
   acronym: VM
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/veterinary-medicine-vm/
   degrees:
@@ -1522,7 +1522,7 @@
     - health
     - science
     - biology
-- title: Water Resources Engineering
+- name: Water Resources Engineering
   acronym: WRE
   url: https://www.uoguelph.ca/programs/water-resources-engineering/
   degrees:
@@ -1532,7 +1532,7 @@
     - co-op
   tags:
     - engineering
-- title: Wildlife Biology and Conservation
+- name: Wildlife Biology and Conservation
   acronym: WBC
   url: https://www.uoguelph.ca/programs/wildlife-biology-and-conservation/
   degrees:
@@ -1561,7 +1561,7 @@
     - sea*
     - water*
     - evolution*
-- title: Zoology
+- name: Zoology
   acronym: ZOO
   url: https://www.uoguelph.ca/programs/zoology/
   degrees:
