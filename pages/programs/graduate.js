@@ -30,7 +30,7 @@ export default function ProgramsGraduate({ programs }) {
 					render={(program) => (
 						<Card
 							href={program.url}
-							key={program.id}
+							key={program.name + program.url}
 							title={
 								<div className="flex flex-col justify-center text-lg">
 									<span className="font-bold">{program.name}</span>

@@ -196,6 +196,7 @@ const enumerateProgramTypes = (programs) => {
 
 const ProgramCard = ({ program }) => (
 	<Card
+		key={program.name + program.url}
 		href={program.url}
 		title={<span className="flex items-center text-lg font-bold">{program.name}</span>}
 		footer={

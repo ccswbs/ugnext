@@ -26,7 +26,7 @@ export default function ProgramsUndergraduate({ programs }) {
 					render={(program) => (
 						<Card
 							href={program.url}
-							key={program.id}
+							key={program.name + program.url}
 							title={
 								<div className="flex flex-col justify-center">
 									<span className="text-lg font-bold">{program.name}</span>
