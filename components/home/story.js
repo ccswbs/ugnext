@@ -11,12 +11,14 @@ export const HomeStory = () => (
 				src: foreground.src,
 				width: foreground.width,
 				height: foreground.height,
+				blurred: foreground.blurDataURL,
 				alt: 'Kiana Gibson and David Sahai, co-founders of MealCare Guelph',
 			}}
 			backgroundImage={{
 				src: background.src,
 				width: background.width,
 				height: background.height,
+				blurred: background.blurDataURL,
 				alt: 'tudent volunteers',
 				className: 'h-full w-full object-cover lg:[object-position:left_40px]',
 			}}
