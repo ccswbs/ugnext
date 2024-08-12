@@ -4,7 +4,7 @@ import { Navigation } from '@/components/navigation';
 export const ProgramNavigation = () => (
 	<div className="my-5">
 		<Navigation
-			aria-label=""
+			label="Level of Study"
 			links={[
 				{ href: '/programs/undergraduate', label: 'Undergraduate Programs' },
 				{ href: '/programs/graduate', label: 'Graduate Programs' },
