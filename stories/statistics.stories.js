@@ -63,6 +63,30 @@ export const SolidColors = {
 	},
 };
 
+export const SolidColorsWithNoGap = {
+	args: {
+		data: [
+			{
+				represents: 'Statistics 1 Represents',
+				value: 'Statistics 1 Value',
+			},
+			{
+				represents: 'Statistics 1 Represents',
+				value: 'Statistics 2 Value',
+			},
+			{
+				represents: 'Statistics 1 Represents',
+				value: 'Statistics 3 Value',
+			},
+			{
+				represents: 'Statistics 1 Represents',
+				value: 'Statistics 4 Value',
+			},
+		],
+		variant: 'solid-colors-no-gap',
+	},
+};
+
 export const LightBlue = {
 	args: {
 		data: [
