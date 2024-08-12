@@ -13,7 +13,7 @@ export const Blockquote = ({ className, children, color = 'yellow' }) => {
 	return (
 		<blockquote
 			className={twMerge(
-				'block w-full text-center text-3xl font-thin italic sm:text-4xl lg:text-3xl xl:text-4xl',
+				'block w-full text-center text-3xl font-thin italic sm:text-4xl lg:text-3xl xl:text-3xl',
 				className,
 			)}
 		>
