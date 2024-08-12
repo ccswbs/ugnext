@@ -1,21 +1,22 @@
-import Image from 'next/image';
 import foreground from '@/img/meal-care-students.png';
 import background from '@/img/change-happens-banner.jpg';
 import { Story } from '@/components/story';
 import { Button } from '@/components/button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuoteLeft, faQuoteRight } from '@awesome.me/kit-7993323d0c/icons/sharp/solid';
 import { Blockquote } from '@/components/blockquote';
 
 export const HomeStory = () => (
 	<>
 		<Story
 			foregroundImage={{
-				src: foreground,
+				src: foreground.src,
+				width: foreground.width,
+				height: foreground.height,
 				alt: 'Kiana Gibson and David Sahai, co-founders of MealCare Guelph',
 			}}
 			backgroundImage={{
-				src: background,
+				src: background.src,
+				width: background.width,
+				height: background.height,
 				alt: 'tudent volunteers',
 				className: 'h-full w-full object-cover lg:[object-position:left_40px]',
 			}}
