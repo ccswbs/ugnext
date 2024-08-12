@@ -37,9 +37,7 @@ export const Select = ({
 	const OptionTag = autocomplete ? ComboboxOption : ListboxOption;
 
 	const [selected, setSelected] = useState(
-		multiple
-			? (options.filter((option) => option?.selected) ?? [])
-			: (options.find((option) => option?.selected) ?? null),
+		multiple ? options.filter((option) => option?.selected) ?? [] : options.find((option) => option?.selected) ?? null,
 	);
 
 	// Create a map of the indices of the options by their value for faster lookup when sorting the selected options
@@ -128,7 +126,7 @@ export const Select = ({
 						{options.filter(filterer).map((option, index) => (
 							<OptionTag
 								className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
-								key={typeof option?.value === 'string' ? option?.value : (option?.key ?? index)}
+								key={typeof option?.value === 'string' ? option?.value : option?.key ?? index}
 								value={option}
 								disabled={option?.disabled}
 							>
