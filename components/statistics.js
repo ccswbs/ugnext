@@ -103,8 +103,8 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colors' }) => {
 Statistics.propTypes = {
 	data: PropTypes.arrayOf(
 		PropTypes.shape({
-			represents: PropTypes.string.isRequired,
-			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+			represents: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+			value: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 			image: PropTypes.shape({
 				width: PropTypes.number,
 				height: PropTypes.number,
@@ -115,8 +115,4 @@ Statistics.propTypes = {
 		}),
 	).isRequired,
 	variant: PropTypes.oneOf(['gradient-of-solid-colors', 'solid-colors', 'light-blue', 'left-border']),
-};
-
-Statistics.defaultProps = {
-	variant: 'gradient-of-solid-colors',
 };
