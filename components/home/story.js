@@ -26,7 +26,7 @@ export const HomeStory = () => (
 			content={
 				<Blockquote className="text-white text-sm">
 					Pieces of experiential learning allow an opportunity for students to engage with their community, beyond the
-					academic sphere, and for me that became pivotal….in shaping my life. ~ Asha Edwin, BA '21
+					academic sphere, and for me that became pivotal...in shaping my life. ~ Asha Edwin, BA &apos;21
 				</Blockquote>
 			}
 			footer={
