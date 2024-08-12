@@ -3,6 +3,7 @@ import { Link } from '@/components/link';
 
 export const Rankings = () => (
 	<Statistics
+		variant="solid-colors-no-gap"
 		data={[
 			{
 				represents: (

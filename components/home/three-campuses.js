@@ -2,24 +2,41 @@ import { Card } from '@/components/card';
 import guelph from '@/img/guelph.png';
 import ridgetown from '@/img/ridgetown.png';
 import guelphHumber from '@/img/guelph-humber.png';
-import Image from 'next/image';
 
 export const ThreeCampuses = () => {
 	const campuses = [
 		{
 			title: 'Guelph',
 			url: 'https://admission.uoguelph.ca/campus-tour-highlights',
-			image: { src: guelph, alt: 'An aerial view of Johnston Hall and the University of Guelph campus' },
+			image: {
+				src: guelph.src,
+				width: guelph.width,
+				height: guelph.height,
+				blurred: guelph.blurDataURL,
+				alt: 'An aerial view of Johnston Hall and the University of Guelph campus',
+			},
 		},
 		{
 			title: 'Ridgetown',
 			url: 'https://www.ridgetownc.com/',
-			image: { src: ridgetown, alt: 'An aerial view of the Ridgetown Campus' },
+			image: {
+				src: ridgetown.src,
+				width: ridgetown.width,
+				height: ridgetown.height,
+				blurred: ridgetown.blurDataURL,
+				alt: 'An aerial view of the Ridgetown Campus',
+			},
 		},
 		{
 			title: 'Guelph-Humber',
 			url: 'https://www.guelphhumber.ca/',
-			image: { src: guelphHumber, alt: 'The main building of the University of Guelph-Humber campus' },
+			image: {
+				src: guelphHumber.src,
+				width: guelphHumber.width,
+				height: guelphHumber.height,
+				blurred: guelphHumber.blurDataURL,
+				alt: 'The main building of the University of Guelph-Humber campus',
+			},
 		},
 	];
 

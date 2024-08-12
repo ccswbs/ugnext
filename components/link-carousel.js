@@ -3,7 +3,7 @@ import { UnstyledLink } from '@/components/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
-import { twJoin, twMerge } from 'tailwind-merge';
+import { twMerge } from 'tailwind-merge';
 import PropTypes from 'prop-types';
 
 export const LinkCarousel = ({ links }) => {

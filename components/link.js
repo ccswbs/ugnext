@@ -43,6 +43,6 @@ UnstyledLink.propTypes = {
 
 Link.propTypes = {
 	...UnstyledLink.propTypes,
-	color: PropTypes.oneOf(['blue', 'red', 'yellow', 'green', 'grey']),
+	color: PropTypes.oneOf(['blue', 'red', 'yellow', 'green', 'grey', 'none']),
 	className: PropTypes.string,
 };

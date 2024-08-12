@@ -1,7 +1,6 @@
 import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
-import { graphql } from '@/lib/drupal';
 import { SpotlightCards } from '@/components/home/spotlight-cards';
 import { TagLine } from '@/components/home/tag-line';
 import { Rankings } from '@/components/home/rankings';
@@ -33,28 +32,28 @@ export default function Home({ cards, hero }) {
 				<TagLine />
 
 				<div className="pt-1">
-					<Heading level={2} className="font-condensed">
+					<Heading level={1} as={'h2'} className="font-condensed text-black">
 						Our Latest News and Events
 					</Heading>
 					<SpotlightCards cards={cards} />
 				</div>
 
 				<div className="pt-1">
-					<Heading level={2} className="font-condensed">
+					<Heading level={1} as={'h2'} className="font-condensed text-black">
 						Study Here
 					</Heading>
 					<StudyHere />
 				</div>
 
 				<div className="pt-1">
-					<Heading level={2} className="font-condensed">
+					<Heading level={1} as={'h2'} className="font-condensed text-black">
 						How We Rank Among the World
 					</Heading>
 					<Rankings />
 				</div>
 
 				<div className="pt-1">
-					<Heading level={2} className="font-condensed">
+					<Heading level={1} as={'h2'} className="font-condensed text-black">
 						Our Three Campuses
 					</Heading>
 					<ThreeCampuses />
