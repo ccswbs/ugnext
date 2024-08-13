@@ -1,5 +1,6 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import { useContext, createContext } from 'react';
+import PropTypes from 'prop-types';
 
 const ListContext = createContext(null);
 
@@ -24,20 +25,32 @@ export const List = ({ variant = 'unordered', children, className, ...rest }) =>
 	);
 };
 
-export const ListItem = ({ children }) => {
+export const ListItem = ({ className, children }) => {
 	const { variant } = useContext(ListContext);
 
 	return (
 		<li
-			className={twJoin(
-				'h-fit w-full has-[ol]:before:content-none has-[ul]:before:content-none',
+			className={twMerge(
+				'relative h-fit w-full pl-8 before:absolute before:shrink-0 before:items-center before:justify-center has-[ol]:before:content-none has-[ul]:before:content-none',
 				variant !== 'ordered' &&
-					'relative pl-8 before:absolute before:left-[.5rem] before:top-[0.35rem] before:block before:h-[1.8rem] before:w-[1.1rem] before:shrink-0 before:items-center before:justify-center before:text-yellow before:content-[url("/icons/chevron-right.svg")]',
+					'before:left-[.5rem] before:top-[0.35rem] before:block before:h-[1.8rem] before:w-[1.1rem] before:text-yellow before:content-[url("/icons/chevron-right.svg")]',
 				variant === 'ordered' &&
-					'relative pl-8 before:absolute before:left-0 before:inline-flex before:h-6 before:w-6 before:shrink-0 before:items-center before:justify-center before:bg-yellow before:font-black before:text-black before:content-[counter(list-number)] before:[counter-increment:list-number]',
+					'before:left-0 before:inline-flex before:h-6 before:w-6 before:bg-yellow before:font-black before:text-black before:content-[counter(list-number)] before:[counter-increment:list-number]',
+				className,
 			)}
 		>
 			{children}
 		</li>
 	);
+};
+
+List.propTypes = {
+	variant: PropTypes.oneOf(['unordered', 'ordered']),
+	children: PropTypes.node,
+	className: PropTypes.string,
+};
+
+ListItem.propTypes = {
+	className: PropTypes.string,
+	children: PropTypes.node,
 };

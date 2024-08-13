@@ -1,6 +1,8 @@
 import { twJoin, twMerge } from 'tailwind-merge';
 import { UnstyledLink } from '@/components/link';
 import React from 'react';
+import PropTypes from 'prop-types';
+import Image from 'next/image';
 
 export const Card = ({ href, image, title, footer, className, centered, children }) => {
 	const Tag = href ? UnstyledLink : 'div';
@@ -24,7 +26,16 @@ export const Card = ({ href, image, title, footer, className, centered, children
 								'transition-transform duration-200 ease-in-out group-hover:scale-110 group-focus-visible:scale-105',
 						)}
 					>
-						{image}
+						<Image
+							src={image.src}
+							width={image.width}
+							height={image.height}
+							alt={image.alt}
+							placeholder={image?.blurred ? 'blur' : 'empty'}
+							blurDataURL={image?.blurred}
+							sizes={image?.sizes}
+							className={twMerge('object-cover', image?.className)}
+						/>
 					</div>
 				</div>
 			)}
@@ -58,4 +69,22 @@ export const Card = ({ href, image, title, footer, className, centered, children
 			)}
 		</Tag>
 	);
+};
+
+Card.propTypes = {
+	href: PropTypes.string,
+	image: PropTypes.shape({
+		src: PropTypes.string.isRequired,
+		height: PropTypes.number,
+		width: PropTypes.number,
+		alt: PropTypes.string.isRequired,
+		blurred: PropTypes.string,
+		className: PropTypes.string,
+		sizes: PropTypes.string,
+	}),
+	title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+	footer: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	className: PropTypes.string,
+	centered: PropTypes.bool,
+	children: PropTypes.node,
 };

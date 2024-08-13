@@ -21,3 +21,7 @@
 		@apply flex-1;
 	}
 }
+
+svg.svg-inline--fa {
+	height: 1em;
+}
