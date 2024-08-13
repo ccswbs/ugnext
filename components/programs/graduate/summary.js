@@ -12,7 +12,7 @@ export const GraduateProgramSummary = ({ data }) => {
   return (
     <>
       {/* <Heading level={2}>Program Summary</Heading> */}
-      <div id="program-summary" className="mx-auto mt-4 bg-gray-900 p-8 md:grid md:grid-cols-3">
+      <div id="program-summary" className="mx-auto mt-4 bg-grey-950 p-8 md:grid md:grid-cols-3">
         <dl className="!leading-loose">
           <dt className="font-bold text-yellow-400">Program type</dt>
           <dd className="text-white">{data.program_type}</dd>
