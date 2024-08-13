@@ -8,7 +8,10 @@ export const StudyHere = () => {
 	const links = [
 		{
 			image: {
-				src: undergraduate,
+				src: undergraduate.src,
+				width: undergraduate.width,
+				height: undergraduate.height,
+				blurred: undergraduate.blurDataURL,
 				alt: 'Leah Weller and another student in lab coats looking at a computer screen.',
 			},
 			title: 'Undergraduate Programs',
@@ -17,7 +20,10 @@ export const StudyHere = () => {
 		},
 		{
 			image: {
-				src: graduate,
+				src: graduate.src,
+				width: graduate.width,
+				height: graduate.height,
+				blurred: graduate.blurDataURL,
 				alt: 'Caroline Pottruff working in a forest with a hard hat on',
 			},
 			title: 'Graduate Programs',
@@ -26,7 +32,10 @@ export const StudyHere = () => {
 		},
 		{
 			image: {
-				src: international,
+				src: international.src,
+				width: international.width,
+				height: international.height,
+				blurred: international.blurDataURL,
 				alt: 'Ryan Ahlers adjusting a spotlight in a theatre',
 			},
 			title: 'International',
@@ -35,7 +44,10 @@ export const StudyHere = () => {
 		},
 		{
 			image: {
-				src: lifelong,
+				src: lifelong.src,
+				width: lifelong.width,
+				height: lifelong.height,
+				blurred: lifelong.blurDataURL,
 				alt: 'Kathryn Knowles & Jenna Schamowski working with bee hives',
 			},
 			title: 'Lifelong Learning',

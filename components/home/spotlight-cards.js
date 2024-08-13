@@ -1,6 +1,4 @@
-import { Heading } from '@/components/heading';
 import { Card } from '@/components/card';
-import Image from 'next/image';
 import { twJoin } from 'tailwind-merge';
 
 export const SpotlightCards = ({ cards }) => (

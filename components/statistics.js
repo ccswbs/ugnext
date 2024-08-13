@@ -10,22 +10,26 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colors' }) => {
 
 	const colors = [
 		twJoin(
-			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-black text-white',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors' || variant === 'solid-colors-no-gap') &&
+				'bg-black text-white',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-black',
 		),
 		twJoin(
-			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-red text-white',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors' || variant === 'solid-colors-no-gap') &&
+				'bg-red text-white',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-red',
 		),
 		twJoin(
-			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-yellow text-black',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors' || variant === 'solid-colors-no-gap') &&
+				'bg-yellow text-black',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-yellow',
 		),
 		twJoin(
-			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors') && 'bg-light-blue text-black',
+			(variant === 'gradient-of-solid-colors' || variant === 'solid-colors' || variant === 'solid-colors-no-gap') &&
+				'bg-light-blue text-black',
 			(variant === 'light-blue' || variant === 'left-border') && 'bg-light-blue-50 text-black',
 			variant === 'left-border' && 'border-l-[1rem] border-light-blue',
 		),
@@ -61,7 +65,7 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colors' }) => {
 				divisibleByFour && 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
 				divisibleByThree && !divisibleByFour && 'grid grid-cols-1 lg:grid-cols-3',
 				divisibleByTwo && !divisibleByFour && 'grid grid-cols-1 sm:grid-cols-2',
-				variant !== 'gradient-of-solid-colors' && 'gap-4',
+				variant !== 'gradient-of-solid-colors' && variant !== 'solid-colors-no-gap' && 'gap-4',
 			)}
 			style={variant === 'gradient-of-solid-colors' ? { '--statistic-bg-width': width + 'px' } : undefined}
 			ref={variant === 'gradient-of-solid-colors' ? ref : undefined}
@@ -103,8 +107,8 @@ export const Statistics = ({ data, variant = 'gradient-of-solid-colors' }) => {
 Statistics.propTypes = {
 	data: PropTypes.arrayOf(
 		PropTypes.shape({
-			represents: PropTypes.string.isRequired,
-			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+			represents: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+			value: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 			image: PropTypes.shape({
 				width: PropTypes.number,
 				height: PropTypes.number,
@@ -114,9 +118,11 @@ Statistics.propTypes = {
 			}),
 		}),
 	).isRequired,
-	variant: PropTypes.oneOf(['gradient-of-solid-colors', 'solid-colors', 'light-blue', 'left-border']),
-};
-
-Statistics.defaultProps = {
-	variant: 'gradient-of-solid-colors',
+	variant: PropTypes.oneOf([
+		'gradient-of-solid-colors',
+		'solid-colors-no-gap',
+		'solid-colors',
+		'light-blue',
+		'left-border',
+	]),
 };
