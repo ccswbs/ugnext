@@ -1,4 +1,5 @@
-- name: Dairy Herdsperson Apprenticeship
+- id: dairy-herdsperson-apprenticeship
+  name: Dairy Herdsperson Apprenticeship
   url: https://www.ridgetownc.com/future/adh/
   types:
     - apprenticeship
@@ -6,7 +7,8 @@
     - agriculture
     - botany
     - animal
-- name: Ice Cream Technology
+- id: ice-cream-technology
+  name: Ice Cream Technology
   url: https://www.uoguelph.ca/foodscience/ice-cream-technology-short-course
   types:
     - short-course
@@ -14,7 +16,8 @@
     - food
     - business
     - management
-- name: Cheese Making Technology
+- id: cheese-making-technology
+  name: Cheese Making Technology
   url: https://www.uoguelph.ca/foodscience/cheese-making-courses
   types:
     - short-course
@@ -22,7 +25,8 @@
     - food
     - business
     - management
-- name: Beer Brewing
+- id: beer-brewing
+  name: Beer Brewing
   url: https://www.uoguelph.ca/foodscience/brewing
   types:
     - short-course
@@ -30,7 +34,8 @@
     - food
     - business
     - management
-- name: Chocolate Science
+- id: chocolate-science
+  name: Chocolate Science
   url: https://www.uoguelph.ca/foodscience/chocolate
   types:
     - short-course
@@ -38,7 +43,8 @@
     - food
     - business
     - management
-- name: Canadian Feed Industry Education Program
+- id: canadian-feed-industry-education-program
+  name: Canadian Feed Industry Education Program
   url: https://courses.opened.uoguelph.ca/contentManagement.do?method=load&code=CM000063
   types:
     - short-course
@@ -46,202 +52,239 @@
     - livestock
     - animal
     - agriculture
-- name: Counselling and Human Sexuality
+- id: counselling-and-human-sexuality
+  name: Counselling and Human Sexuality
   url: https://courses.opened.uoguelph.ca/contentManagement.do?method=load&code=CM000025
   types:
     - certificate
   tags: []
-- name: Creative Writing
+- id: creative-writing
+  name: Creative Writing
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=583604
   types:
     - certificate
   tags: []
-- name: Equine Studies
+- id: equine-studies
+  name: Equine Studies
   url: https://courses.opened.uoguelph.ca/contentManagement.do?method=load&code=CM000020
   types:
     - diploma
   tags:
     - horse
     - animal
-- name: Equine Science
+- id: equine-science
+  name: Equine Science
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=610688
   types:
     - certificate
   tags:
     - horse
     - animal
-- name: Equine Welfare
+- id: equine-welfare
+  name: Equine Welfare
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=611375
   types:
     - certificate
   tags:
     - horse
     - animal
-- name: English Language Programs
+- id: english-language-programs
+  name: English Language Programs
   url: https://opened.uoguelph.ca/student-resources/guelph-elp
   types:
     - certificate
     - short-course
   tags:
     - language
-- name: Environmental Citizenship
+- id: environmental-citizenship
+  name: Environmental Citizenship
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=625466
   types:
     - certificate
   tags: []
-- name: Environmental Conservation
+- id: environmental-conservation
+  name: Environmental Conservation
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=626394
   types:
     - certificate
   tags: []
-- name: DNA Barcoding
+- id: dna-barcoding
+  name: DNA Barcoding
   url: https://courses.opened.uoguelph.ca/public/category/programStream.do?method=load&selectedProgramAreaId=16994&selectedProgramStreamId=12732257
   types:
     - short-course
   tags: []
-- name: Advanced Principles of Toxicology
+- id: advanced-principles-of-toxicology
+  name: Advanced Principles of Toxicology
   url: https://courses.opened.uoguelph.ca/search/publicCourseSearchDetails.do?method=load&courseId=17780&selectedProgramAreaId=16994&selectedProgramStreamId=17127
   types:
     - short-course
   tags: []
-- name: Food Science
+- id: food-science
+  name: Food Science
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=655668
   types:
     - certificate
   tags: []
-- name: Geographical Epidemiology
+- id: geographical-epidemiology
+  name: Geographical Epidemiology
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=655668
   types:
     - short-course
   tags: []
-- name: Plant-Based Nutrition
+- id: plant-based-nutrition
+  name: Plant-Based Nutrition
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=29839235
   types:
     - certificate
   tags: []
-- name: Horticulture (Diploma)
+- id: horticulture-diploma
+  name: Horticulture (Diploma)
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=18118724&selectedProgramAreaId=16989&selectedProgramStreamId=
   types:
     - diploma
   tags: []
-- name: Landscape Design (Diploma)
+- id: landscape-design-diploma
+  name: Landscape Design (Diploma)
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=18143026&selectedProgramAreaId=16989&selectedProgramStreamId=
   types:
     - diploma
   tags: []
-- name: Horticulture (Certificate)
+- id: horticulture-certificate
+  name: Horticulture (Certificate)
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=15952899&selectedProgramAreaId=16989&selectedProgramStreamId=
   types:
     - certificate
   tags: []
-- name: Landscape Design (Certificate)
+- id: landscape-design-certificate
+  name: Landscape Design (Certificate)
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=18143158&selectedProgramAreaId=16989&selectedProgramStreamId=
   types:
     - certificate
   tags: []
-- name: Maintaining Golf Courses
+- id: maintaining-golf-courses
+  name: Maintaining Golf Courses
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=701097&selectedProgramAreaId=16989&selectedProgramStreamId=
   types:
     - certificate
   tags: []
-- name: Sustainable Urban Agriculture
+- id: sustainable-urban-agriculture
+  name: Sustainable Urban Agriculture
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=615989&selectedProgramAreaId=16975&selectedProgramStreamId=17124
   types:
     - certificate
   tags: []
-- name: Sustainable Urban Horticulture
+- id: sustainable-urban-horticulture
+  name: Sustainable Urban Horticulture
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=702165&selectedProgramAreaId=16989&selectedProgramStreamId=
   types:
     - certificate
   tags: []
-- name: Turf Managers
+- id: turf-managers
+  name: Turf Managers
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=14958241
   types:
     - short-course
     - certificate
   tags: []
-- name: Accounting
+- id: accounting
+  name: Accounting
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=26779164
   types:
     - certificate
   tags: []
-- name: Business
+- id: business
+  name: Business
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=621077
   types:
     - certificate
   tags: []
-
-- name: Disability Management
+- id: disability-management
+  name: Disability Management
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129861
   types:
     - certificate
   tags: []
-- name: Hospitality Studies
+- id: hospitality-studies
+  name: Hospitality Studies
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=627258
   types:
     - certificate
   tags: []
-- name: Information Management, Privacy and Access
+- id: information-management-privacy-and-access
+  name: Information Management, Privacy and Access
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129924
   types:
     - certificate
   tags: []
-- name: Leadership
+- id: leadership
+  name: Leadership
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=646478
   types:
     - certificate
   tags: []
-- name: Supply Chain Management for Public Procurement
+- id: supply-chain-management-for-public-procurement
+  name: Supply Chain Management for Public Procurement
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=474252
   types:
     - certificate
   tags: []
-- name: Data Science
+- id: data-science
+  name: Data Science
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=8353906
   types:
     - certificate
   tags: []
-- name: Human Resources Management
+- id: human-resources-management
+  name: Human Resources Management
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=590230
   types:
     - diploma
   tags: []
-- name: Advanced Interpersonal Skills for PSW Practice
+- id: advanced-interpersonal-skills-for-psw-practice
+  name: Advanced Interpersonal Skills for PSW Practice
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=34640456
   types:
     - certificate
   tags: []
-- name: Facilities Management
+- id: facilities-management
+  name: Facilities Management
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129911
   types:
     - certificate
   tags: []
-- name: Human Resources Management for School Board Administration
+- id: human-resources-management-for-school-board-administration
+  name: Human Resources Management for School Board Administration
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129911
   types:
     - certificate
   tags: []
-- name: Information and Communication Technology Management
+- id: information-and-communication-technology-management
+  name: Information and Communication Technology Management
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=129941
   types:
     - certificate
   tags: []
-- name: Pupil Transportation Management
+- id: pupil-transportation-management
+  name: Pupil Transportation Management
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=465245
   types:
     - certificate
   tags: []
-- name: School Board Administration
+- id: school-board-administration
+  name: School Board Administration
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=605466
   types:
     - diploma
   tags: []
-- name: Knowledge Mobilization
+- id: knowledge-mobilization
+  name: Knowledge Mobilization
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=453705
   types:
     - certificate
   tags: []
-- name: Public Policy and Administration
+- id: public-policy-and-administration
+  name: Public Policy and Administration
   url: https://courses.opened.uoguelph.ca/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=654157
   types:
     - diploma

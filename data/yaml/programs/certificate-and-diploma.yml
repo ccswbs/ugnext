@@ -1,11 +1,13 @@
-- name: Accounting
+- id: accounting
+  name: Accounting
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/accounting-acct/
   types:
     - certificate
   tags:
     - business
     - finance
-- name: Agriculture
+- id: agriculture
+  name: Agriculture
   url: https://www.ridgetownc.com/future/dagr/
   types:
     - associate-diploma
@@ -13,28 +15,32 @@
   tags:
     - agriculture
     - botany
-- name: Business
+- id: business
+  name: Business
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-bus/
   types:
     - certificate
   tags:
     - business
     - finance
-- name: Environmental Citizenship
+- id: environmental-citizenship
+  name: Environmental Citizenship
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-citizenship-ect/
   types:
     - certificate
   tags:
     - humanities
     - science
-- name: Environmental Conservation
+- id: environmental-conservation
+  name: Environmental Conservation
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-conservation-ecv/
   types:
     - certificate
   tags:
     - biology
     - science
-- name: Environmental Technician
+- id: environmental-technician
+  name: Environmental Technician
   url: https://www.ridgetownc.com/future/denm/
   types:
     - associate-diploma
@@ -43,7 +49,8 @@
     - agriculture
     - botany
     - environment
-- name: Equine Care & Management
+- id: equine-care-management
+  name: Equine Care & Management
   url: https://www.ridgetownc.com/future/denm/
   types:
     - associate-diploma
@@ -53,21 +60,24 @@
     - nutrition
     - animal
     - management
-- name: Food Science
+- id: food-science
+  name: Food Science
   url: https://www.uoguelph.ca/programs/food-science/
   types:
     - certificate
   tags:
     - food
     - science
-- name: German Language and Culture
+- id: german-language-and-culture
+  name: German Language and Culture
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/german-germ/
   types:
     - certificate
   tags:
     - humanities
     - language
-- name: Horticulture
+- id: horticulture
+  name: Horticulture
   url: https://www.ridgetownc.com/future/dhrt/
   types:
     - associate-diploma
@@ -76,7 +86,8 @@
     - landscaping
     - botany
     - plant
-- name: Hospitality and Tourism Management
+- id: hospitality-and-tourism-management
+  name: Hospitality and Tourism Management
   url: https://www.uoguelph.ca/programs/hospitality-and-tourism-management/
   types:
     - certificate
@@ -84,21 +95,24 @@
     - business
     - tourism
     - management
-- name: Indigenous Environmental Governance
+- id: indigenous-environmental-governance
+  name: Indigenous Environmental Governance
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/indigenous-environmental-governance-ieg/
   types:
     - certificate
   tags:
     - humanities
     - culture
-- name: Leadership
+- id: leadership
+  name: Leadership
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/leadership-lead/
   types:
     - certificate
   tags:
     - humanities
     - management
-- name: Organic Agriculture
+- id: organic-agriculture
+  name: Organic Agriculture
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/organic-agriculture-oagr/
   types:
     - certificate
@@ -106,7 +120,8 @@
     - agriculture
     - biology
     - science
-- name: Public Policy and Administration
+- id: public-policy-and-administration
+  name: Public Policy and Administration
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/public-policy-administration-ppa#certificatetext
   types:
     - certificate
@@ -114,7 +129,8 @@
     - humanities
     - politics
     - law
-- name: Spanish Language and Culture
+- id: spanish-language-and-culture
+  name: Spanish Language and Culture
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/spanish-hispanic-studies-spah#certificatetext
   types:
     - certificate
@@ -122,7 +138,8 @@
     - humanities
     - language
     - culture
-- name: Applied Statistics
+- id: applied-statistics
+  name: Applied Statistics
   acronym: STAT
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/statistics-stat#diplomatext
   degrees:
@@ -132,7 +149,8 @@
   tags:
     - mathematics
     - statistics
-- name: Turfgrass Management
+- id: turfgrass-management
+  name: Turfgrass Management
   acronym: DTM
   url: https://www.uoguelph.ca/programs/turfgrass-management/
   types:
@@ -142,7 +160,8 @@
     - landscaping
     - botany
     - plant
-- name: Veterinary Technology
+- id: veterinary-technology
+  name: Veterinary Technology
   url: https://www.ridgetownc.com/future/dvt/
   types:
     - associate-diploma
