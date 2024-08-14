@@ -1,6 +1,6 @@
 import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
-import { getLocations, getPrograms, getStudentTypes } from '@/data/sqlite/admission/undergraduate/requirements';
+import { getLocations, getPrograms, getStudentTypes } from '@/data/yaml/admission/undergraduate/requirements';
 import { Select } from '@/components/select';
 import { Heading } from '@/components/heading';
 import { useMemo, useState } from 'react';

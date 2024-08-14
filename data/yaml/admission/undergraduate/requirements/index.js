@@ -19,26 +19,6 @@ export const getPrograms = async () => {
 	return programs.filter((program) => program.types.includes('major'));
 };
 
-export const requirementToSlug = (studentType, program, location) => {
-	let slug = '';
-
-	console.log(studentType, program, location);
-
-	if (studentType) {
-		slug += `/${studentType}`;
-	}
-
-	if (program) {
-		slug += `/${program}`;
-	}
-
-	if (location) {
-		slug += `/${location}`;
-	}
-
-	return slug;
-};
-
 export const slugToRequirement = (slug) => {
 	return {
 		studentType: slug[0],
