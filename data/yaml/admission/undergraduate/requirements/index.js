@@ -59,24 +59,24 @@ export const isValidRequirement = async (studentTypeID, programID, locationID) =
 };
 
 export const getRequirementTitle = async (studentTypeID, programID, locationID) => {
-	const studentTypeName = studentTypes
-		.find(({ id, name }) => id === studentTypeID)
-		?.name?.replace('Student', 'Students')
-		?.replace('Graduate', 'Graduates');
+	const studentType = studentTypes.find(({ id, name }) => id === studentTypeID);
+	const studentTypeName = studentType?.name?.replace('Student', 'Students')?.replace('Graduate', 'Graduates');
 
 	if (!programID && !locationID) {
 		return `Undergraduate Admission Requirements for ${studentTypeName}`;
 	}
 
-	const programName = programs.find(({ id, name }) => id === programID)?.name;
-	const locationName = locations.find(({ id, name }) => id === locationID)?.name;
+	const program = programs.find(({ id, name }) => id === programID);
+	const location = locations.find(({ id, name }) => id === locationID);
 
-	if (programName && !locationName) {
-		return `${programName} Admission Requirements for ${studentTypeName}`;
+	if (program && !location) {
+		return `${program.name} Admission Requirements for ${studentTypeName}`;
 	}
 
-	if (programName && locationName) {
-		return `${programName} Admission Requirements for ${studentTypeName} in ${locationName}`;
+	if (program && location) {
+		return location.type === 'curriculum'
+			? `${program.name} Admission Requirements for ${location.name} Students/Graduates`
+			: `${program.name} Admission Requirements for ${studentTypeName} in ${location.name}`;
 	}
 
 	return '';
