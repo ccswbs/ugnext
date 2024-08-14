@@ -1,7 +1,7 @@
 import studentTypes from './student-types.yml';
 import locations from './locations.yml';
 import programs from '@/data/yaml/programs/undergraduate.yml';
-import fragments from './fragments.yml'
+import fragments from './fragments.yml';
 
 export const getAllStudentTypes = async () => {
 	return studentTypes;
@@ -89,5 +89,12 @@ export const getRequirementTitle = ({ studentType, program, location }) => {
 };
 
 export const getRequirementContent = async ({ studentType, program, location }) => {
-	return '';
+	return fragments
+		.filter((fragment) => {
+			return false;
+		})
+		.sort((a, b) => {
+			return a.rank - b.rank;
+		})
+		.reduce((acc, value) => acc.concat(value.content), '');
 };
