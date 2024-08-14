@@ -172,7 +172,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 														My curriculum of study is/was
 													</Heading>
 												}
-												options={locations.curriculums.map((location) => ({
+												options={locations.curriculum.map((location) => ({
 													label: location.name,
 													value: location,
 													key: location.id,
