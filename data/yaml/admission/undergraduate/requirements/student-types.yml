@@ -1,0 +1,29 @@
+- id: high-school
+  name: High School Student/Graduate
+  location_dependent: true
+  program_dependent: true
+
+- id: university
+  name: University Student/Graduate
+  location_dependent: false
+  program_dependent: true
+
+- id: college
+  name: College Student/Graduate
+  location_dependent: false
+  program_dependent: true
+
+- id: internal
+  name: Current or Previous University of Guelph Student
+  location_dependent: false
+  program_dependent: true
+
+- id: mature
+  name: Mature Student
+  location_dependent: false
+  program_dependent: false
+
+- id: home-schooled
+  name: Home Schooled Student
+  location_dependent: false
+  program_dependent: false
