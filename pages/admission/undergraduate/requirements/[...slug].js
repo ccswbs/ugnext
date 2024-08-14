@@ -3,7 +3,7 @@ import {
 	slugToRequirement,
 	isValidRequirement,
 	getRequirementContent,
-} from '@/data/sqlite/admission/undergraduate/requirements';
+} from '@/data/yaml/admission/undergraduate/requirements';
 import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
 import { Heading } from '@/components/heading';
