@@ -91,6 +91,9 @@ export const getRequirementTitle = ({ studentType, program, location }) => {
 export const getRequirementContent = async ({ studentType, program, location }) => {
 	return fragments
 		.filter((fragment) => {
+			const validateProp = (prop) => {
+
+			}
 			return false;
 		})
 		.sort((a, b) => {
