@@ -1,6 +1,7 @@
 import studentTypes from './student-types.yml';
 import locations from './locations.yml';
 import programs from '@/data/yaml/programs/undergraduate.yml';
+import fragments from './fragments.yml'
 
 export const getAllStudentTypes = async () => {
 	return studentTypes;
@@ -63,7 +64,7 @@ export const slugToRequirement = async (slug) => {
 	return requirement;
 };
 
-export const getRequirementTitle = async ({ studentType, program, location }) => {
+export const getRequirementTitle = ({ studentType, program, location }) => {
 	const studentTypeName = studentType?.name?.replace('Student', 'Students')?.replace('Graduate', 'Graduates');
 
 	if (!program && !location) {

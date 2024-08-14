@@ -31,7 +31,7 @@ export async function getStaticProps(context) {
 
 	return {
 		props: {
-			title: await getRequirementTitle(requirement),
+			title: getRequirementTitle(requirement),
 			content: await getRequirementContent(requirement),
 		},
 	};
