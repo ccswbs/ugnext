@@ -1,6 +1,6 @@
 import { Layout } from '@/components/layout';
 import { Container } from '@/components/container';
-import { getLocations, getPrograms, getStudentTypes } from '@/data/yaml/admission/undergraduate/requirements';
+import { getAllLocations, getAllPrograms, getAllStudentTypes } from '@/data/yaml/admission/undergraduate/requirements';
 import { Select } from '@/components/select';
 import { Heading } from '@/components/heading';
 import { useMemo, useState } from 'react';
@@ -12,9 +12,9 @@ import { Sidebar } from '@/components/admission/undergraduate/requirements/sideb
 export async function getStaticProps(context) {
 	return {
 		props: {
-			locations: await getLocations(),
-			studentTypes: await getStudentTypes(),
-			programs: (await getPrograms()) ?? [],
+			locations: await getAllLocations(),
+			studentTypes: await getAllStudentTypes(),
+			programs: (await getAllPrograms()) ?? [],
 		},
 	};
 }
@@ -41,17 +41,17 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 	const [showInternational, setShowInternational] = useState(false);
 	const [showCurriculums, setShowCurriculums] = useState(false);
 
-	const isLocationRequirementMet = (studentType?.location_dependent && location) || !studentType?.location_dependent;
-	const isProgramRequirementMet = (studentType?.program_dependent && program) || !studentType?.program_dependent;
+	const isLocationRequirementMet = (studentType?.is_location_dependent && location) || !studentType?.is_location_dependent;
+	const isProgramRequirementMet = (studentType?.is_program_dependent && program) || !studentType?.is_program_dependent;
 	const isComplete = studentType && isLocationRequirementMet && isProgramRequirementMet;
 
 	const locationDependentStudentTypes = useMemo(
-		() => new Set(studentTypes.filter((type) => type.location_dependent).map((type) => type.id)),
+		() => new Set(studentTypes.filter((type) => type.is_location_dependent).map((type) => type.id)),
 		[studentTypes],
 	);
 
 	const programDependentStudentTypes = useMemo(
-		() => new Set(studentTypes.filter((type) => type.program_dependent).map((type) => type.id)),
+		() => new Set(studentTypes.filter((type) => type.is_program_dependent).map((type) => type.id)),
 		[studentTypes],
 	);
 
@@ -64,8 +64,8 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 
 		const slug = requirementToSlug(
 			studentType.id,
-			studentType.program_dependent ? program.id : null,
-			studentType.location_dependent ? location.id : null,
+			studentType.is_program_dependent ? program.id : null,
+			studentType.is_location_dependent ? location.id : null,
 		);
 
 		router.push(`/admission/undergraduate/requirements/${slug}`).catch((e) => console.error(e));

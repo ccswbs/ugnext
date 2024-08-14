@@ -1,14 +1,12 @@
 import studentTypes from './student-types.yml';
 import locations from './locations.yml';
-import allPrograms from '@/data/yaml/programs/undergraduate.yml';
+import programs from '@/data/yaml/programs/undergraduate.yml';
 
-const programs = allPrograms.filter((program) => program.types.includes('major'));
-
-export const getStudentTypes = async () => {
+export const getAllStudentTypes = async () => {
 	return studentTypes;
 };
 
-export const getLocations = async () => {
+export const getAllLocations = async () => {
 	return locations.reduce((acc, location) => {
 		acc[location.type] ??= [];
 		acc[location.type].push(location);
@@ -17,60 +15,69 @@ export const getLocations = async () => {
 	}, {});
 };
 
-export const getPrograms = async () => {
-	return programs;
+export const getAllPrograms = async () => {
+	return programs.filter((program) => program.types.includes('major'));
 };
 
-export const slugToRequirement = (slug) => {
-	return {
+export const getStudentType = async (id) => {
+	return studentTypes.find((type) => type.id === id);
+};
+
+export const getProgram = async (id) => {
+	return programs.find((program) => program.id === id);
+};
+
+export const getLocation = async (id) => {
+	return locations.find((location) => location.id === id);
+};
+
+export const slugToRequirement = async (slug) => {
+	const ids = {
 		studentType: slug[0],
 		program: slug.length !== 1 ? slug[1] : null,
 		location: slug.length === 3 ? slug[2] : null,
 	};
+
+	const requirement = {
+		studentType: await getStudentType(ids.studentType),
+		program: await getProgram(ids.program),
+		location: await getLocation(ids.location),
+	};
+
+	// Determine if the slug was able to be correctly mapped to a valid requirement object
+	if (
+		// No student type
+		!requirement.studentType ||
+		// Student type is not program-dependent so program id shouldn't be in the slug
+		(!requirement.studentType.is_program_dependent && ids.program) ||
+		// Student type is not location-dependent so location id shouldn't be in the slug
+		(!requirement.studentType.is_location_dependent && ids.location) ||
+		// Student type is program-dependent so need to have retrieved a program object
+		(requirement.studentType.is_program_dependent && !requirement.program) ||
+		// Student type is location-dependent so need to have retrieved a location object
+		(requirement.studentType.is_location_dependent && !requirement.location)
+	) {
+		return null;
+	}
+
+	return requirement;
 };
 
-export const isValidRequirement = async (studentTypeID, programID, locationID) => {
-	const studentType = studentTypes.find(({ id }) => id === studentTypeID);
-
-	// Check if there exists a student type with the id (retrieved from the slug) in the list
-	if (!studentType) {
-		return false;
-	}
-
-	// if the student type is location independent, then the slug shouldn't contain a program id
-	if (!studentType.program_dependent && programID) {
-		return false;
-	}
-
-	// if the student type is location independent, then the slug shouldn't contain a location id
-	if (!studentType.location_dependent && locationID) {
-		return false;
-	}
-
-	if (studentType.program_dependent && !programs.some(({ id }) => id === programID)) {
-		return false;
-	}
-
-	if (studentType.location_dependent && !locations.some(({ id }) => id === locationID)) {
-		return false;
-	}
-
-	return true;
-};
-
-export const getRequirementTitle = async (studentTypeID, programID, locationID) => {
-	const studentType = studentTypes.find(({ id, name }) => id === studentTypeID);
+export const getRequirementTitle = async ({ studentType, program, location }) => {
 	const studentTypeName = studentType?.name?.replace('Student', 'Students')?.replace('Graduate', 'Graduates');
 
-	if (!programID && !locationID) {
+	if (!program && !location) {
 		return `Undergraduate Admission Requirements for ${studentTypeName}`;
 	}
 
-	const program = programs.find(({ id, name }) => id === programID);
-	const location = locations.find(({ id, name }) => id === locationID);
-
 	if (program && !location) {
 		return `${program.name} Admission Requirements for ${studentTypeName}`;
+	}
+
+	if (!program && location) {
+		return location.type === 'curriculum'
+			? `Undergraduate Admission Requirements for ${location.name} Students/Graduates`
+			: `Undergraduate Admission Requirements for ${studentTypeName} in ${location.name}`;
 	}
 
 	if (program && location) {
@@ -78,10 +85,8 @@ export const getRequirementTitle = async (studentTypeID, programID, locationID) 
 			? `${program.name} Admission Requirements for ${location.name} Students/Graduates`
 			: `${program.name} Admission Requirements for ${studentTypeName} in ${location.name}`;
 	}
-
-	return '';
 };
 
-export const getRequirementContent = async (studentType, program, location) => {
+export const getRequirementContent = async ({ studentType, program, location }) => {
 	return '';
 };

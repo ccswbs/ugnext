@@ -1,7 +1,6 @@
 import {
 	getRequirementTitle,
 	slugToRequirement,
-	isValidRequirement,
 	getRequirementContent,
 } from '@/data/yaml/admission/undergraduate/requirements';
 import { Layout } from '@/components/layout';
@@ -22,9 +21,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-	const { studentType, program, location } = slugToRequirement(context.params.slug);
+	const requirement = await slugToRequirement(context.params.slug);
 
-	if (!(await isValidRequirement(studentType, program, location))) {
+	if (!requirement) {
 		return {
 			notFound: true,
 		};
@@ -32,8 +31,8 @@ export async function getStaticProps(context) {
 
 	return {
 		props: {
-			title: await getRequirementTitle(studentType, program, location),
-			content: await getRequirementContent(studentType, program, location),
+			title: await getRequirementTitle(requirement),
+			content: await getRequirementContent(requirement),
 		},
 	};
 }
