@@ -1,29 +1,29 @@
 - id: high-school
   name: High School Student/Graduate
-  is_location_dependent: true
-  is_program_dependent: true
+  isLocationDependent: true
+  isProgramDependent: true
 
 - id: university
   name: University Student/Graduate
-  is_location_dependent: false
-  is_program_dependent: true
+  isLocationDependent: false
+  isProgramDependent: true
 
 - id: college
   name: College Student/Graduate
-  is_location_dependent: false
-  is_program_dependent: true
+  isLocationDependent: false
+  isProgramDependent: true
 
 - id: internal
   name: Current or Previous University of Guelph Student
-  is_location_dependent: false
-  is_program_dependent: true
+  isLocationDependent: false
+  isProgramDependent: true
 
 - id: mature
   name: Mature Student
-  is_location_dependent: false
-  is_program_dependent: false
+  isLocationDependent: false
+  isProgramDependent: false
 
 - id: home-schooled
   name: Home Schooled Student
-  is_location_dependent: false
-  is_program_dependent: false
+  isLocationDependent: false
+  isProgramDependent: false

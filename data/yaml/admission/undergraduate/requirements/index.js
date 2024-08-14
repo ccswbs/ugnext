@@ -50,13 +50,13 @@ export const slugToRequirement = async (slug) => {
 		// No student type
 		!requirement.studentType ||
 		// Student type is not program-dependent so program id shouldn't be in the slug
-		(!requirement.studentType.is_program_dependent && ids.program) ||
+		(!requirement.studentType.isProgramDependent && ids.program) ||
 		// Student type is not location-dependent so location id shouldn't be in the slug
-		(!requirement.studentType.is_location_dependent && ids.location) ||
+		(!requirement.studentType.isLocationDependent && ids.location) ||
 		// Student type is program-dependent so need to have retrieved a program object
-		(requirement.studentType.is_program_dependent && !requirement.program) ||
+		(requirement.studentType.isProgramDependent && !requirement.program) ||
 		// Student type is location-dependent so need to have retrieved a location object
-		(requirement.studentType.is_location_dependent && !requirement.location)
+		(requirement.studentType.isLocationDependent && !requirement.location)
 	) {
 		return null;
 	}
@@ -88,13 +88,21 @@ export const getRequirementTitle = ({ studentType, program, location }) => {
 	}
 };
 
-export const getRequirementContent = async ({ studentType, program, location }) => {
+export const getRequirementContent = async (requirement) => {
 	return fragments
 		.filter((fragment) => {
-			const validateProp = (prop) => {
+			const validate = (name) => {
+				const fragmentID = fragment[name];
+				const requirementID = requirement[name]?.id;
 
-			}
-			return false;
+				return (
+					fragmentID === null ||
+					fragmentID === requirementID ||
+					(Array.isArray(fragmentID) && fragmentID.includes(requirementID))
+				);
+			};
+
+			return validate('studentType') && validate('program') && validate('location');
 		})
 		.sort((a, b) => {
 			return a.rank - b.rank;

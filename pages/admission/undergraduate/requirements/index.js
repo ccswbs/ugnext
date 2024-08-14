@@ -41,17 +41,17 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 	const [showInternational, setShowInternational] = useState(false);
 	const [showCurriculums, setShowCurriculums] = useState(false);
 
-	const isLocationRequirementMet = (studentType?.is_location_dependent && location) || !studentType?.is_location_dependent;
-	const isProgramRequirementMet = (studentType?.is_program_dependent && program) || !studentType?.is_program_dependent;
+	const isLocationRequirementMet = (studentType?.isLocationDependent && location) || !studentType?.isLocationDependent;
+	const isProgramRequirementMet = (studentType?.isProgramDependent && program) || !studentType?.isProgramDependent;
 	const isComplete = studentType && isLocationRequirementMet && isProgramRequirementMet;
 
 	const locationDependentStudentTypes = useMemo(
-		() => new Set(studentTypes.filter((type) => type.is_location_dependent).map((type) => type.id)),
+		() => new Set(studentTypes.filter((type) => type.isLocationDependent).map((type) => type.id)),
 		[studentTypes],
 	);
 
 	const programDependentStudentTypes = useMemo(
-		() => new Set(studentTypes.filter((type) => type.is_program_dependent).map((type) => type.id)),
+		() => new Set(studentTypes.filter((type) => type.isProgramDependent).map((type) => type.id)),
 		[studentTypes],
 	);
 
@@ -64,8 +64,8 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 
 		const slug = requirementToSlug(
 			studentType.id,
-			studentType.is_program_dependent ? program.id : null,
-			studentType.is_location_dependent ? location.id : null,
+			studentType.isProgramDependent ? program.id : null,
+			studentType.isLocationDependent ? location.id : null,
 		);
 
 		router.push(`/admission/undergraduate/requirements/${slug}`).catch((e) => console.error(e));
