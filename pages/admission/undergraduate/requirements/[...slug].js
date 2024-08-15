@@ -39,7 +39,6 @@ export async function getStaticProps(context) {
 }
 
 export default function UndergraduateAdmissionRequirements({ title, content }) {
-	console.log(content);
 	return (
 		<Layout title={title || 'Undergraduate Admission Requirements'}>
 			<Container centered>
