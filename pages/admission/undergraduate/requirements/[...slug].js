@@ -49,17 +49,6 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 				<div className="flex flex-col [&_p]:py-2 py-6">
 					<HtmlParser html={content ?? ''} />
 				</div>
-
-				<div className="flex flex-col items-center justify-center w-full font-bold text-2xl gap-6">
-					<span>Take the next steps to get Future Ready</span>
-					<Button
-						className="px-10 py-4 text-2xl"
-						color="red"
-						href="https://www.uoguelph.ca/admission/undergraduate/apply/"
-					>
-						Apply Now!
-					</Button>
-				</div>
 			</Container>
 		</Layout>
 	);
