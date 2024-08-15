@@ -10,9 +10,6 @@ import { HtmlParser } from '@/components/html-parser';
 import { Button } from '@/components/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftToBracket } from '@awesome.me/kit-7993323d0c/icons/sharp/solid';
-import { Section } from '@/components/section';
-import { List, ListItem } from '@/components/list';
-import { Link } from '@/components/link';
 
 export async function getStaticPaths() {
 	return {
@@ -41,7 +38,7 @@ export async function getStaticProps(context) {
 export default function UndergraduateAdmissionRequirements({ title, content }) {
 	return (
 		<Layout title={title || 'Undergraduate Admission Requirements'}>
-			<Container centered className="md:w-2/3">
+			<Container centered>
 				<Heading level={1}>{title || 'Undergraduate Admission Requirements'}</Heading>
 
 				<Button className="flex gap-2 w-fit" color="red" href="/admission/undergraduate/requirements/">
@@ -51,6 +48,17 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 
 				<div className="flex flex-col [&_p]:py-2 py-6">
 					<HtmlParser html={content ?? ''} />
+				</div>
+
+				<div className="flex flex-col items-center justify-center w-full font-bold text-2xl gap-6">
+					<span>Take the next steps to get Future Ready</span>
+					<Button
+						className="px-10 py-4 text-2xl"
+						color="red"
+						href="https://www.uoguelph.ca/admission/undergraduate/apply/"
+					>
+						Apply Now!
+					</Button>
 				</div>
 			</Container>
 		</Layout>
