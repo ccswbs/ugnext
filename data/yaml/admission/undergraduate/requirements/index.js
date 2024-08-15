@@ -89,7 +89,7 @@ export const getRequirementTitle = ({ studentType, program, location }) => {
 };
 
 export const getRequirementContent = async (requirement) => {
-	return fragments
+	const content = fragments
 		.filter((fragment) => {
 			const validate = (name) => {
 				const fragmentID = fragment[name];
@@ -107,5 +107,24 @@ export const getRequirementContent = async (requirement) => {
 		.sort((a, b) => {
 			return a.rank - b.rank;
 		})
-		.reduce((acc, value) => acc.concat(value.content), '');
+		.reduce(
+			(acc, value) => {
+				acc.body.concat(value.content);
+				return acc;
+			},
+			{ body: '', links: [] },
+		);
+
+	// Remove duplicate links
+	const ids = new Set();
+	content.links = content.links.reduce((acc, link) => {
+		if (!ids.has(link.title)) {
+			acc.push(link);
+			ids.add(link.title);
+		}
+
+		return acc;
+	}, []);
+
+	return content;
 };

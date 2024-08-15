@@ -5,9 +5,7 @@ import { Select } from '@/components/select';
 import { Heading } from '@/components/heading';
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/button';
-import { Section } from '@/components/section';
 import { useRouter } from 'next/router';
-import { Sidebar } from '@/components/admission/undergraduate/requirements/sidebar';
 
 export async function getStaticProps(context) {
 	return {
@@ -74,149 +72,136 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 	return (
 		<Layout title="Undergraduate Admission Requirements">
 			<Container centered>
-				<Section
-					primary={
-						<>
-							<Heading level={1}>Undergraduate Admission Requirements</Heading>
+				<Heading level={1}>Undergraduate Admission Requirements</Heading>
 
-							<form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+				<form className="flex flex-col gap-8 max-w-screen-md" onSubmit={handleSubmit}>
+					<Select
+						label={
+							<Heading level={5} as="h2" className="mb-1 mt-0">
+								I am a
+							</Heading>
+						}
+						options={studentTypes.map((type) => ({
+							label: type.name,
+							value: type,
+							key: type.id,
+						}))}
+						onChange={(selection) => {
+							setStudentType(selection?.value);
+
+							if (!selection) {
+								setLocation(null);
+								setProgram(null);
+							}
+						}}
+					/>
+
+					{locationDependentStudentTypes.has(studentType?.id) && (
+						<>
+							<Select
+								label={
+									<Heading level={5} as="h2" className="mb-1 mt-0">
+										I attend/attended high school in
+									</Heading>
+								}
+								options={[
+									...locations.domestic.map((location) => ({
+										label: location.name,
+										value: location,
+										key: location.id,
+									})),
+									{
+										label: 'Outside of Canada',
+										value: 'international',
+										key: 'international',
+									},
+									{
+										label: 'Another Curriculum of Study',
+										value: 'curriculum',
+										key: 'curriculum',
+									},
+								]}
+								onChange={(selection) => {
+									switch (selection?.value) {
+										case 'international':
+											setShowInternational(true);
+											setShowCurriculums(false);
+											setLocation(null);
+											break;
+										case 'curriculum':
+											setShowInternational(false);
+											setShowCurriculums(true);
+											setLocation(null);
+											break;
+										default:
+											setShowInternational(false);
+											setShowCurriculums(false);
+											setLocation(selection?.value);
+									}
+								}}
+							/>
+
+							{showInternational && (
+								<Select
+									autocomplete
+									label={
+										<Heading level={5} as="h2" className="mb-1 mt-0">
+											I study/studied in
+										</Heading>
+									}
+									options={locations.international.map((location) => ({
+										label: location.name,
+										value: location,
+										key: location.id,
+									}))}
+									onChange={(selection) => {
+										setLocation(selection?.value);
+									}}
+								/>
+							)}
+
+							{showCurriculums && (
 								<Select
 									label={
 										<Heading level={5} as="h2" className="mb-1 mt-0">
-											I am a
+											My curriculum of study is/was
 										</Heading>
 									}
-									options={studentTypes.map((type) => ({
-										label: type.name,
-										value: type,
-										key: type.id,
+									options={locations.curriculum.map((location) => ({
+										label: location.name,
+										value: location,
+										key: location.id,
 									}))}
 									onChange={(selection) => {
-										setStudentType(selection?.value);
-
-										if (!selection) {
-											setLocation(null);
-											setProgram(null);
-										}
+										setLocation(selection?.value);
 									}}
 								/>
-
-								{locationDependentStudentTypes.has(studentType?.id) && (
-									<>
-										<Select
-											label={
-												<Heading level={5} as="h2" className="mb-1 mt-0">
-													I attend/attended high school in
-												</Heading>
-											}
-											options={[
-												...locations.domestic.map((location) => ({
-													label: location.name,
-													value: location,
-													key: location.id,
-												})),
-												{
-													label: 'Outside of Canada',
-													value: 'international',
-													key: 'international',
-												},
-												{
-													label: 'Another Curriculum of Study',
-													value: 'curriculum',
-													key: 'curriculum',
-												},
-											]}
-											onChange={(selection) => {
-												switch (selection?.value) {
-													case 'international':
-														setShowInternational(true);
-														setShowCurriculums(false);
-														setLocation(null);
-														break;
-													case 'curriculum':
-														setShowInternational(false);
-														setShowCurriculums(true);
-														setLocation(null);
-														break;
-													default:
-														setShowInternational(false);
-														setShowCurriculums(false);
-														setLocation(selection?.value);
-												}
-											}}
-										/>
-
-										{showInternational && (
-											<Select
-												autocomplete
-												label={
-													<Heading level={5} as="h2" className="mb-1 mt-0">
-														I study/studied in
-													</Heading>
-												}
-												options={locations.international.map((location) => ({
-													label: location.name,
-													value: location,
-													key: location.id,
-												}))}
-												onChange={(selection) => {
-													setLocation(selection?.value);
-												}}
-											/>
-										)}
-
-										{showCurriculums && (
-											<Select
-												label={
-													<Heading level={5} as="h2" className="mb-1 mt-0">
-														My curriculum of study is/was
-													</Heading>
-												}
-												options={locations.curriculum.map((location) => ({
-													label: location.name,
-													value: location,
-													key: location.id,
-												}))}
-												onChange={(selection) => {
-													setLocation(selection?.value);
-												}}
-											/>
-										)}
-									</>
-								)}
-
-								{programDependentStudentTypes.has(studentType?.id) && (
-									<Select
-										autocomplete
-										label={
-											<Heading level={5} as="h2" className="mb-1 mt-0">
-												I am interested in studying
-											</Heading>
-										}
-										options={programs?.map((program) => ({
-											label: program.name,
-											value: program,
-											key: program.id,
-										}))}
-										onChange={(selection) => {
-											setProgram(selection?.value);
-										}}
-									/>
-								)}
-								<Button
-									className="w-full sm:w-fit"
-									color="red"
-									type="submit"
-									disabled={!isComplete}
-									outlined={!isComplete}
-								>
-									View Requirements
-								</Button>
-							</form>
+							)}
 						</>
-					}
-					secondary={<Sidebar />}
-				/>
+					)}
+
+					{programDependentStudentTypes.has(studentType?.id) && (
+						<Select
+							autocomplete
+							label={
+								<Heading level={5} as="h2" className="mb-1 mt-0">
+									I am interested in studying
+								</Heading>
+							}
+							options={programs?.map((program) => ({
+								label: program.name,
+								value: program,
+								key: program.id,
+							}))}
+							onChange={(selection) => {
+								setProgram(selection?.value);
+							}}
+						/>
+					)}
+					<Button className="w-full sm:w-fit" color="red" type="submit" disabled={!isComplete} outlined={!isComplete}>
+						View Requirements
+					</Button>
+				</form>
 			</Container>
 		</Layout>
 	);
