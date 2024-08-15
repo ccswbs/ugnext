@@ -41,41 +41,17 @@ export async function getStaticProps(context) {
 export default function UndergraduateAdmissionRequirements({ title, content }) {
 	return (
 		<Layout title={title || 'Undergraduate Admission Requirements'}>
-			<Container centered>
-				<Section
-					primary={
-						<>
-							<Heading level={1}>{title || 'Undergraduate Admission Requirements'}</Heading>
+			<Container centered className="md:w-2/3">
+				<Heading level={1}>{title || 'Undergraduate Admission Requirements'}</Heading>
 
-							<Button className="flex gap-2 w-fit" color="red" href="/admission/undergraduate/requirements/">
-								<FontAwesomeIcon icon={faArrowLeftToBracket} />
-								<span>View Other Requirements</span>
-							</Button>
+				<Button className="flex gap-2 w-fit" color="red" href="/admission/undergraduate/requirements/">
+					<FontAwesomeIcon icon={faArrowLeftToBracket} />
+					<span>View Other Requirements</span>
+				</Button>
 
-							<div className="flex flex-col [&_p]:py-2 py-6">
-								<HtmlParser html={content?.body ?? ''} />
-							</div>
-						</>
-					}
-					secondary={
-						content?.links?.length > 0 && (
-							<div className="flex flex-col pl-8 mt-5">
-								<Heading level={3} as="h2" className="mb-1">
-									More Information
-								</Heading>
-								<List className="text-lg">
-									{content?.links?.map((link) => (
-										<ListItem key={link.title}>
-											<Link className="block pt-0 w-fit" href={link.url}>
-												{link.title}
-											</Link>
-										</ListItem>
-									))}
-								</List>
-							</div>
-						)
-					}
-				/>
+				<div className="flex flex-col [&_p]:py-2 py-6">
+					<HtmlParser html={content ?? ''} />
+				</div>
 			</Container>
 		</Layout>
 	);

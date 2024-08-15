@@ -89,7 +89,7 @@ export const getRequirementTitle = ({ studentType, program, location }) => {
 };
 
 export const getRequirementContent = async (requirement) => {
-	const content = fragments
+	return fragments
 		.filter((fragment) => {
 			const validate = (name) => {
 				const fragmentID = fragment[name];
@@ -106,21 +106,7 @@ export const getRequirementContent = async (requirement) => {
 		})
 		.sort((a, b) => {
 			return a.rank - b.rank;
-		});
-
-	const body = content.map((fragment) => fragment.body ?? '').join('');
-
-	const ids = new Set();
-	const links = content
-		.flatMap((fragment) => fragment.links)
-		.reduce((acc, link) => {
-			if (!ids.has(link.title)) {
-				acc.push(link);
-				ids.add(link.title);
-			}
-
-			return acc;
-		}, []);
-
-	return { body, links };
+		})
+		.map((fragment) => fragment.content ?? '')
+		.join('');
 };
