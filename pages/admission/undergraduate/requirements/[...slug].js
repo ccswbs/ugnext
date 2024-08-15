@@ -39,6 +39,7 @@ export async function getStaticProps(context) {
 }
 
 export default function UndergraduateAdmissionRequirements({ title, content }) {
+	console.log(content);
 	return (
 		<Layout title={title || 'Undergraduate Admission Requirements'}>
 			<Container centered>
@@ -53,18 +54,18 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
 							</Button>
 
 							<div className="flex flex-col [&_p]:py-2 py-6">
-								<HtmlParser html={content.body ?? ''} />
+								<HtmlParser html={content?.body ?? ''} />
 							</div>
 						</>
 					}
 					secondary={
-						content.links.length > 0 && (
+						content?.links?.length > 0 && (
 							<div className="flex flex-col pl-8 mt-5">
 								<Heading level={3} as="h2" className="mb-1">
 									More Information
 								</Heading>
 								<List className="text-lg">
-									{content.links.map((link) => (
+									{content?.links?.map((link) => (
 										<ListItem key={link.title}>
 											<Link className="block pt-0 w-fit" href={link.url}>
 												{link.title}

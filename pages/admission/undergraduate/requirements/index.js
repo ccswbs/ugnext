@@ -74,7 +74,7 @@ export default function UndergraduateAdmissionRequirementsHome({ locations, stud
 			<Container centered>
 				<Heading level={1}>Undergraduate Admission Requirements</Heading>
 
-				<form className="flex flex-col gap-8 max-w-screen-md" onSubmit={handleSubmit}>
+				<form className="flex flex-col gap-8 w-full md:w-2/3" onSubmit={handleSubmit}>
 					<Select
 						label={
 							<Heading level={5} as="h2" className="mb-1 mt-0">

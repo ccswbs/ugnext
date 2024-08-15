@@ -106,25 +106,21 @@ export const getRequirementContent = async (requirement) => {
 		})
 		.sort((a, b) => {
 			return a.rank - b.rank;
-		})
-		.reduce(
-			(acc, value) => {
-				acc.body.concat(value.content);
-				return acc;
-			},
-			{ body: '', links: [] },
-		);
+		});
 
-	// Remove duplicate links
+	const body = content.map((fragment) => fragment.body ?? '').join('');
+
 	const ids = new Set();
-	content.links = content.links.reduce((acc, link) => {
-		if (!ids.has(link.title)) {
-			acc.push(link);
-			ids.add(link.title);
-		}
+	const links = content
+		.flatMap((fragment) => fragment.links)
+		.reduce((acc, link) => {
+			if (!ids.has(link.title)) {
+				acc.push(link);
+				ids.add(link.title);
+			}
 
-		return acc;
-	}, []);
+			return acc;
+		}, []);
 
-	return content;
+	return { body, links };
 };
