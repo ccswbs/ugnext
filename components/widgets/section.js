@@ -23,7 +23,11 @@ export const Section = ({ data }) => {
 
 	return (
 		<>
-			{data.heading && <Heading level={data.heading.level ?? 1} />}
+			{data.heading && 
+			<Heading level={data.heading.level ?? 2} className='font-bold text-3xl'>
+                {data.heading}
+              </Heading>
+			}
 
 			{(primary.length > 0 || secondary.length > 0) && <SectionComponent primary={primary} secondary={secondary} />}
 

@@ -6,15 +6,15 @@ function setButtonStyle(buttonStyle) {
     case 'Primary':
       return 'bg-red text-white hover:bg-red-900';
     case 'Primary (Outline)':
-      return 'text-red border-2 border-red hover:bg-red hover:text-white';
+      return 'border-2 border-red hover:bg-red hover:text-white';
     case 'Secondary':
-      return 'bg-gray-800 text-white hover:bg-black';
+      return 'bg-grey-100 text-black hover:bg-grey-800';
     case 'Secondary (Outline)':
-      return 'border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white';
+      return 'border-2 hover:bg-grey-100 hover:text-black';
     case 'Info':
       return 'bg-blue text-white hover:bg-blue-900';
     case 'Info (Outline)':
-      return 'border-2 border-blue text-blue hover:bg-blue hover:text-white';
+      return 'border-2 border-blue hover:bg-blue hover:text-white';
     default:
       return 'bg-blue text-white';
   }

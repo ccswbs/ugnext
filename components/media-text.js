@@ -5,6 +5,7 @@ import { Heading } from '@/components/heading';
 import { Video } from '@/components/video';
 import { HtmlParser } from '@/components/html-parser';
 import { ButtonSection } from '@/components/widgets/button-section';
+import ConditionalWrap from 'conditional-wrap';
 
 export const MediaText = ({ data }) => {
   const region = data.sectionColumn.name;
@@ -62,28 +63,32 @@ export const MediaText = ({ data }) => {
     videoType: videoType,
     videoID: videoID,
   };
-
+//console.log(mediaTitle,textColPadding,wrapperCol)
   return (
-    <div className={twJoin('mx-auto', 'mt-4', 'md:flex', textColBg, headingColor, headingClass)} data-title="media">
-      <div className={twJoin('', mediaCol, leftDivClasses)}>
-        {videoURL && <Video className={twJoin('w-full')} videoData={videoData} />}
+    <ConditionalWrap condition={wrapperCol} wrap={children => <div className={wrapperCol}>{children}</div>}>
+    <div className={twJoin('mx-auto', 'mt-4', 'md:flex', textColBg, headingColor, headingClass)}>
+          
+        <div className={twJoin('w-full', mediaCol, leftDivClasses)}  data-title="media">
+          {videoURL && <Video className={twJoin('w-full')} videoData={videoData} />}
 
-        {imageURL && (
-          <Image className={twJoin('w-full')} src={imageURL} alt={imageAlt} width={imageWidth} height={imageHeight} />
-        )}
-      </div>
-
-      {textOrButtons && (
-        <div className={twJoin(textCol, rightDivClasses, 'p-5')}>
-          {mediaTitle && (
-            <Heading level={2} className={twJoin('text-3xl font-bold', headingColor, headingClass)}>
-              {mediaTitle}
-            </Heading>
+          {imageURL && (
+            <Image className={twJoin('w-full')} src={imageURL} alt={imageAlt} width={imageWidth} height={imageHeight} />
           )}
-          {mediaDescription && <HtmlParser html={mediaDescription} />}
-          {mediaButtons && <ButtonSection data={mediaButtons} />}
         </div>
-      )}
+
+        {textOrButtons && (
+          <div className={twJoin(textCol, rightDivClasses, 'w-full p-5')}>
+            {mediaTitle && (
+              <Heading level={3} className={twJoin('text-3xl font-bold', headingColor, headingClass)}>
+                {mediaTitle}
+              </Heading>
+            )}
+            {mediaDescription && <HtmlParser html={mediaDescription} />}
+            {mediaButtons && <ButtonSection data={mediaButtons} />}
+          </div>
+        )}
+      
     </div>
+    </ConditionalWrap>
   );
 };

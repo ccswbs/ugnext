@@ -8,6 +8,7 @@ import { Statistics } from '@/components/widgets/statistics';
 import { Tabs } from '@/components/widgets/tabs';
 
 export const WidgetSelector = ({ data }) => {
+  console.log(data);
   switch (data.__typename) {
     case 'ParagraphAccordionSection':
       return <Accordions data={data} />;
