@@ -17,7 +17,7 @@ export default function ProgramsCertificateAndDiploma({ programs }) {
 	return (
 		<Layout title="Certificate and Diplomas">
 			<Container centered>
-				<Heading level={1}>Certificate and Diplomas at the University of Guelph</Heading>
+				<Heading level={1}>Certificates and Diplomas at the University of Guelph</Heading>
 
 				<ProgramSearch programs={programs} />
 			</Container>
