@@ -68,7 +68,7 @@ export const MediaText = ({ data }) => {
     <ConditionalWrap condition={wrapperCol} wrap={children => <div className={wrapperCol}>{children}</div>}>
     <div className={twJoin('mx-auto', 'mt-4', 'md:flex', textColBg, headingColor, headingClass)}>
           
-        <div className={twJoin('w-full', mediaCol, leftDivClasses)}  data-title="media">
+        <div className={twJoin('text-center w-full', mediaCol, leftDivClasses)}  data-title="media">
           {videoURL && <Video className={twJoin('w-full')} videoData={videoData} />}
 
           {imageURL && (

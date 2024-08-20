@@ -23,6 +23,6 @@ export function Video ({videoData, className}) {
         >
             <iframe className='w-full h-full absolute top-0 left-0' allowFullScreen src={videoSrc} title={videoTitle ? videoTitle : videoType + " video player"} />
         </div>
-        {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
+        {videoTranscript && <a className="flex justify-center items-center text-white bg-red-700 w-full py-2 btn btn-primary" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
     </>)
 }
