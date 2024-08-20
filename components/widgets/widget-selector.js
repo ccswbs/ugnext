@@ -6,6 +6,7 @@ import { MediaText } from '@/components/widgets/media-text';
 import { Section } from '@/components/widgets/section-widget.js';
 import { Statistics } from '@/components/widgets/statistics';
 import { Tabs } from '@/components/widgets/tabs';
+import { TestimonialSlider } from '@/components/widgets/testimonial-slider';
 
 export const WidgetSelector = ({ data }) => {
   switch (data.__typename) {
@@ -19,6 +20,8 @@ export const WidgetSelector = ({ data }) => {
       return <Links data={data} />;
     case 'ParagraphMediaText':
       return <MediaText data={data} />;
+    case 'ParagraphTestimonialSlider':
+      return <TestimonialSlider data={data} />;
     case 'ParagraphSection':
       return <Section data={data} />;
     case 'ParagraphSectionTab':

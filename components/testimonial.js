@@ -6,7 +6,7 @@ import { Link } from '@/components/link';
 
 export const Testimonial = ({ image, name, description, quote, link }) => {
   return (
-    <div className="flex text-gray-700 gap-5 w-full">
+    <div className="flex text-gray-700 gap-5 w-full px-4">
       <Image
         src={image.src}
         width={image.width}
@@ -19,7 +19,9 @@ export const Testimonial = ({ image, name, description, quote, link }) => {
         <div className="flex flex-col gap-0.5 border-l-4 border-yellow-400 pl-3">
           <p className="mb-0 font-semibold py-0 px-1">{name}</p>
           <p className="mb-0 py-0 px-1 text-red">{description}</p>
-          <Link className="m-0 py-0 px-1 w-fit" href={link.url}>{link.title}</Link>
+          {link && (
+            <Link className="m-0 py-0 px-1 w-fit" href={link.url}>{link.title}</Link>
+          )}
         </div>
       </div>
     </div>

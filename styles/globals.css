@@ -24,15 +24,6 @@
   p {
     @apply mb-2.5;
   }
-
-  svg.svg-inline--fa {
-    height: 1em;
-  }
-
-  .slick-prev:before,
-  .slick-next:before {
-    opacity: 0 !important;
-  }
 }
 
 @layer utilities {
@@ -50,5 +41,7 @@
     @apply border-l-4 border-l-red pl-4;
   }
 }
-/*  testimonial style */
-/* hide slick icons */
+
+svg.svg-inline--fa {
+  height: 1em;
+}
