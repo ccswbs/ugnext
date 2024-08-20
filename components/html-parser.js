@@ -8,6 +8,7 @@ import { getHeadingLevel } from '@/lib/string-utils';
 import Image from 'next/image';
 import Script from 'next/script';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
