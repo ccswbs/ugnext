@@ -2,7 +2,7 @@ import { Accordions } from '@/components/widgets/accordions';
 import { ButtonSection } from '@/components/widgets/button-section';
 import { GeneralText } from '@/components/widgets/general-text';
 import { Links } from '@/components/widgets/links';
-import { MediaText } from '@/components/widgets/mediaText';
+import { MediaText } from '@/components/widgets/media-text';
 import { Section } from '@/components/widgets/section-widget.js';
 import { Statistics } from '@/components/widgets/statistics';
 import { Tabs } from '@/components/widgets/tabs';
