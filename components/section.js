@@ -4,22 +4,33 @@ import PropTypes from 'prop-types';
 
 export const SectionContext = createContext(null);
 
-export const Section = ({ primary, secondary, equal = false }) => (
-	<div className={twJoin('grid w-full grid-cols-1', equal ? 'md:grid-cols-[50%_50%]' : 'md:grid-cols-[75%_25%]')}>
-		<SectionContext.Provider value={{ column: 'primary', equal: equal }}>
-			<div>{primary}</div>
-		</SectionContext.Provider>
-		<SectionContext.Provider value={{ column: 'secondary', equal: equal }}>
-			<div>{secondary}</div>
-		</SectionContext.Provider>
-	</div>
-);
+export const Section = ({ primary, secondary, equal = false }) => {
+  const hasSecondary = Array.isArray(secondary) ? secondary.length > 0 : Boolean(secondary);
+
+  return hasSecondary ? (
+    <div className={twJoin('grid w-full grid-cols-1', equal ? 'md:grid-cols-[50%_50%]' : 'md:grid-cols-[75%_25%]')}>
+      <SectionContext.Provider value={{ column: 'primary', equal }}>
+        <div>{primary}</div>
+      </SectionContext.Provider>
+
+      {secondary && (
+        <SectionContext.Provider value={{ column: 'secondary', equal, hasSecondary }}>
+          <div>{secondary}</div>
+        </SectionContext.Provider>
+      )}
+    </div>
+  ) : (
+    <SectionContext.Provider value={{ column: 'primary', equal, hasSecondary }}>
+      <>{primary}</>
+    </SectionContext.Provider>
+  );
+};
 
 Section.propTypes = {
-	primary: PropTypes.node.isRequired,
-	secondary: PropTypes.node.isRequired,
-	/**
-	 * Determines whether both columns are equal in width
-	 */
-	equal: PropTypes.bool,
+  primary: PropTypes.node.isRequired,
+  secondary: PropTypes.node.isRequired,
+  /**
+   * Determines whether both columns are equal in width
+   */
+  equal: PropTypes.bool,
 };
