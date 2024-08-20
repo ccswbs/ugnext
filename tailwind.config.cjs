@@ -167,5 +167,6 @@ module.exports = {
   corePlugins: {
     preflight: true,
   },
+  safelist: ['vcard', 'author'],
   important: false,
 };
