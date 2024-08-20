@@ -85,6 +85,10 @@ const colors = {
 		900: '#4e4e4e',
 		950: '#282828',
 		DEFAULT: '#dddddd',
+		light: '#f5f5f5',
+	},
+	'uog-blue-muted': {
+		DEFAULT: '#f5f7fa',
 	},
 };
 
@@ -161,11 +165,18 @@ module.exports = {
 			spacing: {
 				'max-content': '1320px',
 			},
+			borderWidth: {
+				'1rem': '1rem',
+			  },
 		},
 	},
 	plugins: [require('@headlessui/tailwindcss')],
 	corePlugins: {
 		preflight: true,
 	},
+	safelist: [
+		"vcard",
+		"author"
+	],
 	important: false,
 };

@@ -11,6 +11,7 @@ const nextConfig = {
 		return config;
 	},
 	images: {
+		domains: ['placehold.co'],
 		remotePatterns: [
 			{
 				protocol: 'https',

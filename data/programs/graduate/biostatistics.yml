@@ -1,0 +1,17 @@
+program: Biostatistics
+slug: biostatistics
+url: #
+degrees:
+  - type: thesis-based
+    ids:
+      - PHD.BST
+      - MSC.BST
+  - type: course-based
+    ids:
+      - MBST.BST:L
+      - GDIP.BST
+tags:
+  - biology
+  - science
+  - health
+  - medical

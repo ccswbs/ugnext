@@ -24,7 +24,7 @@ export const DEFAULT_INSTRUCTIONS = [
 			delete node.attribs.class;
 
 			return (
-				<Heading {...node.attribs} level={level}>
+				<Heading {...node.attribs} level={level} key={uuidv4()}>
 					{children}
 				</Heading>
 			);
@@ -65,7 +65,27 @@ export const DEFAULT_INSTRUCTIONS = [
 	// Divider
 	{
 		shouldProcessNode: (node) => node.tagName === 'hr',
-		processNode: (node) => <Divider />,
+		processNode: (node) => <Divider key={uuidv4()} />,
+	},
+	// Images
+	{
+		shouldProcessNode: (node) =>
+			node.tagName === 'img' && node.attribs.src && node.attribs.width && node.attribs.height,
+		processNode: (node) => (
+			<Image
+				src={node.attribs.src}
+				alt={node.attribs.alt ?? null}
+				loading="lazy"
+				className={node.attribs.class}
+				width={node.attribs.width}
+				height={node.attribs.height}
+			/>
+		),
+	},
+	// Scripts
+	{
+		shouldProcessNode: (node) => node.tagName === 'script',
+		processNode: (node) => <Script src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />,
 	},
 	// Images
 	{

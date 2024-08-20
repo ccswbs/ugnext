@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
+<<<<<<< HEAD
     "format": "prettier -w ./",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -59,5 +60,46 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
+=======
+    "format": "prettier -w ./"
+  },
+  "dependencies": {
+    "@awesome.me/kit-7993323d0c": "^1.0.8",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@netlify/plugin-nextjs": "^5.5.1",
+    "@next/bundle-analyzer": "^14.2.5",
+    "classnames": "^2.5.1",
+    "conditional-wrap": "^1.0.2",
+    "cross-fetch": "^4.0.0",
+    "fast-blurhash": "^1.1.2",
+    "next": "^14.2.5",
+    "next-drupal": "^1.6.0",
+    "react": "^18.3.1",
+    "react-animate-height": "^3.2.3",
+    "react-dom": "^18.3.1",
+    "react-slick": "^0.30.2",
+    "sharp": "^0.33.4",
+    "slick-carousel": "^1.8.1",
+    "stemmer": "^2.0.1",
+    "use-resize-observer": "^9.1.0",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@headlessui/react": "^2.1.2",
+    "@headlessui/tailwindcss": "^0.2.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "html-to-react": "^1.7.0",
+    "postcss": "^8.4.39",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss": "^3.4.6",
+    "yaml": "^2.4.5"
+>>>>>>> text_media_widget
   }
 }
