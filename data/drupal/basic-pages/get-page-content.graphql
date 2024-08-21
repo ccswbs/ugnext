@@ -274,14 +274,15 @@ fragment Tabs on ParagraphSectionTab {
 }
 
 fragment Tag on TermTag {
+  id
   name
+  path
 }
 
 fragment Testimonial on NodeTestimonial {
   __typename
   body {
     processed
-    summary
   }
   profile {
     url
@@ -293,6 +294,23 @@ fragment Testimonial on NodeTestimonial {
     }
   }
   title
+  image {
+    ... on MediaImage {
+      id
+      name
+      image {
+        url
+        width
+        height
+        alt
+        variations(styles: PLACEHOLDER) {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
 }
 
 fragment TestimonialSlider on ParagraphTestimonialSlider {
