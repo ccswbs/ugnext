@@ -1,13 +1,13 @@
 {
-	"useTabs": false,
-	"tabWidth": 2,
-	"singleQuote": true,
-	"semi": true,
-	"proseWrap": "always",
-	"trailingComma": "all",
-	"printWidth": 120,
-	"arrowParens": "always",
-	"bracketSameLine": false,
-	"plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-embed"],
-	"tailwindFunctions": ["twJoin", "twMerge"]
+  "useTabs": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "semi": true,
+  "proseWrap": "always",
+  "trailingComma": "all",
+  "printWidth": 120,
+  "arrowParens": "always",
+  "bracketSameLine": false,
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-embed"],
+  "tailwindFunctions": ["twJoin", "twMerge"]
 }

@@ -63,12 +63,11 @@ export const MediaText = ({ data }) => {
     videoType: videoType,
     videoID: videoID,
   };
-//console.log(mediaTitle,textColPadding,wrapperCol)
+  //console.log(mediaTitle,textColPadding,wrapperCol)
   return (
-    <ConditionalWrap condition={wrapperCol} wrap={children => <div className={wrapperCol}>{children}</div>}>
-    <div className={twJoin('mx-auto', 'mt-4', 'md:flex', textColBg, headingColor, headingClass)}>
-          
-        <div className={twJoin('text-center w-full', mediaCol, leftDivClasses)}  data-title="media">
+    <ConditionalWrap condition={wrapperCol} wrap={(children) => <div className={wrapperCol}>{children}</div>}>
+      <div className={twJoin('mx-auto', 'mt-4', 'md:flex', textColBg, headingColor, headingClass)}>
+        <div className={twJoin('text-center w-full', mediaCol, leftDivClasses)} data-title="media">
           {videoURL && <Video className={twJoin('w-full')} videoData={videoData} />}
 
           {imageURL && (
@@ -87,8 +86,7 @@ export const MediaText = ({ data }) => {
             {mediaButtons && <ButtonSection data={mediaButtons} />}
           </div>
         )}
-      
-    </div>
+      </div>
     </ConditionalWrap>
   );
 };

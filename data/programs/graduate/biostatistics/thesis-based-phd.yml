@@ -38,7 +38,7 @@ resource_links:
     icon: <i className="fa-light fa-print text-light-blue-300"></i>
 viewbook: https://www.uoguelph.ca
 overview_html: |
-  <p>Biostatistics is a research oriented department with dynamic hands on educational programs for both undergraduates and graduate students. Research and teaching programs in MBST revolve around the basic sciences relevant to animal development and wellbeing. Our department receives $6-7million in research funding each year, which is used in part to support approximately 130 graduate students at any one time enrolled in MSc and PhD programs. Our graduate student population represents over 20 different countries, which reflects our many international connections and collaborations.</p> 
+  <p>Biostatistics is a research oriented department with dynamic hands on educational programs for both undergraduates and graduate students. Research and teaching programs in MBST revolve around the basic sciences relevant to animal development and wellbeing. Our department receives $6-7million in research funding each year, which is used in part to support approximately 130 graduate students at any one time enrolled in MSc and PhD programs. Our graduate student population represents over 20 different countries, which reflects our many international connections and collaborations.</p>
 fields_of_study:
   - Clinical Pharmacology
   - Comparative Medicine
@@ -132,7 +132,7 @@ courses:
 spot_light_cards:
   - id: 1
     title: Neuroscience
-    url: 
+    url:
       - url: https://www.uoguelph.ca/.netlify/images?w=1680&h=640&fit=cover&position=center&fm=webp&q=75&url=https%3A%2F%2Fapi.liveugconthub.uoguelph.dev%2Fsites%2Fdefault%2Ffiles%2F2023-11%2Fneurons.png&cd=8dfd138c8c72b1dc278fe26f0e7f1411
     thumbnailImageCropping: https://www.uoguelph.ca/.netlify/images?w=1680&h=640&fit=cover&position=center&fm=webp&q=75&url=https%3A%2F%2Fapi.liveugconthub.uoguelph.dev%2Fsites%2Fdefault%2Ffiles%2F2023-11%2Fneurons.png&cd=8dfd138c8c72b1dc278fe26f0e7f1411
     image:
@@ -142,4 +142,3 @@ spot_light_cards:
             height: 640
             variations:
               - url: https://www.uoguelph.ca
-  

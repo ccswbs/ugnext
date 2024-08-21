@@ -2,7 +2,7 @@ import { Accordions } from '@/components/widgets/accordions';
 import { ButtonSection } from '@/components/widgets/button-section';
 import { GeneralText } from '@/components/widgets/general-text';
 import { Links } from '@/components/widgets/links';
-import { MediaText } from "@/components/widgets/media-text";
+import { MediaText } from '@/components/widgets/media-text';
 import { Section } from '@/components/widgets/section';
 import { Statistics } from '@/components/widgets/statistics';
 import { Tabs } from '@/components/widgets/tabs';
@@ -13,7 +13,7 @@ export const WidgetSelector = ({ data }) => {
     case 'ParagraphAccordionSection':
       return <Accordions data={data} />;
     case 'ParagraphSectionButton':
-      return <ButtonSection data={data} />
+      return <ButtonSection data={data} />;
     case 'ParagraphGeneralText':
       return <GeneralText data={data} />;
     case 'ParagraphLinksWidget':

@@ -39,7 +39,11 @@ function fontAwesomeIconColour(colourChoice) {
 
 export const Button = ({ buttonCol, buttonData }) => {
   let urlLink = buttonData?.link?.url;
-  let buttonLinkTitle = buttonData?.formattedTitle ? buttonData.formattedTitle.processed : (buttonData.link?.title ? buttonData.link.title : 'No title entered');
+  let buttonLinkTitle = buttonData?.formattedTitle
+    ? buttonData.formattedTitle.processed
+    : buttonData.link?.title
+      ? buttonData.link.title
+      : 'No title entered';
   let buttonIcon = buttonData?.fontAwesomeIcon;
   let buttonIconColour = buttonData?.fontAwesomeIconColour?.name;
   let buttonStyle = buttonData?.style?.name;
@@ -69,7 +73,7 @@ export const Button = ({ buttonCol, buttonData }) => {
     'block',
   );
 
-  if (buttonCol !=='right' && buttonCol !=='Secondary') {
+  if (buttonCol !== 'right' && buttonCol !== 'Secondary') {
     buttonClasses = twJoin(buttonClasses, 'md:inline-block');
   }
 
@@ -77,8 +81,8 @@ export const Button = ({ buttonCol, buttonData }) => {
     <>
       <a className={buttonClasses} href={urlLink}>
         {buttonIcon && setButtonIcon(buttonIcon, buttonIconClasses)}
-        <span className='align-middle inline-block' dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+        <span className="align-middle inline-block" dangerouslySetInnerHTML={{ __html: buttonLinkTitle }} />
       </a>
     </>
-    );
+  );
 };

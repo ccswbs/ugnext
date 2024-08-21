@@ -316,35 +316,35 @@ fragment Video on MediaVideo {
 }
 
 query GetPage($id: String = "", $status: Boolean = false) {
-	contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
-		results {
-			... on NodePage {
-				primaryNavigation {
-					...Navigation
-				}
-				image {
-					...Image
-				}
-				title
-				widgets {
-					...Accordion
-					...GeneralText
-					...Buttons
-					...Links
-					...MediaText
-					...ButtonSection
-					...Tabs
-					...Statistics
-					...TestimonialSlider
-					...Story
-					...ImageOverlay
-					...ModalVideo
-					...Section
-				}
-				changed {
-					timestamp
-				}
-			}
-		}
-	}
+  contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
+    results {
+      ... on NodePage {
+        primaryNavigation {
+          ...Navigation
+        }
+        image {
+          ...Image
+        }
+        title
+        widgets {
+          ...Accordion
+          ...GeneralText
+          ...Buttons
+          ...Links
+          ...MediaText
+          ...ButtonSection
+          ...Tabs
+          ...Statistics
+          ...TestimonialSlider
+          ...Story
+          ...ImageOverlay
+          ...ModalVideo
+          ...Section
+        }
+        changed {
+          timestamp
+        }
+      }
+    }
+  }
 }

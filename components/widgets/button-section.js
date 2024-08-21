@@ -10,9 +10,12 @@ export const ButtonSection = ({ data }) => {
   return (
     <>
       {buttonsData?.length > 0 && (
-        <ConditionalWrap condition={buttonCol === 'Call to Action'} wrap={children => <div className='md:flex md:justify-center'>{children}</div>}>
-          {buttonsData.map((button) => (            
-              <Button key={button.id} buttonCol={buttonCol} buttonData={button} />            
+        <ConditionalWrap
+          condition={buttonCol === 'Call to Action'}
+          wrap={(children) => <div className="md:flex md:justify-center">{children}</div>}
+        >
+          {buttonsData.map((button) => (
+            <Button key={button.id} buttonCol={buttonCol} buttonData={button} />
           ))}
         </ConditionalWrap>
       )}
