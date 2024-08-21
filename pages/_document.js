@@ -1,5 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
+import GoogleTagManager from '@magicul/next-google-tag-manager';
 
 export default function Document() {
   return (
@@ -32,6 +33,7 @@ export default function Document() {
         <Script src="https://kit.fontawesome.com/7993323d0c.js" crossorigin="anonymous" strategy="lazyOnload" />
       </Head>
       <body>
+        {process.env.NODE_ENV === 'production' && <GoogleTagManager id={process.env.GTM_ID} />}
         <Main />
         <NextScript />
       </body>

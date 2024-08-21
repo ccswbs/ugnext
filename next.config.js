@@ -11,7 +11,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['placehold.co'],
+    domains: ['picsum.photos'],
     remotePatterns: [
       {
         protocol: 'https',

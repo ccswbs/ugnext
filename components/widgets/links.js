@@ -17,16 +17,14 @@ export const Links = ({ data }) => {
             title={<span className="my-auto w-full text-center text-xl font-bold">{link.url.title}</span>}
             href={link.url.url}
             centered
-            image={
-              <Image
-                className="aspect-[4/3] w-full"
-                src={link.image.image.url}
-                alt={link.image.image.alt}
-                width={link.image.image.width}
-                height={link.image.image.height}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              />
-            }
+            image={{
+              src: link.image.image.url,
+              alt: link.image.image.alt,
+              width: link.image.image.width,
+              height: link.image.image.height,
+              className: 'aspect-[4/3] w-full',
+              sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw',
+            }}
           />
         ))}
       </div>

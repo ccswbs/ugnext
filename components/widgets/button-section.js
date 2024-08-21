@@ -1,24 +1,10 @@
-import { createContext } from 'react';
-import { twJoin } from 'tailwind-merge';
 import { Button } from '@/components/widgets/button-widget';
-import ConditionalWrap from 'conditional-wrap';
 
 export const ButtonSection = ({ data }) => {
-  const buttonsData = data?.buttons;
-  const buttonCol = data?.sectionColumn?.name;
+  const buttons = data?.buttons;
+  const column = data?.sectionColumn?.name;
 
   return (
-    <>
-      {buttonsData?.length > 0 && (
-        <ConditionalWrap
-          condition={buttonCol === 'Call to Action'}
-          wrap={(children) => <div className="md:flex md:justify-center">{children}</div>}
-        >
-          {buttonsData.map((button) => (
-            <Button key={button.id} buttonCol={buttonCol} buttonData={button} />
-          ))}
-        </ConditionalWrap>
-      )}
-    </>
+    <>{buttons?.length > 0 && buttons.map((button) => <Button key={button.id} column={column} data={button} />)}</>
   );
 };

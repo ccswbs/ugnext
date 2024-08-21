@@ -24,7 +24,7 @@ export const Button = ({
       href={href}
       type={href ? undefined : type}
       className={twMerge(
-        'inline-flex items-center justify-center px-4 py-3 text-base font-medium no-underline shadow-sm transition-colors focus:outline-none',
+        'inline-flex items-center justify-center text-lg px-6 py-4 font-medium no-underline shadow-sm transition-colors focus:outline-none',
         !disabled && 'cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2',
         outlined &&
           !disabled &&
@@ -38,10 +38,12 @@ export const Button = ({
               'border-blue text-blue hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue',
             color === 'green' &&
               'border-green text-green hover:bg-green hover:text-white focus:bg-green focus:text-white focus:ring-green',
-            color === 'grey' &&
-              'border-grey-300 text-black hover:bg-grey-300 hover:text-black focus:bg-grey focus:text-white focus:ring-grey',
+            color === 'gray' &&
+              'border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-white focus:bg-gray-300 focus:text-white focus:ring-gray-300',
+            color === 'black' &&
+              'border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white focus:bg-gray focus:text-white focus:ring-gray-800',
             color === 'white' &&
-              'border-white text-black hover:bg-white hover:text-black focus:bg-grey-light focus:text-white focus:ring-white',
+              'border-white text-black hover:bg-white hover:text-black focus:bg-gray-light focus:text-white focus:ring-white',
           ),
         !outlined &&
           !disabled &&
@@ -54,10 +56,12 @@ export const Button = ({
               'bg-blue text-white hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue',
             color === 'green' &&
               'bg-green text-white hover:bg-green-800 hover:text-white focus:bg-green-800 focus:text-white focus:ring-green',
-            color === 'grey' &&
-              'bg-grey text-black hover:bg-grey-400 hover:text-black focus:bg-grey-400 focus:text-black focus:ring-grey',
+            color === 'gray' &&
+              'bg-gray text-black hover:bg-gray-400 hover:text-black focus:bg-gray-400 focus:text-black focus:ring-gray',
+            color === 'black' &&
+              'bg-gray-800 text-white hover:bg-black hover:text-white focus:bg-black focus:text-white focus:ring-black',
             color === 'white' &&
-              'border-white bg-white text-black hover:bg-grey-light hover:text-black focus:bg-white focus:text-black focus:ring-white',
+              'border-white bg-white text-black hover:bg-gray-light hover:text-black focus:bg-white focus:text-black focus:ring-white',
           ),
         disabled &&
           twJoin(
@@ -81,7 +85,7 @@ Button.propTypes = {
   /**
    * What background color to use
    */
-  color: PropTypes.oneOf(['red', 'yellow', 'blue', 'green', 'grey', 'none']),
+  color: PropTypes.oneOf(['red', 'yellow', 'blue', 'green', 'gray', 'black', 'white', 'none']),
   /**
    * What style of button to use
    */

@@ -59,11 +59,13 @@ export default function Page({ data }) {
       {data?.image ? (
         <>
           <Hero
-            variant="ch"
-            src={data.image.url}
-            height={data.image.height}
-            width={data.image.width}
-            alt={data.image.alt}
+            variant="content-hub"
+            image={{
+              src: data.image.url,
+              height: data.image.height,
+              width: data.image.width,
+              alt: data.image.alt,
+            }}
             title={data.title}
           />
 
