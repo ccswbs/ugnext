@@ -26,8 +26,8 @@ export const ProgramTestimonial = () => {
 	  const data = {
 		testimonialData:testimonialData,
 		setting:{
-			slideNum : 4,
-			displayType:'col'
+			slideNum : 2,
+			displayType:'row'
 		},
 		heading: {
 			level:3,

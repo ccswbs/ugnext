@@ -41,7 +41,6 @@ const Card = ({ img, title, name, description, displayType }) => {
             borderRadius:0,
             width:'100%',
             height:'100%',
-            padding: 7,
             marginBottom: 20,
           }:{
             width: 120,
@@ -53,9 +52,9 @@ const Card = ({ img, title, name, description, displayType }) => {
       />
       <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
       {displayType === 'col' ? (
-          <>
+          <div  className='p-2'>
             {/* Title Section First */}
-            <div className=''>
+            <div>
               <p className='mb-0'>
                 <span className="font-semibold">{name}</span>
               </p>
@@ -65,7 +64,7 @@ const Card = ({ img, title, name, description, displayType }) => {
             </div>
             {/* Description After Title */}
             <p>{description}</p>
-          </>
+          </div>
         ) : (
           <>
             {/* Description First */}
