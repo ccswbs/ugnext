@@ -1,10 +1,7 @@
 import React from 'react';
-import { Heading } from '@/components/heading';
-import { Testimonials } from '@/components/testimonial';
 import {MeetFaculty} from '@/components/meet-faculty';
 export const ProgramTestimonial = () => {	
-	//test data for testimonial
-	
+	//test data for testimonial	
 	const testimonialData = [
 		{
 		  img: "https://www.tutorialrepublic.com/examples/images/clients/1.jpg",
