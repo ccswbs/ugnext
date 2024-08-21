@@ -1,0 +1,41 @@
+fragment Testimonial on NodeTestimonial {
+  __typename
+  body {
+    processed
+  }
+  profile {
+    url
+    title
+  }
+  type {
+    ... on TermTestimonialType {
+      name
+    }
+  }
+  title
+  image {
+    ... on MediaImage {
+      id
+      name
+      image {
+        url
+        width
+        height
+        alt
+        variations(styles: PLACEHOLDER) {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
+}
+
+query GetTestimonialsByTag {
+  testimonialsByTag(filter: { tags: ["320"] }) {
+    results {
+      ...Testimonial
+    }
+  }
+}
