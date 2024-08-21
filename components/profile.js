@@ -15,7 +15,7 @@ export const Profile = ({ image, body, footer }) => {
         className={twMerge('rounded-full w-[15rem] h-[15rem] object-cover object-center', image?.className)}
       />
       <div className={twJoin('flex flex-col gap-6', !footer && 'my-auto')}>
-        <div className="italic text-gray-700 text-lg">{body}</div>
+        <div className="text-lg">{body}</div>
         {footer && <Info color="yellow">{footer}</Info>}
       </div>
     </div>

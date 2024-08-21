@@ -66,7 +66,7 @@ export const TestimonialSlider = ({ data }) => {
           <Profile
             key={testimonial.name + index}
             image={testimonial.image}
-            body={<blockquote>{testimonial.quote}</blockquote>}
+            body={<blockquote className="italic text-gray-700">{testimonial.quote}</blockquote>}
             footer={
               <>
                 <span className="font-bold">{testimonial.name}</span>
