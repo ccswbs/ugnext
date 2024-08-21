@@ -1,8 +1,8 @@
 import React from 'react';
-import { twJoin, twMerge } from 'tailwind-merge';
 import { Carousel } from '@/components/carousel';
-import { Testimonial } from '@/components/testimonial';
 import { Heading } from '@/components/heading';
+import { Profile } from '@/components/profile';
+import { Link } from '@/components/link';
 
 export const TestimonialSlider = ({ data }) => {
   const testimonials = [
@@ -58,16 +58,24 @@ export const TestimonialSlider = ({ data }) => {
 
   return (
     <div className="px-10 py-14 bg-gray-100 flex flex-col items-center">
-      <Heading level={3} as="h2" className="mb-12 text-black">Testimonial Slider</Heading>
+      <Heading level={3} as="h2" className="mb-12 text-black">
+        Testimonial Slider
+      </Heading>
       <Carousel loop="jump" display={2}>
         {testimonials.map((testimonial, index) => (
-          <Testimonial
+          <Profile
             key={testimonial.name + index}
             image={testimonial.image}
-            quote={testimonial.quote}
-            name={testimonial.name}
-            description={testimonial.description}
-            title={testimonial.title}
+            body={<blockquote>{testimonial.quote}</blockquote>}
+            footer={
+              <>
+                <span className="font-bold">{testimonial.name}</span>
+                <span className="text-red">{testimonial.description}</span>
+                <Link className="w-fit py-0" href={testimonial.link.url} color="blue">
+                  {testimonial.link.title}
+                </Link>
+              </>
+            }
           />
         ))}
       </Carousel>
