@@ -32,44 +32,28 @@ export default function Home({ cards, hero }) {
 				<TagLine />
 
 				<div className="pt-1">
-<<<<<<< HEAD
 					<Heading level={1} as={'h2'} className="font-condensed text-black">
-=======
-					<Heading className="font-condensed" level={2}>
->>>>>>> text_media_widget
 						Our Latest News and Events
 					</Heading>
 					<SpotlightCards cards={cards} />
 				</div>
 
 				<div className="pt-1">
-<<<<<<< HEAD
 					<Heading level={1} as={'h2'} className="font-condensed text-black">
-=======
-					<Heading className="font-condensed" level={2}>
->>>>>>> text_media_widget
 						Study Here
 					</Heading>
 					<StudyHere />
 				</div>
 
 				<div className="pt-1">
-<<<<<<< HEAD
 					<Heading level={1} as={'h2'} className="font-condensed text-black">
-=======
-					<Heading className="font-condensed" level={2}>
->>>>>>> text_media_widget
 						How We Rank Among the World
 					</Heading>
 					<Rankings />
 				</div>
 
 				<div className="pt-1">
-<<<<<<< HEAD
 					<Heading level={1} as={'h2'} className="font-condensed text-black">
-=======
-					<Heading className="font-condensed" level={2}>
->>>>>>> text_media_widget
 						Our Three Campuses
 					</Heading>
 					<ThreeCampuses />
