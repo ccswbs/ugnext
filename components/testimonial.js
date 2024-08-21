@@ -12,7 +12,7 @@ const PreviousBtn = (props) => {
     <div 
       className={twMerge(twJoin('z-10'), className)}
       onClick={onClick} style={{ top:'33%', left:'0px' }} >
-      <ArrowBackIos className='text-yellow-400' style={{ fontSize: "45px" }} />
+      <ArrowBackIos className='text-yellow-400  hover:text-black' style={{ fontSize: "45px" }} />
     </div>
   );
 };
@@ -23,36 +23,62 @@ const NextBtn = (props) => {
     <div 
       className={twMerge(twJoin('z-10'), className)}
       onClick={onClick} style={{ top:'33%', right:'10px' }} >
-      <ArrowForwardIos className='text-yellow-400' style={{ fontSize: "45px" }} />
+      <ArrowForwardIos className='text-yellow-400 hover:text-black' style={{ fontSize: "45px" }} />
     </div>
   );
 };
 
-const Card = ({ img, title, name, description }) => {
+const Card = ({ img, title, name, description, displayType }) => {
   return (
-    <div className='flex items-center flex-row text-left text-gray-700 px-5'>
+    <div className={`flex items-center ${displayType === 'col' ? 'flex-col' : 'flex-row'} text-left text-gray-700 px-5`}>
       <Avatar
-        imgProps={{ style: { borderRadius: "50%" } }}
+        imgProps={
+          displayType !== 'col' ?{ style: { borderRadius: "50%" } }:{}
+        }
         src={img}
-        style={{
-          width: 120,
-          height: 120,
-          padding: 7,
-          marginBottom: 20,
-        }}
+        style={
+          displayType === 'col' ?{
+            borderRadius:0,
+            width:'100%',
+            height:'100%',
+            padding: 7,
+            marginBottom: 20,
+          }:{
+            width: 120,
+            height: 120,
+            padding: 7,
+            marginBottom: 20,
+          }
+        }
       />
-      <div className='flex items-left flex-col ml-5'>
-        <p>
-          {description}
-        </p>
-        <div className='border-l-4 border-yellow-400 pl-4'>
-          <p className='mb-0'>
-            <span className="font-semibold">{name}</span>
-          </p>
-          <p>
-            {title}
-          </p>
-        </div>
+      <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
+      {displayType === 'col' ? (
+          <>
+            {/* Title Section First */}
+            <div className=''>
+              <p className='mb-0'>
+                <span className="font-semibold">{name}</span>
+              </p>
+              <p>
+                <span className="font-semibold">{title}</span>
+              </p>
+            </div>
+            {/* Description After Title */}
+            <p>{description}</p>
+          </>
+        ) : (
+          <>
+            {/* Description First */}
+            <p>{description}</p>
+            {/* Title Section After Description */}
+            <div className='border-l-4 border-yellow-400 pl-4'>
+              <p className='mb-0'>
+                <span className="font-semibold">{name}</span>
+              </p>
+              <p>{title}</p>
+            </div>
+          </>
+        )}
         
       </div>
       
@@ -60,13 +86,13 @@ const Card = ({ img, title, name, description }) => {
   );
 };
 
-export const Testimonials = ({testimonialData}) => {
+export const Testimonials = ({testimonialData, slideNum, displayType=''}) => {
     
   const settings = {
     prevArrow: <PreviousBtn />,
     nextArrow: <NextBtn />,
     dots: false,
-    slidesToShow: 2,
+    slidesToShow: slideNum,
     slidesToScroll: 1,
     responsive: [      
       {
@@ -89,7 +115,8 @@ export const Testimonials = ({testimonialData}) => {
               img={item.img}
               title={item.title}
               name={item.name}
-              description={item.description}              
+              description={item.description}
+              displayType={displayType}              
             />
           ))}
         </Slider>
