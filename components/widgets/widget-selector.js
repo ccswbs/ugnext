@@ -9,7 +9,6 @@ import { Tabs } from '@/components/widgets/tabs';
 import { TestimonialSlider } from '@/components/widgets/testimonial-slider';
 import ConditionalWrap from 'conditional-wrap';
 import { Container } from '@/components/container';
-import { Title } from '@storybook/blocks';
 
 export const WidgetSelector = ({ data }) => {
   const noWrapWidgets = ['ParagraphTestimonialSlider'];
