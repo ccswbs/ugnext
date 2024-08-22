@@ -106,7 +106,7 @@ export const JumpLoop = {
 
 export const ContinuousLoop = {
   args: {
-    display: 2,
+    display: 3,
     loop: 'continuous',
     children: [
       <div key="test-1" className="flex justify-center items-center border-2 h-96">
