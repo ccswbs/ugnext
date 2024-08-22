@@ -4,6 +4,7 @@ import getPathsQuery from './get-paths.graphql';
 import getPageIDQuery from './get-page-id.graphql';
 import getPageTitleQuery from './get-page-title.graphql';
 import getPageQuery from './get-page-content.graphql';
+import getTestimonialsByTagQuery from './get-testimonials-by-tag.graphql';
 import getPageMenuQuery from './get-page-menu.graphql';
 
 export const getPaths = async () => {
@@ -47,7 +48,25 @@ export const getPageContent = async (id, status) => {
     status: status,
   });
 
-  return data?.contentRevisions?.results[0];
+  const content = data?.contentRevisions?.results[0];
+
+  // For Testimonial Sliders that are getting testimonials by tag, we need to fetch the testimonials separately
+  const sliders = content.widgets.filter(
+    (widget) => widget.__typename === 'ParagraphTestimonialSlider' && widget?.byTags,
+  );
+
+  for (const slider of sliders) {
+    const tags = slider.byTags.map((tag) => tag.path.replace('/taxonomy/term/', ''));
+
+    const { data } = await graphql(getTestimonialsByTagQuery, {
+      tags: tags,
+      status: status,
+    });
+
+    slider.byTags = data.testimonialsByTag.results;
+  }
+
+  return content;
 };
 
 export const getPageMenu = async (page) => {

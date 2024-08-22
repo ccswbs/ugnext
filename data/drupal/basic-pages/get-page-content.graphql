@@ -281,6 +281,7 @@ fragment Tag on TermTag {
 
 fragment Testimonial on NodeTestimonial {
   __typename
+  id
   body {
     processed
   }
@@ -294,10 +295,9 @@ fragment Testimonial on NodeTestimonial {
     }
   }
   title
+  description
   image {
     ... on MediaImage {
-      id
-      name
       image {
         url
         width

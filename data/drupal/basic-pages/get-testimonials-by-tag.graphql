@@ -1,5 +1,6 @@
 fragment Testimonial on NodeTestimonial {
   __typename
+  id
   body {
     processed
   }
@@ -13,10 +14,9 @@ fragment Testimonial on NodeTestimonial {
     }
   }
   title
+  description
   image {
     ... on MediaImage {
-      id
-      name
       image {
         url
         width
@@ -32,8 +32,8 @@ fragment Testimonial on NodeTestimonial {
   }
 }
 
-query GetTestimonialsByTag {
-  testimonialsByTag(filter: { tags: ["320"] }) {
+query GetTestimonialsByTag($status: Boolean = false, $tags: [String!]!) {
+  testimonialsByTag(filter: { tags: $tags, status: $status }) {
     results {
       ...Testimonial
     }

@@ -36,8 +36,6 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
   const maxIndex = count - visibleItems;
   const isAnimating = useRef(false);
 
-  console.log(index, maxIndex);
-
   useEffect(() => {
     if (!ref.current) {
       return;
