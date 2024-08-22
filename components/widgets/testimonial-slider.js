@@ -26,18 +26,20 @@ export const TestimonialSlider = ({ data }) => {
 
         <Carousel loop="jump" display={2}>
           {testimonials.map((testimonial, index) => {
-            const image = testimonial?.image.image;
+            const image = testimonial?.image?.image;
             const title = testimonial?.type ? `${testimonial.title}, ${testimonial.type[0].name}` : testimonial.title;
 
             return (
               <Profile
                 key={testimonial.id}
-                image={{
-                  src: image?.url,
-                  width: image?.width,
-                  height: image?.height,
-                  alt: image?.alt,
-                }}
+                image={
+                  image && {
+                    src: image?.url,
+                    width: image?.width,
+                    height: image?.height,
+                    alt: image?.alt,
+                  }
+                }
                 body={
                   <blockquote className="italic text-gray-700 text-xl">
                     <HtmlParser html={testimonial?.body?.processed} />

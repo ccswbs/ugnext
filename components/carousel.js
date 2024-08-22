@@ -92,7 +92,7 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
           <button
             onClick={() => shift(-1)}
             className={twJoin(
-              'h-full w-16 flex items-center justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
+              'h-full w-16 flex justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
               'left-0 hover:-translate-x-1 focus-visible:-translate-x-1',
               loop === 'none' && index === 0 && 'opacity-0 invisible pointer-events-none',
             )}
@@ -103,7 +103,7 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
           <button
             onClick={() => shift(1)}
             className={twJoin(
-              'h-full w-16 flex items-center justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
+              'h-full w-16 flex justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
               'right-0 hover:translate-x-1 focus-visible:translate-x-1',
               loop === 'none' && index === maxIndex && 'opacity-0 invisible pointer-events-none',
             )}
