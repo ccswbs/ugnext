@@ -17,6 +17,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@magicul/next-google-tag-manager": "^2.0.0",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@netlify/plugin-nextjs": "^5.5.1",
     "@next/bundle-analyzer": "^14.2.5",
     "classnames": "^2.5.1",
