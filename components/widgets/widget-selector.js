@@ -7,28 +7,32 @@ import { Section } from '@/components/widgets/section-widget.js';
 import { Statistics } from '@/components/widgets/statistics';
 import { Tabs } from '@/components/widgets/tabs';
 import { TestimonialSlider } from '@/components/widgets/testimonial-slider';
+import ConditionalWrap from 'conditional-wrap';
+import { Container } from '@/components/container';
+import { Title } from '@storybook/blocks';
 
 export const WidgetSelector = ({ data }) => {
-  switch (data.__typename) {
-    case 'ParagraphAccordionSection':
-      return <Accordions data={data} />;
-    case 'ParagraphSectionButton':
-      return <ButtonSection data={data} />;
-    case 'ParagraphGeneralText':
-      return <GeneralText data={data} />;
-    case 'ParagraphLinksWidget':
-      return <Links data={data} />;
-    case 'ParagraphMediaText':
-      return <MediaText data={data} />;
-    case 'ParagraphTestimonialSlider':
-      return <TestimonialSlider data={data} />;
-    case 'ParagraphSection':
-      return <Section data={data} />;
-    case 'ParagraphSectionTab':
-      return <Tabs data={data} />;
-    case 'ParagraphStatisticWidget':
-      return <Statistics data={data} />;
-    default:
-      return <div>{data.__typename} is not yet implemented</div>;
-  }
+  const noWrapWidgets = ['ParagraphTestimonialSlider'];
+  const map = {
+    ParagraphAccordionSection: Accordions,
+    ParagraphSectionButton: ButtonSection,
+    ParagraphGeneralText: GeneralText,
+    ParagraphLinksWidget: Links,
+    ParagraphMediaText: MediaText,
+    ParagraphTestimonialSlider: TestimonialSlider,
+    ParagraphSection: Section,
+    ParagraphSectionTab: Tabs,
+    ParagraphStatisticWidget: Statistics,
+  };
+
+  const Widget = map[data.__typename];
+
+  return (
+    <ConditionalWrap
+      condition={!noWrapWidgets.includes(data.__typename)}
+      wrap={(children) => <Container centered={true}>{children}</Container>}
+    >
+      {Widget && <Widget data={data} />}
+    </ConditionalWrap>
+  );
 };

@@ -81,11 +81,9 @@ export default function Page({ data }) {
         </Container>
       )}
 
-      <Container centered>
-        {data?.widgets?.map((widget, index) => (
-          <WidgetSelector key={index} data={widget} />
-        ))}
-      </Container>
+      {data?.widgets?.map((widget, index) => (
+        <WidgetSelector key={index} data={widget} />
+      ))}
     </Layout>
   );
 }
