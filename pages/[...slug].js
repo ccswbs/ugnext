@@ -72,13 +72,15 @@ export default function Page({ data }) {
           <Breadcrumbs links={data?.breadcrumbs} />
         </>
       ) : (
-        <Container centered>
+        <>
           <Breadcrumbs links={data?.breadcrumbs} />
 
-          <Heading level={1} className="mb-0">
-            {data?.title}
-          </Heading>
-        </Container>
+          <Container centered>
+            <Heading level={1} className="mb-0">
+              {data?.title}
+            </Heading>
+          </Container>
+        </>
       )}
 
       {data?.widgets?.map((widget, index) => (
