@@ -5,9 +5,11 @@ import { Profile } from '@/components/profile';
 import { Link } from '@/components/link';
 import { HtmlParser } from '@/components/html-parser';
 import { Container } from '@/components/container';
+import { useMediaQuery } from '@/lib/use-media-query';
 
 export const TestimonialSlider = ({ data }) => {
   let testimonials = [];
+  const showMultiple = useMediaQuery('only screen and (min-width : 1024px)');
 
   if (Array.isArray(data?.byTitle)) {
     testimonials = testimonials.concat(data.byTitle);
@@ -24,7 +26,7 @@ export const TestimonialSlider = ({ data }) => {
           {data?.title}
         </Heading>
 
-        <Carousel loop="jump" display={2}>
+        <Carousel loop="jump" display={showMultiple ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
             const image = testimonial?.image?.image;
             const title = testimonial?.type ? `${testimonial.title}, ${testimonial.type[0].name}` : testimonial.title;
