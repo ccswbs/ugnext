@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Info } from '@/components/info';
 
-export const Profile = ({ image, body, footer }) => {
+export const Profile = ({ image, body, footer, color = 'yellow' }) => {
+  console.log(color);
+
   return (
     <div className="flex gap-5 w-full px-4">
       {image && (
@@ -18,7 +20,7 @@ export const Profile = ({ image, body, footer }) => {
       )}
       <div className={twJoin('flex flex-col gap-6', !footer && 'my-auto')}>
         <div className="text-lg">{body}</div>
-        {footer && <Info color="yellow">{footer}</Info>}
+        {footer && <Info color={color}>{footer}</Info>}
       </div>
     </div>
   );
@@ -34,4 +36,5 @@ Profile.propTypes = {
   }),
   body: PropTypes.node.isRequired,
   footer: PropTypes.node,
+  color: PropTypes.oneOf(['red', 'yellow', 'blue', 'white']),
 };

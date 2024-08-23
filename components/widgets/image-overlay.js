@@ -39,16 +39,20 @@ const Content = ({ data, style }) => {
               : undefined
           }
           body={
-            <Blockquote color={style === 'yellow background' && 'red'} className="text-inherit text-left">
+            <Blockquote
+              color={style === 'yellow background' ? 'red' : 'yellow'}
+              className="text-inherit text-left xl:text-4xl"
+            >
               {data?.quoteContent}
             </Blockquote>
           }
           footer={
             <>
-              {data?.quoteSource && <span>{data.quoteSource}</span>}
-              {data?.quoteDescription && <span>{data.quoteDescription}</span>}
+              {data?.quoteSource && <span className="text-xl">{data.quoteSource}</span>}
+              {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
             </>
           }
+          color={style === 'yellow background' ? 'red' : 'yellow'}
         />
       );
     case 'ParagraphSectionButton':
