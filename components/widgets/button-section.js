@@ -79,7 +79,6 @@ export const Button = ({ column, data }) => {
 
 export const ButtonSection = ({ data }) => {
   const buttons = data?.buttons;
-  console.log(data);
   const column = data?.buttonSectionColumn?.name;
 
   return (
