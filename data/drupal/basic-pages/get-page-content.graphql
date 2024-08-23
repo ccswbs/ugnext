@@ -93,6 +93,11 @@ fragment ImageOverlay on ParagraphImageOverlay {
       name
     }
   }
+  contentAlignment {
+    ... on TermAlignmentStyle {
+      name
+    }
+  }
 }
 
 fragment Links on ParagraphLinksWidget {
