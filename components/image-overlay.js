@@ -3,12 +3,12 @@ import { twJoin, twMerge } from 'tailwind-merge';
 import PropTypes from 'prop-types';
 import { Container } from '@/components/container';
 
-export const ImageOverlay = ({ image, children, alignment, overlay = 'none', blurred = false }) => {
+export const ImageOverlay = ({ image, children, alignment = 'center', overlay = 'none', blurred = false }) => {
   return (
     <div className="flex flex-col relative w-full h-fit lg:min-h-[40rem]">
       <div className="absolute w-full h-full z-10">
         <Image
-          className={twMerge('w-full h-full object-cover', blurred && 'backdrop-blur', image.className)}
+          className={twMerge('w-full h-full object-cover', blurred && 'blur-sm', image.className)}
           src={image.src}
           width={image.width}
           height={image.height}
