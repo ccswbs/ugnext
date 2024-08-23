@@ -23,7 +23,7 @@ fragment ButtonSection on ParagraphSectionButton {
   buttons {
     ...Buttons
   }
-  sectionColumn {
+  buttonSectionColumn: sectionColumn {
     __typename
     ...SectionColumn
     ...SpecialRegions
