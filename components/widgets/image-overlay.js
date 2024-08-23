@@ -74,28 +74,30 @@ export const ImageOverlay = ({ data }) => {
   const content = data.imageOverlayContent;
 
   return (
-    <div className="w-full h-fit grid grid-cols-1">
-      <Image
-        className="row-start-1 col-start-1 w-full h-full object-cover"
-        src={background.src ?? background.url}
-        width={background.width}
-        height={background.height}
-        alt={background.alt || ''}
-      />
+    <div className="flex flex-col relative w-full h-fit lg:min-h-[60rem]">
+      <div className="absolute w-full h-full z-10">
+        <Image
+          className="w-full h-full object-cover"
+          src={background.src ?? background.url}
+          width={background.width}
+          height={background.height}
+          alt={background.alt || ''}
+        />
 
-      {(style === 'dark overlay' || style === 'light overlay') && (
-        <div
-          className={twJoin(
-            'row-start-1 col-start-1 w-full h-full object-cover',
-            style === 'dark overlay' && 'bg-black/60',
-            style === 'light overlay' && 'bg-white/60',
-          )}
-        ></div>
-      )}
+        {(style === 'dark overlay' || style === 'light overlay') && (
+          <div
+            className={twJoin(
+              'absolute top-0 left-0 w-full h-full',
+              style === 'dark overlay' && 'bg-black/60',
+              style === 'light overlay' && 'bg-white/60',
+            )}
+          ></div>
+        )}
+      </div>
 
       <Container
         className={twJoin(
-          'flex flex-col row-start-1 col-start-1',
+          'relative py-20 flex flex-col z-20 flex-1',
           (style === 'dark overlay' || style === 'red background') && 'text-white',
           alignment === 'centre middle' && 'justify-center items-center',
           alignment === 'left middle' && 'justify-center items-start',
