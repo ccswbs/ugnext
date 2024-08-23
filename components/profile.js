@@ -5,8 +5,6 @@ import React from 'react';
 import { Info } from '@/components/info';
 
 export const Profile = ({ image, body, footer, color = 'yellow' }) => {
-  console.log(color);
-
   return (
     <div className="flex gap-5 w-full px-4">
       {image && (
