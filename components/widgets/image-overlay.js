@@ -22,7 +22,11 @@ const getImage = (data) => {
 const Content = ({ data, style }) => {
   switch (data?.__typename) {
     case 'ParagraphGeneralText':
-      return <HtmlParser html={data.body.processed} />;
+      return (
+        <div className="[&_*]:text-inherit">
+          <HtmlParser html={data.body.processed} />
+        </div>
+      );
     case 'ParagraphStoryQuote':
       const image = data.image?.image;
 
