@@ -6,7 +6,7 @@ import { Info } from '@/components/info';
 
 export const Profile = ({ image, body, footer }) => {
   return (
-    <div className="flex text-gray-700 gap-5 w-full px-4">
+    <div className="flex gap-5 w-full px-4">
       {image && (
         <Image
           src={image.src}
