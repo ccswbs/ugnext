@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { twJoin, twMerge } from 'tailwind-merge';
+import { Container } from '@/components/container';
 
 export const Story = ({ backgroundImage, foregroundImage, content, footer }) => {
   return (
@@ -34,7 +35,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
 
       {footer && (
         <div className="flex w-full items-center justify-center bg-black p-4 text-white">
-          <div className="text-xl">{footer}</div>
+          <Container className="text-xl">{footer}</Container>
         </div>
       )}
     </div>

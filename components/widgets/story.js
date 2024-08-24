@@ -2,6 +2,7 @@ import { Story as StoryComponent } from '@/components/story';
 import { Statistics } from '@/components/widgets/statistics';
 import { HtmlParser } from '@/components/html-parser';
 import { twJoin } from 'tailwind-merge';
+import { Blockquote } from '../blockquote';
 
 export const Story = ({ data }) => {
   return (
@@ -10,6 +11,10 @@ export const Story = ({ data }) => {
         ?.map((content) => {
           switch (content.__typename) {
             case 'ParagraphStoryImageCutoutBackground':
+              const quotes = content.storyContent?.filter((node) => node.__typename === 'ParagraphStoryQuote');
+
+              console.log(quotes);
+
               return (
                 <StoryComponent
                   key={content?.id ?? index}
@@ -31,6 +36,20 @@ export const Story = ({ data }) => {
                       <span className="text-2xl mb-4">{content.title}</span>
                       {content.text && <HtmlParser html={content.text.processed} />}
                     </div>
+                  }
+                  footer={
+                    quotes.length > 0 && (
+                      <div>
+                        {quotes.map((quote) => {
+                          return (
+                            <div className="flex flex-col justify-center items-center gap-4" key={quote.id}>
+                              <Blockquote>{quote.quoteContent}</Blockquote>
+                              <span className="">~ {quote.quoteSource}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )
                   }
                 />
               );

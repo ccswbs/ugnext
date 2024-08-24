@@ -257,6 +257,7 @@ fragment StoryModalVideo on ParagraphStoryModalVideo {
 
 fragment StoryQuote on ParagraphStoryQuote {
   __typename
+  id
   quoteContent: content
   quoteSource: source
   quoteDescription: description
