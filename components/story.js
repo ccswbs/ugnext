@@ -1,42 +1,45 @@
 import PropTypes from 'prop-types';
 import Image from 'next/image';
+import { twJoin, twMerge } from 'tailwind-merge';
 
-export const Story = ({ backgroundImage, foregroundImage, content, footer }) => (
-  <div className="flex w-full flex-col">
-    <div className="relative flex w-full items-center justify-center overflow-hidden">
-      <div className="absolute z-0 h-full max-h-full w-full">
-        <Image
-          src={backgroundImage.src}
-          alt={backgroundImage.alt}
-          className={backgroundImage?.className}
-          width={backgroundImage?.width}
-          height={backgroundImage?.height}
-          sizes="100vw"
-        />
-      </div>
-
-      <div className="container z-10 flex w-full max-w-max-content flex-col items-center gap-6 px-6 pt-6 lg:flex-row">
-        <div className="flex w-full justify-center lg:w-1/2">{content}</div>
-        <div className="flex w-full justify-center lg:mt-auto lg:w-1/2">
+export const Story = ({ backgroundImage, foregroundImage, content, footer }) => {
+  return (
+    <div className="flex w-full flex-col">
+      <div className="relative flex w-full items-center justify-center overflow-hidden">
+        <div className="absolute z-0 h-full max-h-full w-full">
           <Image
-            src={foregroundImage.src}
-            alt={foregroundImage.alt}
-            className={foregroundImage?.className}
-            width={foregroundImage?.width}
-            height={foregroundImage?.height}
-            sizes="(max-width: 1024px) 50vw, 100vw"
+            src={backgroundImage.src}
+            alt={backgroundImage.alt}
+            className={twMerge('w-full', backgroundImage?.className)}
+            width={backgroundImage?.width}
+            height={backgroundImage?.height}
+            sizes="100vw"
           />
         </div>
-      </div>
-    </div>
 
-    {footer && (
-      <div className="flex w-full items-center justify-center bg-black p-4 text-white">
-        <div className="text-xl">{footer}</div>
+        <div className="container z-10 flex w-full max-w-max-content flex-col items-center gap-6 px-6 lg:flex-row">
+          <div className="flex w-full justify-center lg:w-1/2">{content}</div>
+          <div className="flex w-full justify-center lg:mt-auto lg:w-1/2">
+            <Image
+              src={foregroundImage.src}
+              alt={foregroundImage.alt}
+              className={twMerge('h-full w-full', foregroundImage?.className)}
+              width={foregroundImage?.width}
+              height={foregroundImage?.height}
+              sizes="(max-width: 1024px) 50vw, 100vw"
+            />
+          </div>
+        </div>
       </div>
-    )}
-  </div>
-);
+
+      {footer && (
+        <div className="flex w-full items-center justify-center bg-black p-4 text-white">
+          <div className="text-xl">{footer}</div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 Story.propTypes = {
   backgroundImage: PropTypes.shape({

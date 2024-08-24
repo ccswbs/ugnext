@@ -200,6 +200,7 @@ fragment SpecialRegions on TermSpecialRegion {
 
 fragment Statistics on ParagraphStatisticWidget {
   __typename
+  id
   content {
     ... on ParagraphStatisticItem {
       image {
@@ -224,6 +225,8 @@ fragment Story on ParagraphStoryWidget {
   content {
     ...Statistics
     ... on ParagraphStoryImageCutoutBackground {
+      __typename
+      id
       backgroundImage {
         ...Image
       }
