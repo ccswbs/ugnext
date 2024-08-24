@@ -41,50 +41,53 @@ export const ImageOverlay = ({ data }) => {
       }}
     >
       <div className={twJoin((style === 'Dark overlay' || style === 'Red background') && 'text-white')}>
-        {data.imageOverlayContent?.map((data, index) => {
-          switch (data?.__typename) {
-            case 'ParagraphGeneralText':
-              return (
-                <div className="[&_*]:text-inherit">
-                  <HtmlParser html={data.body.processed} />
-                </div>
-              );
-            case 'ParagraphStoryQuote':
-              const image = data.image?.image
-                ? {
-                    src: data.image?.image.url,
-                    height: data.image?.image.height,
-                    width: data.image?.image.width,
-                    alt: data.image?.image.alt,
-                  }
-                : null;
+        {data.imageOverlayContent
+          ?.map((data, index) => {
+            switch (data?.__typename) {
+              case 'ParagraphGeneralText':
+                return (
+                  <div key={data?.id ?? index} className="[&_*]:text-inherit">
+                    <HtmlParser html={data.body.processed} />
+                  </div>
+                );
+              case 'ParagraphStoryQuote':
+                const image = data.image?.image
+                  ? {
+                      src: data.image?.image.url,
+                      height: data.image?.image.height,
+                      width: data.image?.image.width,
+                      alt: data.image?.image.alt,
+                    }
+                  : null;
 
-              return (
-                <Profile
-                  image={image}
-                  body={
-                    <Blockquote
-                      color={style === 'Yellow background' ? 'red' : 'yellow'}
-                      className="text-inherit text-left xl:text-4xl"
-                    >
-                      {data?.quoteContent}
-                    </Blockquote>
-                  }
-                  footer={
-                    <>
-                      {data?.quoteSource && <span className="text-xl">{data.quoteSource}</span>}
-                      {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
-                    </>
-                  }
-                  color={style === 'Yellow background' ? 'red' : 'yellow'}
-                />
-              );
-            case 'ParagraphSectionButton':
-              return <ButtonSection data={data} />;
-            default:
-              return <></>;
-          }
-        })}
+                return (
+                  <Profile
+                    key={data?.id ?? index}
+                    image={image}
+                    body={
+                      <Blockquote
+                        color={style === 'Yellow background' ? 'red' : 'yellow'}
+                        className="text-inherit text-left xl:text-4xl"
+                      >
+                        {data?.quoteContent}
+                      </Blockquote>
+                    }
+                    footer={
+                      <>
+                        {data?.quoteSource && <span className="text-xl">{data.quoteSource}</span>}
+                        {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
+                      </>
+                    }
+                    color={style === 'Yellow background' ? 'red' : 'yellow'}
+                  />
+                );
+              case 'ParagraphSectionButton':
+                return <ButtonSection key={data?.id ?? index} data={data} />;
+              default:
+                return null;
+            }
+          })
+          .filter(Boolean)}
       </div>
     </ImageOverlayComponent>
   );
