@@ -18,8 +18,8 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
           />
         </div>
 
-        <div className="container z-10 flex w-full max-w-max-content flex-col items-center gap-6 px-6 lg:flex-row">
-          <div className="flex w-full justify-center p-8 lg:w-1/2">{content}</div>
+        <div className="container z-10 flex w-full max-w-max-content flex-col items-center gap-6 px-4 lg:flex-row">
+          <div className="flex w-full justify-center px-8 lg:p-0 lg:w-1/2">{content}</div>
           <div className="flex w-full justify-center lg:mt-auto lg:w-1/2">
             <Image
               src={foregroundImage.src}
