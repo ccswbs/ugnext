@@ -11,7 +11,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
           <Image
             src={backgroundImage.src}
             alt={backgroundImage.alt}
-            className={twMerge('w-full', backgroundImage?.className)}
+            className={twMerge('w-full h-full object-cover', backgroundImage?.className)}
             width={backgroundImage?.width}
             height={backgroundImage?.height}
             sizes="100vw"
@@ -19,7 +19,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
         </div>
 
         <div className="container z-10 flex w-full max-w-max-content flex-col items-center gap-6 px-6 lg:flex-row">
-          <div className="flex w-full justify-center lg:w-1/2">{content}</div>
+          <div className="flex w-full justify-center p-8 lg:w-1/2">{content}</div>
           <div className="flex w-full justify-center lg:mt-auto lg:w-1/2">
             <Image
               src={foregroundImage.src}

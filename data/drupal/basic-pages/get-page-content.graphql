@@ -247,6 +247,7 @@ fragment Story on ParagraphStoryWidget {
 
 fragment StoryModalVideo on ParagraphStoryModalVideo {
   __typename
+  id
   title {
     processed
   }
