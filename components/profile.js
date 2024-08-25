@@ -6,7 +6,7 @@ import { Info } from '@/components/info';
 
 export const Profile = ({ image, body, footer, color = 'yellow' }) => {
   return (
-    <div className="flex gap-5 w-full px-4">
+    <div className="flex flex-col items-center sm:flex-row sm:items-start gap-5 w-full px-4">
       {image && (
         <Image
           src={image.src}
