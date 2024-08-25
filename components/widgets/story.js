@@ -39,7 +39,7 @@ export const Story = ({ data }) => {
                     width: content.foregroundImage.image.width,
                     height: content.foregroundImage.image.height,
                     alt: content.foregroundImage.image.alt,
-                    className: twJoin('pt-4'),
+                    className: twJoin('pt-10'),
                   }}
                   content={
                     <div className="flex flex-col text-white">
