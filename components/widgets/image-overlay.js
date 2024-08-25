@@ -74,7 +74,7 @@ export const ImageOverlay = ({ data }) => {
                     }
                     footer={
                       <>
-                        {data?.quoteSource && <span className="text-xl">{data.quoteSource}</span>}
+                        {data?.quoteSource && <span className="text-xl font-bold">{data.quoteSource}</span>}
                         {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
                       </>
                     }
