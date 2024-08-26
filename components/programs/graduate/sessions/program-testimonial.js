@@ -24,10 +24,11 @@ export const ProgramTestimonial = () => {
 	  ];
 
 	  const data = {
+		// displayType: col or row
 		testimonialData:testimonialData,
 		setting:{
-			slideNum : 2,
-			displayType:'row'
+			slideNum : 3,
+			displayType:'col'
 		},
 		heading: {
 			level:3,
