@@ -26,20 +26,24 @@ export const ProgramTestimonial = () => {
     },
   ];
 
-  const data = {
-    testimonialData: testimonialData,
-    setting: {
-      slideNum: 2,
-      displayType: 'row',
-    },
-    heading: {
-      level: 3,
-      title: 'Meet the Biostatistics Faculty',
-    },
-  };
-  return (
-    <div className="ug-testimonial text-center bg-grey-light py-10">
-      <MeetFaculty data={data} />
-    </div>
-  );
+	  const data = {
+		// displayType: col or row
+		testimonialData:testimonialData,
+		setting:{
+			slideNum : 3,
+			displayType:'col'
+		},
+		heading: {
+			level:3,
+			title: 'Meet the Biostatistics Faculty'
+		}
+	};
+	return (
+		<div className='ug-testimonial text-center bg-grey-light py-10' >
+			<MeetFaculty
+				data={data}
+			/>
+		</div>
+
+	)
 };

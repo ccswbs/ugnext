@@ -27,7 +27,7 @@ const NextBtn = (props) => {
 const Card = ({ img, title, name, description, displayType }) => {
   return (
     <div
-      className={`flex items-center ${displayType === 'col' ? 'flex-col' : 'flex-row'} text-left text-gray-700 px-5`}
+      className={`flex items-center ${displayType === 'col' ? 'flex-col hover:bg-yellow-400' : 'flex-row'} text-left text-gray-700 px-5`}
     >
       <Avatar
         imgProps={displayType !== 'col' ? { style: { borderRadius: '50%' } } : {}}
