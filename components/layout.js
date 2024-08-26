@@ -57,8 +57,8 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
           <FontAwesomeIcon className="text-9xl" icon={faGryphonStatue} />
 
           <div className="flex items-center gap-2">
-            <FontAwesomeIcon className="w-[1.5em] animate-spin" icon={faSpinner} />
-            <span className="font-condensed text-3xl">Loading</span>
+            <FontAwesomeIcon className="h-[1em] text-3xl animate-spin" icon={faSpinner} />
+            <span className="font-condensed text-3xl relative">Loading</span>
           </div>
         </div>
       </Transition>

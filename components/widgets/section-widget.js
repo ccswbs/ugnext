@@ -9,7 +9,8 @@ export const Section = ({ data }) => {
   const others = [];
 
   data?.content?.forEach((widget, index) => {
-    switch (widget?.sectionColumn?.name?.toLowerCase()) {
+    const column = (widget?.buttonSectionColumn?.name ?? widget?.sectionColumn?.name).toLowerCase();
+    switch (column) {
       case 'primary':
         primary.push(<WidgetSelector key={index} data={widget} />);
         break;
@@ -25,10 +26,8 @@ export const Section = ({ data }) => {
   return (
     <>
       {data.heading && <Heading level={getHeadingLevel(data.headingLevel) ?? 1}>{data.heading}</Heading>}
-
-      {(primary.length > 0 || secondary.length > 0) && <SectionComponent primary={primary} secondary={secondary} />}
-
       {others.length > 0 && <div className="w-full text-center">{...others}</div>}
+      {(primary.length > 0 || secondary.length > 0) && <SectionComponent primary={primary} secondary={secondary} />}
     </>
   );
 };

@@ -23,7 +23,7 @@ fragment ButtonSection on ParagraphSectionButton {
   buttons {
     ...Buttons
   }
-  sectionColumn {
+  buttonSectionColumn: sectionColumn {
     __typename
     ...SectionColumn
     ...SpecialRegions
@@ -90,6 +90,11 @@ fragment ImageOverlay on ParagraphImageOverlay {
   }
   imageOverlayStyle: style {
     ... on TermImageOverlayStyle {
+      name
+    }
+  }
+  contentAlignment {
+    ... on TermAlignmentStyle {
       name
     }
   }
@@ -195,6 +200,7 @@ fragment SpecialRegions on TermSpecialRegion {
 
 fragment Statistics on ParagraphStatisticWidget {
   __typename
+  id
   content {
     ... on ParagraphStatisticItem {
       image {
@@ -219,6 +225,8 @@ fragment Story on ParagraphStoryWidget {
   content {
     ...Statistics
     ... on ParagraphStoryImageCutoutBackground {
+      __typename
+      id
       backgroundImage {
         ...Image
       }
@@ -239,6 +247,7 @@ fragment Story on ParagraphStoryWidget {
 
 fragment StoryModalVideo on ParagraphStoryModalVideo {
   __typename
+  id
   title {
     processed
   }
@@ -249,6 +258,7 @@ fragment StoryModalVideo on ParagraphStoryModalVideo {
 
 fragment StoryQuote on ParagraphStoryQuote {
   __typename
+  id
   quoteContent: content
   quoteSource: source
   quoteDescription: description
@@ -274,14 +284,16 @@ fragment Tabs on ParagraphSectionTab {
 }
 
 fragment Tag on TermTag {
+  id
   name
+  path
 }
 
 fragment Testimonial on NodeTestimonial {
   __typename
+  id
   body {
     processed
-    summary
   }
   profile {
     url
@@ -293,6 +305,22 @@ fragment Testimonial on NodeTestimonial {
     }
   }
   title
+  description
+  image {
+    ... on MediaImage {
+      image {
+        url
+        width
+        height
+        alt
+        variations(styles: PLACEHOLDER) {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
 }
 
 fragment TestimonialSlider on ParagraphTestimonialSlider {

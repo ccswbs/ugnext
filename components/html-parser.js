@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Parser, ProcessNodeDefinitions } from 'html-to-react';
 import { Link } from '@/components/link';
 import { Heading } from '@/components/heading';
@@ -9,6 +9,7 @@ import Image from 'next/image';
 import Script from 'next/script';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 
 const headingTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
@@ -120,7 +121,7 @@ export const DEFAULT_INSTRUCTIONS = [
  */
 export const HtmlParser = ({ html, instructions }) => {
   const parsed = useMemo(() => {
-    return parser.parseWithInstructions(
+    const parsed = parser.parseWithInstructions(
       html,
       () => true,
       Array.isArray(instructions)
@@ -133,6 +134,18 @@ export const HtmlParser = ({ html, instructions }) => {
           ]
         : DEFAULT_INSTRUCTIONS,
     );
+
+    if (Array.isArray(parsed)) {
+      return parsed.map((child) => {
+        if (typeof child === 'object') {
+          return <Fragment key={nanoid()}>{child}</Fragment>;
+        }
+
+        return child;
+      });
+    }
+
+    return parsed;
   }, [html, instructions]);
 
   return <>{parsed}</>;

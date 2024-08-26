@@ -12,7 +12,7 @@ const scroll = (element, to, duration) => {
   return new Promise((resolve) => {
     const step = (timestamp) => {
       const elapsed = timestamp - start;
-      const delta = bezier(Math.min(elapsed / duration, 1), 0.25, 0, 0.75, 1);
+      const delta = bezier(Math.min(elapsed / duration, 1), 0.25, 0, 0.25, 1);
 
       element.scrollLeft = lerp(from, to, delta);
 
@@ -33,7 +33,7 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
   const ref = useRef(null);
   const previousIndex = useRef(0);
   const [index, setIndex] = useState(0);
-  const maxIndex = count - (count % visibleItems) - 1;
+  const maxIndex = count - visibleItems;
   const isAnimating = useRef(false);
 
   useEffect(() => {
@@ -41,16 +41,29 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
       return;
     }
 
-    if (loop === 'jump' || loop === 'none' || (loop === 'continuous' && index < maxIndex - 1)) {
+    const width = ref.current?.offsetWidth / visibleItems;
+
+    if (loop === 'jump' || loop === 'none') {
       isAnimating.current = true;
 
-      scroll(ref.current, (ref.current?.offsetWidth / visibleItems) * index, 250).then(() => {
+      scroll(ref.current, width * index, 250).then(() => {
         isAnimating.current = false;
       });
     }
 
+    if (loop === 'continuous') {
+      /*
+      const column = mod(index + visibleItems, count);
+      ref.current.scrollLeft = width * (column - 1);
+
+      scroll(ref.current, width * column, 250).then(() => {
+        isAnimating.current = false;
+      });
+       */
+    }
+
     previousIndex.current = index;
-  }, [index, loop, visibleItems]);
+  }, [index, loop, maxIndex, visibleItems]);
 
   const shift = (value) => {
     if (isAnimating.current) return;
@@ -79,7 +92,7 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
           <button
             onClick={() => shift(-1)}
             className={twJoin(
-              'h-full w-16 flex items-center justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
+              'h-full w-16 items-center flex justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
               'left-0 hover:-translate-x-1 focus-visible:-translate-x-1',
               loop === 'none' && index === 0 && 'opacity-0 invisible pointer-events-none',
             )}
@@ -90,9 +103,9 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
           <button
             onClick={() => shift(1)}
             className={twJoin(
-              'h-full w-16 flex items-center justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
+              'h-full w-16 items-center flex justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black',
               'right-0 hover:translate-x-1 focus-visible:translate-x-1',
-              loop === 'none' && index === maxIndex - 1 && 'opacity-0 invisible pointer-events-none',
+              loop === 'none' && index === maxIndex && 'opacity-0 invisible pointer-events-none',
             )}
             aria-label="Shift carousel right"
           >
@@ -106,10 +119,8 @@ export const Carousel = ({ children, display = 1, loop = 'none' }) => {
         style={{ '--display': visibleItems, '--items': count }}
         ref={ref}
       >
-        {Children.map(children, (child, index) => (
-          <div key={child.key} style={{ gridColumn: index + 1 }}>
-            {child}
-          </div>
+        {Children.map(children, (child, i) => (
+          <div key={child.key}>{child}</div>
         ))}
       </div>
     </div>
