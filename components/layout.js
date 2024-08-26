@@ -63,6 +63,10 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 				</div>
 			</Transition>
 
+			{!isFallback && (
+				<a className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] text-blue underline" href="#content">Skip to content</a>
+			)}
+
 			<div className="flex flex-1 flex-col">
 				{isPreview && (
 					<div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
@@ -75,7 +79,7 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 				)}
 
 				<Header menu={menu} />
-				<main className={twMerge('flex-1 pb-4', className)}>{children}</main>
+				<main id="content" className={twMerge('flex-1 pb-4', className)}>{children}</main>
 				<Footer links={footerLinks} />
 			</div>
 		</>
