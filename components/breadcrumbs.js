@@ -16,7 +16,16 @@ export const Breadcrumbs = ({ links }) => (
       {links?.map((link, index) => (
         <li key={index} className="flex items-center gap-2">
           <FontAwesomeIcon icon={faChevronRight} className="h-[.75em]" />
-          {index === links.length - 1 ? <span>{link.title}</span> : <Link href={link.url}>{link.title}</Link>}
+          {index === links.length - 1 ? (
+            <span>{link.title}</span>
+          ) : (
+            <Link
+              className="underline decoration-1 decoration-transparent transition-colors hover:decoration-black focus:decoration-black"
+              href={link.url}
+            >
+              {link.title}
+            </Link>
+          )}
         </li>
       ))}
     </ol>

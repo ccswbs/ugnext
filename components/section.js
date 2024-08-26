@@ -8,7 +8,9 @@ export const Section = ({ primary, secondary, equal = false }) => {
   const hasSecondary = Array.isArray(secondary) ? secondary.length > 0 : Boolean(secondary);
 
   return hasSecondary ? (
-    <div className={twJoin('grid w-full grid-cols-1', equal ? 'md:grid-cols-[50%_50%]' : 'md:grid-cols-[75%_25%]')}>
+    <div
+      className={twJoin('grid w-full grid-cols-1 gap-4', equal ? 'md:grid-cols-[1fr_1fr]' : 'md:grid-cols-[3fr_1fr]')}
+    >
       <SectionContext.Provider value={{ column: 'primary', equal }}>
         <div>{primary}</div>
       </SectionContext.Provider>
