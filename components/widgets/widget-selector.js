@@ -6,31 +6,6 @@ import { MediaText } from '@/components/widgets/media-text';
 import { Section } from '@/components/widgets/section';
 import { Statistics } from '@/components/widgets/statistics';
 import { Tabs } from '@/components/widgets/tabs';
-<<<<<<< HEAD
-
-export const WidgetSelector = ({ data }) => {
-  console.log(data);
-  switch (data.__typename) {
-    case 'ParagraphAccordionSection':
-      return <Accordions data={data} />;
-    case 'ParagraphSectionButton':
-      return <ButtonSection data={data} />;
-    case 'ParagraphGeneralText':
-      return <GeneralText data={data} />;
-    case 'ParagraphLinksWidget':
-      return <Links data={data} />;
-    case 'ParagraphMediaText':
-      return <MediaText data={data} />;
-    case 'ParagraphSection':
-      return <Section data={data} />;
-    case 'ParagraphSectionTab':
-      return <Tabs data={data} />;
-    case 'ParagraphStatisticWidget':
-      return <Statistics data={data} />;
-    default:
-      return <div>{data.__typename} is not yet implemented</div>;
-  }
-=======
 import { TestimonialSlider } from '@/components/widgets/testimonial-slider';
 import ConditionalWrap from 'conditional-wrap';
 import { Container } from '@/components/container';
@@ -70,5 +45,4 @@ export const WidgetSelector = ({ data }) => {
       {Widget && <Widget data={data} />}
     </ConditionalWrap>
   );
->>>>>>> 667fa8c5fadda7e48a42958ea13a726d640af627
 };
