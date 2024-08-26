@@ -12,7 +12,7 @@ const scroll = (element, to, duration) => {
   return new Promise((resolve) => {
     const step = (timestamp) => {
       const elapsed = timestamp - start;
-      const delta = bezier(Math.min(elapsed / duration, 1), 0.25, 0, 0.75, 1);
+      const delta = bezier(Math.min(elapsed / duration, 1), 0.25, 0, 0.25, 1);
 
       element.scrollLeft = lerp(from, to, delta);
 
