@@ -1,0 +1,152 @@
+- name: Accounting
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/accounting-acct/
+  types:
+    - certificate
+  tags:
+    - business
+    - finance
+- name: Agriculture
+  url: https://www.ridgetownc.com/future/dagr/
+  types:
+    - associate-diploma
+    - co-op
+  tags:
+    - agriculture
+    - botany
+- name: Business
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-bus/
+  types:
+    - certificate
+  tags:
+    - business
+    - finance
+- name: Environmental Citizenship
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-citizenship-ect/
+  types:
+    - certificate
+  tags:
+    - humanities
+    - science
+- name: Environmental Conservation
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-conservation-ecv/
+  types:
+    - certificate
+  tags:
+    - biology
+    - science
+- name: Environmental Technician
+  url: https://www.ridgetownc.com/future/denm/
+  types:
+    - associate-diploma
+    - co-op
+  tags:
+    - agriculture
+    - botany
+    - environment
+- name: Equine Care & Management
+  url: https://www.ridgetownc.com/future/denm/
+  types:
+    - associate-diploma
+    - co-op
+  tags:
+    - business
+    - nutrition
+    - animal
+    - management
+- name: Food Science
+  url: https://www.uoguelph.ca/programs/food-science/
+  types:
+    - certificate
+  tags:
+    - food
+    - science
+- name: German Language and Culture
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/german-germ/
+  types:
+    - certificate
+  tags:
+    - humanities
+    - language
+- name: Horticulture
+  url: https://www.ridgetownc.com/future/dhrt/
+  types:
+    - associate-diploma
+    - co-op
+  tags:
+    - landscaping
+    - botany
+    - plant
+- name: Hospitality and Tourism Management
+  url: https://www.uoguelph.ca/programs/hospitality-and-tourism-management/
+  types:
+    - certificate
+  tags:
+    - business
+    - tourism
+    - management
+- name: Indigenous Environmental Governance
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/indigenous-environmental-governance-ieg/
+  types:
+    - certificate
+  tags:
+    - humanities
+    - culture
+- name: Leadership
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/leadership-lead/
+  types:
+    - certificate
+  tags:
+    - humanities
+    - management
+- name: Organic Agriculture
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/organic-agriculture-oagr/
+  types:
+    - certificate
+  tags:
+    - agriculture
+    - biology
+    - science
+- name: Public Policy and Administration
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/public-policy-administration-ppa#certificatetext
+  types:
+    - certificate
+  tags:
+    - humanities
+    - politics
+    - law
+- name: Spanish Language and Culture
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/spanish-hispanic-studies-spah#certificatetext
+  types:
+    - certificate
+  tags:
+    - humanities
+    - language
+    - culture
+- name: Applied Statistics
+  acronym: STAT
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/statistics-stat#diplomatext
+  degrees:
+    - Bachelor of Arts
+  types:
+    - diploma
+  tags:
+    - mathematics
+    - statistics
+- name: Turfgrass Management
+  acronym: DTM
+  url: https://www.uoguelph.ca/programs/turfgrass-management/
+  types:
+    - associate-diploma
+    - co-op
+  tags:
+    - landscaping
+    - botany
+    - plant
+- name: Veterinary Technology
+  url: https://www.ridgetownc.com/future/dvt/
+  types:
+    - associate-diploma
+  tags:
+    - animal
+    - vet
+    - biology

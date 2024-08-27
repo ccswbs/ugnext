@@ -32,5 +32,8 @@ yarn-error.log*
 .vercel
 
 .idea
-*storybook.log!
-/data/sqlite/db.sqlite3
+
+data/sqlite/db.sqlite3
+*storybook.log!/data/sqlite/db.sqlite3
+
+.fleet
