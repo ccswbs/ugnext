@@ -1,5 +1,7 @@
 # UGNext
 
+## Package Manager
+
 UGNext uses bun as its runtime/package manager.
 
 To get started:
