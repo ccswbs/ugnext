@@ -64,7 +64,7 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 			</Transition>
 
 			{!isFallback && (
-				<a className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] text-blue underline" href="#content">Skip to content</a>
+				<a className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]" href="#content">Skip to main content</a>
 			)}
 
 			<div className="flex flex-1 flex-col">
