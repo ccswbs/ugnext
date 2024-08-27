@@ -4,17 +4,17 @@ import certificateAndDiplomas from './certificate-and-diploma.yml';
 import continuingEducation from './continuing-education.yml';
 
 export const getUndergraduatePrograms = async () => {
-	return undergraduate;
+  return undergraduate;
 };
 
 export const getGraduatePrograms = async () => {
-	return graduate;
+  return graduate;
 };
 
 export const getCertificateAndDiplomaPrograms = async () => {
-	return certificateAndDiplomas;
+  return certificateAndDiplomas;
 };
 
 export const getContinuingEducationPrograms = async () => {
-	return continuingEducation;
+  return continuingEducation;
 };
