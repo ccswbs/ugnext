@@ -7,10 +7,10 @@ import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
 import { twJoin, twMerge } from 'tailwind-merge';
 
 const PreviousBtn = (props) => {
-  const { className, onClick } = props;
+  const { className, onClick, displayType } = props;
   return (
     <div 
-      className={twMerge(twJoin('z-10'), className)}
+      className={twMerge(twJoin(`z-10 ${displayType === 'col' ? '!top-auto !right-20 bottom-0 my-0 mx-auto sm:top-1/3 sm:right-auto sm:bottom-auto' : ''}`), className)}
       onClick={onClick} style={{ top:'33%', left:'0px' }} >
       <ArrowBackIos className='text-yellow-400  hover:text-black' style={{ fontSize: "45px" }} />
     </div>
@@ -18,10 +18,10 @@ const PreviousBtn = (props) => {
 };
 
 const NextBtn = (props) => {
-  const { className, onClick } = props;
+  const { className, onClick, displayType } = props;
   return (
     <div 
-      className={twMerge(twJoin('z-10'), className)}
+      className={twMerge(twJoin(`z-10 ${displayType === 'col' ? '!top-auto !left-20 bottom-0 my-0 mx-auto sm:top-1/3 sm:left-auto sm:bottom-auto' : ''}`), className)}
       onClick={onClick} style={{ top:'33%', right:'10px' }} >
       <ArrowForwardIos className='text-yellow-400 hover:text-black' style={{ fontSize: "45px" }} />
     </div>
@@ -90,8 +90,8 @@ const Card = ({ img, title, name, description, displayType }) => {
 export const Testimonials = ({testimonialData, slideNum, displayType=''}) => {
     
   const settings = {
-    prevArrow: <PreviousBtn />,
-    nextArrow: <NextBtn />,
+    prevArrow: <PreviousBtn displayType = {displayType} />,
+    nextArrow: <NextBtn displayType = {displayType} />,
     dots: false,
     slidesToShow: slideNum,
     slidesToScroll: 1,

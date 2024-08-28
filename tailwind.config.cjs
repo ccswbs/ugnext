@@ -178,5 +178,5 @@ module.exports = {
 		"vcard",
 		"author"
 	],
-	important: false,
+	important: true,
 };
