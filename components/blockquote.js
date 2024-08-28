@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 export const Blockquote = ({ className, children, color = 'yellow' }) => {
 	const markClasses = twJoin(
-		'mr-[0.2em] inline-block h-[1em]',
+		'inline-block h-[1em]',
 		color === 'yellow' && 'text-yellow',
 		color === 'red' && 'text-red',
 	);
@@ -18,7 +18,7 @@ export const Blockquote = ({ className, children, color = 'yellow' }) => {
 			)}
 		>
 			<FontAwesomeIcon icon={faQuoteLeft} className={markClasses} />
-			<span>{children}</span>
+			<span>&nbsp;{children}&nbsp;</span>
 			<FontAwesomeIcon icon={faQuoteRight} className={markClasses} />
 		</blockquote>
 	);
