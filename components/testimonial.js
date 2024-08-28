@@ -31,7 +31,7 @@ const NextBtn = (props) => {
 const Card = ({ img, title, name, description, displayType }) => {
   return (
     <div
-      className={`flex items-center ${displayType === 'col' ? 'flex-col' : 'flex-row'} text-left text-gray-700 px-5`}
+      className={`flex items-center ${displayType === 'col' ? 'flex-col hover:bg-yellow-400' : 'flex-row'} text-left text-gray-700 mx-2`}
     >
       <Avatar
         imgProps={
@@ -52,7 +52,7 @@ const Card = ({ img, title, name, description, displayType }) => {
       />
       <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
       {displayType === 'col' ? (
-          <div className={`p-2 ${displayType === 'col' ? 'hover:bg-yellow-400' : ''}`}>
+          <div className='p-2'>
             {/* Title Section First */}
             <div>
               <p className='mb-0'>
