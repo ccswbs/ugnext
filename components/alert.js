@@ -17,7 +17,7 @@ export const Alert = ({ type = 'danger', title, subtitle, message, footer }) => 
 				type === 'info' && 'bg-blue text-white',
 			)}
 		>
-			<FontAwesomeIcon className="h-[1.5em]" icon={faCircleExclamation} />
+			<FontAwesomeIcon className="!h-[1.5em]" icon={faCircleExclamation} />
 			<span>{title}</span>
 		</div>
 

@@ -9,6 +9,7 @@ import { Transition } from '@headlessui/react';
 import { faSpinner } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 import { twMerge } from 'tailwind-merge';
 import PropTypes from 'prop-types';
+import AppArmor from '@/components/app-armor';
 
 export const Layout = ({ children, className, menu, footerLinks, title = '', description = '', image = null }) => {
 	const { isPreview, isFallback } = useRouter();
@@ -73,6 +74,8 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 						</Button>
 					</div>
 				)}
+
+				<AppArmor />
 
 				<Header menu={menu} />
 				<main className={twMerge('flex-1 pb-4', className)}>{children}</main>
