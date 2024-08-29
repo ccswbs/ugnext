@@ -37,26 +37,6 @@ const Card = ({ img, title, name, description, displayType }) => {
         imgProps={displayType !== 'col' ? { style: { borderRadius: '50%' } } : {}}
         src={img}
         style={
-<<<<<<< HEAD
-          displayType === 'col'
-            ? {
-                borderRadius: 0,
-                width: '100%',
-                height: '100%',
-                marginBottom: 20,
-              }
-            : {
-                width: 120,
-                height: 120,
-                padding: 7,
-                marginBottom: 20,
-              }
-        }
-      />
-      <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
-        {displayType === 'col' ? (
-          <div className="p-2">
-=======
           displayType === 'col' ?{
             borderRadius:0,
             width:'100%',
@@ -71,7 +51,6 @@ const Card = ({ img, title, name, description, displayType }) => {
       <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
       {displayType === 'col' ? (
           <div className='p-2'>
->>>>>>> faculty-component
             {/* Title Section First */}
             <div>
               <p className="mb-0">
