@@ -7,19 +7,23 @@ import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import { twJoin, twMerge } from 'tailwind-merge';
 
 const PreviousBtn = (props) => {
-  const { className, onClick } = props;
+  const { className, onClick, displayType } = props;
   return (
-    <div className={twMerge(twJoin('z-10'), className)} onClick={onClick} style={{ top: '33%', left: '0px' }}>
-      <ArrowBackIos className="text-yellow-400  hover:text-black" style={{ fontSize: '45px' }} />
+    <div 
+      className={twMerge(twJoin(`z-10 ${displayType === 'col' ? '!top-auto !right-20 bottom-0 my-0 mx-auto sm:top-1/2 sm:right-auto sm:bottom-auto' : ''}`), className)}
+      onClick={onClick} style={{ top:'33%', left:'0px' }} >
+      <ArrowBackIos className='text-yellow-400  hover:text-black' style={{ fontSize: "45px" }} />
     </div>
   );
 };
 
 const NextBtn = (props) => {
-  const { className, onClick } = props;
+  const { className, onClick, displayType } = props;
   return (
-    <div className={twMerge(twJoin('z-10'), className)} onClick={onClick} style={{ top: '33%', right: '10px' }}>
-      <ArrowForwardIos className="text-yellow-400 hover:text-black" style={{ fontSize: '45px' }} />
+    <div 
+      className={twMerge(twJoin(`z-10 ${displayType === 'col' ? '!top-auto !left-20 bottom-0 my-0 mx-auto sm:top-1/2 sm:left-auto sm:bottom-auto' : ''}`), className)}
+      onClick={onClick} style={{ top:'33%', right:'10px' }} >
+      <ArrowForwardIos className='text-yellow-400 hover:text-black' style={{ fontSize: "45px" }} />
     </div>
   );
 };
@@ -27,12 +31,13 @@ const NextBtn = (props) => {
 const Card = ({ img, title, name, description, displayType }) => {
   return (
     <div
-      className={`flex items-center ${displayType === 'col' ? 'flex-col hover:bg-yellow-400' : 'flex-row'} text-left text-gray-700 px-5`}
+      className={`flex items-center ${displayType === 'col' ? 'flex-col hover:bg-yellow-400' : 'flex-row'} text-left text-gray-700 mx-2 mb-5 sm:mb-auto`}
     >
       <Avatar
         imgProps={displayType !== 'col' ? { style: { borderRadius: '50%' } } : {}}
         src={img}
         style={
+<<<<<<< HEAD
           displayType === 'col'
             ? {
                 borderRadius: 0,
@@ -51,6 +56,22 @@ const Card = ({ img, title, name, description, displayType }) => {
       <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
         {displayType === 'col' ? (
           <div className="p-2">
+=======
+          displayType === 'col' ?{
+            borderRadius:0,
+            width:'100%',
+            height:'100%',
+          }:{
+            width: 120,
+            height: 120,
+            padding: 7,
+          }
+        }        
+      />
+      <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
+      {displayType === 'col' ? (
+          <div className='p-2'>
+>>>>>>> faculty-component
             {/* Title Section First */}
             <div>
               <p className="mb-0">
@@ -83,8 +104,8 @@ const Card = ({ img, title, name, description, displayType }) => {
 
 export const Testimonials = ({ testimonialData, slideNum, displayType = '' }) => {
   const settings = {
-    prevArrow: <PreviousBtn />,
-    nextArrow: <NextBtn />,
+    prevArrow: <PreviousBtn displayType = {displayType} />,
+    nextArrow: <NextBtn displayType = {displayType} />,
     dots: false,
     slidesToShow: slideNum,
     slidesToScroll: 1,

@@ -118,62 +118,65 @@ const scaled = (input, scale) => {
 const scale = 1 / 0.625;
 
 module.exports = {
-  content: [
-    './components/**/*.{html,js,jsx,ts,tsx}',
-    './pages/**/*.{html,js,jsx,ts,tsx}',
-    './public/**/*.{html,js,jsx,ts,tsx}',
-    './stories/**/*.{html,js,jsx,ts,tsx}',
-  ],
-  darkMode: 'selector',
-  theme: {
-    borderRadius: scaled(defaultTheme.borderRadius, scale),
-    columns: scaled(defaultTheme.columns, scale),
-    fontSize: scaled(defaultTheme.fontSize, scale),
-    lineHeight: scaled(defaultTheme.lineHeight, scale),
-    maxWidth: ({ theme, breakpoints }) => ({
-      ...scaled(defaultTheme.maxWidth({ theme, breakpoints }), scale),
-    }),
-    maxHeight: ({ theme, breakpoints }) => ({
-      ...scaled(defaultTheme.maxHeight({ theme, breakpoints }), scale),
-    }),
-    spacing: scaled(defaultTheme.spacing, scale),
-    extend: {
-      fontFamily: {
-        condensed: ['Roboto Condensed', 'Arial', 'sans-serif'],
-        sans: ['Roboto', 'Arial', 'sans-serif'],
-        icon: ['"Font Awesome 6 Pro"'],
-      },
-      colors: colors,
-      content: {
-        'chevron-right': '"\\f054"',
-      },
-      backgroundImage: {
-        divider: `linear-gradient(90deg,#000,#000 56%,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 57%,${colors.red.DEFAULT} 0,${colors.red.DEFAULT} 85%,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 86%,${colors.yellow.DEFAULT} 0)`,
-      },
-      aria: {
-        'page-current': 'current="page"',
-      },
-      animation: {
-        fade: 'fade 250ms ease-in-out 1 both',
-      },
-      keyframes: {
-        fade: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        },
-      },
-      spacing: {
-        'max-content': '1320px',
-      },
-      borderWidth: {
-        '1rem': '1rem',
-      },
-    },
-  },
-  plugins: [require('@headlessui/tailwindcss')],
-  corePlugins: {
-    preflight: true,
-  },
-  safelist: ['vcard', 'author'],
-  important: false,
+	content: [
+		'./components/**/*.{html,js,jsx,ts,tsx}',
+		'./pages/**/*.{html,js,jsx,ts,tsx}',
+		'./public/**/*.{html,js,jsx,ts,tsx}',
+		'./stories/**/*.{html,js,jsx,ts,tsx}',
+	],
+	darkMode: 'selector',
+	theme: {
+		borderRadius: scaled(defaultTheme.borderRadius, scale),
+		columns: scaled(defaultTheme.columns, scale),
+		fontSize: scaled(defaultTheme.fontSize, scale),
+		lineHeight: scaled(defaultTheme.lineHeight, scale),
+		maxWidth: ({ theme, breakpoints }) => ({
+			...scaled(defaultTheme.maxWidth({ theme, breakpoints }), scale),
+		}),
+		maxHeight: ({ theme, breakpoints }) => ({
+			...scaled(defaultTheme.maxHeight({ theme, breakpoints }), scale),
+		}),
+		spacing: scaled(defaultTheme.spacing, scale),
+		extend: {
+			fontFamily: {
+				condensed: ['Roboto Condensed', 'Arial', 'sans-serif'],
+				sans: ['Roboto', 'Arial', 'sans-serif'],
+				icon: ['"Font Awesome 6 Pro"'],
+			},
+			colors: colors,
+			content: {
+				'chevron-right': '"\\f054"',
+			},
+			backgroundImage: {
+				divider: `linear-gradient(90deg,#000,#000 56%,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 57%,${colors.red.DEFAULT} 0,${colors.red.DEFAULT} 85%,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,0) 86%,${colors.yellow.DEFAULT} 0)`,
+			},
+			aria: {
+				'page-current': 'current="page"',
+			},
+			animation: {
+				fade: 'fade 250ms ease-in-out 1 both',
+			},
+			keyframes: {
+				fade: {
+					'0%': { opacity: 0 },
+					'100%': { opacity: 1 },
+				},
+			},
+			spacing: {
+				'max-content': '1320px',
+			},
+			borderWidth: {
+				'1rem': '1rem',
+			  },
+		},
+	},
+	plugins: [require('@headlessui/tailwindcss')],
+	corePlugins: {
+		preflight: true,
+	},
+	safelist: [
+		"vcard",
+		"author"
+	],
+	important: true,
 };

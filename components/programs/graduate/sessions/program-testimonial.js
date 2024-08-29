@@ -1,30 +1,27 @@
 import React from 'react';
-import { MeetFaculty } from '@/components/meet-faculty';
-export const ProgramTestimonial = () => {
-  //test data for testimonial
-  const testimonialData = [
-    {
-      img: 'https://www.tutorialrepublic.com/examples/images/clients/1.jpg',
-      title: 'Professor, Department of Biostatics',
-      name: 'Dr. Gwendolyn Patterson',
-      description:
-        '1st Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum',
-    },
-    {
-      img: 'https://www.tutorialrepublic.com/examples/images/clients/2.jpg',
-      title: 'Professor, Department of Biostatics',
-      name: 'Dr. Montgomery Smith',
-      description:
-        '2nd Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum',
-    },
-    {
-      img: 'https://www.tutorialrepublic.com/examples/images/clients/3.jpg',
-      title: 'Professor, Department of Biostatics',
-      name: 'Dr. Ryan D',
-      description:
-        '3rd Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum',
-    },
-  ];
+import {MeetFaculty} from '@/components/meet-faculty';
+export const ProgramTestimonial = () => {	
+	//test data for testimonial	
+	const testimonialData = [
+		{
+		  img: "https://placehold.co/330x330/png",
+		  title: 'Professor, Department of Biostatics',
+		  name: 'Dr. Gwendolyn Patterson',
+		  description: '1st Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
+		},
+		{
+		  img: "https://placehold.co/330x330/png",
+		  title: 'Professor, Department of Biostatics',
+		  name: 'Dr. Montgomery Smith',
+		  description: '2nd Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
+		},
+		{
+		  img: "https://placehold.co/330x330/png",
+		  title: 'Professor, Department of Biostatics',
+		  name: 'Dr. Ryan D',
+		  description: '3rd Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
+		}
+	  ];
 
 	  const data = {
 		// displayType: col or row
