@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 import { Button } from '@/components/button';
 import Banner from '@/components/banner';
+import { faX } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 
 const AppArmor = () => {
 	const { isPreview, isFallback } = useRouter();
@@ -39,9 +40,16 @@ const AppArmor = () => {
 			{alert && (
 				<>
 					<Banner color="red" className="p-0">
-						<Button className="p-3 text-lg w-full" onClick={() => setShow(true)} color="red">
+						<Button className="p-3 text-lg flex-1" onClick={() => setShow(true)} color="red">
 							<FontAwesomeIcon icon={faCircleExclamation} className="text-2xl" />
 							<span>&nbsp;{alert.title}&nbsp;</span>
+						</Button>
+
+						<Button
+							color="none"
+							className="flex absolute p-2 w-fit aspect-square right-2 top-1/2 -translate-y-1/2 mr-2"
+						>
+							<FontAwesomeIcon icon={faX} className="text-sm" />
 						</Button>
 					</Banner>
 
