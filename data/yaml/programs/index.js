@@ -1,4 +1,5 @@
 import undergraduate from './undergraduate.yml';
+import degrees from './undergraduate-degrees.yml';
 import graduate from './graduate.yml';
 import certificateAndDiplomas from './certificate-and-diploma.yml';
 import continuingEducation from './continuing-education.yml';
@@ -18,3 +19,7 @@ export const getCertificateAndDiplomaPrograms = async () => {
 export const getContinuingEducationPrograms = async () => {
 	return continuingEducation;
 };
+
+export const getUndergraduateDegrees = async () => {
+	return degrees.map(degree => ({...degree, types: ['bachelor'], tags: []}));
+}
