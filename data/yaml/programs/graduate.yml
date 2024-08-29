@@ -1,5 +1,4 @@
-- id: accounting
-  name: Accounting
+- name: Accounting
   url: https://graduatestudies.uoguelph.ca/programs/accounting
   degrees:
     - Graduate Diploma
@@ -8,8 +7,7 @@
   tags:
     - business
     - finance
-- id: animal-biosciences
-  name: Animal Biosciences
+- name: Animal Biosciences
   url: https://graduatestudies.uoguelph.ca/programs/aps
   degrees:
     - MSc
@@ -20,8 +18,7 @@
   tags:
     - biology
     - science
-- id: applied-nutrition
-  name: Applied Nutrition
+- name: Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/applied-nutrition
   degrees:
     - MAN
@@ -30,8 +27,7 @@
   tags:
     - health
     - food
-- id: art-history-and-visual-culture
-  name: Art History and Visual Culture
+- name: Art History and Visual Culture
   url: https://graduatestudies.uoguelph.ca/programs/avc
   degrees:
     - MA
@@ -42,8 +38,7 @@
     - arts
     - culture
     - history
-- id: artificial-intelligence
-  name: Artificial Intelligence
+- name: Artificial Intelligence
   url: https://graduatestudies.uoguelph.ca/programs/csai
   degrees:
     - MSc
@@ -56,8 +51,7 @@
     - mathematics
     - programming
     - ai
-- id: bioinformatics
-  name: Bioinformatics
+- name: Bioinformatics
   url: https://graduatestudies.uoguelph.ca/programs/binf
   degrees:
     - MBINF
@@ -76,8 +70,7 @@
     - statistic*
     - programming
     - analys*
-- id: biomedical-sciences
-  name: Biomedical Sciences
+- name: Biomedical Sciences
   url: https://graduatestudies.uoguelph.ca/programs/biom
   degrees:
     - MBS
@@ -91,8 +84,7 @@
     - science
     - health
     - medical
-- id: biophysics
-  name: Biophysics
+- name: Biophysics
   url: https://graduatestudies.uoguelph.ca/programs/biop
   degrees:
     - MSc
@@ -103,8 +95,7 @@
     - biology
     - physics
     - science
-- id: biotechnology
-  name: Biotechnology
+- name: Biotechnology
   url: https://graduatestudies.uoguelph.ca/programs/biotechnology
   degrees:
     - MBIOT
@@ -114,8 +105,7 @@
     - biology
     - science
     - technology
-- id: business-administration
-  name: Business Administration
+- name: Business Administration
   url: https://graduatestudies.uoguelph.ca/programs/bus
   degrees:
     - MBA
@@ -123,8 +113,7 @@
     - course-based
   tags:
     - business
-- id: capacity-development-and-extension
-  name: Capacity Development and Extension
+- name: Capacity Development and Extension
   url: https://graduatestudies.uoguelph.ca/programs/cde
   degrees:
     - MSc
@@ -133,8 +122,7 @@
     - course-based
   tags:
     - humanities
-- id: chemistry
-  name: Chemistry
+- name: Chemistry
   url: https://graduatestudies.uoguelph.ca/programs/chbi
   degrees:
     - MSc
@@ -144,8 +132,7 @@
   tags:
     - chemistry
     - science
-- id: clinical-studies
-  name: Clinical Studies
+- name: Clinical Studies
   url: https://graduatestudies.uoguelph.ca/programs/clin
   degrees:
     - MSc
@@ -158,8 +145,7 @@
     - science
     - health
     - medical
-- id: computational-sciences
-  name: Computational Sciences
+- name: Computational Sciences
   url: https://graduatestudies.uoguelph.ca/programs/computational-science-phd
   degrees:
     - PhD
@@ -169,8 +155,7 @@
     - technology
     - science
     - mathematics
-- id: computer-science
-  name: Computer Science
+- name: Computer Science
   url: https://graduatestudies.uoguelph.ca/programs/cis
   degrees:
     - MSc
@@ -182,8 +167,7 @@
     - science
     - mathematics
     - programming
-- id: conservation-leadership
-  name: Conservation Leadership
+- name: Conservation Leadership
   url: https://graduatestudies.uoguelph.ca/Programs/ConservationLeadership
   degrees:
     - MCL
@@ -200,8 +184,7 @@
     - water
     - sustain*
     - science
-- id: creative-writing
-  name: Creative Writing
+- name: Creative Writing
   url: https://graduatestudies.uoguelph.ca/programs/crwr
   degrees:
     - MFA
@@ -211,8 +194,7 @@
     - arts
     - humanities
     - culture
-- id: criminology-and-criminal-justice-policy
-  name: Criminology and Criminal Justice Policy
+- name: Criminology and Criminal Justice Policy
   url: https://graduatestudies.uoguelph.ca/programs/ccjp
   degrees:
     - MA
@@ -228,8 +210,7 @@
     - public
     - affairs
     - socio*
-- id: critical-studies-in-improvisation
-  name: Critical Studies in Improvisation
+- name: Critical Studies in Improvisation
   url: https://graduatestudies.uoguelph.ca/programs/impr
   degrees:
     - MA
@@ -240,8 +221,7 @@
     - arts
     - humanities
     - culture
-- id: cybersecurity-and-threat-intelligence
-  name: Cybersecurity and Threat Intelligence
+- name: Cybersecurity and Threat Intelligence
   url: https://graduatestudies.uoguelph.ca/programs/mcti
   degrees:
     - MCTI
@@ -252,8 +232,7 @@
     - science
     - mathematics
     - programming
-- id: data-science
-  name: Data Science
+- name: Data Science
   url: https://graduatestudies.uoguelph.ca/programs/data-science
   degrees:
     - MDS
@@ -266,8 +245,7 @@
     - programming
     - artificial intelligence
     - ai
-- id: economics
-  name: Economics
+- name: Economics
   url: https://graduatestudies.uoguelph.ca/programs/econ
   degrees:
     - MA
@@ -278,8 +256,7 @@
     - business
     - economics
     - finance
-- id: engineering
-  name: Engineering
+- name: Engineering
   url: https://graduatestudies.uoguelph.ca/programs/engg
   degrees:
     - MEng
@@ -292,8 +269,7 @@
     - engineering
     - artificial intelligence
     - ai
-- id: english
-  name: English
+- name: English
   url: https://graduatestudies.uoguelph.ca/programs/engl
   degrees:
     - MA
@@ -303,8 +279,7 @@
     - arts
     - humanities
     - language
-- id: environmental-sciences
-  name: Environmental Sciences
+- name: Environmental Sciences
   url: https://graduatestudies.uoguelph.ca/programs/envs
   degrees:
     - MES
@@ -315,8 +290,7 @@
   tags:
     - biology
     - science
-- id: european-studies
-  name: European Studies
+- name: European Studies
   url: https://graduatestudies.uoguelph.ca/programs/eurs
   degrees:
     - MA
@@ -325,8 +299,7 @@
   tags:
     - humanities
     - culture
-- id: family-relations-and-applied-nutrition
-  name: Family Relations and Applied Nutrition
+- name: Family Relations and Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/fran
   degrees:
     - MAN
@@ -340,8 +313,7 @@
     - food
     - humanities
     - science
-- id: food-safety-and-quality-assurance
-  name: Food Safety and Quality Assurance
+- name: Food Safety and Quality Assurance
   url: https://graduatestudies.uoguelph.ca/programs/fsqu
   degrees:
     - MSc
@@ -351,8 +323,7 @@
   tags:
     - food
     - science
-- id: food-science
-  name: Food Science
+- name: Food Science
   url: https://graduatestudies.uoguelph.ca/programs/food
   degrees:
     - MSc
@@ -363,8 +334,7 @@
     - food
     - science
     - nutrition
-- id: food-agricultural-and-resource-economics
-  name: Food, Agricultural and Resource Economics
+- name: Food, Agricultural and Resource Economics
   url: https://graduatestudies.uoguelph.ca/programs/fare
   degrees:
     - MFARE
@@ -377,8 +347,7 @@
     - business
     - agriculture
     - economics
-- id: french
-  name: French
+- name: French
   url: https://graduatestudies.uoguelph.ca/programs/fren
   degrees:
     - MA
@@ -387,8 +356,7 @@
   tags:
     - humanities
     - language
-- id: geography
-  name: Geography
+- name: Geography
   url: https://graduatestudies.uoguelph.ca/programs/geog
   degrees:
     - MA
@@ -400,8 +368,7 @@
   tags:
     - geography
     - science
-- id: history
-  name: History
+- name: History
   url: https://graduatestudies.uoguelph.ca/programs/hist
   degrees:
     - MA
@@ -411,8 +378,7 @@
   tags:
     - humanities
     - history
-- id: human-health-and-nutritional-sciences
-  name: Human Health and Nutritional Sciences
+- name: Human Health and Nutritional Sciences
   url: https://graduatestudies.uoguelph.ca/programs/hhns
   degrees:
     - MSc
@@ -454,8 +420,7 @@
     - pharma*
     - cogniti*
     - diet*
-- id: integrative-biology
-  name: Integrative Biology
+- name: Integrative Biology
   url: https://graduatestudies.uoguelph.ca/programs/ibio
   degrees:
     - MSc
@@ -478,8 +443,7 @@
     - sustain*
     - mammal*
     - evolution*
-- id: international-development-studies
-  name: International Development Studies
+- name: International Development Studies
   url: https://graduatestudies.uoguelph.ca/programs/idev
   degrees:
     - PhD
@@ -490,8 +454,7 @@
   tags:
     - humanities
     - culture
-- id: landscape-architecture
-  name: Landscape Architecture
+- name: Landscape Architecture
   url: https://graduatestudies.uoguelph.ca/programs/ldar
   degrees:
     - MLA
@@ -500,8 +463,7 @@
   tags:
     - architecture
     - design
-- id: latin-american-and-caribbean-studies
-  name: Latin American and Caribbean Studies
+- name: Latin American and Caribbean Studies
   url: https://graduatestudies.uoguelph.ca/programs/lacs
   degrees:
     - MA
@@ -511,8 +473,7 @@
     - humanities
     - culture
     - history
-- id: leadership
-  name: Leadership
+- name: Leadership
   url: https://graduatestudies.uoguelph.ca/programs/lead
   degrees:
     - MA
@@ -521,8 +482,7 @@
   tags:
     - humanities
     - business
-- id: literary-studiestheatre-studies-in-english
-  name: Literary Studies/Theatre Studies in English
+- name: Literary Studies/Theatre Studies in English
   url: https://graduatestudies.uoguelph.ca/programs/sets
   degrees:
     - PhD
@@ -531,8 +491,7 @@
   tags:
     - arts
     - humanities
-- id: management
-  name: Management
+- name: Management
   url: https://graduatestudies.uoguelph.ca/programs/mgmt
   degrees:
     - MSc
@@ -542,8 +501,7 @@
   tags:
     - business
     - management
-- id: market-research
-  name: Market Research
+- name: Market Research
   url: https://graduatestudies.uoguelph.ca/programs/marketresearch
   degrees:
     - Graduate Diploma
@@ -552,8 +510,7 @@
   tags:
     - business
     - marketing
-- id: marketing-and-consumer-studies
-  name: Marketing and Consumer Studies
+- name: Marketing and Consumer Studies
   url: https://graduatestudies.uoguelph.ca/programs/cost
   degrees:
     - MSc
@@ -563,8 +520,7 @@
   tags:
     - business
     - marketing
-- id: mathematics-and-statistics
-  name: Mathematics and Statistics
+- name: Mathematics and Statistics
   url: https://graduatestudies.uoguelph.ca/programs/math
   degrees:
     - MSc
@@ -577,8 +533,7 @@
     - artificial intelligence
     - ai
     - data
-- id: molecular-and-cellular-biology
-  name: Molecular and Cellular Biology
+- name: Molecular and Cellular Biology
   url: https://graduatestudies.uoguelph.ca/programs/mcb
   degrees:
     - MSc
@@ -611,8 +566,7 @@
     - infect*
     - dna
     - pharma*
-- id: neuroscience
-  name: Neuroscience
+- name: Neuroscience
   url: https://graduatestudies.uoguelph.ca/programs/neur
   degrees:
     - MSc
@@ -629,8 +583,7 @@
     - neuro*
     - brain
     - cogniti*
-- id: one-health
-  name: One Health
+- name: One Health
   url: https://graduatestudies.uoguelph.ca/programs/onehealth
   degrees:
     - MSc
@@ -671,8 +624,7 @@
     - infect*
     - dna
     - pharma*
-- id: pathobiology
-  name: Pathobiology
+- name: Pathobiology
   url: https://graduatestudies.uoguelph.ca/programs/path
   degrees:
     - MSc
@@ -686,8 +638,7 @@
     - science
     - health
     - medical
-- id: philosophy
-  name: Philosophy
+- name: Philosophy
   url: https://graduatestudies.uoguelph.ca/programs/phil
   degrees:
     - MA
@@ -697,8 +648,7 @@
   tags:
     - humanities
     - culture
-- id: physics
-  name: Physics
+- name: Physics
   url: https://graduatestudies.uoguelph.ca/programs/phys
   degrees:
     - MSc
@@ -709,8 +659,7 @@
   tags:
     - physics
     - science
-- id: planning
-  name: Planning
+- name: Planning
   url: https://www.uoguelph.ca/programs/master-of-planning
   degrees:
     - MPlan
@@ -721,8 +670,7 @@
     - geography
     - rural
     - environmental design
-- id: political-science
-  name: Political Science
+- name: Political Science
   url: https://graduatestudies.uoguelph.ca/programs/pols
   degrees:
     - MA
@@ -733,8 +681,7 @@
   tags:
     - humanities
     - politics
-- id: population-medicine
-  name: Population Medicine
+- name: Population Medicine
   url: https://graduatestudies.uoguelph.ca/programs/popmed
   degrees:
     - MSc
@@ -747,8 +694,7 @@
     - science
     - health
     - medical
-- id: project-management
-  name: Project Management
+- name: Project Management
   url: https://graduatestudies.uoguelph.ca/programs/project-management
   degrees:
     - MPM
@@ -758,8 +704,7 @@
   tags:
     - business
     - management
-- id: psychology
-  name: Psychology
+- name: Psychology
   url: https://graduatestudies.uoguelph.ca/programs/psyc
   degrees:
     - MA
@@ -769,8 +714,7 @@
     - thesis-based
   tags:
     - humanities
-- id: public-health
-  name: Public Health
+- name: Public Health
   url: https://graduatestudies.uoguelph.ca/programs/phlt
   degrees:
     - MPH
@@ -783,8 +727,7 @@
     - medical
     - science
     - biology
-- id: public-issues-anthropology
-  name: Public Issues Anthropology
+- name: Public Issues Anthropology
   url: https://graduatestudies.uoguelph.ca/programs/pia
   degrees:
     - MA
@@ -797,8 +740,7 @@
     - antho*
     - affairs
     - socio*
-- id: regenerative-medicine
-  name: Regenerative Medicine
+- name: Regenerative Medicine
   url: https://graduatestudies.uoguelph.ca/programs/regenerative-medicine
   degrees:
     - MSc
@@ -834,8 +776,7 @@
     - infect*
     - dna
     - pharma*
-- id: relational-and-psychotherapy-training-program
-  name: Relational and Psychotherapy Training Program
+- name: Relational and Psychotherapy Training Program
   url: https://graduatestudies.uoguelph.ca/programs/relational-and-psychotherapy-training-program
   degrees:
     - MP
@@ -847,8 +788,7 @@
     - health
     - medical
     - psychology
-- id: rural-planning-and-development
-  name: Rural Planning and Development
+- name: Rural Planning and Development
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof
   degrees:
     - MSc
@@ -857,8 +797,7 @@
     - course-based
   tags:
     - humanities
-- id: rural-studies
-  name: Rural Studies
+- name: Rural Studies
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof-stu
   degrees:
     - PhD
@@ -867,8 +806,7 @@
     - course-based
   tags:
     - humanities
-- id: sexuality-genders-and-bodies
-  name: Sexuality, Genders and Bodies
+- name: Sexuality, Genders and Bodies
   url: https://graduatestudies.uoguelph.ca/programs/Sexualities-Genders-And-Bodies
   degrees:
     - MA
@@ -883,8 +821,7 @@
     - feminis*
     - decolon*
     - interdisciplinary
-- id: social-practice-and-transformational-change
-  name: Social Practice and Transformational Change
+- name: Social Practice and Transformational Change
   url: https://graduatestudies.uoguelph.ca/programs/sptc
   degrees:
     - PhD
@@ -909,8 +846,7 @@
     - family
     - relation*
     - critical
-- id: sociology
-  name: Sociology
+- name: Sociology
   url: https://graduatestudies.uoguelph.ca/programs/soca
   degrees:
     - MA
@@ -920,8 +856,7 @@
   tags:
     - humanities
     - culture
-- id: studio-art
-  name: Studio Art
+- name: Studio Art
   url: https://graduatestudies.uoguelph.ca/programs/sart
   degrees:
     - MFA
@@ -931,8 +866,7 @@
     - arts
     - humanities
     - culture
-- id: sustainable-agriculture
-  name: Sustainable Agriculture
+- name: Sustainable Agriculture
   url: https://www.uoguelph.ca/programs/master-sustainable-agriculture/
   degrees:
     - MSAg
@@ -942,8 +876,7 @@
     - agriculture
     - biology
     - science
-- id: theatre-studies
-  name: Theatre Studies
+- name: Theatre Studies
   url: https://graduatestudies.uoguelph.ca/programs/thst
   degrees:
     - MA
@@ -954,8 +887,7 @@
     - arts
     - humanities
     - culture
-- id: tourism-and-hospitality
-  name: Tourism and Hospitality
+- name: Tourism and Hospitality
   url: https://graduatestudies.uoguelph.ca/programs/trmh
   degrees:
     - MSc
@@ -966,8 +898,7 @@
   tags:
     - business
     - marketing
-- id: tourism-research
-  name: Tourism Research
+- name: Tourism Research
   url: https://graduatestudies.uoguelph.ca/programs/tres
   degrees:
     - Graduate Diploma
@@ -976,8 +907,7 @@
   tags:
     - business
     - marketing
-- id: toxicology
-  name: Toxicology
+- name: Toxicology
   url: https://graduatestudies.uoguelph.ca/programs/tox
   degrees:
     - MSc
@@ -990,8 +920,7 @@
     - science
     - health
     - medical
-- id: veterinary-medicine-public-health
-  name: Veterinary Medicine / Public Health
+- name: Veterinary Medicine / Public Health
   url: https://graduatestudies.uoguelph.ca/programs/DVMMPH
   degrees:
     - DVM
@@ -1003,8 +932,7 @@
     - science
     - health
     - medical
-- id: veterinary-science
-  name: Veterinary Science
+- name: Veterinary Science
   url: https://graduatestudies.uoguelph.ca/programs/vets
   degrees:
     - DVSc
@@ -1015,8 +943,7 @@
     - science
     - health
     - medical
-- id: wildlife-biology
-  name: Wildlife Biology
+- name: Wildlife Biology
   url: https://calendar.uoguelph.ca/graduate-calendar/graduate-programs/wildlife-biology/
   degrees:
     - MWB
@@ -1038,8 +965,7 @@
     - fish*
     - sustain*
     - mammal*
-- id: plant-agriculture
-  name: Plant Agriculture
+- name: Plant Agriculture
   url: https://graduatestudies.uoguelph.ca/programs/plnt
   degrees:
     - MSc

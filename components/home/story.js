@@ -24,7 +24,7 @@ export const HomeStory = () => (
 				className: 'h-full w-full object-cover lg:[object-position:left_40px]',
 			}}
 			content={
-				<Blockquote className="text-white text-sm">
+				<Blockquote className="text-white">
 					Pieces of experiential learning allow an opportunity for students to engage with their community, beyond the
 					academic sphere, and for me that became pivotal...in shaping my life. ~ Asha Edwin, BA &apos;21
 				</Blockquote>
