@@ -12,21 +12,27 @@ export const HowToApply = ({ data }) => {
         </Heading>
         <p>
           To apply, you must &nbsp;
-          <Link children="secure a faculty advisor" href="#" />. Email your chosen advisor to discuss research
+          <Link href="#" >secure a faculty advisor </Link>. Email your chosen advisor to discuss research
           opportunities.
+          
         </p>
         <div className="accordion-div">
-          <Accordion title="Admission Requirements - MSc" children="Admission Requirements - MSc content..." />
-          <Accordion title="Admission Requirements - PhD" children="Admission Requirements - PhD content..." />
-          <Accordion title="Application Deadlines" children="Application Deadlines - PhD content..." />
-          <Accordion
-            title="Helpful Tips for Your Application"
-            children="Helpful Tips for Your Application content..."
-          />
+          <Accordion title="Admission Requirements - MSc" >
+            Admission Requirements - MSc content...
+          </Accordion>
+          <Accordion title="Admission Requirements - PhD">
+           Admission Requirements - PhD content...
+          </Accordion>
+          <Accordion title="Application Deadlines" >
+            Application Deadlines - PhD content...
+          </Accordion>
+          <Accordion title="Helpful Tips for Your Application">
+            Helpful Tips for Your Application content...
+          </Accordion>
         </div>
         <p>
           You may also be interested in &nbsp;
-          <Link children="Biostatistics (Course-based)" href="#" />
+          <Link href="#" >Biostatistics (Course-based)</Link>
         </p>
       </div>
       <div className="md:w-1/4">
@@ -43,7 +49,7 @@ export const HowToApply = ({ data }) => {
           </p>
           <p>
             <i className="fa-solid fa-at mr-2"></i>
-            <Link children="harwood@uoguelph.ca" href="mailto:harwood@uoguelph.ca" />
+            <Link href="mailto:harwood@uoguelph.ca" >harwood@uoguelph.ca</Link>
           </p>
           <p>
             <i className="fa-solid fa-phone mr-2"></i>
@@ -63,7 +69,7 @@ export const HowToApply = ({ data }) => {
           </p>
           <p>
             <i className="fa-solid fa-at mr-2"></i>
-            <Link children="lewest@uoguelph.ca" href="mailto:lewest@uoguelph.ca" />
+            <Link href="mailto:lewest@uoguelph.ca" >lewest@uoguelph.ca</Link>
           </p>
           <p>
             <i className="fa-solid fa-phone mr-2"></i>

@@ -48,7 +48,7 @@ const Card = ({ img, title, name, description, displayType }) => {
           }
         }        
       />
-      <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
+      <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-5`}>
       {displayType === 'col' ? (
           <div className='p-2'>
             {/* Title Section First */}
