@@ -10,6 +10,7 @@ import { faSpinner } from '@awesome.me/kit-7993323d0c/icons/classic/solid';
 import { twMerge } from 'tailwind-merge';
 import PropTypes from 'prop-types';
 import AppArmor from '@/components/app-armor';
+import Banner from '@/components/banner';
 
 export const Layout = ({ children, className, menu, footerLinks, title = '', description = '', image = null }) => {
 	const { isPreview, isFallback } = useRouter();
@@ -66,13 +67,13 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 
 			<div className="flex flex-1 flex-col">
 				{isPreview && (
-					<div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
+					<Banner>
 						<span>You are currently in Preview Mode.</span>
 
 						<Button color="yellow" className="p-2" href="/api/exit-preview">
 							Exit Preview Mode
 						</Button>
-					</div>
+					</Banner>
 				)}
 
 				<AppArmor />
