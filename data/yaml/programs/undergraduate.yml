@@ -1,3 +1,14 @@
+- name: Accounting
+  url: https://www.uoguelph.ca/programs/accounting/
+  degrees:
+    - Bachelor of Commerce
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - business
+    - finance
 - name: Agriculture
   acronym: AGRS
   url: https://www.uoguelph.ca/programs/bachelor-of-science-in-agriculture/
@@ -1339,11 +1350,10 @@
   url: https://www.uoguelph.ca/programs/political-science/
   degrees:
     - Bachelor of Arts
+    - Bachelor of Arts and Science
   types:
     - major
-    - co-op
     - minor
-    - area-of-concentration
   tags:
     - poli*
     - crim*
