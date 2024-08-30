@@ -10,7 +10,9 @@ import { getUndergraduateDegrees, getUndergraduatePrograms } from '@/data/yaml/p
 export async function getStaticProps() {
 	return {
 		props: {
-			programs: (await getUndergraduatePrograms()).concat(await getUndergraduateDegrees()),
+			programs: (await getUndergraduatePrograms())
+				.concat(await getUndergraduateDegrees())
+				.sort((a, b) => a.name.localeCompare(b.name)),
 		},
 	};
 }
