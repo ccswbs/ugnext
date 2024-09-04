@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Avatar } from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import { twJoin, twMerge } from 'tailwind-merge';
+import PropTypes from 'prop-types';
 
 const PreviousBtn = (props) => {
   const { className, onClick, displayType } = props;
@@ -81,7 +82,8 @@ const Card = ({ img, title, name, description, displayType }) => {
   );
 };
 
-export const Testimonials = ({ testimonialData, slideNum, displayType = '' }) => {
+export const Testimonials = ({testimonialData, slideNum, displayType='row'}) => {
+    
   const settings = {
     prevArrow: <PreviousBtn displayType = {displayType} />,
     nextArrow: <NextBtn displayType = {displayType} />,
@@ -117,4 +119,10 @@ export const Testimonials = ({ testimonialData, slideNum, displayType = '' }) =>
       </div>
     </div>
   );
+};
+
+Testimonials.propTypes = {
+	displayType: PropTypes.oneOf(['col', 'row']),
+	slideNum: PropTypes.number,
+	testimonialData: PropTypes.node.isRequired,
 };
