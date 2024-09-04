@@ -1,4 +1,4 @@
-import { Dialog, DialogBackdrop, DialogPanel, Transition } from '@headlessui/react';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 import PropTypes from 'prop-types';
 
