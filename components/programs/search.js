@@ -227,7 +227,7 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 	return (
 		<>
 			<div className="flex flex-col gap-3">
-				<div className="flex flex-col gap-4 sm:flex-row">
+				<div className="flex flex-col gap-4 sm:flex-row sm:items-end">
 					<div className="flex-1">
 						<TextInput
 							onInput={(value) => setInput(value)}
