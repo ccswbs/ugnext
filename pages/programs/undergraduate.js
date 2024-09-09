@@ -5,12 +5,14 @@ import { Heading } from '@/components/heading';
 import { ProgramSearch } from '@/components/programs/search';
 import { toTitleCase } from '@/lib/string-utils';
 import { Card } from '@/components/card';
-import { getUndergraduatePrograms } from '@/data/yaml/programs';
+import { getUndergraduateDegrees, getUndergraduatePrograms } from '@/data/yaml/programs';
 
 export async function getStaticProps() {
 	return {
 		props: {
-			programs: await getUndergraduatePrograms(),
+			programs: (await getUndergraduatePrograms())
+				.concat(await getUndergraduateDegrees())
+				.sort((a, b) => a.name.localeCompare(b.name)),
 		},
 	};
 }

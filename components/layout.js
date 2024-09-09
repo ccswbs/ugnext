@@ -44,16 +44,8 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<Transition
-				show={isFallback}
-				enter="transition-opacity duration-300"
-				enterFrom="opacity-0"
-				enterTo="opacity-100"
-				leave="transition-opacity duration-150"
-				leaveFrom="opacity-100"
-				leaveTo="opacity-0"
-			>
-				<div className="fixed left-0 top-0 z-20 flex h-screen w-screen flex-col items-center justify-center gap-6 bg-white text-red">
+			<Transition show={isFallback}>
+				<div className="fixed left-0 top-0 z-20 flex h-screen w-screen flex-col items-center justify-center gap-6 bg-white text-red transition-opacity duration-300 data-[closed]:opacity-0">
 					<FontAwesomeIcon className="text-9xl" icon={faGryphonStatue} />
 
 					<div className="flex items-center gap-2">
@@ -64,7 +56,12 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 			</Transition>
 
 			{!isFallback && (
-				<a className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]" href="#content">Skip to main content</a>
+				<a
+					className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
+					href="#content"
+				>
+					Skip to main content
+				</a>
 			)}
 
 			<div className="flex flex-1 flex-col">
@@ -79,7 +76,9 @@ export const Layout = ({ children, className, menu, footerLinks, title = '', des
 				)}
 
 				<Header menu={menu} />
-				<main id="content" className={twMerge('flex-1 pb-4', className)}>{children}</main>
+				<main id="content" className={twMerge('flex-1 pb-4', className)}>
+					{children}
+				</main>
 				<Footer links={footerLinks} />
 			</div>
 		</>

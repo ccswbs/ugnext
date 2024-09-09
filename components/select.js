@@ -13,13 +13,11 @@ import {
 	ListboxButton,
 	ListboxOption,
 	ListboxOptions,
-	Transition,
 } from '@headlessui/react';
 import { twJoin } from 'tailwind-merge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCheck } from '@awesome.me/kit-7993323d0c/icons/classic/regular';
 import PropTypes from 'prop-types';
-import * as propTypes from 'prop-types';
 
 export const Select = ({
 	onChange,
@@ -116,37 +114,31 @@ export const Select = ({
 					</ButtonTag>
 				)}
 
-				<Transition
-					enter="transition-opacity duration-100 ease-out"
-					enterFrom="opacity-0"
-					enterTo="opacity-100"
-					leave="transition-opacity duration-100 ease-out"
-					leaveFrom="opacity-100"
-					leaveTo="opacity-0"
+				<OptionsTag
+					transition
+					className="z-10 max-h-[20rem] w-full overflow-auto rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md group-focus-within:border-blue group-focus-within:outline-none ui-open:border-blue md:absolute transition duration-300 ease-out data-[closed]:opacity-0"
 				>
-					<OptionsTag className="z-10 max-h-[20rem] w-full overflow-auto rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:border-blue md:absolute">
-						{options.filter(filterer).map((option, index) => (
-							<OptionTag
-								className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
-								key={typeof option?.value === 'string' ? option?.value : (option?.key ?? index)}
-								value={option}
-								disabled={option?.disabled}
-							>
-								{({ focus, selected }) => (
-									<>
-										{option?.label}
+					{options.filter(filterer).map((option, index) => (
+						<OptionTag
+							className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
+							key={typeof option?.value === 'string' ? option?.value : (option?.key ?? index)}
+							value={option}
+							disabled={option?.disabled}
+						>
+							{({ focus, selected }) => (
+								<>
+									{option?.label}
 
-										{selected && (
-											<span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-blue-600 ui-selected:flex">
-												<FontAwesomeIcon icon={faCheck} className="h-5 w-5" />
-											</span>
-										)}
-									</>
-								)}
-							</OptionTag>
-						))}
-					</OptionsTag>
-				</Transition>
+									{selected && (
+										<span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-blue-600 ui-selected:flex">
+											<FontAwesomeIcon icon={faCheck} className="h-5 w-5" />
+										</span>
+									)}
+								</>
+							)}
+						</OptionTag>
+					))}
+				</OptionsTag>
 			</ContainerTag>
 
 			{description && <Description className="text-sm text-gray-500">{description}</Description>}
