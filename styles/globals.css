@@ -45,7 +45,8 @@
 /* hide slick icons */
 .slick-prev:before,
 .slick-next:before {
-  opacity: 0 !important;
+	opacity: 0 !important;
+}
 
 svg.svg-inline--fa {
 	height: 1em;
