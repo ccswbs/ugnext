@@ -3,8 +3,8 @@ import { twJoin, twMerge } from 'tailwind-merge';
 import PropTypes from 'prop-types';
 
 export const Heading = ({ level, children, className, as, ...rest }) => {
-  const headingLevel = clamp(level || 1, 1, 6);
-  const Tag = as ?? `h${headingLevel}`;
+	const headingLevel = clamp(level || 1, 1, 6);
+	const Tag = as ?? `h${headingLevel}`;
 
 	return (
 		<Tag
@@ -27,11 +27,11 @@ export const Heading = ({ level, children, className, as, ...rest }) => {
 };
 
 Heading.propTypes = {
-  level: PropTypes.number,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  /**
-   * What element to render this button as
-   */
-  as: PropTypes.string,
+	level: PropTypes.number,
+	children: PropTypes.node,
+	className: PropTypes.string,
+	/**
+	 * What element to render this button as
+	 */
+	as: PropTypes.string,
 };
