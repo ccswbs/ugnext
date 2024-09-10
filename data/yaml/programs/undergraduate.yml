@@ -838,6 +838,16 @@
   tags:
     - humanities
     - history
+- name: Honours Agriculture
+  url: https://www.uoguelph.ca/programs/honours-agriculture/
+  degrees: []
+  types:
+    - major
+  tags:
+    - agriculture
+    - botany
+    - bioscience
+    - science
 - name: Horticulture
   acronym: HRT
   url: https://www.uoguelph.ca/programs/horticulture/
