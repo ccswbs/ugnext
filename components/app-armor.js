@@ -86,10 +86,11 @@ const AppArmor = () => {
 						subtitle={alert.title}
 						message={alert.description}
 						footer={
-							<div className="flex gap-2">
+							<div className="flex items-center justify-between w-full">
 								<span>{`Last Updated: ${alert.time}`}</span>
 								<Button
 									color="red"
+									className="py-2"
 									onClick={() => {
 										setShow(false);
 										window?.localStorage?.setItem(APP_ARMOR_ALERT_DISMISS_ALERT_KEY, 'true');
