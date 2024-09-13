@@ -96,7 +96,7 @@ const AppArmor = () => {
 										window?.localStorage?.setItem(APP_ARMOR_ALERT_DISMISS_ALERT_KEY, 'true');
 									}}
 								>
-									Dismiss Alert
+									Don&apos;t show me this again
 								</Button>
 							</div>
 						}
