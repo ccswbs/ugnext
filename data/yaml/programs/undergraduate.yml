@@ -601,7 +601,7 @@
     - science
 - name: Environmental Geomatics
   acronym: EG
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-geomatics-eg/
+  url: https://www.uoguelph.ca/programs/environmental-geomatics/
   degrees:
     - Bachelor of Science
   types:
@@ -838,6 +838,17 @@
   tags:
     - humanities
     - history
+- name: Honours Agriculture
+  url: https://www.uoguelph.ca/programs/honours-agriculture/
+  degrees:
+    - Bachelor of Science in Agriculture
+  types:
+    - major
+  tags:
+    - agriculture
+    - botany
+    - bioscience
+    - science
 - name: Horticulture
   acronym: HRT
   url: https://www.uoguelph.ca/programs/horticulture/

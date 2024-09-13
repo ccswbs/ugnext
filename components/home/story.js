@@ -24,13 +24,13 @@ export const HomeStory = () => (
 				className: 'h-full w-full object-cover lg:[object-position:left_40px]',
 			}}
 			content={
-				<Blockquote className="text-white">
+				<Blockquote className="text-white pt-[40px]">
 					Pieces of experiential learning allow an opportunity for students to engage with their community, beyond the
 					academic sphere, and for me that became pivotal...in shaping my life. ~ Asha Edwin, BA &apos;21
 				</Blockquote>
 			}
 			footer={
-				<div className="p-2">
+				<div className="flex items-center justify-center p-2">
 					<span className="mr-1 text-2xl leading-tight">Learn how real-world education and experience will</span>
 					<Button color="red" className="py-2 px-4 mx-[.25em] text-2xl">
 						Improve Life
