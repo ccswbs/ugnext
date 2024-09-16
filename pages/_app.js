@@ -8,7 +8,7 @@ function Application({ Component, pageProps }) {
 	return (
 		<>
 			<Component {...pageProps} />;
-			{process.env.NODE_ENV === 'production' && !isPreview && <GoogleTagManager gtmId={process.env.GTM_ID} />}
+			{process.env.NODE_ENV === 'production' && !isPreview && <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />}
 		</>
 	);
 }
