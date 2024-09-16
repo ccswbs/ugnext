@@ -4,6 +4,7 @@ import Script from 'next/script';
 import { Modal } from '@/components/modal';
 import { Alert } from '@/components/alert';
 import { Button } from '@/components/button';
+import { Container } from '@/components/container';
 
 const APP_ARMOR_ALERT_KEY = 'app-armor-alert';
 const APP_ARMOR_ALERT_DISMISS_ALERT_KEY = 'app-armor-alert-dismiss';
@@ -81,26 +82,28 @@ const AppArmor = () => {
 
 			{alert && (
 				<Modal open={show} onClose={() => setShow(false)}>
-					<Alert
-						title="University of Guelph Alert"
-						subtitle={alert.title}
-						message={alert.description}
-						footer={
-							<div className="flex items-center justify-between w-full">
-								<span>{`Last Updated: ${alert.time}`}</span>
-								<Button
-									color="red"
-									className="py-2"
-									onClick={() => {
-										setShow(false);
-										window?.localStorage?.setItem(APP_ARMOR_ALERT_DISMISS_ALERT_KEY, 'true');
-									}}
-								>
-									Don&apos;t show me this again
-								</Button>
-							</div>
-						}
-					/>
+					<Container centered className="p-0 !max-w-[80rem]">
+						<Alert
+							title="University of Guelph Alert"
+							subtitle={alert.title}
+							message={alert.description}
+							footer={
+								<div className="flex flex-col gap-2 md:flex-row items-center justify-between w-full">
+									<span>{`Last Updated: ${alert.time}`}</span>
+									<Button
+										color="red"
+										className="py-2"
+										onClick={() => {
+											setShow(false);
+											window?.localStorage?.setItem(APP_ARMOR_ALERT_DISMISS_ALERT_KEY, 'true');
+										}}
+									>
+										Don&apos;t show me this again
+									</Button>
+								</div>
+							}
+						/>
+					</Container>
 				</Modal>
 			)}
 		</>
