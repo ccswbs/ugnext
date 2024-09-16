@@ -5,7 +5,8 @@ function Application({ Component, pageProps }) {
 	return (
 		<>
 			<Component {...pageProps} />;
-			{process.env.NODE_ENV === 'production' && <GoogleTagManager gtmId={process.env.GTM_ID} />}
+			<GoogleTagManager gtmId={process.env.GTM_ID} />
+			{/* {process.env.NODE_ENV === 'production' && <GoogleTagManager gtmId={process.env.GTM_ID} />} */}
 		</>
 	)
 }
