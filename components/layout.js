@@ -11,20 +11,22 @@ import { twMerge } from 'tailwind-merge';
 import PropTypes from 'prop-types';
 import AppArmor from '@/components/app-armor';
 
+const DEFAULT_TITLE = 'University of Guelph - Improve Life';
+const FALLBACK_TITLE = 'Loading... | University of Guelph';
+
+const DEFAULT_DESCRIPTION =
+	'The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life';
+
+const DEFAULT_SOCIAL_IMAGE = {
+	src: 'https://www.uoguelph.ca/img/ug-social-thumb.jpg',
+	alt: 'University of Guelph logo',
+};
+
 export const Layout = ({ children, className, menu, footerLinks, title = '', description = '', image = null }) => {
 	const { isPreview, isFallback } = useRouter();
-	const pageTitle = title
-		? `${title} | University of Guelph`
-		: isFallback
-			? 'Loading... | University of Guelph'
-			: 'University of Guelph';
-	const pageDescription =
-		description ||
-		'The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life';
-	const pageImage = image ?? {
-		src: 'https://www.uoguelph.ca/img/ug-social-thumb.jpg',
-		alt: 'University of Guelph logo',
-	};
+	const pageTitle = title ? `${title} | University of Guelph` : isFallback ? FALLBACK_TITLE : DEFAULT_TITLE;
+	const pageDescription = description || DEFAULT_DESCRIPTION;
+	const pageImage = image ?? DEFAULT_SOCIAL_IMAGE;
 
 	return (
 		<>
