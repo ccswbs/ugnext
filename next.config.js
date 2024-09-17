@@ -7,8 +7,15 @@ const nextConfig = {
 		config.module.rules.push(
 			{
 				test: /\.gql|.graphql$/,
-				// This is the asset module.
-				type: 'asset/source',
+				use: {
+					loader: 'webpack-graphql-loader',
+					options: {
+						removeUnusedFragments: true,
+						output: 'string',
+						validate: false,
+						minify: true,
+					},
+				},
 			},
 			{
 				test: /\.ya?ml$/,
