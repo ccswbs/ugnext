@@ -2,7 +2,7 @@ import { twJoin } from 'tailwind-merge';
 import { extractVideoID, computeLayoutMediaText, buttonStyle } from '@/lib/ug-utils';
 import Image from 'next/image';
 import { Heading } from '@/components/heading';
-import { Video } from '@/components/video';
+import { EmbeddedVideo } from '@/components/embedded-video';
 import { HtmlParser } from '@/components/html-parser';
 import { ButtonSection } from '@/components/widgets/button-section';
 import ConditionalWrap from 'conditional-wrap';
@@ -68,7 +68,7 @@ export const MediaText = ({ data }) => {
     <ConditionalWrap condition={wrapperCol} wrap={(children) => <div className={wrapperCol}>{children}</div>}>
       <div className={twJoin('mx-auto', 'mt-4', 'md:flex', textColBg, headingColor, headingClass)}>
         <div className={twJoin('text-center w-full', mediaCol, leftDivClasses)} data-title="media">
-          {videoURL && <Video className={twJoin('w-full')} videoData={videoData} />}
+          {videoURL && <EmbeddedVideo className={twJoin('w-full')} videoData={videoData} />}
 
           {imageURL && (
             <Image className={twJoin('w-full')} src={imageURL} alt={imageAlt} width={imageWidth} height={imageHeight} />
