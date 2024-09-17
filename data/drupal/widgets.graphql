@@ -1,0 +1,294 @@
+#import "./media.graphql"
+#import "./taxonomy.graphql"
+
+fragment Accordion on ParagraphAccordionSection {
+	__typename
+	id
+	headingLevel
+	accordionSectionTitle: title
+	items {
+		... on ParagraphAccordionBlock {
+			headingLevel
+			accordionTitle: title
+			text {
+				processed
+			}
+		}
+	}
+	sectionColumn {
+		...SectionColumn
+	}
+}
+
+fragment ButtonSection on ParagraphSectionButton {
+	__typename
+	id
+	buttons {
+		...Buttons
+	}
+	buttonSectionColumn: sectionColumn {
+		__typename
+		...SectionColumn
+		...SpecialRegions
+	}
+}
+
+fragment Buttons on ParagraphButtonWidget {
+	__typename
+	ctaHeading {
+		processed
+	}
+	fontAwesomeIcon
+	fontAwesomeIconColour {
+		... on TermColourVariable {
+			name
+		}
+	}
+	formattedTitle {
+		processed
+	}
+	id
+	link {
+		title
+		url
+	}
+	style {
+		... on TermButtonStyle {
+			name
+		}
+	}
+}
+
+fragment GeneralText on ParagraphGeneralText {
+	__typename
+	id
+	sectionColumn {
+		...SectionColumn
+	}
+	body {
+		processed
+	}
+}
+
+fragment ImageOverlay on ParagraphImageOverlay {
+	__typename
+	backgroundImage {
+		...Image
+	}
+	imageOverlayContent: content {
+		...GeneralText
+		...ButtonSection
+		...StoryQuote
+		...StoryModalVideo
+	}
+	imageOverlayStyle: style {
+		... on TermImageOverlayStyle {
+			name
+		}
+	}
+	contentAlignment {
+		... on TermAlignmentStyle {
+			name
+		}
+	}
+}
+
+fragment Links on ParagraphLinksWidget {
+	__typename
+	links {
+		... on ParagraphLinkItem {
+			url {
+				title
+				url
+			}
+			image {
+				...Image
+			}
+			description
+		}
+	}
+}
+
+fragment MediaText on ParagraphMediaText {
+	__typename
+	heading: title
+	mediaImageSize
+	buttonSection {
+		...ButtonSection
+	}
+	media {
+		__typename
+		...Image
+		...RemoteVideo
+		...Video
+	}
+	mediaAlignment
+	mediaImageSize
+	sectionColumn {
+		...SectionColumn
+	}
+	headingLevel
+	description {
+		processed
+	}
+	background {
+		... on TermBgColor {
+			name
+		}
+	}
+}
+
+fragment ModalVideo on ParagraphModalVideoWidget {
+	__typename
+	video {
+		...RemoteVideo
+	}
+}
+
+fragment Section on ParagraphSection {
+	__typename
+	id
+	heading: title
+	headingLevel
+	content {
+		__typename
+		...Accordion
+		...GeneralText
+		...Buttons
+		...Links
+		...MediaText
+		...ButtonSection
+		...Tabs
+		...Statistics
+	}
+}
+
+fragment Statistics on ParagraphStatisticWidget {
+	__typename
+	id
+	content {
+		... on ParagraphStatisticItem {
+			image {
+				...Image
+			}
+			fontAwesomeIcon
+			represents {
+				processed
+			}
+			value
+		}
+	}
+	style {
+		... on TermStatisticStyle {
+			name
+		}
+	}
+}
+
+fragment Story on ParagraphStoryWidget {
+	__typename
+	content {
+		...Statistics
+		... on ParagraphStoryImageCutoutBackground {
+			__typename
+			id
+			backgroundImage {
+				...Image
+			}
+			foregroundImage {
+				...Image
+			}
+			title
+			text {
+				processed
+			}
+			storyContent: content {
+				...StoryModalVideo
+				...StoryQuote
+			}
+		}
+	}
+}
+
+fragment StoryModalVideo on ParagraphStoryModalVideo {
+	__typename
+	id
+	title {
+		processed
+	}
+	video {
+		...RemoteVideo
+	}
+}
+
+fragment StoryQuote on ParagraphStoryQuote {
+	__typename
+	id
+	quoteContent: content
+	quoteSource: source
+	quoteDescription: description
+	image {
+		...Image
+	}
+}
+
+fragment Tabs on ParagraphSectionTab {
+	__typename
+	id
+	tabs {
+		... on ParagraphTabContent {
+			body {
+				processed
+			}
+			title
+		}
+	}
+	sectionColumn {
+		...SectionColumn
+	}
+}
+
+fragment Testimonial on NodeTestimonial {
+	__typename
+	id
+	body {
+		processed
+	}
+	profile {
+		url
+		title
+	}
+	type {
+		... on TermTestimonialType {
+			name
+		}
+	}
+	title
+	description
+	image {
+		... on MediaImage {
+			image {
+				url
+				width
+				height
+				alt
+				variations(styles: PLACEHOLDER) {
+					url
+					width
+					height
+				}
+			}
+		}
+	}
+}
+
+fragment TestimonialSlider on ParagraphTestimonialSlider {
+	__typename
+	title
+	byTitle {
+		...Testimonial
+	}
+	byTags {
+		...Tag
+	}
+}
