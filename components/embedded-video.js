@@ -1,5 +1,5 @@
 import React from 'react';
-import { twJoin, twMerge } from 'tailwind-merge';
+import { twMerge } from 'tailwind-merge';
 import { Button } from '@/components/button';
 import { YouTubeEmbed } from '@next/third-parties/google';
 
