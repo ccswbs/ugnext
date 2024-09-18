@@ -1,6 +1,9 @@
 trigger:
   - none
 
+variables:
+- group: ugnext
+
 pool:
   vmImage: ubuntu-latest
 
