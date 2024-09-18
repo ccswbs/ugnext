@@ -9,6 +9,7 @@ import { SpotlightHero } from '@/components/home/spotlight-hero';
 import { HomeStory } from '@/components/home/story';
 import { StudyHere } from '@/components/home/study-here';
 import { getSpotlightCards, getSpotlightHero } from '@/data/drupal/home';
+import Notification from '@/components/notification';
 
 export async function getStaticProps(context) {
 	const status = context?.preview || process.env.NODE_ENV !== 'production' ? null : true;
@@ -25,42 +26,46 @@ export async function getStaticProps(context) {
 
 export default function Home({ cards, hero }) {
 	return (
-		<Layout title="Home">
-			{hero && <SpotlightHero hero={hero} />}
+		<>
+			<Notification color='grey' title="U of G Strike Updates:" url="https://uoguelph.ca/strike" />
 
-			<Container centered>
-				<TagLine />
+			<Layout title="Home">
+				{hero && <SpotlightHero hero={hero} />}
 
-				<div className="pt-1">
-					<Heading level={1} as={'h2'} className="font-condensed text-black">
-						Our Latest News and Events
-					</Heading>
-					<SpotlightCards cards={cards} />
-				</div>
+				<Container centered>
+					<TagLine />
 
-				<div className="pt-1">
-					<Heading level={1} as={'h2'} className="font-condensed text-black">
-						Study Here
-					</Heading>
-					<StudyHere />
-				</div>
+					<div className="pt-1">
+						<Heading level={1} as={'h2'} className="font-condensed text-black">
+							Our Latest News and Events
+						</Heading>
+						<SpotlightCards cards={cards} />
+					</div>
 
-				<div className="pt-1">
-					<Heading level={1} as={'h2'} className="font-condensed text-black">
-						How We Rank Among the World
-					</Heading>
-					<Rankings />
-				</div>
+					<div className="pt-1">
+						<Heading level={1} as={'h2'} className="font-condensed text-black">
+							Study Here
+						</Heading>
+						<StudyHere />
+					</div>
 
-				<div className="pt-1">
-					<Heading level={1} as={'h2'} className="font-condensed text-black">
-						Our Three Campuses
-					</Heading>
-					<ThreeCampuses />
-				</div>
-			</Container>
+					<div className="pt-1">
+						<Heading level={1} as={'h2'} className="font-condensed text-black">
+							How We Rank Among the World
+						</Heading>
+						<Rankings />
+					</div>
 
-			<HomeStory />
-		</Layout>
+					<div className="pt-1">
+						<Heading level={1} as={'h2'} className="font-condensed text-black">
+							Our Three Campuses
+						</Heading>
+						<ThreeCampuses />
+					</div>
+				</Container>
+
+				<HomeStory />
+			</Layout>
+		</>
 	);
 }
