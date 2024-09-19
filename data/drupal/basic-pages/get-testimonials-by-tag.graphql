@@ -1,0 +1,41 @@
+fragment Testimonial on NodeTestimonial {
+  __typename
+  id
+  body {
+    processed
+  }
+  profile {
+    url
+    title
+  }
+  type {
+    ... on TermTestimonialType {
+      name
+    }
+  }
+  title
+  description
+  image {
+    ... on MediaImage {
+      image {
+        url
+        width
+        height
+        alt
+        variations(styles: PLACEHOLDER) {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
+}
+
+query GetTestimonialsByTag($status: Boolean = false, $tags: [String!]!) {
+  testimonialsByTag(filter: { tags: $tags, status: $status }) {
+    results {
+      ...Testimonial
+    }
+  }
+}

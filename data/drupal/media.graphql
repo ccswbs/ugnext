@@ -1,0 +1,44 @@
+fragment Image on MediaImage {
+  __typename
+  image {
+    alt
+    height
+    width
+    url
+  }
+}
+
+fragment Video on MediaVideo {
+  __typename
+  video {
+    name
+    url
+    mime
+  }
+}
+
+fragment RemoteVideo on MediaRemoteVideo {
+  __typename
+  height
+  width
+  url
+  name
+  cc {
+    url
+    name
+  }
+  transcript {
+    name
+    url
+  }
+}
+
+fragment Audio on MediaAudio {
+  __typename
+  name
+  audio {
+    name
+    url
+    mime
+  }
+}
