@@ -21,13 +21,20 @@ export const ProgramTestimonial = () => {
 		  name: 'Dr. Ryan D',
 		  description: '3rd Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
 		}
+    ,
+		{
+		  img: "https://placehold.co/330x330/png",
+		  title: 'Professor, Department of Biostatics',
+		  name: 'Dr.A Ho D',
+		  description: '4th Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum'
+		}
 	  ];
 
 	  const data = {
 		// displayType: col or row
 		testimonialData:testimonialData,
 		setting:{
-			slideNum : 3,
+			slideNum : 4,
 			displayType:'col'
 		},
 		heading: {
