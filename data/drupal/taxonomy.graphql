@@ -1,0 +1,17 @@
+fragment Navigation on TermPrimaryNavigation {
+  menuName
+}
+
+fragment SectionColumn on TermSectionColumn {
+  name
+}
+
+fragment SpecialRegions on TermSpecialRegion {
+  name
+}
+
+fragment Tag on TermTag {
+  id
+  name
+  path
+}
