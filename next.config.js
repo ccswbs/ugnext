@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	output: process.env.NEXT_STATIC_OUTPUT === 'true' ? 'export' : undefined,
 	reactStrictMode: true,
 	swcMinify: true,
 	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -18,6 +19,7 @@ const nextConfig = {
 	},
 	images: {
 		domains: ['placehold.co'],
+		unoptimized: process.env.NEXT_STATIC_OUTPUT === 'true',
 		remotePatterns: [
 			{
 				protocol: 'https',
