@@ -1,0 +1,11 @@
+query GetPageTitle($url: String!) {
+  route(path: $url) {
+    ... on RouteInternal {
+      entity {
+        ... on NodePage {
+          title
+        }
+      }
+    }
+  }
+}

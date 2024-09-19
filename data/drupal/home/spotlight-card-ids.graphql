@@ -1,9 +1,9 @@
 query SpotlightCardIDs($status: Boolean = null, $page: Int = 0) {
-	spotlightRevisions(filter: { rank: [], status: $status }, page: $page, pageSize: 5) {
-		results {
-			... on NodeSpotlight {
-				id
-			}
-		}
-	}
+  spotlightRevisions(filter: { rank: [], status: $status }, page: $page, pageSize: 5) {
+    results {
+      ... on NodeSpotlight {
+        id
+      }
+    }
+  }
 }

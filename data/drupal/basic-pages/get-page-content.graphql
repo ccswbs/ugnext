@@ -1,0 +1,39 @@
+#import "../media.graphql"
+#import "../taxonomy.graphql"
+#import "../widgets.graphql"
+
+query GetPage($id: String = "", $status: Boolean = false) {
+  contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
+    results {
+      ... on NodePage {
+        primaryNavigation {
+          ...Navigation
+        }
+        image {
+          ...Image
+        }
+        title
+        heroWidgets {
+          ...ModalVideo
+        }
+        widgets {
+          ...Accordion
+          ...GeneralText
+          ...Buttons
+          ...Links
+          ...MediaText
+          ...ButtonSection
+          ...Tabs
+          ...Statistics
+          ...TestimonialSlider
+          ...Story
+          ...ImageOverlay
+          ...Section
+        }
+        changed {
+          timestamp
+        }
+      }
+    }
+  }
+}
