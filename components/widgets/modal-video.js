@@ -1,4 +1,1 @@
-
-
-export const ModalVideo = ({ data }) => {
-}
+export const ModalVideo = ({ data }) => {};

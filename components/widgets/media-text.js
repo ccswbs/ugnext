@@ -1,11 +1,11 @@
-import { twJoin } from 'tailwind-merge';
-import { extractVideoID, computeLayoutMediaText, buttonStyle } from '@/lib/ug-utils';
-import Image from 'next/image';
-import { Heading } from '@/components/heading';
-import { EmbeddedVideo } from '@/components/embedded-video';
-import { HtmlParser } from '@/components/html-parser';
-import { ButtonSection } from '@/components/widgets/button-section';
-import ConditionalWrap from 'conditional-wrap';
+import { twJoin } from "tailwind-merge";
+import { extractVideoID, computeLayoutMediaText, buttonStyle } from "@/lib/ug-utils";
+import Image from "next/image";
+import { Heading } from "@/components/heading";
+import { EmbeddedVideo } from "@/components/embedded-video";
+import { HtmlParser } from "@/components/html-parser";
+import { ButtonSection } from "@/components/widgets/button-section";
+import ConditionalWrap from "conditional-wrap";
 
 export const MediaText = ({ data }) => {
   const region = data.sectionColumn.name;
@@ -25,7 +25,7 @@ export const MediaText = ({ data }) => {
   const videoURL = data?.media?.url;
   const videoHeight = data?.media?.height;
   const videoWidth = data?.media?.width;
-  const videoType = videoURL?.includes('youtube') || videoURL?.includes('youtu.be') ? `youtube` : `vimeo`;
+  const videoType = videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`;
   const videoID = videoType === `youtube` ? extractVideoID(videoURL) : videoURL?.substring(18);
 
   const mediaButtons = data.buttonSection;
@@ -66,19 +66,19 @@ export const MediaText = ({ data }) => {
   //console.log(mediaTitle,textColPadding,wrapperCol)
   return (
     <ConditionalWrap condition={wrapperCol} wrap={(children) => <div className={wrapperCol}>{children}</div>}>
-      <div className={twJoin('mx-auto', 'mt-4', 'md:flex', textColBg, headingColor, headingClass)}>
-        <div className={twJoin('text-center w-full', mediaCol, leftDivClasses)} data-title="media">
-          {videoURL && <EmbeddedVideo className={twJoin('w-full')} videoData={videoData} />}
+      <div className={twJoin("mx-auto", "mt-4", "md:flex", textColBg, headingColor, headingClass)}>
+        <div className={twJoin("text-center w-full", mediaCol, leftDivClasses)} data-title="media">
+          {videoURL && <EmbeddedVideo className={twJoin("w-full")} videoData={videoData} />}
 
           {imageURL && (
-            <Image className={twJoin('w-full')} src={imageURL} alt={imageAlt} width={imageWidth} height={imageHeight} />
+            <Image className={twJoin("w-full")} src={imageURL} alt={imageAlt} width={imageWidth} height={imageHeight} />
           )}
         </div>
 
         {textOrButtons && (
-          <div className={twJoin(textCol, rightDivClasses, 'w-full p-5')}>
+          <div className={twJoin(textCol, rightDivClasses, "w-full p-5")}>
             {mediaTitle && (
-              <Heading level={3} className={twJoin('text-3xl font-bold', headingColor, headingClass)}>
+              <Heading level={3} className={twJoin("text-3xl font-bold", headingColor, headingClass)}>
                 {mediaTitle}
               </Heading>
             )}
