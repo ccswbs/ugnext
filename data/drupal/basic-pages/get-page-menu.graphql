@@ -1,0 +1,27 @@
+fragment MenuItemContent on MenuItem {
+  url
+  title
+}
+
+query GetMenu($menu: MenuAvailable!) {
+  menu(name: $menu) {
+    items {
+      ...MenuItemContent
+      children {
+        ...MenuItemContent
+        children {
+          ...MenuItemContent
+          children {
+            ...MenuItemContent
+            children {
+              ...MenuItemContent
+              children {
+                ...MenuItemContent
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
