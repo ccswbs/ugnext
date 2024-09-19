@@ -1,5 +1,6 @@
 import React from 'react';
 import { List, ListItem } from '@/components/list';
+import { Link } from '@/components/link';
 
 export const CourseTab = ({data,activeTab}) => {
   
@@ -28,9 +29,12 @@ const rightColumnItems = data.courses.slice(4);
                 ))}
                     {rightColumnItems.length > 3 && (
                     <ListItem>
-                        <a href='/programs/graduate' className='text-blue-600 cursor-pointer'>
+                        <Link
+                            className='text-blue-600 cursor-pointer'
+                            href='/programs/graduate'
+                        >
                             View All Biostatistics Graduate Courses
-                        </a>
+                        </Link>
                     </ListItem>
                 )}
                 </List>
