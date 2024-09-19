@@ -16,17 +16,6 @@ steps:
     displayName: 'Install bun using npm'
 
   - script: |
-      bun bun.lockb > bun.lockb.txt
-    displayName: 'Output text version of bun.lockb'
-
-  - task: Cache@2
-    inputs:
-      key: 'bun | "$(Agent.OS)" | bun.lockb.txt | "$(Build.SourceBranch)"'
-      path: 'node_modules'
-      cacheHitVar: 'BunCacheHit'
-    displayName: 'Cache bun dependencies'
-
-  - script: |
       bun install --frozen-lockfile
     displayName: 'Install dependencies using bun'
     condition: ne(variables.BunCacheHit, 'true')
