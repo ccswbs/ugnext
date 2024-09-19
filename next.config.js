@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	output: process.env.NEXT_STATIC_OUTPUT === 'true' ? 'export' : undefined,
 	reactStrictMode: true,
 	swcMinify: true,
 	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -17,6 +18,7 @@ const nextConfig = {
 		return config;
 	},
 	images: {
+		unoptimized: process.env.NEXT_STATIC_OUTPUT === 'true',
 		remotePatterns: [
 			{
 				protocol: 'https',
@@ -29,6 +31,12 @@ const nextConfig = {
 				hostname: 'api.liveugconthub.uoguelph.dev',
 				port: '',
 				pathname: '/sites/default/files/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'picsum.photos',
+				port: '',
+				pathname: '/**',
 			},
 		],
 	},

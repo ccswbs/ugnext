@@ -19,13 +19,13 @@ export const TextInput = ({ value, type = 'text', placeholder = '', onInput, lab
 );
 
 TextInput.propTypes = {
-  /**
-   * Sets the initial value of the TextInput
-   */
-  value: PropTypes.string,
-  type: PropTypes.oneOf(['text', 'password']),
-  placeholder: PropTypes.string,
-  onInput: PropTypes.func,
-  label: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
-  description: PropTypes.string,
+	/**
+	 * Sets the initial value of the TextInput
+	 */
+	value: PropTypes.string,
+	type: PropTypes.oneOf(['text', 'password']),
+	placeholder: PropTypes.string,
+	onInput: PropTypes.func,
+	label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	description: PropTypes.string,
 };

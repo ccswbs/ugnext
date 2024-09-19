@@ -227,7 +227,7 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 	return (
 		<>
 			<div className="flex flex-col gap-3">
-				<div className="flex flex-col gap-4 sm:flex-row">
+				<div className="flex flex-col gap-4 sm:flex-row sm:items-end">
 					<div className="flex-1">
 						<TextInput
 							onInput={(value) => setInput(value)}
@@ -256,7 +256,7 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
 			</div>
 
 			{/* Search results */}
-			<div className="mt-5 grid grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))] gap-5">
+			<div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
 				{filtered?.map((program) =>
 					typeof render === 'function' ? render(program) : <ProgramCard key={program.id} program={program} />,
 				)}
