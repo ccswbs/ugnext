@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import { UnstyledLink } from "@/components/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTriangleExclamation, faCircleXmark } from "@awesome.me/kit-7993323d0c/icons/classic/regular";
+import { faTriangleExclamation } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { faCircleXmark } from "@awesome.me/kit-7993323d0c/icons/classic/regular";
 
 const Notification = ({ title, url, color, className }) => {
   const [dismissed, setDismissed] = useState(false);
@@ -21,8 +22,8 @@ const Notification = ({ title, url, color, className }) => {
             className
           )}
         >
-          <UnstyledLink href={url} className="flex justify-center items-center ml-auto gap-[0.25em]">
-            <FontAwesomeIcon className="text-[1.25em]" icon={faTriangleExclamation} />
+          <UnstyledLink href={url} className="flex justify-center items-center ml-auto gap-[0.25em] text-lg">
+            <FontAwesomeIcon className={twJoin("text-[1.25em] mr-1", color === 'grey' && 'text-red')} icon={faTriangleExclamation} />
             <span>{title}</span>
             <span>{url?.replace(/https?:\/\//, "")}</span>
           </UnstyledLink>
