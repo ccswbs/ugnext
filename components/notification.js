@@ -24,7 +24,7 @@ const Notification = ({ title, url, color, className }) => {
         >
           <UnstyledLink href={url} className="flex justify-center items-center ml-auto gap-[0.25em] text-lg">
             <FontAwesomeIcon className={twJoin("text-[1.25em] mr-1", color === 'grey' && 'text-red')} icon={faTriangleExclamation} />
-            <span>{title}</span>
+            <span className="hidden md:block">{title}</span>
             <span>{url?.replace(/https?:\/\//, "")}</span>
           </UnstyledLink>
 
