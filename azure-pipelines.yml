@@ -1,5 +1,7 @@
 trigger:
-  - none
+  - main
+
+pr: none
 
 variables:
   - group: ugnext
