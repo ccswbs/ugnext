@@ -35,7 +35,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
 
       {footer && (
         <div className="flex w-full items-center justify-center bg-black p-4 text-white">
-          <Container className="text-xl">{footer}</Container>
+          <Container className="text-xl p-2">{footer}</Container>
         </div>
       )}
     </div>
