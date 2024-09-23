@@ -1,5 +1,5 @@
 import { Statistics } from "@/components/statistics";
-import { Link } from "@/components/link";
+import { UnstyledLink } from "@/components/link";
 
 export const Rankings = () => (
   <Statistics
@@ -7,12 +7,13 @@ export const Rankings = () => (
     data={[
       {
         represents: (
-          <Link
+          <UnstyledLink
+            className="underline underline-offset-2 decoration-transparent hover:decoration-current focus:decoration-current transition-colors"
             color="none"
             href="https://sustainabilitymag.com/sustainability/inside-the-worlds-most-sustainable-university"
           >
             QS Sustainability Rankings, 2023
-          </Link>
+          </UnstyledLink>
         ),
         value: (
           <>
@@ -22,12 +23,13 @@ export const Rankings = () => (
       },
       {
         represents: (
-          <Link
+          <UnstyledLink
+            className="underline underline-offset-2 decoration-transparent hover:decoration-current focus:decoration-current transition-colors"
             color="none"
             href="https://education.macleans.ca/feature/canadas-best-comprehensive-universities-rankings-2024/"
           >
             Macleans, 2024
-          </Link>
+          </UnstyledLink>
         ),
         value: (
           <>
@@ -37,9 +39,13 @@ export const Rankings = () => (
       },
       {
         represents: (
-          <Link color="none" href="https://www.timeshighereducation.com/world-university-rankings/by-subject">
+          <UnstyledLink
+            className="underline underline-offset-2 decoration-transparent hover:decoration-current focus:decoration-current transition-colors"
+            color="none"
+            href="https://www.timeshighereducation.com/world-university-rankings/by-subject"
+          >
             Times Higher Education, 2023
-          </Link>
+          </UnstyledLink>
         ),
         value: (
           <>
@@ -49,9 +55,13 @@ export const Rankings = () => (
       },
       {
         represents: (
-          <Link color="none" href="https://researchinfosource.com/top-50-research-universities/2023">
+          <UnstyledLink
+            className="underline underline-offset-2 decoration-transparent hover:decoration-current focus:decoration-current transition-colors"
+            color="none"
+            href="https://researchinfosource.com/top-50-research-universities/2023"
+          >
             Infosource 2023
-          </Link>
+          </UnstyledLink>
         ),
         value: (
           <>
