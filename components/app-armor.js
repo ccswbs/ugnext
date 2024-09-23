@@ -17,7 +17,7 @@ const AppArmor = () => {
   const hash = useMemo(() => {
     return alert ? objectHash(alert) : null;
   }, [alert]);
-  const { dismissed, dismiss, clear } = useDismissible("app-armor-alert", hash);
+  const { dismissed, dismiss, clear } = useDismissible("app-armor-alert", hash, 'session');
 
   return (
     <>
