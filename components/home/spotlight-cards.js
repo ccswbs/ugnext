@@ -6,7 +6,7 @@ export const SpotlightCards = ({ cards }) => (
     {cards.map((card, index) => (
       <Card
         key={card.id}
-        className={`h-full spotlight-card-${index + 2}`}
+        className={`h-full spotlight-card-rank-${index + 2}`}
         title={<span className="my-auto w-full text-center text-xl font-bold">{card.title}</span>}
         href={card.url.url}
         centered
