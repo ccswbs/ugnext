@@ -75,13 +75,15 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
           </div>
         )}
 
-        <Header title={header?.title} url={header?.url} menu={header?.menu} variant={header?.variant} />
+        {header !== false && (
+          <Header title={header?.title} url={header?.url} menu={header?.menu} variant={header?.variant} />
+        )}
 
         <main id="content" className={twMerge("flex-1 pb-4", className)}>
           {children}
         </main>
 
-        <Footer links={footer?.links} variant={footer?.variant} />
+        {footer !== false && <Footer links={footer?.links} variant={footer?.variant} />}
       </div>
     </>
   );
@@ -105,6 +107,6 @@ Layout.propTypes = {
       alt: PropTypes.string,
     }),
   }),
-  header: PropTypes.shape({ ...Header.propTypes }),
-  footer: PropTypes.shape({ ...Footer.propTypes }),
+  header: PropTypes.oneOfType([PropTypes.shape({ ...Header.propTypes }), PropTypes.bool]),
+  footer: PropTypes.oneOfType([PropTypes.shape({ ...Footer.propTypes }), PropTypes.bool]),
 };
