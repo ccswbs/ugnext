@@ -1,0 +1,54 @@
+trigger:
+  - main
+
+pr: none
+
+variables:
+  - group: ugnext
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "install -g bun"
+      verbose: true
+    displayName: "Install bun using npm"
+
+  - script: |
+      bun bun.lockb > bun.lockb.txt
+    displayName: "Output text version of bun.lockb"
+
+  - script: |
+      bun install --frozen-lockfile
+    displayName: "Install dependencies using bun"
+
+  - task: DeleteFiles@1
+    inputs:
+      contents: "pages/**/!(404.js|500.js|_app.js|_document.js|index.js)"
+    displayName: "Remove all pages except home, template and error pages"
+
+  - task: Cache@2
+    inputs:
+      key: "next | $(Agent.OS) | bun.lockb.txt"
+      path: "$(System.DefaultWorkingDirectory)/.next/cache"
+    displayName: "Cache .next/cache"
+
+  - script: |
+      bun run static-build
+    displayName: "Build site"
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: "out"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      replaceExistingArchive: true
+    displayName: "Archive output folder"
+
+  - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+    artifact: zipOutput
+    displayName: "Publish Artifact"
