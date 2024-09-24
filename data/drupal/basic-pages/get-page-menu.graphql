@@ -7,15 +7,15 @@ query GetMenu($menu: MenuAvailable!) {
   menu(name: $menu) {
     items {
       ...MenuItemContent
-      children {
+      items: children {
         ...MenuItemContent
-        children {
+        items: children {
           ...MenuItemContent
-          children {
+          items: children {
             ...MenuItemContent
-            children {
+            items: children {
               ...MenuItemContent
-              children {
+              items: children {
                 ...MenuItemContent
               }
             }
