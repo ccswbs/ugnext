@@ -56,35 +56,37 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
       </Transition>
 
       {!isFallback && (
-        <a
-          className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
-          href="#content"
-        >
-          Skip to main content
-        </a>
-      )}
+        <>
+          <a
+            className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
+            href="#content"
+          >
+            Skip to main content
+          </a>
 
-      <div className="flex flex-1 flex-col">
-        {isPreview && (
-          <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
-            <span>You are currently in Preview Mode.</span>
+          <div className="flex flex-1 flex-col">
+            {isPreview && (
+              <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
+                <span>You are currently in Preview Mode.</span>
 
-            <Button color="yellow" className="p-2" href="/api/exit-preview">
-              Exit Preview Mode
-            </Button>
+                <Button color="yellow" className="p-2" href="/api/exit-preview">
+                  Exit Preview Mode
+                </Button>
+              </div>
+            )}
+
+            {header !== false && (
+              <Header title={header?.title} url={header?.url} menu={header?.menu} variant={header?.variant} />
+            )}
+
+            <main id="content" className={twMerge("flex-1 pb-4", className)}>
+              {children}
+            </main>
+
+            {footer !== false && <Footer links={footer?.links} variant={footer?.variant} />}
           </div>
-        )}
-
-        {header !== false && (
-          <Header title={header?.title} url={header?.url} menu={header?.menu} variant={header?.variant} />
-        )}
-
-        <main id="content" className={twMerge("flex-1 pb-4", className)}>
-          {children}
-        </main>
-
-        {footer !== false && <Footer links={footer?.links} variant={footer?.variant} />}
-      </div>
+        </>
+      )}
     </>
   );
 };
