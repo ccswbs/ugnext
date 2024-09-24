@@ -28,62 +28,63 @@ export async function getStaticProps(context) {
   }
 
   // Now that we have the ID for the page we can request its content from its latest revision.
-  const page = await getPageContent(id, status);
+  const content = await getPageContent(id, status);
 
-  if (!page) {
+  if (!content) {
     return {
       notFound: true,
     };
   }
 
-  page.menu = await getPageMenu(page);
+  content.menu = await getPageMenu(content);
+  //content.page = content.menu?.shift();
 
   // Get rid of any data that doesn't need to be passed to the page.
-  delete page.primaryNavigation;
+  delete content.primaryNavigation;
 
   // Flatten image prop
-  page.image = page?.image?.image ?? null;
+  content.image = content?.image?.image ?? null;
 
-  page.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
+  content.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
 
   return {
-    props: { data: page },
+    props: { content },
   };
 }
 
-export default function Page({ data }) {
-  const { isFallback } = useRouter();
+export default function Page({ content }) {
+  console.log(content?.menu);
 
   return (
-    <Layout className={twJoin(isFallback && "hidden")} title={data?.title} menu={data?.menu}>
-      {data?.image ? (
+    <Layout metadata={{ title: content?.title }}>
+      {content?.image ? (
         <>
           <Hero
             variant="content-hub"
             image={{
-              src: data.image.url,
-              height: data.image.height,
-              width: data.image.width,
-              alt: data.image.alt,
+              src: content.image.url,
+              height: content.image.height,
+              width: content.image.width,
+              alt: content.image.alt,
             }}
-            title={data.title}
+            title={content.title}
           />
 
-          <Breadcrumbs links={data?.breadcrumbs} />
+          <Breadcrumbs links={content?.breadcrumbs} />
         </>
       ) : (
         <>
-          <Breadcrumbs links={data?.breadcrumbs} />
+          <Breadcrumbs links={content?.breadcrumbs} />
 
           <Container centered>
             <Heading level={1} className="mb-0">
-              {data?.title}
+              {content?.title}
             </Heading>
           </Container>
         </>
       )}
 
-      {data?.widgets?.map((widget, index) => (
+      {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
     </Layout>
