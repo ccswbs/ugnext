@@ -20,7 +20,7 @@ export default function ProgramsGraduate({ programs }) {
   const [filter, setFilter] = useState(null);
 
   return (
-    <Layout title="Graduate Programs">
+    <Layout metadata={{ title: "Graduate Programs" }}>
       <Container centered>
         <Heading level={1}>Graduate Programs at the University of Guelph</Heading>
 
