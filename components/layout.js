@@ -75,9 +75,7 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
               </div>
             )}
 
-            {header !== false && (
-              <Header title={header?.title} url={header?.url} menu={header?.menu} variant={header?.variant} />
-            )}
+            {header !== false && <Header topic={header?.topic} menu={header?.menu} variant={header?.variant} />}
 
             <main id="content" className={twMerge("flex-1 pb-4", className)}>
               {children}

@@ -20,9 +20,9 @@ const Menu = ({ title, items }) => {
   );
 };
 
-export const Header = ({ title, url, navigation, variant }) => {
+export const Header = ({ topic, navigation, variant = "guelph" }) => {
   return (
-    <uofg-header page-title={title} page-url={url} variant={variant}>
+    <uofg-header page-title={topic?.title} page-url={topic?.url} variant={variant}>
       {navigation?.map((item, index) => {
         if (Array.isArray(item.items)) {
           return <Menu key={item.title + index} title={item.title} items={item.items} />;
@@ -49,8 +49,10 @@ const menu = PropTypes.shape({
 menu.items = PropTypes.arrayOf(PropTypes.oneOfType([link, menu])).isRequired;
 
 Header.propTypes = {
-  title: PropTypes.string,
-  url: PropTypes.string,
+  topic: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string,
+  }),
   navigation: PropTypes.arrayOf(PropTypes.oneOfType([link, menu])),
-  variant: PropTypes.oneOf(["dual-brand"]),
+  variant: PropTypes.oneOf(["guelph", "dual-brand", "ridgetown"]),
 };
