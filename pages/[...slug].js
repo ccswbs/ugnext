@@ -50,7 +50,6 @@ export async function getStaticProps(context) {
 }
 
 export default function Page({ content }) {
-
   return (
     <Layout metadata={{ title: content?.title }} header={content?.menu}>
       {content?.image ? (

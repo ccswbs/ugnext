@@ -96,12 +96,12 @@ export const WithTopic = {
 
 export const DualBrandVariant = {
   args: {
-    variant: 'dual-brand'
-  }
+    variant: "dual-brand",
+  },
 };
 
 export const RidgetownVariant = {
   args: {
-    variant: 'ridgetown'
-  }
+    variant: "ridgetown",
+  },
 };

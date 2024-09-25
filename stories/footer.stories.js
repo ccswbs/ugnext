@@ -43,6 +43,6 @@ export const WithCustomLinks = {
 
 export const RidgetownVariant = {
   args: {
-    variant: 'ridgetown'
+    variant: "ridgetown",
   },
 };
