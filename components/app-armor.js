@@ -9,8 +9,8 @@ import { useDismissible } from "@/lib/use-dismissible";
 import objectHash from "object-hash";
 
 const AppArmor = () => {
-  const { isPreview, pathname } = useRouter();
-  const id = pathname === "/app-armor-test" || isPreview ? 168 : 169;
+  const { pathname } = useRouter();
+  const id = pathname === "/app-armor-test" ? 168 : 169;
   const ref = useRef(null);
   const [alert, setAlert] = useState(null);
   const [show, setShow] = useState(true);
