@@ -1,8 +1,6 @@
-import { useRouter } from "next/router";
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
-import { twJoin } from "tailwind-merge";
 import { Hero } from "@/components/hero";
 import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
@@ -37,7 +35,6 @@ export async function getStaticProps(context) {
   }
 
   content.menu = await getPageMenu(content);
-  //content.page = content.menu?.shift();
 
   // Get rid of any data that doesn't need to be passed to the page.
   delete content.primaryNavigation;
@@ -53,10 +50,9 @@ export async function getStaticProps(context) {
 }
 
 export default function Page({ content }) {
-  console.log(content?.menu);
 
   return (
-    <Layout metadata={{ title: content?.title }}>
+    <Layout metadata={{ title: content?.title }} header={content?.menu}>
       {content?.image ? (
         <>
           <Hero
