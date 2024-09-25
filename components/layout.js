@@ -14,7 +14,7 @@ import metadata from "next/dist/server/typescript/rules/metadata";
 export const Layout = ({ children, className, metadata, header, footer }) => {
   const { isPreview, isFallback } = useRouter();
 
-  const title = metadata?.title ? `${metadata.title} | University of Guelph` : "University of Guelph";
+  const title = metadata?.title ? `${metadata.title} | University of Guelph` : "University of Guelph - Improve Life";
 
   const description =
     metadata?.description ??

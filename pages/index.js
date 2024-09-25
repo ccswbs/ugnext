@@ -25,7 +25,7 @@ export async function getStaticProps(context) {
 
 export default function Home({ cards, hero }) {
   return (
-    <Layout title="Home">
+    <Layout>
       {hero && <SpotlightHero hero={hero} />}
 
       <Container centered>
