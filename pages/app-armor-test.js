@@ -3,7 +3,7 @@ import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/button";
 
-export default function EnsTest() {
+export default function AppArmorTest() {
   return (
     <Layout>
       <Container centered>

@@ -7,11 +7,10 @@ import { Button } from "@/components/button";
 import { Container } from "@/components/container";
 import { useDismissible } from "@/lib/use-dismissible";
 import objectHash from "object-hash";
-import { useSearchParams } from "next/navigation";
 
 const AppArmor = () => {
   const { isPreview, pathname } = useRouter();
-  const id = pathname === "/ens-test" || isPreview ? 168 : 169;
+  const id = pathname === "/app-armor-test" || isPreview ? 168 : 169;
   const ref = useRef(null);
   const [alert, setAlert] = useState(null);
   const [show, setShow] = useState(true);
