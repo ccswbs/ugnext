@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const Footer = ({ links, variant }) => (
+export const Footer = ({ links, variant = "guelph" }) => (
   <uofg-footer variant={variant}>
     {Array.isArray(links) &&
       links?.map((link) => {
@@ -20,5 +20,5 @@ Footer.propTypes = {
       url: PropTypes.string.isRequired,
     })
   ),
-  variant: PropTypes.oneOf(["ridgetown"]),
+  variant: PropTypes.oneOf(["guelph", "ridgetown"]),
 };
