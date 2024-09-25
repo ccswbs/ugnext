@@ -9,18 +9,6 @@ query GetMenu($menu: MenuAvailable!) {
       ...MenuItemContent
       items: children {
         ...MenuItemContent
-        items: children {
-          ...MenuItemContent
-          items: children {
-            ...MenuItemContent
-            items: children {
-              ...MenuItemContent
-              items: children {
-                ...MenuItemContent
-              }
-            }
-          }
-        }
       }
     }
   }
