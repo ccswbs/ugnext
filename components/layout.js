@@ -9,7 +9,7 @@ import { Transition } from "@headlessui/react";
 import { faSpinner } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { twMerge } from "tailwind-merge";
 import PropTypes from "prop-types";
-import metadata from "next/dist/server/typescript/rules/metadata";
+import AppArmor from '@/components/app-armor';
 
 export const Layout = ({ children, className, metadata, header, footer }) => {
   const { isPreview, isFallback } = useRouter();
@@ -55,14 +55,18 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
         </div>
       </Transition>
 
-      {!isFallback && (
-        <>
-          <a
-            className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
-            href="#content"
-          >
-            Skip to main content
-          </a>
+			{!isFallback && (
+				<>
+					<AppArmor />
+
+					<a
+						className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
+						href="#content"
+					>
+						Skip to main content
+					</a>
+				</>
+			)}
 
           <div className="flex flex-1 flex-col">
             {isPreview && (
