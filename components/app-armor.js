@@ -10,10 +10,8 @@ import objectHash from "object-hash";
 import { useSearchParams } from "next/navigation";
 
 const AppArmor = () => {
-  const { isPreview, isFallback } = useRouter();
-  const searchParams = useSearchParams();
-
-  const id = isPreview || process.env.NODE_ENV !== "production" || searchParams.get("app-armor-test-mode") ? 168 : 169;
+  const { isPreview, pathname } = useRouter();
+  const id = pathname === "/ens-test" || isPreview ? 168 : 169;
   const ref = useRef(null);
   const [alert, setAlert] = useState(null);
   const [show, setShow] = useState(true);
