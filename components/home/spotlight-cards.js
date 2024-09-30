@@ -7,7 +7,7 @@ export const SpotlightCards = ({ cards }) => (
       <Card
         key={card.id}
         className={`h-full spotlight-card-rank-${index + 2}`}
-        title={<span className="my-auto w-full text-center text-xl font-bold">{card.title}</span>}
+        title={<span className="my-auto w-full text-center text-[2.2rem] leading-[3rem] font-bold">{card.title}</span>}
         href={card.url.url}
         centered
         image={{
