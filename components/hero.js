@@ -48,7 +48,7 @@ export const Hero = ({ variant = "spotlight", image, title, caption, button, ali
                   color="yellow"
                   href={button?.href}
                   className={twJoin(
-                    "w-fit text-lg p-3",
+                    "w-fit text-lg p-3 hover:bg-red hover:text-white focus:bg-red focus:text-white",
                     alignment === "center" && "lg:mx-auto",
                     alignment === "right" && "lg:ml-auto"
                   )}
