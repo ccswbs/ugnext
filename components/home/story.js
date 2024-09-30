@@ -39,6 +39,6 @@ export const HomeStory = () => (
       }
     />
 
-    <div className="w-full p-2"></div>
+    <div className="w-full p-5"></div>
   </>
 );
