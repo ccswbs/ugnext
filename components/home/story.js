@@ -13,7 +13,7 @@ export const HomeStory = () => (
         height: foreground.height,
         blurred: foreground.blurDataURL,
         alt: "Asha Edwin smiling",
-        className: "h-[370px] w-auto object-fit",
+        className: "h-[390px] w-auto object-fit",
       }}
       backgroundImage={{
         src: background.src,
@@ -21,7 +21,7 @@ export const HomeStory = () => (
         height: background.height,
         blurred: background.blurDataURL,
         alt: "Student volunteers",
-        className: "h-full w-full object-cover lg:[object-position:left_40px]",
+        className: "h-full w-full object-cover lg:[object-position:left_20px]",
       }}
       content={
         <Blockquote className="text-white pt-[40px]">
