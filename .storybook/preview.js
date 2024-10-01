@@ -1,8 +1,6 @@
 import "@/styles/globals.css";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
-console.log("test", typeof window === "object");
-
 /** @type { import('@storybook/react').Preview } */
 const preview = {
   parameters: {
