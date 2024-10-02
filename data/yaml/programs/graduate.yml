@@ -668,6 +668,20 @@
     - geography
     - rural
     - environmental design
+- name: Plant Agriculture
+  url: https://graduatestudies.uoguelph.ca/programs/plnt
+  degrees:
+    - MSc
+    - PhD
+    - MPAg
+  types:
+    - course-based
+    - thesis-based
+  tags:
+    - crops
+    - crop science
+    - biochemistry
+    - plant genetics
 - name: Political Science
   url: https://graduatestudies.uoguelph.ca/programs/pols
   degrees:
@@ -963,17 +977,3 @@
     - fish*
     - sustain*
     - mammal*
-- name: Plant Agriculture
-  url: https://graduatestudies.uoguelph.ca/programs/plnt
-  degrees:
-    - MSc
-    - PhD
-    - MPAg
-  types:
-    - course-based
-    - thesis-based
-  tags:
-    - crops
-    - crop science
-    - biochemistry
-    - plant genetics
