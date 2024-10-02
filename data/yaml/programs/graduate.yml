@@ -287,6 +287,7 @@
     - PhD
   types:
     - course-based
+    - thesis-based
   tags:
     - biology
     - science
@@ -342,6 +343,7 @@
     - PhD
   types:
     - course-based
+    - thesis-based
   tags:
     - food
     - business
@@ -460,6 +462,7 @@
     - MLA
   types:
     - course-based
+    - thesis-based
   tags:
     - architecture
     - design
@@ -795,6 +798,7 @@
     - MPLAN
   types:
     - course-based
+    - thesis-based
   tags:
     - humanities
 - name: Rural Studies
@@ -803,7 +807,6 @@
     - PhD
   types:
     - thesis-based
-    - course-based
   tags:
     - humanities
 - name: Sexuality, Genders and Bodies
@@ -973,6 +976,7 @@
     - MPAg
   types:
     - course-based
+    - thesis-based
   tags:
     - crops
     - crop science
