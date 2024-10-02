@@ -505,6 +505,18 @@
   tags:
     - biology
     - science
+- name: Earth Observation and Geographic Information Science
+  url: https://www.uoguelph.ca/programs/earth-geographic-info-science/
+  degrees:
+    - Bachelor of Science in Environmental Science
+  types:
+    - major
+    - co-op
+  tags:
+    - geography
+    - technology
+    - geomatics
+    - science
 - name: Economics
   acronym: ECON
   url: https://www.uoguelph.ca/programs/economics/
@@ -600,18 +612,6 @@
     - minor
   tags:
     - engineering
-    - science
-- name: Earth Observation and Geographic Information Science
-  url: https://www.uoguelph.ca/programs/earth-geographic-info-science/
-  degrees:
-    - Bachelor of Science in Environmental Science
-  types:
-    - major
-    - co-op
-  tags:
-    - geography
-    - technology
-    - geomatics
     - science
 - name: Environmental Governance
   acronym: EGOV
