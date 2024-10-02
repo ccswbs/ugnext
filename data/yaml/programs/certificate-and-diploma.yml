@@ -142,6 +142,14 @@
     - landscaping
     - botany
     - plant
+- name: Veterinary Assistant and Office Administration Certificate
+  url: https://www.ridgetownc.com/future/vaoa/
+  types:
+    - certificate
+  tags:
+    - animal
+    - vet
+    - biology
 - name: Veterinary Technology
   url: https://www.ridgetownc.com/future/dvt/
   types:
