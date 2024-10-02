@@ -23,8 +23,6 @@ export const getContinuingEducationPrograms = async () => {
 export const getUndergraduateDegrees = async () => {
   return degrees.map((degree) => ({
     ...degree,
-    types: ["bachelor"],
-    tags: [],
     url: `https://uoguelph.ca${degree.url}`,
   }));
 };

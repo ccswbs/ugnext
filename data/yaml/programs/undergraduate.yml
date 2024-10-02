@@ -1515,17 +1515,6 @@
     - humanities
     - arts
     - culture
-- name: Veterinary Medicine
-  acronym: VM
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/veterinary-medicine-vm/
-  degrees:
-    - Doctor of Veterinary Medicine
-  types:
-    - major
-  tags:
-    - health
-    - science
-    - biology
 - name: Water Resources Engineering
   acronym: WRE
   url: https://www.uoguelph.ca/programs/water-resources-engineering/
