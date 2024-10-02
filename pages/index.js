@@ -29,7 +29,7 @@ export default function Home({ cards, hero }) {
     <>
       <Notification color="grey" title="U of G Strike Updates:" url="https://uoguelph.ca/strike" />
 
-      <Layout title="Home">
+      <Layout>
         {hero && <SpotlightHero hero={hero} />}
 
         <Container centered>

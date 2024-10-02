@@ -266,6 +266,18 @@
   tags:
     - biology
     - science
+- name: Biological and Medical Physics
+  url: https://www.uoguelph.ca/programs/biological-and-medical-physics/
+  degrees:
+    - Bachelor of Science
+  types:
+    - major
+    - co-op
+  tags:
+    - human health
+    - science
+    - research*
+    - life science
 - name: Biomedical Engineering
   acronym: BME
   url: https://www.uoguelph.ca/programs/biomedical-engineering/
@@ -1122,6 +1134,18 @@
     - major
     - co-op
   tags:
+    - robotics
+    - design
+- name: Mechatronics Engineering
+  url: https://www.uoguelph.ca/programs/mechatronics-engineering/
+  degrees:
+    - Bachelor of Engineering
+  types:
+    - major
+    - co-op
+  tags:
+    - artificial intelligence
+    - ai
     - robotics
     - design
 - name: Media and Cinema Studies
