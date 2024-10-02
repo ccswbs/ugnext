@@ -9,19 +9,6 @@
   tags:
     - business
     - finance
-- name: Agriculture
-  acronym: AGRS
-  url: https://www.uoguelph.ca/programs/bachelor-of-science-in-agriculture/
-  degrees:
-    - Bachelor of Science in Agriculture
-  types:
-    - major
-    - minor
-    - co-op
-  tags:
-    - agriculture
-    - botany
-    - bioscience
 - name: Animal Biology
   acronym: ABIO
   url: https://www.uoguelph.ca/programs/animal-biology/
@@ -94,16 +81,6 @@
   tags:
     - arts
     - history
-- name: Arts and Sciences
-  acronym: AS
-  url: https://www.uoguelph.ca/programs/bachelor-of-arts-and-sciences/
-  degrees:
-    - Bachelor of Arts and Sciences
-  types:
-    - major
-  tags:
-    - science
-    - arts
 - name: Bio-Medical Science
   acronym: BIOM
   url: https://www.uoguelph.ca/programs/biomedical-science/
@@ -910,17 +887,6 @@
   tags:
     - business
     - management
-- name: Indigenous Environmental Science and Practice
-  acronym: IESP
-  url: https://www.uoguelph.ca/programs/bachelor-of-indigenous-environmental-science-and-practice/
-  degrees:
-    - Bachelor of Indigenous Environmental Science and Practice
-  types:
-    - major
-  tags:
-    - humanities
-    - culture
-    - science
 - name: International Business
   acronym: IB
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/international-business-ib/
@@ -1069,20 +1035,6 @@
     - business
     - economics
     - mathematics
-- name: Bachelor of Mathematics
-  acronym: BMATH
-  url: https://www.uoguelph.ca/programs/bachelor-of-mathematics/
-  degrees:
-    - Bachelor of Mathematics
-  types:
-    - major
-    - minor
-  tags:
-    - mathematics
-    - artificial intelligence
-    - ai
-    - data
-    - analytics
 - name: Mathematics
   acronym: MATH
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/mathematics-math/
@@ -1266,18 +1218,6 @@
     - nutraceut*
     - food
     - supplement*
-- name: One Health
-  acronym: ONEH
-  url: https://www.uoguelph.ca/programs/bachelor-of-one-health/
-  degrees:
-    - Bachelor of One Health
-  types:
-    - major
-    - minor
-  tags:
-    - health
-    - science
-    - biology
 - name: Philosophy
   acronym: PHIL
   url: https://www.uoguelph.ca/programs/philosophy/

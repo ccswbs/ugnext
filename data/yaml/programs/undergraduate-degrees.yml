@@ -50,7 +50,10 @@
   url: "/programs/bachelor-of-indigenous-environmental-science-and-practice/"
   types:
     - bachelor
-  tags: []
+  tags:
+    - humanities
+    - culture
+    - science
 
 - name: Bachelor of Landscape Architecture
   url: "/programs/bachelor-of-landscape-architecture/"
@@ -62,13 +65,21 @@
   url: "/programs/bachelor-of-mathematics/"
   types:
     - bachelor
-  tags: []
+  tags:
+    - mathematics
+    - artificial intelligence
+    - ai
+    - data
+    - analytics
 
 - name: Bachelor of One Health
   url: "/programs/bachelor-of-one-health/"
   types:
     - bachelor
-  tags: []
+  tags:
+    - health
+    - science
+    - biology
 
 - name: Bachelor of Science
   url: "/programs/bachelor-of-science/"
@@ -80,7 +91,10 @@
   url: "/programs/bachelor-of-science-in-agriculture/"
   types:
     - bachelor
-  tags: []
+  tags:
+    - agriculture
+    - botany
+    - bioscience
 
 - name: Bachelor of Science in Environmental Sciences
   url: "/programs/bachelor-of-science-in-environmental-sciences/"
