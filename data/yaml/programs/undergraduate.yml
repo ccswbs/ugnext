@@ -576,16 +576,6 @@
     - water
     - sustain*
     - science
-- name: Environmental Biology
-  acronym: ENVB
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-biology-envb/
-  degrees:
-    - Bachelor of Science
-  types:
-    - major
-  tags:
-    - biology
-    - science
 - name: Environmental Economics and Policy
   acronym: EEP
   url: https://www.uoguelph.ca/programs/environmental-economics-and-policy/
@@ -611,17 +601,17 @@
   tags:
     - engineering
     - science
-- name: Environmental Geomatics
-  acronym: EG
-  url: https://www.uoguelph.ca/programs/environmental-geomatics/
+- name: Earth Observation and Geographic Information Science
+  url: https://www.uoguelph.ca/programs/earth-geographic-info-science/
   degrees:
-    - Bachelor of Science
+    - Bachelor of Science in Environmental Science
   types:
     - major
     - co-op
   tags:
     - geography
     - technology
+    - geomatics
     - science
 - name: Environmental Governance
   acronym: EGOV
@@ -745,18 +735,6 @@
   tags:
     - food
     - engineering
-- name: Food Industry Management
-  acronym: FIM
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/food-industry-management-fim/
-  degrees:
-    - Bachelor of Bio-Resource Management
-  types:
-    - major
-    - co-op
-  tags:
-    - food
-    - business
-    - management
 - name: Food Science
   acronym: FOOD
   url: https://www.uoguelph.ca/programs/food-science/
@@ -998,16 +976,6 @@
     - public
     - affairs
     - socio*
-- name: Landscape Architecture
-  acronym: LA
-  url: https://www.uoguelph.ca/programs/bachelor-of-landscape-architecture/
-  degrees:
-    - Bachelor of Landscape Architecture
-  types:
-    - major
-  tags:
-    - architecture
-    - design
 - name: Linguistics
   acronym: LING
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/linguistics-ling/
