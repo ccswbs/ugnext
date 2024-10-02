@@ -126,15 +126,14 @@ export const Select = ({
               disabled={option?.disabled}
             >
               {({ focus, selected }) => (
-                <>
-                  {option?.label}
+                <div className="flex">
+                  <span className="flex-1">{option?.label}</span>
 
-                  {selected && (
-                    <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-blue-600 ui-selected:flex">
-                      <FontAwesomeIcon icon={faCheck} className="h-5 w-5" />
-                    </span>
-                  )}
-                </>
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className={twJoin("h-5 w-5 text-blue-600", selected ? "visible" : "invisible")}
+                  />
+                </div>
               )}
             </OptionTag>
           ))}
