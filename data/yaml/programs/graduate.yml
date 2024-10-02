@@ -701,6 +701,7 @@
     - DVSc
   types:
     - thesis-based
+    - course-based
   tags:
     - biology
     - science
@@ -744,7 +745,7 @@
   degrees:
     - MA
   types:
-    - thesis-based
+    - course-based
   tags:
     - poli*
     - cultur*
@@ -865,6 +866,7 @@
     - PhD
   types:
     - thesis-based
+    - course-based
   tags:
     - humanities
     - culture
@@ -873,7 +875,7 @@
   degrees:
     - MFA
   types:
-    - course-based
+    - thesis-based
   tags:
     - arts
     - humanities
@@ -906,7 +908,6 @@
     - Graduate Diploma
   types:
     - thesis-based
-    - course-based
   tags:
     - business
     - marketing
