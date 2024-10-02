@@ -18,6 +18,7 @@
   tags:
     - biology
     - science
+    - agriculture
 - name: Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/applied-nutrition
   degrees:
@@ -122,6 +123,8 @@
     - course-based
   tags:
     - humanities
+    - agriculture
+    - livestock
 - name: Chemistry
   url: https://graduatestudies.uoguelph.ca/programs/chbi
   degrees:
@@ -291,6 +294,8 @@
   tags:
     - biology
     - science
+    - soil
+    - indigenous
 - name: Family Relations and Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/fran
   degrees:
@@ -668,6 +673,7 @@
     - geography
     - rural
     - environmental design
+    - indigenous
 - name: Plant Agriculture
   url: https://graduatestudies.uoguelph.ca/programs/plnt
   degrees:
@@ -811,6 +817,7 @@
     - thesis-based
   tags:
     - humanities
+    - indigenous
 - name: Rural Studies
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof-stu
   degrees:
@@ -834,6 +841,7 @@
     - feminis*
     - decolon*
     - interdisciplinary
+    - indigenous
 - name: Social Practice and Transformational Change
   url: https://graduatestudies.uoguelph.ca/programs/sptc
   degrees:
@@ -890,6 +898,7 @@
     - agriculture
     - biology
     - science
+    - soil
 - name: Theatre Studies
   url: https://graduatestudies.uoguelph.ca/programs/thst
   degrees:
