@@ -291,15 +291,6 @@
   tags:
     - biology
     - science
-- name: European Studies
-  url: https://graduatestudies.uoguelph.ca/programs/eurs
-  degrees:
-    - MA
-  types:
-    - course-based
-  tags:
-    - humanities
-    - culture
 - name: Family Relations and Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/fran
   degrees:
@@ -349,15 +340,6 @@
     - business
     - agriculture
     - economics
-- name: French
-  url: https://graduatestudies.uoguelph.ca/programs/fren
-  degrees:
-    - MA
-  types:
-    - course-based
-  tags:
-    - humanities
-    - language
 - name: Geography
   url: https://graduatestudies.uoguelph.ca/programs/geog
   degrees:
@@ -422,6 +404,19 @@
     - pharma*
     - cogniti*
     - diet*
+- name: Integrated Humanities
+  url: https://graduatestudies.uoguelph.ca/programs/integrated-humanities
+  degrees:
+    - MA
+  types:
+    - thesis-based
+    - course-based
+  tags:
+    - language
+    - french studies
+    - european studies
+    - francophone
+    - culture
 - name: Integrative Biology
   url: https://graduatestudies.uoguelph.ca/programs/ibio
   degrees:
