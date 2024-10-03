@@ -49,10 +49,8 @@ export const Button = ({ column, data }) => {
   const style = data?.style?.name;
   const color = getColor(style);
   const outlined = isOutlined(style);
-  /*
-    let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
-    let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
-  */
+  const analyticsGoal = data?.relationships.field_cta_analytics_goal?.name;
+  const analyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
 
   return (
     <>
@@ -69,6 +67,16 @@ export const Button = ({ column, data }) => {
         href={url}
         color={color}
         outlined={outlined}
+        onClick={(e) => {
+          if (analyticsGoal && analyticsAction) {
+            window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
+            window.dataLayer.push({
+              event: "customEvent",
+              category: analyticsGoal,
+              action: analyticsAction,
+            });
+          }
+        }}
       >
         {icon && <i className={twJoin("pe-3 text-4xl inline-block align-middle", icon, iconColor)}></i>}
         <HtmlParser html={title} />
