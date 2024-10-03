@@ -9,19 +9,6 @@
   tags:
     - business
     - finance
-- name: Agriculture
-  acronym: AGRS
-  url: https://www.uoguelph.ca/programs/bachelor-of-science-in-agriculture/
-  degrees:
-    - Bachelor of Science in Agriculture
-  types:
-    - major
-    - minor
-    - co-op
-  tags:
-    - agriculture
-    - botany
-    - bioscience
 - name: Animal Biology
   acronym: ABIO
   url: https://www.uoguelph.ca/programs/animal-biology/
@@ -94,16 +81,6 @@
   tags:
     - arts
     - history
-- name: Arts and Sciences
-  acronym: AS
-  url: https://www.uoguelph.ca/programs/bachelor-of-arts-and-sciences/
-  degrees:
-    - Bachelor of Arts and Sciences
-  types:
-    - major
-  tags:
-    - science
-    - arts
 - name: Bio-Medical Science
   acronym: BIOM
   url: https://www.uoguelph.ca/programs/biomedical-science/
@@ -505,6 +482,18 @@
   tags:
     - biology
     - science
+- name: Earth Observation and Geographic Information Science
+  url: https://www.uoguelph.ca/programs/earth-geographic-info-science/
+  degrees:
+    - Bachelor of Science in Environmental Science
+  types:
+    - major
+    - co-op
+  tags:
+    - geography
+    - technology
+    - geomatics
+    - science
 - name: Economics
   acronym: ECON
   url: https://www.uoguelph.ca/programs/economics/
@@ -576,16 +565,6 @@
     - water
     - sustain*
     - science
-- name: Environmental Biology
-  acronym: ENVB
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/environmental-biology-envb/
-  degrees:
-    - Bachelor of Science
-  types:
-    - major
-  tags:
-    - biology
-    - science
 - name: Environmental Economics and Policy
   acronym: EEP
   url: https://www.uoguelph.ca/programs/environmental-economics-and-policy/
@@ -610,18 +589,6 @@
     - minor
   tags:
     - engineering
-    - science
-- name: Environmental Geomatics
-  acronym: EG
-  url: https://www.uoguelph.ca/programs/environmental-geomatics/
-  degrees:
-    - Bachelor of Science
-  types:
-    - major
-    - co-op
-  tags:
-    - geography
-    - technology
     - science
 - name: Environmental Governance
   acronym: EGOV
@@ -745,18 +712,6 @@
   tags:
     - food
     - engineering
-- name: Food Industry Management
-  acronym: FIM
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/food-industry-management-fim/
-  degrees:
-    - Bachelor of Bio-Resource Management
-  types:
-    - major
-    - co-op
-  tags:
-    - food
-    - business
-    - management
 - name: Food Science
   acronym: FOOD
   url: https://www.uoguelph.ca/programs/food-science/
@@ -932,17 +887,6 @@
   tags:
     - business
     - management
-- name: Indigenous Environmental Science and Practice
-  acronym: IESP
-  url: https://www.uoguelph.ca/programs/bachelor-of-indigenous-environmental-science-and-practice/
-  degrees:
-    - Bachelor of Indigenous Environmental Science and Practice
-  types:
-    - major
-  tags:
-    - humanities
-    - culture
-    - science
 - name: International Business
   acronym: IB
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/international-business-ib/
@@ -998,16 +942,6 @@
     - public
     - affairs
     - socio*
-- name: Landscape Architecture
-  acronym: LA
-  url: https://www.uoguelph.ca/programs/bachelor-of-landscape-architecture/
-  degrees:
-    - Bachelor of Landscape Architecture
-  types:
-    - major
-  tags:
-    - architecture
-    - design
 - name: Linguistics
   acronym: LING
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/linguistics-ling/
@@ -1101,20 +1035,6 @@
     - business
     - economics
     - mathematics
-- name: Bachelor of Mathematics
-  acronym: BMATH
-  url: https://www.uoguelph.ca/programs/bachelor-of-mathematics/
-  degrees:
-    - Bachelor of Mathematics
-  types:
-    - major
-    - minor
-  tags:
-    - mathematics
-    - artificial intelligence
-    - ai
-    - data
-    - analytics
 - name: Mathematics
   acronym: MATH
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/mathematics-math/
@@ -1298,18 +1218,6 @@
     - nutraceut*
     - food
     - supplement*
-- name: One Health
-  acronym: ONEH
-  url: https://www.uoguelph.ca/programs/bachelor-of-one-health/
-  degrees:
-    - Bachelor of One Health
-  types:
-    - major
-    - minor
-  tags:
-    - health
-    - science
-    - biology
 - name: Philosophy
   acronym: PHIL
   url: https://www.uoguelph.ca/programs/philosophy/
@@ -1547,17 +1455,6 @@
     - humanities
     - arts
     - culture
-- name: Veterinary Medicine
-  acronym: VM
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/veterinary-medicine-vm/
-  degrees:
-    - Doctor of Veterinary Medicine
-  types:
-    - major
-  tags:
-    - health
-    - science
-    - biology
 - name: Water Resources Engineering
   acronym: WRE
   url: https://www.uoguelph.ca/programs/water-resources-engineering/
