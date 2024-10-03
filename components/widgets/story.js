@@ -22,8 +22,6 @@ export const Story = ({ data }) => {
               const buttons =
                 content.storyContent?.filter((node) => node.__typename === "ParagraphStoryModalVideo") ?? [];
 
-              console.log(buttons);
-
               return (
                 <StoryComponent
                   key={content?.id ?? index}
