@@ -18,6 +18,7 @@
   tags:
     - biology
     - science
+    - agriculture
 - name: Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/applied-nutrition
   degrees:
@@ -122,6 +123,8 @@
     - course-based
   tags:
     - humanities
+    - agriculture
+    - livestock
 - name: Chemistry
   url: https://graduatestudies.uoguelph.ca/programs/chbi
   degrees:
@@ -287,18 +290,12 @@
     - PhD
   types:
     - course-based
+    - thesis-based
   tags:
     - biology
     - science
-- name: European Studies
-  url: https://graduatestudies.uoguelph.ca/programs/eurs
-  degrees:
-    - MA
-  types:
-    - course-based
-  tags:
-    - humanities
-    - culture
+    - soil
+    - indigenous
 - name: Family Relations and Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/fran
   degrees:
@@ -342,20 +339,12 @@
     - PhD
   types:
     - course-based
+    - thesis-based
   tags:
     - food
     - business
     - agriculture
     - economics
-- name: French
-  url: https://graduatestudies.uoguelph.ca/programs/fren
-  degrees:
-    - MA
-  types:
-    - course-based
-  tags:
-    - humanities
-    - language
 - name: Geography
   url: https://graduatestudies.uoguelph.ca/programs/geog
   degrees:
@@ -420,6 +409,19 @@
     - pharma*
     - cogniti*
     - diet*
+- name: Integrated Humanities
+  url: https://graduatestudies.uoguelph.ca/programs/integrated-humanities
+  degrees:
+    - MA
+  types:
+    - thesis-based
+    - course-based
+  tags:
+    - language
+    - french studies
+    - european studies
+    - francophone
+    - culture
 - name: Integrative Biology
   url: https://graduatestudies.uoguelph.ca/programs/ibio
   degrees:
@@ -460,6 +462,7 @@
     - MLA
   types:
     - course-based
+    - thesis-based
   tags:
     - architecture
     - design
@@ -670,6 +673,21 @@
     - geography
     - rural
     - environmental design
+    - indigenous
+- name: Plant Agriculture
+  url: https://graduatestudies.uoguelph.ca/programs/plnt
+  degrees:
+    - MSc
+    - PhD
+    - MPAg
+  types:
+    - course-based
+    - thesis-based
+  tags:
+    - crops
+    - crop science
+    - biochemistry
+    - plant genetics
 - name: Political Science
   url: https://graduatestudies.uoguelph.ca/programs/pols
   degrees:
@@ -689,6 +707,7 @@
     - DVSc
   types:
     - thesis-based
+    - course-based
   tags:
     - biology
     - science
@@ -732,7 +751,7 @@
   degrees:
     - MA
   types:
-    - thesis-based
+    - course-based
   tags:
     - poli*
     - cultur*
@@ -795,15 +814,16 @@
     - MPLAN
   types:
     - course-based
+    - thesis-based
   tags:
     - humanities
+    - indigenous
 - name: Rural Studies
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof-stu
   degrees:
     - PhD
   types:
     - thesis-based
-    - course-based
   tags:
     - humanities
 - name: Sexuality, Genders and Bodies
@@ -821,6 +841,7 @@
     - feminis*
     - decolon*
     - interdisciplinary
+    - indigenous
 - name: Social Practice and Transformational Change
   url: https://graduatestudies.uoguelph.ca/programs/sptc
   degrees:
@@ -853,6 +874,7 @@
     - PhD
   types:
     - thesis-based
+    - course-based
   tags:
     - humanities
     - culture
@@ -861,7 +883,7 @@
   degrees:
     - MFA
   types:
-    - course-based
+    - thesis-based
   tags:
     - arts
     - humanities
@@ -876,6 +898,7 @@
     - agriculture
     - biology
     - science
+    - soil
 - name: Theatre Studies
   url: https://graduatestudies.uoguelph.ca/programs/thst
   degrees:
@@ -894,7 +917,6 @@
     - Graduate Diploma
   types:
     - thesis-based
-    - course-based
   tags:
     - business
     - marketing
@@ -965,16 +987,3 @@
     - fish*
     - sustain*
     - mammal*
-- name: Plant Agriculture
-  url: https://graduatestudies.uoguelph.ca/programs/plnt
-  degrees:
-    - MSc
-    - PhD
-    - MPAg
-  types:
-    - course-based
-  tags:
-    - crops
-    - crop science
-    - biochemistry
-    - plant genetics
