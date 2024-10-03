@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "program.schema.json",
+  "title": "Program",
+  "description": "A University of Guelph Program",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "The name of the program",
+        "type": "string"
+      },
+      "url": {
+        "description": "The url to the program's page",
+        "type": "string"
+      },
+      "types": {
+        "description": "Values used to categorize the program (e.g. Major, Minor, Certificate, etc.)",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "tags": {
+        "description": "Keywords used to improve the searchability of the program",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "degrees": {
+        "description": "The degree(s) the program belongs to",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "acronym": {
+        "description": "An acronym of the program's name",
+        "type": "string"
+      }
+    },
+    "required": ["name", "url", "types", "tags"],
+    "additionalProperties": false
+  }
+}
