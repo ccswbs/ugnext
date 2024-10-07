@@ -759,6 +759,17 @@
     - antho*
     - affairs
     - socio*
+- name: Real Estate
+  url: https://www.uoguelph.ca/lang/masters-real-estate/
+  degrees:
+    - MRE
+  types:
+    - course-based
+  tags:
+    - finance
+    - retail
+    - residential
+    - marketing
 - name: Regenerative Medicine
   url: https://graduatestudies.uoguelph.ca/programs/regenerative-medicine
   degrees:
