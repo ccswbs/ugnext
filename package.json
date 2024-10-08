@@ -13,7 +13,7 @@
     "format": "prettier -w ./",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "export $(cat .env | xargs) && bunx chromatic"
+    "chromatic": "export $(cat .env | xargs) && bunx chromatic --project-token=$CHROMACTIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "@awesome.me/kit-7993323d0c": "^1.0.8",
@@ -83,6 +83,10 @@
     ]
   },
   "trustedDependencies": [
-    "core-js-pure"
+    "@fortawesome/fontawesome-common-types",
+    "core-js",
+    "core-js-pure",
+    "esbuild",
+    "sharp"
   ]
 }
