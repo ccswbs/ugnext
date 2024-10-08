@@ -45,7 +45,7 @@ export const WithImage = {
     title: "Example Title",
     className: "w-96",
     image: {
-      src: "https://picsum.photos/300/200",
+      src: "https://picsum.photos/seed/card/300/200",
       width: 300,
       height: 200,
       alt: "Placeholder image",
@@ -66,7 +66,7 @@ export const WithFooter = {
     title: "Example Title",
     className: "w-96",
     image: {
-      src: "https://picsum.photos/300/200",
+      src: "https://picsum.photos/seed/card/300/200",
       width: 300,
       height: 200,
       alt: "Placeholder image",
@@ -88,7 +88,7 @@ export const AsALink = {
     title: "Example Title",
     className: "w-96",
     image: {
-      src: "https://picsum.photos/300/200",
+      src: "https://picsum.photos/seed/card/300/200",
       width: 300,
       height: 200,
       alt: "Placeholder image",
