@@ -1454,6 +1454,20 @@
     - humanities
     - arts
     - culture
+- name: Theoretical Physics
+  acronym: THPY
+  url: https://www.uoguelph.ca/programs/theoretical-physics/
+  degrees:
+    - Bachelor of Science
+  types:
+    - major
+  tags:
+    - physics
+    - science
+    - math
+    - space
+    - quantum
+    - theoretical physics
 - name: Water Resources Engineering
   acronym: WRE
   url: https://www.uoguelph.ca/programs/water-resources-engineering/
