@@ -331,6 +331,21 @@
     - business
     - finance
     - economics
+- name: Chemical Physics
+  acronym: CHPY
+  url: https://www.uoguelph.ca/programs/chemical-physics/
+  degrees:
+    - Bachelor of Science
+  types:
+    - major
+  tags:
+    - physics
+    - science
+    - math
+    - space
+    - quantum
+    - medical physics
+    - chemical physics
 - name: Chemistry
   acronym: CHEM
   url: https://www.uoguelph.ca/programs/chemistry/
