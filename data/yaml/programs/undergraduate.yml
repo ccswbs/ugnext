@@ -340,12 +340,10 @@
     - major
     - co-op
   tags:
+    - chemistry
     - physics
     - science
     - math
-    - space
-    - quantum
-    - medical physics
     - chemical physics
 - name: Chemistry
   acronym: CHEM
