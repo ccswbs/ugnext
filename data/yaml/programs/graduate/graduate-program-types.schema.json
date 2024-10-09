@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "graduate-program-types.schema.json",
+  "title": "Graduate Program Types",
+  "description": "A graduate program type offered at the University of Guelph",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "A unique id for the type",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the type",
+        "type": "string"
+      }
+    },
+    "required": ["id", "name"],
+    "additionalProperties": false
+  }
+}

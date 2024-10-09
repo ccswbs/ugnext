@@ -1,0 +1,1062 @@
+- id: accounting
+  name: Accounting
+  url: https://graduatestudies.uoguelph.ca/programs/accounting
+  degrees:
+    - gdip
+  types:
+    - course
+  tags:
+    - business
+    - finance
+- id: animal-biosciences
+  name: Animal Biosciences
+  url: https://graduatestudies.uoguelph.ca/programs/aps
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+    - course
+  tags:
+    - biology
+    - science
+    - agriculture
+- id: applied-nutrition
+  name: Applied Nutrition
+  url: https://graduatestudies.uoguelph.ca/programs/applied-nutrition
+  degrees:
+    - man
+  types:
+    - course
+  tags:
+    - health
+    - food
+- id: art-history-and-visual-culture
+  name: Art History and Visual Culture
+  url: https://graduatestudies.uoguelph.ca/programs/avc
+  degrees:
+    - ma
+  types:
+    - thesis
+    - course
+  tags:
+    - arts
+    - culture
+    - history
+- id: artificial-intelligence
+  name: Artificial Intelligence
+  url: https://graduatestudies.uoguelph.ca/programs/csai
+  degrees:
+    - msc
+    - masc
+  types:
+    - collaborative-specialization
+  tags:
+    - technology
+    - science
+    - mathematics
+    - programming
+    - ai
+- id: bioinformatics
+  name: Bioinformatics
+  url: https://graduatestudies.uoguelph.ca/programs/binf
+  degrees:
+    - mbinf
+    - msc
+    - phd
+  types:
+    - course
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - informat*
+    - data
+    - statistic*
+    - programming
+    - analys*
+- id: biomedical-sciences
+  name: Biomedical Sciences
+  url: https://graduatestudies.uoguelph.ca/programs/biom
+  degrees:
+    - mbs
+    - msc
+    - phd
+    - dvsc
+  types:
+    - course
+  tags:
+    - biology
+    - science
+    - health
+    - medical
+- id: biophysics
+  name: Biophysics
+  url: https://graduatestudies.uoguelph.ca/programs/biop
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - biology
+    - physics
+    - science
+- id: biotechnology
+  name: Biotechnology
+  url: https://graduatestudies.uoguelph.ca/programs/biotechnology
+  degrees:
+    - mbiot
+  types:
+    - course
+  tags:
+    - biology
+    - science
+    - technology
+- id: business-administration
+  name: Business Administration
+  url: https://graduatestudies.uoguelph.ca/programs/bus
+  degrees:
+    - mba
+  types:
+    - course
+  tags:
+    - business
+- id: capacity-development-and-extension
+  name: Capacity Development and Extension
+  url: https://graduatestudies.uoguelph.ca/programs/cde
+  degrees:
+    - msc
+  types:
+    - thesis
+    - course
+  tags:
+    - humanities
+    - agriculture
+    - livestock
+- id: chemistry
+  name: Chemistry
+  url: https://graduatestudies.uoguelph.ca/programs/chbi
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - chemistry
+    - science
+- id: clinical-studies
+  name: Clinical Studies
+  url: https://graduatestudies.uoguelph.ca/programs/clin
+  degrees:
+    - msc
+    - dvsc
+  types:
+    - thesis
+    - course
+  tags:
+    - biology
+    - science
+    - health
+    - medical
+- id: computational-sciences
+  name: Computational Sciences
+  url: https://graduatestudies.uoguelph.ca/programs/computational-science-phd
+  degrees:
+    - phd
+  types:
+    - course
+  tags:
+    - technology
+    - science
+    - mathematics
+- id: computer-science
+  name: Computer Science
+  url: https://graduatestudies.uoguelph.ca/programs/cis
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - technology
+    - science
+    - mathematics
+    - programming
+- id: conservation-leadership
+  name: Conservation Leadership
+  url: https://graduatestudies.uoguelph.ca/Programs/ConservationLeadership
+  degrees:
+    - mcl
+  types:
+    - course
+  tags:
+    - geograph*
+    - environment
+    - climat*
+    - conserv*
+    - natur*
+    - resource
+    - land
+    - water
+    - sustain*
+    - science
+- id: creative-writing
+  name: Creative Writing
+  url: https://graduatestudies.uoguelph.ca/programs/crwr
+  degrees:
+    - mfa
+  types:
+    - course
+  tags:
+    - arts
+    - humanities
+    - culture
+- id: criminology-and-criminal-justice-policy
+  name: Criminology and Criminal Justice Policy
+  url: https://graduatestudies.uoguelph.ca/programs/ccjp
+  degrees:
+    - ma
+  types:
+    - course
+    - thesis
+  tags:
+    - poli*
+    - crim*
+    - govern*
+    - law
+    - power
+    - public
+    - affairs
+    - socio*
+- id: critical-studies-in-improvisation
+  name: Critical Studies in Improvisation
+  url: https://graduatestudies.uoguelph.ca/programs/impr
+  degrees:
+    - ma
+    - phd
+  types:
+    - course
+  tags:
+    - arts
+    - humanities
+    - culture
+- id: cybersecurity-and-threat-intelligence
+  name: Cybersecurity and Threat Intelligence
+  url: https://graduatestudies.uoguelph.ca/programs/mcti
+  degrees:
+    - mcti
+  types:
+    - course
+  tags:
+    - technology
+    - science
+    - mathematics
+    - programming
+- id: data-science
+  name: Data Science
+  url: https://graduatestudies.uoguelph.ca/programs/data-science
+  degrees:
+    - mds
+  types:
+    - course
+  tags:
+    - technology
+    - statistics
+    - mathematics
+    - programming
+    - artificial intelligence
+    - ai
+- id: economics
+  name: Economics
+  url: https://graduatestudies.uoguelph.ca/programs/econ
+  degrees:
+    - ma
+    - phd
+  types:
+    - course
+  tags:
+    - business
+    - economics
+    - finance
+- id: engineering
+  name: Engineering
+  url: https://graduatestudies.uoguelph.ca/programs/engg
+  degrees:
+    - meng
+    - masc
+    - phd
+  types:
+    - course
+  tags:
+    - technology
+    - engineering
+    - artificial intelligence
+    - ai
+- id: english
+  name: English
+  url: https://graduatestudies.uoguelph.ca/programs/engl
+  degrees:
+    - ma
+  types:
+    - thesis
+  tags:
+    - arts
+    - humanities
+    - language
+- id: environmental-sciences
+  name: Environmental Sciences
+  url: https://graduatestudies.uoguelph.ca/programs/envs
+  degrees:
+    - mes
+    - msc
+    - phd
+  types:
+    - course
+    - thesis
+  tags:
+    - biology
+    - science
+    - soil
+    - indigenous
+- id: family-relations-and-applied-nutrition
+  name: Family Relations and Applied Nutrition
+  url: https://graduatestudies.uoguelph.ca/programs/fran
+  degrees:
+    - man
+    - msc
+    - phd
+  types:
+    - course
+    - thesis
+  tags:
+    - health
+    - food
+    - humanities
+    - science
+- id: food-safety-and-quality-assurance
+  name: Food Safety and Quality Assurance
+  url: https://graduatestudies.uoguelph.ca/programs/fsqu
+  degrees:
+    - msc
+    - gdip
+  types:
+    - course
+  tags:
+    - food
+    - science
+- id: food-science
+  name: Food Science
+  url: https://graduatestudies.uoguelph.ca/programs/food
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - food
+    - science
+    - nutrition
+- id: food-agricultural-and-resource-economics
+  name: Food, Agricultural and Resource Economics
+  url: https://graduatestudies.uoguelph.ca/programs/fare
+  degrees:
+    - mfare
+    - msc
+    - phd
+  types:
+    - course
+    - thesis
+  tags:
+    - food
+    - business
+    - agriculture
+    - economics
+- id: geography
+  name: Geography
+  url: https://graduatestudies.uoguelph.ca/programs/geog
+  degrees:
+    - ma
+    - msc
+    - phd
+  types:
+    - course
+    - thesis
+  tags:
+    - geography
+    - science
+- id: history
+  name: History
+  url: https://graduatestudies.uoguelph.ca/programs/hist
+  degrees:
+    - ma
+    - phd
+  types:
+    - thesis
+  tags:
+    - humanities
+    - history
+- id: human-health-and-nutritional-sciences
+  name: Human Health and Nutritional Sciences
+  url: https://graduatestudies.uoguelph.ca/programs/hhns
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+    - course
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biomedic*
+    - health*
+    - cell*
+    - medic*
+    - biomolecu*
+    - physi*
+    - kinesio*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - exercise
+    - nutri*
+    - sports
+    - biomechanic*
+    - athlet*
+    - movement
+    - rehab*
+    - anatom*
+    - micro*
+    - immun*
+    - virolog*
+    - virus
+    - infect*
+    - dna
+    - pharma*
+    - cogniti*
+    - diet*
+- id: integrated-humanities
+  name: Integrated Humanities
+  url: https://graduatestudies.uoguelph.ca/programs/integrated-humanities
+  degrees:
+    - ma
+  types:
+    - thesis
+    - course
+  tags:
+    - language
+    - french studies
+    - european studies
+    - francophone
+    - culture
+- id: integrative-biology
+  name: Integrative Biology
+  url: https://graduatestudies.uoguelph.ca/programs/ibio
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - natur*
+    - eco*
+    - wild*
+    - biodivers*
+    - conserva*
+    - animal*
+    - enviro*
+    - sustain*
+    - mammal*
+    - evolution*
+- id: international-development-studies
+  name: International Development Studies
+  url: https://graduatestudies.uoguelph.ca/programs/idev
+  degrees:
+    - phd
+    - msc
+    - ma
+  types:
+    - collaborative-specialization
+  tags:
+    - humanities
+    - culture
+- id: landscape-architecture
+  name: Landscape Architecture
+  url: https://graduatestudies.uoguelph.ca/programs/ldar
+  degrees:
+    - mla
+  types:
+    - course
+    - thesis
+  tags:
+    - architecture
+    - design
+- id: latin-american-and-caribbean-studies
+  name: Latin American and Caribbean Studies
+  url: https://graduatestudies.uoguelph.ca/programs/lacs
+  degrees:
+    - ma
+  types:
+    - course
+  tags:
+    - humanities
+    - culture
+    - history
+- id: leadership
+  name: Leadership
+  url: https://graduatestudies.uoguelph.ca/programs/lead
+  degrees:
+    - ma
+  types:
+    - course
+  tags:
+    - humanities
+    - business
+- id: literary-studiestheatre-studies-in-english
+  name: Literary Studies/Theatre Studies in English
+  url: https://graduatestudies.uoguelph.ca/programs/sets
+  degrees:
+    - phd
+  types:
+    - thesis
+  tags:
+    - arts
+    - humanities
+- id: management
+  name: Management
+  url: https://graduatestudies.uoguelph.ca/programs/mgmt
+  degrees:
+    - msc
+    - phd
+  types:
+    - course
+  tags:
+    - business
+    - management
+- id: market-research
+  name: Market Research
+  url: https://graduatestudies.uoguelph.ca/programs/marketresearch
+  degrees:
+    - gdip
+  types:
+    - course
+  tags:
+    - business
+    - marketing
+- id: marketing-and-consumer-studies
+  name: Marketing and Consumer Studies
+  url: https://graduatestudies.uoguelph.ca/programs/cost
+  degrees:
+    - msc
+    - gdip
+  types:
+    - thesis
+  tags:
+    - business
+    - marketing
+- id: mathematics-and-statistics
+  name: Mathematics and Statistics
+  url: https://graduatestudies.uoguelph.ca/programs/math
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - mathematics
+    - statistics
+    - artificial intelligence
+    - ai
+    - data
+- id: molecular-and-cellular-biology
+  name: Molecular and Cellular Biology
+  url: https://graduatestudies.uoguelph.ca/programs/mcb
+  degrees:
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biochem*
+    - biomedic*
+    - health*
+    - molecu*
+    - cell*
+    - medic*
+    - biomolecu*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - micro*
+    - bacteria*
+    - immun*
+    - virolog*
+    - virus
+    - evolution*
+    - infect*
+    - dna
+    - pharma*
+- id: neuroscience
+  name: Neuroscience
+  url: https://graduatestudies.uoguelph.ca/programs/neur
+  degrees:
+    - msc
+    - phd
+    - mbs
+  types:
+    - collaborative-specialization
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - neuro*
+    - brain
+    - cogniti*
+- id: one-health
+  name: One Health
+  url: https://graduatestudies.uoguelph.ca/programs/onehealth
+  degrees:
+    - msc
+    - phd
+    - mes
+    - ma
+    - masc
+    - meng
+  types:
+    - collaborative-specialization
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - natur*
+    - eco*
+    - wild*
+    - biodivers*
+    - conserva*
+    - animal*
+    - enviro*
+    - sustain*
+    - mammal*
+    - evolution*
+    - health*
+    - medic*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - micro*
+    - bacteria*
+    - immun*
+    - virolog*
+    - virus
+    - infect*
+    - dna
+    - pharma*
+- id: pathobiology
+  name: Pathobiology
+  url: https://graduatestudies.uoguelph.ca/programs/path
+  degrees:
+    - msc
+    - phd
+    - dvsc
+    - gdip
+  types:
+    - thesis
+  tags:
+    - biology
+    - science
+    - health
+    - medical
+- id: philosophy
+  name: Philosophy
+  url: https://graduatestudies.uoguelph.ca/programs/phil
+  degrees:
+    - ma
+    - phd
+  types:
+    - course
+  tags:
+    - humanities
+    - culture
+- id: physics
+  name: Physics
+  url: https://graduatestudies.uoguelph.ca/programs/phys
+  degrees:
+    - msc
+    - phd
+  types:
+    - course
+    - thesis
+  tags:
+    - physics
+    - science
+- id: planning
+  name: Planning
+  url: https://www.uoguelph.ca/programs/master-of-planning
+  degrees:
+    - mplan
+  types:
+    - course
+  tags:
+    - humanities
+    - geography
+    - rural
+    - environmental design
+    - indigenous
+- id: plant-agriculture
+  name: Plant Agriculture
+  url: https://graduatestudies.uoguelph.ca/programs/plnt
+  degrees:
+    - msc
+    - phd
+    - mpag
+  types:
+    - course
+    - thesis
+  tags:
+    - crops
+    - crop science
+    - biochemistry
+    - plant genetics
+- id: political-science
+  name: Political Science
+  url: https://graduatestudies.uoguelph.ca/programs/pols
+  degrees:
+    - ma
+    - phd
+  types:
+    - course
+    - thesis
+  tags:
+    - humanities
+    - politics
+- id: population-medicine
+  name: Population Medicine
+  url: https://graduatestudies.uoguelph.ca/programs/popmed
+  degrees:
+    - msc
+    - phd
+    - dvsc
+  types:
+    - thesis
+    - course
+  tags:
+    - biology
+    - science
+    - health
+    - medical
+- id: project-management
+  name: Project Management
+  url: https://graduatestudies.uoguelph.ca/programs/project-management
+  degrees:
+    - mpm
+    - gdip
+  types:
+    - course
+  tags:
+    - business
+    - management
+- id: psychology
+  name: Psychology
+  url: https://graduatestudies.uoguelph.ca/programs/psyc
+  degrees:
+    - ma
+    - msc
+    - phd
+  types:
+    - thesis
+  tags:
+    - humanities
+- id: public-health
+  name: Public Health
+  url: https://graduatestudies.uoguelph.ca/programs/phlt
+  degrees:
+    - mph
+    - dvm/mph combined degree
+    - gdip
+  types:
+    - course
+  tags:
+    - health
+    - medical
+    - science
+    - biology
+- id: public-issues-anthropology
+  name: Public Issues Anthropology
+  url: https://graduatestudies.uoguelph.ca/programs/pia
+  degrees:
+    - ma
+  types:
+    - course
+  tags:
+    - poli*
+    - cultur*
+    - human
+    - antho*
+    - affairs
+    - socio*
+- id: regenerative-medicine
+  name: Regenerative Medicine
+  url: https://graduatestudies.uoguelph.ca/programs/regenerative-medicine
+  degrees:
+    - msc
+    - phd
+    - dvsc
+    - masc
+    - mbs
+  types:
+    - collaborative-specialization
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biochem*
+    - biomedic*
+    - health*
+    - molecu*
+    - cell*
+    - medic*
+    - biomolecu*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - micro*
+    - bacteria*
+    - immun*
+    - virolog*
+    - virus
+    - evolution*
+    - infect*
+    - dna
+    - pharma*
+- id: relational-and-psychotherapy-training-program
+  name: Relational and Psychotherapy Training Program
+  url: https://graduatestudies.uoguelph.ca/programs/relational-and-psychotherapy-training-program
+  degrees:
+    - mp
+    - mrft
+    - ma
+  types:
+    - course
+  tags:
+    - health
+    - medical
+    - psychology
+- id: rural-planning-and-development
+  name: Rural Planning and Development
+  url: https://graduatestudies.uoguelph.ca/programs/rpdprof
+  degrees:
+    - msc
+    - mplan
+  types:
+    - course
+    - thesis
+  tags:
+    - humanities
+    - indigenous
+- id: rural-studies
+  name: Rural Studies
+  url: https://graduatestudies.uoguelph.ca/programs/rpdprof-stu
+  degrees:
+    - phd
+  types:
+    - thesis
+  tags:
+    - humanities
+- id: sexuality-genders-and-bodies
+  name: Sexuality, Genders and Bodies
+  url: https://graduatestudies.uoguelph.ca/programs/Sexualities-Genders-And-Bodies
+  degrees:
+    - ma
+    - phd
+    - msc
+  types:
+    - collaborative-specialization
+  tags:
+    - poli*
+    - indigen*
+    - justice
+    - feminis*
+    - decolon*
+    - interdisciplinary
+    - indigenous
+- id: social-practice-and-transformational-change
+  name: Social Practice and Transformational Change
+  url: https://graduatestudies.uoguelph.ca/programs/sptc
+  degrees:
+    - phd
+  types:
+    - thesis
+  tags:
+    - poli*
+    - indigen*
+    - justice
+    - feminis*
+    - decolon*
+    - interdisciplinary
+    - sex*
+    - disab*
+    - gender
+    - lgb*
+    - psych*
+    - queer
+    - socio*
+    - anthro*
+    - geograph*
+    - family
+    - relation*
+    - critical
+- id: sociology
+  name: Sociology
+  url: https://graduatestudies.uoguelph.ca/programs/soca
+  degrees:
+    - ma
+    - phd
+  types:
+    - thesis
+    - course
+  tags:
+    - humanities
+    - culture
+- id: studio-art
+  name: Studio Art
+  url: https://graduatestudies.uoguelph.ca/programs/sart
+  degrees:
+    - mfa
+  types:
+    - thesis
+  tags:
+    - arts
+    - humanities
+    - culture
+- id: sustainable-agriculture
+  name: Sustainable Agriculture
+  url: https://www.uoguelph.ca/programs/master-sustainable-agriculture/
+  degrees:
+    - msag
+  types:
+    - course
+  tags:
+    - agriculture
+    - biology
+    - science
+    - soil
+- id: theatre-studies
+  name: Theatre Studies
+  url: https://graduatestudies.uoguelph.ca/programs/thst
+  degrees:
+    - ma
+  types:
+    - thesis
+    - course
+  tags:
+    - arts
+    - humanities
+    - culture
+- id: tourism-and-hospitality
+  name: Tourism and Hospitality
+  url: https://graduatestudies.uoguelph.ca/programs/trmh
+  degrees:
+    - msc
+    - gdip
+  types:
+    - thesis
+  tags:
+    - business
+    - marketing
+- id: tourism-research
+  name: Tourism Research
+  url: https://graduatestudies.uoguelph.ca/programs/tres
+  degrees:
+    - gdip
+  types:
+    - course
+  tags:
+    - business
+    - marketing
+- id: toxicology
+  name: Toxicology
+  url: https://graduatestudies.uoguelph.ca/programs/tox
+  degrees:
+    - msc
+    - phd
+    - mbs
+  types:
+    - collaborative-specialization
+  tags:
+    - biology
+    - science
+    - health
+    - medical
+- id: veterinary-medicine-public-health
+  name: Veterinary Medicine / Public Health
+  url: https://graduatestudies.uoguelph.ca/programs/DVMMPH
+  degrees:
+    - dvm
+    - mph
+  types:
+    - course
+  tags:
+    - biology
+    - science
+    - health
+    - medical
+- id: veterinary-science
+  name: Veterinary Science
+  url: https://graduatestudies.uoguelph.ca/programs/vets
+  degrees:
+    - dvsc
+  types:
+    - course
+  tags:
+    - biology
+    - science
+    - health
+    - medical
+- id: wildlife-biology
+  name: Wildlife Biology
+  url: https://calendar.uoguelph.ca/graduate-calendar/graduate-programs/wildlife-biology/
+  degrees:
+    - mwb
+  types:
+    - course
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - natur*
+    - eco*
+    - wild*
+    - biodivers*
+    - conserva*
+    - animal*
+    - enviro*
+    - fish*
+    - sustain*
+    - mammal*

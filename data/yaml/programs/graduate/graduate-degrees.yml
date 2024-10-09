@@ -1,0 +1,85 @@
+- id: phd
+  name: Doctor of Philosophy
+  acronym: PhD
+- id: dvm
+  name: Doctor of Veterinary Medicine
+  acronym: DVM
+- id: dvsc
+  name: Doctor of Veterinary Science
+  acronym: DVSc
+- id: dvm-mph
+  name: DVM/MPH Combined Degree
+- id: gdip
+  name: Graduate Diploma
+- id: man
+  name: Master of Applied Nutrition
+  acronym: MAN
+- id: masc
+  name: Master of Applied Science
+  acronym: MASc
+- id: ma
+  name: Master of Arts
+  acronym: MA
+- id: mbinf
+  name: Master of Bioinformatics
+  acronym: MBINF
+- id: mbs
+  name: Master of Biomedical Sciences
+  acronym: MBS
+- id: mbiot
+  name: Master of Biotechnology
+  acronym: MBIOT
+- id: mba
+  name: Master of Business Administration
+  acronym: MBA
+- id: mcl
+  name: Master of Conservation Leadership
+  acronym: MCL
+- id: mcti
+  name: Master of Cybersecurity and Threat Intelligence
+  acronym: MCTI
+- id: mds
+  name: Master of Data Science
+  acronym: MDS
+- id: meng
+  name: Master of Engineering
+  acronym: MEng
+- id: mes
+  name: Master of Environmental Sciences
+  acronym: MES
+- id: mfa
+  name: Master of Fine Arts
+  acronym: MFA
+- id: mfare
+  name: Master of Food, Agricultural and Resource Economics
+  acronym: MFARE
+- id: mplan
+  name: Master of Planning
+  acronym: MPlan
+- id: mpag
+  name: Master of Plant Agriculture
+  acronym: MPAg
+- id: mp
+  name: Master of Psychotherapy
+  acronym: MP
+- id: mph
+  name: Master of Public Health
+  acronym: MPH
+- id: mre
+  name: Master of Real Estate
+  acronym: MRE
+- id: mrft
+  name: Master of Relational and Family Therapy
+  acronym: MRFT
+- id: msc
+  name: Master of Science
+  acronym: MSc
+- id: msag
+  name: Master of Sustainable Agriculture
+  acronym: MSAg
+- id: mwb
+  name: Master of Wildlife Biology
+  acronym: MWB
+- id: mpm
+  name: Masters in Project Management
+  acronym: MPM
