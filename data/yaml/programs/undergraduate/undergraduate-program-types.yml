@@ -1,0 +1,8 @@
+- id: major
+  name: Major
+- id: minor
+  name: Minor
+- id: "co-op"
+  name: "Co-op"
+- id: concentration
+  name: Area of Concentration

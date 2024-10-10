@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "undergraduate-programs.schema.json",
+  "title": "Undergraduate Programs",
+  "description": "Undergraduate programs offered at the University of Guelph",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "A unique ID for the program",
+        "type": "string"
+      },
+      "acronym": {
+        "description": "An short form/acronym of the program's name",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the program",
+        "type": "string"
+      },
+      "url": {
+        "description": "The url to the program's page",
+        "type": "string"
+      },
+      "types": {
+        "description": "The associated undergraduate program type ids",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "tags": {
+        "description": "Keywords used to improve the searchability of the program",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "degrees": {
+        "description": "The associated undergraduate degree ids",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      }
+    },
+    "required": ["name", "url", "types", "tags"],
+    "additionalProperties": false
+  }
+}

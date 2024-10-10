@@ -1,0 +1,1624 @@
+- id: accounting
+  name: Accounting
+  url: https://www.uoguelph.ca/programs/accounting/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - business
+    - finance
+- id: animal-biology
+  name: Animal Biology
+  acronym: ABIO
+  url: https://www.uoguelph.ca/programs/animal-biology/
+  degrees:
+    - bsc
+  types:
+    - major
+  tags:
+    - biology
+    - science
+- id: animal-science
+  name: Animal Science
+  acronym: ANSC
+  url: https://www.uoguelph.ca/programs/animal-science/
+  degrees:
+    - bsc in agriculture
+  types:
+    - major
+    - co-op
+  tags:
+    - biology
+    - science
+- id: anthropology
+  name: Anthropology
+  acronym: ANTH
+  url: https://www.uoguelph.ca/programs/anthropology/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+    - concentration
+  tags:
+    - poli*
+    - cultur*
+    - human
+    - socio*
+    - antho*
+    - public
+    - affairs
+    - socio*
+- id: applied-geomatics
+  name: Applied Geomatics
+  acronym: AG
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/applied-geomatics-ag/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - geography
+    - technology
+- id: applied-human-nutrition
+  name: Applied Human Nutrition
+  acronym: AHN
+  url: https://www.uoguelph.ca/programs/applied-human-nutrition/
+  degrees:
+    - bachelor of applied science
+  types:
+    - major
+  tags:
+    - health
+    - diet*
+    - nutrition*
+    - food
+- id: art-history
+  name: Art History
+  acronym: ARTH
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/art-history-arth/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+  tags:
+    - arts
+    - history
+- id: bio-medical-science
+  name: Bio-Medical Science
+  acronym: BIOM
+  url: https://www.uoguelph.ca/programs/biomedical-science/
+  degrees:
+    - bsc
+  types:
+    - major
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biochem*
+    - biomedic*
+    - health*
+    - molecu*
+    - cell*
+    - medic*
+    - biomolecu*
+    - physi*
+    - kinesio*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - exercise
+    - nutri*
+    - sports
+    - biomechanic*
+    - athlet*
+    - movement
+    - rehab*
+    - anatom*
+    - micro*
+    - bacteria*
+    - immun*
+    - virolog*
+    - virus
+    - evolution*
+    - infect*
+    - dna
+    - pharma*
+    - cogniti*
+    - diet*
+- id: biochemistry
+  name: Biochemistry
+  acronym: BIOC
+  url: https://www.uoguelph.ca/programs/biochemistry/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biochem*
+    - chem*
+    - biomedic*
+    - health*
+    - molecu*
+    - cell*
+    - medic*
+    - biomolecu*
+    - disease
+    - clinic*
+    - patho*
+    - pharma*
+- id: biological-and-pharmaceutical-chemistry
+  name: Biological and Pharmaceutical Chemistry
+  acronym: BPCH
+  url: https://www.uoguelph.ca/programs/biological-and-pharmaceutical-chemistry/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+  tags:
+    - biology
+    - chemistry
+    - health
+    - medical
+    - science
+- id: biological-engineering
+  name: Biological Engineering
+  acronym: BIOE
+  url: https://www.uoguelph.ca/programs/biological-engineering/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+  tags:
+    - biology
+    - engineering
+    - science
+    - chemistry
+- id: biological-science
+  name: Biological Science
+  acronym: BIOS
+  url: https://www.uoguelph.ca/programs/biological-science/
+  degrees:
+    - bsc
+  types:
+    - major
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biochem*
+    - biomedic*
+    - health*
+    - molecu*
+    - natur*
+    - ecol*
+    - wild*
+    - cell*
+    - biodivers*
+    - conserva*
+    - animal*
+    - enviro*
+    - medic*
+    - biomolecu*
+    - physi*
+    - kinesio*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - exercise
+    - nutri*
+    - sports
+    - biomechanic*
+    - athlet*
+    - movement
+    - rehab*
+    - anatom*
+    - sustain*
+    - mammal*
+    - micro*
+    - bacteria*
+    - immun*
+    - virolog*
+    - virus
+    - evolution*
+    - infect*
+    - dna
+    - pharma*
+    - cogniti*
+    - diet*
+- id: biology
+  name: Biology
+  acronym: BIOL
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/biology-biol/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - biology
+    - science
+- id: biological-and-medical-physics
+  name: Biological and Medical Physics
+  url: https://www.uoguelph.ca/programs/biological-and-medical-physics/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+  tags:
+    - human health
+    - science
+    - research*
+    - life science
+- id: biomedical-engineering
+  name: Biomedical Engineering
+  acronym: BME
+  url: https://www.uoguelph.ca/programs/biomedical-engineering/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+  tags:
+    - biology
+    - engineering
+    - science
+- id: biomedical-toxicology
+  name: Biomedical Toxicology
+  acronym: BTOX
+  url: https://www.uoguelph.ca/programs/biomedical-toxicology/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+  tags:
+    - biology
+    - health
+    - medical
+    - science
+    - biochemistry
+    - pharmacology
+- id: biotechnology
+  name: Biotechnology
+  acronym: BIOT
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/biotechnology-biot/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - biology
+    - science
+    - technology
+- id: black-canadian-studies
+  name: Black Canadian Studies
+  acronym: BLCK
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/black-canadian-studies-blck/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+    - history
+    - culture
+- id: business
+  name: Business
+  acronym: BUS
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-bus/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+    - finance
+- id: business-data-analytics
+  name: Business Data Analytics
+  acronym: BDA
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-data-analytics-bda/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+    - finance
+    - statistics
+- id: business-economics
+  name: Business Economics
+  acronym: BECN
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-economics-becn/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+    - finance
+    - economics
+- id: chemistry
+  name: Chemistry
+  acronym: CHEM
+  url: https://www.uoguelph.ca/programs/chemistry/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - chemistry
+    - science
+    - chemical physics
+    - nanoscience
+- id: child-studies
+  name: Child Studies
+  acronym: CSTU
+  url: https://www.uoguelph.ca/programs/child-studies/
+  degrees:
+    - bachelor of applied science
+  types:
+    - major
+  tags:
+    - child*
+    - youth
+    - educat*
+    - teach*
+    - early
+    - relation*
+    - socio*
+    - social
+    - cultur*
+    - psych*
+    - sex*
+    - health
+    - family
+    - pedagog*
+- id: classical-studies
+  name: Classical Studies
+  acronym: CLAS
+  url: https://www.uoguelph.ca/programs/classical-studies/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+  tags:
+    - humanities
+    - history
+    - culture
+- id: computer-engineering
+  name: Computer Engineering
+  acronym: CENG
+  url: https://www.uoguelph.ca/programs/computer-engineering/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+  tags:
+    - technology
+    - engineering
+    - programming
+    - computer science
+    - artificial intelligence
+    - ai
+    - design
+- id: computer-science
+  name: Computer Science
+  acronym: CS
+  url: https://www.uoguelph.ca/programs/computer-science/
+  degrees:
+    - bcomp
+  types:
+    - major
+    - co-op
+  tags:
+    - technology
+    - programming
+    - engineering
+    - software development
+    - software engineering
+    - software
+    - web development
+    - artificial intelligence
+    - ai
+    - mathematics
+    - software design
+    - data
+    - analytics
+- id: creative-writing
+  name: Creative Writing
+  acronym: CW
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/creative-writing-cw/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+  tags:
+    - arts
+- id: criminal-justice-and-public-policy
+  name: Criminal Justice and Public Policy
+  acronym: CJPP
+  url: https://www.uoguelph.ca/programs/criminal-justice-and-public-policy/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - poli*
+    - crim*
+    - govern*
+    - law
+    - power
+    - affairs
+    - socio*
+- id: crop-science
+  name: Crop Science
+  acronym: CRSC
+  url: https://www.uoguelph.ca/programs/crop-science/
+  degrees:
+    - bsc in agriculture
+  types:
+    - major
+    - co-op
+  tags:
+    - agriculture
+    - botany
+    - bioscience
+    - science
+- id: culture-and-technology-studies
+  name: Culture and Technology Studies
+  acronym: CTS
+  url: https://www.uoguelph.ca/programs/culture-and-technology-studies/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - humanities
+    - technology
+    - culture
+- id: ecology
+  name: Ecology
+  acronym: ECOL
+  url: https://www.uoguelph.ca/programs/ecology/
+  degrees:
+    - bsc in environmental sciences
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - biology
+    - science
+- id: earth-observation-and-geographic-information-science
+  name: Earth Observation and Geographic Information Science
+  url: https://www.uoguelph.ca/programs/earth-geographic-info-science/
+  degrees:
+    - bsc in environmental science
+  types:
+    - major
+    - co-op
+  tags:
+    - geography
+    - technology
+    - geomatics
+    - science
+- id: economics
+  name: Economics
+  acronym: ECON
+  url: https://www.uoguelph.ca/programs/economics/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - business
+    - finance
+    - economics
+- id: engineering-systems-and-computing
+  name: Engineering Systems and Computing
+  acronym: ESC
+  url: https://www.uoguelph.ca/programs/engineering-systems-and-computing/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+  tags:
+    - technology
+    - engineering
+    - programming
+    - software
+    - software engineering
+    - artificial intelligence
+    - ai
+    - web development
+    - software design
+- id: english
+  name: English
+  acronym: ENGL
+  url: https://www.uoguelph.ca/programs/english/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+    - concentration
+  tags:
+    - humanities
+    - language
+- id: entrepreneurship
+  name: Entrepreneurship
+  acronym: ENT
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/entrepreneurship-ent/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+    - finance
+- id: environment-and-resource-management
+  name: Environment and Resource Management
+  acronym: ERM
+  url: https://www.uoguelph.ca/programs/environment-and-resource-management/
+  degrees:
+    - bsc in environmental sciences
+  types:
+    - major
+    - co-op
+  tags:
+    - geograph*
+    - environment
+    - climat*
+    - conserv*
+    - natur*
+    - resource
+    - land
+    - water
+    - sustain*
+    - science
+- id: environmental-economics-and-policy
+  name: Environmental Economics and Policy
+  acronym: EEP
+  url: https://www.uoguelph.ca/programs/environmental-economics-and-policy/
+  degrees:
+    - bsc in environmental sciences
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+    - finance
+    - economics
+    - science
+- id: environmental-engineering
+  name: Environmental Engineering
+  acronym: ENVE
+  url: https://www.uoguelph.ca/programs/environmental-engineering/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - engineering
+    - science
+- id: environmental-governance
+  name: Environmental Governance
+  acronym: EGOV
+  url: https://www.uoguelph.ca/programs/environmental-governance/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+  tags:
+    - geograph*
+    - environment
+    - climat*
+    - conserv*
+    - natur*
+    - resource
+    - land
+    - water
+    - sustain*
+    - poli*
+- id: environmental-management
+  name: Environmental Management
+  acronym: EM
+  url: https://www.uoguelph.ca/programs/environmental-management/
+  degrees:
+    - bbrm
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+- id: environmental-sciences
+  name: Environmental Sciences
+  acronym: ENVS
+  url: https://www.uoguelph.ca/programs/environmental-sciences/
+  degrees:
+    - bsc in environmental sciences
+  types:
+    - major
+    - co-op
+  tags:
+    - biology
+    - science
+- id: equine-management
+  name: Equine Management
+  acronym: EQM
+  url: https://www.uoguelph.ca/programs/equine-management/
+  degrees:
+    - bbrm
+  types:
+    - major
+    - co-op
+  tags:
+    - biology
+    - science
+- id: european-culture-and-civilization
+  name: European Culture and Civilization
+  acronym: ECC
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/european-culture-civilization-ecc/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+    - history
+    - culture
+- id: european-studies
+  name: European Studies
+  acronym: EURS
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/european-studies-eurs/
+  degrees:
+    - ba
+  types:
+    - major
+  tags:
+    - humanities
+    - history
+    - culture
+- id: family-and-child-studies
+  name: Family and Child Studies
+  acronym: FCS
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/family-child-studies-fcs/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+- id: family-studies-and-human-development
+  name: Family Studies and Human Development
+  acronym: FSHD
+  url: https://www.uoguelph.ca/programs/family-studies-and-human-development/
+  degrees:
+    - bachelor of applied science
+  types:
+    - major
+  tags:
+    - child*
+    - youth
+    - adult
+    - life
+    - relation*
+    - cultur*
+    - psych*
+    - socio*
+    - development
+    - gerontology
+    - aging
+    - sex*
+    - health
+- id: food-and-agricultural-business
+  name: Food and Agricultural Business
+  acronym: FAB
+  url: https://www.uoguelph.ca/programs/food-and-agricultural-business/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+  tags:
+    - agriculture
+    - food
+    - business
+- id: food-engineering
+  name: Food Engineering
+  acronym: FENG
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/food-engineering-feng/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - food
+    - engineering
+- id: food-science
+  name: Food Science
+  acronym: FOOD
+  url: https://www.uoguelph.ca/programs/food-science/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+  tags:
+    - food
+    - science
+- id: food-agricultural-and-resource-economics
+  name: Food, Agricultural and Resource Economics
+  acronym: FARE
+  url: https://www.uoguelph.ca/programs/food-agricultural-resource-economics/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+  tags:
+    - agriculture
+    - food
+    - business
+    - economics
+- id: french-studies
+  name: French Studies
+  acronym: FREN
+  url: https://www.uoguelph.ca/programs/french-studies/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+    - concentration
+  tags:
+    - humanities
+    - language
+- id: geography
+  name: Geography
+  acronym: GEOG
+  url: https://www.uoguelph.ca/programs/geography/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+    - concentration
+  tags:
+    - geograph*
+    - environment
+    - climat*
+    - conserv*
+    - natur*
+    - resource
+    - land
+    - water
+    - sustain*
+    - science
+- id: german
+  name: German
+  acronym: GERM
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/german-germ/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+    - language
+- id: government-economics-and-management
+  name: Government, Economics and Management
+  acronym: GEM
+  url: https://www.uoguelph.ca/programs/government-economics-and-management/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+    - economics
+    - politics
+    - management
+    - law
+- id: history
+  name: History
+  acronym: HIST
+  url: https://www.uoguelph.ca/programs/history/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+    - concentration
+  tags:
+    - humanities
+    - history
+- id: honours-agriculture
+  name: Honours Agriculture
+  url: https://www.uoguelph.ca/programs/honours-agriculture/
+  degrees:
+    - bsc in agriculture
+  types:
+    - major
+  tags:
+    - agriculture
+    - botany
+    - bioscience
+    - science
+- id: horticulture
+  name: Horticulture
+  acronym: HRT
+  url: https://www.uoguelph.ca/programs/horticulture/
+  degrees:
+    - bsc in agriculture
+  types:
+    - major
+    - co-op
+  tags:
+    - agriculture
+    - botany
+    - bioscience
+    - science
+- id: hospitality-and-tourism-management
+  name: Hospitality and Tourism Management
+  acronym: HTM
+  url: https://www.uoguelph.ca/programs/hospitality-and-tourism-management/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+    - tourism
+    - management
+- id: human-kinetics
+  name: Human Kinetics
+  acronym: HK
+  url: https://www.uoguelph.ca/programs/human-kinetics/
+  degrees:
+    - bsc
+  types:
+    - major
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biomedic*
+    - health*
+    - cell*
+    - medic*
+    - physi*
+    - kinesio*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - exercise
+    - nutri*
+    - sports
+    - biomechanic*
+    - athlet*
+    - movement
+    - rehab*
+    - anatom*
+    - immun*
+    - virolog*
+    - virus
+    - infect*
+    - dna
+    - diet*
+- id: human-resources
+  name: Human Resources
+  acronym: HR
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/human-resources-hr/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+    - management
+- id: international-business
+  name: International Business
+  acronym: IB
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/international-business-ib/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+- id: international-development-studies
+  name: International Development Studies
+  acronym: IDS
+  url: https://www.uoguelph.ca/programs/international-development-studies/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+    - concentration
+  tags:
+    - poli*
+    - environment
+    - climat*
+    - conserv*
+    - natur*
+    - resource
+    - land
+    - water
+    - sustain*
+    - govern*
+- id: italian
+  name: Italian
+  acronym: ITAL
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/italian-ital/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+    - language
+- id: justice-and-legal-studies
+  name: Justice and Legal Studies
+  acronym: JLS
+  url: https://www.uoguelph.ca/programs/justice-and-legal-studies/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+  tags:
+    - poli*
+    - crim*
+    - govern*
+    - law
+    - power
+    - public
+    - affairs
+    - socio*
+- id: linguistics
+  name: Linguistics
+  acronym: LING
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/linguistics-ling/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+    - language
+- id: management
+  name: Management
+  acronym: MGMT
+  url: https://www.uoguelph.ca/programs/management/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+    - management
+- id: management-economics-and-finance
+  name: Management Economics and Finance
+  acronym: MEF
+  url: https://www.uoguelph.ca/programs/management-economics-and-finance/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+    - finance
+    - economics
+- id: marine-and-freshwater-biology
+  name: Marine and Freshwater Biology
+  acronym: MFB
+  url: https://www.uoguelph.ca/programs/marine-and-freshwater-biology/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - natur*
+    - ecol*
+    - wild*
+    - biodivers*
+    - conserva*
+    - animal*
+    - enviro*
+    - ocean*
+    - aqua*
+    - fish*
+    - sustain*
+    - mammal*
+    - sea*
+    - water*
+    - evolution*
+- id: marketing
+  name: Marketing
+  acronym: MKTG
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/marketing-mktg/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+    - marketing
+- id: marketing-management
+  name: Marketing Management
+  acronym: MKMN
+  url: https://www.uoguelph.ca/programs/marketing-management/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+    - marketing
+- id: mathematical-economics
+  name: Mathematical Economics
+  acronym: MAEC
+  url: https://www.uoguelph.ca/programs/mathematical-economics/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+  tags:
+    - business
+    - economics
+    - mathematics
+- id: mathematics
+  name: Mathematics
+  acronym: MATH
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/mathematics-math/
+  degrees:
+    - ba
+  types:
+    - minor
+    - concentration
+  tags:
+    - mathematics
+- id: mechanical-engineering
+  name: Mechanical Engineering
+  acronym: MECH
+  url: https://www.uoguelph.ca/programs/mechanical-engineering/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+  tags:
+    - robotics
+    - design
+- id: mechatronics-engineering
+  name: Mechatronics Engineering
+  url: https://www.uoguelph.ca/programs/mechatronics-engineering/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+  tags:
+    - artificial intelligence
+    - ai
+    - robotics
+    - design
+- id: media-and-cinema-studies
+  name: Media and Cinema Studies
+  acronym: MCST
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/media-cinema-studies-mcst/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+    - arts
+    - culture
+- id: microbiology
+  name: Microbiology
+  acronym: MICR
+  url: https://www.uoguelph.ca/programs/microbiology/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biomedic*
+    - health*
+    - molecu*
+    - cell*
+    - medic*
+    - biomolecu*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - micro*
+    - bacteria*
+    - immun*
+    - virolog*
+    - virus
+    - evolution*
+    - infect*
+    - dna
+- id: molecular-biology-and-genetics
+  name: Molecular Biology and Genetics
+  acronym: MBG
+  url: https://www.uoguelph.ca/programs/molecular-biology-and-genetics/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biochem*
+    - biomedic*
+    - health*
+    - molecu*
+    - cell*
+    - biodivers*
+    - medic*
+    - biomolecu*
+    - disease
+    - gene*
+    - clinic*
+    - patho*
+    - micro*
+    - immun*
+    - virolog*
+    - virus
+    - evolution*
+    - infect*
+    - dna
+    - pharma*
+- id: museum-studies
+  name: Museum Studies
+  acronym: MS
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/museum-studies-ms/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - humanities
+    - arts
+    - culture
+    - history
+- id: music
+  name: Music
+  acronym: MUSC
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/music-musc/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+    - concentration
+  tags:
+    - humanities
+    - arts
+    - culture
+- id: neuroscience
+  name: Neuroscience
+  acronym: NEUR
+  url: https://www.uoguelph.ca/programs/neuroscience/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - psych*
+    - neuro*
+    - brain
+    - cogni*
+    - human
+    - behav*
+- id: nutritional-and-nutraceutical-sciences
+  name: Nutritional and Nutraceutical Sciences
+  acronym: NANS
+  url: https://www.uoguelph.ca/programs/nutritional-and-nutraceutical-sciences/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - biomedic*
+    - health*
+    - medic*
+    - biomolecu*
+    - physi*
+    - kinesio*
+    - disease
+    - clinic*
+    - patho*
+    - exercise
+    - nutri*
+    - micro*
+    - pharma*
+    - diet*
+    - nutraceut*
+    - food
+    - supplement*
+- id: philosophy
+  name: Philosophy
+  acronym: PHIL
+  url: https://www.uoguelph.ca/programs/philosophy/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+    - concentration
+  tags:
+    - humanities
+- id: physical-science
+  name: Physical Science
+  acronym: PSCI
+  url: https://www.uoguelph.ca/programs/physical-science/
+  degrees:
+    - bsc
+  types:
+    - major
+  tags:
+    - science
+    - physics
+    - chemistry
+    - math
+    - space
+    - quantum
+    - quantum mechanics
+    - medical physics
+- id: physics
+  name: Physics
+  acronym: PHYS
+  url: https://www.uoguelph.ca/programs/physics/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - physics
+    - science
+    - math
+    - space
+    - quantum
+    - quantum mechanics
+    - medical physics
+    - theoretical physics
+    - chemical physics
+    - nanoscience
+    - bio medical physics
+- id: plant-science
+  name: Plant Science
+  acronym: PLSC
+  url: https://www.uoguelph.ca/programs/plant-science/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - agriculture
+    - biology
+    - science
+- id: political-science
+  name: Political Science
+  acronym: POLS
+  url: https://www.uoguelph.ca/programs/political-science/
+  degrees:
+    - ba
+    - ba and science
+  types:
+    - major
+    - minor
+  tags:
+    - poli*
+    - crim*
+    - govern*
+    - law
+    - power
+    - justice
+    - affairs
+    - socio*
+- id: project-management
+  name: Project Management
+  acronym: PM
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/project-management-pm/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+    - management
+- id: psychology
+  name: Psychology
+  acronym: PSYC
+  url: https://www.uoguelph.ca/programs/psychology/
+  degrees:
+    - ba
+  types:
+    - major
+    - co-op
+    - minor
+    - concentration
+  tags:
+    - psych*
+    - neuro*
+    - brain
+    - cogni*
+    - human
+    - behav*
+    - cultur*
+- id: real-estate
+  name: Real Estate
+  acronym: RE
+  url: https://www.uoguelph.ca/programs/real-estate/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+  tags:
+    - marketing
+    - business
+    - finance
+    - economics
+- id: sexualities-genders-and-social-change
+  name: Sexualities, Genders and Social Change
+  acronym: SXGN
+  url: https://www.uoguelph.ca/programs/sexualities-genders-and-social-change/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+  tags:
+    - humanities
+    - culture
+- id: sociology
+  name: Sociology
+  acronym: SOC
+  url: https://www.uoguelph.ca/programs/sociology/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+    - concentration
+  tags:
+    - poli*
+    - crim*
+    - govern*
+    - law
+    - power
+    - institution*
+    - affairs
+    - socio*
+    - justice
+    - public
+- id: software-engineering
+  name: Software Engineering
+  acronym: SENG
+  url: https://www.uoguelph.ca/programs/software-engineering/
+  degrees:
+    - bcomp
+  types:
+    - major
+    - co-op
+  tags:
+    - programming
+    - technology
+    - engineering
+    - web development
+    - computer science
+    - artificial intelligence
+    - ai
+    - software design
+- id: spanish-and-hispanic-studies
+  name: Spanish and Hispanic Studies
+  acronym: SPAH
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/spanish-hispanic-studies-spah/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+    - concentration
+  tags:
+    - humanities
+    - language
+    - culture
+- id: sport-and-event-management
+  name: Sport and Event Management
+  acronym: SPMT
+  url: https://www.uoguelph.ca/programs/sport-and-event-management/
+  degrees:
+    - bcomm
+  types:
+    - major
+    - co-op
+    - minor
+  tags:
+    - business
+    - management
+    - sports
+- id: statistics
+  name: Statistics
+  acronym: STAT
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/statistics-stat/
+  degrees:
+    - ba
+  types:
+    - minor
+    - concentration
+  tags:
+    - mathematics
+    - statistics
+- id: studio-art
+  name: Studio Art
+  acronym: SART
+  url: https://www.uoguelph.ca/programs/studio-art/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+  tags:
+    - humanities
+    - arts
+    - culture
+- id: sustainable-business
+  name: Sustainable Business
+  acronym: SB
+  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/sustainable-business-sb/
+  degrees: []
+  types:
+    - minor
+  tags:
+    - business
+- id: theatre-studies
+  name: Theatre Studies
+  acronym: THST
+  url: https://www.uoguelph.ca/programs/theatre-studies/
+  degrees:
+    - ba
+  types:
+    - major
+    - minor
+    - concentration
+  tags:
+    - humanities
+    - arts
+    - culture
+- id: water-resources-engineering
+  name: Water Resources Engineering
+  acronym: WRE
+  url: https://www.uoguelph.ca/programs/water-resources-engineering/
+  degrees:
+    - beng
+  types:
+    - major
+    - co-op
+  tags:
+    - engineering
+- id: wildlife-biology-and-conservation
+  name: Wildlife Biology and Conservation
+  acronym: WBC
+  url: https://www.uoguelph.ca/programs/wildlife-biology-and-conservation/
+  degrees:
+    - bsc
+  types:
+    - major
+    - co-op
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - natur*
+    - ecol*
+    - wild*
+    - biodivers*
+    - conserva*
+    - animal*
+    - enviro*
+    - ocean*
+    - aqua*
+    - fish*
+    - sustain*
+    - mammal*
+    - sea*
+    - water*
+    - evolution*
+- id: zoology
+  name: Zoology
+  acronym: ZOO
+  url: https://www.uoguelph.ca/programs/zoology/
+  degrees:
+    - bsc
+  types:
+    - major
+    - minor
+  tags:
+    - biol*
+    - science*
+    - life*
+    - living
+    - research*
+    - natur*
+    - ecol*
+    - wild*
+    - biodivers*
+    - conserva*
+    - animal*
+    - enviro*
+    - fish*
+    - sustain*
+    - mammal*
+    - evolution*
+    - dna

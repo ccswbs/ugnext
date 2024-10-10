@@ -1,0 +1,94 @@
+- id: basc
+  name: Bachelor of Applied Sciences
+  acronym: B.A.Sc.
+  url: "/programs/bachelor-of-applied-science/"
+  tags: []
+- id: ba
+  name: Bachelor of Arts
+  acronym: B.A.
+  url: "/programs/bachelor-of-arts/"
+  tags: []
+- id: bas
+  name: Bachelor of Arts and Sciences
+  acronym: B.A.S.
+  url: "/programs/bachelor-of-arts-and-sciences/"
+  tags: []
+- id: bbrm
+  name: Bachelor of Bio-Resource Management
+  acronym: B.B.R.M.
+  url: "/programs/bachelor-of-bio-resource-management/"
+  tags: []
+- id: bcomm
+  name: Bachelor of Commerce
+  url: "/programs/bachelor-of-commerce/"
+  acronym: B.Comm.
+  tags: []
+- id: bcomp
+  name: Bachelor of Computing
+  url: "/programs/bachelor-of-computing/"
+  acronym: B.Comp.
+  tags: []
+- id: bca
+  name: Bachelor of Creative Arts, Health and Wellness
+  acronym:
+  url: "/programs/bachelor-of-creative-arts-health-and-wellness/"
+  tags: []
+- id: beng
+  name: Bachelor of Engineering
+  acronym: B.Eng.
+  url: "/programs/bachelor-of-engineering/"
+  tags: []
+- id: biesp
+  name: Bachelor of Indigenous Environmental Science and Practice
+  acronym: B.I.E.S.P.
+  url: "/programs/bachelor-of-indigenous-environmental-science-and-practice/"
+  tags:
+    - humanities
+    - culture
+    - science
+- id: bla
+  name: Bachelor of Landscape Architecture
+  acronym: B.L.A.
+  url: "/programs/bachelor-of-landscape-architecture/"
+  tags: []
+- id: bmath
+  name: Bachelor of Mathematics
+  acronym: B.Math.
+  url: "/programs/bachelor-of-mathematics/"
+  tags:
+    - mathematics
+    - artificial intelligence
+    - ai
+    - data
+    - analytics
+- id: boh
+  name: Bachelor of One Health
+  acronym: B.O.H.
+  url: "/programs/bachelor-of-one-health/"
+  tags:
+    - health
+    - science
+    - biology
+- id: bsc
+  name: Bachelor of Science
+  acronym: B.Sc.
+  url: "/programs/bachelor-of-science/"
+  tags: []
+- id: bsc-agr
+  name: Bachelor of Science in Agriculture
+  acronym: B.Sc.(Agr.)
+  url: "/programs/bachelor-of-science-in-agriculture/"
+  tags:
+    - agriculture
+    - botany
+    - bioscience
+- id: bsc-env
+  name: Bachelor of Science in Environmental Sciences
+  acronym: B.Sc.(Env.)
+  url: "/programs/bachelor-of-science-in-environmental-sciences/"
+  tags: []
+- id: dvm
+  name: Doctor of Veterinary Medicine
+  acronym: D.V.M.
+  url: "/programs/doctor-veterinary-medicine/"
+  tags: []
