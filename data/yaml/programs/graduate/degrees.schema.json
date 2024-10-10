@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "graduate-degrees.schema.json",
   "title": "Graduate Degrees",
   "description": "Graduate degrees offered at the University of Guelph",
   "type": "array",

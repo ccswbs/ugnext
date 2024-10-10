@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "undergraduate-programs.schema.json",
   "title": "Undergraduate Programs",
   "description": "Undergraduate programs offered at the University of Guelph",
   "type": "array",

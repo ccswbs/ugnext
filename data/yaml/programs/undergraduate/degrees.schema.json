@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "undergraduate-degrees.schema.json",
   "title": "Undergraduate Degrees",
   "description": "Undergraduate degrees offered at the University of Guelph",
   "type": "array",
@@ -17,6 +16,10 @@
       },
       "acronym": {
         "description": "A short name/acronym for the degree",
+        "type": "string"
+      },
+      "url": {
+        "description": "A URL to the degree page",
         "type": "string"
       },
       "tags": {
