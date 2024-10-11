@@ -2,7 +2,7 @@ import { TextInput } from "@/components/text-input";
 import { Select } from "@/components/select";
 import { editDistance, strncmp, toTitleCase } from "@/lib/string-utils";
 import { useSearch } from "@/lib/use-search";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ProgramNavigation } from "@/components/programs/navigation";
 import { Card } from "@/components/card";
 import { stemmer } from "stemmer";
@@ -177,31 +177,41 @@ const programSearchFunc = (data) => {
   };
 };
 
-const enumerateProgramTypes = (programs) => {
-  const types = new Map();
-
-  for (const program of programs) {
+const getTypes = (programs) => {
+  const types = programs.reduce((types, program) => {
     for (const type of program.types) {
-      if (!types.has(type))
-        types.set(type, {
-          value: type,
-          label: toTitleCase(type),
-          selected: true,
-        });
+      if (types.has(type.id)) continue;
+
+      types.set(type.id, {
+        value: type.id,
+        label: type.name,
+        selected: true
+      });
     }
-  }
+
+    return types;
+  }, new Map());
 
   return Array.from(types.values());
 };
 
 const ProgramCard = ({ program }) => (
   <Card
-    key={program.name + program.url}
+    key={program.id}
     href={program.url}
-    title={<span className="flex items-center text-lg font-bold">{program.name}</span>}
+    title={
+      <div className="flex flex-col justify-center">
+        <span className="text-lg font-bold">{program.name}</span>
+        {program.degrees && program.degrees.map((degree, index) => (
+          <span key={degree.id} className="text-sm text-black/65">
+            {degree.name}
+          </span>
+        ))}
+      </div>
+    }
     footer={
       <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-        {program?.types?.map((type) => toTitleCase(type)).join(", ")}
+        {program.types && program.types.map((type) => type.name).join(", ")}
       </span>
     }
   />
@@ -210,19 +220,21 @@ const ProgramCard = ({ program }) => (
 export const ProgramSearch = ({ programs, children, filterer, render }) => {
   const [input, setInput] = useState("");
 
-  const types = useMemo(() => enumerateProgramTypes(programs), [programs]);
+  // Enumerate all the types present in the programs, to enable user to filter based on type
+  const types = useMemo(() => getTypes(programs), [programs]);
   const [selectedTypes, setSelectedTypes] = useState(types);
 
-  const results = useSearch(programs, input, programSearchFunc);
-  const filtered = useMemo(() => {
-    let filtered = results?.filter((program) => selectedTypes.some((type) => program.types.includes(type.value)));
+  // Perform the search based on user input and store the results for further filtering
+  const searchResults = useSearch(programs, input, programSearchFunc);
 
-    if (typeof filterer === "function") {
-      filtered = filtered?.filter((program) => filterer(program));
-    }
+  // Perform additional filtering, based on user selected types and/or any other passed filter
+  const filteredSearchResults = useMemo(() => {
+    const filtered = searchResults?.filter((program) => {
+      return program.types.some((type) => selectedTypes.some(selectedType => type.id === selectedType.value))
+    });
 
-    return filtered;
-  }, [filterer, results, selectedTypes]);
+    return typeof filterer === "function" ? filtered?.filter((program) => filterer(program)) : filtered;
+  }, [filterer, searchResults, selectedTypes]);
 
   return (
     <>
@@ -255,14 +267,17 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
         <div className="flex flex-col justify-between"></div>
       </div>
 
-      {/* Search results */}
+      {input && filteredSearchResults?.length !== 0 && (
+        <div className="font-bold text-black/50">{filteredSearchResults?.length} result(s) found.</div>
+      )}
+
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {filtered?.map((program) =>
+        {filteredSearchResults?.map((program) =>
           typeof render === "function" ? render(program) : <ProgramCard key={program.id} program={program} />
         )}
       </div>
 
-      {filtered?.length === 0 && (
+      {filteredSearchResults?.length === 0 && (
         <div className="flex w-full items-center justify-center">
           <span className="text-xl font-bold text-black/50">No programs matching your criteria were found.</span>
         </div>
