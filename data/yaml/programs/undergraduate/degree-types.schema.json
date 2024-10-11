@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Undergraduate Degree Types",
+  "description": "Undergraduate degree types offered at the University of Guelph",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "A unique id for the degree type",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the degree type",
+        "type": "string"
+      }
+    },
+    "required": ["id", "name"],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,6 @@
+- id: masters
+  name: Masters
+- id: doctoral
+  name: Doctoral
+- id: diploma
+  name: Graduate Diploma

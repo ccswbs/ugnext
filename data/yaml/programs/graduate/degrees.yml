@@ -1,85 +1,114 @@
 - id: phd
   name: Doctor of Philosophy
+  type: doctoral
   acronym: PhD
 - id: dvm
   name: Doctor of Veterinary Medicine
+  type: doctoral
   acronym: DVM
 - id: dvsc
   name: Doctor of Veterinary Science
+  type: doctoral
   acronym: DVSc
 - id: dvm-mph
   name: DVM/MPH Combined Degree
+  type: doctoral
 - id: gdip
   name: Graduate Diploma
+  type: diploma
 - id: man
   name: Master of Applied Nutrition
+  type: masters
   acronym: MAN
 - id: masc
   name: Master of Applied Science
+  type: masters
   acronym: MASc
 - id: ma
   name: Master of Arts
+  type: masters
   acronym: MA
 - id: mbinf
   name: Master of Bioinformatics
+  type: masters
   acronym: MBINF
 - id: mbs
   name: Master of Biomedical Sciences
+  type: masters
   acronym: MBS
 - id: mbiot
   name: Master of Biotechnology
+  type: masters
   acronym: MBIOT
 - id: mba
   name: Master of Business Administration
+  type: masters
   acronym: MBA
 - id: mcl
   name: Master of Conservation Leadership
+  type: masters
   acronym: MCL
 - id: mcti
   name: Master of Cybersecurity and Threat Intelligence
+  type: masters
   acronym: MCTI
 - id: mds
   name: Master of Data Science
+  type: masters
   acronym: MDS
 - id: meng
   name: Master of Engineering
+  type: masters
   acronym: MEng
 - id: mes
   name: Master of Environmental Sciences
+  type: masters
   acronym: MES
 - id: mfa
   name: Master of Fine Arts
+  type: masters
   acronym: MFA
 - id: mfare
   name: Master of Food, Agricultural and Resource Economics
+  type: masters
   acronym: MFARE
 - id: mplan
   name: Master of Planning
+  type: masters
   acronym: MPlan
 - id: mpag
   name: Master of Plant Agriculture
+  type: masters
   acronym: MPAg
 - id: mp
   name: Master of Psychotherapy
+  type: masters
   acronym: MP
 - id: mph
   name: Master of Public Health
+  type: masters
   acronym: MPH
 - id: mre
   name: Master of Real Estate
+  type: masters
   acronym: MRE
 - id: mrft
   name: Master of Relational and Family Therapy
+  type: masters
   acronym: MRFT
 - id: msc
   name: Master of Science
+  type: masters
   acronym: MSc
 - id: msag
   name: Master of Sustainable Agriculture
+  type: masters
   acronym: MSAg
 - id: mwb
   name: Master of Wildlife Biology
+  type: masters
   acronym: MWB
 - id: mpm
   name: Masters in Project Management
+  type: masters
   acronym: MPM

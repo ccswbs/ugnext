@@ -31,7 +31,13 @@
         "uniqueItems": true
       }
     },
-    "required": ["id", "name"],
+    "patternProperties": {
+      "^type$": {
+        "description": "The associated type id for the degree",
+        "type": "string"
+      }
+    },
+    "required": ["id", "name", "type"],
     "additionalProperties": false
   }
 }
