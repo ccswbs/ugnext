@@ -1,54 +1,63 @@
 - id: basc
   name: Bachelor of Applied Sciences
   acronym: B.A.Sc.
-  type: bachelor
+  types:
+    - bachelor
   url: "/programs/bachelor-of-applied-science/"
   tags: []
 - id: ba
   name: Bachelor of Arts
   acronym: B.A.
-  type: bachelor
+  types:
+    - bachelor
   url: "/programs/bachelor-of-arts/"
   tags: []
 - id: bas
   name: Bachelor of Arts and Sciences
   acronym: B.A.S.
-  type: bachelor
+  types:
+    - bachelor
   url: "/programs/bachelor-of-arts-and-sciences/"
   tags: []
 - id: bbrm
   name: Bachelor of Bio-Resource Management
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.B.R.M.
   url: "/programs/bachelor-of-bio-resource-management/"
   tags: []
 - id: bcomm
   name: Bachelor of Commerce
-  type: bachelor
+  types:
+    - bachelor
   url: "/programs/bachelor-of-commerce/"
   acronym: B.Comm.
   tags: []
 - id: bcomp
   name: Bachelor of Computing
-  type: bachelor
+  types:
+    - bachelor
   url: "/programs/bachelor-of-computing/"
   acronym: B.Comp.
   tags: []
 - id: bca
   name: Bachelor of Creative Arts, Health and Wellness
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.C.A.H.W.
   url: "/programs/bachelor-of-creative-arts-health-and-wellness/"
   tags: []
 - id: beng
   name: Bachelor of Engineering
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.Eng.
   url: "/programs/bachelor-of-engineering/"
   tags: []
 - id: biesp
   name: Bachelor of Indigenous Environmental Science and Practice
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.I.E.S.P.
   url: "/programs/bachelor-of-indigenous-environmental-science-and-practice/"
   tags:
@@ -57,13 +66,15 @@
     - science
 - id: bla
   name: Bachelor of Landscape Architecture
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.L.A.
   url: "/programs/bachelor-of-landscape-architecture/"
   tags: []
 - id: bmath
   name: Bachelor of Mathematics
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.Math.
   url: "/programs/bachelor-of-mathematics/"
   tags:
@@ -74,7 +85,8 @@
     - analytics
 - id: boh
   name: Bachelor of One Health
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.O.H.
   url: "/programs/bachelor-of-one-health/"
   tags:
@@ -83,13 +95,15 @@
     - biology
 - id: bsc
   name: Bachelor of Science
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.Sc.
   url: "/programs/bachelor-of-science/"
   tags: []
 - id: bsc-agr
   name: Bachelor of Science in Agriculture
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.Sc.(Agr.)
   url: "/programs/bachelor-of-science-in-agriculture/"
   tags:
@@ -98,13 +112,15 @@
     - bioscience
 - id: bsc-env
   name: Bachelor of Science in Environmental Sciences
-  type: bachelor
+  types:
+    - bachelor
   acronym: B.Sc.(Env.)
   url: "/programs/bachelor-of-science-in-environmental-sciences/"
   tags: []
 - id: dvm
   name: Doctor of Veterinary Medicine
-  type: dvm
+  types:
+    - dvm
   acronym: D.V.M.
   url: "/programs/doctor-veterinary-medicine/"
   tags: []
