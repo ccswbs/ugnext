@@ -26,7 +26,7 @@
   acronym: ANSC
   url: https://www.uoguelph.ca/programs/animal-science/
   degrees:
-    - bsc in agriculture
+    - bsc-agr
   types:
     - major
     - co-op
@@ -68,7 +68,7 @@
   acronym: AHN
   url: https://www.uoguelph.ca/programs/applied-human-nutrition/
   degrees:
-    - bachelor of applied science
+    - basc
   types:
     - major
   tags:
@@ -372,7 +372,7 @@
   acronym: CSTU
   url: https://www.uoguelph.ca/programs/child-studies/
   degrees:
-    - bachelor of applied science
+    - basc
   types:
     - major
   tags:
@@ -477,7 +477,7 @@
   acronym: CRSC
   url: https://www.uoguelph.ca/programs/crop-science/
   degrees:
-    - bsc in agriculture
+    - bsc-agr
   types:
     - major
     - co-op
@@ -505,7 +505,7 @@
   acronym: ECOL
   url: https://www.uoguelph.ca/programs/ecology/
   degrees:
-    - bsc in environmental sciences
+    - bsc-env
   types:
     - major
     - co-op
@@ -517,7 +517,7 @@
   name: Earth Observation and Geographic Information Science
   url: https://www.uoguelph.ca/programs/earth-geographic-info-science/
   degrees:
-    - bsc in environmental science
+    - bsc-env
   types:
     - major
     - co-op
@@ -587,7 +587,7 @@
   acronym: ERM
   url: https://www.uoguelph.ca/programs/environment-and-resource-management/
   degrees:
-    - bsc in environmental sciences
+    - bsc-env
   types:
     - major
     - co-op
@@ -607,7 +607,7 @@
   acronym: EEP
   url: https://www.uoguelph.ca/programs/environmental-economics-and-policy/
   degrees:
-    - bsc in environmental sciences
+    - bsc-env
   types:
     - major
     - co-op
@@ -665,7 +665,7 @@
   acronym: ENVS
   url: https://www.uoguelph.ca/programs/environmental-sciences/
   degrees:
-    - bsc in environmental sciences
+    - bsc-env
   types:
     - major
     - co-op
@@ -721,7 +721,7 @@
   acronym: FSHD
   url: https://www.uoguelph.ca/programs/family-studies-and-human-development/
   degrees:
-    - bachelor of applied science
+    - basc
   types:
     - major
   tags:
@@ -865,7 +865,7 @@
   name: Honours Agriculture
   url: https://www.uoguelph.ca/programs/honours-agriculture/
   degrees:
-    - bsc in agriculture
+    - bsc-agr
   types:
     - major
   tags:
@@ -878,7 +878,7 @@
   acronym: HRT
   url: https://www.uoguelph.ca/programs/horticulture/
   degrees:
-    - bsc in agriculture
+    - bsc-agr
   types:
     - major
     - co-op
@@ -1371,7 +1371,7 @@
   url: https://www.uoguelph.ca/programs/political-science/
   degrees:
     - ba
-    - ba and science
+    - bas
   types:
     - major
     - minor
