@@ -72,7 +72,7 @@
     - food
 - name: Art History
   acronym: ARTH
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/art-history-arth/
+  url: https://www.uoguelph.ca/programs/art-history/
   degrees:
     - Bachelor of Arts
   types:
@@ -331,6 +331,20 @@
     - business
     - finance
     - economics
+- name: Chemical Physics
+  acronym: CHPY
+  url: https://www.uoguelph.ca/programs/chemical-physics/
+  degrees:
+    - Bachelor of Science
+  types:
+    - major
+    - co-op
+  tags:
+    - chemistry
+    - physics
+    - science
+    - molecular
+    - chemical physics
 - name: Chemistry
   acronym: CHEM
   url: https://www.uoguelph.ca/programs/chemistry/
@@ -485,7 +499,7 @@
 - name: Earth Observation and Geographic Information Science
   url: https://www.uoguelph.ca/programs/earth-geographic-info-science/
   degrees:
-    - Bachelor of Science in Environmental Science
+    - Bachelor of Science in Environmental Sciences
   types:
     - major
     - co-op
@@ -1284,7 +1298,6 @@
   url: https://www.uoguelph.ca/programs/political-science/
   degrees:
     - Bachelor of Arts
-    - Bachelor of Arts and Science
   types:
     - major
     - minor
@@ -1455,6 +1468,20 @@
     - humanities
     - arts
     - culture
+- name: Theoretical Physics
+  acronym: THPY
+  url: https://www.uoguelph.ca/programs/theoretical-physics/
+  degrees:
+    - Bachelor of Science
+  types:
+    - major
+  tags:
+    - physics
+    - science
+    - math
+    - space
+    - quantum
+    - theoretical physics
 - name: Water Resources Engineering
   acronym: WRE
   url: https://www.uoguelph.ca/programs/water-resources-engineering/
