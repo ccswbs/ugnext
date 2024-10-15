@@ -55,7 +55,7 @@ function getVideoInfo(url) {
   return { type: type, id: id };
 }
 
-export function EmbeddedVideo({ url, title, transcript, className }) {
+export function EmbeddedVideo({ url, title, transcript, className, restrictRelated = false }) {
   const { id, type } = getVideoInfo(url);
 
   return (
@@ -65,6 +65,9 @@ export function EmbeddedVideo({ url, title, transcript, className }) {
           style="width: 100%; max-width: unset;"
           videoid={id}
           playlabel={title ?? "Youtube Embedded Video Player"}
+          params={{
+            rel: restrictRelated ? 0 : 1,
+          }}
         />
       )}
 
@@ -91,4 +94,5 @@ EmbeddedVideo.propTypes = {
   title: PropTypes.string,
   transcript: PropTypes.string,
   className: PropTypes.string,
+  restrictRelated: PropTypes.bool, // Restrict related videos on YouTube to only videos from the same channel
 };
