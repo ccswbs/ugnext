@@ -49,8 +49,8 @@ export const Button = ({ column, data }) => {
   const style = data?.style?.name;
   const color = getColor(style);
   const outlined = isOutlined(style);
-  const analyticsGoal = data?.relationships.field_cta_analytics_goal?.name;
-  const analyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
+  const analyticsGoal = data?.ctaAnalyticsGoal?.name;
+  const analyticsAction = buttonData.ctaAnalyticsGoal?.action;
 
   return (
     <>
