@@ -41,7 +41,11 @@ export const Hero = ({ variant = "spotlight", image, title, caption, button, ali
                 alignment === "right" && "lg:text-right"
               )}
             >
-              <h1 className="font-condensed text-3xl font-bold">{title}</h1>
+              {typeof title === "string" ? (
+                <h1 className="font-condensed text-3xl font-bold">{title}</h1>
+              ) : (
+                <div className="font-condensed text-3xl font-bold">{title}</div>
+              )}
               {caption && <span className="text-xl">{caption}</span>}
               {button && (
                 <Button
@@ -63,9 +67,13 @@ export const Hero = ({ variant = "spotlight", image, title, caption, button, ali
 
       {variant !== "spotlight" && (
         <Container centered className="absolute bottom-0 left-1/2 h-fit w-full -translate-x-1/2 p-0">
-          <Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">
-            {title}
-          </Heading>
+          {typeof title === "string" ? (
+            <Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">
+              {title}
+            </Heading>
+          ) : (
+            <div className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">{title}</div>
+          )}
         </Container>
       )}
     </div>
@@ -82,7 +90,7 @@ Hero.propTypes = {
     className: PropTypes.string,
     blurred: PropTypes.string,
   }).isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   /**
    * A short paragraph to display underneath the title (does nothing for content-hub variant)
    */
