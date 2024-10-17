@@ -10,6 +10,13 @@ export const LinkCarousel = ({ links }) => {
   const [activeLink, setActiveLink] = useState(links[0]);
   const previousActiveLink = useRef(null);
 
+  const updateActiveLink = (link) => {
+    setActiveLink((previous) => {
+      previousActiveLink.current = previous;
+      return link;
+    });
+  }
+
   return (
     <div className="relative w-full">
       <div className="absolute left-0 top-0 z-0 h-full w-full">
@@ -46,14 +53,14 @@ export const LinkCarousel = ({ links }) => {
         {links.map((link, index) => (
           <UnstyledLink
             onMouseEnter={() => {
-              setActiveLink((previous) => {
-                previousActiveLink.current = previous;
-                return link;
-              });
+              updateActiveLink(link);
+            }}
+            onFocus={() => {
+              updateActiveLink(link);
             }}
             key={index}
             href={link.url}
-            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-xl text-white backdrop-blur transition-colors hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus-visible:outline-none"
+            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-[2.2rem] text-white backdrop-blur transition-colors hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus-visible:outline-none"
           >
             <span>{link.title}</span>
 
