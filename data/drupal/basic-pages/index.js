@@ -72,7 +72,7 @@ export const getPageContent = async (id, status) => {
 export const getPageMenu = async (page) => {
   const name = page?.primaryNavigation?.menuName?.toUpperCase()?.replaceAll("-", "_");
 
-  if (!name) {
+  if (!name || name === "NO_MENU") {
     return null;
   }
 
