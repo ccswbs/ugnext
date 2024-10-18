@@ -18,9 +18,9 @@ export const Default = {
   args: {},
 };
 
-export const WithMenu = {
+export const WithNavigation = {
   args: {
-    menu: [
+    navigation: [
       {
         url: "/example-page-1",
         title: "Example Link 1",
@@ -35,7 +35,7 @@ export const WithMenu = {
       },
       {
         title: "Example Dropdown",
-        children: [
+        items: [
           {
             url: "/example-page-4",
             title: "Example Link 4",
@@ -51,5 +51,57 @@ export const WithMenu = {
         ],
       },
     ],
+  },
+};
+
+export const WithTopic = {
+  args: {
+    topic: {
+      title: "Example Topic",
+      url: "#example",
+    },
+    navigation: [
+      {
+        url: "/example-page-1",
+        title: "Example Link 1",
+      },
+      {
+        url: "/example-page-2",
+        title: "Example Link 2",
+      },
+      {
+        url: "/example-page-3",
+        title: "Example Link 3",
+      },
+      {
+        title: "Example Dropdown",
+        items: [
+          {
+            url: "/example-page-4",
+            title: "Example Link 4",
+          },
+          {
+            url: "/example-page-5",
+            title: "Example Link 5",
+          },
+          {
+            url: "/example-page-6",
+            title: "Example Link 6",
+          },
+        ],
+      },
+    ],
+  },
+};
+
+export const DualBrandVariant = {
+  args: {
+    variant: "dual-brand",
+  },
+};
+
+export const RidgetownVariant = {
+  args: {
+    variant: "ridgetown",
   },
 };

@@ -15,6 +15,8 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
             width={backgroundImage?.width}
             height={backgroundImage?.height}
             sizes="100vw"
+            placeholder={backgroundImage?.blurred ? "blur" : "empty"}
+            blurDataURL={backgroundImage?.blurred}
           />
         </div>
 
@@ -28,6 +30,8 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
               width={foregroundImage?.width}
               height={foregroundImage?.height}
               sizes="(max-width: 1024px) 50vw, 100vw"
+              placeholder={foregroundImage?.blurred ? "blur" : "empty"}
+              blurDataURL={foregroundImage?.blurred}
             />
           </div>
         </div>
@@ -35,7 +39,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
 
       {footer && (
         <div className="flex w-full items-center justify-center bg-black p-4 text-white">
-          <Container className="text-xl">{footer}</Container>
+          <Container className="text-xl p-2">{footer}</Container>
         </div>
       )}
     </div>
@@ -49,6 +53,7 @@ Story.propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
     className: PropTypes.string,
+    blurred: PropTypes.string,
   }).isRequired,
   foregroundImage: PropTypes.shape({
     width: PropTypes.number,
@@ -56,6 +61,7 @@ Story.propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
     className: PropTypes.string,
+    blurred: PropTypes.string,
   }).isRequired,
   content: PropTypes.node.isRequired,
   footer: PropTypes.node,

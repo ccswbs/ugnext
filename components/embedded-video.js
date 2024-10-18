@@ -4,27 +4,58 @@ import { Button } from "@/components/button";
 import PropTypes from "prop-types";
 import { YouTubeEmbed } from "@next/third-parties/google";
 
-const getVideoInfo = (url) => {
-  if (!url) {
-    return { type: null, id: null };
+function getYouTubeVideoID(url) {
+  if (!(url instanceof URL)) {
+    return null;
   }
 
-  const regex =
-    /^((?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|v\/|embed\/|user\/[A-Za-z0-9]+#p\/u\/\d\/)|youtu\.be\/)|(?:https?:\/\/)?(?:www\.)?vimeo\.com\/)([A-Za-z0-9\-_]+)/;
-
-  const match = url.match(regex);
-
-  if (match) {
-    const type = match[1].includes("youtube") || match[1].includes("youtu.be") ? "youtube" : "vimeo";
-    const id = match[2];
-
-    return { type: type, id: id };
+  if (url.searchParams.has("v")) {
+    return url.searchParams.get("v");
   }
 
-  return { type: null, id: null };
-};
+  const path = url.pathname.split("/")?.filter((token) => token !== "");
 
-export function EmbeddedVideo({ url, title, transcript, className }) {
+  switch (path?.[0]) {
+    case "v":
+    case "embed":
+    case "watch":
+    case "e":
+    case "shorts":
+    case "live":
+      return path?.[1] ?? null;
+    case "oembed":
+      return getYouTubeVideoID(decodeURIComponent(url.searchParams.get("url")));
+    case "attribution_link":
+      // TODO: Handle attribution links
+      return null;
+    default:
+      return path?.[0] ?? null;
+  }
+}
+
+function getVimeoVideoID(url) {
+  const path = url.pathname.split("/")?.filter((token) => token !== "");
+  return path?.[0] ?? null;
+}
+
+function getVideoInfo(url) {
+  const parsed = new URL(url);
+  let type = null;
+  let id = null;
+
+  // Determine where the remote video is hosted (i.e. YouTube or Vimeo)
+  if (parsed?.hostname.includes("youtube") || parsed?.hostname.includes("youtu.be")) {
+    type = "youtube";
+    id = getYouTubeVideoID(parsed);
+  } else if (parsed?.hostname.includes("vimeo")) {
+    type = "vimeo";
+    id = getVimeoVideoID(parsed);
+  }
+
+  return { type: type, id: id };
+}
+
+export function EmbeddedVideo({ url, title, transcript, className, restrictRelated = false }) {
   const { id, type } = getVideoInfo(url);
 
   return (
@@ -34,6 +65,9 @@ export function EmbeddedVideo({ url, title, transcript, className }) {
           style="width: 100%; max-width: unset;"
           videoid={id}
           playlabel={title ?? "Youtube Embedded Video Player"}
+          params={{
+            rel: restrictRelated ? 0 : 1,
+          }}
         />
       )}
 
@@ -60,4 +94,5 @@ EmbeddedVideo.propTypes = {
   title: PropTypes.string,
   transcript: PropTypes.string,
   className: PropTypes.string,
+  restrictRelated: PropTypes.bool, // Restrict related videos on YouTube to only videos from the same channel
 };
