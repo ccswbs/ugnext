@@ -19,7 +19,7 @@ export async function getStaticProps() {
 
 export default function ProgramsUndergraduate({ programs }) {
   return (
-    <Layout title="Undergraduate Programs">
+    <Layout metadata={{ title: "Undergraduate Programs" }}>
       <Container centered>
         <Heading level={1}>Undergraduate Programs at the University of Guelph</Heading>
 

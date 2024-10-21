@@ -4,7 +4,7 @@ import { twJoin } from "tailwind-merge";
 export const SpotlightHero = ({ hero }) => (
   <Hero
     variant="spotlight"
-    title={hero.title}
+    title={<h2>{hero.title}</h2>}
     image={{
       src: hero.image.image.variations[0].url,
       alt: hero.image.image.alt,

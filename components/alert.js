@@ -26,8 +26,8 @@ export const Alert = ({ type = "danger", title, subtitle, message, footer }) => 
       <span className="text-lg">{message}</span>
     </div>
 
-		{footer && <div className="flex bg-grey px-4 py-2">{footer}</div>}
-	</div>
+    {footer && <div className="flex bg-grey px-4 py-2">{footer}</div>}
+  </div>
 );
 
 Alert.propTypes = {
