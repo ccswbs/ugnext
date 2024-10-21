@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Layout title="404: Not Found">
+    <Layout metadata={{ title: "404: Not Found" }}>
       <Container centered>
         <Heading level={1}>HTTP 404 — File not found</Heading>
         <Heading level={2}>Possible reasons for this error:</Heading>

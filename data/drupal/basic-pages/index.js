@@ -70,9 +70,22 @@ export const getPageContent = async (id, status) => {
 };
 
 export const getPageMenu = async (page) => {
+  const parse = (node) => {
+    if (Array.isArray(node?.items) && node?.items?.length > 0) {
+      const items = node.items.map((item) => parse(item));
+
+      return {
+        title: node.title,
+        items: node.url ? [{ title: node.title, url: node.url }, ...items] : items,
+      };
+    }
+
+    return { title: node?.title, url: node?.url };
+  };
+
   const name = page?.primaryNavigation?.menuName?.toUpperCase()?.replaceAll("-", "_");
 
-  if (!name) {
+  if (!name || name === "NO_MENU") {
     return null;
   }
 
@@ -80,7 +93,21 @@ export const getPageMenu = async (page) => {
     menu: name,
   });
 
-  return data?.menu?.items ?? null;
+  const menu = data?.menu?.items?.reduce(
+    (acc, item, index) => {
+      if (index === 0 && item.url) {
+        acc.topic.url = item.url;
+        acc.topic.title = item.title;
+      } else {
+        acc.navigation.push(parse(item));
+      }
+
+      return acc;
+    },
+    { topic: {}, navigation: [] }
+  );
+
+  return menu ?? null;
 };
 
 export const getBreadcrumbs = async (slug, status) => {
