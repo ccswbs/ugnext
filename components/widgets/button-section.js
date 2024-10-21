@@ -50,7 +50,7 @@ export const Button = ({ column, data }) => {
   const color = getColor(style);
   const outlined = isOutlined(style);
   const analyticsGoal = data?.ctaAnalyticsGoal?.name;
-  const analyticsAction = buttonData.ctaAnalyticsGoal?.action;
+  const analyticsAction = data?.ctaAnalyticsGoal?.action;
 
   return (
     <>
