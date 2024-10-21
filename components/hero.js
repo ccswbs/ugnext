@@ -42,7 +42,7 @@ export const Hero = ({ variant = "spotlight", image, title, caption, button, ali
               )}
             >
               {typeof title === "string" ? (
-                <h1 className="font-condensed text-3xl font-bold">{title}</h1>
+                <h2 className="font-condensed text-3xl font-bold">{title}</h2>
               ) : (
                 <div className="font-condensed text-3xl font-bold">{title}</div>
               )}
