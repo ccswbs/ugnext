@@ -56,7 +56,7 @@ export const MediaCaption = ({ media, size = "small", position = "left", backgro
           position === "above" && "px-4 md:py-4",
           position === "right" && "col-start-1 row-start-1",
           background === "light-blue" && "bg-light-blue-50",
-          background === "dark-grey" && "bg-gray-950 text-white"
+          background === "dark-grey" && "bg-cool-grey-950 text-white"
         )}
       >
         {children}
