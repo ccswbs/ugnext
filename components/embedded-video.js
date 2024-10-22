@@ -55,8 +55,8 @@ function getVideoInfo(url) {
   return { type: type, id: id };
 }
 
-export function EmbeddedVideo({ url, title, transcript, className, restrictRelated = false }) {
-  const { id, type } = getVideoInfo(url);
+export function EmbeddedVideo({ src, title, transcript, className, restrictRelated = false }) {
+  const { id, type } = getVideoInfo(src);
 
   return (
     <div className={twMerge("flex flex-col", className)}>
@@ -90,7 +90,7 @@ export function EmbeddedVideo({ url, title, transcript, className, restrictRelat
 }
 
 EmbeddedVideo.propTypes = {
-  url: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
   title: PropTypes.string,
   transcript: PropTypes.string,
   className: PropTypes.string,
