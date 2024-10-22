@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 
 function Application({ Component, pageProps }) {
   const { isPreview } = useRouter();
+  const gtmId = process.env.NODE_ENV === "production" && !isPreview
+    ? process.env.NEXT_PUBLIC_GTM_ID
+    : process.env.NEXT_PUBLIC_GTM_ID_DEV;
 
   return (
     <>
       <Component {...pageProps} />
-      {process.env.NODE_ENV === "production" && !isPreview && (
-        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
-      )}
+      <GoogleTagManager gtmId={gtmId} />
     </>
   );
 }
