@@ -3,31 +3,55 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		font-size: 62.5%;
-		/*--max-content-width: theme('screens.2xl');*/
-	}
+  :root {
+    font-size: 62.5%;
+    /*--max-content-width: theme('screens.2xl');*/
+  }
 
-	html {
-		@apply h-full;
-	}
+  html {
+    @apply h-full;
+  }
 
-	body,
-	#__next {
-		@apply flex min-h-full flex-col text-base leading-relaxed;
-	}
+  body,
+  #__next {
+    @apply flex min-h-full flex-col text-base leading-relaxed;
+  }
 
-	#__next {
-		@apply flex-1;
-	}
+  #__next {
+    @apply flex-1;
+  }
 
-	p {
-		@apply mb-2.5;
-	}
+  p {
+    @apply mb-2.5;
+  }
+}
+
+@layer utilities {
+  .break-auto {
+    word-break: auto-phrase;
+  }
+
+  .icon {
+    font-family: "Font Awesome 6 Pro";
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+  }
+}
+
+@layer components {
+  .vcard {
+    @apply mb-2 bg-grey-50 p-4;
+  }
+
+  .author {
+    @apply border-l-4 border-l-red pl-4;
+  }
 }
 
 svg.svg-inline--fa {
-	height: 1em;
+  height: 1em;
 }
 @layer utilities {
 	.break-auto {

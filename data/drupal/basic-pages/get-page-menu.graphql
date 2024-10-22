@@ -1,27 +1,15 @@
 fragment MenuItemContent on MenuItem {
-	url
-	title
+  url
+  title
 }
 
 query GetMenu($menu: MenuAvailable!) {
-	menu(name: $menu) {
-		items {
-			...MenuItemContent
-			children {
-				...MenuItemContent
-				children {
-					...MenuItemContent
-					children {
-						...MenuItemContent
-						children {
-							...MenuItemContent
-							children {
-								...MenuItemContent
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  menu(name: $menu) {
+    items {
+      ...MenuItemContent
+      items: children {
+        ...MenuItemContent
+      }
+    }
+  }
 }

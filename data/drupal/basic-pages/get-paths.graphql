@@ -1,9 +1,9 @@
 query GetPaths($page: Int = 0, $pageSize: Int = 100) {
-	content(filter: { type: "page", status: true }, page: $page, pageSize: $pageSize) {
-		results {
-			... on NodePage {
-				path
-			}
-		}
-	}
+  content(filter: { type: "page", status: true }, page: $page, pageSize: $pageSize) {
+    results {
+      ... on NodePage {
+        path
+      }
+    }
+  }
 }

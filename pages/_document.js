@@ -1,10 +1,11 @@
-import { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
+import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
     <Html lang="en">
       <Head>
+<<<<<<< HEAD
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
           rel="stylesheet"
@@ -14,15 +15,27 @@ export default function Document() {
 
         <link
           href="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css"
+=======
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet"
         />
 
-				<Script
-					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-header.esm.js"
-					type="module"
-					strategy="beforeInteractive"
-				/>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;400;700&display=swap"
+>>>>>>> main
+          rel="stylesheet"
+        />
 
+        <link
+          href="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css"
+          rel="stylesheet"
+        />
+
+<<<<<<< HEAD
 				<Script
 					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-footer.esm.js"
 					type="module"
@@ -37,4 +50,26 @@ export default function Document() {
 			</body>
 		</Html>
 	);
+=======
+        <Script
+          src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-header.esm.js"
+          type="module"
+          strategy="beforeInteractive"
+        />
+
+        <Script
+          src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-footer.esm.js"
+          type="module"
+          strategy="beforeInteractive"
+        />
+
+        <Script src="https://kit.fontawesome.com/7993323d0c.js" crossorigin="anonymous" strategy="lazyOnload" />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+>>>>>>> main
 }

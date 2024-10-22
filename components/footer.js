@@ -1,25 +1,24 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-export const Footer = ({ links }) => (
-	<uofg-footer>
-		{Array.isArray(links) &&
-			links?.map((link) => {
-				if (typeof link.href === 'string' && typeof link.text === 'string') {
-					return (
-						<a key={link.href} href={link.href}>
-							{link.text}
-						</a>
-					);
-				}
-			})}
-	</uofg-footer>
+export const Footer = ({ links, variant = "guelph" }) => (
+  <uofg-footer variant={variant}>
+    {Array.isArray(links) &&
+      links?.map((link) => {
+        return (
+          <a key={link.url + link.title} href={link.url}>
+            {link.title}
+          </a>
+        );
+      })}
+  </uofg-footer>
 );
 
 Footer.propTypes = {
-	links: PropTypes.arrayOf(
-		PropTypes.shape({
-			href: PropTypes.string.isRequired,
-			text: PropTypes.string.isRequired,
-		}),
-	),
+  links: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    })
+  ),
+  variant: PropTypes.oneOf(["guelph", "ridgetown"]),
 };

@@ -1,24 +1,25 @@
-- title: Accounting
+- name: Accounting
   url: https://graduatestudies.uoguelph.ca/programs/accounting
   degrees:
-    - GDip
+    - Graduate Diploma
   types:
     - course-based
   tags:
     - business
     - finance
-- title: Animal Biosciences
+- name: Animal Biosciences
   url: https://graduatestudies.uoguelph.ca/programs/aps
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
     - course-based
   tags:
     - biology
     - science
-- title: Applied Nutrition
+    - agriculture
+- name: Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/applied-nutrition
   degrees:
     - MAN
@@ -27,18 +28,18 @@
   tags:
     - health
     - food
-- title: Art History and Visual Culture
+- name: Art History and Visual Culture
   url: https://graduatestudies.uoguelph.ca/programs/avc
   degrees:
     - MA
   types:
-    - research-based
+    - thesis-based
     - course-based
   tags:
     - arts
     - culture
     - history
-- title: Artificial Intelligence
+- name: Artificial Intelligence
   url: https://graduatestudies.uoguelph.ca/programs/csai
   degrees:
     - MSc
@@ -51,7 +52,8 @@
     - mathematics
     - programming
     - ai
-- title: Bioinformatics
+    - computer science
+- name: Bioinformatics
   url: https://graduatestudies.uoguelph.ca/programs/binf
   degrees:
     - MBINF
@@ -70,7 +72,7 @@
     - statistic*
     - programming
     - analys*
-- title: Biomedical Sciences
+- name: Biomedical Sciences
   url: https://graduatestudies.uoguelph.ca/programs/biom
   degrees:
     - MBS
@@ -84,18 +86,18 @@
     - science
     - health
     - medical
-- title: Biophysics
+- name: Biophysics
   url: https://graduatestudies.uoguelph.ca/programs/biop
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - biology
     - physics
     - science
-- title: Biotechnology
+- name: Biotechnology
   url: https://graduatestudies.uoguelph.ca/programs/biotechnology
   degrees:
     - MBIOT
@@ -105,7 +107,7 @@
     - biology
     - science
     - technology
-- title: Business Administration
+- name: Business Administration
   url: https://graduatestudies.uoguelph.ca/programs/bus
   degrees:
     - MBA
@@ -113,39 +115,41 @@
     - course-based
   tags:
     - business
-- title: Capacity Development and Extension
+- name: Capacity Development and Extension
   url: https://graduatestudies.uoguelph.ca/programs/cde
   degrees:
     - MSc
   types:
-    - research-based
+    - thesis-based
     - course-based
   tags:
     - humanities
-- title: Chemistry
+    - agriculture
+    - livestock
+- name: Chemistry
   url: https://graduatestudies.uoguelph.ca/programs/chbi
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - chemistry
     - science
-- title: Clinical Studies
+- name: Clinical Studies
   url: https://graduatestudies.uoguelph.ca/programs/clin
   degrees:
     - MSc
     - DVSc
   types:
-    - research-based
+    - thesis-based
     - course-based
   tags:
     - biology
     - science
     - health
     - medical
-- title: Computational Sciences
+- name: Computational Sciences
   url: https://graduatestudies.uoguelph.ca/programs/computational-science-phd
   degrees:
     - PhD
@@ -155,19 +159,19 @@
     - technology
     - science
     - mathematics
-- title: Computer Science
+- name: Computer Science
   url: https://graduatestudies.uoguelph.ca/programs/cis
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - technology
     - science
     - mathematics
     - programming
-- title: Conservation Leadership
+- name: Conservation Leadership
   url: https://graduatestudies.uoguelph.ca/Programs/ConservationLeadership
   degrees:
     - MCL
@@ -184,7 +188,7 @@
     - water
     - sustain*
     - science
-- title: Creative Writing
+- name: Creative Writing
   url: https://graduatestudies.uoguelph.ca/programs/crwr
   degrees:
     - MFA
@@ -194,13 +198,13 @@
     - arts
     - humanities
     - culture
-- title: Criminology and Criminal Justice Policy
+- name: Criminology and Criminal Justice Policy
   url: https://graduatestudies.uoguelph.ca/programs/ccjp
   degrees:
     - MA
   types:
     - course-based
-    - research-based
+    - thesis-based
   tags:
     - poli*
     - crim*
@@ -210,7 +214,7 @@
     - public
     - affairs
     - socio*
-- title: Critical Studies in Improvisation
+- name: Critical Studies in Improvisation
   url: https://graduatestudies.uoguelph.ca/programs/impr
   degrees:
     - MA
@@ -221,7 +225,7 @@
     - arts
     - humanities
     - culture
-- title: Cybersecurity and Threat Intelligence
+- name: Cybersecurity and Threat Intelligence
   url: https://graduatestudies.uoguelph.ca/programs/mcti
   degrees:
     - MCTI
@@ -232,7 +236,7 @@
     - science
     - mathematics
     - programming
-- title: Data Science
+- name: Data Science
   url: https://graduatestudies.uoguelph.ca/programs/data-science
   degrees:
     - MDS
@@ -245,7 +249,7 @@
     - programming
     - artificial intelligence
     - ai
-- title: Economics
+- name: Economics
   url: https://graduatestudies.uoguelph.ca/programs/econ
   degrees:
     - MA
@@ -256,7 +260,7 @@
     - business
     - economics
     - finance
-- title: Engineering
+- name: Engineering
   url: https://graduatestudies.uoguelph.ca/programs/engg
   degrees:
     - MEng
@@ -269,17 +273,17 @@
     - engineering
     - artificial intelligence
     - ai
-- title: English
+- name: English
   url: https://graduatestudies.uoguelph.ca/programs/engl
   degrees:
     - MA
   types:
-    - research-based
+    - thesis-based
   tags:
     - arts
     - humanities
     - language
-- title: Environmental Sciences
+- name: Environmental Sciences
   url: https://graduatestudies.uoguelph.ca/programs/envs
   degrees:
     - MES
@@ -287,19 +291,13 @@
     - PhD
   types:
     - course-based
+    - thesis-based
   tags:
     - biology
     - science
-- title: European Studies
-  url: https://graduatestudies.uoguelph.ca/programs/eurs
-  degrees:
-    - MA
-  types:
-    - course-based
-  tags:
-    - humanities
-    - culture
-- title: Family Relations and Applied Nutrition
+    - soil
+    - indigenous
+- name: Family Relations and Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/fran
   degrees:
     - MAN
@@ -307,34 +305,34 @@
     - PhD
   types:
     - course-based
-    - research-based
+    - thesis-based
   tags:
     - health
     - food
     - humanities
     - science
-- title: Food Safety and Quality Assurance
+- name: Food Safety and Quality Assurance
   url: https://graduatestudies.uoguelph.ca/programs/fsqu
   degrees:
     - MSc
-    - GDip
+    - Graduate Diploma
   types:
     - course-based
   tags:
     - food
     - science
-- title: Food Science
+- name: Food Science
   url: https://graduatestudies.uoguelph.ca/programs/food
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - food
     - science
     - nutrition
-- title: Food, Agricultural and Resource Economics
+- name: Food, Agricultural and Resource Economics
   url: https://graduatestudies.uoguelph.ca/programs/fare
   degrees:
     - MFARE
@@ -342,21 +340,13 @@
     - PhD
   types:
     - course-based
+    - thesis-based
   tags:
     - food
     - business
     - agriculture
     - economics
-- title: French
-  url: https://graduatestudies.uoguelph.ca/programs/fren
-  degrees:
-    - MA
-  types:
-    - course-based
-  tags:
-    - humanities
-    - language
-- title: Geography
+- name: Geography
   url: https://graduatestudies.uoguelph.ca/programs/geog
   degrees:
     - MA
@@ -364,27 +354,27 @@
     - PhD
   types:
     - course-based
-    - research-based
+    - thesis-based
   tags:
     - geography
     - science
-- title: History
+- name: History
   url: https://graduatestudies.uoguelph.ca/programs/hist
   degrees:
     - MA
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - humanities
     - history
-- title: Human Health and Nutritional Sciences
+- name: Human Health and Nutritional Sciences
   url: https://graduatestudies.uoguelph.ca/programs/hhns
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
     - course-based
   tags:
     - biol*
@@ -420,13 +410,26 @@
     - pharma*
     - cogniti*
     - diet*
-- title: Integrative Biology
+- name: Integrated Humanities
+  url: https://graduatestudies.uoguelph.ca/programs/integrated-humanities
+  degrees:
+    - MA
+  types:
+    - thesis-based
+    - course-based
+  tags:
+    - language
+    - french studies
+    - european studies
+    - francophone
+    - culture
+- name: Integrative Biology
   url: https://graduatestudies.uoguelph.ca/programs/ibio
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - biol*
     - science*
@@ -443,7 +446,7 @@
     - sustain*
     - mammal*
     - evolution*
-- title: International Development Studies
+- name: International Development Studies
   url: https://graduatestudies.uoguelph.ca/programs/idev
   degrees:
     - PhD
@@ -454,16 +457,17 @@
   tags:
     - humanities
     - culture
-- title: Landscape Architecture
+- name: Landscape Architecture
   url: https://graduatestudies.uoguelph.ca/programs/ldar
   degrees:
     - MLA
   types:
     - course-based
+    - thesis-based
   tags:
     - architecture
     - design
-- title: Latin American and Caribbean Studies
+- name: Latin American and Caribbean Studies
   url: https://graduatestudies.uoguelph.ca/programs/lacs
   degrees:
     - MA
@@ -473,7 +477,7 @@
     - humanities
     - culture
     - history
-- title: Leadership
+- name: Leadership
   url: https://graduatestudies.uoguelph.ca/programs/lead
   degrees:
     - MA
@@ -482,16 +486,16 @@
   tags:
     - humanities
     - business
-- title: Literary Studies/Theatre Studies in English
+- name: Literary Studies/Theatre Studies in English
   url: https://graduatestudies.uoguelph.ca/programs/sets
   degrees:
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - arts
     - humanities
-- title: Management
+- name: Management
   url: https://graduatestudies.uoguelph.ca/programs/mgmt
   degrees:
     - MSc
@@ -501,45 +505,45 @@
   tags:
     - business
     - management
-- title: Market Research
+- name: Market Research
   url: https://graduatestudies.uoguelph.ca/programs/marketresearch
   degrees:
-    - GDip
+    - Graduate Diploma
   types:
     - course-based
   tags:
     - business
     - marketing
-- title: Marketing and Consumer Studies
+- name: Marketing and Consumer Studies
   url: https://graduatestudies.uoguelph.ca/programs/cost
   degrees:
     - MSc
-    - GDip
+    - Graduate Diploma
   types:
-    - research-based
+    - thesis-based
   tags:
     - business
     - marketing
-- title: Mathematics and Statistics
+- name: Mathematics and Statistics
   url: https://graduatestudies.uoguelph.ca/programs/math
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - mathematics
     - statistics
     - artificial intelligence
     - ai
     - data
-- title: Molecular and Cellular Biology
+- name: Molecular and Cellular Biology
   url: https://graduatestudies.uoguelph.ca/programs/mcb
   degrees:
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - biol*
     - science*
@@ -566,7 +570,7 @@
     - infect*
     - dna
     - pharma*
-- title: Neuroscience
+- name: Neuroscience
   url: https://graduatestudies.uoguelph.ca/programs/neur
   degrees:
     - MSc
@@ -583,7 +587,7 @@
     - neuro*
     - brain
     - cogniti*
-- title: One Health
+- name: One Health
   url: https://graduatestudies.uoguelph.ca/programs/onehealth
   degrees:
     - MSc
@@ -624,21 +628,21 @@
     - infect*
     - dna
     - pharma*
-- title: Pathobiology
+- name: Pathobiology
   url: https://graduatestudies.uoguelph.ca/programs/path
   degrees:
     - MSc
     - PhD
     - DVSc
-    - GDip
+    - Graduate Diploma
   types:
-    - research-based
+    - thesis-based
   tags:
     - biology
     - science
     - health
     - medical
-- title: Philosophy
+- name: Philosophy
   url: https://graduatestudies.uoguelph.ca/programs/phil
   degrees:
     - MA
@@ -648,18 +652,18 @@
   tags:
     - humanities
     - culture
-- title: Physics
+- name: Physics
   url: https://graduatestudies.uoguelph.ca/programs/phys
   degrees:
     - MSc
     - PhD
   types:
     - course-based
-    - research-based
+    - thesis-based
   tags:
     - physics
     - science
-- title: Planning
+- name: Planning
   url: https://www.uoguelph.ca/programs/master-of-planning
   degrees:
     - MPlan
@@ -670,67 +674,72 @@
     - geography
     - rural
     - environmental design
-- title: Plant Agriculture
+    - indigenous
+- name: Plant Agriculture
   url: https://graduatestudies.uoguelph.ca/programs/plnt
   degrees:
     - MSc
     - PhD
+    - MPAg
   types:
-    - research-based
+    - course-based
+    - thesis-based
   tags:
-    - agriculture
-    - biology
-    - science
-- title: Political Science
+    - crops
+    - crop science
+    - biochemistry
+    - plant genetics
+- name: Political Science
   url: https://graduatestudies.uoguelph.ca/programs/pols
   degrees:
     - MA
     - PhD
   types:
     - course-based
-    - research-based
+    - thesis-based
   tags:
     - humanities
     - politics
-- title: Population Medicine
+- name: Population Medicine
   url: https://graduatestudies.uoguelph.ca/programs/popmed
   degrees:
     - MSc
     - PhD
     - DVSc
   types:
-    - research-based
+    - thesis-based
+    - course-based
   tags:
     - biology
     - science
     - health
     - medical
-- title: Project Management
+- name: Project Management
   url: https://graduatestudies.uoguelph.ca/programs/project-management
   degrees:
     - MPM
-    - GDip
+    - Graduate Diploma
   types:
     - course-based
   tags:
     - business
     - management
-- title: Psychology
+- name: Psychology
   url: https://graduatestudies.uoguelph.ca/programs/psyc
   degrees:
     - MA
     - MSc
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - humanities
-- title: Public Health
+- name: Public Health
   url: https://graduatestudies.uoguelph.ca/programs/phlt
   degrees:
     - MPH
     - DVM/MPH Combined Degree
-    - GDip
+    - Graduate Diploma
   types:
     - course-based
   tags:
@@ -738,12 +747,12 @@
     - medical
     - science
     - biology
-- title: Public Issues Anthropology
+- name: Public Issues Anthropology
   url: https://graduatestudies.uoguelph.ca/programs/pia
   degrees:
     - MA
   types:
-    - research-based
+    - course-based
   tags:
     - poli*
     - cultur*
@@ -751,7 +760,18 @@
     - antho*
     - affairs
     - socio*
-- title: Regenerative Medicine
+- name: Real Estate
+  url: https://www.uoguelph.ca/lang/masters-real-estate/
+  degrees:
+    - MRE
+  types:
+    - course-based
+  tags:
+    - finance
+    - retail
+    - residential
+    - marketing
+- name: Regenerative Medicine
   url: https://graduatestudies.uoguelph.ca/programs/regenerative-medicine
   degrees:
     - MSc
@@ -787,7 +807,7 @@
     - infect*
     - dna
     - pharma*
-- title: Relational and Psychotherapy Training Program
+- name: Relational and Psychotherapy Training Program
   url: https://graduatestudies.uoguelph.ca/programs/relational-and-psychotherapy-training-program
   degrees:
     - MP
@@ -799,25 +819,26 @@
     - health
     - medical
     - psychology
-- title: Rural Planning and Development
+- name: Rural Planning and Development
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof
   degrees:
     - MSc
     - MPLAN
   types:
     - course-based
+    - thesis-based
   tags:
     - humanities
-- title: Rural Studies
+    - indigenous
+- name: Rural Studies
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof-stu
   degrees:
     - PhD
   types:
-    - research-based
-    - course-based
+    - thesis-based
   tags:
     - humanities
-- title: Sexuality, Genders and Bodies
+- name: Sexuality, Genders and Bodies
   url: https://graduatestudies.uoguelph.ca/programs/Sexualities-Genders-And-Bodies
   degrees:
     - MA
@@ -832,12 +853,13 @@
     - feminis*
     - decolon*
     - interdisciplinary
-- title: Social Practice and Transformational Change
+    - indigenous
+- name: Social Practice and Transformational Change
   url: https://graduatestudies.uoguelph.ca/programs/sptc
   degrees:
     - PhD
   types:
-    - research-based
+    - thesis-based
   tags:
     - poli*
     - indigen*
@@ -857,68 +879,69 @@
     - family
     - relation*
     - critical
-- title: Sociology
+- name: Sociology
   url: https://graduatestudies.uoguelph.ca/programs/soca
   degrees:
     - MA
     - PhD
   types:
-    - research-based
+    - thesis-based
+    - course-based
   tags:
     - humanities
     - culture
-- title: Studio Art
+- name: Studio Art
   url: https://graduatestudies.uoguelph.ca/programs/sart
   degrees:
     - MFA
   types:
-    - course-based
+    - thesis-based
   tags:
     - arts
     - humanities
     - culture
-- title: Sustainable Agriculture
+- name: Sustainable Agriculture
   url: https://www.uoguelph.ca/programs/master-sustainable-agriculture/
   degrees:
-    - MSA
+    - MSAg
   types:
     - course-based
   tags:
     - agriculture
     - biology
     - science
-- title: Theatre Studies
+    - soil
+- name: Theatre Studies
   url: https://graduatestudies.uoguelph.ca/programs/thst
   degrees:
     - MA
   types:
-    - research-based
+    - thesis-based
     - course-based
   tags:
     - arts
     - humanities
     - culture
-- title: Tourism and Hospitality
+- name: Tourism and Hospitality
   url: https://graduatestudies.uoguelph.ca/programs/trmh
   degrees:
     - MSc
-    - GDip
+    - Graduate Diploma
   types:
-    - research-based
-    - course-based
+    - thesis-based
   tags:
     - business
     - marketing
-- title: Tourism Research
+- name: Tourism Research
   url: https://graduatestudies.uoguelph.ca/programs/tres
   degrees:
-    - GDip
+    - Graduate Diploma
   types:
     - course-based
   tags:
     - business
     - marketing
-- title: Toxicology
+- name: Toxicology
   url: https://graduatestudies.uoguelph.ca/programs/tox
   degrees:
     - MSc
@@ -931,7 +954,7 @@
     - science
     - health
     - medical
-- title: Veterinary Medicine / Public Health
+- name: Veterinary Medicine / Public Health
   url: https://graduatestudies.uoguelph.ca/programs/DVMMPH
   degrees:
     - DVM
@@ -943,7 +966,7 @@
     - science
     - health
     - medical
-- title: Veterinary Science
+- name: Veterinary Science
   url: https://graduatestudies.uoguelph.ca/programs/vets
   degrees:
     - DVSc
@@ -954,7 +977,7 @@
     - science
     - health
     - medical
-- title: Wildlife Biology
+- name: Wildlife Biology
   url: https://calendar.uoguelph.ca/graduate-calendar/graduate-programs/wildlife-biology/
   degrees:
     - MWB

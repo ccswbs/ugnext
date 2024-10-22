@@ -1,11 +1,11 @@
 query GetPageID($url: String!) {
-    route(path: $url) {
-        ... on RouteInternal {
-            entity {
-                ... on NodePage {
-                    id
-                }
-            }
+  route(path: $url) {
+    ... on RouteInternal {
+      entity {
+        ... on NodePage {
+          id
         }
+      }
     }
+  }
 }

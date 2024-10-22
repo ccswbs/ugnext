@@ -1,63 +1,58 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const flatten = (node) => {
-	if (Array.isArray(node?.children) && node?.children.length > 0) {
-		return [{ title: node?.title, url: node?.url }, ...node.children.map((child) => flatten(child))];
-	}
-
-	return { title: node?.title, url: node?.url };
+const Link = ({ title, url }) => {
+  return <a href={url}>{title}</a>;
 };
 
-export const Header = ({ menu }) => {
-	const navigation = menu
-		?.map((item) => flatten(item))
-		?.map((item) => {
-			if (Array.isArray(item)) {
-				return {
-					title: item[0].title,
-					children: item[0].url ? item : item.slice(1),
-				};
-			}
-
-			return item;
-		});
-
-	return (
-		<uofg-header>
-			{navigation?.map((item) => {
-				if (Array.isArray(item.children) && item.children.length > 0) {
-					return (
-						<ul key={item.title} data-title={item.title}>
-							{item.children.map((link) => (
-								<li key={link.url}>
-									<a href={link?.url}>{link?.title}</a>
-								</li>
-							))}
-						</ul>
-					);
-				}
-
-				if (typeof item.url === 'string' && typeof item.title === 'string') {
-					return (
-						<a key={item.url} href={item.url}>
-							{item.title}
-						</a>
-					);
-				}
-
-				return null;
-			})}
-		</uofg-header>
-	);
+const Menu = ({ title, items }) => {
+  return (
+    <ul data-title={title}>
+      {items.map((item, index) => (
+        <li key={item?.title + index}>
+          {Array.isArray(item?.items) ? (
+            <Menu title={item.title} items={item.items} />
+          ) : (
+            <Link title={item.title} url={item.url}></Link>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
 };
 
-const itemType = {
-	title: PropTypes.string,
-	url: PropTypes.string,
+export const Header = ({ topic, navigation, variant = "guelph" }) => {
+  return (
+    <uofg-header page-title={topic?.title} page-url={topic?.url} variant={variant}>
+      {navigation?.map((item, index) => {
+        if (Array.isArray(item.items)) {
+          return <Menu key={item.title + index} title={item.title} items={item.items} />;
+        }
+
+        if (typeof item.url === "string" && typeof item.title === "string") {
+          return <Link key={item.title + item.url + index} title={item.title} url={item.url}></Link>;
+        }
+
+        return null;
+      })}
+    </uofg-header>
+  );
 };
 
-itemType.children = PropTypes.arrayOf(PropTypes.shape(itemType));
+const link = PropTypes.shape({
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+});
+
+const menu = PropTypes.shape({
+  title: PropTypes.string.isRequired,
+});
+menu.items = PropTypes.arrayOf(PropTypes.oneOfType([link, menu])).isRequired;
 
 Header.propTypes = {
-	menu: PropTypes.arrayOf(PropTypes.shape(itemType)),
+  topic: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string,
+  }),
+  navigation: PropTypes.arrayOf(PropTypes.oneOfType([link, menu])),
+  variant: PropTypes.oneOf(["guelph", "dual-brand", "ridgetown"]),
 };
