@@ -1,0 +1,27 @@
+query SpotlightCard($status: Boolean = false, $id: String = "") {
+	spotlightRevisions(filter: { status: $status, id: $id }, pageSize: 1) {
+		results {
+			... on NodeSpotlight {
+				image {
+					... on MediaImage {
+						image {
+							alt
+							height
+							width
+							variations(styles: SPOTLIGHT_CARD_IMAGE) {
+								url
+							}
+						}
+					}
+				}
+				rank
+				title
+				thumbnailImageCrop
+				url {
+					url
+					title
+				}
+			}
+		}
+	}
+}

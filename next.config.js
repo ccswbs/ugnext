@@ -25,6 +25,7 @@ const nextConfig = {
     return config;
   },
   images: {
+    domains: ['placehold.co'],
     unoptimized: process.env.NEXT_STATIC_OUTPUT === "true",
     remotePatterns: [
       {
