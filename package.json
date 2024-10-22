@@ -35,15 +35,6 @@
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-animate-height": "^3.2.3",
-<<<<<<< HEAD
-    "react-dom": "^18.2.0",
-    "react-slick": "^0.30.2",
-    "sharp": "^0.33.4",
-    "slick-carousel": "^1.8.1",
-    "stemmer": "^2.0.1",
-    "use-resize-observer": "^9.1.0",
-    "uuid": "^10.0.0"
-=======
     "react-dom": "^18.3.1",
     "react-slick": "^0.30.2",
     "sharp": "^0.33.5",
@@ -51,7 +42,6 @@
     "use-resize-observer": "^9.1.0",
     "uuid": "^10.0.0",
     "webpack-graphql-loader": "^1.0.2"
->>>>>>> main
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.8.0",
@@ -91,12 +81,8 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-<<<<<<< HEAD
-  }
-=======
   },
   "trustedDependencies": [
     "core-js-pure"
   ]
->>>>>>> main
 }

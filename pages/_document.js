@@ -5,17 +5,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-<<<<<<< HEAD
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-
-        <link
-          href="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css"
-=======
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
 
@@ -26,7 +15,6 @@ export default function Document() {
 
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;400;700&display=swap"
->>>>>>> main
           rel="stylesheet"
         />
 
@@ -35,22 +23,6 @@ export default function Document() {
           rel="stylesheet"
         />
 
-<<<<<<< HEAD
-				<Script
-					src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-footer.esm.js"
-					type="module"
-					strategy="beforeInteractive"
-				/>
-
-				<Script src="https://kit.fontawesome.com/7993323d0c.js" crossorigin="anonymous" strategy="lazyOnload" />
-			</Head>
-			<body>
-				<Main />
-				<NextScript />
-			</body>
-		</Html>
-	);
-=======
         <Script
           src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-header.esm.js"
           type="module"
@@ -71,5 +43,4 @@ export default function Document() {
       </body>
     </Html>
   );
->>>>>>> main
 }
