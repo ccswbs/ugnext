@@ -52,6 +52,7 @@
     - mathematics
     - programming
     - ai
+    - computer science
 - name: Bioinformatics
   url: https://graduatestudies.uoguelph.ca/programs/binf
   degrees:
@@ -299,7 +300,6 @@
 - name: Family Relations and Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/fran
   degrees:
-    - MAN
     - MSc
     - PhD
   types:
@@ -536,6 +536,16 @@
     - artificial intelligence
     - ai
     - data
+- name: Mental Health
+  url: https://www.uoguelph.ca/programs/master-of-arts-in-mental-health/
+  degrees:
+    - MA
+  types:
+    - course-based
+  tags:
+    - health
+    - medical
+    - psychology
 - name: Molecular and Cellular Biology
   url: https://graduatestudies.uoguelph.ca/programs/mcb
   degrees:
@@ -733,6 +743,16 @@
     - thesis-based
   tags:
     - humanities
+- name: Psychotherapy
+  url: https://www.uoguelph.ca/programs/master-of-psychotherapy/
+  degrees:
+    - MP
+  types:
+    - course-based
+  tags:
+    - health
+    - medical
+    - psychology
 - name: Public Health
   url: https://graduatestudies.uoguelph.ca/programs/phlt
   degrees:
@@ -752,6 +772,7 @@
     - MA
   types:
     - course-based
+    - thesis-based
   tags:
     - poli*
     - cultur*
@@ -759,6 +780,17 @@
     - antho*
     - affairs
     - socio*
+- name: Real Estate
+  url: https://www.uoguelph.ca/lang/masters-real-estate/
+  degrees:
+    - MRE
+  types:
+    - course-based
+  tags:
+    - finance
+    - retail
+    - residential
+    - marketing
 - name: Regenerative Medicine
   url: https://graduatestudies.uoguelph.ca/programs/regenerative-medicine
   degrees:
@@ -795,12 +827,10 @@
     - infect*
     - dna
     - pharma*
-- name: Relational and Psychotherapy Training Program
-  url: https://graduatestudies.uoguelph.ca/programs/relational-and-psychotherapy-training-program
+- name: Relational and Family Therapy
+  url: https://www.uoguelph.ca/programs/master-of-relational-and-family-therapy/
   degrees:
-    - MP
     - MRFT
-    - MA
   types:
     - course-based
   tags:

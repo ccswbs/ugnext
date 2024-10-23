@@ -35,6 +35,12 @@ fragment ButtonSection on ParagraphSectionButton {
 
 fragment Buttons on ParagraphButtonWidget {
   __typename
+  ctaAnalyticsGoal {
+    ... on TermGoal {
+      action
+      name
+    }
+  }
   ctaHeading {
     processed
   }

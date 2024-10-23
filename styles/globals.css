@@ -30,6 +30,14 @@
   .break-auto {
     word-break: auto-phrase;
   }
+
+  .icon {
+    font-family: "Font Awesome 6 Pro";
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+  }
 }
 
 @layer components {

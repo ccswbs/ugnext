@@ -14,6 +14,7 @@ export const Button = ({
   className,
   disabled = false,
   type = "button",
+  onClick = () => {}, // Default to an empty function
   ...rest
 }) => {
   const Tag = as ? as : typeof href === "string" ? UnstyledLink : "button";
@@ -23,6 +24,7 @@ export const Button = ({
       {...rest}
       href={href}
       type={href ? undefined : type}
+      onClick={onClick}
       className={twMerge(
         "inline-flex items-center justify-center text-lg px-6 py-4 font-medium no-underline shadow-sm transition-colors focus:outline-none",
         !disabled && "cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2",
@@ -107,4 +109,8 @@ Button.propTypes = {
    * The type of this button when present within a HTML form
    */
   type: PropTypes.oneOf(["button", "submit"]),
+  /**
+   * For any onClick actions such as Google Tag Manager custom events
+   */
+  onClick: PropTypes.func,
 };

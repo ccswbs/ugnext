@@ -9,6 +9,7 @@ import { SpotlightHero } from "@/components/home/spotlight-hero";
 import { HomeStory } from "@/components/home/story";
 import { StudyHere } from "@/components/home/study-here";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
+import { twJoin } from "tailwind-merge";
 import Notification from "@/components/notification";
 
 export async function getStaticProps(context) {
@@ -25,47 +26,51 @@ export async function getStaticProps(context) {
 }
 
 export default function Home({ cards, hero }) {
+  const containerClasses = twJoin("pt-6");
+
   return (
     <>
       <Notification color="grey" title="U of G Strike Updates:" url="https://uoguelph.ca/strike" />
 
       <Layout>
-        {hero && <SpotlightHero hero={hero} />}
+      <h1 className="sr-only">University of Guelph, Ontario, Canada</h1>
 
-        <Container centered>
-          <TagLine />
+      {hero && <SpotlightHero hero={hero} />}
 
-          <div className="pt-1">
-            <Heading level={1} as={"h2"} className="font-condensed text-black">
-              Our Latest News and Events
-            </Heading>
-            <SpotlightCards cards={cards} />
-          </div>
+      <Container centered>
+        <TagLine />
 
-          <div className="pt-1">
-            <Heading level={1} as={"h2"} className="font-condensed text-black">
-              Study Here
-            </Heading>
-            <StudyHere />
-          </div>
+        <div className={containerClasses}>
+          <Heading level={1} as={"h2"} className="font-condensed text-black">
+            Our Latest News and Events
+          </Heading>
+          <SpotlightCards cards={cards} />
+        </div>
 
-          <div className="pt-1">
-            <Heading level={1} as={"h2"} className="font-condensed text-black">
-              How We Rank Among the World
-            </Heading>
-            <Rankings />
-          </div>
+        <div className={containerClasses}>
+          <Heading level={1} as={"h2"} className="font-condensed text-black">
+            Study Here
+          </Heading>
+          <StudyHere />
+        </div>
 
-          <div className="pt-1">
-            <Heading level={1} as={"h2"} className="font-condensed text-black">
-              Our Three Campuses
-            </Heading>
-            <ThreeCampuses />
-          </div>
-        </Container>
+        <div className={containerClasses}>
+          <Heading level={1} as={"h2"} className="font-condensed text-black">
+            How We Rank Among the World
+          </Heading>
+          <Rankings />
+        </div>
 
-        <HomeStory />
-      </Layout>
-    </>
+        <div className={containerClasses}>
+          <Heading level={1} as={"h2"} className="font-condensed text-black">
+            Our Three Campuses
+          </Heading>
+          <ThreeCampuses />
+        </div>
+      </Container>
+
+      <HomeStory />
+    </Layout>
+      </>
   );
 }
