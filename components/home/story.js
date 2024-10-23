@@ -13,7 +13,7 @@ export const HomeStory = () => (
         height: foreground.height,
         blurred: foreground.blurDataURL,
         alt: "Asha Edwin smiling",
-        className: "h-[370px] w-auto object-fit",
+        className: "h-[390px] w-auto object-fit",
       }}
       backgroundImage={{
         src: background.src,
@@ -21,7 +21,7 @@ export const HomeStory = () => (
         height: background.height,
         blurred: background.blurDataURL,
         alt: "Student volunteers",
-        className: "h-full w-full object-cover lg:[object-position:left_40px]",
+        className: "h-full w-full object-cover lg:[object-position:left_20px]",
       }}
       content={
         <Blockquote className="text-white pt-[40px]">
@@ -30,7 +30,7 @@ export const HomeStory = () => (
         </Blockquote>
       }
       footer={
-        <div className="flex items-center justify-center p-2">
+        <div className="flex items-center justify-center">
           <span className="mr-1 text-2xl leading-tight">Learn how real-world education and experience will</span>
           <Button color="red" className="py-2 px-4 mx-[.25em] text-2xl">
             Improve Life
@@ -39,6 +39,6 @@ export const HomeStory = () => (
       }
     />
 
-    <div className="w-full p-2"></div>
+    <div className="w-full p-5"></div>
   </>
 );

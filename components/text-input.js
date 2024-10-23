@@ -11,7 +11,7 @@ export const TextInput = ({ value = "", type = "text", placeholder = "", onInput
 
   useEffect(() => {
     onInput(input);
-  }, [input]);
+  }, [input, onInput]);
 
   return (
     <Field className="flex flex-col gap-0.5">
