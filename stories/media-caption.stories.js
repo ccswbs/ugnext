@@ -103,6 +103,7 @@ export const ImageAbove = {
   args: {
     media: image,
     position: "above",
+    className: "w-96",
     children: <Body />,
   },
 };
@@ -156,6 +157,7 @@ export const LightBlueBG = {
     media: image,
     position: "above",
     background: "light-blue",
+    className: "w-96",
     children: <Body />,
   },
 };
@@ -165,6 +167,7 @@ export const DarkGreyBG = {
     media: image,
     position: "above",
     background: "dark-grey",
+    className: "w-96",
     children: <Body />,
   },
 };

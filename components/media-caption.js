@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { EmbeddedVideo } from "@/components/embedded-video";
 
-export const MediaCaption = ({ media, size = "small", position = "left", background = "none", children }) => {
+export const MediaCaption = ({ media, size = "small", position = "left", background = "none", className, children }) => {
   const type = media?.src && media?.alt ? "image" : "video";
 
   // Small video doesn't work well, so we'll bump it up to medium
@@ -12,7 +12,7 @@ export const MediaCaption = ({ media, size = "small", position = "left", backgro
 
   return (
     <div
-      className={twJoin(
+      className={twMerge(
         "flex flex-col",
         position === "left" &&
           twJoin(
@@ -27,7 +27,8 @@ export const MediaCaption = ({ media, size = "small", position = "left", backgro
             size === "small" && "grid-cols-[4fr,1fr]",
             size === "medium" && "grid-cols-[2fr,1fr]",
             size === "large" && "grid-cols-[1fr,1fr]"
-          )
+          ),
+        className
       )}
     >
       <div className={twJoin(position === "right" && "col-start-2 row-start-1")}>
@@ -51,12 +52,14 @@ export const MediaCaption = ({ media, size = "small", position = "left", backgro
       </div>
 
       <div
-        className={twJoin(
-          "py-4 md:px-4 md:py-0",
-          position === "above" && "px-4 md:py-4",
+        className={twMerge(
+          "p-4",
           position === "right" && "col-start-1 row-start-1",
           background === "light-blue" && "bg-light-blue-50",
-          background === "dark-grey" && "bg-cool-grey-950 text-white"
+          background === "dark-grey" && "bg-cool-grey-950 text-white",
+          background === "none" && position === "left" && "py-0 md:px-4",
+          background === "none" && position === "right" && "py-0 md:px-4",
+          background === "none" && position === "above" && "px-0"
         )}
       >
         {children}
@@ -96,5 +99,6 @@ MediaCaption.propTypes = {
    * The background colour of the caption area.
    */
   background: PropTypes.oneOf(["none", "light-blue", "dark-grey"]),
+  className: PropTypes.string,
   children: PropTypes.node,
 };
