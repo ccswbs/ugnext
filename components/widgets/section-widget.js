@@ -11,7 +11,7 @@ export const Section = ({ data }) => {
     others,
   } = data?.content?.reduce(
     (acc, widget, index) => {
-      const columnName = widget?.buttonSectionColumn?.name ?? widget?.sectionColumn?.name;
+      const columnName = widget?.buttonSectionColumn?.name ?? widget?.sectionColumn?.name ?? "primary";
       const column = columnName ? columnName.toLowerCase() : "";
 
       switch (column) {
