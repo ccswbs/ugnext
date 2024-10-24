@@ -54,7 +54,7 @@ const getPosition = (data, column) => {
 export const MediaText = ({ data }) => {
   const context = useContext(SectionContext);
   const background = getBackground(data);
-  const size = data?.mediaImageSize ?? "small";
+  const size = data?.mediaImageSize ?? "large";
   const media = getMedia(data);
   const position = getPosition(data, context?.column);
   const headingLevel = data?.headingLevel ?? 3;

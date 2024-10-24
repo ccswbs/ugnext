@@ -71,9 +71,9 @@ export const Section = ({ data }) => {
               }
 
               return (
-                <div key={index} className="flex gap-4">
+                <div key={index} className="sm:flex gap-4">
                   {widget.map((w, i) => (
-                    <div key={i} className="flex-1">
+                    <div key={i} className="sm:flex-1">
                       <WidgetSelector data={w} />
                     </div>
                   ))}
