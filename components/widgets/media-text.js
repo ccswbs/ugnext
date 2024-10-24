@@ -1,11 +1,6 @@
-import { twJoin } from "tailwind-merge";
-import { extractVideoID, computeLayoutMediaText, buttonStyle } from "@/lib/ug-utils";
-import Image from "next/image";
 import { Heading } from "@/components/heading";
-import { EmbeddedVideo } from "@/components/embedded-video";
 import { HtmlParser } from "@/components/html-parser";
 import { ButtonSection } from "@/components/widgets/button-section";
-import ConditionalWrap from "conditional-wrap";
 import { MediaCaption } from "@/components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
@@ -64,10 +59,8 @@ export const MediaText = ({ data }) => {
   const position = getPosition(data, context?.column);
   const headingLevel = data?.headingLevel ?? 3;
 
-  console.log(context);
-
   return (
-    <MediaCaption media={media} background={background} size={size} position={position}>
+    <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1">
       {data?.heading && <Heading level={headingLevel}>{data?.heading}</Heading>}
 
       <HtmlParser html={data?.description?.processed ?? ""} />
