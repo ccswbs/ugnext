@@ -5,6 +5,8 @@ import { Hero } from "@/components/hero";
 import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { tailwind } from "@/lib/tailwind";
+import Head from "next/head";
 
 export async function getStaticPaths() {
   return {
@@ -44,6 +46,9 @@ export async function getStaticProps(context) {
 
   content.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
 
+  // Parse tailwind classes from page widgets.
+  content.styles = await tailwind(JSON.stringify(content.widgets));
+
   return {
     props: { content },
   };
@@ -52,6 +57,10 @@ export async function getStaticProps(context) {
 export default function Page({ content }) {
   return (
     <Layout metadata={{ title: content?.title }} header={content?.menu}>
+      <Head>
+        <style id="injected-tailwind">{content?.styles ?? ""}</style>
+      </Head>
+
       {content?.image ? (
         <>
           <Hero

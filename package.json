@@ -27,6 +27,7 @@
     "classnames": "^2.5.1",
     "conditional-wrap": "^1.0.2",
     "cross-fetch": "^4.0.0",
+    "cssnano": "^7.0.6",
     "fast-blurhash": "^1.1.4",
     "nanoid": "^5.0.7",
     "next": "^14.2.11",
