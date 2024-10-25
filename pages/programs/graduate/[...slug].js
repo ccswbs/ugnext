@@ -1,8 +1,24 @@
 import { useRouter } from "next/router";
-import { getAllGraduatePrograms } from "@/lib/yaml/get-all-graduate-programs";
-import { getGraduateProgram } from "@/lib/yaml/get-graduate-program";
+import { getPaths, getGraduateProgram } from "@/data/yaml/programs/graduate";
 import { GraduateProgramDegreePage } from "@/components/programs/graduate/program-degree";
 import { GraduateProgramPage } from "@/components/programs/graduate/program";
+
+export async function getStaticPaths() {
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
+
+  // Get the paths we want to prerender based on programs
+  // In production environments, prerender all pages
+  // (slower builds, but faster initial page load)
+  return {
+    paths: await getPaths(),
+    fallback: true,
+  };
+}
 
 export async function getStaticProps(context) {
   // Try to get data of the program the user is requesting.
@@ -13,30 +29,6 @@ export async function getStaticProps(context) {
 
   return {
     props: { data },
-  };
-}
-
-export async function getStaticPaths() {
-  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
-    return {
-      paths: [],
-      fallback: true,
-    };
-  }
-
-  const results = await getAllGraduatePrograms();
-
-  // Get the paths we want to prerender based on programs
-  // In production environments, prerender all pages
-  // (slower builds, but faster initial page load)
-  return {
-    paths: results?.map((result) => ({
-      params: {
-        slug: result?.slug.split("/").filter(Boolean),
-      },
-    })),
-    // { fallback: false } means other routes should 404
-    fallback: false,
   };
 }
 
