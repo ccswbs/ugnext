@@ -1,11 +1,12 @@
 import React from "react";
 import { Carousel } from "@/components/carousel";
 import { Heading } from "@/components/heading";
-import { Profile } from "@/components/profile";
 import { Link } from "@/components/link";
 import { HtmlParser } from "@/components/html-parser";
 import { Container } from "@/components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
+import { MediaCaption } from "@/components/media-caption";
+import { Info } from "@/components/info";
 
 export const TestimonialSlider = ({ data }) => {
   let testimonials = [];
@@ -32,22 +33,26 @@ export const TestimonialSlider = ({ data }) => {
             const title = testimonial?.type ? `${testimonial.title}, ${testimonial.type[0].name}` : testimonial.title;
 
             return (
-              <Profile
+              <MediaCaption
                 key={testimonial.id}
-                image={
+                size="medium"
+                position="left"
+                className="h-full"
+                media={
                   image && {
                     src: image?.url,
                     width: image?.width,
                     height: image?.height,
                     alt: image?.alt,
+                    className: "rounded-full",
                   }
                 }
-                body={
-                  <blockquote className="italic text-gray-700 text-xl">
-                    <HtmlParser html={testimonial?.body?.processed} />
-                  </blockquote>
-                }
-                footer={
+              >
+                <blockquote className="italic text-gray-700 text-xl mt-4 md:mt-0">
+                  <HtmlParser html={testimonial?.body?.processed} />
+                </blockquote>
+
+                <Info color="yellow">
                   <div className="flex flex-col gap-0.5">
                     <span className="font-bold text-lg">{title}</span>
                     {testimonial?.description && <span className="text-red text-lg">{testimonial.description}</span>}
@@ -57,8 +62,8 @@ export const TestimonialSlider = ({ data }) => {
                       </Link>
                     )}
                   </div>
-                }
-              />
+                </Info>
+              </MediaCaption>
             );
           })}
         </Carousel>
