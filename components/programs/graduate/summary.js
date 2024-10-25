@@ -1,8 +1,8 @@
-import React from 'react';
-import { Heading } from '@/components/heading';
-import { HtmlParser } from '@/components/html-parser';
-import { Link } from '@/components/link';
-import { List, ListItem } from '@/components/list';
+import React from "react";
+import { Heading } from "@/components/heading";
+import { HtmlParser } from "@/components/html-parser";
+import { Link } from "@/components/link";
+import { List, ListItem } from "@/components/list";
 
 export const GraduateProgramSummary = ({ data }) => {
   if (!data) {
@@ -73,7 +73,7 @@ export const GraduateProgramSummary = ({ data }) => {
             <ul>
               {data.resource_links.map((resource) => (
                 <li key={resource.name}>
-                  <HtmlParser html={resource.icon} />{' '}
+                  <HtmlParser html={resource.icon} />{" "}
                   <Link href={resource.url} className="text-light-blue-300">
                     {resource.name}
                   </Link>

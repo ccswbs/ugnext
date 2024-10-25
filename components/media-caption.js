@@ -4,7 +4,14 @@ import Image from "next/image";
 import React from "react";
 import { EmbeddedVideo } from "@/components/embedded-video";
 
-export const MediaCaption = ({ media, size = "small", position = "left", background = "none", className, children }) => {
+export const MediaCaption = ({
+  media,
+  size = "small",
+  position = "left",
+  background = "none",
+  className,
+  children,
+}) => {
   const type = media?.src && media?.alt ? "image" : "video";
 
   // Small video doesn't work well, so we'll bump it up to medium

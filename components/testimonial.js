@@ -1,20 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Avatar } from "@material-ui/core";
 import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
-import { twJoin, twMerge } from 'tailwind-merge';
-import PropTypes from 'prop-types';
-
+import { twJoin, twMerge } from "tailwind-merge";
+import PropTypes from "prop-types";
 
 const PreviousBtn = (props) => {
   const { className, onClick, displayType } = props;
   return (
-    <div 
-      className={twMerge(twJoin(`z-10 ${displayType === 'col' ? '!top-auto !right-20 bottom-0 my-0 mx-auto sm:top-1/2 sm:right-auto sm:bottom-auto' : ''}`), className)}
-      onClick={onClick} style={{ top:'33%', left:'0px' }} >
-      <ArrowBackIos className='text-yellow-400  hover:text-black' style={{ fontSize: "45px" }} />
+    <div
+      className={twMerge(
+        twJoin(
+          `z-10 ${displayType === "col" ? "!top-auto !right-20 bottom-0 my-0 mx-auto sm:top-1/2 sm:right-auto sm:bottom-auto" : ""}`
+        ),
+        className
+      )}
+      onClick={onClick}
+      style={{ top: "33%", left: "0px" }}
+    >
+      <ArrowBackIos className="text-yellow-400  hover:text-black" style={{ fontSize: "45px" }} />
     </div>
   );
 };
@@ -22,24 +28,30 @@ const PreviousBtn = (props) => {
 const NextBtn = (props) => {
   const { className, onClick, displayType } = props;
   return (
-    <div 
-      className={twMerge(twJoin(`z-10 ${displayType === 'col' ? '!top-auto !left-20 bottom-0 my-0 mx-auto sm:top-1/2 sm:left-auto sm:bottom-auto' : ''}`), className)}
-      onClick={onClick} style={{ top:'33%', right:'10px' }} >
-      <ArrowForwardIos className='text-yellow-400 hover:text-black' style={{ fontSize: "45px" }} />
+    <div
+      className={twMerge(
+        twJoin(
+          `z-10 ${displayType === "col" ? "!top-auto !left-20 bottom-0 my-0 mx-auto sm:top-1/2 sm:left-auto sm:bottom-auto" : ""}`
+        ),
+        className
+      )}
+      onClick={onClick}
+      style={{ top: "33%", right: "10px" }}
+    >
+      <ArrowForwardIos className="text-yellow-400 hover:text-black" style={{ fontSize: "45px" }} />
     </div>
   );
 };
 
-
 const Card = ({ img, title, name, description, displayType }) => {
   const imgRef = useRef(null); // Reference for the image
-  const [parentHeight, setParentHeight] = useState('auto'); // Initial height for the parent container
+  const [parentHeight, setParentHeight] = useState("auto"); // Initial height for the parent container
 
   useEffect(() => {
     // Function to set the parent height based on the image height
     const setHeight = () => {
       if (imgRef.current) {
-        const imgHeight = imgRef.current.offsetHeight +1; // Get the height of the image
+        const imgHeight = imgRef.current.offsetHeight + 1; // Get the height of the image
         setParentHeight(`${imgHeight}px`); // Set the parent height
       }
     };
@@ -47,44 +59,41 @@ const Card = ({ img, title, name, description, displayType }) => {
     setHeight(); // Set height on mount
 
     // Optional: Recalculate height on window resize
-    window.addEventListener('resize', setHeight);
+    window.addEventListener("resize", setHeight);
 
     return () => {
-      window.removeEventListener('resize', setHeight); // Cleanup listener
+      window.removeEventListener("resize", setHeight); // Cleanup listener
     };
   }, [img]); // Run effect when the img prop changes
 
   return (
     <div
       className={`group flex items-center ${
-        displayType === 'col' ? 'flex-col hover:bg-yellow-400' : 'flex-row'
+        displayType === "col" ? "flex-col hover:bg-yellow-400" : "flex-row"
       } text-left text-gray-700 mx-2 mb-5 sm:mb-auto overflow-hidden`}
-      
     >
       <div
-          style={{
-            ...(displayType === 'col' && {
-              height: parentHeight,
-              overflow: 'hidden',
-            }),
-          }}
-        >
+        style={{
+          ...(displayType === "col" && {
+            height: parentHeight,
+            overflow: "hidden",
+          }),
+        }}
+      >
         <Avatar
-          imgProps={
-            displayType !== 'col' ? { style: { borderRadius: '50%'} } : {}
-          }
+          imgProps={displayType !== "col" ? { style: { borderRadius: "50%" } } : {}}
           src={img}
           ref={imgRef} // Attach the ref to the image element
           style={{
-            borderRadius: displayType === 'col' ? 0 : '50%',
-            width: displayType === 'col' ? '100%' : 120,
-            height: displayType === 'col' ? parentHeight : 120,
+            borderRadius: displayType === "col" ? 0 : "50%",
+            width: displayType === "col" ? "100%" : 120,
+            height: displayType === "col" ? parentHeight : 120,
           }}
-          className={`${displayType === 'col' ? 'transition-transform duration-200 ease-in-out group-hover:scale-110 object-cover' : 'mx-2'} `}
+          className={`${displayType === "col" ? "transition-transform duration-200 ease-in-out group-hover:scale-110 object-cover" : "mx-2"} `}
         />
-       </div>
-      <div className={`${displayType === 'col' ? 'w-full' : ''} flex items-left flex-col ml-51`}>
-        {displayType === 'col' ? (
+      </div>
+      <div className={`${displayType === "col" ? "w-full" : ""} flex items-left flex-col ml-51`}>
+        {displayType === "col" ? (
           <div className="p-2">
             {/* Title Section First */}
             <div>
@@ -118,31 +127,28 @@ const Card = ({ img, title, name, description, displayType }) => {
 
 export default Card;
 
-
-
-export const Testimonials = ({testimonialData, slideNum, displayType='row'}) => {
-    
+export const Testimonials = ({ testimonialData, slideNum, displayType = "row" }) => {
   const settings = {
-    prevArrow: <PreviousBtn displayType = {displayType} />,
-    nextArrow: <NextBtn displayType = {displayType} />,
+    prevArrow: <PreviousBtn displayType={displayType} />,
+    nextArrow: <NextBtn displayType={displayType} />,
     dots: false,
     slidesToShow: slideNum,
     slidesToScroll: 1,
-    responsive: [      
+    responsive: [
       {
         breakpoint: 767,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
-    <div className='testimonial w-full flex md:flex md:justify-center'>
-      <div className='text-center mx-auto md:px-5' style={{ width: "90%" }}>
-        <Slider className='px-5' {...settings}>
+    <div className="testimonial w-full flex md:flex md:justify-center">
+      <div className="text-center mx-auto md:px-5" style={{ width: "90%" }}>
+        <Slider className="px-5" {...settings}>
           {testimonialData.map((item, index) => (
             <Card
               key={index}
@@ -150,7 +156,7 @@ export const Testimonials = ({testimonialData, slideNum, displayType='row'}) => 
               title={item.title}
               name={item.name}
               description={item.description}
-              displayType={displayType}              
+              displayType={displayType}
             />
           ))}
         </Slider>
@@ -160,7 +166,7 @@ export const Testimonials = ({testimonialData, slideNum, displayType='row'}) => 
 };
 
 Testimonials.propTypes = {
-	displayType: PropTypes.oneOf(['col', 'row']),
-	slideNum: PropTypes.number,
-	testimonialData: PropTypes.node.isRequired,
+  displayType: PropTypes.oneOf(["col", "row"]),
+  slideNum: PropTypes.number,
+  testimonialData: PropTypes.node.isRequired,
 };

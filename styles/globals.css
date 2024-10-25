@@ -54,22 +54,23 @@ svg.svg-inline--fa {
   height: 1em;
 }
 @layer utilities {
-	.break-auto {
-		word-break: auto-phrase;
-	}
+  .break-auto {
+    word-break: auto-phrase;
+  }
 }
 
 @layer components {
-	.vcard {
-		@apply mb-2 bg-grey-50 p-4;
-	}
+  .vcard {
+    @apply mb-2 bg-grey-50 p-4;
+  }
 
-	.author {
-		@apply border-l-4 border-l-red pl-4;
-	}
+  .author {
+    @apply border-l-4 border-l-red pl-4;
+  }
 }
 /*  testimonial style */
 /* hide slick icons */
-.slick-prev:before, .slick-next:before {
-	opacity:0 !important;
-  }
+.slick-prev:before,
+.slick-next:before {
+  opacity: 0 !important;
+}

@@ -83,9 +83,7 @@ export const Statistics = ({ data, variant = "gradient-of-solid-colors" }) => {
               color
             )}
           >
-            <dt className="break-auto hyphens-auto p-6 pb-0 text-center font-bold leading-tight text-3xl">
-              {value}
-            </dt>
+            <dt className="break-auto hyphens-auto p-6 pb-0 text-center font-bold leading-tight text-3xl">{value}</dt>
             <dd className="text-normal p-6 pt-0 text-center font-normal text-lg">{represents}</dd>
 
             {image && (
