@@ -39,24 +39,29 @@ function getVimeoVideoID(url) {
 }
 
 function getVideoInfo(url) {
-  const parsed = new URL(url);
   let type = null;
   let id = null;
 
-  // Determine where the remote video is hosted (i.e. YouTube or Vimeo)
-  if (parsed?.hostname.includes("youtube") || parsed?.hostname.includes("youtu.be")) {
-    type = "youtube";
-    id = getYouTubeVideoID(parsed);
-  } else if (parsed?.hostname.includes("vimeo")) {
-    type = "vimeo";
-    id = getVimeoVideoID(parsed);
+  try {
+    const parsed = new URL(url);
+
+    // Determine where the remote video is hosted (i.e. YouTube or Vimeo)
+    if (parsed?.hostname.includes("youtube") || parsed?.hostname.includes("youtu.be")) {
+      type = "youtube";
+      id = getYouTubeVideoID(parsed);
+    } else if (parsed?.hostname.includes("vimeo")) {
+      type = "vimeo";
+      id = getVimeoVideoID(parsed);
+    }
+  } catch (e) {
+    // Do nothing
   }
 
   return { type: type, id: id };
 }
 
-export function EmbeddedVideo({ url, title, transcript, className, restrictRelated = false }) {
-  const { id, type } = getVideoInfo(url);
+export function EmbeddedVideo({ src, title, transcript, className, restrictRelated = false }) {
+  const { id, type } = getVideoInfo(src);
 
   return (
     <div className={twMerge("flex flex-col", className)}>
@@ -90,7 +95,7 @@ export function EmbeddedVideo({ url, title, transcript, className, restrictRelat
 }
 
 EmbeddedVideo.propTypes = {
-  url: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
   title: PropTypes.string,
   transcript: PropTypes.string,
   className: PropTypes.string,
