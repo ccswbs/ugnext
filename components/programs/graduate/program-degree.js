@@ -13,7 +13,7 @@ import { FundYourEducation } from "@/components/programs/graduate/sessions/fund-
 import { ApplyNow } from "@/components/programs/graduate/sessions/apply-now";
 
 export const GraduateProgramDegreePage = ({ data, isFallback }) => (
-  <Layout title="Graduate Programs">
+  <Layout metadata={{ title: "Graduate Programs" }}>
     <GraduateProgramHero />
     <Container className={twJoin(isFallback && "hidden", "px-0")} centered>
       {/* add test breadcrumbs, will replace breadcrumbs code here once merge with basic page branch*/}

@@ -5,7 +5,7 @@ import { twJoin } from "tailwind-merge";
 import { GraduateProgramHero } from "@/components/programs/graduate/hero";
 
 export const GraduateProgramPage = ({ data, isFallback }) => (
-  <Layout title="Graduate Programs">
+  <Layout metadata={{ title: "Graduate Programs" }}>
     <GraduateProgramHero />
     <Container className={twJoin(isFallback && "hidden")} centered>
       <Heading level={1}>{data?.program}</Heading>
