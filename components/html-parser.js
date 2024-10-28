@@ -43,14 +43,16 @@ export const DEFAULT_INSTRUCTIONS = [
       const isButton = node.attribs.className?.includes("btn");
 
       if (isButton) {
-        const type = node.attribs.className?.match(/btn-(\w*)/)?.[1];
+        const type = node.attribs.className?.match(/btn-(?:outline-)?(\w*)/)?.[1];
         const map = {
           primary: "red",
           secondary: "blue",
         };
 
+        const outlined = node.attribs.className?.includes("btn-outline");
+
         return (
-          <Button {...node.attribs} href={node.attribs?.href ?? ""} color={map[type] ?? "red"}>
+          <Button {...node.attribs} href={node.attribs?.href ?? ""} color={map[type] ?? "red"} outlined={outlined}>
             {children}
           </Button>
         );
