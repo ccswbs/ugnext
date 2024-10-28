@@ -10,6 +10,7 @@ fragment WidgetBlock on BlockContentWidgetBlock {
   __typename
   title
   content {
+    __typename
     ...Accordion
     ...ButtonSection
     ...GeneralText

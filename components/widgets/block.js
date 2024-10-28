@@ -1,14 +1,30 @@
 import { HtmlParser } from "@/components/html-parser";
-import { Heading } from "@/components/heading";
-import { getHeadingLevel } from "@/lib/string-utils";
+import { WidgetSelector } from "@/components/widgets/widget-selector";
 
-export const Block = ({ data }) => {
+const BasicBlock = ({ data }) => {
+  return <HtmlParser key={data.id} html={data.body.processed} />;
+};
 
-  console.log(data);
+const WidgetBlock = ({ data }) => {
+  return <WidgetSelector data={data.content} />;
+};
 
+const YamlBlock = ({ data }) => {
   return (
     <>
-      <div>BLOCK: {JSON.stringify(data)}</div>
+      <div>YAML BLOCK: {JSON.stringify(data)}</div>
     </>
   );
+};
+
+export const Block = ({ data }) => {
+  const map = {
+    BlockContentBasic: BasicBlock,
+    BlockContentWidgetBlock: WidgetBlock,
+    BlockContentYamlBlock: YamlBlock,
+  };
+
+  const Widget = map[data.block.__typename];
+
+  return <Widget data={data.block} />;
 };
