@@ -59,11 +59,15 @@ const StoryImageCutoutBackground = ({ data }) => {
           {buttons.length > 0 && (
             <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
               {video && (
-                <EmbeddedVideo
-                  src={video.url}
-                  transcript={video?.transcript?.url}
-                  className={"max-h-screen h-[50rem] aspect-video"}
-                />
+                <div className="flex flex-col gap-4 p-4 bg-zinc-900 w-fit text-white">
+                  <span className='text-xl'>{video.name}</span>
+
+                  <EmbeddedVideo
+                    src={video.url}
+                    transcript={video?.transcript?.url}
+                    className={"max-w-2xl w-[calc(100vw_-_theme(spacing.4))]"}
+                  />
+                </div>
               )}
             </Modal>
           )}
