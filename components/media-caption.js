@@ -55,6 +55,7 @@ export const MediaCaption = ({ media, size = "small", position = "left", backgro
         className={twMerge(
           "p-4",
           position === "right" && "col-start-1 row-start-1",
+          position === "above" && "flex-1",
           background === "light-blue" && "bg-light-blue-50",
           background === "dark-grey" && "bg-cool-grey-950 text-white",
           background === "none" && position === "left" && "py-0 md:px-4",

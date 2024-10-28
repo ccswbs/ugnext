@@ -60,7 +60,7 @@ export const MediaText = ({ data }) => {
   const position = getPosition(data, context?.column);
 
   return (
-    <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1">
+    <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1 h-full">
       {data?.heading && <Heading level={getHeadingLevel(data?.headingLevel) ?? 3}>{data?.heading}</Heading>}
 
       <HtmlParser html={data?.description?.processed ?? ""} />
