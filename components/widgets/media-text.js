@@ -4,6 +4,7 @@ import { ButtonSection } from "@/components/widgets/button-section";
 import { MediaCaption } from "@/components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
+import { getHeadingLevel } from "@/lib/string-utils";
 
 const getBackground = (data) => {
   switch (data?.background?.name) {
@@ -57,11 +58,10 @@ export const MediaText = ({ data }) => {
   const size = data?.mediaImageSize ?? "large";
   const media = getMedia(data);
   const position = getPosition(data, context?.column);
-  const headingLevel = data?.headingLevel ?? 3;
 
   return (
     <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1">
-      {data?.heading && <Heading level={headingLevel}>{data?.heading}</Heading>}
+      {data?.heading && <Heading level={getHeadingLevel(data?.headingLevel) ?? 3}>{data?.heading}</Heading>}
 
       <HtmlParser html={data?.description?.processed ?? ""} />
 
