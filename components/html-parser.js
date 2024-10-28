@@ -5,6 +5,7 @@ import { Heading } from "@/components/heading";
 import { List, ListItem } from "@/components/list";
 import { Divider } from "@/components/divider";
 import { getHeadingLevel } from "@/lib/string-utils";
+import { Button } from "@/components/button";
 import Image from "next/image";
 import Script from "next/script";
 import PropTypes from "prop-types";
@@ -37,6 +38,23 @@ export const DEFAULT_INSTRUCTIONS = [
     processNode: (node, children) => {
       node.attribs.className = node.attribs.class;
       delete node.attribs.class;
+
+      // Check if the link is a button by looking for the "btn" class or "btn-*" class
+      const isButton = node.attribs.className?.includes("btn");
+
+      if (isButton) {
+        const type = node.attribs.className?.match(/btn-(\w*)/)?.[1];
+        const map = {
+          primary: "red",
+          secondary: "blue",
+        };
+
+        return (
+          <Button {...node.attribs} href={node.attribs?.href ?? ""} color={map[type] ?? "red"}>
+            {children}
+          </Button>
+        );
+      }
 
       return (
         <Link {...node.attribs} href={node.attribs?.href ?? ""}>
