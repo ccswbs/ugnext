@@ -1,5 +1,6 @@
 #import "./media.graphql"
 #import "./taxonomy.graphql"
+#import "./blocks.graphql"
 
 fragment Accordion on ParagraphAccordionSection {
   __typename
@@ -18,6 +19,17 @@ fragment Accordion on ParagraphAccordionSection {
   sectionColumn {
     ...SectionColumn
   }
+}
+
+fragment Block on ParagraphBlockWidget {
+  __typename
+  block {
+    __typename
+    ...BasicBlock
+    ...WidgetBlock
+    ...YamlBlock
+  }
+  id
 }
 
 fragment ButtonSection on ParagraphSectionButton {
@@ -159,6 +171,7 @@ fragment Section on ParagraphSection {
   content {
     __typename
     ...Accordion
+    ...Block
     ...GeneralText
     ...Buttons
     ...Links
