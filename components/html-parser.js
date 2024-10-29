@@ -24,6 +24,7 @@ export const DEFAULT_INSTRUCTIONS = [
 
       node.attribs.className = node.attribs.class;
       delete node.attribs.class;
+      delete node?.attribs?.style;
 
       return (
         <Heading {...node.attribs} level={level}>
@@ -38,6 +39,7 @@ export const DEFAULT_INSTRUCTIONS = [
     processNode: (node, children) => {
       node.attribs.className = node.attribs.class;
       delete node.attribs.class;
+      delete node?.attribs?.style;
 
       // Check if the link is a button by looking for the "btn" class or "btn-*" class
       const isButton = node.attribs.className?.includes("btn");
@@ -71,6 +73,7 @@ export const DEFAULT_INSTRUCTIONS = [
     processNode: (node, children) => {
       node.attribs.className = node.attribs.class;
       delete node.attribs.class;
+      delete node?.attribs?.style;
 
       return (
         <List {...node.attribs} variant={node.tagName === "ol" ? "ordered" : "unordered"}>
@@ -92,16 +95,20 @@ export const DEFAULT_INSTRUCTIONS = [
   {
     shouldProcessNode: (node) =>
       node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
-    processNode: (node) => (
-      <Image
-        src={node.attribs.src}
-        alt={node.attribs.alt ?? null}
-        loading="lazy"
-        className={node.attribs.class}
-        width={node.attribs.width}
-        height={node.attribs.height}
-      />
-    ),
+    processNode: (node) => {
+      delete node?.attribs?.style;
+
+      return (
+        <Image
+          src={node.attribs.src}
+          alt={node.attribs.alt ?? null}
+          loading="lazy"
+          className={node.attribs.class}
+          width={node.attribs.width}
+          height={node.attribs.height}
+        />
+      );
+    },
   },
   // Scripts
   {
@@ -111,7 +118,12 @@ export const DEFAULT_INSTRUCTIONS = [
   // Fallback
   {
     shouldProcessNode: () => true,
-    processNode: DEFAULT_PROCESSOR,
+    processNode: (node, children) => {
+      // Remove inline styles because Next.js doesn't like when they're present
+      delete node?.attribs?.style;
+
+      return DEFAULT_PROCESSOR(node, children);
+    },
   },
 ];
 
