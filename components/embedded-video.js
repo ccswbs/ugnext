@@ -102,7 +102,7 @@ export function EmbeddedVideo({ src, title, transcript, className, options, moda
 
   return modal ? (
     <>
-      {modal.style === "play-button" ? (
+      {modal.type === "play-button" ? (
         <button
           className={twMerge(
             "rounded-full transition-colors w-24 text-4xl flex items-center justify-center aspect-square text-white bg-black/30 hover:bg-red/30 focus:bg-red/30",
@@ -113,7 +113,7 @@ export function EmbeddedVideo({ src, title, transcript, className, options, moda
           <FontAwesomeIcon icon={faPlay} />
         </button>
       ) : (
-        <Button color={modal.style} onClick={() => setModalOpen(true)} className={modal.className}>
+        <Button color={modal.type} onClick={() => setModalOpen(true)} className={modal.className}>
           {modal.button}
         </Button>
       )}
@@ -148,7 +148,7 @@ EmbeddedVideo.propTypes = {
   }),
   modal: PropTypes.shape({
     button: PropTypes.node,
-    style: PropTypes.oneOf([...ButtonColors, "play-button"]).isRequired,
+    type: PropTypes.oneOf([...ButtonColors, "play-button"]).isRequired,
     className: PropTypes.string,
   }),
 };

@@ -3,11 +3,8 @@ import { Statistics } from "@/components/widgets/statistics";
 import { HtmlParser } from "@/components/html-parser";
 import { twJoin } from "tailwind-merge";
 import { Blockquote } from "@/components/blockquote";
-import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
-import { Modal } from "@/components/modal";
-import { useState } from "react";
 import { EmbeddedVideo } from "@/components/embedded-video";
 
 const StoryImageCutoutBackground = ({ data }) => {
@@ -48,7 +45,7 @@ const StoryImageCutoutBackground = ({ data }) => {
                     <span>Watch Video</span>
                   </>
                 ),
-                style: "red",
+                type: "red",
                 className: "w-fit gap-2",
               }}
             />

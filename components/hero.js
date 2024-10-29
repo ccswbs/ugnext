@@ -75,7 +75,7 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
                         <span>Watch Video</span>
                       </>
                     ),
-                    style: "yellow",
+                    type: "yellow",
                     className: "w-fit gap-2",
                   }}
                 />
@@ -102,7 +102,7 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
               src={video.src}
               title={video.title}
               transcript={video.transcript}
-              modal={{ style: "play-button", className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" }}
+              modal={{ type: "play-button", className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" }}
             />
           )}
         </>
