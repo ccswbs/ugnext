@@ -30,7 +30,9 @@ export const TestimonialSlider = ({ data }) => {
         <Carousel loop="jump" display={showMultiple ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
             const image = testimonial?.image?.image;
-            const title = testimonial?.type ? `${testimonial.title}, ${testimonial.type[0].name}` : testimonial.title;
+            const title = testimonial?.name ?? 'Anonymous';
+
+            console.log(testimonial, title)
 
             return (
               <MediaCaption

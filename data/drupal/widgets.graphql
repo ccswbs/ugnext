@@ -283,6 +283,7 @@ fragment Testimonial on NodeTestimonial {
     }
   }
   title
+  name
   description
   image {
     ... on MediaImage {
