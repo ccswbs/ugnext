@@ -4,8 +4,11 @@ import { Button } from "@/components/button";
 import { Heading } from "@/components/heading";
 import { Container } from "@/components/container";
 import PropTypes from "prop-types";
+import { EmbeddedVideo } from "@/components/embedded-video";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
-export const Hero = ({ variant = "spotlight", image, title, caption, button, alignment }) => {
+export const Hero = ({ variant = "spotlight", image, video, title, caption, button, alignment }) => {
   return (
     <div className={twJoin("relative flex w-full flex-col overflow-hidden", variant !== "spotlight" && " h-fit")}>
       <Image
@@ -60,21 +63,49 @@ export const Hero = ({ variant = "spotlight", image, title, caption, button, ali
                   {button?.body}
                 </Button>
               )}
+              {video && (
+                <EmbeddedVideo
+                  src={video.src}
+                  title={video.title}
+                  transcript={video.transcript}
+                  modal={{
+                    button: (
+                      <>
+                        <FontAwesomeIcon icon={faPlay} />
+                        <span>Watch Video</span>
+                      </>
+                    ),
+                    style: "yellow",
+                    className: "w-fit gap-2",
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
       )}
 
       {variant !== "spotlight" && (
-        <Container centered className="absolute bottom-0 left-1/2 h-fit w-full -translate-x-1/2 p-0">
-          {typeof title === "string" ? (
-            <Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">
-              {title}
-            </Heading>
-          ) : (
-            <div className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">{title}</div>
+        <>
+          <Container centered className="absolute bottom-0 left-1/2 h-fit w-full -translate-x-1/2 p-0">
+            {typeof title === "string" ? (
+              <Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">
+                {title}
+              </Heading>
+            ) : (
+              <div className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">{title}</div>
+            )}
+          </Container>
+
+          {video && (
+            <EmbeddedVideo
+              src={video.src}
+              title={video.title}
+              transcript={video.transcript}
+              modal={{ style: "play-button", className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" }}
+            />
           )}
-        </Container>
+        </>
       )}
     </div>
   );
@@ -90,6 +121,11 @@ Hero.propTypes = {
     className: PropTypes.string,
     blurred: PropTypes.string,
   }).isRequired,
+  video: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    transcript: PropTypes.string,
+  }),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   /**
    * A short paragraph to display underneath the title (does nothing for content-hub variant)
