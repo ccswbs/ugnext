@@ -32,8 +32,6 @@ export const TestimonialSlider = ({ data }) => {
             const image = testimonial?.image?.image;
             const title = testimonial?.name ?? 'Anonymous';
 
-            console.log(testimonial, title)
-
             return (
               <MediaCaption
                 key={testimonial.id}
