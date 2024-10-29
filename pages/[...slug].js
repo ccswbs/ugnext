@@ -62,6 +62,13 @@ export default function Page({ content }) {
               width: content.image.width,
               alt: content.image.alt,
             }}
+            video={
+              content?.heroWidgets?.video && {
+                src: content.heroWidgets.video.url,
+                title: content.heroWidgets.video.name,
+                transcript: content.heroWidgets.video.transcript?.url,
+              }
+            }
             title={content.title}
           />
 
