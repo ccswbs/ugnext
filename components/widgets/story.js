@@ -11,9 +11,6 @@ import { useState } from "react";
 import { EmbeddedVideo } from "@/components/embedded-video";
 
 const StoryImageCutoutBackground = ({ data }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [video, setVideo] = useState(null);
-
   const quotes = data.storyContent?.filter((node) => node.__typename === "ParagraphStoryQuote") ?? [];
   const buttons = data.storyContent?.filter((node) => node.__typename === "ParagraphStoryModalVideo") ?? [];
 
@@ -39,38 +36,23 @@ const StoryImageCutoutBackground = ({ data }) => {
           <span className="text-2xl font-bold mb-4">{data.title.toUpperCase()}</span>
           {data.text && <HtmlParser html={data.text.processed} />}
           {buttons.map((button) => (
-            <Button
-              key={button.id}
-              className="flex gap-2 w-fit p-3 mt-4"
-              color="red"
-              onClick={() => {
-                setModalOpen(!modalOpen);
-                setVideo(button.video);
+            <EmbeddedVideo
+              key={button.video.url}
+              src={button.video.url}
+              title={button.video.name}
+              transcript={button.video?.transcript?.url}
+              modal={{
+                button: (
+                  <>
+                    <FontAwesomeIcon icon={faPlay} />
+                    <span>Watch Video</span>
+                  </>
+                ),
+                style: "red",
+                className: "w-fit gap-2",
               }}
-            >
-              {button?.title ?? (
-                <>
-                  <FontAwesomeIcon icon={faPlay} />
-                  <span>Watch Video</span>
-                </>
-              )}
-            </Button>
+            />
           ))}
-          {buttons.length > 0 && (
-            <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-              {video && (
-                <div className="flex flex-col gap-4 p-4 bg-zinc-900 w-fit text-white">
-                  <span className='text-xl'>{video.name}</span>
-
-                  <EmbeddedVideo
-                    src={video.url}
-                    transcript={video?.transcript?.url}
-                    className={"max-w-2xl w-[calc(100vw_-_theme(spacing.4))]"}
-                  />
-                </div>
-              )}
-            </Modal>
-          )}
         </div>
       }
       footer={
