@@ -1,3 +1,4 @@
+#import "../testimonial.graphql"
 #import "../widgets.graphql"
 
 query GetTestimonialsByTag($status: Boolean = false, $tags: [String!]!) {

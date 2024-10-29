@@ -1,6 +1,7 @@
 #import "./media.graphql"
 #import "./taxonomy.graphql"
 #import "./blocks.graphql"
+#import "./testimonial.graphql"
 
 fragment Accordion on ParagraphAccordionSection {
   __typename
@@ -264,41 +265,6 @@ fragment Tabs on ParagraphSectionTab {
   }
   sectionColumn {
     ...SectionColumn
-  }
-}
-
-fragment Testimonial on NodeTestimonial {
-  __typename
-  id
-  body {
-    processed
-  }
-  profile {
-    url
-    title
-  }
-  type {
-    ... on TermTestimonialType {
-      name
-    }
-  }
-  title
-  name
-  description
-  image {
-    ... on MediaImage {
-      image {
-        url
-        width
-        height
-        alt
-        variations(styles: PLACEHOLDER) {
-          url
-          width
-          height
-        }
-      }
-    }
   }
 }
 
