@@ -85,14 +85,20 @@ export const Carousel = ({ children, display = 1, loop = "none" }) => {
     setIndex(idx);
   };
 
+  const buttonClasses = twJoin(
+    "h-full w-16 flex-1 items-center flex justify-center text-3xl sm:text-6xl md:absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black"
+  );
+
   return (
-    <div className={twJoin("flex flex-col relative w-full min-h-[7rem] h-fit", count > visibleItems && "sm:px-16")}>
+    <div
+      className={twJoin("flex flex-col-reverse relative w-full min-h-[7rem] h-fit", count > visibleItems && "sm:px-16")}
+    >
       {count > visibleItems && (
-        <>
+        <div className="flex w-full h-16 pt-8 md:contents">
           <button
             onClick={() => shift(-1)}
             className={twJoin(
-              "h-full w-16 items-center flex justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black",
+              buttonClasses,
               "left-0 hover:-translate-x-1 focus-visible:-translate-x-1",
               loop === "none" && index === 0 && "opacity-0 invisible pointer-events-none"
             )}
@@ -103,7 +109,7 @@ export const Carousel = ({ children, display = 1, loop = "none" }) => {
           <button
             onClick={() => shift(1)}
             className={twJoin(
-              "h-full w-16 items-center flex justify-center text-xl sm:text-6xl absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black",
+              buttonClasses,
               "right-0 hover:translate-x-1 focus-visible:translate-x-1",
               loop === "none" && index === maxIndex && "opacity-0 invisible pointer-events-none"
             )}
@@ -111,7 +117,7 @@ export const Carousel = ({ children, display = 1, loop = "none" }) => {
           >
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
-        </>
+        </div>
       )}
 
       <div
