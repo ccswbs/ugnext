@@ -49,7 +49,7 @@ export const Green = {
   },
 };
 
-export const gray = {
+export const Gray = {
   args: {
     children: "Example Link",
     href: "/example-page",
