@@ -49,10 +49,10 @@ export const Green = {
   },
 };
 
-export const Grey = {
+export const gray = {
   args: {
     children: "Example Link",
     href: "/example-page",
-    color: "grey",
+    color: "gray",
   },
 };

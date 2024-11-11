@@ -27,7 +27,7 @@ export const Link = ({ href, color = "blue", children, className, ...rest }) => 
         color === "red" && "text-red hover:bg-red hover:text-white focus:text-red-800 focus:ring-red",
         color === "yellow" && "text-yellow hover:bg-yellow hover:text-white focus:text-yellow-600 focus:ring-yellow",
         color === "green" && "text-green hover:bg-green hover:text-white focus:text-green-800 focus:ring-green",
-        color === "grey" && "text-grey hover:bg-grey hover:text-white focus:text-grey-600 focus:ring-grey"
+        color === "gray" && "text-gray hover:bg-gray hover:text-white focus:text-gray-600 focus:ring-gray"
       ),
       className
     )}
@@ -43,6 +43,6 @@ UnstyledLink.propTypes = {
 
 Link.propTypes = {
   ...UnstyledLink.propTypes,
-  color: PropTypes.oneOf(["blue", "red", "yellow", "green", "grey", "none"]),
+  color: PropTypes.oneOf(["blue", "red", "yellow", "green", "gray", "none"]),
   className: PropTypes.string,
 };

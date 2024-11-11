@@ -24,7 +24,7 @@ export const Modal = ({ open, onClose = () => {}, role = "dialog", labelledBy, c
 
         <CloseButton
           onClick={onClose}
-          className="text-xl text-white bg-grey-950 w-9 h-9 flex items-center justify-center rounded-full absolute top-0 right-0 md:-top-4 md:-right-4 hover:bg-red transition-colors"
+          className="text-xl text-white bg-gray-950 w-9 h-9 flex items-center justify-center rounded-full absolute top-0 right-0 md:-top-4 md:-right-4 hover:bg-red transition-colors"
         >
           <span className="sr-only">Close</span>
           <FontAwesomeIcon icon={faTimes} />

@@ -72,7 +72,7 @@ const colors = {
     950: "#11280b",
     DEFAULT: "#3c8221",
   },
-  grey: {
+  gray: {
     50: "#f8f8f8",
     100: "#f0f0f0",
     200: "#dddddd",
@@ -87,7 +87,7 @@ const colors = {
     DEFAULT: "#dddddd",
     light: "#f5f5f5",
   },
-  "cool-grey": {
+  "cool-gray": {
     '50': '#f4f6f7',
     '100': '#e3e7ea',
     '200': '#cbd3d6',

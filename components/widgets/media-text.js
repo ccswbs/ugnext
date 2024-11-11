@@ -11,7 +11,7 @@ const getBackground = (data) => {
     case "Light Blue":
       return "light-blue";
     case "Dark Gray":
-      return "dark-grey";
+      return "dark-gray";
     default:
       return "none";
   }
