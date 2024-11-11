@@ -5,6 +5,7 @@ import { MediaCaption } from "@/components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
 import { getHeadingLevel } from "@/lib/string-utils";
+import { twJoin } from "tailwind-merge";
 
 const getBackground = (data) => {
   switch (data?.background?.name) {
@@ -61,7 +62,11 @@ export const MediaText = ({ data }) => {
 
   return (
     <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1 h-full">
-      {data?.heading && <Heading level={getHeadingLevel(data?.headingLevel) ?? 3}>{data?.heading}</Heading>}
+      {data?.heading && (
+        <Heading className="mt-0" level={getHeadingLevel(data?.headingLevel) ?? 3}>
+          {data?.heading}
+        </Heading>
+      )}
 
       <HtmlParser html={data?.description?.processed ?? ""} />
 
