@@ -10,6 +10,12 @@
     - bachelor
   tags: []
 
+- name: Bachelor of Arts (General)
+  url: "/programs/bachelor-of-arts-general-fully-online/"
+  types:
+    - bachelor
+  tags: []
+
 - name: Bachelor of Arts and Sciences
   url: "/programs/bachelor-of-arts-and-sciences/"
   types:
