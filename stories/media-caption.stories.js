@@ -162,7 +162,7 @@ export const LightBlueBG = {
   },
 };
 
-export const DarkgrayBG = {
+export const DarkGrayBG = {
   args: {
     media: image,
     position: "above",
