@@ -183,6 +183,7 @@ fragment Section on ParagraphSection {
     ...ButtonSection
     ...Tabs
     ...Statistics
+    ...ImageOverlay
   }
 }
 
