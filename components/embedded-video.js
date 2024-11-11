@@ -111,6 +111,7 @@ export function EmbeddedVideo({ src, title, transcript, className, options, moda
           onClick={() => setModalOpen(true)}
         >
           <FontAwesomeIcon icon={faPlay} />
+          <span className="sr-only">Show Video</span>
         </button>
       ) : (
         <Button color={modal.type} onClick={() => setModalOpen(true)} className={modal.className}>
