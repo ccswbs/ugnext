@@ -56,3 +56,19 @@ export const Gray = {
     color: "gray",
   },
 };
+
+export const Black = {
+  args: {
+    children: "Example Link",
+    href: "/example-page",
+    color: "black",
+  },
+};
+
+export const White = {
+  args: {
+    children: "Example Link",
+    href: "/example-page",
+    color: "white",
+  },
+};
