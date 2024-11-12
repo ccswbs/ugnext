@@ -57,7 +57,7 @@ export default function ProgramsGraduate({ programs }) {
               options={[
                 {
                   value: "masters",
-                  label: "Masters",
+                  label: "Master's",
                   selected: true,
                 },
                 {
