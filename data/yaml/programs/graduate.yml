@@ -19,6 +19,12 @@
     - biology
     - science
     - agriculture
+    - animal behavior
+    - animal breeding
+    - animal genetics
+    - animal nutrition
+    - animal welfare
+    - animal*
 - name: Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/applied-nutrition
   degrees:
@@ -39,6 +45,14 @@
     - arts
     - culture
     - history
+    - art market
+    - art*
+    - changemaking
+    - cultur*
+    - fine art
+    - fundraising
+    - human perceptions & behaviour
+    - identit*
 - name: Artificial Intelligence
   url: https://graduatestudies.uoguelph.ca/programs/csai
   degrees:
@@ -53,6 +67,16 @@
     - programming
     - ai
     - computer science
+    - artificial intelligence
+    - automation
+    - data science
+    - data*
+    - ethics
+    - innovation
+    - machine learning
+    - robotics
+    - software development
+    - software engineering
 - name: Bioinformatics
   url: https://graduatestudies.uoguelph.ca/programs/binf
   degrees:
@@ -72,6 +96,12 @@
     - statistic*
     - programming
     - analys*
+    - big data
+    - biology
+    - data*
+    - innovation
+    - software development
+    - software engineering
 - name: Biomedical Sciences
   url: https://graduatestudies.uoguelph.ca/programs/biom
   degrees:
@@ -86,6 +116,27 @@
     - science
     - health
     - medical
+    - cancer cell biology
+    - cardiovascular disease
+    - cardiovascular health
+    - disease
+    - disorders
+    - genetics
+    - health*
+    - illness
+    - innovation
+    - medi*
+    - medicine*
+    - neuroscience
+    - pharma*
+    - pharmacology
+    - pregnancy
+    - regenerative medicine
+    - reproductive biology
+    - stem cell medicine
+    - stem cell*
+    - toxicology
+    - toxin*
 - name: Biophysics
   url: https://graduatestudies.uoguelph.ca/programs/biop
   degrees:
@@ -97,6 +148,19 @@
     - biology
     - physics
     - science
+    - applied modeling
+    - biomechanic*
+    - cell*
+    - computational biophysics
+    - genetics
+    - health*
+    - human biology
+    - life sciences
+    - medicine*
+    - microbiology
+    - molecular biophysics
+    - pharma*
+    - structural biophysics
 - name: Biotechnology
   url: https://graduatestudies.uoguelph.ca/programs/biotechnology
   degrees:
@@ -107,6 +171,13 @@
     - biology
     - science
     - technology
+    - agri*
+    - food*
+    - health*
+    - innovation
+    - medi*
+    - medicine*
+    - pharma*
 - name: Business Administration
   url: https://graduatestudies.uoguelph.ca/programs/bus
   degrees:
@@ -115,6 +186,21 @@
     - course-based
   tags:
     - business
+    - agri-business
+    - agri*
+    - changemaking
+    - communications
+    - economics & finance
+    - food management
+    - food*
+    - hospitality
+    - management*
+    - organization*
+    - software development
+    - software engineering
+    - sustainab*
+    - sustainable commerce
+    - tourism management
 - name: Capacity Development and Extension
   url: https://graduatestudies.uoguelph.ca/programs/cde
   degrees:
@@ -126,6 +212,26 @@
     - humanities
     - agriculture
     - livestock
+    - changemaking
+    - citizen media
+    - communication process
+    - communications
+    - community development
+    - community*
+    - decision making
+    - enviro*
+    - environmental change
+    - inclusive development
+    - innovation
+    - international development
+    - leadership
+    - non-formal education
+    - responsible innovation
+    - rural*
+    - small communities
+    - social change
+    - sustainab*
+    - teach*
 - name: Chemistry
   url: https://graduatestudies.uoguelph.ca/programs/chbi
   degrees:
@@ -136,6 +242,19 @@
   tags:
     - chemistry
     - science
+    - crop protection
+    - energy
+    - forensic
+    - government policy & laws
+    - law*
+    - magnets
+    - medicine*
+    - nuclear power safety
+    - pharma*
+    - science education
+    - sustainab*
+    - teach*
+    - vaccines
 - name: Clinical Studies
   url: https://graduatestudies.uoguelph.ca/programs/clin
   degrees:
@@ -149,6 +268,19 @@
     - science
     - health
     - medical
+    - animal health industry
+    - animal medicine
+    - animal*
+    - biomedical*
+    - clinic*
+    - disease
+    - disorders
+    - health*
+    - illness
+    - medi*
+    - pharma*
+    - vet*
+    - zoo*
 - name: Computational Sciences
   url: https://graduatestudies.uoguelph.ca/programs/computational-science-phd
   degrees:
@@ -159,6 +291,23 @@
     - technology
     - science
     - mathematics
+    - applied modeling
+    - artificial intelligence
+    - bioinformatics
+    - biology
+    - crime
+    - cybersecurity
+    - data analytics
+    - data engineering
+    - data*
+    - design patterns
+    - ehealth innovation
+    - health*
+    - machine learning
+    - patterns
+    - physical design
+    - software engineering & development
+    - theory
 - name: Computer Science
   url: https://graduatestudies.uoguelph.ca/programs/cis
   degrees:
@@ -171,6 +320,13 @@
     - science
     - mathematics
     - programming
+    - data engineering
+    - data*
+    - design patterns
+    - ehealth innovation
+    - health*
+    - physical design
+    - software engineering & development
 - name: Conservation Leadership
   url: https://graduatestudies.uoguelph.ca/Programs/ConservationLeadership
   degrees:
@@ -188,6 +344,19 @@
     - water
     - sustain*
     - science
+    - communications
+    - conservation*
+    - emerging infectious diseases
+    - health inequalities
+    - health*
+    - indigenous studies
+    - indigenous-led conservation
+    - management*
+    - organization*
+    - private lands conservation
+    - project management
+    - public communication
+    - sustainab*
 - name: Creative Writing
   url: https://graduatestudies.uoguelph.ca/programs/crwr
   degrees:
@@ -198,6 +367,12 @@
     - arts
     - humanities
     - culture
+    - art*
+    - communications
+    - creative expression
+    - cultur*
+    - poetry
+    - teach*
 - name: Criminology and Criminal Justice Policy
   url: https://graduatestudies.uoguelph.ca/programs/ccjp
   degrees:
@@ -214,6 +389,9 @@
     - public
     - affairs
     - socio*
+    - government policy
+    - law*
+    - organization*
 - name: Critical Studies in Improvisation
   url: https://graduatestudies.uoguelph.ca/programs/impr
   degrees:
@@ -225,6 +403,12 @@
     - arts
     - humanities
     - culture
+    - art*
+    - communications
+    - community*
+    - creative expression
+    - cultur*
+    - identit*
 - name: Cybersecurity and Threat Intelligence
   url: https://graduatestudies.uoguelph.ca/programs/mcti
   degrees:
@@ -236,6 +420,20 @@
     - science
     - mathematics
     - programming
+    - attacks and defenses
+    - biology
+    - crime
+    - cryptography
+    - cybersecurity
+    - data*
+    - digital forensics
+    - government*
+    - information technology
+    - organization*
+    - privacy
+    - security
+    - security architecture
+    - threat
 - name: Data Science
   url: https://graduatestudies.uoguelph.ca/programs/data-science
   degrees:
@@ -249,6 +447,14 @@
     - programming
     - artificial intelligence
     - ai
+    - applied modeling
+    - data ethics
+    - data*
+    - ethics
+    - innovation
+    - machine learning
+    - software development
+    - software engineering
 - name: Economics
   url: https://graduatestudies.uoguelph.ca/programs/econ
   degrees:
@@ -260,6 +466,13 @@
     - business
     - economics
     - finance
+    - commerce
+    - data analytics
+    - data*
+    - enviro*
+    - international development
+    - resource*
+    - sustainab*
 - name: Engineering
   url: https://graduatestudies.uoguelph.ca/programs/engg
   degrees:
@@ -272,6 +485,23 @@
     - engineering
     - artificial intelligence
     - ai
+    - agriculture engineering
+    - energy
+    - food engineering
+    - food*
+    - government policy & laws
+    - innovation
+    - intelligent systems
+    - law*
+    - machine learning
+    - physical design
+    - research & development
+    - resource management
+    - software engineering & development
+    - sustainab*
+    - sustainable energy systems
+    - waste management
+    - water*
 - name: Engineering
   url: https://www.uoguelph.ca/programs/master-of-engineering
   degrees:
@@ -283,6 +513,23 @@
     - engineering
     - artificial intelligence
     - ai
+    - agriculture engineering
+    - energy
+    - food engineering
+    - food*
+    - government policy & laws
+    - innovation
+    - intelligent systems
+    - law*
+    - machine learning
+    - physical design
+    - research & development
+    - resource management
+    - software engineering & development
+    - sustainab*
+    - sustainable energy systems
+    - waste management
+    - water*
 - name: English
   url: https://graduatestudies.uoguelph.ca/programs/engl
   degrees:
@@ -293,6 +540,25 @@
     - arts
     - humanities
     - language
+    - art*
+    - colonial*
+    - communications
+    - creat*
+    - creative expression
+    - cultur*
+    - gender*
+    - history
+    - indentit*
+    - literature
+    - music
+    - performance
+    - postcolonial*
+    - public relations
+    - publishing
+    - sex*
+    - teach*
+    - theatre
+    - writing
 - name: Environmental Sciences
   url: https://graduatestudies.uoguelph.ca/programs/envs
   degrees:
@@ -307,6 +573,32 @@
     - science
     - soil
     - indigenous
+    - changemaking
+    - community science
+    - community*
+    - data*
+    - ecological change
+    - ecology
+    - enviro*
+    - environmental data science
+    - environmental education
+    - environmental health
+    - environmental microbiology
+    - food insecurity
+    - food security
+    - food*
+    - government policy
+    - government policy & laws
+    - indigenous knowledge systems
+    - indigenous studies
+    - law*
+    - public service
+    - regulatory affairs
+    - space exploration
+    - sustainab*
+    - teach*
+    - water quality
+    - water*
 - name: Family Relations and Applied Nutrition
   url: https://graduatestudies.uoguelph.ca/programs/fran
   degrees:
@@ -341,6 +633,22 @@
     - food
     - science
     - nutrition
+    - biochemistry
+    - biology
+    - elderly health
+    - food chemistry
+    - food microbiology
+    - food processing
+    - food safety
+    - food*
+    - gut health
+    - health*
+    - immunity
+    - innovation
+    - microbiology
+    - organic chemistry
+    - product development
+    - sustainab*
 - name: Food, Agricultural and Resource Economics
   url: https://graduatestudies.uoguelph.ca/programs/fare
   degrees:
@@ -367,6 +675,34 @@
   tags:
     - geography
     - science
+    - agri-environmental management
+    - agri*
+    - aquaculture
+    - biogeography
+    - biology
+    - community planning
+    - community*
+    - conservation*
+    - ecosystems
+    - enviro*
+    - environmental governance
+    - ethnobotany
+    - food*
+    - forestry
+    - government policy & laws
+    - hydrology
+    - indigenous methodology
+    - indigenous studies
+    - innovation
+    - law*
+    - management*
+    - mining
+    - public health
+    - remote sensing
+    - software engineering & development
+    - sustainab*
+    - waste management
+    - water*
 - name: History
   url: https://graduatestudies.uoguelph.ca/programs/hist
   degrees:
@@ -377,6 +713,25 @@
   tags:
     - humanities
     - history
+    - art*
+    - changemaking
+    - communications
+    - crime
+    - cultur*
+    - education
+    - enviro*
+    - food*
+    - healing
+    - health*
+    - journalism
+    - media
+    - protest
+    - rural*
+    - soci*
+    - social justice and human rights
+    - social movements
+    - war and society
+    - water*
 - name: Human Health and Nutritional Sciences
   url: https://graduatestudies.uoguelph.ca/programs/hhns
   degrees:
@@ -419,6 +774,19 @@
     - pharma*
     - cogniti*
     - diet*
+    - aging
+    - biology
+    - diabetes
+    - disorders
+    - elderly health
+    - famil*
+    - food*
+    - ilness
+    - leisure*
+    - medicine*
+    - obesity
+    - sport*
+    - teach*
 - name: Integrated Humanities
   url: https://graduatestudies.uoguelph.ca/programs/integrated-humanities
   degrees:
@@ -432,6 +800,38 @@
     - european studies
     - francophone
     - culture
+    - art*
+    - civil service
+    - communications
+    - crime
+    - cultur*
+    - data*
+    - european identities
+    - food*
+    - french literature
+    - french*
+    - gender*
+    - government*
+    - human perceptions & behaviour
+    - identit*
+    - identity formation
+    - international development
+    - journalism
+    - leisure*
+    - linguistics
+    - literary studies
+    - migration
+    - minorities
+    - national identities
+    - sport*
+    - sustainab*
+    - teach*
+    - translation
+    - trauma*
+    - travel
+    - visual culture
+    - visual*
+    - workplace learning
 - name: Integrative Biology
   url: https://graduatestudies.uoguelph.ca/programs/ibio
   degrees:
@@ -455,6 +855,13 @@
     - sustain*
     - mammal*
     - evolution*
+    - biology
+    - conservation*
+    - evolution
+    - freshwater biology
+    - marine biology
+    - sustainab*
+    - water*
 - name: International Development Studies
   url: https://graduatestudies.uoguelph.ca/programs/idev
   degrees:
@@ -466,6 +873,20 @@
   tags:
     - humanities
     - culture
+    - changemaking
+    - economic change
+    - enviro*
+    - environmental governance
+    - food security
+    - food*
+    - gender*
+    - health*
+    - human rights
+    - identit*
+    - soci*
+    - social change
+    - social justice
+    - sustainab*
 - name: Landscape Architecture
   url: https://graduatestudies.uoguelph.ca/programs/ldar
   degrees:
@@ -476,6 +897,18 @@
   tags:
     - architecture
     - design
+    - community*
+    - creative expression
+    - innovation
+    - neighbourhood
+    - physical design
+    - recreation
+    - resillien*
+    - rural*
+    - soci*
+    - socio-cultural design
+    - sustainab*
+    - tourism*
 - name: Latin American and Caribbean Studies
   url: https://graduatestudies.uoguelph.ca/programs/lacs
   degrees:
@@ -495,6 +928,19 @@
   tags:
     - humanities
     - business
+    - bank*
+    - communications
+    - economics
+    - finance
+    - government policy
+    - human behaviour
+    - human perceptions
+    - human*
+    - law*
+    - leadership
+    - management*
+    - organization*
+    - tourism*
 - name: Literary Studies/Theatre Studies in English
   url: https://graduatestudies.uoguelph.ca/programs/sets
   degrees:
@@ -504,6 +950,24 @@
   tags:
     - arts
     - humanities
+    - art*
+    - colonial*
+    - communications
+    - creat*
+    - cultur*
+    - gender*
+    - history
+    - indentit*
+    - literature
+    - music
+    - performance
+    - postcolonial*
+    - public relations
+    - publishing
+    - sex*
+    - teach*
+    - theatre
+    - writing
 - name: Management
   url: https://graduatestudies.uoguelph.ca/programs/mgmt
   degrees:
@@ -514,6 +978,32 @@
   tags:
     - business
     - management
+    - agri-business development
+    - changemaking
+    - communications
+    - corporate social responsibility
+    - data analytics
+    - data*
+    - decision making
+    - entrepreneurship
+    - evidence-based management
+    - food supply chains
+    - food*
+    - government policy & laws
+    - human perceptions & behaviour
+    - innovation
+    - law*
+    - leisure*
+    - management*
+    - organization*
+    - organizational behaviour
+    - organizational change
+    - project management
+    - sport management
+    - sport*
+    - sustainab*
+    - teach*
+    - toxicology
 - name: Market Research
   url: https://graduatestudies.uoguelph.ca/programs/marketresearch
   degrees:
@@ -556,6 +1046,12 @@
     - health
     - medical
     - psychology
+    - enviro*
+    - environmental consulting
+    - government policy
+    - government*
+    - non-profit organizations
+    - psycho*
 - name: Molecular and Cellular Biology
   url: https://graduatestudies.uoguelph.ca/programs/mcb
   degrees:
@@ -589,6 +1085,33 @@
     - infect*
     - dna
     - pharma*
+    - biochemistry
+    - biotechnology
+    - cell biology
+    - cell signalling
+    - cell trafficking
+    - cellular biology
+    - disorders
+    - education
+    - food safety
+    - food*
+    - gene expression
+    - genetics
+    - illness
+    - medicine*
+    - microbiology
+    - molecular basis of disease
+    - molecular biology & genetics
+    - pathogen*
+    - plant biology
+    - plant metabolism
+    - protein function
+    - protein structure
+    - protein*
+    - regulation
+    - science outreach
+    - sustainab*
+    - teach*
 - name: Neuroscience
   url: https://graduatestudies.uoguelph.ca/programs/neur
   degrees:
@@ -606,6 +1129,17 @@
     - neuro*
     - brain
     - cogniti*
+    - addiction
+    - aging
+    - disease
+    - disorders
+    - health*
+    - human perceptions & behaviour
+    - illness
+    - medicine*
+    - nursing
+    - pharma*
+    - public health
 - name: One Health
   url: https://graduatestudies.uoguelph.ca/programs/onehealth
   degrees:
@@ -647,6 +1181,14 @@
     - infect*
     - dna
     - pharma*
+    - antimicrobial resistance
+    - climate change
+    - food safety
+    - food security
+    - government*
+    - infectious diseases
+    - medicine*
+    - regulation
 - name: Pathobiology
   url: https://graduatestudies.uoguelph.ca/programs/path
   degrees:
@@ -661,6 +1203,27 @@
     - science
     - health
     - medical
+    - animal*
+    - biomedical*
+    - cancer*
+    - diagnostics
+    - disease
+    - disorders
+    - illness
+    - immunology
+    - infectious diseases
+    - medicine*
+    - one health
+    - patho*
+    - pathogen*
+    - pharma*
+    - vet*
+    - veterinary pathology diagnostics
+    - water*
+    - waterbourne diseases
+    - wildlife
+    - zoo medicine
+    - zoo*
 - name: Philosophy
   url: https://graduatestudies.uoguelph.ca/programs/phil
   degrees:
@@ -671,6 +1234,23 @@
   tags:
     - humanities
     - culture
+    - artificial intelligence
+    - big data
+    - changemaking
+    - communications
+    - concept*
+    - data*
+    - education
+    - ethics
+    - government policy
+    - health*
+    - human rights
+    - law*
+    - machine learning
+    - politic*
+    - public service
+    - social justice
+    - teach*
 - name: Physics
   url: https://graduatestudies.uoguelph.ca/programs/phys
   degrees:
@@ -682,6 +1262,28 @@
   tags:
     - physics
     - science
+    - applied modeling
+    - applied physics
+    - astro*
+    - astrophysics and gravitation
+    - atomic, molecular and optical physics
+    - biophysics
+    - chemical physics
+    - condensed matter and material physics
+    - education
+    - energy
+    - financial modeling
+    - government policy
+    - gravitational wave
+    - law*
+    - mars
+    - nanoscience
+    - outreach
+    - physics education
+    - planetary surface exploration
+    - space exploration
+    - subatomic physics
+    - teach*
 - name: Planning
   url: https://www.uoguelph.ca/programs/master-of-planning
   degrees:
@@ -708,6 +1310,38 @@
     - crop science
     - biochemistry
     - plant genetics
+    - agri-food
+    - agri*
+    - agronomy
+    - applied bioinformatics
+    - biofuels
+    - biological plant disease control
+    - biology
+    - breeding
+    - crop production systems
+    - crop*
+    - cultureal plant disease control
+    - energy
+    - food production
+    - food*
+    - fruit and vegetable technology
+    - genetics
+    - grass
+    - horticulture
+    - innovation
+    - metabolic processes in crop plants
+    - physiology of crop yield
+    - plant biology
+    - plant breeding
+    - plant diseases
+    - plant production
+    - plant*
+    - soil
+    - soy
+    - sustainab*
+    - teach*
+    - turf
+    - wheat
 - name: Political Science
   url: https://graduatestudies.uoguelph.ca/programs/pols
   degrees:
@@ -719,6 +1353,25 @@
   tags:
     - humanities
     - politics
+    - citizen*
+    - communications
+    - comparative politics
+    - disability
+    - gender*
+    - global politics
+    - global*
+    - government policy
+    - identit*
+    - international development
+    - international relations
+    - justice
+    - law*
+    - politic*
+    - public policy
+    - rights
+    - sex*
+    - sustainab*
+    - teach*
 - name: Population Medicine
   url: https://graduatestudies.uoguelph.ca/programs/popmed
   degrees:
@@ -733,6 +1386,27 @@
     - science
     - health
     - medical
+    - agri*
+    - animal*
+    - applied modeling
+    - communications
+    - data*
+    - disease
+    - disorders
+    - food*
+    - government policy
+    - health*
+    - human behaviour
+    - human perceptions
+    - ilness
+    - law*
+    - medicine*
+    - one health
+    - pharma*
+    - public health
+    - sustainab*
+    - water*
+    - waterbourne diseases
 - name: Project Management
   url: https://graduatestudies.uoguelph.ca/programs/project-management
   degrees:
@@ -743,6 +1417,23 @@
   tags:
     - business
     - management
+    - analy*
+    - applied modeling
+    - business analytics
+    - data*
+    - engineering
+    - governance
+    - health care
+    - health*
+    - information technology
+    - leadership
+    - logistics
+    - management*
+    - organization*
+    - project management
+    - project*
+    - supply chain management
+    - transportation
 - name: Psychology
   url: https://graduatestudies.uoguelph.ca/programs/psyc
   degrees:
@@ -753,6 +1444,28 @@
     - thesis-based
   tags:
     - humanities
+    - addiction
+    - aging
+    - behavioural neuroscience
+    - brain
+    - cognition
+    - cognitive ergonomics
+    - decision making
+    - disease
+    - disorders
+    - evolution
+    - famil*
+    - human behaviour
+    - human development
+    - human perceptions
+    - human relations
+    - illness
+    - job performance
+    - life-span
+    - management*
+    - neuroscience
+    - organization*
+    - psycho*
 - name: Psychotherapy
   url: https://www.uoguelph.ca/programs/master-of-psychotherapy/
   degrees:
@@ -763,6 +1476,19 @@
     - health
     - medical
     - psychology
+    - community*
+    - education
+    - gender*
+    - human resources
+    - mental health
+    - psycho*
+    - psychotherapy
+    - sex*
+    - soci*
+    - social policy
+    - sociocultural atunement
+    - trauma informed practice
+    - trauma*
 - name: Public Health
   url: https://graduatestudies.uoguelph.ca/programs/phlt
   degrees:
@@ -776,6 +1502,34 @@
     - medical
     - science
     - biology
+    - aging
+    - agri*
+    - animal health
+    - animal*
+    - applied modeling
+    - biostatistics
+    - clinical veterinary communications
+    - communications
+    - data*
+    - disease
+    - epidemiology
+    - food safety
+    - food*
+    - government policy
+    - health management
+    - health*
+    - infection control
+    - infectious disease modeling
+    - law*
+    - one health
+    - patho*
+    - population
+    - public health
+    - vaccines
+    - water safety
+    - waterbourne diseases
+    - zoo*
+    - zoontoic disease
 - name: Public Issues Anthropology
   url: https://graduatestudies.uoguelph.ca/programs/pia
   degrees:
@@ -790,6 +1544,29 @@
     - antho*
     - affairs
     - socio*
+    - aging
+    - agri*
+    - conservation*
+    - disability
+    - disease
+    - disorders
+    - enviro*
+    - famil*
+    - food*
+    - government policy
+    - health*
+    - human rights
+    - illness
+    - indigen*
+    - indigenous studies
+    - international development
+    - law*
+    - natural resource management
+    - nutrition*
+    - one health
+    - public health
+    - social justice
+    - water*
 - name: Real Estate
   url: https://www.uoguelph.ca/lang/masters-real-estate/
   degrees:
@@ -801,6 +1578,15 @@
     - retail
     - residential
     - marketing
+    - analy*
+    - business
+    - commercial development
+    - commercial leasing
+    - housing
+    - leadership
+    - property management
+    - real estate investing
+    - real estate*
 - name: Regenerative Medicine
   url: https://graduatestudies.uoguelph.ca/programs/regenerative-medicine
   degrees:
@@ -837,6 +1623,24 @@
     - infect*
     - dna
     - pharma*
+    - applied modeling
+    - biology
+    - disease modeling
+    - disease treatment
+    - disorders
+    - endogenous regeneration
+    - engineering
+    - genetics
+    - illness
+    - innovation
+    - medicine*
+    - outreach
+    - public health
+    - stem cell biology
+    - stem cell*
+    - teach*
+    - tissue engineering
+    - vet*
 - name: Relational and Family Therapy
   url: https://www.uoguelph.ca/programs/master-of-relational-and-family-therapy/
   degrees:
@@ -847,6 +1651,17 @@
     - health
     - medical
     - psychology
+    - anti-oppression
+    - clinic*
+    - famil*
+    - family health
+    - gender*
+    - health*
+    - heath care
+    - psycho*
+    - psychotherapy
+    - sex*
+    - trauma*
 - name: Rural Planning and Development
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof
   degrees:
@@ -858,6 +1673,25 @@
   tags:
     - humanities
     - indigenous
+    - agri-food systems
+    - agri*
+    - community*
+    - conservation planning
+    - conservation*
+    - development
+    - environmental consulting
+    - food*
+    - government policy
+    - indigen*
+    - indigenous community planning and development
+    - indigenous studies
+    - international development
+    - international development agencies
+    - land use planning
+    - law*
+    - management*
+    - water resources security
+    - water*
 - name: Rural Studies
   url: https://graduatestudies.uoguelph.ca/programs/rpdprof-stu
   degrees:
@@ -866,6 +1700,22 @@
     - thesis-based
   tags:
     - humanities
+    - agri*
+    - community development
+    - community-based nature tourism
+    - community*
+    - conservation*
+    - government policy & laws
+    - innovation
+    - law*
+    - project management
+    - rural*
+    - soci*
+    - social enterprises
+    - sustainab*
+    - sustainable landscapes
+    - tourism*
+    - water*
 - name: Sexuality, Genders and Bodies
   url: https://graduatestudies.uoguelph.ca/programs/Sexualities-Genders-And-Bodies
   degrees:
@@ -907,6 +1757,20 @@
     - family
     - relation*
     - critical
+    - changemaking
+    - community engaged scholarship
+    - community*
+    - gender*
+    - government policy
+    - indentit*
+    - indigenous knowledge
+    - indigenous studies
+    - innovative methodologies
+    - law*
+    - rac*
+    - social justice
+    - tourism*
+    - water*
 - name: Sociology
   url: https://graduatestudies.uoguelph.ca/programs/soca
   degrees:
@@ -918,6 +1782,29 @@
   tags:
     - humanities
     - culture
+    - applied statistics
+    - art*
+    - community engaged scholarship
+    - community*
+    - crime
+    - cultur*
+    - cultural sociology
+    - data*
+    - economics & finance
+    - enviro*
+    - food*
+    - human resources
+    - identit*
+    - indigenous studies
+    - innovation
+    - neo-marxism
+    - organization*
+    - political economy
+    - soci*
+    - social control
+    - social justice and human rights
+    - teach*
+    - work
 - name: Studio Art
   url: https://graduatestudies.uoguelph.ca/programs/sart
   degrees:
@@ -928,6 +1815,18 @@
     - arts
     - humanities
     - culture
+    - art history
+    - art theory
+    - art*
+    - creat*
+    - creative expression
+    - critical*
+    - cultur*
+    - fine art
+    - identit*
+    - painting
+    - photography
+    - sculpture
 - name: Sustainable Agriculture
   url: https://www.uoguelph.ca/programs/master-sustainable-agriculture/
   degrees:
@@ -939,6 +1838,16 @@
     - biology
     - science
     - soil
+    - advocacy
+    - agri*
+    - enviro*
+    - environmental resource management
+    - farmland preservation
+    - food production
+    - food systems
+    - food*
+    - policy
+    - sustainablility
 - name: Theatre Studies
   url: https://graduatestudies.uoguelph.ca/programs/thst
   degrees:
@@ -950,6 +1859,24 @@
     - arts
     - humanities
     - culture
+    - art*
+    - colonial*
+    - communications
+    - creat*
+    - cultur*
+    - gender*
+    - history
+    - indentit*
+    - literature
+    - music
+    - performance
+    - postcolonial*
+    - public relations
+    - publishing
+    - sex*
+    - teach*
+    - theatre
+    - writing
 - name: Tourism and Hospitality
   url: https://graduatestudies.uoguelph.ca/programs/trmh
   degrees:
@@ -982,6 +1909,25 @@
     - science
     - health
     - medical
+    - analy*
+    - biomedical*
+    - disease
+    - enviro*
+    - forensic
+    - genetics
+    - government policy
+    - health*
+    - insecticides
+    - law*
+    - medicine*
+    - molecular*
+    - pesticides
+    - pharma*
+    - physiolog*
+    - plant diseases
+    - pollutants
+    - toxic*
+    - toxin*
 - name: Veterinary Medicine / Public Health
   url: https://graduatestudies.uoguelph.ca/programs/DVMMPH
   degrees:
@@ -1027,3 +1973,12 @@
     - fish*
     - sustain*
     - mammal*
+    - arts administration
+    - biomonitoring
+    - international education
+    - international organizations
+    - international*
+    - tourism*
+    - wildlife biology
+    - wildlife conservation
+    - wildlife rehabilitation
