@@ -263,9 +263,19 @@
 - name: Engineering
   url: https://graduatestudies.uoguelph.ca/programs/engg
   degrees:
-    - MEng
     - MASc
     - PhD
+  types:
+    - thesis-based
+  tags:
+    - technology
+    - engineering
+    - artificial intelligence
+    - ai
+- name: Engineering
+  url: https://www.uoguelph.ca/programs/master-of-engineering
+  degrees:
+    - MEng
   types:
     - course-based
   tags:
