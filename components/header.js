@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 const Link = ({ title, url }) => {
   return <a href={url}>{title}</a>;
@@ -21,6 +22,10 @@ const Menu = ({ title, items }) => {
 };
 
 export const Header = ({ topic, navigation, variant = "guelph" }) => {
+  useEffect(() => {
+    import('@uoguelph/web-components/dist/uofg-web-components/uofg-header.esm');
+  }, [])
+
   return (
     <uofg-header page-title={topic?.title} page-url={topic?.url} variant={variant}>
       {navigation?.map((item, index) => {
