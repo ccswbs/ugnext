@@ -2,7 +2,6 @@
 const nextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
   reactStrictMode: true,
-  swcMinify: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push(
       {
