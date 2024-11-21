@@ -29,7 +29,7 @@ export const Link = ({ href, color = "blue", children, className, ...rest }) => 
         color === "green" && "text-green hover:bg-green hover:text-white focus:text-green-800 focus:ring-green",
         color === "gray" && "text-gray hover:bg-gray hover:text-white focus:text-gray-600 focus:ring-gray",
         color === "black" && "text-black hover:bg-black hover:text-white focus:text-black-800 focus:ring-black",
-        color === "white" && "text-white hover:bg-white hover:text-black focus:text-white-800 focus:ring-white",
+        color === "white" && "text-white hover:bg-white hover:text-black focus:text-white-800 focus:ring-white"
       ),
       className
     )}
