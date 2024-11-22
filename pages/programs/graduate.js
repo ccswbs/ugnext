@@ -1,7 +1,7 @@
 import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
-import { ProgramSearch } from "@/components/programs/search";
+import { ProgramSearch } from "@/components/programs/program-search";
 import path from "path";
 import { getDegreeTypes, getPrograms, getProgramTypes } from "@/data/yaml/programs";
 

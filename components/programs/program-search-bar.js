@@ -2,10 +2,8 @@ import { TextInput } from "@/components/text-input";
 import { Select } from "@/components/select";
 import { editDistance, strncmp } from "@/lib/string-utils";
 import { useSearch } from "@/lib/use-search";
-import { useMemo, useState } from "react";
-import { Card } from "@/components/card";
+import { useEffect, useMemo, useState } from "react";
 import { stemmer } from "stemmer";
-import { Navigation } from "@/components/navigation";
 
 const programSearchFunc = (data) => {
   const parse = (input) => {
@@ -177,107 +175,56 @@ const programSearchFunc = (data) => {
   };
 };
 
-export const ProgramSearch = ({ programs, types, degreeTypes }) => {
+export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange }) => {
   const [input, setInput] = useState("");
   const results = useSearch(programs, input, programSearchFunc);
   const [selectedTypes, setSelectedTypes] = useState(types.map((type) => type.id));
   const [selectedDegreeTypes, setSelectedDegreeTypes] = useState(degreeTypes?.map((degreeType) => degreeType.id) ?? []);
-  const filteredResults = useMemo(
-    () =>
-      results
-        ?.filter((program) => program.types.some((type) => selectedTypes.includes(type.id)))
-        ?.filter((program) => {
-          if (!Array.isArray(degreeTypes) || degreeTypes?.length === 0) return true;
-          return program.degrees.some((degree) => selectedDegreeTypes.includes(degree.type.id));
-        }),
-    [results, selectedTypes, selectedDegreeTypes, degreeTypes]
-  );
+
+  useEffect(() => {
+    const filtered = results
+      ?.filter((program) => program.types.some((type) => selectedTypes.includes(type.id)))
+      ?.filter((program) => {
+        if (!Array.isArray(degreeTypes) || degreeTypes?.length === 0) return true;
+        return program.degrees.some((degree) => selectedDegreeTypes.includes(degree.type.id));
+      });
+
+    onChange(filtered);
+  }, [results, selectedTypes, selectedDegreeTypes, onChange, degreeTypes]);
 
   return (
-    <>
-      {/* Controls */}
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-          <div className="flex-1">
-            <TextInput
-              onInput={(value) => setInput(value)}
-              label={<span className="text-xl font-bold">What would you like to study?</span>}
-              placeholder="ex. programming, engineering, psychology, etc."
-            />
-          </div>
-
-          <div className="sm:w-1/3 md:w-1/4">
-            <Select
-              multiple
-              options={types.map((type) => ({ label: type.name, value: type.id, selected: true }))}
-              onChange={(options) => {
-                setSelectedTypes(options.map((option) => option.value));
-              }}
-              label={<span className="text-xl font-bold">Filter by type</span>}
-            />
-          </div>
-
-          {degreeTypes?.length > 0 && (
-            <div className="sm:w-1/3 md:w-1/4">
-              <Select
-                multiple
-                options={degreeTypes.map((type) => ({ label: type.name, value: type.id, selected: true }))}
-                onChange={(options) => {
-                  setSelectedDegreeTypes(options.map((option) => option.value));
-                }}
-                label={<span className="text-xl font-bold">Filter by degree type</span>}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="my-5">
-          <Navigation
-            label="Level of Study"
-            links={[
-              { href: "/programs/undergraduate", label: "Undergraduate Programs" },
-              { href: "/programs/graduate", label: "Graduate Programs" },
-              { href: "/programs/certificate-and-diploma", label: "Certificate and Diplomas" },
-              { href: "/programs/continuing-education", label: "Continuing Education" },
-            ]}
-          />
-        </div>
-
-        {input !== "" && <div className="w-full text-black/50 text-center">Found {filteredResults.length} Results</div>}
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+      <div className="flex-1">
+        <TextInput
+          onInput={(value) => setInput(value)}
+          label={<span className="text-xl font-bold">What would you like to study?</span>}
+          placeholder="ex. programming, engineering, psychology, etc."
+        />
       </div>
 
-      {/* Search results */}
-      <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {filteredResults?.map((program) => (
-          <Card
-            href={program.url}
-            key={program.id}
-            title={
-              <div className="flex flex-col gap-2 justify-center">
-                <span className="text-lg font-bold">{program.name}</span>
-                {!program.types.some((type) => type.id === "collaborative-specialization") &&
-                  program?.degrees?.map((degree, index) => (
-                    <span key={degree.id} className="text-sm text-black/65">
-                      {degree.acronym ? `${degree.name} - ${degree.acronym}` : degree.name}
-                    </span>
-                  ))}
-              </div>
-            }
-            footer={
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                {program?.types?.map((type) => type.name).join(", ")}
-              </span>
-            }
-          />
-        ))}
+      <div className="sm:w-1/3 md:w-1/4">
+        <Select
+          multiple
+          options={types.map((type) => ({ label: type.name, value: type.id, selected: true }))}
+          onChange={(options) => {
+            setSelectedTypes(options.map((option) => option.value));
+          }}
+          label={<span className="text-xl font-bold">Filter by type</span>}
+        />
       </div>
 
-      {/* No results were found */}
-      {filteredResults?.length === 0 && (
-        <div className="flex w-full items-center justify-center">
-          <span className="text-xl font-bold text-black/50">No programs matching your criteria were found.</span>
+      {degreeTypes?.length > 0 && (
+        <div className="sm:w-1/3 md:w-1/4">
+          <Select
+            multiple
+            options={degreeTypes.map((type) => ({ label: type.name, value: type.id, selected: true }))}
+            onChange={(options) => {
+              setSelectedDegreeTypes(options.map((option) => option.value));
+            }}
+            label={<span className="text-xl font-bold">Filter by degree type</span>}
+          />
         </div>
       )}
-    </>
+    </div>
   );
 };
