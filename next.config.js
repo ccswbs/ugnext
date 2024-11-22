@@ -1,6 +1,3 @@
-const CopyPlugin = require("copy-webpack-plugin");
-const path = require("path");
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
@@ -23,17 +20,6 @@ const nextConfig = {
         test: /\.ya?ml$/,
         use: "yaml-loader",
       }
-    );
-
-    config.plugins.push(
-      new CopyPlugin({
-        patterns: [
-          {
-            from: "node_modules/@uoguelph/web-components/dist/uofg-web-components",
-            to: path.resolve(__dirname, 'public', 'uofg-web-components'),
-          },
-        ],
-      })
     );
     return config;
   },

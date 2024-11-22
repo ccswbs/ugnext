@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import "@uoguelph/web-components/dist/uofg-web-components/uofg-web-components.css";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Roboto, Roboto_Condensed } from "next/font/google";
 import { useRouter } from "next/router";
