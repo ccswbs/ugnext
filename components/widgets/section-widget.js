@@ -10,7 +10,7 @@ export const Section = ({ data }) => {
 
   data?.content?.forEach((widget, index) => {
     const columnName = widget?.buttonSectionColumn?.name ?? widget?.sectionColumn?.name;
-    const column = columnName ? columnName.toLowerCase() : '';
+    const column = columnName ? columnName.toLowerCase() : "";
     switch (column) {
       case "primary":
         primary.push(<WidgetSelector key={index} data={widget} />);

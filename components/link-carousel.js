@@ -15,7 +15,7 @@ export const LinkCarousel = ({ links }) => {
       previousActiveLink.current = previous;
       return link;
     });
-  }
+  };
 
   return (
     <div className="relative w-full">
