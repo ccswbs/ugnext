@@ -1,0 +1,11 @@
+id: chemistry
+name: Chemistry
+url: https://graduatestudies.uoguelph.ca/programs/chbi
+degrees:
+  - msc
+  - phd
+types:
+  - thesis-based
+tags:
+  - chemistry
+  - science

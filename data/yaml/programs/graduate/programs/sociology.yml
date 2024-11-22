@@ -1,0 +1,12 @@
+id: sociology
+name: Sociology
+url: https://graduatestudies.uoguelph.ca/programs/soca
+degrees:
+  - ma
+  - phd
+types:
+  - thesis-based
+  - course-based
+tags:
+  - humanities
+  - culture

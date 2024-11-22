@@ -1,0 +1,11 @@
+id: philosophy
+name: Philosophy
+url: https://graduatestudies.uoguelph.ca/programs/phil
+degrees:
+  - ma
+  - phd
+types:
+  - course-based
+tags:
+  - humanities
+  - culture

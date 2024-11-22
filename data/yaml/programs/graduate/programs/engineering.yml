@@ -1,0 +1,13 @@
+id: engineering
+name: Engineering
+url: https://graduatestudies.uoguelph.ca/programs/engg
+degrees:
+  - masc
+  - phd
+types:
+  - thesis-based
+tags:
+  - technology
+  - engineering
+  - artificial intelligence
+  - ai

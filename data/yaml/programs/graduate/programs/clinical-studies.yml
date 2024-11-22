@@ -1,0 +1,14 @@
+id: clinical-studies
+name: Clinical Studies
+url: https://graduatestudies.uoguelph.ca/programs/clin
+degrees:
+  - msc
+  - dvsc
+types:
+  - thesis-based
+  - course-based
+tags:
+  - biology
+  - science
+  - health
+  - medical

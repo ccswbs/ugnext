@@ -1,0 +1,11 @@
+id: psychology
+name: Psychology
+url: https://graduatestudies.uoguelph.ca/programs/psyc
+degrees:
+  - ma
+  - msc
+  - phd
+types:
+  - thesis-based
+tags:
+  - humanities

@@ -1,0 +1,11 @@
+id: management
+name: Management
+url: https://graduatestudies.uoguelph.ca/programs/mgmt
+degrees:
+  - msc
+  - phd
+types:
+  - course-based
+tags:
+  - business
+  - management
