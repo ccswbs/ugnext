@@ -50,135 +50,137 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
   return (
     <Layout metadata={{ title: "Undergraduate Admission Requirements" }}>
       <Container centered>
-        <Heading level={1}>Undergraduate Admission Requirements</Heading>
-
         <Section
           primary={
-            <div className="flex flex-col gap-8 w-full pr-4">
-              <Select
-                label={
-                  <Heading level={5} as="h2" className="mb-1 mt-0">
-                    I am a
-                  </Heading>
-                }
-                options={studentTypes.map((type) => ({
-                  label: type.name,
-                  value: type,
-                  key: type.id,
-                }))}
-                onChange={(selection) => {
-                  setSelectedStudentType(selection?.value);
-                }}
-              />
+            <>
+              <Heading level={1}>Undergraduate Admission Requirements</Heading>
 
-              <Select
-                label={
-                  <Heading level={5} as="h2" className="mb-1 mt-0">
-                    I attend/attended high school in
-                  </Heading>
-                }
-                options={[
-                  ...locations
-                    .filter((location) => location.type === "domestic")
-                    .map((location) => ({
-                      label: location.name,
-                      value: location,
-                      key: location.id,
-                    })),
-                  {
-                    label: "Outside of Canada",
-                    value: "international",
-                    key: "international",
-                  },
-                  {
-                    label: "Another Curriculum of Study",
-                    value: "curriculum",
-                    key: "curriculum",
-                  },
-                ]}
-                onChange={(selection) => {
-                  switch (selection?.value) {
-                    case "international":
-                      setShowInternational(true);
-                      setShowCurriculums(false);
-                      setSelectedLocation(null);
-                      break;
-                    case "curriculum":
-                      setShowInternational(false);
-                      setShowCurriculums(true);
-                      setSelectedLocation(null);
-                      break;
-                    default:
-                      setShowInternational(false);
-                      setShowCurriculums(false);
+              <div className="flex flex-col gap-8 w-full pr-4">
+                <Select
+                  label={
+                    <Heading level={5} as="h2" className="mb-1 mt-0">
+                      I am a
+                    </Heading>
+                  }
+                  options={studentTypes.map((type) => ({
+                    label: type.name,
+                    value: type,
+                    key: type.id,
+                  }))}
+                  onChange={(selection) => {
+                    setSelectedStudentType(selection?.value);
+                  }}
+                />
+
+                <Select
+                  label={
+                    <Heading level={5} as="h2" className="mb-1 mt-0">
+                      I attend/attended high school in
+                    </Heading>
+                  }
+                  options={[
+                    ...locations
+                      .filter((location) => location.type === "domestic")
+                      .map((location) => ({
+                        label: location.name,
+                        value: location,
+                        key: location.id,
+                      })),
+                    {
+                      label: "Outside of Canada",
+                      value: "international",
+                      key: "international",
+                    },
+                    {
+                      label: "Another Curriculum of Study",
+                      value: "curriculum",
+                      key: "curriculum",
+                    },
+                  ]}
+                  onChange={(selection) => {
+                    switch (selection?.value) {
+                      case "international":
+                        setShowInternational(true);
+                        setShowCurriculums(false);
+                        setSelectedLocation(null);
+                        break;
+                      case "curriculum":
+                        setShowInternational(false);
+                        setShowCurriculums(true);
+                        setSelectedLocation(null);
+                        break;
+                      default:
+                        setShowInternational(false);
+                        setShowCurriculums(false);
+                        setSelectedLocation(selection?.value);
+                    }
+                  }}
+                />
+
+                {showInternational && (
+                  <Select
+                    autocomplete
+                    label={
+                      <Heading level={5} as="h2" className="mb-1 mt-0">
+                        I study/studied in
+                      </Heading>
+                    }
+                    options={locations
+                      .filter((location) => location.type === "international")
+                      .map((location) => ({
+                        label: location.name,
+                        value: location,
+                        key: location.id,
+                      }))}
+                    onChange={(selection) => {
                       setSelectedLocation(selection?.value);
-                  }
-                }}
-              />
+                    }}
+                  />
+                )}
 
-              {showInternational && (
-                <Select
-                  autocomplete
-                  label={
-                    <Heading level={5} as="h2" className="mb-1 mt-0">
-                      I study/studied in
-                    </Heading>
-                  }
-                  options={locations
-                    .filter((location) => location.type === "international")
-                    .map((location) => ({
-                      label: location.name,
-                      value: location,
-                      key: location.id,
-                    }))}
-                  onChange={(selection) => {
-                    setSelectedLocation(selection?.value);
-                  }}
-                />
-              )}
+                {showCurriculums && (
+                  <Select
+                    label={
+                      <Heading level={5} as="h2" className="mb-1 mt-0">
+                        My curriculum of study is/was
+                      </Heading>
+                    }
+                    options={locations
+                      .filter((location) => location.type === "curriculum")
+                      .map((location) => ({
+                        label: location.name,
+                        value: location,
+                        key: location.id,
+                      }))}
+                    onChange={(selection) => {
+                      setSelectedLocation(selection?.value);
+                    }}
+                  />
+                )}
 
-              {showCurriculums && (
-                <Select
-                  label={
-                    <Heading level={5} as="h2" className="mb-1 mt-0">
-                      My curriculum of study is/was
-                    </Heading>
-                  }
-                  options={locations
-                    .filter((location) => location.type === "curriculum")
-                    .map((location) => ({
-                      label: location.name,
-                      value: location,
-                      key: location.id,
-                    }))}
-                  onChange={(selection) => {
-                    setSelectedLocation(selection?.value);
-                  }}
-                />
-              )}
+                {selectedStudentType && selectedLocation && (
+                  <div className="relative group">
+                    <ProgramSearchBar programs={programs} onChange={(programs) => setFilteredPrograms(programs)} />
 
-              {selectedStudentType && selectedLocation && (
-                <div className="relative group">
-                  <ProgramSearchBar programs={programs} onChange={(programs) => setFilteredPrograms(programs)} />
-
-                  <div className="flex flex-col max-h-32 w-full overflow-y-auto bg-white absolute group-focus-within:opacity-100 group-focus-within:visible opacity-0 invisible transition duration-200 rounded-b-md border border-t-0 border-gray-300 shadow-md group-focus-within:border-blue">
-                    {filteredPrograms.map((program) => (
-                      <UnstyledLink
-                        className="w-full border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-                        key={program.id}
-                        href={`/programs/undergraduate/requirements/${selectedStudentType.id}/${selectedLocation.id}/${program.id}`}
-                      >
-                        {program.name}
-                      </UnstyledLink>
-                    ))}
+                    <div className="flex flex-col max-h-32 w-full overflow-y-auto bg-white absolute group-focus-within:opacity-100 group-focus-within:visible opacity-0 invisible transition duration-200 rounded-b-md border border-t-0 border-gray-300 shadow-md group-focus-within:border-blue">
+                      {filteredPrograms.map((program) => (
+                        <UnstyledLink
+                          className="w-full border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                          key={program.id}
+                          href={`/programs/undergraduate/requirements/${selectedStudentType.id}/${selectedLocation.id}/${program.id}`}
+                        >
+                          {program.name}
+                        </UnstyledLink>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            </>
           }
           secondary={
             <div className="flex flex-col gap-2 w-full px-4">
-              <Heading level={5} as="h2" className="mb-1 mt-0">
+              <Heading level={3} as="h2" className="mt-7">
                 More Information
               </Heading>
 
