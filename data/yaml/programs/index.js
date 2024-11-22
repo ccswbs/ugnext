@@ -78,6 +78,7 @@ export async function getPrograms(dir) {
         id: resolvedDegree.id,
         name: resolvedDegree.name,
         type: resolvedDegree.type,
+        acronym: resolvedDegree.acronym,
       };
     });
 
