@@ -22,7 +22,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange }) => 
       );
     }
 
-    onChange(filtered);
+    onChange?.(filtered);
   }, [results, selectedTypes, selectedDegreeTypes, onChange, degreeTypes, types]);
 
   return (
@@ -30,7 +30,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange }) => 
       <div className="flex-1">
         <TextInput
           onInput={(value) => setInput(value)}
-          label={<span className="text-xl font-bold">What would you like to study?</span>}
+          label={<span className="text-xl font-bold mb-1">What would you like to study?</span>}
           placeholder="ex. programming, engineering, psychology, etc."
         />
       </div>
