@@ -5,10 +5,6 @@ import { twMerge } from "tailwind-merge";
 import { useEffect } from "react";
 
 export const Footer = ({ links, subFooter, variant = "guelph" }) => {
-  useEffect(() => {
-    import("@uoguelph/web-components/dist/uofg-web-components/uofg-footer.esm.js");
-  }, []);
-
   return (
     <>
       {subFooter && (
