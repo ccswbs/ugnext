@@ -1,92 +1,76 @@
-import { twJoin } from "tailwind-merge";
-import { extractVideoID, computeLayoutMediaText, buttonStyle } from "@/lib/ug-utils";
-import Image from "next/image";
 import { Heading } from "@/components/heading";
-import { EmbeddedVideo } from "@/components/embedded-video";
 import { HtmlParser } from "@/components/html-parser";
 import { ButtonSection } from "@/components/widgets/button-section";
-import ConditionalWrap from "conditional-wrap";
+import { MediaCaption } from "@/components/media-caption";
+import { useContext } from "react";
+import { SectionContext } from "@/components/section";
+import { getHeadingLevel } from "@/lib/string-utils";
+import { twJoin } from "tailwind-merge";
+
+const getBackground = (data) => {
+  switch (data?.background?.name) {
+    case "Light Blue":
+      return "light-blue";
+    case "Dark Gray":
+      return "dark-gray";
+    default:
+      return "none";
+  }
+};
+
+const getMedia = (data) => {
+  switch (data?.media?.__typename) {
+    case "MediaImage":
+      return {
+        src: data?.media?.image?.url,
+        width: data?.media?.image?.width,
+        height: data?.media?.image?.height,
+        alt: data?.media?.image?.alt,
+      };
+    case "MediaRemoteVideo":
+      return {
+        src: data?.media?.url,
+        title: data?.media?.name,
+        transcript: data?.media?.transcript,
+      };
+  }
+};
+
+const getPosition = (data, column) => {
+  switch (column) {
+    case "primary":
+      switch (data?.mediaImageSize) {
+        case "small":
+        case "medium":
+          return "left";
+        default:
+          return "above";
+      }
+    case "secondary":
+      return "above";
+    default:
+      return data?.mediaAlignment?.name ?? "left";
+  }
+};
 
 export const MediaText = ({ data }) => {
-  const region = data.sectionColumn.name;
-  const mediaTitle = data?.heading;
-  const mediaDescription = data?.description?.processed;
-  const mediaBgColor = data?.background?.name;
+  const context = useContext(SectionContext);
+  const background = getBackground(data);
+  const size = data?.mediaImageSize ?? "large";
+  const media = getMedia(data);
+  const position = getPosition(data, context?.column);
 
-  const mediaSize = data?.mediaImageSize;
-  const imageURL = data?.media?.image?.url;
-  const imageAlt = data?.media?.image?.alt;
-  const imageWidth = data?.media?.image?.width;
-  const imageHeight = data?.media?.image?.height;
-  const mediaAlignment = data?.mediaAlignment;
-
-  const videoTitle = data?.media?.name;
-  const videoTranscript = data?.media?.transcript;
-  const videoURL = data?.media?.url;
-  const videoHeight = data?.media?.height;
-  const videoWidth = data?.media?.width;
-  const videoType = videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`;
-  const videoID = videoType === `youtube` ? extractVideoID(videoURL) : videoURL?.substring(18);
-
-  const mediaButtons = data.buttonSection;
-  let textOrButtons = mediaDescription || mediaButtons ? true : false;
-  //const mediaRelationships = data.widgetData?.relationships.field_media_text_media?.relationships;
-
-  const computeLayoutData = {
-    region: region,
-    mediaDescription: mediaDescription,
-    mediaBgColor: mediaBgColor,
-    mediaSize: mediaSize,
-    imageURL: imageURL,
-    videoURL: videoURL,
-    mediaButtons: mediaButtons,
-    mediaAlignment: mediaAlignment,
-  };
-  const {
-    textColBg,
-    headingClass,
-    mediaCol,
-    textCol,
-    textColPadding,
-    textColHeight,
-    wrapperCol,
-    leftDivClasses,
-    rightDivClasses,
-    headingColor,
-  } = computeLayoutMediaText(computeLayoutData);
-
-  const videoData = {
-    videoTitle: videoTitle,
-    videoTranscript: videoTranscript,
-    videoHeight: videoHeight,
-    videoWidth: videoWidth,
-    videoType: videoType,
-    videoID: videoID,
-  };
-  //console.log(mediaTitle,textColPadding,wrapperCol)
   return (
-    <ConditionalWrap condition={wrapperCol} wrap={(children) => <div className={wrapperCol}>{children}</div>}>
-      <div className={twJoin("mx-auto", "mt-4", "md:flex", textColBg, headingColor, headingClass)}>
-        <div className={twJoin("text-center w-full", mediaCol, leftDivClasses)} data-title="media">
-          {videoURL && <EmbeddedVideo className={twJoin("w-full")} videoData={videoData} />}
+    <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1 h-full">
+      {data?.heading && (
+        <Heading className="mt-0" level={getHeadingLevel(data?.headingLevel) ?? 3}>
+          {data?.heading}
+        </Heading>
+      )}
 
-          {imageURL && (
-            <Image className={twJoin("w-full")} src={imageURL} alt={imageAlt} width={imageWidth} height={imageHeight} />
-          )}
-        </div>
+      <HtmlParser html={data?.description?.processed ?? ""} />
 
-        {textOrButtons && (
-          <div className={twJoin(textCol, rightDivClasses, "w-full p-5")}>
-            {mediaTitle && (
-              <Heading level={3} className={twJoin("text-3xl font-bold", headingColor, headingClass)}>
-                {mediaTitle}
-              </Heading>
-            )}
-            {mediaDescription && <HtmlParser html={mediaDescription} />}
-            {mediaButtons && <ButtonSection data={mediaButtons} />}
-          </div>
-        )}
-      </div>
-    </ConditionalWrap>
+      {data?.buttonSection && <ButtonSection data={data.buttonSection} />}
+    </MediaCaption>
   );
 };
