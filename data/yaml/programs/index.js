@@ -1,7 +1,5 @@
-import { parseYaml } from "../../../lib/file-utils";
+import { parseYaml } from "@/lib/file-utils";
 import path from "path";
-
-const UNDERGRADUATE_DIRECTORY = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
 
 export async function getAdmissionLocations() {
   return await parseYaml(path.join(process.cwd(), "data", "yaml", "programs", "admission-locations.yml"));
@@ -90,7 +88,3 @@ export async function getPrograms(dir) {
     };
   });
 }
-
-getPrograms(UNDERGRADUATE_DIRECTORY).then((programs) => {
-  console.log(programs);
-})
