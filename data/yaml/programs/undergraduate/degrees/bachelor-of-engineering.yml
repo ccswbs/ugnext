@@ -1,6 +1,5 @@
 id: bachelor-of-engineering
 name: Bachelor of Engineering
 url: /programs/bachelor-of-engineering/
-types:
-  - bachelor
+type: bachelor
 tags: []

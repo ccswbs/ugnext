@@ -1,8 +1,7 @@
 id: bachelor-of-one-health
 name: Bachelor of One Health
 url: /programs/bachelor-of-one-health/
-types:
-  - bachelor
+type: bachelor
 tags:
   - health
   - science

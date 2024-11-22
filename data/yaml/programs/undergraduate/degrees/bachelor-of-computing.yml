@@ -1,8 +1,7 @@
 id: bachelor-of-computing
 name: Bachelor of Computing
 url: /programs/bachelor-of-computing/
-types:
-  - bachelor
+type: bachelor
 tags:
   - software engineering
   - software *

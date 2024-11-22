@@ -1,6 +1,5 @@
 id: bachelor-of-science-in-environmental-sciences
 name: Bachelor of Science in Environmental Sciences
 url: /programs/bachelor-of-science-in-environmental-sciences/
-types:
-  - bachelor
+type: bachelor
 tags: []

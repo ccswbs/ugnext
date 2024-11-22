@@ -1,6 +1,5 @@
 id: bachelor-of-arts-and-sciences
 name: Bachelor of Arts and Sciences
 url: /programs/bachelor-of-arts-and-sciences/
-types:
-  - bachelor
+type: bachelor
 tags: []

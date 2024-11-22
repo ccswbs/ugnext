@@ -1,6 +1,5 @@
 id: bachelor-of-arts-general
 name: Bachelor of Arts, General
 url: /programs/bachelor-of-arts-general-fully-online/
-types:
-  - bachelor
+type: bachelor
 tags: []
