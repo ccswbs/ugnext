@@ -28,16 +28,18 @@ export async function getDegrees(dir) {
   }, new Map());
 
   // Resolve the references to degree types in each degree
-  return degrees.map((degree) => {
-    if (!types.has(degree.type)) {
-      throw new Error(`Degree '${degree.id}' has a invalid degree type '${degree.type}'`);
-    }
+  return degrees
+    .map((degree) => {
+      if (!types.has(degree.type)) {
+        throw new Error(`Degree '${degree.id}' has a invalid degree type '${degree.type}'`);
+      }
 
-    return {
-      ...degree,
-      type: types.get(degree.type),
-    };
-  });
+      return {
+        ...degree,
+        type: types.get(degree.type),
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function getPrograms(dir) {
@@ -57,35 +59,41 @@ export async function getPrograms(dir) {
   }, new Map());
 
   // Resolve the references to program types and degrees (if the program has them) in each program
-  return programs.map((program) => {
-    const programTypes = program.types.map((type) => {
-      if (!types.has(type)) {
-        throw new Error(`Program '${program.id}' has an invalid program type '${type}'`);
-      }
+  return programs
+    .map((program) => {
+      const programTypes = program.types
+        .map((type) => {
+          if (!types.has(type)) {
+            throw new Error(`Program '${program.id}' has an invalid program type '${type}'`);
+          }
 
-      return types.get(type);
-    });
+          return types.get(type);
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
 
-    const programDegrees = program.degrees?.map((degree) => {
-      if (!degrees.has(degree)) {
-        throw new Error(`Program '${program.id}' has an invalid degree '${degree}'`);
-      }
+      const programDegrees = program.degrees
+        ?.map((degree) => {
+          if (!degrees.has(degree)) {
+            throw new Error(`Program '${program.id}' has an invalid degree '${degree}'`);
+          }
 
-      const resolvedDegree = degrees.get(degree);
+          const resolvedDegree = degrees.get(degree);
 
-      // Only keep some information from the degree in the program
+          // Only keep some information from the degree in the program
+          return {
+            id: resolvedDegree.id,
+            name: resolvedDegree.name,
+            type: resolvedDegree.type,
+            acronym: resolvedDegree.acronym,
+          };
+        })
+        ?.sort((a, b) => a.name.localeCompare(b.name));
+
       return {
-        id: resolvedDegree.id,
-        name: resolvedDegree.name,
-        type: resolvedDegree.type,
-        acronym: resolvedDegree.acronym,
+        ...program,
+        types: programTypes,
+        degrees: programDegrees ?? null,
       };
-    });
-
-    return {
-      ...program,
-      types: programTypes,
-      degrees: programDegrees ?? null,
-    };
-  });
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
