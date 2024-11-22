@@ -29,8 +29,6 @@ export async function getDegrees(dir) {
 
   // Resolve the references to degree types in each degree
   return degrees.map((degree) => {
-    console.log(degree);
-    
     if (!types.has(degree.type)) {
       throw new Error(`Degree '${degree.id}' has a invalid degree type '${degree.type}'`);
     }
