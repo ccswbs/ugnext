@@ -178,7 +178,7 @@ const programSearchFunc = (data) => {
 export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange }) => {
   const [input, setInput] = useState("");
   const results = useSearch(programs, input, programSearchFunc);
-  const [selectedTypes, setSelectedTypes] = useState(types.map((type) => type.id));
+  const [selectedTypes, setSelectedTypes] = useState(types?.map((type) => type.id) ?? []);
   const [selectedDegreeTypes, setSelectedDegreeTypes] = useState(degreeTypes?.map((degreeType) => degreeType.id) ?? []);
 
   useEffect(() => {
