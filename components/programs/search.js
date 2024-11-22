@@ -252,13 +252,14 @@ export const ProgramSearch = ({ programs, types, degreeTypes }) => {
             href={program.url}
             key={program.id}
             title={
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col gap-2 justify-center">
                 <span className="text-lg font-bold">{program.name}</span>
-                {program?.degrees?.map((degree, index) => (
-                  <span key={degree.id} className="text-sm text-black/65">
-                    {degree.name}
-                  </span>
-                ))}
+                {!program.types.some((type) => type.id === "collaborative-specialization") &&
+                  program?.degrees?.map((degree, index) => (
+                    <span key={degree.id} className="text-sm text-black/65">
+                      {degree.acronym ? `${degree.name} (${degree.acronym})` : degree.name}
+                    </span>
+                  ))}
               </div>
             }
             footer={
