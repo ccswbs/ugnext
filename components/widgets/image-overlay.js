@@ -2,10 +2,82 @@ import red from "@/img/red-background.webp";
 import yellow from "@/img/yellow-background.webp";
 import { twJoin } from "tailwind-merge";
 import { HtmlParser } from "@/components/html-parser";
-import { Profile } from "@/components/profile";
 import { Blockquote } from "@/components/blockquote";
 import { ButtonSection } from "@/components/widgets/button-section";
 import { ImageOverlay as ImageOverlayComponent } from "@/components/image-overlay";
+import { Info } from "@/components/info";
+import { MediaCaption } from "@/components/media-caption";
+import React from "react";
+
+const GeneralTextContent = ({ data }) => (
+  <div key={data?.id ?? index} className="[&_*]:text-inherit">
+    <HtmlParser html={data.body.processed} />
+  </div>
+);
+
+const StoryQuoteContent = ({ data, style }) => {
+  const image = data.image?.image
+    ? {
+        src: data.image?.image.url,
+        height: data.image?.image.height,
+        width: data.image?.image.width,
+        alt: data.image?.image.alt,
+      }
+    : null;
+
+  if (image) {
+    return (
+      <MediaCaption
+        size="medium"
+        position="left"
+        className="h-full"
+        media={
+          image && {
+            src: image?.url,
+            width: image?.width,
+            height: image?.height,
+            alt: image?.alt,
+            className: "rounded-full",
+          }
+        }
+      >
+        <Blockquote
+          color={style === "Yellow background" ? "red" : "yellow"}
+          className="text-inherit text-left xl:text-4xl mt-4 md:mt-0"
+        >
+          {data?.quoteContent}
+        </Blockquote>
+
+        <Info color={style === "Yellow background" ? "red" : "yellow"}>
+          <div className="flex flex-col gap-0.5">
+            {data?.quoteSource && <span className="text-xl font-bold">{data.quoteSource}</span>}
+            {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
+          </div>
+        </Info>
+      </MediaCaption>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-8">
+      <Blockquote
+        color={style === "Yellow background" ? "red" : "yellow"}
+        className="text-inherit text-left xl:text-4xl mt-4 md:mt-0"
+      >
+        {data?.quoteContent}
+      </Blockquote>
+
+      <Info color={style === "Yellow background" ? "red" : "yellow"}>
+        <div className="flex flex-col gap-0.5">
+          {data?.quoteSource && <span className="text-xl font-bold">{data.quoteSource}</span>}
+          {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
+        </div>
+      </Info>
+    </div>
+  );
+};
+
+const SectionButtonContent = ({ data }) => <ButtonSection key={data?.id ?? index} data={data} />;
 
 export const ImageOverlay = ({ data }) => {
   const images = {
@@ -45,44 +117,11 @@ export const ImageOverlay = ({ data }) => {
           ?.map((data, index) => {
             switch (data?.__typename) {
               case "ParagraphGeneralText":
-                return (
-                  <div key={data?.id ?? index} className="[&_*]:text-inherit">
-                    <HtmlParser html={data.body.processed} />
-                  </div>
-                );
+                return <GeneralTextContent key={data?.id ?? index} data={data} />;
               case "ParagraphStoryQuote":
-                const image = data.image?.image
-                  ? {
-                      src: data.image?.image.url,
-                      height: data.image?.image.height,
-                      width: data.image?.image.width,
-                      alt: data.image?.image.alt,
-                    }
-                  : null;
-
-                return (
-                  <Profile
-                    key={data?.id ?? index}
-                    image={image}
-                    body={
-                      <Blockquote
-                        color={style === "Yellow background" ? "red" : "yellow"}
-                        className="text-inherit text-left xl:text-4xl"
-                      >
-                        {data?.quoteContent}
-                      </Blockquote>
-                    }
-                    footer={
-                      <>
-                        {data?.quoteSource && <span className="text-xl font-bold">{data.quoteSource}</span>}
-                        {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
-                      </>
-                    }
-                    color={style === "Yellow background" ? "red" : "yellow"}
-                  />
-                );
+                return <StoryQuoteContent key={data?.id ?? index} data={data} style={style} />;
               case "ParagraphSectionButton":
-                return <ButtonSection key={data?.id ?? index} data={data} />;
+                return <SectionButtonContent key={data?.id ?? index} data={data} />;
               default:
                 return null;
             }

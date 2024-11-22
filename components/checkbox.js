@@ -28,8 +28,8 @@ export const Checkbox = ({ checked = false, label, description, color = "red", d
               twJoin("focus-visible:ring-blue", disabled ? "ui-checked:bg-blue/50" : "ui-checked:bg-blue"),
             color === "green" &&
               twJoin("focus-visible:ring-green", disabled ? "ui-checked:bg-green/50" : "ui-checked:bg-green"),
-            color === "grey" &&
-              twJoin("focus-visible:ring-grey", disabled ? "ui-checked:bg-grey/50" : "ui-checked:bg-grey")
+            color === "gray" &&
+              twJoin("focus-visible:ring-gray", disabled ? "ui-checked:bg-gray/50" : "ui-checked:bg-gray")
           )}
         >
           <FontAwesomeIcon
@@ -39,7 +39,7 @@ export const Checkbox = ({ checked = false, label, description, color = "red", d
               color === "yellow" && "text-black",
               color === "blue" && "text-white",
               color === "green" && "text-white",
-              color === "grey" && "text-black",
+              color === "gray" && "text-black",
               disabled ? "group-data-[checked]:opacity-70" : "group-data-[checked]:opacity-100"
             )}
             icon={faCheck}
@@ -60,7 +60,7 @@ Checkbox.propTypes = {
   checked: PropTypes.bool,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  color: PropTypes.oneOf(["red", "yellow", "blue", "green", "grey"]),
+  color: PropTypes.oneOf(["red", "yellow", "blue", "green", "gray"]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
 };

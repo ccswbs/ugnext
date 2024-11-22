@@ -87,13 +87,15 @@ export const Statistics = ({ data, variant = "gradient-of-solid-colors" }) => {
             <dd className="text-normal p-6 pt-0 text-center font-normal text-lg">{represents}</dd>
 
             {image && (
-              <Image
-                width={image.width}
-                height={image.height}
-                src={image.src}
-                alt={image.alt}
-                className={twMerge("w-full", image?.className)}
-              />
+              <dd className="contents">
+                <Image
+                  width={image.width}
+                  height={image.height}
+                  src={image.src}
+                  alt={image.alt}
+                  className={twMerge("w-full", image?.className)}
+                />
+              </dd>
             )}
           </div>
         );

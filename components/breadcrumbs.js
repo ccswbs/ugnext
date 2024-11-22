@@ -11,6 +11,7 @@ export const Breadcrumbs = ({ links }) => (
       <li>
         <Link href="/">
           <FontAwesomeIcon icon={faHome} className="h-[1em] fill-black" />
+          <span className="sr-only">U of G Homepage</span>
         </Link>
       </li>
       {links?.map((link, index) => (

@@ -18,6 +18,7 @@ query GetPage($id: String = "", $status: Boolean = false) {
         }
         widgets {
           ...Accordion
+          ...Block
           ...GeneralText
           ...Buttons
           ...Links

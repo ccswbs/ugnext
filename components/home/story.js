@@ -32,7 +32,7 @@ export const HomeStory = () => (
       footer={
         <div className="flex items-center justify-center">
           <span className="mr-1 text-2xl leading-tight">Learn how real-world education and experience will</span>
-          <Button color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+          <Button href="https://www.uoguelph.ca/improve-life/" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
             Improve Life
           </Button>
         </div>
