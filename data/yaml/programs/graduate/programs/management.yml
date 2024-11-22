@@ -2,8 +2,8 @@ id: management
 name: Management
 url: https://graduatestudies.uoguelph.ca/programs/mgmt
 degrees:
-  - msc
-  - phd
+  - master-of-science
+  - doctor-of-philosophy
 types:
   - course-based
 tags:

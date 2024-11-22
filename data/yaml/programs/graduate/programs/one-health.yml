@@ -2,12 +2,12 @@ id: one-health
 name: One Health
 url: https://graduatestudies.uoguelph.ca/programs/onehealth
 degrees:
-  - msc
-  - phd
-  - mes
-  - ma
-  - masc
-  - meng
+  - master-of-science
+  - doctor-of-philosophy
+  - master-of-environmental-sciences
+  - master-of-arts
+  - master-of-applied-science
+  - master-of-engineering
 types:
   - collaborative-specialization
 tags:

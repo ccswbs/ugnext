@@ -2,11 +2,11 @@ id: regenerative-medicine
 name: Regenerative Medicine
 url: https://graduatestudies.uoguelph.ca/programs/regenerative-medicine
 degrees:
-  - msc
-  - phd
+  - master-of-science
+  - doctor-of-philosophy
   - dvsc
-  - masc
-  - mbs
+  - master-of-applied-science
+  - master-of-biomedical-science
 types:
   - collaborative-specialization
 tags:

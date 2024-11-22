@@ -2,9 +2,9 @@ id: geography
 name: Geography
 url: https://graduatestudies.uoguelph.ca/programs/geog
 degrees:
-  - ma
-  - msc
-  - phd
+  - master-of-arts
+  - master-of-science
+  - doctor-of-philosophy
 types:
   - course-based
   - thesis-based

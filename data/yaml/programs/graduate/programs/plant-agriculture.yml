@@ -2,9 +2,9 @@ id: plant-agriculture
 name: Plant Agriculture
 url: https://graduatestudies.uoguelph.ca/programs/plnt
 degrees:
-  - msc
-  - phd
-  - mpag
+  - master-of-science
+  - doctor-of-philosophy
+  - master-of-plant-agriculture
 types:
   - course-based
   - thesis-based

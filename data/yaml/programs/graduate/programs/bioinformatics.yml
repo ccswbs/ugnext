@@ -2,9 +2,9 @@ id: bioinformatics
 name: Bioinformatics
 url: https://graduatestudies.uoguelph.ca/programs/binf
 degrees:
-  - mbinf
-  - msc
-  - phd
+  - master-of-bioinformatics
+  - master-of-science
+  - doctor-of-philosophy
 types:
   - course-based
 tags:

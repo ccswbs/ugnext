@@ -2,8 +2,8 @@ id: population-medicine
 name: Population Medicine
 url: https://graduatestudies.uoguelph.ca/programs/popmed
 degrees:
-  - msc
-  - phd
+  - master-of-science
+  - doctor-of-philosophy
   - dvsc
 types:
   - thesis-based

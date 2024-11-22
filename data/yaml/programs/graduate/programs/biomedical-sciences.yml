@@ -2,9 +2,9 @@ id: biomedical-sciences
 name: Biomedical Sciences
 url: https://graduatestudies.uoguelph.ca/programs/biom
 degrees:
-  - mbs
-  - msc
-  - phd
+  - master-of-biomedical-science
+  - master-of-science
+  - doctor-of-philosophy
   - dvsc
 types:
   - course-based

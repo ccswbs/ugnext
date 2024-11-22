@@ -2,9 +2,9 @@ id: environmental-sciences
 name: Environmental Sciences
 url: https://graduatestudies.uoguelph.ca/programs/envs
 degrees:
-  - mes
-  - msc
-  - phd
+  - master-of-environmental-sciences
+  - master-of-science
+  - doctor-of-philosophy
 types:
   - course-based
   - thesis-based
