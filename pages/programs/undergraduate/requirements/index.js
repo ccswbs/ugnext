@@ -162,7 +162,7 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                   <div className="relative group">
                     <ProgramSearchBar programs={programs} onChange={(programs) => setFilteredPrograms(programs)} />
 
-                    <div className="flex flex-col max-h-32 w-full overflow-y-auto bg-white absolute group-focus-within:opacity-100 group-focus-within:visible opacity-0 invisible transition duration-200 rounded-b-md border border-t-0 border-gray-300 shadow-md group-focus-within:border-blue">
+                    <div className="flex flex-col max-h-32 w-full overflow-y-auto bg-white group-focus-within:opacity-100 group-focus-within:visible opacity-0 invisible transition duration-200 rounded-b-md border border-t-0 border-gray-300 shadow-md group-focus-within:border-blue">
                       {filteredPrograms.map((program) => (
                         <UnstyledLink
                           className="w-full border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
