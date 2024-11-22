@@ -15,9 +15,18 @@ export async function getStaticProps() {
 
   return {
     props: {
-      programs: [...programs, ...degrees.map((degree) => ({ ...degree, types: [degree.type] }))].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ),
+      programs: [
+        ...programs.map((program) => {
+          // Remove admission requirements data as we don't need it for the search
+          delete program.requirements;
+          return program;
+        }),
+        ...degrees.map((degree) => {
+          // Remove admission requirements data as we don't need it for the search
+          delete degree.requirements;
+          return { ...degree, types: [degree.type] };
+        }),
+      ].sort((a, b) => a.name.localeCompare(b.name)),
       types: [...types, ...degreesTypes],
     },
   };
