@@ -257,7 +257,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes }) => {
                 {!program.types.some((type) => type.id === "collaborative-specialization") &&
                   program?.degrees?.map((degree, index) => (
                     <span key={degree.id} className="text-sm text-black/65">
-                      {degree.acronym ? `${degree.name} (${degree.acronym})` : degree.name}
+                      {degree.acronym ? `${degree.name} - ${degree.acronym}` : degree.name}
                     </span>
                   ))}
               </div>
