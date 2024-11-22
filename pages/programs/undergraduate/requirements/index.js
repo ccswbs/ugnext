@@ -42,7 +42,6 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [showInternational, setShowInternational] = useState(false);
   const [showCurriculums, setShowCurriculums] = useState(false);
-
   const isComplete = selectedStudentType && selectedLocation && selectedProgram;
 
   useEffect(() => {
