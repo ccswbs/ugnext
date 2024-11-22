@@ -3,50 +3,33 @@ import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
 import { ProgramSearch } from "@/components/programs/search";
-import { toTitleCase } from "@/lib/string-utils";
-import { Card } from "@/components/card";
-import { getUndergraduateDegrees, getUndergraduatePrograms } from "@/data/yaml/programs";
+import { getDegrees, getDegreeTypes, getPrograms, getProgramTypes } from "@/data/yaml/programs";
+import path from "path";
 
 export async function getStaticProps() {
+  const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
+  const programs = await getPrograms(directory);
+  const types = await getProgramTypes(directory);
+  const degrees = await getDegrees(directory);
+  const degreesTypes = await getDegreeTypes(directory);
+
   return {
     props: {
-      programs: (await getUndergraduatePrograms())
-        .concat(await getUndergraduateDegrees())
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      programs: [...programs, ...degrees.map((degree) => ({ ...degree, types: [degree.type] }))].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      ),
+      types: [...types, ...degreesTypes],
     },
   };
 }
 
-export default function ProgramsUndergraduate({ programs }) {
+export default function ProgramsUndergraduate({ programs, types }) {
   return (
     <Layout metadata={{ title: "Undergraduate Programs" }}>
       <Container centered>
         <Heading level={1}>Undergraduate Programs at the University of Guelph</Heading>
 
-        <ProgramSearch
-          programs={programs}
-          render={(program) => (
-            <Card
-              href={program.url}
-              key={program.name + program.url}
-              title={
-                <div className="flex flex-col justify-center">
-                  <span className="text-lg font-bold">{program.name}</span>
-                  {program?.degrees?.map((degree, index) => (
-                    <span key={index} className="text-sm text-black/65">
-                      {degree}
-                    </span>
-                  ))}
-                </div>
-              }
-              footer={
-                <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                  {program?.types?.map((type) => toTitleCase(type)).join(", ")}
-                </span>
-              }
-            />
-          )}
-        />
+        <ProgramSearch programs={programs} types={types} />
       </Container>
     </Layout>
   );

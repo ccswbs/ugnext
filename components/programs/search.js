@@ -1,11 +1,11 @@
 import { TextInput } from "@/components/text-input";
 import { Select } from "@/components/select";
-import { editDistance, strncmp, toTitleCase } from "@/lib/string-utils";
+import { editDistance, strncmp } from "@/lib/string-utils";
 import { useSearch } from "@/lib/use-search";
-import React, { useMemo, useState } from "react";
-import { ProgramNavigation } from "@/components/programs/navigation";
+import { useMemo, useState } from "react";
 import { Card } from "@/components/card";
 import { stemmer } from "stemmer";
+import { Navigation } from "@/components/navigation";
 
 const programSearchFunc = (data) => {
   const parse = (input) => {
@@ -177,55 +177,24 @@ const programSearchFunc = (data) => {
   };
 };
 
-const enumerateProgramTypes = (programs) => {
-  const types = new Map();
-
-  for (const program of programs) {
-    for (const type of program.types) {
-      if (!types.has(type))
-        types.set(type, {
-          value: type,
-          label: toTitleCase(type),
-          selected: true,
-        });
-    }
-  }
-
-  return Array.from(types.values());
-};
-
-const ProgramCard = ({ program }) => (
-  <Card
-    key={program.name + program.url}
-    href={program.url}
-    title={<span className="flex items-center text-lg font-bold">{program.name}</span>}
-    footer={
-      <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-        {program?.types?.map((type) => toTitleCase(type)).join(", ")}
-      </span>
-    }
-  />
-);
-
-export const ProgramSearch = ({ programs, children, filterer, render }) => {
+export const ProgramSearch = ({ programs, types, degreeTypes }) => {
   const [input, setInput] = useState("");
-
-  const types = useMemo(() => enumerateProgramTypes(programs), [programs]);
-  const [selectedTypes, setSelectedTypes] = useState(types);
-
   const results = useSearch(programs, input, programSearchFunc);
-  const filtered = useMemo(() => {
-    let filtered = results?.filter((program) => selectedTypes.some((type) => program.types.includes(type.value)));
-
-    if (typeof filterer === "function") {
-      filtered = filtered?.filter((program) => filterer(program));
-    }
-
-    return filtered;
-  }, [filterer, results, selectedTypes]);
-
+  const [selectedTypes, setSelectedTypes] = useState(types.map((type) => type.id));
+  const [selectedDegreeTypes, setSelectedDegreeTypes] = useState(degreeTypes?.map((degreeType) => degreeType.id) ?? []);
+  const filteredResults = useMemo(
+    () =>
+      results
+        ?.filter((program) => program.types.some((type) => selectedTypes.includes(type.id)))
+        ?.filter((program) => {
+          if (!Array.isArray(degreeTypes) || degreeTypes?.length === 0) return true;
+          return program.degrees.some((degree) => selectedDegreeTypes.includes(degree.type.id));
+        }),
+    [results, selectedTypes, selectedDegreeTypes, degreeTypes]
+  );
   return (
     <>
+      {/* Controls */}
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
           <div className="flex-1">
@@ -239,30 +208,70 @@ export const ProgramSearch = ({ programs, children, filterer, render }) => {
           <div className="sm:w-1/3 md:w-1/4">
             <Select
               multiple
-              options={types}
+              options={types.map((type) => ({ label: type.name, value: type.id, selected: true }))}
               onChange={(options) => {
-                setSelectedTypes(options);
+                setSelectedTypes(options.map((option) => option.value));
               }}
               label={<span className="text-xl font-bold">Filter by type</span>}
             />
           </div>
 
-          {children}
+          {degreeTypes?.length > 0 && (
+            <div className="sm:w-1/3 md:w-1/4">
+              <Select
+                multiple
+                options={degreeTypes.map((type) => ({ label: type.name, value: type.id, selected: true }))}
+                onChange={(options) => {
+                  setSelectedDegreeTypes(options.map((option) => option.value));
+                }}
+                label={<span className="text-xl font-bold">Filter by degree type</span>}
+              />
+            </div>
+          )}
         </div>
 
-        <ProgramNavigation />
+        <div className="my-5">
+          <Navigation
+            label="Level of Study"
+            links={[
+              { href: "/programs/undergraduate", label: "Undergraduate Programs" },
+              { href: "/programs/graduate", label: "Graduate Programs" },
+              { href: "/programs/certificate-and-diploma", label: "Certificate and Diplomas" },
+              { href: "/programs/continuing-education", label: "Continuing Education" },
+            ]}
+          />
+        </div>
 
-        <div className="flex flex-col justify-between"></div>
+        {input !== "" && <div className="w-full text-black/50 text-center">Found {filteredResults.length} Results</div>}
       </div>
 
       {/* Search results */}
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {filtered?.map((program) =>
-          typeof render === "function" ? render(program) : <ProgramCard key={program.id} program={program} />
-        )}
+        {filteredResults?.map((program) => (
+          <Card
+            href={program.url}
+            key={program.id}
+            title={
+              <div className="flex flex-col justify-center">
+                <span className="text-lg font-bold">{program.name}</span>
+                {program?.degrees?.map((degree, index) => (
+                  <span key={degree.id} className="text-sm text-black/65">
+                    {degree.name}
+                  </span>
+                ))}
+              </div>
+            }
+            footer={
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                {program?.types?.map((type) => type.name).join(", ")}
+              </span>
+            }
+          />
+        ))}
       </div>
 
-      {filtered?.length === 0 && (
+      {/* No results were found */}
+      {filteredResults?.length === 0 && (
         <div className="flex w-full items-center justify-center">
           <span className="text-xl font-bold text-black/50">No programs matching your criteria were found.</span>
         </div>
