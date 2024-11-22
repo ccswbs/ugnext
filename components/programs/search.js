@@ -192,6 +192,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes }) => {
         }),
     [results, selectedTypes, selectedDegreeTypes, degreeTypes]
   );
+
   return (
     <>
       {/* Controls */}
