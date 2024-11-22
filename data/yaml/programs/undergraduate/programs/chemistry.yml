@@ -1,0 +1,15 @@
+id: chemistry
+name: Chemistry
+acronym: CHEM
+url: https://www.uoguelph.ca/programs/chemistry/
+degrees:
+  - Bachelor of Science
+types:
+  - major
+  - co-op
+  - minor
+tags:
+  - chemistry
+  - science
+  - chemical physics
+  - nanoscience

@@ -1,0 +1,13 @@
+id: english
+name: English
+acronym: ENGL
+url: https://www.uoguelph.ca/programs/english/
+degrees:
+  - Bachelor of Arts
+types:
+  - major
+  - minor
+  - area-of-concentration
+tags:
+  - humanities
+  - language
