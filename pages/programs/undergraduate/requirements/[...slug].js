@@ -1,8 +1,3 @@
-import {
-  getRequirementTitle,
-  slugToRequirement,
-  getRequirementContent,
-} from "@/data/yaml/admission/undergraduate/requirements";
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
@@ -19,18 +14,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const requirement = await slugToRequirement(context.params.slug);
-
-  if (!requirement) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
     props: {
-      title: getRequirementTitle(requirement),
-      content: await getRequirementContent(requirement),
+      title: "Test",
+      content: "<div>test</div>",
     },
   };
 }
@@ -41,7 +28,7 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
       <Container centered>
         <Heading level={1}>{title || "Undergraduate Admission Requirements"}</Heading>
 
-        <Button className="flex gap-2 w-fit" color="red" href="/admission/undergraduate/requirements/">
+        <Button className="flex gap-2 w-fit" color="red" href="/programs/undergraduate/requirements/">
           <FontAwesomeIcon icon={faArrowLeftToBracket} />
           <span>View Other Requirements</span>
         </Button>
