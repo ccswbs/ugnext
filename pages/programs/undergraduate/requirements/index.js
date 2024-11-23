@@ -180,7 +180,11 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
               </div>
             </>
           }
-          secondary={<Sidebar />}
+          secondary={
+            <div className="flex flex-col gap-2 w-full px-4">
+              <Sidebar />
+            </div>
+          }
         />
       </Container>
     </Layout>
