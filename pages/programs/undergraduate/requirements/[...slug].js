@@ -49,7 +49,7 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-      title: `${program.name} Admission Requirements for ${studentType.name} in ${location.name}`,
+      title: `${program.name} Admission Requirements for ${studentType.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location.name}`,
       content: "<div>Requirements information here</div>",
     },
   };
