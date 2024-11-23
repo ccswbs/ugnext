@@ -9,7 +9,7 @@ import {
   faCalendarDays,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
-export const Sidebar = () => {
+export const Sidebar = ({ children }) => {
   const links = [
     {
       url: "https://www.uoguelph.ca/admission/undergraduate/apply/",
@@ -39,14 +39,14 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-2 w-full px-4">
+    <>
       <Heading level={3} as="h2" className="mt-7">
         More Information
       </Heading>
 
       <ul className="flex flex-col w-full gap-4">
         {links.map((link, index) => (
-          <li key={link.href} className="w-full">
+          <li key={link.url} className="w-full">
             <Button
               className="flex items-center justify-start gap-4 w-full"
               href={link.url}
@@ -57,7 +57,9 @@ export const Sidebar = () => {
             </Button>
           </li>
         ))}
+
+        {children}
       </ul>
-    </div>
+    </>
   );
 };
