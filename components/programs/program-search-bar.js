@@ -2,8 +2,9 @@ import { TextInput } from "@/components/text-input";
 import { Select } from "@/components/select";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
 import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
-export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange }) => {
+export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, className }) => {
   const [input, setInput] = useState("");
   const results = useSearch(programs, input, nameAndTagSearch);
   const [selectedTypes, setSelectedTypes] = useState(types?.map((type) => type.id) ?? []);
@@ -26,7 +27,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange }) => 
   }, [results, selectedTypes, selectedDegreeTypes, onChange, degreeTypes, types]);
 
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+    <div className={twMerge("flex flex-col gap-4 sm:flex-row sm:items-end", className)}>
       <div className="flex-1">
         <TextInput
           onInput={(value) => setInput(value)}

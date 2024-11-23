@@ -7,10 +7,8 @@ import { useState } from "react";
 import { Select } from "@/components/select";
 import { ProgramSearchBar } from "@/components/programs/program-search-bar";
 import { Section } from "@/components/section";
-import { List, ListItem } from "@/components/list";
-import { Link, UnstyledLink } from "@/components/link";
-import { Button } from "@/components/button";
-import { Card } from "@/components/card";
+import { UnstyledLink } from "@/components/link";
+import { Sidebar } from "@/components/programs/undergraduate/sidebar";
 
 export async function getStaticProps() {
   const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
@@ -160,9 +158,13 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
 
                 {selectedStudentType && selectedLocation && (
                   <div className="relative group">
-                    <ProgramSearchBar programs={programs} onChange={(programs) => setFilteredPrograms(programs)} />
+                    <ProgramSearchBar
+                      programs={programs}
+                      onChange={(programs) => setFilteredPrograms(programs)}
+                      className="[&_.text-input]:rounded-b-none"
+                    />
 
-                    <div className="flex flex-col max-h-32 w-full overflow-y-auto bg-white group-focus-within:opacity-100 group-focus-within:visible opacity-0 invisible transition duration-200 rounded-b-md border border-t-0 border-gray-300 shadow-md group-focus-within:border-blue">
+                    <div className="flex flex-col max-h-32 w-full overflow-y-auto bg-white rounded-b-md border border-t-0 border-gray-300 group-focus-within:border-blue">
                       {filteredPrograms.map((program) => (
                         <UnstyledLink
                           className="w-full border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
@@ -178,21 +180,7 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
               </div>
             </>
           }
-          secondary={
-            <div className="flex flex-col gap-2 w-full px-4">
-              <Heading level={3} as="h2" className="mt-7">
-                More Information
-              </Heading>
-
-              <ul className="w-full">
-                <li className="w-full">
-                  <Button className="w-full p-2" href="/programs/undergraduate" color="red" outlined>
-                    View All Programs
-                  </Button>
-                </li>
-              </ul>
-            </div>
-          }
+          secondary={<Sidebar />}
         />
       </Container>
     </Layout>
