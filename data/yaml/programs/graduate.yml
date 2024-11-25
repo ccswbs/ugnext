@@ -51,7 +51,7 @@
     - cultur*
     - fine art
     - fundraising
-    - human perceptions & behaviour
+    - human perceptions behaviour
     - identit*
 - name: Artificial Intelligence
   url: https://graduatestudies.uoguelph.ca/programs/csai
@@ -190,7 +190,8 @@
     - agri*
     - changemaking
     - communications
-    - economics & finance
+    - economics
+    - finance
     - food management
     - food*
     - hospitality
@@ -245,7 +246,8 @@
     - crop protection
     - energy
     - forensic
-    - government policy & laws
+    - government policy
+    - government policy laws
     - law*
     - magnets
     - medicine*
@@ -306,7 +308,8 @@
     - machine learning
     - patterns
     - physical design
-    - software engineering & development
+    - software engineering
+    - software development
     - theory
 - name: Computer Science
   url: https://graduatestudies.uoguelph.ca/programs/cis
@@ -326,7 +329,8 @@
     - ehealth innovation
     - health*
     - physical design
-    - software engineering & development
+    - software engineering
+    - software development
 - name: Conservation Leadership
   url: https://graduatestudies.uoguelph.ca/Programs/ConservationLeadership
   degrees:
@@ -489,15 +493,16 @@
     - energy
     - food engineering
     - food*
-    - government policy & laws
+    - government policy
     - innovation
     - intelligent systems
     - law*
     - machine learning
     - physical design
-    - research & development
+    - research development
     - resource management
-    - software engineering & development
+    - software engineering
+    - software development
     - sustainab*
     - sustainable energy systems
     - waste management
@@ -517,15 +522,16 @@
     - energy
     - food engineering
     - food*
-    - government policy & laws
+    - government policy
     - innovation
     - intelligent systems
     - law*
     - machine learning
     - physical design
-    - research & development
+    - research development
     - resource management
-    - software engineering & development
+    - software engineering
+    - software development
     - sustainab*
     - sustainable energy systems
     - waste management
@@ -588,7 +594,6 @@
     - food security
     - food*
     - government policy
-    - government policy & laws
     - indigenous knowledge systems
     - indigenous studies
     - law*
@@ -689,7 +694,7 @@
     - ethnobotany
     - food*
     - forestry
-    - government policy & laws
+    - government policy
     - hydrology
     - indigenous methodology
     - indigenous studies
@@ -699,7 +704,8 @@
     - mining
     - public health
     - remote sensing
-    - software engineering & development
+    - software engineering
+    - software development
     - sustainab*
     - waste management
     - water*
@@ -812,7 +818,7 @@
     - french*
     - gender*
     - government*
-    - human perceptions & behaviour
+    - human perceptions behaviour
     - identit*
     - identity formation
     - international development
@@ -989,8 +995,8 @@
     - evidence-based management
     - food supply chains
     - food*
-    - government policy & laws
-    - human perceptions & behaviour
+    - government policy
+    - human perceptions behaviour
     - innovation
     - law*
     - leisure*
@@ -1101,7 +1107,7 @@
     - medicine*
     - microbiology
     - molecular basis of disease
-    - molecular biology & genetics
+    - molecular biology
     - pathogen*
     - plant biology
     - plant metabolism
@@ -1134,7 +1140,7 @@
     - disease
     - disorders
     - health*
-    - human perceptions & behaviour
+    - human perceptions behaviour
     - illness
     - medicine*
     - nursing
@@ -1705,7 +1711,7 @@
     - community-based nature tourism
     - community*
     - conservation*
-    - government policy & laws
+    - government policy
     - innovation
     - law*
     - project management
@@ -1790,7 +1796,8 @@
     - cultur*
     - cultural sociology
     - data*
-    - economics & finance
+    - economics
+    - finance
     - enviro*
     - food*
     - human resources
