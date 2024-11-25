@@ -2,17 +2,14 @@ import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
 import { ProgramSearch } from "@/components/programs/program-search";
-import path from "path";
-import { getDegreeTypes, getPrograms, getProgramTypes } from "@/data/yaml/programs";
+import { getGraduateDegreeTypes, getGraduatePrograms, getGraduateProgramTypes } from "@/data/yaml/programs/graduate";
 
 export async function getStaticProps() {
-  const directory = path.join(process.cwd(), "data", "yaml", "programs", "graduate");
-
   return {
     props: {
-      programs: await getPrograms(directory),
-      types: await getProgramTypes(directory),
-      degreeTypes: await getDegreeTypes(directory),
+      programs: await getGraduatePrograms(),
+      types: await getGraduateProgramTypes(),
+      degreeTypes: await getGraduateDegreeTypes(),
     },
   };
 }
