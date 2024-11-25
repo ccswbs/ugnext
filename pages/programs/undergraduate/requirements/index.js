@@ -1,39 +1,30 @@
 import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
-import { getAdmissionLocations, getDegrees, getPrograms, getStudentTypes } from "@/data/yaml/programs";
-import path from "path";
+import { getAdmissionLocations } from "@/data/yaml/programs";
 import { useState } from "react";
 import { Select } from "@/components/select";
 import { ProgramSearchBar } from "@/components/programs/program-search-bar";
 import { Section } from "@/components/section";
 import { UnstyledLink } from "@/components/link";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
+import { getUndergraduatePrograms, getUndergraduateStudentTypes } from "@/data/yaml/programs/undergraduate";
 
 export async function getStaticProps() {
-  const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
-  const programs = await getPrograms(directory);
-  const degrees = await getDegrees(directory);
-
   return {
     props: {
-      studentTypes: await getStudentTypes(directory),
+      studentTypes: await getUndergraduateStudentTypes(),
       locations: await getAdmissionLocations(),
-      programs: [
-        ...programs
-          // For admission requirements, we only need majors
-          .filter((program) => program.types.some((type) => type.id === "major"))
-          .map((program) => {
-            // Remove admission requirements data as we don't need it for the search
-            delete program.requirements;
-            return program;
-          }),
-        ...degrees.map((degree) => {
+      programs: (await getUndergraduatePrograms())
+        .filter((program) => {
+          const allowedTypes = new Set(["major", "bachelor"]);
+          return program.types.some((type) => allowedTypes.has(type.id));
+        })
+        .map((program) => {
           // Remove admission requirements data as we don't need it for the search
-          delete degree.requirements;
-          return { ...degree, types: [degree.type] };
+          delete program.requirements;
+          return program;
         }),
-      ].sort((a, b) => a.name.localeCompare(b.name)),
     },
   };
 }
