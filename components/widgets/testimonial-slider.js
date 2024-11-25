@@ -21,7 +21,7 @@ export const TestimonialSlider = ({ data }) => {
   }
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-50">
       <Container className="px-4 py-14 flex flex-col items-center" centered={true}>
         <Heading level={2} as="h3" className="mb-12 text-black">
           {data?.title}
@@ -30,7 +30,7 @@ export const TestimonialSlider = ({ data }) => {
         <Carousel loop="jump" display={showMultiple ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
             const image = testimonial?.image?.image;
-            const title = testimonial?.name ?? 'Anonymous';
+            const title = testimonial?.name ?? "Anonymous";
 
             return (
               <MediaCaption

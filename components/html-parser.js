@@ -48,7 +48,13 @@ export const DEFAULT_INSTRUCTIONS = [
         const type = node.attribs.className?.match(/btn-(?:outline-)?(\w*)/)?.[1];
         const map = {
           primary: "red",
-          secondary: "blue",
+          secondary: "black",
+          info: "blue",
+          success: "green",
+          warning: "yellow",
+          danger: "red",
+          light: "gray",
+          dark: "black",
         };
 
         const outlined = node.attribs.className?.includes("btn-outline");

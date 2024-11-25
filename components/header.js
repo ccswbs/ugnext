@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 const Link = ({ title, url }) => {
   return <a href={url}>{title}</a>;

@@ -24,6 +24,9 @@ fragment Accordion on ParagraphAccordionSection {
 
 fragment Block on ParagraphBlockWidget {
   __typename
+  sectionColumn {
+    ...SectionColumn
+  }
   block {
     __typename
     ...BasicBlock
@@ -180,6 +183,7 @@ fragment Section on ParagraphSection {
     ...ButtonSection
     ...Tabs
     ...Statistics
+    ...ImageOverlay
   }
 }
 

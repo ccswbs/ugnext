@@ -64,7 +64,7 @@ export const MediaCaption = ({
           position === "right" && "col-start-1 row-start-1",
           position === "above" && "flex-1",
           background === "light-blue" && "bg-light-blue-50",
-          background === "dark-grey" && "bg-cool-grey-950 text-white",
+          background === "dark-gray" && "bg-cool-gray-950 text-white",
           background === "none" && position === "left" && "py-0 md:px-4",
           background === "none" && position === "right" && "py-0 md:px-4",
           background === "none" && position === "above" && "px-0"
@@ -106,7 +106,7 @@ MediaCaption.propTypes = {
   /**
    * The background colour of the caption area.
    */
-  background: PropTypes.oneOf(["none", "light-blue", "dark-grey"]),
+  background: PropTypes.oneOf(["none", "light-blue", "dark-gray"]),
   className: PropTypes.string,
   children: PropTypes.node,
 };
