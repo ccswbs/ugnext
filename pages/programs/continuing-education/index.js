@@ -3,16 +3,16 @@ import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
 import { ProgramSearch } from "@/components/programs/program-search";
-import { getPrograms, getProgramTypes } from "@/data/yaml/programs";
-import path from "path";
+import {
+  getContinuingEducationPrograms,
+  getContinuingEducationProgramTypes,
+} from "@/data/yaml/programs/continuing-education";
 
 export async function getStaticProps() {
-  const directory = path.join(process.cwd(), "data", "yaml", "programs", "continuing-education");
-
   return {
     props: {
-      programs: await getPrograms(directory),
-      types: await getProgramTypes(directory),
+      programs: await getContinuingEducationPrograms(),
+      types: await getContinuingEducationProgramTypes(),
     },
   };
 }
