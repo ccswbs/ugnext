@@ -21,3 +21,15 @@ tags:
   - software design
   - data
   - analytics
+requirements:
+  - studentType: high-school
+    location:
+      - ontario
+    content: |
+      <div> Computer Science High School Ontario </div>
+  - studentType: high-school
+    location:
+      - colombia
+      - ecuador
+    content: |
+      <div> Computer Science High School Ontario </div>
