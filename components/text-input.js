@@ -10,7 +10,7 @@ export const TextInput = ({ value = "", type = "text", placeholder = "", onInput
   const ref = useRef(null);
 
   useEffect(() => {
-    onInput(input);
+    onInput?.(input);
   }, [input, onInput]);
 
   return (

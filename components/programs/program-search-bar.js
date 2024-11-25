@@ -1,7 +1,7 @@
 import { TextInput } from "@/components/text-input";
 import { Select } from "@/components/select";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, className }) => {
@@ -10,7 +10,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
   const [selectedTypes, setSelectedTypes] = useState(types?.map((type) => type.id) ?? []);
   const [selectedDegreeTypes, setSelectedDegreeTypes] = useState(degreeTypes?.map((degreeType) => degreeType.id) ?? []);
 
-  useEffect(() => {
+  const filtered = useMemo(() => {
     let filtered = results;
 
     if (Array.isArray(types) && types.length > 0) {
@@ -23,8 +23,12 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
       );
     }
 
+    return filtered;
+  }, [results, selectedTypes, selectedDegreeTypes, types, degreeTypes]);
+
+  useEffect(() => {
     onChange?.(filtered);
-  }, [results, selectedTypes, selectedDegreeTypes, onChange, degreeTypes, types]);
+  }, [filtered, onChange]);
 
   return (
     <div className={twMerge("flex flex-col gap-4 sm:flex-row sm:items-end", className)}>

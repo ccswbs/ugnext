@@ -12,7 +12,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes }) => {
         programs={programs}
         types={types}
         degreeTypes={degreeTypes}
-        onChange={(programs) => setFilteredPrograms(programs)}
+        onChange={(filtered) => setFilteredPrograms(filtered)}
       />
 
       <ProgramSearchNavigation />
