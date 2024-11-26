@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
-import path from "path";
-import { getAdmissionLocations, getDegrees, getPrograms, getStudentTypes } from "@/data/yaml/programs";
+import { getUndergraduateRequirements, slugToUndergraduateRequirements } from "@/data/yaml/programs/undergraduate";
 
 export async function getStaticPaths() {
   return {
@@ -18,39 +17,20 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
-  const slug = context.params.slug;
-  const programs = await getPrograms(directory);
-  const degrees = await getDegrees(directory);
+  const parsed = await slugToUndergraduateRequirements(context.params.slug);
 
-  const studentType = (await getStudentTypes(directory)).find((studentType) => studentType.id === slug[0]);
-
-  if (!studentType) {
+  if (!parsed) {
     return {
       notFound: true,
     };
   }
 
-  const location = (await getAdmissionLocations()).find((location) => location.id === slug[1]);
-
-  if (!location) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const program = programs.find((program) => program.id === slug[2]) ?? degrees.find((degree) => degree.id === slug[2]);
-
-  if (!program) {
-    return {
-      notFound: true,
-    };
-  }
+  const { title, content } = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
 
   return {
     props: {
-      title: `${program.name} Admission Requirements for ${studentType.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location.name}`,
-      content: "<div>Requirements information here</div>",
+      title: title,
+      content: content,
     },
   };
 }
