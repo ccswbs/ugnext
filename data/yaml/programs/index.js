@@ -1,25 +1,25 @@
-import { parseYaml } from "@/lib/file-utils";
+import { parseYamlFiles } from "@/lib/yaml";
 import path from "path";
 
 export async function getAdmissionLocations() {
-  return await parseYaml(path.join(process.cwd(), "data", "yaml", "programs", "admission-locations.yml"));
+  return await parseYamlFiles(path.join(process.cwd(), "data", "yaml", "programs", "admission-locations.yml"));
 }
 
 export async function getStudentTypes(dir) {
-  return await parseYaml(path.join(dir, "student-types.yml"));
+  return await parseYamlFiles(path.join(dir, "student-types.yml"));
 }
 
 export async function getDegreeTypes(dir) {
-  return await parseYaml(path.join(dir, "degree-types.yml"));
+  return await parseYamlFiles(path.join(dir, "degree-types.yml"));
 }
 
 export async function getProgramTypes(dir) {
-  return await parseYaml(path.join(dir, "program-types.yml"));
+  return await parseYamlFiles(path.join(dir, "program-types.yml"));
 }
 
 export async function getDegrees(dir) {
   // Parse all the degree YAML files
-  const degrees = await parseYaml(path.join(dir, "degrees", "*.yml"));
+  const degrees = await parseYamlFiles(path.join(dir, "degrees", "*.yml"));
 
   // Create a map of the valid degree types
   const types = (await getDegreeTypes(dir)).reduce((acc, type) => {
@@ -44,7 +44,7 @@ export async function getDegrees(dir) {
 
 export async function getPrograms(dir) {
   // Get all the program YAML files
-  const programs = await parseYaml(path.join(dir, "programs", "*.yml"));
+  const programs = await parseYamlFiles(path.join(dir, "programs", "*.yml"));
 
   // Create a map of the valid program types
   const types = (await getProgramTypes(dir)).reduce((acc, type) => {
