@@ -196,7 +196,7 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                 />
 
                 {selectedStudentType && selectedLocation && selectedProgram && (
-                  <Button type="submit" color="red">
+                  <Button type="submit" color="red" className="w-fit">
                     View Requirements
                   </Button>
                 )}
