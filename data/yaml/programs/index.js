@@ -1,4 +1,4 @@
-import { parseYamlFiles } from "@/lib/yaml";
+import { parseYamlFiles } from "@/lib/file-utils";
 import path from "path";
 
 export async function getAdmissionLocations() {
