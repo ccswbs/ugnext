@@ -2,13 +2,14 @@ import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
 import { getAdmissionLocations } from "@/data/yaml/programs";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Select } from "@/components/select";
-import { ProgramSearchBar } from "@/components/programs/program-search-bar";
 import { Section } from "@/components/section";
-import { UnstyledLink } from "@/components/link";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
 import { getUndergraduatePrograms, getUndergraduateStudentTypes } from "@/data/yaml/programs/undergraduate";
+import { nameAndTagSearch } from "@/lib/use-search";
+import { Button } from "@/components/button";
+import { useRouter } from "next/router";
 
 export async function getStaticProps() {
   return {
@@ -31,10 +32,17 @@ export async function getStaticProps() {
 
 export default function UndergraduateAdmissionRequirements({ studentTypes, locations, programs }) {
   const [selectedStudentType, setSelectedStudentType] = useState(null);
+
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [showInternational, setShowInternational] = useState(false);
   const [showCurriculums, setShowCurriculums] = useState(false);
-  const [filteredPrograms, setFilteredPrograms] = useState(programs);
+
+  const [selectedProgram, setSelectedProgram] = useState(null);
+  const searchPrograms = useMemo(() => {
+    return nameAndTagSearch(programs);
+  }, [programs]);
+
+  const router = useRouter();
 
   return (
     <Layout metadata={{ title: "Undergraduate Admission Requirements" }}>
@@ -44,7 +52,20 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
             <>
               <Heading level={1}>Undergraduate Admission Requirements</Heading>
 
-              <div className="flex flex-col gap-8 w-full pr-4">
+              <form
+                className="flex flex-col gap-8 w-full pr-4"
+                onSubmit={(e) => {
+                  e.preventDefault();
+
+                  if (selectedStudentType && selectedLocation && selectedProgram) {
+                    router
+                      .push(
+                        `/programs/undergraduate/requirements/${selectedStudentType.id}/${selectedLocation.id}/${selectedProgram.id}`
+                      )
+                      .catch((err) => console.error(err));
+                  }
+                }}
+              >
                 <Select
                   label={
                     <Heading level={5} as="h2" className="mb-1 mt-0">
@@ -147,28 +168,39 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                   />
                 )}
 
-                {selectedStudentType && selectedLocation && (
-                  <div className="relative group">
-                    <ProgramSearchBar
-                      programs={programs}
-                      onChange={(programs) => setFilteredPrograms(programs)}
-                      className="[&_.text-input]:rounded-b-none"
-                    />
+                <Select
+                  label={
+                    <Heading level={5} as="h2" className="mb-1 mt-0">
+                      I want to study
+                    </Heading>
+                  }
+                  options={programs.map((program) => ({
+                    label: program.name,
+                    value: program,
+                    key: program.id,
+                  }))}
+                  onChange={(selection) => {
+                    setSelectedProgram(selection?.value);
+                  }}
+                  autocomplete={(input, options) => {
+                    if (!input) {
+                      return options;
+                    }
 
-                    <div className="flex flex-col max-h-32 w-full overflow-y-auto bg-white rounded-b-md border border-t-0 border-gray-300 group-focus-within:border-blue">
-                      {filteredPrograms.map((program) => (
-                        <UnstyledLink
-                          className="w-full border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-                          key={program.id}
-                          href={`/programs/undergraduate/requirements/${selectedStudentType.id}/${selectedLocation.id}/${program.id}`}
-                        >
-                          {program.name}
-                        </UnstyledLink>
-                      ))}
-                    </div>
-                  </div>
+                    const filteredPrograms = searchPrograms(input);
+
+                    return options.filter((option) => {
+                      return filteredPrograms.some((program) => program.id === option.key);
+                    });
+                  }}
+                />
+
+                {selectedStudentType && selectedLocation && selectedProgram && (
+                  <Button type="submit" color="red">
+                    View Requirements
+                  </Button>
                 )}
-              </div>
+              </form>
             </>
           }
           secondary={
