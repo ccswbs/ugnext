@@ -2,7 +2,7 @@ import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
 import { getAdmissionLocations } from "@/data/yaml/programs";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Select } from "@/components/select";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
@@ -171,7 +171,7 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                 <Select
                   label={
                     <Heading level={5} as="h2" className="mb-1 mt-0">
-                      I want to study
+                      I am interested in studying
                     </Heading>
                   }
                   options={programs.map((program) => ({
