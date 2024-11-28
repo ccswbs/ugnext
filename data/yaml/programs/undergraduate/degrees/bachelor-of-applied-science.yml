@@ -4,8 +4,3 @@ url: https://uoguelph.ca/programs/bachelor-of-applied-science/
 type: bachelor
 acronym: B.A.Sc.
 tags: []
-requirements:
-  - studentType: high-school
-    location:
-      - ontario
-    content: "<div>test</div>"
