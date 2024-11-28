@@ -64,27 +64,18 @@ export async function slugToUndergraduateRequirements(slug) {
 }
 
 export async function getUndergraduateRequirements(studentType, location, program) {
-  const associatedDegrees = (await getUndergraduateDegrees()).filter((degree) => {
-    const hasRequirements = Array.isArray(degree.requirements);
-    const isAssociated = program.degrees?.some((d) => d.id === degree.id);
+  const requirements =
+    program.requirements
+      ?.filter((requirement) => {
+        const matchesStudentType = requirement.studentType === studentType.id;
+        const matchesLocation =
+          (Array.isArray(requirement.location) && requirement.location.includes(location.id)) ||
+          requirement.location === location.id;
 
-    return hasRequirements && isAssociated;
-  });
-
-  const degreeRequirements = associatedDegrees.reduce((acc, degree) => {
-    acc.push(...degree.requirements);
-    return acc;
-  }, []);
-
-  const requirements = [...degreeRequirements, ...(program.requirements ?? [])]
-    .filter((requirement) => requirement.studentType === studentType.id && requirement.location.includes(location.id))
-    .map((requirement) => `<div class="undergraduate-admission-requirement-fragment">${requirement.content}</div>`)
-    .reduce((acc, requirement) => {
-      acc += requirement;
-      return acc;
-    }, "");
-
-  console.log(requirements);
+        return matchesStudentType && matchesLocation;
+      })
+      ?.map((requirement) => requirement.content)
+      ?.join("") ?? "";
 
   return {
     title: `${program.name} Admission Requirements for ${studentType.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location.name}`,
