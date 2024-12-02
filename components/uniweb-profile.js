@@ -4,8 +4,8 @@ const getAccessToken = async () => {
   const tokenURL = 'https://uoguelph-dev.uniweb.io/api/token.php';
   const postFields = {
     grant_type: 'password',
-    username: 'ugnextTest',
-    password: 'e65ec5304d537819a045'
+    username: process.env.UNIWEB_CLIENT_NAME,
+    password: process.env.UNIWEB_CLIENT_SECRET
   };
 
   try {
@@ -50,8 +50,8 @@ const UniWebProfile = () => {
 
         const response = await fetch('https://uoguelph-dev.uniweb.io/api/resource?action=read&resources[]=profile/affiliations&resources[]=profile/membership_information&id=353', {
           headers: {
-            'Client-Name': 'contentHub',
-            'Client-Secret': '6618e0d925e766e1772d',
+            'Client-Name': process.env.UNIWEB_CLIENT_NAME,
+            'Client-Secret': process.env.UNIWEB_CLIENT_SECRET,
             'Authorization': `Bearer ${token}`
           }
         });
