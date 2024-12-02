@@ -6,8 +6,8 @@ export default async function handler(req, res) {
     // Perform your data fetching here
     const response = await fetch(`https://uoguelph-dev.uniweb.io/resource.php?action=read&resources[]=${resources.join('&resources[]=')}&id=${id}`, {
       headers: {
-        'clientName': 'uofg-test',
-        'clientSecret': 'd1fda2415f929404ecac'
+        'clientName': process.env.UNIWEB_CLIENT_NAME,
+        'clientSecret': process.env.UNIWEB_CLIENT_SECRET
       }
     });
 
