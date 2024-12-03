@@ -433,14 +433,20 @@
     - analytics
 - name: Creative Writing
   acronym: CW
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/creative-writing-cw/
+  url: https://www.uoguelph.ca/programs/creative-writing/
   degrees:
     - Bachelor of Arts
   types:
     - major
     - minor
   tags:
-    - arts
+    - art*
+    - writing
+    - literature
+    - lgbtq
+    - crime
+    - sustainability
+    - film
 - name: Criminal Justice and Public Policy
   acronym: CJPP
   url: https://www.uoguelph.ca/programs/criminal-justice-and-public-policy/
@@ -1162,7 +1168,7 @@
     - history
 - name: Music
   acronym: MUSC
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/music-musc/
+  url: https://www.uoguelph.ca/programs/music/
   degrees:
     - Bachelor of Arts
   types:
@@ -1171,8 +1177,13 @@
     - area-of-concentration
   tags:
     - humanities
-    - arts
+    - art*
     - culture
+    - performance
+    - technology
+    - gender
+    - drama
+    - business
 - name: Neuroscience
   acronym: NEUR
   url: https://www.uoguelph.ca/programs/neuroscience/
@@ -1393,7 +1404,6 @@
   degrees:
     - Bachelor of Arts
   types:
-    - major
     - minor
     - area-of-concentration
   tags:
@@ -1431,11 +1441,12 @@
     - Bachelor of Arts
   types:
     - major
-    - minor
   tags:
     - humanities
-    - arts
+    - art*
     - culture
+    - performance
+    - technology    
 - name: Sustainable Business
   acronym: SB
   url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/sustainable-business-sb/
