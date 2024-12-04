@@ -46,7 +46,20 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/token',
+        destination: 'https://uoguelph-dev.uniweb.io/api/token.php'
+      },
+      {
+        source: '/api/resource',
+        destination: 'https://uoguelph-dev.uniweb.io/api/resource'
+      }
+    ];
+  }
 };
+
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
