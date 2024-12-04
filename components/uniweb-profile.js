@@ -43,7 +43,7 @@ const getAccessToken = async () => {
   }
 };
 
-const UniWebProfile = () => {
+const UniWebProfile = ({ id }) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -53,7 +53,7 @@ const UniWebProfile = () => {
         const { token } = await getAccessToken();
 
         const response = await fetch(
-          "/api/resource?action=read&resources[]=profile/affiliations&resources[]=profile/membership_information&id=353",
+          `/api/resource?action=read&resources[]=profile/affiliations&resources[]=profile/membership_information&id=${id}`,
           {
             headers: {
               "Client-Name": process.env.NEXT_PUBLIC_UNIWEB_CLIENT_NAME,
@@ -76,7 +76,7 @@ const UniWebProfile = () => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div>{error ? <p>Error: {error}</p> : data ? <pre>{JSON.stringify(data, null, 2)}</pre> : <p>Loading...</p>}</div>

@@ -8,11 +8,13 @@ import React from 'react';
 import UniWebProfile from '../components/uniweb-profile';
 
 export default function ProfilePage() {
+  const userId = 353; // Replace with the desired ID
+
   return (
     <Layout metadata={{ title: "Profile Test" }}>
       <Container>
         <h1>Data Display</h1>
-        <UniWebProfile />
+        <UniWebProfile id={userId} />
       </Container>
     </Layout>
   );
