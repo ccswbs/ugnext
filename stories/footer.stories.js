@@ -4,7 +4,7 @@ const config = {
   title: "Components/Footer",
   component: Footer,
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
     docs: {
       toc: true,
     },
@@ -38,6 +38,20 @@ export const WithCustomLinks = {
         title: "Example Page 4",
       },
     ],
+  },
+};
+
+export const WithSubFooter = {
+  args: {
+    subFooter: {
+      image: {
+        src: "https://api.liveugconthub.uoguelph.dev/sites/default/files/2022-02/OntarioVeterinaryCollege_version1_Full%20Colour_OVC%20%281%29.png",
+        height: 150,
+        width: 400,
+        alt: "Placeholder",
+      },
+      content: "This is the sub footer content.",
+    },
   },
 };
 

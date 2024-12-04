@@ -10,7 +10,7 @@ export const Tabs = ({ fullWidth = true, tabs }) => (
         <Tab
           key={index}
           className={twJoin(
-            "mb-1 rounded-t-sm bg-gray-200 px-4 py-3 text-lg font-bold text-black transition-colors hover:bg-gray-300 focus:bg-grey-300 focus:outline-none ui-selected:mb-0 ui-selected:border-2 ui-selected:border-yellow ui-selected:bg-yellow",
+            "mb-1 rounded-t-sm bg-gray-200 px-4 py-3 text-lg font-bold text-black transition-colors hover:bg-gray-300 focus:bg-gray-300 focus:outline-none ui-selected:mb-0 ui-selected:border-2 ui-selected:border-yellow ui-selected:bg-yellow",
             fullWidth && "flex-1"
           )}
         >

@@ -72,7 +72,7 @@ const colors = {
     950: "#11280b",
     DEFAULT: "#3c8221",
   },
-  grey: {
+  gray: {
     50: "#f8f8f8",
     100: "#f0f0f0",
     200: "#dddddd",
@@ -86,6 +86,19 @@ const colors = {
     950: "#282828",
     DEFAULT: "#dddddd",
     light: "#f5f5f5",
+  },
+  "cool-gray": {
+    50: "#f4f6f7",
+    100: "#e3e7ea",
+    200: "#cbd3d6",
+    300: "#a6b4ba",
+    400: "#7a8c96",
+    500: "#5f717b",
+    600: "#515f69",
+    700: "#465058",
+    800: "#3e454c",
+    900: "#373d42",
+    950: "#212529",
   },
   "uog-blue-muted": {
     DEFAULT: "#f5f7fa",

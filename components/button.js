@@ -2,6 +2,8 @@ import { twJoin, twMerge } from "tailwind-merge";
 import { UnstyledLink } from "@/components/link";
 import PropTypes from "prop-types";
 
+export const ButtonColors = ["red", "yellow", "blue", "green", "gray", "black", "white", "none"];
+
 /**
  * A basic button which can be used as a link or a normal button.
  */
@@ -87,7 +89,7 @@ Button.propTypes = {
   /**
    * What background color to use
    */
-  color: PropTypes.oneOf(["red", "yellow", "blue", "green", "gray", "black", "white", "none"]),
+  color: PropTypes.oneOf(ButtonColors),
   /**
    * What style of button to use
    */

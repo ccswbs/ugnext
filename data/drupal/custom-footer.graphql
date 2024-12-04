@@ -1,0 +1,20 @@
+#import './media.graphql'
+#import './widgets.graphql'
+
+fragment CustomFooter on NodeCustomFooter {
+  __typename
+  id
+  title
+  body {
+    processed
+  }
+  footerLogo {
+    ...Image
+  }
+  widgets {
+    ...GeneralText
+    ...Links
+    ...MediaText
+    ...Section
+  }
+}

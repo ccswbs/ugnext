@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 export const Contact = ({ name, title, phoneNumber, extension, email }) => {
   return (
-    <div className="flex flex-col mb-2 bg-grey-50 p-4">
+    <div className="flex flex-col mb-2 bg-gray-50 p-4">
       <span className="font-bold">{name}</span>
 
       <span>{title}</span>

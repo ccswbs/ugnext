@@ -381,9 +381,9 @@
     - health
     - family
     - pedagog*
-- name: Classical Studies
+- name: Classical and Modern Cultures
   acronym: CLAS
-  url: https://www.uoguelph.ca/programs/classical-studies/
+  url: https://www.uoguelph.ca/programs/classical-and-modern-cultures/
   degrees:
     - Bachelor of Arts
   types:
@@ -661,17 +661,6 @@
   degrees: []
   types:
     - minor
-  tags:
-    - humanities
-    - history
-    - culture
-- name: European Studies
-  acronym: EURS
-  url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/european-studies-eurs/
-  degrees:
-    - Bachelor of Arts
-  types:
-    - major
   tags:
     - humanities
     - history

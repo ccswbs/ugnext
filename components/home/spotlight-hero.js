@@ -20,7 +20,7 @@ export const SpotlightHero = ({ hero }) => (
     caption={hero.caption}
     button={{
       body: hero.url.title,
-      href: hero.url.href,
+      href: hero.url.url,
     }}
     alignment={hero.captionAlignment}
   />

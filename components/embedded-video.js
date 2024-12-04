@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { Button } from "@/components/button";
+import { Button, ButtonColors } from "@/components/button";
 import PropTypes from "prop-types";
 import { YouTubeEmbed } from "@next/third-parties/google";
+import { Modal } from "@/components/modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
 function getYouTubeVideoID(url) {
   if (!(url instanceof URL)) {
@@ -39,24 +42,29 @@ function getVimeoVideoID(url) {
 }
 
 function getVideoInfo(url) {
-  const parsed = new URL(url);
   let type = null;
   let id = null;
 
-  // Determine where the remote video is hosted (i.e. YouTube or Vimeo)
-  if (parsed?.hostname.includes("youtube") || parsed?.hostname.includes("youtu.be")) {
-    type = "youtube";
-    id = getYouTubeVideoID(parsed);
-  } else if (parsed?.hostname.includes("vimeo")) {
-    type = "vimeo";
-    id = getVimeoVideoID(parsed);
+  try {
+    const parsed = new URL(url);
+
+    // Determine where the remote video is hosted (i.e. YouTube or Vimeo)
+    if (parsed?.hostname.includes("youtube") || parsed?.hostname.includes("youtu.be")) {
+      type = "youtube";
+      id = getYouTubeVideoID(parsed);
+    } else if (parsed?.hostname.includes("vimeo")) {
+      type = "vimeo";
+      id = getVimeoVideoID(parsed);
+    }
+  } catch (e) {
+    // Do nothing
   }
 
   return { type: type, id: id };
 }
 
-export function EmbeddedVideo({ url, title, transcript, className, restrictRelated = false }) {
-  const { id, type } = getVideoInfo(url);
+function Video({ src, title, transcript, className, options }) {
+  const { id, type } = getVideoInfo(src);
 
   return (
     <div className={twMerge("flex flex-col", className)}>
@@ -66,7 +74,7 @@ export function EmbeddedVideo({ url, title, transcript, className, restrictRelat
           videoid={id}
           playlabel={title ?? "Youtube Embedded Video Player"}
           params={{
-            rel: restrictRelated ? 0 : 1,
+            rel: options?.restrictRelated ? 0 : 1,
           }}
         />
       )}
@@ -89,10 +97,59 @@ export function EmbeddedVideo({ url, title, transcript, className, restrictRelat
   );
 }
 
+export function EmbeddedVideo({ src, title, transcript, className, options, modal }) {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  return modal ? (
+    <>
+      {modal.type === "play-button" ? (
+        <button
+          className={twMerge(
+            "rounded-full transition-colors w-24 text-4xl flex items-center justify-center aspect-square text-white bg-black/30 hover:bg-red/30 focus:bg-red/30",
+            modal.className
+          )}
+          onClick={() => setModalOpen(true)}
+        >
+          <FontAwesomeIcon icon={faPlay} />
+          <span className="sr-only">Show Video</span>
+        </button>
+      ) : (
+        <Button color={modal.type} onClick={() => setModalOpen(true)} className={modal.className}>
+          {modal.button}
+        </Button>
+      )}
+
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <div className="flex flex-col gap-4 p-4 bg-zinc-900 w-fit text-white">
+          <span className="text-xl">{title}</span>
+
+          <Video
+            src={src}
+            title={title}
+            transcript={transcript}
+            className={twMerge("max-w-2xl w-[calc(100vw_-_theme(spacing.4))]", className)}
+            options={options}
+          />
+        </div>
+      </Modal>
+    </>
+  ) : (
+    <Video src={src} title={title} transcript={transcript} className={className} options={options} />
+  );
+}
+
 EmbeddedVideo.propTypes = {
-  url: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
   title: PropTypes.string,
   transcript: PropTypes.string,
   className: PropTypes.string,
-  restrictRelated: PropTypes.bool, // Restrict related videos on YouTube to only videos from the same channel
+  restrictRelated: PropTypes.bool,
+  options: PropTypes.shape({
+    restrictRelated: PropTypes.bool, // Restrict related videos on YouTube to only videos from the same channel
+  }),
+  modal: PropTypes.shape({
+    button: PropTypes.node,
+    type: PropTypes.oneOf([...ButtonColors, "play-button"]).isRequired,
+    className: PropTypes.string,
+  }),
 };

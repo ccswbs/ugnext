@@ -92,18 +92,18 @@ export const GreenOutlined = {
   },
 };
 
-export const GreyNotOutlined = {
+export const GrayNotOutlined = {
   args: {
-    color: "grey",
+    color: "gray",
     children: "Example Button",
     outlined: false,
     disabled: false,
   },
 };
 
-export const GreyOutlined = {
+export const GrayOutlined = {
   args: {
-    color: "grey",
+    color: "gray",
     children: "Example Button",
     outlined: true,
     disabled: false,

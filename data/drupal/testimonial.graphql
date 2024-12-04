@@ -1,0 +1,26 @@
+#import "./media.graphql"
+
+fragment TestimonialType on TermTestimonialType {
+  name
+}
+
+fragment Testimonial on NodeTestimonial {
+  __typename
+  id
+  body {
+    processed
+  }
+  profile {
+    url
+    title
+  }
+  type {
+    ...TestimonialType
+  }
+  title
+  name
+  description
+  image {
+    ...Image
+  }
+}

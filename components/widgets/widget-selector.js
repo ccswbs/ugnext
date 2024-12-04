@@ -13,6 +13,7 @@ import { useContext } from "react";
 import { SectionContext } from "@/components/section";
 import { ImageOverlay } from "@/components/widgets/image-overlay";
 import { Story } from "@/components/widgets/story";
+import { Block } from "@/components/widgets/block";
 
 export const WidgetSelector = ({ data }) => {
   // If this widget is within a section, we don't want to render a container around it
@@ -33,6 +34,7 @@ export const WidgetSelector = ({ data }) => {
     ParagraphStatisticWidget: Statistics,
     ParagraphImageOverlay: ImageOverlay,
     ParagraphStoryWidget: Story,
+    ParagraphBlockWidget: Block,
   };
 
   const Widget = map[data.__typename];
