@@ -9,8 +9,6 @@ const getAccessToken = async () => {
     password: process.env.NEXT_PUBLIC_UNIWEB_CLIENT_SECRET,
   });
 
-  console.log("Post Fields:", postFields.toString()); // Log the payload
-
   try {
     const response = await fetch(tokenURL, {
       method: "POST",
