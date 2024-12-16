@@ -1,0 +1,41 @@
+id: geography
+name: Geography
+url: https://graduatestudies.uoguelph.ca/programs/geog
+degrees:
+  - master-of-arts
+  - master-of-science
+  - doctor-of-philosophy
+types:
+  - course-based
+  - thesis-based
+tags:
+  - geography
+  - science
+  - agri-environmental management
+  - agri*
+  - aquaculture
+  - biogeography
+  - biology
+  - community planning
+  - community*
+  - conservation*
+  - ecosystems
+  - enviro*
+  - environmental governance
+  - ethnobotany
+  - food*
+  - forestry
+  - government policy & laws
+  - hydrology
+  - indigenous methodology
+  - indigenous studies
+  - innovation
+  - law*
+  - management*
+  - mining
+  - public health
+  - remote sensing
+  - software engineering & development
+  - sustainab*
+  - waste management
+  - water*
