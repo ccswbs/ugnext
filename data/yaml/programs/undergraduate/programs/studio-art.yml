@@ -6,8 +6,9 @@ degrees:
   - bachelor-of-arts
 types:
   - major
-  - minor
 tags:
   - humanities
-  - arts
+  - art*
   - culture
+  - performance
+  - technology

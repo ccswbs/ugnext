@@ -1,7 +1,7 @@
 id: music
 name: Music
 acronym: MUSC
-url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/music-musc/
+url: https://www.uoguelph.ca/programs/music/
 degrees:
   - bachelor-of-arts
 types:
@@ -10,5 +10,10 @@ types:
   - area-of-concentration
 tags:
   - humanities
-  - arts
+  - art*
   - culture
+  - performance
+  - technology
+  - gender
+  - drama
+  - business
