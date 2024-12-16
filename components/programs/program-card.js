@@ -1,6 +1,6 @@
 import { Card } from "@/components/card";
 
-export const ProgramCard = ({ program, condensedDegrees }) => {
+export const ProgramCard = ({ program, condensedDegrees = false }) => {
   return (
     <Card
       href={program.url}
@@ -8,7 +8,7 @@ export const ProgramCard = ({ program, condensedDegrees }) => {
       title={
         <div className="flex flex-col gap-2 justify-center">
           <span className="text-lg font-bold">{program.name}</span>
-          {condensedDegrees ? (
+          {Array.isArray(program.degrees) && condensedDegrees ? (
             <span className="text-sm text-black/65">
               {program?.degrees?.map((degree, index) => degree.acronym ?? degree.name).join(", ")}
             </span>
