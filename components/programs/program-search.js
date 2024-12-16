@@ -3,7 +3,7 @@ import { ProgramSearchNavigation } from "@/components/programs/program-search-na
 import { ProgramGrid } from "@/components/programs/program-grid";
 import { useState } from "react";
 
-export const ProgramSearch = ({ programs, types, degreeTypes }) => {
+export const ProgramSearch = ({ programs, types, degreeTypes, condensedDegrees = false }) => {
   const [filteredPrograms, setFilteredPrograms] = useState(programs);
 
   return (
@@ -17,7 +17,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes }) => {
 
       <ProgramSearchNavigation />
 
-      <ProgramGrid programs={filteredPrograms} />
+      <ProgramGrid programs={filteredPrograms} condensedDegrees={condensedDegrees} />
 
       {/* No results were found */}
       {programs?.length === 0 && (
