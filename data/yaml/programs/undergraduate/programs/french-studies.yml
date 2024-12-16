@@ -1,0 +1,13 @@
+id: french-studies
+name: French Studies
+acronym: FREN
+url: https://www.uoguelph.ca/programs/french-studies/
+degrees:
+  - bachelor-of-arts
+types:
+  - major
+  - minor
+  - area-of-concentration
+tags:
+  - humanities
+  - language

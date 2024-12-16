@@ -1,0 +1,33 @@
+id: toxicology
+name: Toxicology
+url: https://graduatestudies.uoguelph.ca/programs/tox
+degrees:
+  - master-of-science
+  - doctor-of-philosophy
+  - master-of-biomedical-science
+types:
+  - collaborative-specialization
+tags:
+  - biology
+  - science
+  - health
+  - medical
+  - analy*
+  - biomedical*
+  - disease
+  - enviro*
+  - forensic
+  - genetics
+  - government policy
+  - health*
+  - insecticides
+  - law*
+  - medicine*
+  - molecular*
+  - pesticides
+  - pharma*
+  - physiolog*
+  - plant diseases
+  - pollutants
+  - toxic*
+  - toxin*

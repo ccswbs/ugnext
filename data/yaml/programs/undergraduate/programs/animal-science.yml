@@ -1,0 +1,12 @@
+id: animal-science
+name: Animal Science
+acronym: ANSC
+url: https://www.uoguelph.ca/programs/animal-science/
+degrees:
+  - bachelor-of-science-in-agriculture
+types:
+  - major
+  - co-op
+tags:
+  - biology
+  - science

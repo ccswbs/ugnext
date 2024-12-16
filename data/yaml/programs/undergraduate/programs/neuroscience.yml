@@ -1,0 +1,17 @@
+id: neuroscience
+name: Neuroscience
+acronym: NEUR
+url: https://www.uoguelph.ca/programs/neuroscience/
+degrees:
+  - bachelor-of-science
+types:
+  - major
+  - co-op
+  - minor
+tags:
+  - psych*
+  - neuro*
+  - brain
+  - cogni*
+  - human
+  - behav*
