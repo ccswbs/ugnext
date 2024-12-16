@@ -1,6 +1,6 @@
 import { Card } from "@/components/card";
 
-export const ProgramCard = ({ program, showDegreesInFooter = false }) => {
+export const ProgramCard = ({ program, condensedDegrees }) => {
   return (
     <Card
       href={program.url}
@@ -8,11 +8,17 @@ export const ProgramCard = ({ program, showDegreesInFooter = false }) => {
       title={
         <div className="flex flex-col gap-2 justify-center">
           <span className="text-lg font-bold">{program.name}</span>
-          {program?.degrees?.map((degree, index) => (
-            <span key={degree.id} className="text-sm text-black/65">
-              {degree.acronym ? `${degree.name} - ${degree.acronym}` : degree.name}
+          {condensedDegrees ? (
+            <span className="text-sm text-black/65">
+              {program?.degrees?.map((degree, index) => degree.acronym ?? degree.name).join(", ")}
             </span>
-          ))}
+          ) : (
+            program?.degrees?.map((degree, index) => (
+              <span key={degree.id} className="text-sm text-black/65">
+                {degree.name}
+              </span>
+            ))
+          )}
         </div>
       }
       footer={
