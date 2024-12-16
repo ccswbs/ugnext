@@ -3,10 +3,13 @@ import { Card } from "@/components/card";
 const ProgramCardDegrees = ({ program, condensedDegrees = false }) => {
   return condensedDegrees ? (
     <span className="text-black/65">
-      {program?.degrees?.map((degree, index) => degree.acronym ?? degree.name).join(", ")}
+      {program.degrees
+        .sort((a, b) => a.acronym.localeCompare(b.acronym))
+        ?.map((degree, index) => degree.acronym ?? degree.name)
+        .join(", ")}
     </span>
   ) : (
-    program?.degrees?.map((degree, index) => (
+    program.degrees?.map((degree, index) => (
       <span key={degree.id} className="text-black/65">
         {degree.name}
       </span>
