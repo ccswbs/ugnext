@@ -10,7 +10,7 @@ import { Search } from "@/components/maps/search";
 import { Directions } from "@/components/maps/directions";
 
 export default function Maps() {
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const [activePanel, setActivePanel] = useState(null);
   const panels = useMemo(
     () => [
@@ -30,7 +30,7 @@ export default function Maps() {
   return (
     <Layout
       metadata={{ title: "Campus Map" }}
-      className="flex flex-col-reverse pb-0 lg:flex-row"
+      className="flex flex-col-reverse pb-0 md:flex-row"
       footer={false}
       header={{
         topic: {
@@ -44,14 +44,14 @@ export default function Maps() {
       }}
     >
       {/* Panels */}
-      <div className="flex flex-col lg:w-96 lg:h-auto relative">
+      <div className="flex flex-col md:w-72 md:h-auto relative">
         {/* Panel Selector */}
-        <div className="flex h-16 lg:h-12 justify-center items-center bg-red">
+        <div className="flex h-16 md:h-12 justify-center items-center bg-red">
           {panels.map((panel, index) => (
             <button
               key={panel.title}
               className={twJoin(
-                "flex flex-col lg:flex-row p-2 items-center justify-center h-full gap-2 flex-1 text-white first:border-r first:border-black/15 last:border-black/15 last:border-l",
+                "flex flex-col md:flex-row p-2 items-center justify-center h-full gap-2 flex-1 text-white first:border-r first:border-black/15 last:border-black/15 last:border-l",
                 activePanel === index && "bg-red-800"
               )}
               onClick={() => {
@@ -63,7 +63,7 @@ export default function Maps() {
               }}
             >
               <FontAwesomeIcon icon={panel.icon} className="text-lg" />
-              <span className="text-xs lg:text-sm">{panel.title}</span>
+              <span className="text-xs">{panel.title}</span>
             </button>
           ))}
         </div>
@@ -71,7 +71,7 @@ export default function Maps() {
         {/* Panel Container */}
         <div
           className={twJoin(
-            "absolute bottom-full bg-white z-10 w-full lg:static lg:h-full transition-[height]",
+            "absolute bottom-full bg-white z-10 w-full md:static md:h-full transition-[height]",
             activePanel === null
               ? "h-0 overflow-hidden"
               : "h-[calc(100dvh_-_var(--header-height)_-_theme(spacing.16))] p-4"
@@ -82,7 +82,7 @@ export default function Maps() {
       </div>
 
       {/* Map Container */}
-      <div className="flex-1 h-[calc(100dvh_-_var(--header-height)_-_theme(spacing.16))] lg:h-auto">
+      <div className="flex-1 h-[calc(100dvh_-_var(--header-height)_-_theme(spacing.16))] md:h-auto">
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
           <Map
             className="h-full w-full"
