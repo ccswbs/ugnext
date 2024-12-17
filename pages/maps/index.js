@@ -5,18 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useState } from "react";
 import { twJoin } from "tailwind-merge";
 import { useMediaQuery } from "@material-ui/core";
-
-const Legend = () => {
-  return <>Legend</>;
-};
-
-const Search = () => {
-  return <>Search</>;
-};
-
-const Directions = () => {
-  return <>Directions</>;
-};
+import { Legend } from "@/components/maps/legend";
+import { Search } from "@/components/maps/search";
+import { Directions } from "@/components/maps/directions";
 
 export default function Maps() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -81,7 +72,9 @@ export default function Maps() {
         <div
           className={twJoin(
             "absolute bottom-full bg-white z-10 w-full lg:static lg:h-full transition-[height]",
-            activePanel === null ? "h-0 overflow-hidden" : "h-[calc(100dvh_-_var(--header-height)_-_theme(spacing.16))]"
+            activePanel === null
+              ? "h-0 overflow-hidden"
+              : "h-[calc(100dvh_-_var(--header-height)_-_theme(spacing.16))] p-4"
           )}
         >
           {activePanel !== null && panels[activePanel].content}
