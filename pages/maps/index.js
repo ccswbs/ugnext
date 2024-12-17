@@ -1,31 +1,95 @@
 import { Layout } from "@/components/layout";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
-import { Tabs } from "@/components/tabs";
 import { faMapMarkerAlt, faSearch, faDirections } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { useHeaderHeight } from "@/lib/use-header-height";
+import { useEffect, useMemo, useState } from "react";
+import { twJoin } from "tailwind-merge";
+import { useMediaQuery } from "@material-ui/core";
+
+const Legend = () => {
+  return <>Legend</>;
+};
+
+const Search = () => {
+  return <>Search</>;
+};
+
+const Directions = () => {
+  return <>Directions</>;
+};
 
 export default function Maps() {
-  const panels = [
-    { title: "Legend", icon: faMapMarkerAlt, content: <>Legend</> },
-    { title: "Search", icon: faSearch, content: <>Search</> },
-    { title: "Directions", icon: faDirections, content: <>Directions</> },
-  ];
-
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   const [activePanel, setActivePanel] = useState(null);
-  const headerHeight = useHeaderHeight();
+  const panels = useMemo(
+    () => [
+      { title: "Legend", icon: faMapMarkerAlt, content: <Legend /> },
+      { title: "Search", icon: faSearch, content: <Search /> },
+      { title: "Directions", icon: faDirections, content: <Directions /> },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    if (isDesktop && activePanel === null) {
+      setActivePanel(0);
+    }
+  }, [activePanel, isDesktop, panels]);
 
   return (
-    <Layout metadata={{ title: "Campus Map" }} className="flex flex-col-reverse pb-0 lg:flex-row" footer={false}>
-      <div className="flex flex-col lg:w-96 lg:h-auto">
-        <div className="flex h-16 justify-center items-center bg-red">Test</div>
+    <Layout
+      metadata={{ title: "Campus Map" }}
+      className="flex flex-col-reverse pb-0 lg:flex-row"
+      footer={false}
+      header={{
+        topic: {
+          title: "Campus Map",
+          url: "/maps",
+        },
+        navigation: [
+          { title: "Locations Directory", url: "/maps/locations" },
+          { title: "Directions", url: "/maps/directions" },
+        ],
+      }}
+    >
+      {/* Panels */}
+      <div className="flex flex-col lg:w-96 lg:h-auto relative">
+        {/* Panel Selector */}
+        <div className="flex h-16 lg:h-12 justify-center items-center bg-red">
+          {panels.map((panel, index) => (
+            <button
+              key={panel.title}
+              className={twJoin(
+                "flex flex-col lg:flex-row p-2 items-center justify-center h-full gap-2 flex-1 text-white first:border-r first:border-black/15 last:border-black/15 last:border-l",
+                activePanel === index && "bg-red-800"
+              )}
+              onClick={() => {
+                if (!isDesktop) {
+                  activePanel === index ? setActivePanel(null) : setActivePanel(index);
+                } else {
+                  setActivePanel(index);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={panel.icon} className="text-lg" />
+              <span className="text-xs lg:text-sm">{panel.title}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Panel Container */}
+        <div
+          className={twJoin(
+            "absolute bottom-full bg-white z-10 w-full lg:static lg:h-full transition-[height]",
+            activePanel === null ? "h-0 overflow-hidden" : "h-[calc(100dvh_-_var(--header-height)_-_theme(spacing.16))]"
+          )}
+        >
+          {activePanel !== null && panels[activePanel].content}
+        </div>
       </div>
 
-      <div
-        className="flex-1 h-[calc(100vh_-_var(--header-height)_-_theme(spacing.16))] lg:h-auto"
-        style={{ "--header-height": headerHeight + "px" }}
-      >
+      {/* Map Container */}
+      <div className="flex-1 h-[calc(100dvh_-_var(--header-height)_-_theme(spacing.16))] lg:h-auto">
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
           <Map
             className="h-full w-full"
