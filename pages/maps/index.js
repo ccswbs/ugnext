@@ -8,8 +8,19 @@ import { useMediaQuery } from "@material-ui/core";
 import { Legend } from "@/components/maps/legend";
 import { Search } from "@/components/maps/search";
 import { Directions } from "@/components/maps/directions";
+import { getLocations } from "@/data/yaml/maps";
 
-export default function Maps() {
+export async function getStaticProps() {
+  const locations = await getLocations();
+
+  return {
+    props: {
+      locations: locations,
+    },
+  };
+}
+
+export default function Maps({ locations }) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [activePanel, setActivePanel] = useState(null);
   const panels = useMemo(
@@ -26,6 +37,10 @@ export default function Maps() {
       setActivePanel(0);
     }
   }, [activePanel, isDesktop, panels]);
+
+  useEffect(() => {
+    console.log(locations);
+  }, [locations]);
 
   return (
     <Layout

@@ -25,15 +25,11 @@ export default function Document() {
           {`
             const updateVariable = () => {
               const header = document.querySelector('uofg-header');              
-              document.body.style.setProperty('--header-height', header.clientHeight + 'px');
+              document.body.style.setProperty('--header-height', header?.clientHeight ?? 0 + 'px');
             }
             
             window.addEventListener('resize', updateVariable, { passive: true });
-            
-            window.addEventListener('load', () => {
-              const header = document.querySelector('uofg-header');              
-              document.body.style.setProperty('--header-height', header.clientHeight + 'px');
-            });
+            window.addEventListener('load', updateVariable);
           `}
         </Script>
       </Head>
