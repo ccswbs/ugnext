@@ -1,0 +1,17 @@
+id: "057"
+name: "Maintenance Bldg #2"
+type: services
+lat: 43.533565
+lng: -80.227293
+address: 50 Trent Lane
+link: /maps/locations/maintenance
+img: maintenance-building.jpg
+polygon:
+  - lat: 43.53358
+    lng: -80.227468
+  - lat: 43.533436
+    lng: -80.227274
+  - lat: 43.533554
+    lng: -80.227117
+  - lat: 43.533694
+    lng: -80.227307

@@ -1,0 +1,22 @@
+id: "048"
+name: Federal Building (Indigenous Student Centre)
+acronym: FEDB
+type: academic
+lat: 43.528485
+lng: -80.226848
+address: 620 Gordon Street
+link: /maps/locations/federal-building
+img: federal-building.jpg
+polygon:
+  - lat: 43.528549
+    lng: -80.227011
+  - lat: 43.528571
+    lng: -80.226981
+  - lat: 43.528567
+    lng: -80.226975
+  - lat: 43.528601
+    lng: -80.226926
+  - lat: 43.528426
+    lng: -80.226686
+  - lat: 43.528369
+    lng: -80.226762

@@ -1,0 +1,17 @@
+id: "091"
+name: Hagen Aqualab
+type: academic
+lat: 43.528872
+lng: -80.226622
+address: 24 Christie Lane
+link: https://www.uoguelph.ca/ib/infrastructure_and_facilities/aqualab
+img: hagen-aqualab.jpg
+polygon:
+  - lat: 43.528871
+    lng: -80.22697
+  - lat: 43.528617
+    lng: -80.226628
+  - lat: 43.528876
+    lng: -80.226274
+  - lat: 43.529127
+    lng: -80.226619

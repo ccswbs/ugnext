@@ -1,0 +1,12 @@
+id: POI003
+name: Gryphon Statue
+type: poi
+lat: 43.526824
+lng: -80.224772
+address: Gordon Street & Stone Road East
+link: /maps/locations/gryphon-statue
+icon:
+  type: fontawesome
+  style: custom
+  name: gryphon-statue
+img: gryphon-statue.jpg

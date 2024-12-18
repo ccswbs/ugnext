@@ -1,0 +1,38 @@
+id: "043"
+name: Canadian Research Institute for Food Safety
+acronym: CRIFS
+type: academic
+lat: 43.529413
+lng: -80.232364
+address: 57 McGilvray Street
+link: https://www.uoguelph.ca/foodscience/guelph-food-innovation-centre/canadian-research-institute-food-safety-crifs
+img: canadian-research-institute-for-food-safety.jpg
+polygon:
+  - lat: 43.529613
+    lng: -80.232251
+  - lat: 43.529589
+    lng: -80.232216
+  - lat: 43.529625
+    lng: -80.232168
+  - lat: 43.529569
+    lng: -80.232087
+  - lat: 43.529533
+    lng: -80.232136
+  - lat: 43.529511
+    lng: -80.232107
+  - lat: 43.529373
+    lng: -80.232295
+  - lat: 43.529353
+    lng: -80.232269
+  - lat: 43.529318
+    lng: -80.232317
+  - lat: 43.529281
+    lng: -80.232266
+  - lat: 43.5292
+    lng: -80.232373
+  - lat: 43.529297
+    lng: -80.232517
+  - lat: 43.529314
+    lng: -80.23249
+  - lat: 43.529371
+    lng: -80.232577

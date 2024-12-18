@@ -1,0 +1,31 @@
+id: "082"
+name: Plant Growth Facilities Building
+type: academic
+lat: 43.527326
+lng: -80.22815
+address: 603 Gordon Street
+link: /maps/locations/plant-growth
+img: plant-growth-facilities.jpg
+polygon:
+  - lat: 43.527612
+    lng: -80.228228
+  - lat: 43.527598
+    lng: -80.228249
+  - lat: 43.527734
+    lng: -80.22844
+  - lat: 43.527631
+    lng: -80.228583
+  - lat: 43.527644
+    lng: -80.2286
+  - lat: 43.527541
+    lng: -80.228738
+  - lat: 43.526921
+    lng: -80.227866
+  - lat: 43.527124
+    lng: -80.227591
+  - lat: 43.527564
+    lng: -80.228202
+  - lat: 43.527584
+    lng: -80.228175
+  - lat: 43.527617
+    lng: -80.228221

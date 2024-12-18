@@ -1,0 +1,21 @@
+id: "084"
+name: CSA Bike Centre and Foodbank
+type: academic
+lat: 43.528341
+lng: -80.226542
+address: 620 Gordon Street
+link: https://csaonline.ca/bike-centre
+img: the-bike-centre.jpg
+polygon:
+  - lat: 43.528247
+    lng: -80.226618
+  - lat: 43.528254
+    lng: -80.226608
+  - lat: 43.528245
+    lng: -80.226596
+  - lat: 43.528387
+    lng: -80.226407
+  - lat: 43.528437
+    lng: -80.22648
+  - lat: 43.528287
+    lng: -80.226677

@@ -1,0 +1,17 @@
+id: "247"
+name: Henry Kock Propagation Centre
+type: academic
+lat: 43.542212
+lng: -80.219435
+address: 390 College Avenue East
+link: /maps/locations/henry-kock
+img: henry-kock-propagation-centre.jpg
+polygon:
+  - lat: 43.542212
+    lng: -80.219598
+  - lat: 43.542096
+    lng: -80.219441
+  - lat: 43.542216
+    lng: -80.219273
+  - lat: 43.542328
+    lng: -80.219437

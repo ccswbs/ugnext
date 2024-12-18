@@ -1,0 +1,48 @@
+id: "178"
+name: Alumni Stadium
+type: athletic
+lat: 43.535068
+lng: -80.226629
+address: 15 Lang Way
+link: /maps/locations/alumni-stadium
+img: alumni-stadium.jpg
+polygon:
+  - - lat: 43.534482
+      lng: -80.226386
+    - lat: 43.534476
+      lng: -80.226258
+    - lat: 43.534758
+      lng: -80.225847
+    - lat: 43.534852
+      lng: -80.225847
+    - lat: 43.535659
+      lng: -80.226874
+    - lat: 43.535668
+      lng: -80.227003
+    - lat: 43.535379
+      lng: -80.22743
+    - lat: 43.535291
+      lng: -80.227424
+  - - lat: 43.535284017125036
+      lng: -80.22772285781272
+    - lat: 43.535033666315464
+      lng: -80.22740568661241
+    - lat: 43.53489123325404
+      lng: -80.22761959277106
+    - lat: 43.53514304300954
+      lng: -80.22793542286692
+  - - lat: 43.53498016236544
+      lng: -80.22733731417229
+    - lat: 43.53486786865243
+      lng: -80.22757133689724
+    - lat: 43.53443521992069
+      lng: -80.22702818959573
+    - lat: 43.53454994505436
+      lng: -80.22679215521411
+groundOverlay:
+  url: /maps/img/overlays/alumni-stadium-angled.svg
+  bounds:
+    north: 43.535678
+    east: -80.225744
+    south: 43.534457
+    west: -80.227519

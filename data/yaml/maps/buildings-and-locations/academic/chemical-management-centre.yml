@@ -1,0 +1,30 @@
+id: "137"
+name: Chemical Management Centre
+acronym: CMC
+type: academic
+lat: 43.528198
+lng: -80.229879
+address: 585 Gordon Street
+link: /maps/locations/chemical-management
+img: chemical-management-centre.png
+polygon:
+  - lat: 43.528222
+    lng: -80.230005
+  - lat: 43.528083
+    lng: -80.22982
+  - lat: 43.528115
+    lng: -80.229777
+  - lat: 43.528148
+    lng: -80.229819
+  - lat: 43.528197
+    lng: -80.229754
+  - lat: 43.528239
+    lng: -80.229807
+  - lat: 43.528233
+    lng: -80.229815
+  - lat: 43.528265
+    lng: -80.229861
+  - lat: 43.528287
+    lng: -80.229833
+  - lat: 43.528313
+    lng: -80.229869

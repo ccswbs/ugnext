@@ -1,0 +1,14 @@
+id: OFF008
+name: Domino's Pizza
+type: off-campus-food
+lat: 43.518007
+lng: -80.234225
+address: 304 Stone Rd W, Guelph, ON N1G 4W4
+link: https://pizza.dominos.ca/Guelph-Ontario-10263
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-dominos-pizza.png
+img: dominos-pizza.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/113664309233820834071/photos">A
+  Google User</a>

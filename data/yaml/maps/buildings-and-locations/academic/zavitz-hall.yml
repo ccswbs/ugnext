@@ -1,0 +1,47 @@
+id: "021"
+name: Zavitz Hall
+acronym: ZAV
+type: academic
+lat: 43.530977
+lng: -80.227183
+address: 60 Reynolds Walk
+link: /maps/locations/zavitz
+img: zavitz-hall.jpg
+polygon:
+  - lat: 43.530812
+    lng: -80.227163
+  - lat: 43.530851
+    lng: -80.227106
+  - lat: 43.530837
+    lng: -80.227087
+  - lat: 43.530832
+    lng: -80.227065
+  - lat: 43.530834
+    lng: -80.227038
+  - lat: 43.530842
+    lng: -80.227018
+  - lat: 43.530857
+    lng: -80.227003
+  - lat: 43.530867
+    lng: -80.227
+  - lat: 43.530878
+    lng: -80.227
+  - lat: 43.53089
+    lng: -80.227004
+  - lat: 43.53091
+    lng: -80.227024
+  - lat: 43.530949
+    lng: -80.226974
+  - lat: 43.531231
+    lng: -80.227375
+  - lat: 43.531099
+    lng: -80.227556
+  - lat: 43.531013
+    lng: -80.227447
+  - lat: 43.531025
+    lng: -80.227434
+  - lat: 43.530911
+    lng: -80.227272
+  - lat: 43.530899
+    lng: -80.227285
+htID: 22

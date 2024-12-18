@@ -1,0 +1,26 @@
+id: "010"
+name: Drew Hall
+type: academic
+lat: 43.533637
+lng: -80.228773
+address: 27 Trent Lane
+link: /maps/locations/drew-hall
+img: drew-hall.jpg
+polygon:
+  - lat: 43.533623
+    lng: -80.228894
+  - lat: 43.533595
+    lng: -80.228854
+  - lat: 43.533578
+    lng: -80.228877
+  - lat: 43.533555
+    lng: -80.228842
+  - lat: 43.533574
+    lng: -80.228818
+  - lat: 43.533549
+    lng: -80.22878
+  - lat: 43.533648
+    lng: -80.228651
+  - lat: 43.533724
+    lng: -80.228762
+htID: 3

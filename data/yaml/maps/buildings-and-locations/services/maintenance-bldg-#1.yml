@@ -1,0 +1,37 @@
+id: "058"
+name: "Maintenance Bldg #1"
+type: services
+lat: 43.533527
+lng: -80.227803
+address: 44 Trent Lane
+link: /maps/locations/maintenance
+img: maintenance-building.jpg
+polygon:
+  - lat: 43.533751
+    lng: -80.228055
+  - lat: 43.533717
+    lng: -80.228098
+  - lat: 43.53371
+    lng: -80.228089
+  - lat: 43.53364
+    lng: -80.228183
+  - lat: 43.533612
+    lng: -80.22814
+  - lat: 43.533602
+    lng: -80.228152
+  - lat: 43.533348
+    lng: -80.227791
+  - lat: 43.533495
+    lng: -80.227594
+  - lat: 43.533521
+    lng: -80.227632
+  - lat: 43.533558
+    lng: -80.227583
+  - lat: 43.533693
+    lng: -80.227774
+  - lat: 43.533651
+    lng: -80.227829
+  - lat: 43.533748
+    lng: -80.227966
+  - lat: 43.533718
+    lng: -80.228006

@@ -1,0 +1,17 @@
+id: "061"
+name: Housekeeping Building
+type: services
+lat: 43.5339
+lng: -80.228479
+address: 24 Trent Lane
+link: /maps/locations/housekeeping
+img: housekeeping-building.jpg
+polygon:
+  - lat: 43.533979
+    lng: -80.228491
+  - lat: 43.533904
+    lng: -80.228588
+  - lat: 43.533821
+    lng: -80.228465
+  - lat: 43.533895
+    lng: -80.228371

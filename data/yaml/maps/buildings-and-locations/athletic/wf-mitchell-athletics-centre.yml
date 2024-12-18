@@ -1,0 +1,56 @@
+id: "050"
+name: W.F. Mitchell Athletics Centre
+acronym: AC
+type: athletic
+lat: 43.533218
+lng: -80.224661
+address: 150 Reynolds Walk
+link: /maps/locations/athletics-centre
+img: wf-mitchell-athletics-centre.jpg
+polygon:
+  - lat: 43.533196
+    lng: -80.223959
+  - lat: 43.533688
+    lng: -80.224653
+  - lat: 43.533629
+    lng: -80.224731
+  - lat: 43.533806
+    lng: -80.224971
+  - lat: 43.533518
+    lng: -80.225364
+  - lat: 43.533368
+    lng: -80.225155
+  - lat: 43.533278
+    lng: -80.225064
+  - lat: 43.533238
+    lng: -80.225116
+  - lat: 43.533261
+    lng: -80.225151
+  - lat: 43.533138
+    lng: -80.225317
+  - lat: 43.533112
+    lng: -80.22529
+  - lat: 43.533096
+    lng: -80.22531
+  - lat: 43.533053
+    lng: -80.225253
+  - lat: 43.533047
+    lng: -80.22526
+  - lat: 43.532687
+    lng: -80.224757
+  - lat: 43.532696
+    lng: -80.224743
+  - lat: 43.532629
+    lng: -80.224657
+  - lat: 43.532831
+    lng: -80.224391
+  - lat: 43.532848
+    lng: -80.224414
+  - lat: 43.532861
+    lng: -80.224395
+  - lat: 43.532843
+    lng: -80.224367
+  - lat: 43.532888
+    lng: -80.224307
+  - lat: 43.532911
+    lng: -80.224339

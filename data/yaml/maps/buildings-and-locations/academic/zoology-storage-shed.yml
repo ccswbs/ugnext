@@ -1,0 +1,17 @@
+id: "194"
+name: Zoology Storage Shed
+type: academic
+lat: 43.527989
+lng: -80.229937
+address: 589 Gordon Street
+link: /maps/locations/zoology-storage
+img: zoology-storage-shed.jpg
+polygon:
+  - lat: 43.528012
+    lng: -80.230066
+  - lat: 43.527895
+    lng: -80.229907
+  - lat: 43.527964
+    lng: -80.229808
+  - lat: 43.528084
+    lng: -80.229967

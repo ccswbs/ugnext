@@ -1,0 +1,34 @@
+id: "123"
+name: Equine Sports Medicine and Reproduction Centre
+acronym: ESRC
+type: academic
+lat: 43.527184
+lng: -80.23267
+address: 50 McGilvray Street
+link: /maps/locations/equine-sciences
+img: equine-research.jpg
+polygon:
+  - lat: 43.52701
+    lng: -80.233444
+  - lat: 43.526928
+    lng: -80.233324
+  - lat: 43.527109
+    lng: -80.233068
+  - lat: 43.527077
+    lng: -80.233027
+  - lat: 43.527046
+    lng: -80.233072
+  - lat: 43.526926
+    lng: -80.2329
+  - lat: 43.527319
+    lng: -80.232352
+  - lat: 43.527442
+    lng: -80.232527
+  - lat: 43.527137
+    lng: -80.232953
+  - lat: 43.527167
+    lng: -80.232994
+  - lat: 43.527222
+    lng: -80.232911
+  - lat: 43.527308
+    lng: -80.233033

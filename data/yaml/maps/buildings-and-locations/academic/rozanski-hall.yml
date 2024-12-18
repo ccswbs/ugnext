@@ -1,0 +1,42 @@
+id: "142"
+name: Rozanski Hall
+acronym: ROZH
+type: academic
+lat: 43.53222
+lng: -80.225807
+address: 98 Trent Lane
+link: /maps/locations/rozanski
+img: rozanski-hall.jpg
+polygon:
+  - lat: 43.532648
+    lng: -80.226029
+  - lat: 43.532603
+    lng: -80.225968
+  - lat: 43.532601
+    lng: -80.225875
+  - lat: 43.532531
+    lng: -80.225776
+  - lat: 43.532564
+    lng: -80.225732
+  - lat: 43.532217
+    lng: -80.225267
+  - lat: 43.5321
+    lng: -80.225434
+  - lat: 43.532081
+    lng: -80.225407
+  - lat: 43.531805
+    lng: -80.225772
+  - lat: 43.532039
+    lng: -80.226098
+  - lat: 43.532063
+    lng: -80.226063
+  - lat: 43.532119
+    lng: -80.226144
+  - lat: 43.532096
+    lng: -80.226175
+  - lat: 43.5323
+    lng: -80.226449
+  - lat: 43.532548
+    lng: -80.226095
+  - lat: 43.532575
+    lng: -80.226131

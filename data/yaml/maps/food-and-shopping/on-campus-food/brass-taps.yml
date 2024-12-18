@@ -1,0 +1,12 @@
+id: ON004
+name: Brass Taps
+type: on-campus-food
+lat: 43.53059
+lng: -80.226556
+address: University Centre (2nd Floor)
+link: https://hospitality.uoguelph.ca/hours-menus
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-brass-taps.png
+img: brass-taps-uc.jpg
+within: "158"

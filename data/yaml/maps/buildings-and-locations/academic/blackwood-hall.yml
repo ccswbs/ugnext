@@ -1,0 +1,18 @@
+id: "014"
+name: Blackwood Hall
+acronym: BWH
+type: academic
+lat: 43.532935
+lng: -80.227053
+address: 70 Trent Lane
+link: /maps/locations/blackwood-hall
+img: blackwood-hall.jpg
+polygon:
+  - lat: 43.533098
+    lng: -80.227458
+  - lat: 43.532648
+    lng: -80.226821
+  - lat: 43.532768
+    lng: -80.226648
+  - lat: 43.533222
+    lng: -80.227283

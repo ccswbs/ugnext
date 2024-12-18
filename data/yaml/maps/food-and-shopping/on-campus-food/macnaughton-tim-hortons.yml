@@ -1,0 +1,12 @@
+id: ON031
+name: Macnaughton Tim Hortons
+type: on-campus-food
+lat: 43.530555
+lng: -80.227162
+address: Inside MacNaughton Building (2nd Floor)
+link: https://hospitality.uoguelph.ca/hours-menus
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-tim-hortons.png
+img: tim-hortons-macnaughton.jpg
+within: "073"

@@ -1,0 +1,17 @@
+id: "079"
+name: Crop Science Greenhouse
+type: academic
+lat: 43.531309
+lng: -80.224286
+address: 119 Reynolds Walk
+link: /maps/locations/crop-science
+img: crop-science-greenhouse.jpg
+polygon:
+  - lat: 43.531352
+    lng: -80.224596
+  - lat: 43.531086
+    lng: -80.224225
+  - lat: 43.531264
+    lng: -80.223975
+  - lat: 43.531532
+    lng: -80.224349

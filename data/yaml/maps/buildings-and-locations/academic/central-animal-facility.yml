@@ -1,0 +1,60 @@
+id: "012"
+name: Central Animal Facility
+acronym: CAF
+type: academic
+lat: 43.5288
+lng: -80.23287
+address: 81 McGilvray Street
+link: https://www.uoguelph.ca/research/services-divisions/central-animal-facility
+img: central-animal-facility.jpg
+polygon:
+  - lat: 43.528952
+    lng: -80.233411
+  - lat: 43.528804
+    lng: -80.233213
+  - lat: 43.528481
+    lng: -80.232752
+  - lat: 43.528521
+    lng: -80.232691
+  - lat: 43.528491
+    lng: -80.232647
+  - lat: 43.52849
+    lng: -80.232622
+  - lat: 43.52851
+    lng: -80.232621
+  - lat: 43.528543
+    lng: -80.232669
+  - lat: 43.528619
+    lng: -80.232555
+  - lat: 43.528663
+    lng: -80.232612
+  - lat: 43.528749
+    lng: -80.232495
+  - lat: 43.52876
+    lng: -80.23251
+  - lat: 43.528787
+    lng: -80.232474
+  - lat: 43.528798
+    lng: -80.232487
+  - lat: 43.528812
+    lng: -80.232467
+  - lat: 43.528812
+    lng: -80.232467
+  - lat: 43.528988
+    lng: -80.232689
+  - lat: 43.528994
+    lng: -80.232679
+  - lat: 43.528988
+    lng: -80.232671
+  - lat: 43.529013
+    lng: -80.232636
+  - lat: 43.529044
+    lng: -80.232677
+  - lat: 43.529006
+    lng: -80.232728
+  - lat: 43.529067
+    lng: -80.232813
+  - lat: 43.528891
+    lng: -80.233061
+  - lat: 43.529046
+    lng: -80.233282

@@ -1,0 +1,43 @@
+id: "009"
+name: War Memorial Hall
+acronym: WMEM
+type: academic
+lat: 43.53259
+lng: -80.23136
+address: 390 Gordon Street
+link: /maps/locations/war-memorial
+img: war-memorial-hall.jpg
+polygon:
+  - lat: 43.532543
+    lng: -80.231584
+  - lat: 43.532522
+    lng: -80.23155
+  - lat: 43.53251
+    lng: -80.231561
+  - lat: 43.532432
+    lng: -80.231459
+  - lat: 43.532444
+    lng: -80.231438
+  - lat: 43.532425
+    lng: -80.231414
+  - lat: 43.532458
+    lng: -80.231361
+  - lat: 43.532451
+    lng: -80.23135
+  - lat: 43.532619
+    lng: -80.231144
+  - lat: 43.532648
+    lng: -80.231183
+  - lat: 43.532684
+    lng: -80.231135
+  - lat: 43.532755
+    lng: -80.231242
+  - lat: 43.532719
+    lng: -80.231286
+  - lat: 43.532743
+    lng: -80.231324
+  - lat: 43.53259
+    lng: -80.231539
+  - lat: 43.532583
+    lng: -80.23153
+htID: 11

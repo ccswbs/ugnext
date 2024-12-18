@@ -1,0 +1,47 @@
+id: "500"
+name: Art Gallery of Guelph
+acronym: AGG
+type: poi
+lat: 43.533003
+lng: -80.232987
+address: 358 Gordon Street
+link: /maps/locations/art-gallery
+img: art-gallery-of-guelph.jpg
+polygon:
+  - lat: 43.53319
+    lng: -80.233093
+  - lat: 43.533127
+    lng: -80.233174
+  - lat: 43.533076
+    lng: -80.2331
+  - lat: 43.533083
+    lng: -80.233091
+  - lat: 43.533066
+    lng: -80.233065
+  - lat: 43.532994
+    lng: -80.233162
+  - lat: 43.532942
+    lng: -80.23309
+  - lat: 43.532937
+    lng: -80.233097
+  - lat: 43.532879
+    lng: -80.233009
+  - lat: 43.532885
+    lng: -80.233002
+  - lat: 43.532816
+    lng: -80.232911
+  - lat: 43.532866
+    lng: -80.232838
+  - lat: 43.532824
+    lng: -80.232777
+  - lat: 43.532901
+    lng: -80.232684
+  - lat: 43.533021
+    lng: -80.232854
+  - lat: 43.533027
+    lng: -80.232844
+  - lat: 43.533067
+    lng: -80.232895
+  - lat: 43.533061
+    lng: -80.232905
+htID: 10

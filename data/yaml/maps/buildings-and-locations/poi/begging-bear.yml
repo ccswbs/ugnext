@@ -1,0 +1,12 @@
+id: POI001
+name: Begging Bear
+type: poi
+lat: 43.532756
+lng: -80.233298
+address: 358 Gordon Street
+link: /maps/locations/begging-bear
+icon:
+  type: fontawesome
+  style: custom
+  name: begging-bear-icon
+img: begging-bear.jpg

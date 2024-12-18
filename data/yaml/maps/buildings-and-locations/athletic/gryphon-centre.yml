@@ -1,0 +1,34 @@
+id: "075"
+name: Gryphon Centre
+acronym: GRC
+type: athletic
+lat: 43.53232
+lng: -80.223506
+address: 149 Reynolds Walk
+link: /maps/locations/gryphon-centre
+img: gryphon-centre.jpg
+polygon:
+  - lat: 43.532504
+    lng: -80.224091
+  - lat: 43.532584
+    lng: -80.224068
+  - lat: 43.532653
+    lng: -80.224006
+  - lat: 43.532716
+    lng: -80.223914
+  - lat: 43.532737
+    lng: -80.223842
+  - lat: 43.532746
+    lng: -80.223754
+  - lat: 43.5327
+    lng: -80.223691
+  - lat: 43.532801
+    lng: -80.223539
+  - lat: 43.53229
+    lng: -80.222845
+  - lat: 43.531838
+    lng: -80.223469
+  - lat: 43.532349
+    lng: -80.224168
+  - lat: 43.53246
+    lng: -80.224028

@@ -1,0 +1,34 @@
+id: "138"
+name: Biodiversity Institute of Ontario
+acronym: BIO
+type: academic
+lat: 43.528163
+lng: -80.229165
+address: 579 Gordon Street
+link: http://www.biodiversity.uoguelph.ca
+img: biodiversity-institute-of-ontario.jpg
+polygon:
+  - lat: 43.528246
+    lng: -80.228996
+  - lat: 43.528227
+    lng: -80.228997
+  - lat: 43.528225
+    lng: -80.228957
+  - lat: 43.528248
+    lng: -80.228957
+  - lat: 43.528257
+    lng: -80.228772
+  - lat: 43.52807
+    lng: -80.228751
+  - lat: 43.52806
+    lng: -80.228934
+  - lat: 43.528079
+    lng: -80.228936
+  - lat: 43.528079
+    lng: -80.229027
+  - lat: 43.528062
+    lng: -80.22903
+  - lat: 43.528078
+    lng: -80.229268
+  - lat: 43.528266
+    lng: -80.229231

@@ -1,0 +1,17 @@
+id: "130"
+name: Temporary Horse Arena
+type: academic
+lat: 43.527044
+lng: -80.232403
+address: 50 McGilvray Street
+link: /maps/locations/equine-sciences
+img: temporary-horse-arena.jpg
+polygon:
+  - lat: 43.527254
+    lng: -80.232308
+  - lat: 43.527121
+    lng: -80.232112
+  - lat: 43.526834
+    lng: -80.232503
+  - lat: 43.526977
+    lng: -80.232694

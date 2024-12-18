@@ -1,0 +1,14 @@
+id: OFF001
+name: Balzac's Coffee Roasters
+type: off-campus-food
+lat: 43.541949
+lng: -80.248649
+address: "5 Gordon St #100, Guelph, ON N1H 4G8"
+link: http://www.balzacs.com/locations/guelph
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-balzacs-coffee-roasters.png
+img: balzacs-coffee-roasters.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/105040429520189267492/photos">Balzac&#39;s
+  Guelph</a>

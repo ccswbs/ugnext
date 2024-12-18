@@ -1,0 +1,21 @@
+id: "095"
+name: OVC Gnotobiotic Laboratory
+type: academic
+lat: 43.52977
+lng: -80.232563
+address: 59 McGilvray Street
+link: /maps/locations/ovc-gnotobiotic
+img: ovc-gnotobiotic-laboratory.jpg
+polygon:
+  - lat: 43.529895
+    lng: -80.232658
+  - lat: 43.529704
+    lng: -80.232386
+  - lat: 43.529676
+    lng: -80.232418
+  - lat: 43.529646
+    lng: -80.232464
+  - lat: 43.529836
+    lng: -80.232739
+  - lat: 43.529873
+    lng: -80.2327

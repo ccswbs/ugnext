@@ -1,0 +1,25 @@
+id: "090"
+name: OVC Large Animal Isolation Unit
+type: academic
+lat: 43.528388
+lng: -80.233718
+address: 20 McIntosh Lane
+link: /maps/locations/ovc-animal-isolation
+img: ovc-large-animal-isolation.jpg
+polygon:
+  - lat: 43.528569
+    lng: -80.23404
+  - lat: 43.528447
+    lng: -80.234037
+  - lat: 43.52818
+    lng: -80.233669
+  - lat: 43.528147
+    lng: -80.233538
+  - lat: 43.52824
+    lng: -80.233396
+  - lat: 43.528341
+    lng: -80.233433
+  - lat: 43.528608
+    lng: -80.233787
+  - lat: 43.528629
+    lng: -80.233943

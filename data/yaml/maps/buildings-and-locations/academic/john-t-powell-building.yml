@@ -1,0 +1,44 @@
+id: "160"
+name: John T. Powell Building
+acronym: JTP
+type: academic
+lat: 43.533495
+lng: -80.223555
+address: 168 Reynolds Walk
+link: /maps/locations/john-t-powell
+img: john-t-powell-building.jpg
+polygon:
+  - lat: 43.533251
+    lng: -80.224038
+  - lat: 43.533208
+    lng: -80.223975
+  - lat: 43.533208
+    lng: -80.223634
+  - lat: 43.53358
+    lng: -80.223109
+  - lat: 43.53362
+    lng: -80.223109
+  - lat: 43.533647
+    lng: -80.223072
+  - lat: 43.533731
+    lng: -80.223187
+  - lat: 43.533713
+    lng: -80.223209
+  - lat: 43.533783
+    lng: -80.223308
+  - lat: 43.533696
+    lng: -80.223431
+  - lat: 43.533708
+    lng: -80.22345
+  - lat: 43.533632
+    lng: -80.223555
+  - lat: 43.533646
+    lng: -80.223576
+  - lat: 43.533489
+    lng: -80.223797
+  - lat: 43.533472
+    lng: -80.223776
+  - lat: 43.533309
+    lng: -80.224006
+  - lat: 43.533294
+    lng: -80.223985

@@ -1,0 +1,23 @@
+id: "032"
+name: Graham Hall
+acronym: GRHM
+type: academic
+lat: 43.528189
+lng: -80.227929
+address: 597 Gordon Street
+link: /maps/locations/graham-hall
+img: graham-hall.jpg
+polygon:
+  - lat: 43.528352
+    lng: -80.227985
+  - lat: 43.528223
+    lng: -80.227805
+  - lat: 43.528235
+    lng: -80.227789
+  - lat: 43.528166
+    lng: -80.227696
+  - lat: 43.528026
+    lng: -80.227887
+  - lat: 43.528224
+    lng: -80.228162
+htID: 26

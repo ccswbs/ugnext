@@ -1,0 +1,22 @@
+id: "193"
+name: Hales-McKay Shelter
+acronym: HMS
+type: academic
+lat: 43.54139272356202
+lng: -80.21460052694842
+address: 250 Arboretum Road
+link: https://www.uoguelph.ca/arboretum
+img: arboretum-centre.jpg
+polygon:
+  - lat: 43.54143403931266
+    lng: -80.21466489995954
+  - lat: 43.54141945728626
+    lng: -80.21456834044285
+  - lat: 43.541407791662614
+    lng: -80.21455694105546
+  - lat: 43.541341686419216
+    lng: -80.21456766989066
+  - lat: 43.541327590438826
+    lng: -80.21459784473961
+  - lat: 43.541423345827
+    lng: -80.21467696989913

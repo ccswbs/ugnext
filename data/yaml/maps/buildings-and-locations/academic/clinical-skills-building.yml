@@ -1,0 +1,34 @@
+id: "147"
+name: Clinical Skills Building
+acronym: CSB
+type: academic
+lat: 43.528316
+lng: -80.2304
+address: 55 Grange Lane
+link: /maps/locations/clinical-skills
+img: clinical-skills-building.jpg
+polygon:
+  - lat: 43.528507
+    lng: -80.230271
+  - lat: 43.528416
+    lng: -80.230141
+  - lat: 43.528359
+    lng: -80.230169
+  - lat: 43.528309
+    lng: -80.230207
+  - lat: 43.528309
+    lng: -80.230223
+  - lat: 43.528266
+    lng: -80.230262
+  - lat: 43.528221
+    lng: -80.230314
+  - lat: 43.528174
+    lng: -80.230382
+  - lat: 43.528204
+    lng: -80.230424
+  - lat: 43.528164
+    lng: -80.23047
+  - lat: 43.528125
+    lng: -80.230524
+  - lat: 43.528225
+    lng: -80.230659

@@ -1,0 +1,13 @@
+id: OFF024
+name: Quiznos
+type: off-campus-food
+lat: 43.519012
+lng: -80.234045
+address: 292 Stone Rd W Unit 3, Guelph, ON N1G 3C4
+link: http://quiznos.ca/en
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-quiznos.png
+img: quiznos.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/114715808745740960134/photos">Quiznos</a>

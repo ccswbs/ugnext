@@ -1,0 +1,22 @@
+id: "116"
+name: Grad House
+acronym: GRAD
+type: academic
+lat: 43.5337782
+lng: -80.23433
+address: 346 Gordon Street
+link: /maps/locations/grad-house
+img: grad-house.jpg
+polygon:
+  - lat: 43.53382784514832
+    lng: -80.23434826394156
+  - lat: 43.53376318998243
+    lng: -80.23443811793909
+  - lat: 43.53375832868894
+    lng: -80.2344314124169
+  - lat: 43.53374325867668
+    lng: -80.23445287008795
+  - lat: 43.533693673448525
+    lng: -80.23439050873144
+  - lat: 43.53377534321437
+    lng: -80.23427584430173

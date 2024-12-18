@@ -1,0 +1,37 @@
+id: "182"
+name: Community Engage Scholarship Institute
+type: academic
+lat: 43.534814
+lng: -80.233123
+address: 17 University Avenue East
+link: /maps/locations/cesi
+img: 17-university.jpg
+polygon:
+  - lat: 43.534844
+    lng: -80.233174
+  - lat: 43.534829
+    lng: -80.233154
+  - lat: 43.534791
+    lng: -80.233205
+  - lat: 43.534733
+    lng: -80.233127
+  - lat: 43.534786
+    lng: -80.23306
+  - lat: 43.534779
+    lng: -80.233051
+  - lat: 43.534814
+    lng: -80.233
+  - lat: 43.534783
+    lng: -80.232956
+  - lat: 43.534821
+    lng: -80.232906
+  - lat: 43.534871
+    lng: -80.232977
+  - lat: 43.534856
+    lng: -80.232998
+  - lat: 43.534885
+    lng: -80.23304
+  - lat: 43.534868
+    lng: -80.233065
+  - lat: 43.534896
+    lng: -80.233104

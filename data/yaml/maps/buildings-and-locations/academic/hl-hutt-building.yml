@@ -1,0 +1,23 @@
+id: "028"
+name: H.L. Hutt Building
+acronym: HUTT
+type: academic
+lat: 43.530233
+lng: -80.227092
+address: 43 Reynolds Walk
+link: /maps/locations/hl-hutt-building
+img: hl-hutt-building.jpg
+polygon:
+  - lat: 43.530468
+    lng: -80.226958
+  - lat: 43.530338
+    lng: -80.226782
+  - lat: 43.530146
+    lng: -80.227041
+  - lat: 43.530081
+    lng: -80.22695
+  - lat: 43.529998
+    lng: -80.227066
+  - lat: 43.530192
+    lng: -80.227327
+htID: 24

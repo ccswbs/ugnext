@@ -1,0 +1,17 @@
+id: "092"
+name: Research Innovation
+type: academic
+lat: 43.528664
+lng: -80.226108
+address: 12 Christie Lane
+link: /maps/locations/research-innovation
+img: research-innovation.jpg
+polygon:
+  - - lat: 43.528672
+      lng: -80.226263
+    - lat: 43.528551
+      lng: -80.226097
+    - lat: 43.528721
+      lng: -80.225859
+    - lat: 43.528842
+      lng: -80.22603

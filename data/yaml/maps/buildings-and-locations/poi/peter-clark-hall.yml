@@ -1,0 +1,9 @@
+id: POI005
+name: Peter Clark Hall
+type: poi
+lat: 43.530637
+lng: -80.226234
+address: In the basement of the UC
+link: /maps/locations/peter-clark
+img: peter-clark-hall.jpg
+within: "158"

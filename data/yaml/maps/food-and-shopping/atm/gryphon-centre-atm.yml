@@ -1,0 +1,8 @@
+id: ATM005
+name: Gryphon Centre ATM
+type: atm
+lat: 43.53235
+lng: -80.223633
+address: Gryphon Centre (2nd Floor outside Gryphs Restaurant)
+img: atm-gryphon-centre.jpg
+within: "075"

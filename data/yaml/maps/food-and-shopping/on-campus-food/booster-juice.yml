@@ -1,0 +1,14 @@
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-booster-juice.png
+lat: 43.53089
+lng: -80.226318
+link: https://hospitality.uoguelph.ca/hours-menus
+name: Booster Juice
+img: booster-juice-uc.jpg
+address: University Centre (1st Floor)
+type: on-campus-food
+id: ON003
+within: "158"
+us-food
+id: ON002

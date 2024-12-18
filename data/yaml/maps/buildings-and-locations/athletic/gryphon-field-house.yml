@@ -1,0 +1,17 @@
+id: "099"
+name: Gryphon Field House
+type: athletic
+lat: 43.534304
+lng: -80.225046
+address: 55 East Ring Road
+link: https://fitandrec.gryphons.ca/about/facilities/gryphon-fieldhouse
+img: gryphon-fieldhouse.jpg
+polygon:
+  - lat: 43.534195
+    lng: -80.225702
+  - lat: 43.533833
+    lng: -80.225219
+  - lat: 43.534413
+    lng: -80.22439
+  - lat: 43.534775
+    lng: -80.224873

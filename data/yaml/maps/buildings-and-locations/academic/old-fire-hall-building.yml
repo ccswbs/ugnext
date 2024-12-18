@@ -1,0 +1,25 @@
+id: "053"
+name: Old Fire Hall Building
+type: academic
+lat: 43.532622
+lng: -80.226652
+address: 86 Trent Lane
+link: /maps/locations/old-fire-hall
+img: old-fire-hall.jpg
+polygon:
+  - lat: 43.532614
+    lng: -80.226755
+  - lat: 43.532608
+    lng: -80.226755
+  - lat: 43.532604
+    lng: -80.226745
+  - lat: 43.532549
+    lng: -80.226669
+  - lat: 43.532632
+    lng: -80.226549
+  - lat: 43.532694
+    lng: -80.226637
+  - lat: 43.532612
+    lng: -80.226744
+  - lat: 43.532615
+    lng: -80.226749

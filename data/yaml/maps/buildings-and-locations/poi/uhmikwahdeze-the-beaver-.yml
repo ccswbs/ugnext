@@ -1,0 +1,11 @@
+id: POI011
+name: Uhmikwahdeze "The Beaver"
+type: poi
+lat: 43.52843036695252
+lng: -80.22696711944151
+link: /maps/locations/the-beaver
+icon:
+  type: fontawesome
+  style: custom
+  name: ug-beaver
+img: the-beaver.jpeg

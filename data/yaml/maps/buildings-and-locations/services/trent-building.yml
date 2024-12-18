@@ -1,0 +1,25 @@
+id: "059"
+name: Trent Building
+type: services
+lat: 43.533813
+lng: -80.22821
+address: 32 Trent Lane
+link: /maps/locations/trent
+img: trent-building.jpg
+polygon:
+  - lat: 43.533797
+    lng: -80.228321
+  - lat: 43.533781
+    lng: -80.228341
+  - lat: 43.533715
+    lng: -80.228245
+  - lat: 43.53373
+    lng: -80.228224
+  - lat: 43.533704
+    lng: -80.228188
+  - lat: 43.533801
+    lng: -80.22806
+  - lat: 43.533922
+    lng: -80.228234
+  - lat: 43.533824
+    lng: -80.22836

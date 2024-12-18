@@ -1,0 +1,34 @@
+id: "089"
+name: OVC Pathobiology/Animal Health Lab Building
+acronym: PAHL
+type: academic
+lat: 43.530403
+lng: -80.231401
+address: 419 Gordon Street
+link: /maps/locations/ovc-pahl
+img: ovc-pathobiology-ahl.jpg
+polygon:
+  - lat: 43.53004
+    lng: -80.23136
+  - lat: 43.530156
+    lng: -80.231197
+  - lat: 43.530116
+    lng: -80.231145
+  - lat: 43.530342
+    lng: -80.230843
+  - lat: 43.530706
+    lng: -80.231362
+  - lat: 43.530726
+    lng: -80.231407
+  - lat: 43.530733
+    lng: -80.231438
+  - lat: 43.530735
+    lng: -80.231467
+  - lat: 43.53073
+    lng: -80.231509
+  - lat: 43.530705
+    lng: -80.23157
+  - lat: 43.530665
+    lng: -80.231642
+  - lat: 43.530443
+    lng: -80.231934

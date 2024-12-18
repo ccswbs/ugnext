@@ -1,0 +1,18 @@
+id: "238"
+name: J.C. Taylor Nature Interpretive Centre
+acronym: ARBNC
+type: academic
+lat: 43.54186
+lng: -80.211872
+address: 270 Arboretum Road
+link: /maps/locations/taylor-nature
+img: jc-taylor-nature-centre.jpg
+polygon:
+  - lat: 43.541913
+    lng: -80.211945
+  - lat: 43.541912
+    lng: -80.211802
+  - lat: 43.541808
+    lng: -80.211799
+  - lat: 43.541807
+    lng: -80.211941

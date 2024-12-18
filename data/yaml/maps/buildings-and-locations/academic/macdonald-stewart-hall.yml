@@ -1,0 +1,42 @@
+id: "023"
+name: Macdonald Stewart Hall
+acronym: MACS
+type: academic
+lat: 43.534383
+lng: -80.232755
+address: 42 Macdonald Street
+link: /maps/locations/macdonald-stewart-hall
+img: macdonald-stewart-hall.jpg
+polygon:
+  - lat: 43.534209
+    lng: -80.232362
+  - lat: 43.534175
+    lng: -80.232414
+  - lat: 43.534189
+    lng: -80.232435
+  - lat: 43.534167
+    lng: -80.232457
+  - lat: 43.534179
+    lng: -80.232509
+  - lat: 43.534149
+    lng: -80.232648
+  - lat: 43.534172
+    lng: -80.232647
+  - lat: 43.534172
+    lng: -80.232806
+  - lat: 43.534344
+    lng: -80.232817
+  - lat: 43.534342
+    lng: -80.232851
+  - lat: 43.53454
+    lng: -80.232851
+  - lat: 43.53454
+    lng: -80.232616
+  - lat: 43.534334
+    lng: -80.232611
+  - lat: 43.534335
+    lng: -80.232409
+  - lat: 43.534296
+    lng: -80.232407
+  - lat: 43.534265
+    lng: -80.232363

@@ -1,0 +1,9 @@
+id: ES002
+name: Fire Safety
+type: services
+lat: 43.533896
+lng: -80.228214
+address: 32 Trent Lane
+link: https://www.uoguelph.ca/fire
+img: fire-safety.jpg
+within: "059"

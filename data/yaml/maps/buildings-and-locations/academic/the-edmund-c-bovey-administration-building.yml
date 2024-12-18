@@ -1,0 +1,18 @@
+id: "080"
+name: The Edmund C. Bovey Administration Building
+acronym: ECBA
+type: academic
+lat: 43.527791
+lng: -80.227385
+address: 607 Gordon Street
+link: /maps/locations/bovey-admin
+img: the-edmund-c-bovey-administration-building.jpg
+polygon:
+  - lat: 43.527942
+    lng: -80.227383
+  - lat: 43.527797
+    lng: -80.227177
+  - lat: 43.52764
+    lng: -80.227383
+  - lat: 43.527792
+    lng: -80.227593

@@ -1,0 +1,54 @@
+id: "158"
+name: University Centre
+acronym: UC
+type: poi
+lat: 43.53074
+lng: -80.226453
+address: 50 South Ring Road East
+link: /maps/locations/university-centre
+img: university-centre.jpg
+polygon:
+  - lat: 43.530944
+    lng: -80.226314
+  - lat: 43.530887
+    lng: -80.226234
+  - lat: 43.530897
+    lng: -80.226222
+  - lat: 43.530842
+    lng: -80.226143
+  - lat: 43.530832
+    lng: -80.226156
+  - lat: 43.530578
+    lng: -80.225791
+  - lat: 43.530587
+    lng: -80.22578
+  - lat: 43.53054
+    lng: -80.225709
+  - lat: 43.53053
+    lng: -80.225721
+  - lat: 43.530468
+    lng: -80.225631
+  - lat: 43.530094
+    lng: -80.226135
+  - lat: 43.530154
+    lng: -80.226224
+  - lat: 43.530121
+    lng: -80.226269
+  - lat: 43.530182
+    lng: -80.226358
+  - lat: 43.5302
+    lng: -80.226334
+  - lat: 43.53044
+    lng: -80.226674
+  - lat: 43.530433
+    lng: -80.226682
+  - lat: 43.530488
+    lng: -80.22677
+  - lat: 43.530518
+    lng: -80.226738
+  - lat: 43.53062
+    lng: -80.226874
+  - lat: 43.530835
+    lng: -80.226579
+  - lat: 43.530796
+    lng: -80.226522

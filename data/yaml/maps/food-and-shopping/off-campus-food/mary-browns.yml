@@ -1,0 +1,14 @@
+id: OFF015
+name: Mary Brown's
+type: off-campus-food
+lat: 43.540173
+lng: -80.282434
+address: Canada Trust Plaza, 170 Silvercreek Pkwy N, Guelph, ON N1H 7P7
+link: https://marybrowns.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-mary-browns.png
+img: mary-browns-at-silvercreek-parkway.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/116667008903269126674/photos">Paul
+  Tuck</a>

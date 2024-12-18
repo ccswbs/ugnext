@@ -1,0 +1,9 @@
+id: BUY004
+name: The University Bookstore
+type: retail
+lat: 43.530598
+lng: -80.227107
+address: Inside MacNaughton to the left of the entrance
+link: https://www.bookstore.uoguelph.ca
+img: the-bookstore-macnaughton.jpg
+within: "073"

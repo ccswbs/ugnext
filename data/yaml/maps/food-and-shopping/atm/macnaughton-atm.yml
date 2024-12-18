@@ -1,0 +1,8 @@
+id: ATM003
+name: MacNaughton ATM
+type: atm
+lat: 43.53062
+lng: -80.227249
+address: MacNaughton Building (Outside the University Bookstore)
+img: atm-macnaughton.jpg
+within: "073"

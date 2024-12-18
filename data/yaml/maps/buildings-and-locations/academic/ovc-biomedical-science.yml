@@ -1,0 +1,44 @@
+id: "040"
+name: OVC Biomedical Science
+acronym: BMED
+type: academic
+lat: 43.530889
+lng: -80.232961
+address: 22 College Avenue West
+link: /maps/locations/ovc-biomed
+img: ovc-biomedical-science.jpg
+polygon:
+  - lat: 43.530954
+    lng: -80.232445
+  - lat: 43.531228
+    lng: -80.232835
+  - lat: 43.530963
+    lng: -80.233191
+  - lat: 43.530982
+    lng: -80.233223
+  - lat: 43.530789
+    lng: -80.233477
+  - lat: 43.530754
+    lng: -80.233425
+  - lat: 43.53073
+    lng: -80.233455
+  - lat: 43.530618
+    lng: -80.233295
+  - lat: 43.530647
+    lng: -80.233254
+  - lat: 43.530635
+    lng: -80.233234
+  - lat: 43.530629
+    lng: -80.23324
+  - lat: 43.53055
+    lng: -80.233124
+  - lat: 43.530747
+    lng: -80.232861
+  - lat: 43.530832
+    lng: -80.232752
+  - lat: 43.530694
+    lng: -80.232551
+  - lat: 43.530769
+    lng: -80.232449
+  - lat: 43.530857
+    lng: -80.232574

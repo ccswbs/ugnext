@@ -1,0 +1,14 @@
+id: OFF011
+name: Fionn MacCool's
+type: off-campus-food
+lat: 43.520758
+lng: -80.234682
+address: 494 Edinburgh Rd S, Guelph, ON N1G 4Z1
+link: https://origin-www.fionnmaccools.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-fionn-maccool.png
+img: fionn-maccools.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/112713294095289481309/photos">Fionn
+  MacCool&#39;s</a>

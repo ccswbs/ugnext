@@ -1,0 +1,61 @@
+id: "167"
+name: OVC Animal Biotechnology Embryo Laboratory
+type: academic
+lat: 43.529204
+lng: -80.233344
+address: 41 McIntosh Lane
+link: /maps/locations/ovc-embryo
+img: ovc-animal-biotechnology-embryo-laboratory.jpg
+polygon:
+  - lat: 43.529223
+    lng: -80.233539
+  - lat: 43.529142
+    lng: -80.233421
+  - lat: 43.52915
+    lng: -80.233411
+  - lat: 43.529121
+    lng: -80.233374
+  - lat: 43.529121
+    lng: -80.233352
+  - lat: 43.52914
+    lng: -80.233323
+  - lat: 43.529241
+    lng: -80.233465
+  - lat: 43.529337
+    lng: -80.233336
+  - lat: 43.529338
+    lng: -80.233324
+  - lat: 43.529349
+    lng: -80.233311
+  - lat: 43.529308
+    lng: -80.23325
+  - lat: 43.529291
+    lng: -80.233268
+  - lat: 43.529197
+    lng: -80.23313
+  - lat: 43.529208
+    lng: -80.233115
+  - lat: 43.529195
+    lng: -80.233099
+  - lat: 43.529184
+    lng: -80.233113
+  - lat: 43.529161
+    lng: -80.233084
+  - lat: 43.529088
+    lng: -80.233186
+  - lat: 43.529121
+    lng: -80.233232
+  - lat: 43.529098
+    lng: -80.233264
+  - lat: 43.529128
+    lng: -80.233308
+  - lat: 43.529107
+    lng: -80.233335
+  - lat: 43.529104
+    lng: -80.233347
+  - lat: 43.529104
+    lng: -80.233374
+  - lat: 43.529058
+    lng: -80.233437
+  - lat: 43.529177
+    lng: -80.233604

@@ -1,0 +1,9 @@
+id: ON042
+name: Pizza Al Forno
+type: on-campus-food
+lat: 43.534008
+lng: -80.22938
+address: Creelman Hall
+link: https://hospitality.uoguelph.ca/hours-menus
+img: pizza-al-forno-creelman.jpg
+within: "007"

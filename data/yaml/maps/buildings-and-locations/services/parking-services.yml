@@ -1,0 +1,9 @@
+id: SERV003
+name: Parking Services
+type: services
+lat: 43.53386
+lng: -80.22827
+address: 32 Trent Lane
+link: https://www.parking.uoguelph.ca/
+img: trent-building.jpg
+within: "059"

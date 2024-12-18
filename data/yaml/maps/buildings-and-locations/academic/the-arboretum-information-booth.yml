@@ -1,0 +1,17 @@
+id: "233"
+name: The Arboretum Information Booth
+type: academic
+lat: 43.536052
+lng: -80.219856
+address: 80 Arboretum Road
+link: https://www.uoguelph.ca/arboretum
+img: arboretum-info-booth.jpg
+polygon:
+  - lat: 43.536019
+    lng: -80.219844
+  - lat: 43.536052
+    lng: -80.219809
+  - lat: 43.536085
+    lng: -80.219867
+  - lat: 43.536052
+    lng: -80.219903

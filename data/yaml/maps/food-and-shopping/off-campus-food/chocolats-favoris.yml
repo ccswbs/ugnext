@@ -1,0 +1,14 @@
+id: OFF005
+name: Chocolats Favoris
+type: off-campus-food
+lat: 43.499383
+lng: -80.189753
+address: "20 Clair Rd W #1, Guelph, ON N1L 0A8"
+link: https://www.chocolatsfavoris.com/en
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-chocolats-favoris.png
+img: chocolats-favoris.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/115005442641035712010/photos">Alex
+  Chen</a>

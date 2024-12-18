@@ -1,0 +1,14 @@
+id: OFF003
+name: Bar Mason
+type: off-campus-food
+lat: 43.525972
+lng: -80.224514
+address: 50 Stone Rd W, Guelph, ON N1G 0A9
+link: https://barmasonrestaurant.ca
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-bar-mason.png
+img: bar-mason.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/110775400181673729108/photos">A
+  Google User</a>

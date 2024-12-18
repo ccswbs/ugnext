@@ -1,0 +1,14 @@
+id: OFF009
+name: Double Dragon
+type: off-campus-food
+lat: 43.544333
+lng: -80.248655
+address: 43 Macdonell St, Guelph, ON N1H 2Z4
+link: http://www.doubledragonguelph.ca
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-double-dragon.png
+img: double-dragon.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/111878012009349504659/photos">A
+  Google User</a>

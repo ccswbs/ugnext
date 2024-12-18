@@ -1,0 +1,14 @@
+id: OFF020
+name: Papa John's Pizza
+type: off-campus-food
+lat: 43.520824
+lng: -80.212729
+address: "987 Gordon St #4, Guelph, ON N1C 1B8"
+link: http://www.papajohns.ca
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-papa-johns.png
+img: papa-johns.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/110571711437818198582/photos">A
+  Google User</a>

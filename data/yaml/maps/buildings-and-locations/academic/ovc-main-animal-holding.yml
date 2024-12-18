@@ -1,0 +1,46 @@
+id: "183"
+name: OVC Main Animal Holding
+acronym: OVC
+type: academic
+lat: 43.529583
+lng: -80.233784
+address: 47 McIntosh Lane
+link: /maps/locations/ovc-main-animal
+img: ovc-main-animal-holding.jpg
+polygon:
+  - lat: 43.529733
+    lng: -80.233371
+  - lat: 43.529882
+    lng: -80.233585
+  - lat: 43.529618
+    lng: -80.233935
+  - lat: 43.529631
+    lng: -80.233963
+  - lat: 43.529598
+    lng: -80.234008
+  - lat: 43.529577
+    lng: -80.233978
+  - lat: 43.529562
+    lng: -80.233996
+  - lat: 43.529566
+    lng: -80.234005
+  - lat: 43.529424
+    lng: -80.234197
+  - lat: 43.529377
+    lng: -80.234133
+  - lat: 43.529361
+    lng: -80.234142
+  - lat: 43.529353
+    lng: -80.234127
+  - lat: 43.529362
+    lng: -80.234109
+  - lat: 43.529283
+    lng: -80.233995
+  - lat: 43.529452
+    lng: -80.233775
+  - lat: 43.5294
+    lng: -80.233701
+  - lat: 43.52943
+    lng: -80.23366
+  - lat: 43.529473
+    lng: -80.233714

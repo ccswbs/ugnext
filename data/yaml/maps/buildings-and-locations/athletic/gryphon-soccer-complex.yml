@@ -1,0 +1,25 @@
+id: ATH001
+name: Gryphon Soccer Complex
+type: athletic
+lat: 43.534309
+lng: -80.219615
+address: 116 Arboretum Road
+link: https://fitandrec.gryphons.ca/about/facilities/outdoor-sports-fields/gryphon-soccer-complex
+img: gryphon-soccer-complex.jpg
+polygon:
+  - lat: 43.533438
+    lng: -80.219936
+  - lat: 43.533438
+    lng: -80.219788
+  - lat: 43.534414
+    lng: -80.218448
+  - lat: 43.534463
+    lng: -80.218453
+  - lat: 43.53515
+    lng: -80.219396
+  - lat: 43.535147
+    lng: -80.219436
+  - lat: 43.534178
+    lng: -80.220768
+  - lat: 43.534056
+    lng: -80.220776

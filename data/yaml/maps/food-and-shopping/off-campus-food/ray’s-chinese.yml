@@ -1,0 +1,10 @@
+id: OFF025
+name: Ray’s Chinese
+type: off-campus-food
+lat: 43.524929
+lng: -80.222578
+address: 35 Harvard Rd, Guelph, ON N1G 3A2
+link: https://www.rayschinese.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-rays-chinese.png

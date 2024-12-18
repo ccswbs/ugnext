@@ -1,0 +1,14 @@
+id: OFF023
+name: Popeyes Louisiana Kitchen
+type: off-campus-food
+lat: 43.52489
+lng: -80.222697
+address: "35 Harvard Rd #14, Guelph, ON N1G 3A2"
+link: https://www.popeyes.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-popeyes.png
+img: popeyes.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/102579380174423105830/photos">Jimmy
+  Lung</a>

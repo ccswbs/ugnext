@@ -1,0 +1,9 @@
+id: SERV01
+name: John Eccles Centre
+type: services
+lat: 43.53120403041109
+lng: -80.22098625324018
+address: Within Maritime Hall
+link: /maps/locations/eccles-centre
+img: eccles-centre.jpg
+within: "072"

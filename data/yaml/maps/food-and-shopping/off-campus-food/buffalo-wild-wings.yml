@@ -1,0 +1,14 @@
+id: OFF004
+name: Buffalo Wild Wings
+type: off-campus-food
+lat: 43.525228
+lng: -80.221542
+address: 35 Harvard Rd, Guelph, ON N1G 4V8
+link: http://buffalowildwings.com/en
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-buffalo-wild-wings.png
+img: buffalo-wild-wings.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/109594846556094365203/photos">Buffalo
+  Wild Wings</a>

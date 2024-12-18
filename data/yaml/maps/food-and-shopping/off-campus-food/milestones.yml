@@ -1,0 +1,14 @@
+id: OFF016
+name: Milestones
+type: off-campus-food
+lat: 43.521953
+lng: -80.232667
+address: 185 Stone Rd W, Guelph, ON N1G 5L4
+link: https://www.milestonesrestaurants.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-milestones.png
+img: milestones.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/112952919437112228226/photos">Milestones
+  Grill &amp; Bar</a>

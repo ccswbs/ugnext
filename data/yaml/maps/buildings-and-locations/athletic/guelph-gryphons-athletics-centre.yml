@@ -1,0 +1,25 @@
+id: ATH002
+name: Guelph Gryphons Athletics Centre
+type: athletic
+lat: 43.533835
+lng: -80.224119
+address: East Ring Road
+link: https://www.buildingpotential.ca/home
+img: guelph-gryphons-athletics-centre.jpg
+polygon:
+  - lat: 43.533744
+    lng: -80.224885
+  - lat: 43.533629
+    lng: -80.224731
+  - lat: 43.533688
+    lng: -80.224653
+  - lat: 43.533313
+    lng: -80.224124
+  - lat: 43.53385
+    lng: -80.2234
+  - lat: 43.534099
+    lng: -80.223745
+  - lat: 43.534172
+    lng: -80.223721
+  - lat: 43.534347
+    lng: -80.224071

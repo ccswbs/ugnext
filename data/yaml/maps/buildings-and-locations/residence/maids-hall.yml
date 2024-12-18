@@ -1,0 +1,21 @@
+id: "062"
+name: Maids Hall
+type: residence
+lat: 43.534146
+lng: -80.228589
+address: 20 Trent Lane
+link: /maps/locations/maids-hall
+img: maids-hall.jpg
+polygon:
+  - lat: 43.53418
+    lng: -80.228772
+  - lat: 43.534272
+    lng: -80.22865
+  - lat: 43.534147
+    lng: -80.228472
+  - lat: 43.534159
+    lng: -80.228457
+  - lat: 43.534125
+    lng: -80.228406
+  - lat: 43.534019
+    lng: -80.228547

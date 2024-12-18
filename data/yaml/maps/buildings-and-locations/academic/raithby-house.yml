@@ -1,0 +1,22 @@
+id: "022"
+name: Raithby House
+type: academic
+lat: 43.5314
+lng: -80.22655
+address: 78 Reynolds Walk
+link: /maps/locations/raithby
+img: raithby-house.jpg
+polygon:
+  - lat: 43.531375
+    lng: -80.226663
+  - lat: 43.531311
+    lng: -80.226575
+  - lat: 43.531381
+    lng: -80.226479
+  - lat: 43.531393
+    lng: -80.226496
+  - lat: 43.531436
+    lng: -80.226437
+  - lat: 43.531488
+    lng: -80.226508
+htID: 21

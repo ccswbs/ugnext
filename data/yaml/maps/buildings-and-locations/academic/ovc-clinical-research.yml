@@ -1,0 +1,56 @@
+id: "174"
+name: OVC Clinical Research
+acronym: CRB
+type: academic
+lat: 43.529582
+lng: -80.232899
+address: 61 McGilvray Street
+link: /maps/locations/ovc-clinical-research
+img: ovc-clinical-research.jpg
+polygon:
+  - lat: 43.529772
+    lng: -80.232646
+  - lat: 43.52976
+    lng: -80.232663
+  - lat: 43.529795
+    lng: -80.232716
+  - lat: 43.529759
+    lng: -80.232761
+  - lat: 43.529757
+    lng: -80.23277
+  - lat: 43.529591
+    lng: -80.232992
+  - lat: 43.529613
+    lng: -80.233023
+  - lat: 43.52959
+    lng: -80.233054
+  - lat: 43.529568
+    lng: -80.233023
+  - lat: 43.529554
+    lng: -80.233039
+  - lat: 43.529454
+    lng: -80.233176
+  - lat: 43.52937
+    lng: -80.233055
+  - lat: 43.529551
+    lng: -80.232815
+  - lat: 43.529522
+    lng: -80.232777
+  - lat: 43.529562
+    lng: -80.23272
+  - lat: 43.529593
+    lng: -80.232763
+  - lat: 43.529646
+    lng: -80.232686
+  - lat: 43.529651
+    lng: -80.232692
+  - lat: 43.529678
+    lng: -80.232654
+  - lat: 43.529688
+    lng: -80.232667
+  - lat: 43.529721
+    lng: -80.232622
+  - lat: 43.529738
+    lng: -80.232649
+  - lat: 43.529756
+    lng: -80.232624

@@ -1,0 +1,48 @@
+id: "232"
+name: The Arboretum Centre
+acronym: ARB
+type: academic
+lat: 43.540828
+lng: -80.21515
+address: 250 Arboretum Road
+link: https://www.uoguelph.ca/arboretum
+img: arboretum-centre.jpg
+polygon:
+  - lat: 43.540957
+    lng: -80.215426
+  - lat: 43.541003
+    lng: -80.215319
+  - lat: 43.540987
+    lng: -80.215239
+  - lat: 43.540911
+    lng: -80.215177
+  - lat: 43.540896
+    lng: -80.215113
+  - lat: 43.540971
+    lng: -80.214944
+  - lat: 43.540966
+    lng: -80.214905
+  - lat: 43.540899
+    lng: -80.214857
+  - lat: 43.54084
+    lng: -80.215
+  - lat: 43.540764
+    lng: -80.215029
+  - lat: 43.540776
+    lng: -80.21508
+  - lat: 43.540653
+    lng: -80.215374
+  - lat: 43.540706
+    lng: -80.215351
+  - lat: 43.540712
+    lng: -80.215383
+  - lat: 43.540752
+    lng: -80.215367
+  - lat: 43.540764
+    lng: -80.215332
+  - lat: 43.540811
+    lng: -80.215315
+  - lat: 43.540822
+    lng: -80.215378
+  - lat: 43.540903
+    lng: -80.215443

@@ -1,0 +1,42 @@
+id: "051"
+name: Landscape Architecture
+acronym: LA
+type: academic
+lat: 43.532469
+lng: -80.225067
+address: 124 Reynolds Walk
+link: /maps/locations/landscape-architecture
+img: landscape-architecture.jpg
+polygon:
+  - - lat: 43.532566
+      lng: -80.225576
+    - lat: 43.532547
+      lng: -80.2256
+    - lat: 43.532445
+      lng: -80.225446
+    - lat: 43.532452
+      lng: -80.225437
+    - lat: 43.532274
+      lng: -80.225182
+    - lat: 43.532534
+      lng: -80.224836
+    - lat: 43.532842
+      lng: -80.22527
+    - lat: 43.532588
+      lng: -80.22561
+  - - lat: 43.532582
+      lng: -80.225404
+    - lat: 43.532703
+      lng: -80.225237
+    - lat: 43.532567
+      lng: -80.225038
+    - lat: 43.532529
+      lng: -80.225088
+    - lat: 43.53259
+      lng: -80.225176
+    - lat: 43.532565
+      lng: -80.225214
+    - lat: 43.532506
+      lng: -80.225117
+    - lat: 43.532443
+      lng: -80.225199

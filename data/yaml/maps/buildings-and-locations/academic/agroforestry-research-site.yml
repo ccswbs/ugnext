@@ -1,0 +1,41 @@
+id: ACAD002
+name: Agroforestry Research Site
+type: academic
+lat: 43.550066
+lng: -80.213732
+address: Victoria Road South
+link: https://www.uoguelph.ca/alliance/
+img: agroforestry-research-site.jpg
+polygon:
+  - lat: 43.549922
+    lng: -80.213615
+  - lat: 43.549925
+    lng: -80.213723
+  - lat: 43.549952
+    lng: -80.213723
+  - lat: 43.549928
+    lng: -80.213849
+  - lat: 43.55026
+    lng: -80.213969
+  - lat: 43.55029
+    lng: -80.213804
+  - lat: 43.550148
+    lng: -80.213752
+  - lat: 43.55017
+    lng: -80.213633
+  - lat: 43.550123
+    lng: -80.213617
+  - lat: 43.550145
+    lng: -80.2135
+  - lat: 43.550118
+    lng: -80.213491
+  - lat: 43.5501
+    lng: -80.213587
+  - lat: 43.550084
+    lng: -80.213582
+  - lat: 43.550092
+    lng: -80.213542
+  - lat: 43.549987
+    lng: -80.213541
+  - lat: 43.549989
+    lng: -80.213615

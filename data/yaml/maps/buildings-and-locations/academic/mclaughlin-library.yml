@@ -1,0 +1,39 @@
+id: "071"
+name: McLaughlin Library
+acronym: MLIB
+type: academic
+lat: 43.531499
+lng: -80.22767
+address: 480 Gordon Street
+link: /maps/locations/mclaughlin-library
+img: mclaughlin-library.jpg
+polygon:
+  - lat: 43.531811
+    lng: -80.228202
+  - lat: 43.531814
+    lng: -80.227845
+  - lat: 43.531743
+    lng: -80.227755
+  - lat: 43.531792
+    lng: -80.227688
+  - lat: 43.531807
+    lng: -80.227712
+  - lat: 43.531891
+    lng: -80.227581
+  - lat: 43.53152
+    lng: -80.227078
+  - lat: 43.531153
+    lng: -80.227585
+  - lat: 43.531164
+    lng: -80.227606
+  - lat: 43.531136
+    lng: -80.227646
+  - lat: 43.531144
+    lng: -80.227657
+  - lat: 43.531107
+    lng: -80.22771
+  - lat: 43.531511
+    lng: -80.228263
+  - lat: 43.531561
+    lng: -80.228202
+htID: 17

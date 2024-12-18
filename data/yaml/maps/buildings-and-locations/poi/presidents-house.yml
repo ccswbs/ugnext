@@ -1,0 +1,42 @@
+id: "005"
+name: President's House
+type: poi
+lat: 43.534295
+lng: -80.229955
+address: 100 College Avenue East
+link: /maps/locations/presidents-house
+img: presidents-house.jpg
+polygon:
+  - lat: 43.534268
+    lng: -80.230106
+  - lat: 43.534268
+    lng: -80.230085
+  - lat: 43.534272
+    lng: -80.230074
+  - lat: 43.534234
+    lng: -80.23003
+  - lat: 43.534199
+    lng: -80.22998
+  - lat: 43.534304
+    lng: -80.229827
+  - lat: 43.534315
+    lng: -80.229823
+  - lat: 43.534342
+    lng: -80.229786
+  - lat: 43.534392
+    lng: -80.229864
+  - lat: 43.534356
+    lng: -80.229914
+  - lat: 43.534391
+    lng: -80.22996
+  - lat: 43.534322
+    lng: -80.230057
+  - lat: 43.534334
+    lng: -80.230073
+  - lat: 43.534327
+    lng: -80.230099
+  - lat: 43.534316
+    lng: -80.230115
+  - lat: 43.53428
+    lng: -80.230124
+htID: 6

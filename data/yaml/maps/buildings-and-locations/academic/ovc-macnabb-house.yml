@@ -1,0 +1,29 @@
+id: "047"
+name: OVC MacNabb House
+type: academic
+lat: 43.531556
+lng: -80.232932
+address: 16 College Avenue West
+link: /maps/locations/ovc-macnabb
+img: ovc-macnabb-house.jpg
+polygon:
+  - lat: 43.531504
+    lng: -80.232952
+  - lat: 43.53151
+    lng: -80.232938
+  - lat: 43.531476
+    lng: -80.232885
+  - lat: 43.531524
+    lng: -80.232819
+  - lat: 43.531546
+    lng: -80.232853
+  - lat: 43.531555
+    lng: -80.232845
+  - lat: 43.531567
+    lng: -80.232865
+  - lat: 43.531574
+    lng: -80.232857
+  - lat: 43.531636
+    lng: -80.23295
+  - lat: 43.531564
+    lng: -80.233044

@@ -1,0 +1,24 @@
+id: "054"
+name: Vehicle Services Building
+acronym: VSER
+type: services
+lat: 43.533225
+lng: -80.225923
+address: 101 Lang Way
+link: /maps/locations/vehicle-services
+img: vehicle-services-building.jpg
+polygon:
+  - lat: 43.533129
+    lng: -80.225902
+  - lat: 43.532858
+    lng: -80.225515
+  - lat: 43.53294
+    lng: -80.225406
+  - lat: 43.533335
+    lng: -80.225948
+  - lat: 43.533279
+    lng: -80.226028
+  - lat: 43.533259
+    lng: -80.22605
+  - lat: 43.533159
+    lng: -80.22605

@@ -1,0 +1,14 @@
+id: OFF012
+name: Kelseys
+type: off-campus-food
+lat: 43.499122
+lng: -80.187849
+address: 26 Clair Rd W, Guelph, ON N1L 0A8
+link: https://www.kelseys.ca
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-kelseys.png
+img: kelseys.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/106028226304387627442/photos">A
+  Google User</a>

@@ -1,0 +1,45 @@
+id: "175"
+name: OVC Comparative Clinical Research Facility
+type: academic
+lat: 43.529152
+lng: -80.232618
+address: 65 McGilvray Street
+link: http://www.ovc.uoguelph.ca/research/en/researchresources/comparativeclinicalresearchfacility.asp
+img: ovc-comparative-clinical-research-facility.jpg
+polygon:
+  - lat: 43.528886
+    lng: -80.23256
+  - lat: 43.528988
+    lng: -80.23269
+  - lat: 43.528994
+    lng: -80.23268
+  - lat: 43.528989
+    lng: -80.23267
+  - lat: 43.529013
+    lng: -80.232636
+  - lat: 43.529083
+    lng: -80.232731
+  - lat: 43.529094
+    lng: -80.232715
+  - lat: 43.529144
+    lng: -80.232783
+  - lat: 43.529155
+    lng: -80.232767
+  - lat: 43.5293
+    lng: -80.23296
+  - lat: 43.529418
+    lng: -80.232796
+  - lat: 43.529283
+    lng: -80.232617
+  - lat: 43.529288
+    lng: -80.232608
+  - lat: 43.529113
+    lng: -80.232382
+  - lat: 43.529137
+    lng: -80.232345
+  - lat: 43.529085
+    lng: -80.232275
+  - lat: 43.528918
+    lng: -80.232495
+  - lat: 43.528927
+    lng: -80.232508

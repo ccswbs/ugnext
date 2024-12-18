@@ -1,0 +1,39 @@
+id: "135"
+name: Centre for Biodiversity Genomics
+type: academic
+lat: 43.528553
+lng: -80.229063
+address: 583 Gordon Street
+link: https://biodiversitygenomics.net
+img: centre-for-biodiversity-genomics.jpg
+polygon:
+  - lat: 43.528617
+    lng: -80.229411
+  - lat: 43.528348
+    lng: -80.229065
+  - lat: 43.528388
+    lng: -80.229018
+  - lat: 43.528383
+    lng: -80.229
+  - lat: 43.52838
+    lng: -80.228952
+  - lat: 43.528399
+    lng: -80.228918
+  - lat: 43.528378
+    lng: -80.228894
+  - lat: 43.528403
+    lng: -80.22885
+  - lat: 43.528379
+    lng: -80.228823
+  - lat: 43.528437
+    lng: -80.228716
+  - lat: 43.528758
+    lng: -80.22904
+  - lat: 43.528701
+    lng: -80.229155
+  - lat: 43.528657
+    lng: -80.229116
+  - lat: 43.528605
+    lng: -80.229212
+  - lat: 43.528683
+    lng: -80.229316

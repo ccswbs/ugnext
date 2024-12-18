@@ -1,0 +1,10 @@
+id: ON001
+name: Bob's Dogs
+type: on-campus-food
+lat: 43.531647
+lng: -80.226129
+address: Guelph, ON N1G 1Y4 (Near The Bullring and Rozanski Hall)
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-bobs-hotdogs.png
+img: bobs-dogs.jpg

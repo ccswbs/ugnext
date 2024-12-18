@@ -1,0 +1,14 @@
+id: OFF018
+name: Mucho Burrito
+type: off-campus-food
+lat: 43.521549
+lng: -80.235551
+address: 492 Edinburgh Rd S, Guelph, ON N1G 4Z1
+link: https://locations.muchoburrito.com/ll/CA/ON/Guelph/492-Edinburgh-Rd-S
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-mucho-burrito.png
+img: mucho-burrito.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/100745478100867786724/photos">Mucho
+  Burrito Guelph</a>

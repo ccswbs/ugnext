@@ -1,0 +1,35 @@
+id: "016"
+name: Day Hall
+acronym: DH
+type: academic
+lat: 43.531894
+lng: -80.226872
+address: 99 Trent Lane
+link: /maps/locations/day-hall
+img: day-hall.jpg
+polygon:
+  - lat: 43.531941
+    lng: -80.227096
+  - lat: 43.531932
+    lng: -80.227084
+  - lat: 43.53194
+    lng: -80.227072
+  - lat: 43.531849
+    lng: -80.226943
+  - lat: 43.531821
+    lng: -80.22698
+  - lat: 43.531729
+    lng: -80.226851
+  - lat: 43.531874
+    lng: -80.226649
+  - lat: 43.531969
+    lng: -80.226782
+  - lat: 43.531966
+    lng: -80.226786
+  - lat: 43.532058
+    lng: -80.226917
+  - lat: 43.532029
+    lng: -80.226963
+  - lat: 43.532034
+    lng: -80.226971
+htID: 19

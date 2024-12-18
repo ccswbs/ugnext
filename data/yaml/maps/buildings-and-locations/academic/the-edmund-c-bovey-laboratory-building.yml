@@ -1,0 +1,60 @@
+id: "081"
+name: The Edmund C. Bovey Laboratory Building
+acronym: ECBA
+type: academic
+lat: 43.527829
+lng: -80.227836
+address: 601 Gordon Street
+link: /maps/locations/bovey-lab
+img: the-edmund-c-bovey-laboratory-building.jpg
+polygon:
+  - lat: 43.528116
+    lng: -80.227638
+  - lat: 43.528088
+    lng: -80.227596
+  - lat: 43.528095
+    lng: -80.227585
+  - lat: 43.5281
+    lng: -80.227563
+  - lat: 43.528102
+    lng: -80.227551
+  - lat: 43.528102
+    lng: -80.227537
+  - lat: 43.528098
+    lng: -80.227517
+  - lat: 43.528017
+    lng: -80.227399
+  - lat: 43.527543
+    lng: -80.22804
+  - lat: 43.52756
+    lng: -80.22807
+  - lat: 43.527554
+    lng: -80.228074
+  - lat: 43.527549
+    lng: -80.228084
+  - lat: 43.527547
+    lng: -80.228093
+  - lat: 43.527549
+    lng: -80.228105
+  - lat: 43.527571
+    lng: -80.228127
+  - lat: 43.527572
+    lng: -80.228143
+  - lat: 43.527575
+    lng: -80.228159
+  - lat: 43.527572
+    lng: -80.228168
+  - lat: 43.52758
+    lng: -80.22818
+  - lat: 43.527584
+    lng: -80.228175
+  - lat: 43.527617
+    lng: -80.228221
+  - lat: 43.527613
+    lng: -80.228227
+  - lat: 43.527647
+    lng: -80.228273
+  - lat: 43.528053
+    lng: -80.227718
+  - lat: 43.528058
+    lng: -80.227716

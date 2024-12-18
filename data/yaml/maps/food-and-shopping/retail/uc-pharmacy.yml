@@ -1,0 +1,12 @@
+id: BUY006
+name: UC Pharmacy
+type: retail
+lat: 43.530749
+lng: -80.226181
+address: Inside University Centre near the north entrance
+icon:
+  type: uofg-icon
+  style: custom
+  name: map-marker-pharmacy
+img: uc-pharmacy.jpg
+within: "158"

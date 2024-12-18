@@ -1,0 +1,26 @@
+id: "151"
+name: Institute for Critical Studies
+acronym: TCI
+type: academic
+lat: 43.534362
+lng: -80.233736
+address: 9 University Avenue
+link: /maps/locations/institute-critical-studies
+img: institute-for-critical-studies.jpg
+polygon:
+  - lat: 43.534366
+    lng: -80.233843
+  - lat: 43.534322
+    lng: -80.233779
+  - lat: 43.534312
+    lng: -80.233778
+  - lat: 43.534301
+    lng: -80.23376
+  - lat: 43.534303
+    lng: -80.233748
+  - lat: 43.534286
+    lng: -80.233724
+  - lat: 43.534352
+    lng: -80.233629
+  - lat: 43.534438
+    lng: -80.233747

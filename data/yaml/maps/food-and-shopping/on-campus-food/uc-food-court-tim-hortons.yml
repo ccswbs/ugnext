@@ -1,0 +1,12 @@
+id: ON033
+name: UC Food Court Tim Hortons
+type: on-campus-food
+lat: 43.530505
+lng: -80.226577
+address: University Centre (UC Food Court)
+link: https://hospitality.uoguelph.ca/hours-menus
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-tim-hortons.png
+img: tim-hortons-uc.jpg
+within: "158"

@@ -1,0 +1,37 @@
+id: "060"
+name: J.C. Hersey Building
+type: academic
+lat: 43.534135
+lng: -80.227997
+address: 117 College Avenue East
+link: /maps/locations/hersey-building
+img: jc-hersey-building.jpg
+polygon:
+  - lat: 43.534213
+    lng: -80.228309
+  - lat: 43.534189
+    lng: -80.228275
+  - lat: 43.534195
+    lng: -80.228266
+  - lat: 43.534058
+    lng: -80.228072
+  - lat: 43.534031
+    lng: -80.228109
+  - lat: 43.534005
+    lng: -80.228071
+  - lat: 43.534016
+    lng: -80.228056
+  - lat: 43.533961
+    lng: -80.22798
+  - lat: 43.53412
+    lng: -80.227765
+  - lat: 43.5342
+    lng: -80.227877
+  - lat: 43.534186
+    lng: -80.227895
+  - lat: 43.534326
+    lng: -80.22809
+  - lat: 43.534321
+    lng: -80.228096
+  - lat: 43.534345
+    lng: -80.22813

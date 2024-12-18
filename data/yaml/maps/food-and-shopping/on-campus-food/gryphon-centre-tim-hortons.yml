@@ -1,0 +1,12 @@
+id: ON029
+name: Gryphon Centre Tim Hortons
+type: on-campus-food
+lat: 43.532661
+lng: -80.223524
+address: Inside Gryphon Centre (1st Floor)
+link: https://hospitality.uoguelph.ca/hours-menus
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-tim-hortons.png
+img: tim-hortons-gryphon-centre.jpg
+within: "075"

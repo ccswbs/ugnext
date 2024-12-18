@@ -1,0 +1,13 @@
+id: POI008
+name: The Portico
+type: poi
+lat: 43.532832
+lng: -80.229747
+address: Johnston Green and Winegard Walk
+link: /maps/locations/the-portico
+icon:
+  type: fontawesome
+  style: custom
+  name: the-portico
+img: the-portico.jpg
+htID: 1

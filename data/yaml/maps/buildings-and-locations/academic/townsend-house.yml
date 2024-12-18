@@ -1,0 +1,21 @@
+id: "131"
+name: Townsend House
+type: academic
+lat: 43.536389
+lng: -80.214227
+address: 308 Stone Road East
+link: /maps/locations/townsend-house
+img: townsend-house.jpg
+polygon:
+  - lat: 43.536428
+    lng: -80.214382
+  - lat: 43.536271
+    lng: -80.214151
+  - lat: 43.536333
+    lng: -80.214071
+  - lat: 43.53641
+    lng: -80.214183
+  - lat: 43.536428
+    lng: -80.214161
+  - lat: 43.536507
+    lng: -80.214278

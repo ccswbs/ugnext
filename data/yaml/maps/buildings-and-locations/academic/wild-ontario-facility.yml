@@ -1,0 +1,22 @@
+id: "244"
+name: Wild Ontario Facility
+acronym: WONF
+type: academic
+lat: 43.538818548655655
+lng: -80.210785010965
+address: 200 Arboretum Road
+link: /maps/locations/wild-ontario
+img: wild-ontario-facility.jpg
+polygon:
+  - lat: 43.53894493155247
+    lng: -80.21071057966306
+  - lat: 43.53890993323833
+    lng: -80.2106629704519
+  - lat: 43.53891673846768
+    lng: -80.21064955940652
+  - lat: 43.53887201837511
+    lng: -80.21058585694091
+  - lat: 43.538645986964966
+    lng: -80.21090302816445
+  - lat: 43.53872862220242
+    lng: -80.21101232818442

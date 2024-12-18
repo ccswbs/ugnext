@@ -1,0 +1,14 @@
+id: OFF010
+name: East Side Mario's
+type: off-campus-food
+lat: 43.517631
+lng: -80.235689
+address: 370 Stone Rd W, Guelph, ON N1G 4V9
+link: https://www.eastsidemarios.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-east-side-marios.png
+img: east-side-marios.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/102134709669694034949/photos">East
+  Side Mario&#39;s</a>

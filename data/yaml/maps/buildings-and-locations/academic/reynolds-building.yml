@@ -1,0 +1,31 @@
+id: "026"
+name: Reynolds Building
+acronym: REYN
+type: academic
+lat: 43.530749
+lng: -80.229062
+address: 474 Gordon Street
+link: /maps/locations/reynolds
+img: reynolds-building.jpg
+polygon:
+  - lat: 43.530731
+    lng: -80.229296
+  - lat: 43.530631
+    lng: -80.229171
+  - lat: 43.530609
+    lng: -80.2292
+  - lat: 43.530569
+    lng: -80.229138
+  - lat: 43.530791
+    lng: -80.228827
+  - lat: 43.53093
+    lng: -80.22901
+  - lat: 43.530859
+    lng: -80.229108
+  - lat: 43.530877
+    lng: -80.229129
+  - lat: 43.530824
+    lng: -80.229206
+  - lat: 43.530808
+    lng: -80.229184
+htID: 14

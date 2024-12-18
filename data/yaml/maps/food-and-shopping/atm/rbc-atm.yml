@@ -1,0 +1,8 @@
+id: ATM006
+name: RBC ATM
+type: atm
+lat: 43.532361
+lng: -80.224052
+address: Gryphon Centre (1st Floor)
+img: rbc-atm-gryphon-centre.jpg
+within: "075"

@@ -1,0 +1,34 @@
+id: "029"
+name: D.M. Rutherford Family Conservatory
+type: academic
+lat: 43.529941
+lng: -80.226583
+address: 37 Christie Lane
+link: https://uoguelph.ca/conservatory
+img: conservatory-gardens.png
+polygon:
+  - lat: 43.529994
+    lng: -80.226705
+  - lat: 43.52996
+    lng: -80.226658
+  - lat: 43.529938
+    lng: -80.226685
+  - lat: 43.529862
+    lng: -80.226578
+  - lat: 43.529884
+    lng: -80.226549
+  - lat: 43.529853
+    lng: -80.226503
+  - lat: 43.529884
+    lng: -80.226461
+  - lat: 43.52992
+    lng: -80.226509
+  - lat: 43.529945
+    lng: -80.226475
+  - lat: 43.530021
+    lng: -80.226577
+  - lat: 43.529997
+    lng: -80.226612
+  - lat: 43.530028
+    lng: -80.226659
+htID: 25

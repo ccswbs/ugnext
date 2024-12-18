@@ -1,0 +1,34 @@
+id: "030"
+name: OVC Enhanced Clinical Learning
+acronym: ECL
+type: academic
+lat: 43.530901
+lng: -80.231768
+address: 415 Gordon Street
+link: /maps/locations/ovc-enhanced-clinical-learning
+img: enhanced-clinical-learning-building-sm.jpg
+polygon:
+  - lat: 43.531078
+    lng: -80.23191
+  - lat: 43.530964
+    lng: -80.232057
+  - lat: 43.530931
+    lng: -80.232014
+  - lat: 43.530916
+    lng: -80.23203
+  - lat: 43.530894
+    lng: -80.232001
+  - lat: 43.530873
+    lng: -80.232026
+  - lat: 43.530843
+    lng: -80.231986
+  - lat: 43.53084
+    lng: -80.231945
+  - lat: 43.530796
+    lng: -80.231887
+  - lat: 43.5307001
+    lng: -80.231756
+  - lat: 43.530878
+    lng: -80.231523
+  - lat: 43.531115
+    lng: -80.231864

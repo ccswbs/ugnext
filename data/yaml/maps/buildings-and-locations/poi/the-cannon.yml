@@ -1,0 +1,12 @@
+id: POI007
+name: The Cannon
+type: poi
+lat: 43.531475
+lng: -80.226924
+address: Winegard Walk, Branion Plaza
+link: /maps/locations/the-cannon
+icon:
+  type: fontawesome
+  style: custom
+  name: cannon-icon
+img: the-cannon.jpg

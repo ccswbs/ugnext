@@ -1,0 +1,63 @@
+id: "093"
+name: OVC Hill's Pet Nutrition Primary Healthcare Centre
+type: academic
+lat: 43.52811
+lng: -80.23411
+address: 48 Smith Lane
+link: /maps/locations/ovc-healthcare
+img: ovc-hills-pet-nutrition-primary-healthcare-centre.jpg
+polygon:
+  - lat: 43.528394
+    lng: -80.234226
+  - lat: 43.528369
+    lng: -80.23426
+  - lat: 43.528369
+    lng: -80.234283
+  - lat: 43.528316
+    lng: -80.234356
+  - lat: 43.528327
+    lng: -80.23437
+  - lat: 43.528259
+    lng: -80.234463
+  - lat: 43.528211
+    lng: -80.234396
+  - lat: 43.528191
+    lng: -80.234424
+  - lat: 43.528106
+    lng: -80.234306
+  - lat: 43.528076
+    lng: -80.234346
+  - lat: 43.527965
+    lng: -80.234192
+  - lat: 43.527939
+    lng: -80.234228
+  - lat: 43.527884
+    lng: -80.234154
+  - lat: 43.527916
+    lng: -80.23411
+  - lat: 43.527827
+    lng: -80.233986
+  - lat: 43.527866
+    lng: -80.233931
+  - lat: 43.527833
+    lng: -80.233885
+  - lat: 43.527894
+    lng: -80.233801
+  - lat: 43.527956
+    lng: -80.233886
+  - lat: 43.52805
+    lng: -80.233757
+  - lat: 43.528165
+    lng: -80.233916
+  - lat: 43.528178
+    lng: -80.233899
+  - lat: 43.528322
+    lng: -80.234098
+  - lat: 43.52827
+    lng: -80.234173
+  - lat: 43.528275
+    lng: -80.23418
+  - lat: 43.528338
+    lng: -80.234193
+  - lat: 43.528353
+    lng: -80.234171

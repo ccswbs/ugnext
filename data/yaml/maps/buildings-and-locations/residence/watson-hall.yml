@@ -1,0 +1,18 @@
+id: "004"
+name: Watson Hall
+type: residence
+lat: 43.535598
+lng: -80.231041
+address: 66 Watson Lane
+link: /maps/locations/watson-hall
+img: watson-hall.jpg
+polygon:
+  - lat: 43.535645
+    lng: -80.231234
+  - lat: 43.535458
+    lng: -80.230969
+  - lat: 43.535547
+    lng: -80.230848
+  - lat: 43.535738
+    lng: -80.231106
+htID: 7

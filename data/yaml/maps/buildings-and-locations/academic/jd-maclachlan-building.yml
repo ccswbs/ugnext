@@ -1,0 +1,55 @@
+id: "025"
+name: J.D. MacLachlan Building
+acronym: MCLN
+type: academic
+lat: 43.531237
+lng: -80.228619
+address: 476 Gordon Street
+link: /maps/locations/jd-maclachlan
+img: jd-maclachlan-building.jpg
+polygon:
+  - lat: 43.531118
+    lng: -80.228756
+  - lat: 43.531104
+    lng: -80.228774
+  - lat: 43.531064
+    lng: -80.228717
+  - lat: 43.531083
+    lng: -80.228692
+  - lat: 43.531088
+    lng: -80.228699
+  - lat: 43.531155
+    lng: -80.228608
+  - lat: 43.531123
+    lng: -80.228562
+  - lat: 43.531195
+    lng: -80.228468
+  - lat: 43.531218
+    lng: -80.228501
+  - lat: 43.531213
+    lng: -80.228508
+  - lat: 43.531221
+    lng: -80.22852
+  - lat: 43.531298
+    lng: -80.228417
+  - lat: 43.531292
+    lng: -80.228409
+  - lat: 43.531312
+    lng: -80.228383
+  - lat: 43.531353
+    lng: -80.228441
+  - lat: 43.531342
+    lng: -80.228455
+  - lat: 43.531409
+    lng: -80.228556
+  - lat: 43.53133
+    lng: -80.228664
+  - lat: 43.531349
+    lng: -80.22869
+  - lat: 43.531287
+    lng: -80.228771
+  - lat: 43.531269
+    lng: -80.228745
+  - lat: 43.531188
+    lng: -80.228854
+htID: 15

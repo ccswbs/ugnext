@@ -1,0 +1,26 @@
+id: ACAD001
+name: Bioproducts Discovery and Development Centre
+acronym: BDDC
+type: academic
+lat: 43.531639
+lng: -80.224002
+address: Behind Crop Science Bldg
+link: https://www.bioproductscentre.com
+img: bioproducts-discovery-and-development-centre.jpg
+polygon:
+  - lat: 43.53183
+    lng: -80.22394
+  - lat: 43.531803
+    lng: -80.223903
+  - lat: 43.531748
+    lng: -80.223977
+  - lat: 43.531707
+    lng: -80.22392
+  - lat: 43.531759
+    lng: -80.223847
+  - lat: 43.531631
+    lng: -80.223669
+  - lat: 43.531448
+    lng: -80.22392
+  - lat: 43.531645
+    lng: -80.224193

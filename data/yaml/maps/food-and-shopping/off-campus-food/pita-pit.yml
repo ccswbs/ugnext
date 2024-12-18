@@ -1,0 +1,14 @@
+id: OFF021
+name: Pita Pit
+type: off-campus-food
+lat: 43.544821
+lng: -80.247573
+address: 65 Macdonell St, Guelph, ON N1H 2Z7
+link: https://pitapit.ca
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-pita-pit.png
+img: pita-pit.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/107450017238847115256/photos">The
+  Pita Pit</a>

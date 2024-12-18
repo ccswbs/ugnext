@@ -1,0 +1,22 @@
+id: "150"
+name: Bio Control Building
+acronym: EBA
+type: academic
+lat: 43.527996
+lng: -80.228468
+address: 595 Gordon Street
+link: /maps/locations/bio-control
+img: bio-control-building.jpg
+polygon:
+  - lat: 43.527964
+    lng: -80.228649
+  - lat: 43.527913
+    lng: -80.228583
+  - lat: 43.527869
+    lng: -80.228647
+  - lat: 43.527815
+    lng: -80.228573
+  - lat: 43.528075
+    lng: -80.228219
+  - lat: 43.528178
+    lng: -80.228361

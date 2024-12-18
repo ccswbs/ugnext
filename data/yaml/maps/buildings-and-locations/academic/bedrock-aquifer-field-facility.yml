@@ -1,0 +1,17 @@
+id: "223"
+name: Bedrock Aquifer Field Facility
+type: academic
+lat: 43.540522
+lng: -80.221961
+address: 360 College Avenue East
+link: /maps/locations/bedrock-aquifer
+img: bedrock-aquifer-field-facility.jpg
+polygon:
+  - lat: 43.540604
+    lng: -80.222093
+  - lat: 43.540561
+    lng: -80.221798
+  - lat: 43.540441
+    lng: -80.22183
+  - lat: 43.540484
+    lng: -80.222124

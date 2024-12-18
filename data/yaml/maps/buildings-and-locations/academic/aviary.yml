@@ -1,0 +1,22 @@
+id: "087"
+name: Aviary
+acronym: AVI
+type: academic
+lat: 43.53592
+lng: -80.220937
+address: 80 Arboretum Road
+link: /maps/locations/aviary
+img: aviary.jpg
+polygon:
+  - lat: 43.53596346264265
+    lng: -80.2210786572197
+  - lat: 43.53592165703137
+    lng: -80.22108938605486
+  - lat: 43.53591825424777
+    lng: -80.22104244740106
+  - lat: 43.53587742082975
+    lng: -80.22104647071424
+  - lat: 43.53585603188543
+    lng: -80.22081445965402
+  - lat: 43.535943532064124
+    lng: -80.22080574247546

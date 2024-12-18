@@ -1,0 +1,14 @@
+id: OFF002
+name: barBURRITO
+type: off-campus-food
+lat: 43.525169
+lng: -80.222289
+address: 35 Harvard Rd, Guelph, ON N1G 2X9
+link: https://www.barburrito.ca
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-barburrito.png
+img: barburrito.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/109323636243537144522/photos">BarBurrito
+  - Guelph, Ontario</a>

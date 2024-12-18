@@ -1,0 +1,33 @@
+id: "196"
+name: Fielding House (Diversity and Human Rights)
+type: academic
+lat: 43.53464
+lng: -80.233354
+address: 15 University Avenue East
+link: /maps/locations/fielding-house
+img: fielding-house.jpg
+polygon:
+  - lat: 43.534634
+    lng: -80.233439
+  - lat: 43.534627
+    lng: -80.23343
+  - lat: 43.534601
+    lng: -80.233466
+  - lat: 43.534564
+    lng: -80.233412
+  - lat: 43.534589
+    lng: -80.233378
+  - lat: 43.534575
+    lng: -80.233359
+  - lat: 43.5346
+    lng: -80.233322
+  - lat: 43.534579
+    lng: -80.233294
+  - lat: 43.534618
+    lng: -80.233241
+  - lat: 43.53464
+    lng: -80.233271
+  - lat: 43.534659
+    lng: -80.233246
+  - lat: 43.534716
+    lng: -80.233325

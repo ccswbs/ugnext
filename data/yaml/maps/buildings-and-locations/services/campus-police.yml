@@ -1,0 +1,9 @@
+id: ES001
+name: Campus Police
+type: services
+lat: 43.53371
+lng: -80.228198
+address: 32 Trent Lane
+link: https://www.uoguelph.ca/police/
+img: trent-building.jpg
+within: "059"

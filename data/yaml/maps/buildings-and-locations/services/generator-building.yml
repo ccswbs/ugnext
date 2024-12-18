@@ -1,0 +1,18 @@
+id: "056"
+name: Generator Building
+acronym: GEN
+type: services
+lat: 43.53379
+lng: -80.226958
+address: 53 Lang Way
+link: /maps/locations/generator-building
+img: generator-building.jpg
+polygon:
+  - lat: 43.533939
+    lng: -80.226943
+  - lat: 43.533816
+    lng: -80.226767
+  - lat: 43.533657
+    lng: -80.226992
+  - lat: 43.533772
+    lng: -80.227165

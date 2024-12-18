@@ -1,0 +1,14 @@
+id: OFF027
+name: The Burger's Priest
+type: off-campus-food
+lat: 43.518609
+lng: -80.23705
+address: 435 Stone Rd W, Guelph, ON N1G 2X6
+link: https://theburgerspriest.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-the-burgers-priest.png
+img: the-burgers-priest.jpg
+attribution: <a
+  href="https://maps.google.com/maps/contrib/105737161030677537553/photos">The
+  Burger&#39;s Priest</a>

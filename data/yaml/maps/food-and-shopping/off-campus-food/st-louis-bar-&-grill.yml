@@ -1,0 +1,10 @@
+id: OFF026
+name: St. Louis Bar & Grill
+type: off-campus-food
+lat: 43.50125
+lng: -80.189816
+address: 202 Clair Rd E, Guelph, ON N1L 0G6
+link: https://www.stlouiswings.com
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-st-louis.png

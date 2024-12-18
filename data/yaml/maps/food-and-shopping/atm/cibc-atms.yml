@@ -1,0 +1,8 @@
+id: ATM001
+name: CIBC ATMs
+type: atm
+lat: 43.530256
+lng: -80.226102
+address: University Centre (Near the entrance from/exit to the bus loop)
+img: cibc-uc.jpg
+within: "158"

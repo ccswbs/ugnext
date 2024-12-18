@@ -1,0 +1,24 @@
+id: SERV002
+name: Experiential Learning Hub
+acronym: COOP
+type: academic
+lat: 43.533072
+lng: -80.226146
+address: 101 Powerhouse Lane
+link: https://www.recruitguelph.ca/cecs
+img: experiential-learning-hub.jpg
+polygon:
+  - lat: 43.532677
+    lng: -80.225749
+  - lat: 43.532769
+    lng: -80.225634
+  - lat: 43.533051
+    lng: -80.226017
+  - lat: 43.533129
+    lng: -80.225902
+  - lat: 43.533156
+    lng: -80.226048
+  - lat: 43.533255
+    lng: -80.226048
+  - lat: 43.533079
+    lng: -80.226301

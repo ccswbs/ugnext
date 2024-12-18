@@ -1,0 +1,22 @@
+id: "035"
+name: Zoology Annex 2
+acronym: ZOOB
+type: academic
+lat: 43.528321
+lng: -80.228547
+address: 593 Gordon Street
+link: /maps/locations/zoology-annex-2
+img: zoology-annex-2.jpg
+polygon:
+  - lat: 43.528345
+    lng: -80.228724
+  - lat: 43.528217
+    lng: -80.228542
+  - lat: 43.528349
+    lng: -80.228369
+  - lat: 43.528403
+    lng: -80.228447
+  - lat: 43.528355
+    lng: -80.228511
+  - lat: 43.528425
+    lng: -80.228616

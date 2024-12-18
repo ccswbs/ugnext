@@ -1,0 +1,50 @@
+id: "018"
+name: Richards Building
+acronym: RICH
+type: academic
+lat: 43.53145
+lng: -80.225299
+address: 101 Reynolds Walk
+link: /maps/locations/richards
+img: richards-building.jpg
+polygon:
+  - lat: 43.531204
+    lng: -80.225556
+  - lat: 43.531238
+    lng: -80.225604
+  - lat: 43.531212
+    lng: -80.225642
+  - lat: 43.531291
+    lng: -80.225761
+  - lat: 43.531542
+    lng: -80.225418
+  - lat: 43.531558
+    lng: -80.225438
+  - lat: 43.531594
+    lng: -80.22539
+  - lat: 43.531609
+    lng: -80.22541
+  - lat: 43.531696
+    lng: -80.225288
+  - lat: 43.531528
+    lng: -80.225063
+  - lat: 43.531519
+    lng: -80.225074
+  - lat: 43.531345
+    lng: -80.224836
+  - lat: 43.531323
+    lng: -80.224867
+  - lat: 43.531301
+    lng: -80.224837
+  - lat: 43.531261
+    lng: -80.224895
+  - lat: 43.53128
+    lng: -80.224922
+  - lat: 43.531253
+    lng: -80.22496
+  - lat: 43.531424
+    lng: -80.225203
+  - lat: 43.531437
+    lng: -80.225186
+  - lat: 43.531456
+    lng: -80.225213

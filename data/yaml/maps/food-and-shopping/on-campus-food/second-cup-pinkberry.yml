@@ -1,0 +1,11 @@
+id: ON019
+name: Second Cup/Pinkberry
+type: on-campus-food
+lat: 43.532279
+lng: -80.233031
+address: 474-570 Gordon St, Guelph, ON N1G 1X8
+link: https://secondcup.com/menu
+icon:
+  type: image
+  url: /maps/img/icons/icon-food-second-cup.png
+img: second-cup.jpg

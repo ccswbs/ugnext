@@ -1,0 +1,22 @@
+id: "231"
+name: Hilton Centre
+acronym: ARBHC
+type: academic
+lat: 43.541893
+lng: -80.219827
+address: 384 College Avenue East
+link: /maps/locations/hilton-centre
+img: hilton-house.jpg
+polygon:
+  - lat: 43.542003
+    lng: -80.219811
+  - lat: 43.541932
+    lng: -80.219705
+  - lat: 43.541898
+    lng: -80.219743
+  - lat: 43.541871
+    lng: -80.219693
+  - lat: 43.541783
+    lng: -80.219818
+  - lat: 43.541888
+    lng: -80.219962
