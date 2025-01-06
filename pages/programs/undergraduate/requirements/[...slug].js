@@ -44,7 +44,7 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
             <>
               <Heading level={1}>{title || "Undergraduate Admission Requirements"}</Heading>
 
-              <div className="flex flex-col [&_p]:py-2 py-6">
+              <div className="flex flex-col [&_p]:py-2 py-6 [&_section]:mb-4">
                 <HtmlParser html={content ?? ""} />
               </div>
             </>

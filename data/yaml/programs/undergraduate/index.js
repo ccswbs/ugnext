@@ -65,7 +65,7 @@ export async function slugToUndergraduateRequirements(slug) {
 
 export async function getUndergraduateRequirements(studentType, location, program) {
   const requirements =
-    program.requirements
+    program?.admission?.requirements
       ?.filter((requirement) => {
         const matchesStudentType = requirement.studentType === studentType.id;
         const matchesLocation =

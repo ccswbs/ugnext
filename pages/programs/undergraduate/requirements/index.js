@@ -18,12 +18,12 @@ export async function getStaticProps() {
       locations: await getAdmissionLocations(),
       programs: (await getUndergraduatePrograms())
         .filter((program) => {
-          const allowedTypes = new Set(["major", "bachelor"]);
+          const allowedTypes = new Set(["major"]);
           return program.types.some((type) => allowedTypes.has(type.id));
         })
         .map((program) => {
-          // Remove admission requirements data as we don't need it for the search
-          delete program.requirements;
+          // Remove admission data as we don't need it for the filter
+          delete program.admission;
           return program;
         }),
     },

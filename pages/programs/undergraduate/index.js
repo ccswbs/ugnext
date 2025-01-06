@@ -9,8 +9,8 @@ export async function getStaticProps() {
   return {
     props: {
       programs: (await getUndergraduatePrograms()).map((program) => {
-        // Remove admission requirements data as we don't need it for the search
-        delete program.requirements;
+        // Remove admission data as we don't need it for the search
+        delete program.admission;
         return program;
       }),
       types: await getUndergraduateProgramTypes(),
