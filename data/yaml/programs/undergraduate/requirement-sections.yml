@@ -1,0 +1,17 @@
+- id: average
+  title: Estimated Cut-off Range
+
+- id: required-courses
+  title: Required Courses
+
+- id: recommended-courses
+  title: Recommended Courses
+
+- id: general-requirements
+  title: General Requirements
+
+- id: program-requirements
+  title: Program Requirements
+
+- id: notes
+  title: Additional Information

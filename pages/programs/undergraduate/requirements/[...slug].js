@@ -8,6 +8,7 @@ import { faArrowLeftToBracket } from "@awesome.me/kit-7993323d0c/icons/sharp/sol
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
 import { getUndergraduateRequirements, slugToUndergraduateRequirements } from "@/data/yaml/programs/undergraduate";
+import { List, ListItem } from "@/components/list";
 
 export async function getStaticPaths() {
   return {
@@ -36,6 +37,8 @@ export async function getStaticProps(context) {
 }
 
 export default function UndergraduateAdmissionRequirements({ title, content }) {
+  console.log(content);
+
   return (
     <Layout title={title || "Undergraduate Admission Requirements"}>
       <Container centered>
@@ -44,8 +47,24 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
             <>
               <Heading level={1}>{title || "Undergraduate Admission Requirements"}</Heading>
 
-              <div className="flex flex-col [&_p]:py-2 py-6 [&_section]:mb-4">
-                <HtmlParser html={content ?? ""} />
+              <div className="flex flex-col">
+                {content?.map((section) => (
+                  <div key={section.id}>
+                    <Heading level={3} as="h2">
+                      {section.title}
+                    </Heading>
+
+                    {Array.isArray(section.content) ? (
+                      <List>
+                        {section.content.map((item, index) => (
+                          <ListItem key={index}>{item}</ListItem>
+                        ))}
+                      </List>
+                    ) : (
+                      <p>{section.content}</p>
+                    )}
+                  </div>
+                ))}
               </div>
             </>
           }

@@ -7,6 +7,7 @@ import {
   getProgramTypes,
   getStudentTypes,
 } from "@/data/yaml/programs";
+import { parseYamlFiles } from "@/lib/file-utils";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
 
@@ -63,22 +64,31 @@ export async function slugToUndergraduateRequirements(slug) {
   return { studentType, location, program };
 }
 
-export async function getUndergraduateRequirements(studentType, location, program) {
-  const requirements =
-    program?.admission?.requirements
-      ?.filter((requirement) => {
-        const matchesStudentType = requirement.studentType === studentType.id;
-        const matchesLocation =
-          (Array.isArray(requirement.location) && requirement.location.includes(location.id)) ||
-          requirement.location === location.id;
+const sections = (await parseYamlFiles(path.join(directory, "requirement-sections.yml"))).reduce((acc, section) => {
+  acc.set(section.id, section);
+  return acc;
+}, new Map());
 
-        return matchesStudentType && matchesLocation;
-      })
-      ?.map((requirement) => requirement.content)
-      ?.join("") ?? "";
+export async function getUndergraduateRequirements(studentType, location, program) {
+  const requirements = program?.admission?.requirements?.filter((requirement) => {
+    const matchesStudentType = requirement.studentType === studentType.id;
+    const matchesLocation =
+      (Array.isArray(requirement.location) && requirement.location.includes(location.id)) ||
+      requirement.location === location.id;
+
+    return matchesStudentType && matchesLocation;
+  });
+
+  const content = requirements
+    .map((requirement) => requirement.content)
+    .flat()
+    .reduce((acc, section) => {
+      acc.set(section.id, { ...section, title: sections.get(section.id)?.title ?? section.id });
+      return acc;
+    }, new Map());
 
   return {
     title: `${program.name} Admission Requirements for ${studentType.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location.name}`,
-    content: requirements,
+    content: Array.from(content.values()),
   };
 }
