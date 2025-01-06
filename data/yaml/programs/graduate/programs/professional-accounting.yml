@@ -1,10 +1,11 @@
-id: accounting
-name: Accounting
+id: professional-accounting
+name: Professional Accounting
 url: https://graduatestudies.uoguelph.ca/programs/accounting
 degrees:
-  - graduate-diploma
+  - master-of-professional-accounting
 types:
   - course-based
 tags:
   - business
+  - management
   - finance
