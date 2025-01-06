@@ -41,7 +41,41 @@ const getAccessToken = async () => {
   }
 };
 
-const UniWebProfile = ({ id }) => {
+const useUniWebProfile = (id) => {
+  const [result, setResult] = useState({ loading: true });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { token } = await getAccessToken();
+
+        const response = await fetch(         `/api/resource?action=read&resources[]=profile/research_interests&resources[]=profile/membership_information&id=${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setResult({ data });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setResult({ error: error.message });
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  return result;
+};
+
+const UniWebProfileRaw = ({ id }) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -50,8 +84,7 @@ const UniWebProfile = ({ id }) => {
       try {
         const { token } = await getAccessToken();
 
-        const response = await fetch(
-          `/api/resource?action=read&resources[]=profile/affiliations&resources[]=profile/membership_information&id=${id}`,
+        const response = await fetch(`/api/resource?action=read&resources[]=profile/research_interests&resources[]=profile/membership_information&id=${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -119,6 +152,7 @@ const UniWebUnitMembers = ({ unitName }) => {
 
 export {
   getAccessToken,
-  UniWebProfile,
+  useUniWebProfile,
+  UniWebProfileRaw,
   UniWebUnitMembers,
 };

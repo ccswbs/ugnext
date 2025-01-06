@@ -5,19 +5,48 @@ import { useEffect, useState } from "react";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import React from 'react';
-import { UniWebProfile, UniWebUnitMembers } from '../components/uniweb-utils';
+import { useUniWebProfile, UniWebProfileRaw } from '../components/uniweb-utils';
 
 export default function ProfilePage() {
-  const userId = 353; // Replace with the desired ID
+  const userId = 66; // Replace with the desired ID
+  const { loading, error, data } = useUniWebProfile(userId);
+
+  if (loading) {
+    return (
+      <Layout metadata={{ title: "UniWEB Test" }}>
+        <Container>
+          <Heading level={1}>UniWEB Test</Heading>
+          <p>Loading...</p>
+        </Container>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout metadata={{ title: "UniWEB Test" }}>
+        <Container>
+          <Heading level={1}>UniWEB Test</Heading>
+          <p>Error: {error}</p>
+        </Container>
+      </Layout>
+    );
+  }
+
+  const membershipInfo = data["profile/membership_information"];
 
   return (
     <Layout metadata={{ title: "UniWEB Test" }}>
       <Container>
-        <h1 className="font-bold my-7 text-4xl mb-0">UniWEB Test</h1>
-        <h2 className="font-bold my-3 text-3xl text-dark">Profile Data</h2>
-        <UniWebProfile id={userId} />
-        <h2 className="font-bold my-3 text-3xl text-dark">Member List</h2>
-        <UniWebUnitMembers unitName="pathobiology" />
+        <Heading level={1}>UniWEB Test</Heading>
+        <Heading level={2}>
+          {membershipInfo.first_name} {membershipInfo.last_name}
+        </Heading>
+        <p>{membershipInfo.position_title[1]}</p>
+        <p>{membershipInfo.academic_unit[2]}</p>
+        <p>{membershipInfo.email}</p>
+      <Heading level={2}>Raw Data</Heading>
+      <UniWebProfileRaw id={userId} />
       </Container>
     </Layout>
   );
