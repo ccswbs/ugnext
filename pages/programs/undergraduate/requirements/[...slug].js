@@ -28,7 +28,7 @@ export async function getStaticProps(context) {
   const requirement = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
 
   return {
-    props: requirement,
+    props: { ...requirement, isCoop: parsed.program.types.some((type) => type.id === "coop") },
   };
 }
 
@@ -55,7 +55,29 @@ export default function UndergraduateAdmissionRequirements({ title, content, isC
                         ))}
                       </List>
                     ) : (
-                      <p>{section.content}</p>
+                      <>
+                        <p>{section.content}</p>
+
+                        {section.id === "average" && (
+                          <p>
+                            <i>
+                              Estimated cutoff ranges are based on admission averages from previous years and are
+                              provided as a point of reference. Exact cut-offs are determined by the quantity and
+                              quality of applications received and the space available in the program. Having an average
+                              within this range does not guarantee admission.
+                            </i>
+                          </p>
+                        )}
+
+                        {section.id === "average" && isCoop && (
+                          <p>
+                            <i>
+                              Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to
+                              co-op will be automatically considered for the regular program.
+                            </i>
+                          </p>
+                        )}
+                      </>
                     )}
                   </div>
                 ))}
