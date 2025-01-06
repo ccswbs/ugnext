@@ -18,7 +18,7 @@ export async function getStaticProps() {
       locations: await getAdmissionLocations(),
       programs: (await getUndergraduatePrograms())
         .filter((program) => {
-          const allowedTypes = new Set(["major"]);
+          const allowedTypes = new Set(["major", "bachelor"]);
           return program.types.some((type) => allowedTypes.has(type.id));
         })
         .map((program) => {

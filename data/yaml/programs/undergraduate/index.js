@@ -70,7 +70,15 @@ const sections = (await parseYamlFiles(path.join(directory, "requirement-section
 }, new Map());
 
 export async function getUndergraduateRequirements(studentType, location, program) {
-  const requirements = program?.admission?.requirements?.filter((requirement) => {
+  const degreeRequirements =
+    (await getUndergraduateDegrees())
+      .filter((degree) => program?.degrees?.some((programDegree) => programDegree.id === degree.id))
+      .map((degree) => degree?.admission?.requirements ?? [])
+      .flat() ?? [];
+
+  const programRequirements = program?.admission?.requirements ?? [];
+
+  const requirements = [...degreeRequirements, ...programRequirements].filter((requirement) => {
     const matchesStudentType = requirement.studentType === studentType.id;
     const matchesLocation =
       (Array.isArray(requirement.location) && requirement.location.includes(location.id)) ||

@@ -37,8 +37,6 @@ export async function getStaticProps(context) {
 }
 
 export default function UndergraduateAdmissionRequirements({ title, content }) {
-  console.log(content);
-
   return (
     <Layout title={title || "Undergraduate Admission Requirements"}>
       <Container centered>
@@ -48,23 +46,31 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
               <Heading level={1}>{title || "Undergraduate Admission Requirements"}</Heading>
 
               <div className="flex flex-col">
-                {content?.map((section) => (
-                  <div key={section.id}>
-                    <Heading level={3} as="h2">
-                      {section.title}
-                    </Heading>
+                {content
+                  ?.map((section) => {
+                    if (!section.content) {
+                      return null;
+                    }
 
-                    {Array.isArray(section.content) ? (
-                      <List>
-                        {section.content.map((item, index) => (
-                          <ListItem key={index}>{item}</ListItem>
-                        ))}
-                      </List>
-                    ) : (
-                      <p>{section.content}</p>
-                    )}
-                  </div>
-                ))}
+                    return (
+                      <div key={section.id}>
+                        <Heading level={3} as="h2">
+                          {section.title}
+                        </Heading>
+
+                        {Array.isArray(section.content) ? (
+                          <List>
+                            {section.content.map((item, index) => (
+                              <ListItem key={index}>{item}</ListItem>
+                            ))}
+                          </List>
+                        ) : (
+                          <p>{section.content}</p>
+                        )}
+                      </div>
+                    );
+                  })
+                  .filter(Boolean)}
               </div>
             </>
           }
