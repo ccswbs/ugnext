@@ -21,3 +21,25 @@ tags:
   - health
   - family
   - pedagog*
+admission:
+  requirements:
+    - studentType: high-school
+      location: ontario
+      content:
+        - id: average
+          content: 79-84%
+        - id: required
+          content:
+            - English (ENG4U)
+            - One 4U math course
+            - One of Biology (SBI4U), Chemistry (SCH4U) or Introductory Kinesiology (PSK4U)
+        - id: recommended
+          content:
+            - 4U Biology
+        - id: general
+          content:
+            - Ontario Secondary School Diploma (OSSD)
+            - A minimum of six 4U/M courses including the required courses for your chosen degree, as outlined above.
+        - id: notes
+          content:
+            - Estimated cutoff ranges are based on admission averages from previous years and are provided as a point of reference. Exact cut-offs are determined by the quantity and quality of applications received and the space available in the program. Having an average within this range does not guarantee admission.
