@@ -1,7 +1,6 @@
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
-import { HtmlParser } from "@/components/html-parser";
 import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
@@ -26,17 +25,14 @@ export async function getStaticProps(context) {
     };
   }
 
-  const { title, content } = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
+  const requirement = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
 
   return {
-    props: {
-      title: title,
-      content: content,
-    },
+    props: requirement,
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ title, content }) {
+export default function UndergraduateAdmissionRequirements({ title, content, isCoop }) {
   return (
     <Layout title={title || "Undergraduate Admission Requirements"}>
       <Container centered>
@@ -46,31 +42,23 @@ export default function UndergraduateAdmissionRequirements({ title, content }) {
               <Heading level={1}>{title || "Undergraduate Admission Requirements"}</Heading>
 
               <div className="flex flex-col">
-                {content
-                  ?.map((section) => {
-                    if (!section.content) {
-                      return null;
-                    }
+                {content?.map((section) => (
+                  <div key={section.id}>
+                    <Heading level={3} as="h2">
+                      {section.title}
+                    </Heading>
 
-                    return (
-                      <div key={section.id}>
-                        <Heading level={3} as="h2">
-                          {section.title}
-                        </Heading>
-
-                        {Array.isArray(section.content) ? (
-                          <List>
-                            {section.content.map((item, index) => (
-                              <ListItem key={index}>{item}</ListItem>
-                            ))}
-                          </List>
-                        ) : (
-                          <p>{section.content}</p>
-                        )}
-                      </div>
-                    );
-                  })
-                  .filter(Boolean)}
+                    {Array.isArray(section.content) ? (
+                      <List>
+                        {section.content.map((item, index) => (
+                          <ListItem key={index}>{item}</ListItem>
+                        ))}
+                      </List>
+                    ) : (
+                      <p>{section.content}</p>
+                    )}
+                  </div>
+                ))}
               </div>
             </>
           }
