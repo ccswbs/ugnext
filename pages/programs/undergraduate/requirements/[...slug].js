@@ -39,8 +39,41 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ requirements, studentType, location, program }) {
+const RequirementsSectionContent = ({ type, content }) => {
+  switch (type) {
+    case "list":
+      return (
+        <List>
+          {content.map((item, index) => (
+            <ListItem key={index}>{item}</ListItem>
+          ))}
+        </List>
+      );
+    default:
+      return (
+        <>
+          {content.map((item, index) => (
+            <p key={index}>{item}</p>
+          ))}
+        </>
+      );
+  }
+};
+
+const RequirementsSection = ({ title, type, content }) => (
+  <>
+    <Heading level={3} as="h2">
+      {title}
+    </Heading>
+
+    <RequirementsSectionContent type={type} content={content} />
+  </>
+);
+
+export default function UndergraduateAdmissionRequirements({ studentType, location, program, requirements }) {
   const title = `${program?.name} Admission Requirements for ${studentType?.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location?.name}`;
+
+  console.log(requirements);
 
   return (
     <Layout title={title ?? "Undergraduate Admission Requirements"}>
@@ -49,47 +82,16 @@ export default function UndergraduateAdmissionRequirements({ requirements, stude
           primary={
             <>
               <Heading level={1}>{title ?? "Undergraduate Admission Requirements"}</Heading>
-
               <div className="flex flex-col">
-                {requirements?.map((section) => (
-                  <div key={section.id}>
-                    <Heading level={3} as="h2">
-                      {section.title}
-                    </Heading>
+                {requirements
+                  ?.map((section) => {
+                    if (section.content.length === 0) {
+                      return null;
+                    }
 
-                    {Array.isArray(section.content) ? (
-                      <List>
-                        {section.content.map((item, index) => (
-                          <ListItem key={index}>{item}</ListItem>
-                        ))}
-                      </List>
-                    ) : (
-                      <>
-                        <p>{section.content}</p>
-
-                        {section.id === "average" && (
-                          <p>
-                            <i>
-                              Estimated cutoff ranges are based on admission averages from previous years and are
-                              provided as a point of reference. Exact cut-offs are determined by the quantity and
-                              quality of applications received and the space available in the program. Having an average
-                              within this range does not guarantee admission.
-                            </i>
-                          </p>
-                        )}
-
-                        {section.id === "average" && program.types.some((type) => type.id === "co-op") && (
-                          <p>
-                            <i>
-                              Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to
-                              co-op will be automatically considered for the regular program.
-                            </i>
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </div>
-                ))}
+                    return <RequirementsSection key={section.id} {...section} />;
+                  })
+                  ?.filter(Boolean)}
               </div>
             </>
           }
