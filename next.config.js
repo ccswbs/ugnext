@@ -3,6 +3,7 @@ const nextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
   reactStrictMode: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.externals.push('bun:sqlite');
     config.module.rules.push(
       {
         test: /\.gql|.graphql$/,
