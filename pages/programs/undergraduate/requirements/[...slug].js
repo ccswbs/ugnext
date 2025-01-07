@@ -3,7 +3,7 @@ import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeftToBracket } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
+import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
 import { getUndergraduateRequirements, slugToUndergraduateRequirements } from "@/data/yaml/programs/undergraduate";
@@ -28,11 +28,15 @@ export async function getStaticProps(context) {
   const requirement = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
 
   return {
-    props: { ...requirement, isCoop: parsed.program.types.some((type) => type.id === "coop") },
+    props: {
+      ...requirement,
+      isCoop: parsed.program.types.some((type) => type.id === "co-op"),
+      url: parsed.program.url,
+    },
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ title, content, isCoop }) {
+export default function UndergraduateAdmissionRequirements({ title, content, isCoop, url }) {
   return (
     <Layout title={title || "Undergraduate Admission Requirements"}>
       <Container centered>
@@ -95,7 +99,14 @@ export default function UndergraduateAdmissionRequirements({ title, content, isC
                 <span className="font-bold">View Other Requirements</span>
               </Button>
 
-              <Sidebar />
+              <Sidebar links={[
+                {
+                  url: url,
+                  text: "About This Program",
+                  icon: faClipboard,
+                  highlight: true,
+                },
+              ]} />
             </div>
           }
         />

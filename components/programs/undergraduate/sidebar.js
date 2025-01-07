@@ -9,12 +9,13 @@ import {
   faCalendarDays,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
-export const Sidebar = ({ children }) => {
-  const links = [
+export const Sidebar = ({ links = [] }) => {
+  const defaultLinks = [
     {
       url: "https://www.uoguelph.ca/admission/undergraduate/apply/",
       text: "Apply Now!",
       icon: faGryphonStatue,
+      highlight: true,
     },
     {
       url: "/programs/undergraduate",
@@ -45,20 +46,18 @@ export const Sidebar = ({ children }) => {
       </Heading>
 
       <ul className="flex flex-col w-full gap-4">
-        {links.map((link, index) => (
+        {[...(links ?? []), ...defaultLinks].map((link, index) => (
           <li key={link.url} className="w-full">
             <Button
               className="flex items-center justify-start gap-4 w-full"
               href={link.url}
-              color={index > 0 ? "black" : "red"}
+              color={link?.highlight ? "red" : "black"}
             >
               {link.icon && <FontAwesomeIcon className="text-2xl" icon={link.icon} />}
               <span className="font-bold">{link.text}</span>
             </Button>
           </li>
         ))}
-
-        {children}
       </ul>
     </>
   );
