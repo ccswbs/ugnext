@@ -87,7 +87,7 @@ export async function getUndergraduateRequirements(studentType, location, progra
     return matchesStudentType && matchesLocation;
   });
 
-  const content = Array.from(
+  return Array.from(
     requirements
       .map((requirement) => requirement.content)
       .flat()
@@ -97,11 +97,4 @@ export async function getUndergraduateRequirements(studentType, location, progra
       }, new Map())
       .values()
   ).filter((section) => section.content);
-
-  console.log(content);
-
-  return {
-    title: `${program.name} Admission Requirements for ${studentType.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location.name}`,
-    content: content,
-  };
 }

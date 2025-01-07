@@ -25,28 +25,33 @@ export async function getStaticProps(context) {
     };
   }
 
-  const requirement = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
+  const requirements = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
+
+  // Don't pass unnecessary data to the page.
+  delete parsed.program.admission;
+  delete parsed.program.tags;
 
   return {
     props: {
-      ...requirement,
-      isCoop: parsed.program.types.some((type) => type.id === "co-op"),
-      url: parsed.program.url,
+      ...parsed,
+      requirements: requirements,
     },
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ title, content, isCoop, url }) {
+export default function UndergraduateAdmissionRequirements({ requirements, studentType, location, program }) {
+  const title = `${program?.name} Admission Requirements for ${studentType?.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location?.name}`;
+
   return (
-    <Layout title={title || "Undergraduate Admission Requirements"}>
+    <Layout title={title ?? "Undergraduate Admission Requirements"}>
       <Container centered>
         <Section
           primary={
             <>
-              <Heading level={1}>{title || "Undergraduate Admission Requirements"}</Heading>
+              <Heading level={1}>{title ?? "Undergraduate Admission Requirements"}</Heading>
 
               <div className="flex flex-col">
-                {content?.map((section) => (
+                {requirements?.map((section) => (
                   <div key={section.id}>
                     <Heading level={3} as="h2">
                       {section.title}
@@ -73,7 +78,7 @@ export default function UndergraduateAdmissionRequirements({ title, content, isC
                           </p>
                         )}
 
-                        {section.id === "average" && isCoop && (
+                        {section.id === "average" && program.types.some((type) => type.id === "co-op") && (
                           <p>
                             <i>
                               Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to
@@ -99,14 +104,16 @@ export default function UndergraduateAdmissionRequirements({ title, content, isC
                 <span className="font-bold">View Other Requirements</span>
               </Button>
 
-              <Sidebar links={[
-                {
-                  url: url,
-                  text: "About This Program",
-                  icon: faClipboard,
-                  highlight: true,
-                },
-              ]} />
+              <Sidebar
+                links={[
+                  {
+                    url: program?.url,
+                    text: "About This Program",
+                    icon: faClipboard,
+                    highlight: true,
+                  },
+                ]}
+              />
             </div>
           }
         />
