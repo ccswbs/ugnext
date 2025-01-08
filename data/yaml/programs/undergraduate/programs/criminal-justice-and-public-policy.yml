@@ -22,6 +22,6 @@ admission:
   requirements:
     - studentType: high-school
       location: ontario
-      content:
+      sections:
         - id: notes
           content: Students not admitted to this program will automatically be considered for Bachelor of Arts, Justice and Legal Studies.

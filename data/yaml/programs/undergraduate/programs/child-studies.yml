@@ -25,6 +25,6 @@ admission:
   requirements:
     - studentType: high-school
       location: ontario
-      content:
+      sections:
         - id: average
           content: 79-84%

@@ -73,8 +73,6 @@ const RequirementsSection = ({ title, type, content }) => (
 export default function UndergraduateAdmissionRequirements({ studentType, location, program, requirements }) {
   const title = `${program?.name} Admission Requirements for ${studentType?.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location?.name}`;
 
-  console.log(requirements);
-
   return (
     <Layout title={title ?? "Undergraduate Admission Requirements"}>
       <Container centered>

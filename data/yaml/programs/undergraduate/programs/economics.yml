@@ -16,7 +16,7 @@ admission:
   requirements:
     - studentType: high-school
       location: ontario
-      content:
+      sections:
         - id: required-courses
           content:
             - English (ENG4U)

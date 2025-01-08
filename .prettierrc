@@ -9,7 +9,8 @@
   "bracketSameLine": false,
   "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-embed", "prettier-plugin-sql"],
   "tailwindFunctions": ["twJoin", "twMerge"],
-  "embeddedSqlTags": ["SQL"],
+  "embeddedSqlComments": ["sql"],
+  "embeddedSqlTags": ["sql"],
   "language": "sqlite",
   "keywordCase": "upper"
 }

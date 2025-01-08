@@ -1,8 +1,8 @@
 import { parseYamlFiles } from "@/lib/file-utils";
 import path from "path";
 
-export async function getAdmissionLocations() {
-  return await parseYamlFiles(path.join(process.cwd(), "data", "yaml", "programs", "admission-locations.yml"));
+export async function getAdmissionLocations(dir) {
+  return await parseYamlFiles(path.join(dir, "admission-locations.yml"));
 }
 
 export async function getStudentTypes(dir) {
