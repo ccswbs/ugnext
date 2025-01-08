@@ -12,14 +12,12 @@ tags:
   - diet*
   - nutrition*
   - food
-admission:
-  requirements:
-    - studentType: high-school
-      location: ontario
-      sections:
-        - id: required-courses
-          content:
-            - English (ENG4U)
-            - One 4U math course
-            - Biology (SBI4U)
-            - Chemistry (SCH4U)
+admission-requirements:
+  - student-type: high-school
+    location: ontario
+    sections:
+      required-courses:
+        - English (ENG4U)
+        - One 4U math course
+        - Biology (SBI4U)
+        - Chemistry (SCH4U)

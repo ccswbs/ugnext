@@ -21,10 +21,8 @@ tags:
   - health
   - family
   - pedagog*
-admission:
-  requirements:
-    - studentType: high-school
-      location: ontario
-      sections:
-        - id: average
-          content: 79-84%
+admission-requirements:
+  - student-type: high-school
+    location: ontario
+    sections:
+      cut-off: 79-84%
