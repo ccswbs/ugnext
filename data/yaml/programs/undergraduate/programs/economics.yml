@@ -12,11 +12,11 @@ tags:
   - business
   - finance
   - economics
-admission-requirements:
+requirements:
   - student-type: high-school
     location: ontario
     sections:
       required-courses:
-          - English (ENG4U)
-          - Advanced Functions (MHF4U)
+        - English (ENG4U)
+        - Advanced Functions (MHF4U)
       recommended-courses: ~

@@ -1,6 +1,7 @@
 import path from "path";
 import { parseYamlFiles } from "../../../../lib/file-utils";
 import { z } from "zod";
+import { yamlToMap } from "../../../../data/yaml/programs";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
 
@@ -172,44 +173,20 @@ const Degree = z.object({
   requirements: z.array(AdmissionRequirement),
 });
 
-const degrees = (await parseYamlFiles(path.join(directory, "degrees", "*.yml"))).reduce(
-  (acc, { path, content: degree }) => {
-    const parsed = Degree.safeParse(degree);
-
-    if (!parsed.success) {
-      throw new Error(`Failed to parse degree yaml file ${path}: ${parsed.error.toString()}`);
-    }
-
-    acc[degree.id] = parsed.data;
-    return acc;
-  },
-  {}
-);
+const degrees = await yamlToMap(path.join(directory, "degrees", "*.yml"), Degree);
 
 const Program = z.object({
   id: z.string(),
   name: z.string(),
   url: z.string(),
   types: z.array(z.enum(Object.keys(programTypes))),
-  degree: z.array(z.enum(Object.keys(degrees))),
+  degrees: z.array(z.enum(Object.keys(degrees))),
   acronym: z.string(),
   tags: z.array(z.string()),
   requirements: z.array(AdmissionRequirement),
 });
 
-const programs = (await parseYamlFiles(path.join(directory, "programs", "*.yml"))).reduce(
-  (acc, { path, content: program }) => {
-    const parsed = Program.safeParse(program);
-
-    if (!parsed.success) {
-      throw new Error(`Failed to parse program yaml file ${path}: ${parsed.error.message}`);
-    }
-
-    acc[program.id] = parsed.data;
-    return acc;
-  },
-  {}
-);
+const programs = await yamlToMap(path.join(directory, "programs", "*.yml"), Program);
 
 programs;
 

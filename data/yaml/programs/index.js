@@ -1,5 +1,20 @@
-import { parseYamlFiles } from "@/lib/file-utils";
+import { parseYamlFiles } from "../../../lib/file-utils";
 import path from "path";
+
+export async function yamlToMap(path, schema) {
+  const parsedFiles = await parseYamlFiles(path);
+
+  return parsedFiles.reduce((acc, { path, content }) => {
+    const parsed = schema.safeParse(content);
+
+    if (!parsed.success) {
+      throw new Error(`Failed to parse yaml file ${path}: ${parsed.error.toString()}`);
+    }
+
+    acc[content.id] = parsed.data;
+    return acc;
+  }, {});
+}
 
 export async function getAdmissionLocations(dir) {
   return await parseYamlFiles(path.join(dir, "admission-locations.yml"));

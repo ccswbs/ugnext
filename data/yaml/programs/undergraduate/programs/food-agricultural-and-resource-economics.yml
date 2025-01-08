@@ -12,7 +12,7 @@ tags:
   - food
   - business
   - economics
-admission-requirements:
+requirements:
   - student-type: high-school
     location: ontario
     sections:

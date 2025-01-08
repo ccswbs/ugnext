@@ -11,7 +11,7 @@ tags:
   - business
   - economics
   - mathematics
-admission-requirements:
+requirements:
   - student-type: high-school
     location: ontario
     sections:

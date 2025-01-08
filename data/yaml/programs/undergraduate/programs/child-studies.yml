@@ -21,7 +21,7 @@ tags:
   - health
   - family
   - pedagog*
-admission-requirements:
+requirements:
   - student-type: high-school
     location: ontario
     sections:

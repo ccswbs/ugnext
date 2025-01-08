@@ -12,7 +12,7 @@ tags:
   - diet*
   - nutrition*
   - food
-admission-requirements:
+requirements:
   - student-type: high-school
     location: ontario
     sections:

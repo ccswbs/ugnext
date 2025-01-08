@@ -16,7 +16,7 @@ tags:
   - power
   - affairs
   - socio*
-admission-requirements:
+requirements:
   - student-type: high-school
     location: ontario
     sections:
