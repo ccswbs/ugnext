@@ -9,6 +9,7 @@ import { useUniWebProfile, UniWebProfileRaw } from '@/lib/uniweb-utils';
 
 export default function ProfilePage() {
   const userId = 66; // Replace with the desired ID
+  const userPicture = "https://uoguelph-dev.uniweb.io/picture.php?action=display&contentType=members&id=" + userId;
   const { loading, error, data } = useUniWebProfile(userId);
 
   if (loading) {
@@ -35,6 +36,7 @@ export default function ProfilePage() {
 
   const membershipInfo = data["profile/membership_information"];
   const researchInterests = data["profile/research_interests"];
+  const researchDescription = data["profile/research_description"];
   //console.log(researchInterests);
   
   // Filter out objects without an 'order' property and sort by 'order'
@@ -47,9 +49,12 @@ const sortedInterests = researchInterests.filter(item => item.order).sort((a, b)
         <Heading level={2}>
           {membershipInfo.first_name} {membershipInfo.last_name}
         </Heading>
+        <img src={userPicture} alt="Profile Photo" />
         <p>{membershipInfo.position_title[1]}</p>
         <p>{membershipInfo.academic_unit[2]}</p>
         <p>{membershipInfo.email}</p>
+        <Heading level={3}>Research description</Heading>
+        <p>{researchDescription.research_description.en}</p>
         <Heading level={3}>Research Interests</Heading>
         <ul>
         {sortedInterests.map(item => (
