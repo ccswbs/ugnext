@@ -1,5 +1,4 @@
 import { parseYamlFiles } from "../../../lib/file-utils";
-import path from "path";
 
 export async function yamlToMap({ path, schema, parser }) {
   const parsedFiles = await parseYamlFiles(path);
