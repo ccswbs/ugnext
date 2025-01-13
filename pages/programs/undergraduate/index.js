@@ -6,12 +6,12 @@ import { ProgramSearch } from "@/components/programs/program-search";
 import { getUndergraduatePrograms, getUndergraduateProgramTypes } from "@/data/yaml/programs/undergraduate";
 
 export async function getStaticProps() {
+  const programs = await getUndergraduatePrograms();
+
   return {
     props: {
-      programs: (await getUndergraduatePrograms()).map((program) => {
-        // Remove admission requirements data as we don't need it for the search
-        delete program.requirements;
-        return program;
+      programs: programs.map((program) => {
+        return { ...program, requirements: null };
       }),
       types: await getUndergraduateProgramTypes(),
     },
