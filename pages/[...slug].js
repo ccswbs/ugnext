@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
-import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
+import { getBreadcrumbs, getPageContent, getPageID, getPageMenu, getPaths } from "@/data/drupal/basic-pages";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { tailwind } from "@/lib/tailwind";
@@ -10,7 +10,7 @@ import Head from "next/head";
 
 export async function getStaticPaths() {
   return {
-    paths: [], //await getPaths(),
+    paths: await getPaths(),
     fallback: true,
   };
 }

@@ -106,10 +106,10 @@ export const ImageOverlay = ({ data }) => {
       alignment={alignment}
       overlay={overlay}
       image={{
-        src: image.src ?? image.url,
-        width: image.width,
-        height: image.height,
-        alt: image.alt ?? "",
+        src: image?.src ?? image?.url,
+        width: image?.width,
+        height: image?.height,
+        alt: image?.alt ?? "",
       }}
     >
       <div className={twJoin((style === "Dark overlay" || style === "Red background") && "text-white")}>
