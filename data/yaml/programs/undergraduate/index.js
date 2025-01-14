@@ -76,7 +76,7 @@ const degrees = await yamlToMap({
     type: z.enum(Object.keys(degreeTypes)),
     acronym: z.string(),
     tags: z.array(z.string()),
-    requirements: z.array(AdmissionRequirementSchema).isOptional(),
+    requirements: z.optional(z.array(AdmissionRequirementSchema)),
   }),
   parser: (degree) => ({
     ...degree,
@@ -92,9 +92,9 @@ const programs = await yamlToMap({
     url: z.string(),
     types: z.array(z.enum(Object.keys(programTypes))),
     degrees: z.array(z.enum(Object.keys(degrees))),
-    acronym: z.string().optional(),
+    acronym: z.optional(z.string()),
     tags: z.array(z.string()),
-    requirements: z.array(AdmissionRequirementSchema).isOptional(),
+    requirements: z.optional(z.array(AdmissionRequirementSchema)),
   }),
   parser: (program) => ({
     ...program,
