@@ -11,7 +11,7 @@ export async function getStaticProps() {
   return {
     props: {
       programs: programs.map((program) => {
-        return { ...program, requirements: null };
+        return { ...program, requirements: null, "alternative-offers": null };
       }),
       types: await getUndergraduateProgramTypes(),
     },

@@ -15,3 +15,14 @@ tags:
   - power
   - affairs
   - socio*
+alternative-offers:
+  - sociology
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 80-85%
+      notes:

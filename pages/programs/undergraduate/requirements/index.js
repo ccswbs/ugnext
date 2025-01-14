@@ -32,9 +32,12 @@ export async function getStaticProps() {
           return program.types.some((type) => allowedTypes.has(type.id));
         })
         .map((program) => {
-          // Remove admission data as we don't need it for the filter
-          delete program.admission;
-          return program;
+          // Remove any data we don't need for the filter
+          return {
+            id: program.id,
+            name: program.name,
+            tags: program.tags,
+          };
         }),
     },
   };

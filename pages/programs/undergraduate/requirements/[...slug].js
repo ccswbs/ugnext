@@ -15,6 +15,8 @@ import {
   faFileSignature,
   faMapLocationDot,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { Fragment } from "react";
+import { HtmlParser } from "@/components/html-parser";
 
 export async function getStaticPaths() {
   return {
@@ -44,39 +46,18 @@ export async function getStaticProps(context) {
   };
 }
 
-const RequirementsSectionContent = ({ type, content }) => {
-  switch (type) {
-    case "list":
-      return (
-        <List>
-          {content.map((item, index) => (
-            <ListItem key={index}>{item}</ListItem>
-          ))}
-        </List>
-      );
-    default:
-      return (
-        <>
-          {content.map((item, index) => (
-            <p key={index}>{item}</p>
-          ))}
-        </>
-      );
-  }
-};
-
-const RequirementsSection = ({ title, type, content }) => (
-  <>
-    <Heading level={3} as="h2">
-      {title}
-    </Heading>
-
-    <RequirementsSectionContent type={type} content={content} />
-  </>
-);
-
 export default function UndergraduateAdmissionRequirements({ studentType, location, program, requirements }) {
   const title = `${program?.name} Admission Requirements for ${studentType?.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location?.name}`;
+
+  const wrappers = {
+    list: List,
+    text: "p",
+  };
+
+  const items = {
+    list: ListItem,
+    text: Fragment,
+  };
 
   return (
     <Layout title={title ?? "Undergraduate Admission Requirements"}>
@@ -88,9 +69,26 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
               <div className="flex flex-col">
                 {requirements
                   ?.filter((requirement) => requirement.content.length > 0)
-                  ?.map((requirement, index) => (
-                    <RequirementsSection key={index} {...requirement} />
-                  ))}
+                  ?.map((requirement, index) => {
+                    const Wrapper = wrappers[requirement.type];
+                    const Content = items[requirement.type];
+
+                    return (
+                      <Fragment key={index}>
+                        <Heading level={3} as="h2">
+                          {requirement.title}
+                        </Heading>
+
+                        <Wrapper>
+                          {requirement.content.map((item, index) => (
+                            <Content key={index}>
+                              <HtmlParser html={item} />
+                            </Content>
+                          ))}
+                        </Wrapper>
+                      </Fragment>
+                    );
+                  })}
               </div>
             </>
           }

@@ -93,8 +93,24 @@ const programs = await yamlToMap({
       .transform((value) => (value === null ? null : degrees[value])),
     acronym: z.string().nullish(),
     tags: z.array(z.string()),
+    "alternative-offers": z.array(z.string()).nullish(),
     requirements: z.array(AdmissionRequirementSchema).nullish(),
   }),
+});
+
+// Process alternative offers after all programs have been parsed.
+Object.values(programs).forEach((program, index) => {
+  program["alternative-offers"] =
+    program["alternative-offers"]?.map((id) => {
+      const alternativeProgram = programs[id];
+
+      if (!alternativeProgram) {
+        throw new Error(
+          `Failed to parse program ${program}: Alternative offer at ${index} refers to program ${id} which does not exist.`
+        );
+      }
+      return programs[id];
+    }) ?? null;
 });
 
 export async function getUndergraduateDegreeTypes() {
@@ -149,6 +165,7 @@ export async function getUndergraduateRequirements(studentType, location, progra
 
   const sections = Object.keys(requirementSectionTypes).reduce((acc, section) => {
     acc[section] = {
+      id: requirementSectionTypes[section].id,
       title: requirementSectionTypes[section].name,
       type: requirementSectionTypes[section].type,
       content: [],
@@ -177,6 +194,13 @@ export async function getUndergraduateRequirements(studentType, location, progra
       hasAverage
         ? "This program is offered with and without co-op. Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to co-op will be automatically considered for the regular program."
         : "This program is offered with and without co-op. Students not admissible to co-op will be automatically considered for the regular program."
+    );
+  }
+
+  // If this program has aleternative offers, then we mention it in the notes section
+  if (program["alternative-offers"]?.length > 0) {
+    sections["notes"].content.push(
+      `Students not admitted to ${program.name} will automatically be considered for: ${program["alternative-offers"].map((program) => `<a href="${program.url}">${program.name}</a>`).join(", ")}. Learn more about <a href="https://www.uoguelph.ca/admission/undergraduate/apply/alternate">Alternate Offers</a>.`
     );
   }
 
