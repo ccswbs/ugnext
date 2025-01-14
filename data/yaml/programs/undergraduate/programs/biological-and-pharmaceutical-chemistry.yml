@@ -2,8 +2,7 @@ id: biological-and-pharmaceutical-chemistry
 name: Biological and Pharmaceutical Chemistry
 acronym: BPCH
 url: https://www.uoguelph.ca/programs/biological-and-pharmaceutical-chemistry/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

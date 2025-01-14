@@ -2,7 +2,7 @@ id: german
 name: German
 acronym: GERM
 url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/german-germ/
-degrees: []
+degree: ~
 types:
   - minor
 tags:

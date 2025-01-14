@@ -2,8 +2,7 @@ id: water-resources-engineering
 name: Water Resources Engineering
 acronym: WRE
 url: https://www.uoguelph.ca/programs/water-resources-engineering/
-degrees:
-  - bachelor-of-engineering
+degree: bachelor-of-engineering
 types:
   - major
   - co-op

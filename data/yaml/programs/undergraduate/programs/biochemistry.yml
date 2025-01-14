@@ -2,8 +2,7 @@ id: biochemistry
 name: Biochemistry
 acronym: BIOC
 url: https://www.uoguelph.ca/programs/biochemistry/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

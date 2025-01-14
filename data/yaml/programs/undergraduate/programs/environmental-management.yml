@@ -2,8 +2,7 @@ id: environmental-management
 name: Environmental Management
 acronym: EM
 url: https://www.uoguelph.ca/programs/environmental-management/
-degrees:
-  - bachelor-of-bioresource-management
+degree: bachelor-of-bioresource-management
 types:
   - major
   - co-op

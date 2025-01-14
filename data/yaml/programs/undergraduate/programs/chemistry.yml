@@ -2,8 +2,7 @@ id: chemistry
 name: Chemistry
 acronym: CHEM
 url: https://www.uoguelph.ca/programs/chemistry/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

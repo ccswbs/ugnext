@@ -2,8 +2,7 @@ id: horticulture
 name: Horticulture
 acronym: HRT
 url: https://www.uoguelph.ca/programs/horticulture/
-degrees:
-  - bachelor-of-science-in-agriculture
+degree: bachelor-of-science-in-agriculture
 types:
   - major
   - co-op

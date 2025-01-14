@@ -2,8 +2,7 @@ id: theatre-studies
 name: Theatre Studies
 acronym: THST
 url: https://www.uoguelph.ca/programs/theatre-studies/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - minor

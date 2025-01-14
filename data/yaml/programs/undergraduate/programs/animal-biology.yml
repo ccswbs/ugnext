@@ -2,8 +2,7 @@ id: animal-biology
 name: Animal Biology
 acronym: ABIO
 url: https://www.uoguelph.ca/programs/animal-biology/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
 tags:

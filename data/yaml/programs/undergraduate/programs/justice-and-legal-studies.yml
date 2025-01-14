@@ -2,8 +2,7 @@ id: justice-and-legal-studies
 name: Justice and Legal Studies
 acronym: JLS
 url: https://www.uoguelph.ca/programs/justice-and-legal-studies/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - co-op

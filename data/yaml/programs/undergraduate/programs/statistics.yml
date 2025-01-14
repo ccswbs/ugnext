@@ -2,8 +2,7 @@ id: statistics
 name: Statistics
 acronym: STAT
 url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/statistics-stat/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - minor
   - area-of-concentration

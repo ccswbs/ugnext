@@ -2,8 +2,7 @@ id: mechanical-engineering
 name: Mechanical Engineering
 acronym: MECH
 url: https://www.uoguelph.ca/programs/mechanical-engineering/
-degrees:
-  - bachelor-of-engineering
+degree: bachelor-of-engineering
 types:
   - major
   - co-op

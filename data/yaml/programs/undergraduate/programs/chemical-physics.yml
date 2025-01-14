@@ -2,8 +2,7 @@ id: chemical-physics
 name: Chemical Physics
 acronym: CHPY
 url: https://www.uoguelph.ca/programs/chemical-physics/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

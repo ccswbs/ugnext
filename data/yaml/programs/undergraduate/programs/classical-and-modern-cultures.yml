@@ -2,8 +2,7 @@ id: classical-and-modern-cultures
 name: Classical and Modern Cultures
 acronym: CLAS
 url: https://www.uoguelph.ca/programs/classical-and-modern-cultures/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - minor

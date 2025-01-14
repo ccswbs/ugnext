@@ -2,8 +2,7 @@ id: environmental-engineering
 name: Environmental Engineering
 acronym: ENVE
 url: https://www.uoguelph.ca/programs/environmental-engineering/
-degrees:
-  - bachelor-of-engineering
+degree: bachelor-of-engineering
 types:
   - major
   - co-op

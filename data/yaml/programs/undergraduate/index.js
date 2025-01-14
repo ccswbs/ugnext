@@ -30,13 +30,9 @@ const degrees = await yamlToMap({
     id: z.string(),
     name: z.string(),
     url: z.string(),
-    type: z.enum(Object.keys(degreeTypes)),
+    type: z.enum(Object.keys(degreeTypes)).transform((value) => degreeTypes[value]),
     acronym: z.string(),
     tags: z.array(z.string()),
-  }),
-  parser: (degree) => ({
-    ...degree,
-    type: degreeTypes[degree.type],
   }),
 });
 
@@ -46,15 +42,13 @@ const programs = await yamlToMap({
     id: z.string(),
     name: z.string(),
     url: z.string(),
-    types: z.array(z.enum(Object.keys(programTypes))),
-    degrees: z.array(z.enum(Object.keys(degrees))),
-    acronym: z.optional(z.string()),
+    types: z.array(z.enum(Object.keys(programTypes)).transform((value) => programTypes[value])),
+    degree: z
+      .enum(Object.keys(degrees))
+      .nullable()
+      .transform((value) => (value === null ? null : degrees[value])),
+    acronym: z.string().optional(),
     tags: z.array(z.string()),
-  }),
-  parser: (program) => ({
-    ...program,
-    types: program.types.map((type) => programTypes[type]),
-    degrees: program.degrees.map((degree) => degrees[degree]),
   }),
 });
 

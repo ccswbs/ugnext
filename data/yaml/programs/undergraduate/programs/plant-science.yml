@@ -2,8 +2,7 @@ id: plant-science
 name: Plant Science
 acronym: PLSC
 url: https://www.uoguelph.ca/programs/plant-science/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

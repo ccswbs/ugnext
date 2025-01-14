@@ -2,8 +2,7 @@ id: political-science
 name: Political Science
 acronym: POLS
 url: https://www.uoguelph.ca/programs/political-science/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - minor

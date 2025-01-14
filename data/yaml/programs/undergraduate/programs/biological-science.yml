@@ -2,8 +2,7 @@ id: biological-science
 name: Biological Science
 acronym: BIOS
 url: https://www.uoguelph.ca/programs/biological-science/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
 tags:

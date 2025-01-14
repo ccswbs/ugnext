@@ -1,8 +1,7 @@
 id: accounting
 name: Accounting
 url: https://www.uoguelph.ca/programs/accounting/
-degrees:
-  - bachelor-of-commerce
+degree: bachelor-of-commerce
 types:
   - major
   - co-op

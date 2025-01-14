@@ -2,8 +2,7 @@ id: international-development-studies
 name: International Development Studies
 acronym: IDS
 url: https://www.uoguelph.ca/programs/international-development-studies/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - co-op
