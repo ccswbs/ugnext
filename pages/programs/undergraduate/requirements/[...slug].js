@@ -5,9 +5,16 @@ import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
-import { Sidebar } from "@/components/programs/undergraduate/sidebar";
+import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
 import { getUndergraduateRequirements, parseAdmissionRequirementsSlug } from "@/data/yaml/programs/undergraduate";
 import { List, ListItem } from "@/components/list";
+import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
+import {
+  faBars,
+  faCalendarDays,
+  faFileSignature,
+  faMapLocationDot,
+} from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
 export async function getStaticPaths() {
   return {
@@ -29,8 +36,8 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-      studentType: { id: studentType.id, name: studentType.name },
-      location: { id: location.id, name: location.name },
+      studentType: studentType,
+      location: location,
       program: { id: program.id, name: program.name, url: program.url },
       requirements: requirements,
     },
@@ -98,13 +105,39 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
                 <span className="font-bold">View Other Requirements</span>
               </Button>
 
-              <Sidebar
+              <AdmissionRequirementsSidebar
                 links={[
+                  {
+                    url: "https://www.uoguelph.ca/admission/undergraduate/apply/",
+                    text: "Apply Now!",
+                    icon: faGryphonStatue,
+                    highlight: true,
+                  },
                   {
                     url: program?.url,
                     text: "About This Program",
                     icon: faClipboard,
                     highlight: true,
+                  },
+                  {
+                    url: "/programs/undergraduate",
+                    text: "View All Programs",
+                    icon: faBars,
+                  },
+                  {
+                    url: "https://www.uoguelph.ca/admission/undergraduate/tours/",
+                    text: "Register for a Campus Tour",
+                    icon: faMapLocationDot,
+                  },
+                  {
+                    url: "https://www.uoguelph.ca/registrar/forms/spf/",
+                    text: "Fill out our Student Profile Form",
+                    icon: faFileSignature,
+                  },
+                  {
+                    url: "https://www.uoguelph.ca/admission/undergraduate/apply/deadlines/",
+                    text: "Dates & Deadlines",
+                    icon: faCalendarDays,
                   },
                 ]}
               />
