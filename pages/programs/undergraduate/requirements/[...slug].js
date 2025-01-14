@@ -17,22 +17,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const parsed = await parseAdmissionRequirementsSlug(context.params.slug);
+  const { studentType, location, program } = await parseAdmissionRequirementsSlug(context.params.slug);
 
-  if (!parsed) {
+  if (!studentType || !location || !program) {
     return {
       notFound: true,
     };
   }
 
-  const requirements = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
+  const requirements = await getUndergraduateRequirements(studentType, location, program);
 
   return {
     props: {
-      ...parsed,
-      studentType: { id: parsed.studentType.id, name: parsed.studentType.name },
-      location: { id: parsed.location.id, name: parsed.location.name },
-      program: { id: parsed.program.id, name: parsed.program.name },
+      studentType: { id: studentType.id, name: studentType.name },
+      location: { id: location.id, name: location.name },
+      program: { id: program.id, name: program.name },
       requirements: requirements,
     },
   };

@@ -76,7 +76,7 @@ const degrees = await yamlToMap({
     type: z.enum(Object.keys(degreeTypes)).transform((value) => degreeTypes[value]),
     acronym: z.string(),
     tags: z.array(z.string()),
-    requirements: z.optional(z.array(AdmissionRequirementSchema)),
+    requirements: z.array(AdmissionRequirementSchema).nullish(),
   }),
 });
 
@@ -89,11 +89,11 @@ const programs = await yamlToMap({
     types: z.array(z.enum(Object.keys(programTypes)).transform((value) => programTypes[value])),
     degree: z
       .enum(Object.keys(degrees))
-      .nullable()
+      .nullish()
       .transform((value) => (value === null ? null : degrees[value])),
-    acronym: z.string().optional(),
+    acronym: z.string().nullish(),
     tags: z.array(z.string()),
-    requirements: z.optional(z.array(AdmissionRequirementSchema)),
+    requirements: z.array(AdmissionRequirementSchema).nullish(),
   }),
 });
 
@@ -132,29 +132,17 @@ export async function getUndergraduatePrograms() {
 }
 
 export async function parseAdmissionRequirementsSlug(slug) {
-  const studentType = studentTypes[slug[0]];
-
-  if (!studentType) {
-    return null;
-  }
-
-  const location = locations[slug[1]];
-
-  if (!location) {
-    return null;
-  }
-
-  const program = programs[slug[2]];
-
-  if (!program) {
-    return null;
-  }
-
-  return { studentType, location, program };
+  return {
+    studentType: studentTypes[slug[0]],
+    location: locations[slug[1]],
+    program: programs[slug[2]],
+  };
 }
 
-/*
+
 export async function getUndergraduateRequirements(studentType, location, program) {
+
+  /*
   const programDegrees = await Promise.all(
     program.degrees.map(async (degree) => await getUndergraduateDegree(degree.id))
   );
@@ -209,5 +197,7 @@ export async function getUndergraduateRequirements(studentType, location, progra
   }
 
   return Object.values(requirements);
+  */
+
+  return [];
 }
-*/
