@@ -5,7 +5,7 @@ import { yamlToMap } from "@/data/yaml/programs";
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "graduate");
 
 const degreeTypes = await yamlToMap({
-  path: path.join(directory, "degree-types.yml"),
+  path: path.join(directory, "degree-types.yml.yml"),
   schema: z.array(
     z.object({
       id: z.string(),
