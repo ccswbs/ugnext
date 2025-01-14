@@ -2,8 +2,7 @@ id: computer-science
 name: Computer Science
 acronym: CS
 url: https://www.uoguelph.ca/programs/computer-science/
-degrees:
-  - bachelor-of-computing
+degree: bachelor-of-computing
 types:
   - major
   - co-op

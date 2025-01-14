@@ -2,8 +2,7 @@ id: real-estate
 name: Real Estate
 acronym: RE
 url: https://www.uoguelph.ca/programs/real-estate/
-degrees:
-  - bachelor-of-commerce
+degree: bachelor-of-commerce
 types:
   - major
   - co-op

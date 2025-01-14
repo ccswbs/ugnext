@@ -2,8 +2,7 @@ id: creative-writing
 name: Creative Writing
 acronym: CW
 url: https://www.uoguelph.ca/programs/creative-writing/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - minor

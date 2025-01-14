@@ -2,8 +2,7 @@ id: microbiology
 name: Microbiology
 acronym: MICR
 url: https://www.uoguelph.ca/programs/microbiology/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

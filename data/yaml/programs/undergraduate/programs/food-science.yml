@@ -2,8 +2,7 @@ id: food-science
 name: Food Science
 acronym: FOOD
 url: https://www.uoguelph.ca/programs/food-science/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

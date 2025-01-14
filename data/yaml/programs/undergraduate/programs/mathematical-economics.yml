@@ -2,8 +2,7 @@ id: mathematical-economics
 name: Mathematical Economics
 acronym: MAEC
 url: https://www.uoguelph.ca/programs/mathematical-economics/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - co-op

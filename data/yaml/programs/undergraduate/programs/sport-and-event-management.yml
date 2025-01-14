@@ -2,8 +2,7 @@ id: sport-and-event-management
 name: Sport and Event Management
 acronym: SPMT
 url: https://www.uoguelph.ca/programs/sport-and-event-management/
-degrees:
-  - bachelor-of-commerce
+degree: bachelor-of-commerce
 types:
   - major
   - co-op

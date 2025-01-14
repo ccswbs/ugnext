@@ -2,8 +2,7 @@ id: physics
 name: Physics
 acronym: PHYS
 url: https://www.uoguelph.ca/programs/physics/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

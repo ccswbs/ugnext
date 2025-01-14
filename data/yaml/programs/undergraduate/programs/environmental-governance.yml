@@ -2,8 +2,7 @@ id: environmental-governance
 name: Environmental Governance
 acronym: EGOV
 url: https://www.uoguelph.ca/programs/environmental-governance/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - co-op

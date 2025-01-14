@@ -2,8 +2,7 @@ id: molecular-biology-and-genetics
 name: Molecular Biology and Genetics
 acronym: MBG
 url: https://www.uoguelph.ca/programs/molecular-biology-and-genetics/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - co-op

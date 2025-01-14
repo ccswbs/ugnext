@@ -2,8 +2,7 @@ id: child-studies
 name: Child Studies
 acronym: CSTU
 url: https://www.uoguelph.ca/programs/child-studies/
-degrees:
-  - bachelor-of-applied-science
+degree: bachelor-of-applied-science
 types:
   - major
 tags:

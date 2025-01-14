@@ -2,8 +2,7 @@ id: food-and-agricultural-business
 name: Food and Agricultural Business
 acronym: FAB
 url: https://www.uoguelph.ca/programs/food-and-agricultural-business/
-degrees:
-  - bachelor-of-commerce
+degree: bachelor-of-commerce
 types:
   - major
   - co-op

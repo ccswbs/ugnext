@@ -2,8 +2,7 @@ id: equine-management
 name: Equine Management
 acronym: EQM
 url: https://www.uoguelph.ca/programs/equine-management/
-degrees:
-  - bachelor-of-bioresource-management
+degree: bachelor-of-bioresource-management
 types:
   - major
   - co-op

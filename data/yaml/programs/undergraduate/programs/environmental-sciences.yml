@@ -2,8 +2,7 @@ id: environmental-sciences
 name: Environmental Sciences
 acronym: ENVS
 url: https://www.uoguelph.ca/programs/environmental-sciences/
-degrees:
-  - bachelor-of-science-in-environmental-sciences
+degree: bachelor-of-science-in-environmental-sciences
 types:
   - major
   - co-op

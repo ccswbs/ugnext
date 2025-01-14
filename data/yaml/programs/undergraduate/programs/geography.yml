@@ -2,8 +2,7 @@ id: geography
 name: Geography
 acronym: GEOG
 url: https://www.uoguelph.ca/programs/geography/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - co-op

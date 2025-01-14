@@ -2,8 +2,7 @@ id: biomedical-science
 name: Bio-Medical Science
 acronym: BIOM
 url: https://www.uoguelph.ca/programs/biomedical-science/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
 tags:

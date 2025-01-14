@@ -2,7 +2,7 @@ id: business
 name: Business
 acronym: BUS
 url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/business-bus/
-degrees: []
+degree: ~
 types:
   - minor
 tags:

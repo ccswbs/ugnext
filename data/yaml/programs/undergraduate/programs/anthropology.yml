@@ -2,8 +2,7 @@ id: anthropology
 name: Anthropology
 acronym: ANTH
 url: https://www.uoguelph.ca/programs/anthropology/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - co-op

@@ -2,8 +2,7 @@ id: management-economics-and-finance
 name: Management Economics and Finance
 acronym: MEF
 url: https://www.uoguelph.ca/programs/management-economics-and-finance/
-degrees:
-  - bachelor-of-commerce
+degree: bachelor-of-commerce
 types:
   - major
   - co-op

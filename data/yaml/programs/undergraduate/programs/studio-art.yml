@@ -2,8 +2,7 @@ id: studio-art
 name: Studio Art
 acronym: SART
 url: https://www.uoguelph.ca/programs/studio-art/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
 tags:

@@ -2,8 +2,7 @@ id: art-history
 name: Art History
 acronym: ARTH
 url: https://www.uoguelph.ca/programs/art-history/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - minor

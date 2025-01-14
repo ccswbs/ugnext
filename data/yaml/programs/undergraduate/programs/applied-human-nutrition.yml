@@ -2,8 +2,7 @@ id: applied-human-nutrition
 name: Applied Human Nutrition
 acronym: AHN
 url: https://www.uoguelph.ca/programs/applied-human-nutrition/
-degrees:
-  - bachelor-of-applied-science
+degree: bachelor-of-applied-science
 types:
   - major
 tags:

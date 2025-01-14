@@ -2,8 +2,7 @@ id: zoology
 name: Zoology
 acronym: ZOO
 url: https://www.uoguelph.ca/programs/zoology/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
   - minor

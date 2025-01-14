@@ -2,8 +2,7 @@ id: psychology
 name: Psychology
 acronym: PSYC
 url: https://www.uoguelph.ca/programs/psychology/
-degrees:
-  - bachelor-of-arts
+degree: bachelor-of-arts
 types:
   - major
   - co-op

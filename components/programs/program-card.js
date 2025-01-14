@@ -1,26 +1,6 @@
 import { Card } from "@/components/card";
 
-const ProgramCardDegrees = ({ program, condensedDegrees = false }) => {
-  return condensedDegrees ? (
-    <span className="text-black/65">
-      {program.degrees
-        .sort((a, b) => a.acronym.localeCompare(b.acronym))
-        ?.map((degree, index) => degree.acronym ?? degree.name)
-        .join(", ")}
-    </span>
-  ) : (
-    program.degrees?.map((degree, index) => (
-      <span key={degree.id} className="text-black/65">
-        {degree.name}
-      </span>
-    ))
-  );
-};
-
-export const ProgramCard = ({ program, condensedDegrees = false }) => {
-  const isCollaborativeSpecialization = program.types.some((type) => type.id === "collaborative-specialization");
-  const showDegrees = Array.isArray(program.degrees) && !isCollaborativeSpecialization;
-
+export const ProgramCard = ({ program }) => {
   return (
     <Card
       href={program.url}
@@ -28,7 +8,14 @@ export const ProgramCard = ({ program, condensedDegrees = false }) => {
       title={
         <div className="flex flex-col gap-2 justify-center">
           <span className="text-lg font-bold">{program.name}</span>
-          {showDegrees && <ProgramCardDegrees program={program} condensedDegrees={condensedDegrees} />}
+
+          {program.degree && <span className="text-black/65">{program.degree.name}</span>}
+
+          {program.degrees && (
+            <span className="text-black/65">
+              {program.degrees?.map((degree) => degree.acronym ?? degree.name).join(", ")}
+            </span>
+          )}
         </div>
       }
       footer={

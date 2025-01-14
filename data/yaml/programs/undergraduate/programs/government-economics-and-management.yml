@@ -2,8 +2,7 @@ id: government-economics-and-management
 name: Government, Economics and Management
 acronym: GEM
 url: https://www.uoguelph.ca/programs/government-economics-and-management/
-degrees:
-  - bachelor-of-commerce
+degree: bachelor-of-commerce
 types:
   - major
   - co-op

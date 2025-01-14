@@ -2,8 +2,7 @@ id: software-engineering
 name: Software Engineering
 acronym: SENG
 url: https://www.uoguelph.ca/programs/software-engineering/
-degrees:
-  - bachelor-of-computing
+degree: bachelor-of-computing
 types:
   - major
   - co-op

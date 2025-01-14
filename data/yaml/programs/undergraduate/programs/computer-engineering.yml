@@ -2,8 +2,7 @@ id: computer-engineering
 name: Computer Engineering
 acronym: CENG
 url: https://www.uoguelph.ca/programs/computer-engineering/
-degrees:
-  - bachelor-of-engineering
+degree: bachelor-of-engineering
 types:
   - major
   - co-op

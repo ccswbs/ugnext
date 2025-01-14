@@ -2,8 +2,7 @@ id: human-kinetics
 name: Human Kinetics
 acronym: HK
 url: https://www.uoguelph.ca/programs/human-kinetics/
-degrees:
-  - bachelor-of-science
+degree: bachelor-of-science
 types:
   - major
 tags:

@@ -20,7 +20,7 @@ export default function ProgramsGraduate({ programs, types, degreeTypes }) {
       <Container centered>
         <Heading level={1}>Graduate Programs at the University of Guelph</Heading>
 
-        <ProgramSearch programs={programs} types={types} degreeTypes={degreeTypes} condensedDegrees />
+        <ProgramSearch programs={programs} types={types} degreeTypes={degreeTypes} />
       </Container>
     </Layout>
   );
