@@ -6,7 +6,7 @@ import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { HtmlParser } from "@/components/html-parser";
 import React from 'react';
-import { useUniWebProfile } from '@/lib/uniweb-utils';
+import { formatPhoneNumber, useUniWebProfile } from '@/lib/uniweb-utils';
 
 export default function ProfilePage() {
   const userId = 66; // Replace with the desired ID
@@ -49,7 +49,7 @@ export default function ProfilePage() {
         <Heading level={1}>
           {membershipInfo.first_name} {membershipInfo.last_name}
         </Heading>        
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row mb-3">
           <div className="w-full md:max-w-max">
             <img src={userPicture} alt="Profile Photo" className="max-w-full h-auto" />
           </div>
@@ -58,13 +58,14 @@ export default function ProfilePage() {
             {membershipInfo.academic_unit[1]}<br />
             {membershipInfo.academic_unit[2]}<br />
             {membershipInfo.academic_unit[3]}<br />
-            {membershipInfo.email}<br />
-            {membershipInfo.telephone}<br />
+            <i className="fa-solid fa-envelope"></i> {membershipInfo.email}<br />
+            <i className="fa-solid fa-building"></i> Office: {membershipInfo.office}<br />
+            <i className="fa-solid fa-phone"></i> {formatPhoneNumber(membershipInfo.telephone)}<br />
             {membershipInfo.homepage}
           </div>
         </div>
         <HtmlParser html={biography.academic_biography.en} />
-        <Heading level={3}>Research description</Heading>
+        <Heading level={3}>Research Description</Heading>
         <p>{researchDescription.research_description.en}</p>
         <Heading level={3}>Research Interests</Heading>
         <ul>
