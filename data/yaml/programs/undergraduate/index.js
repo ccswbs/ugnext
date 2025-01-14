@@ -46,7 +46,7 @@ const locations = await yamlToMap({
 });
 
 const requirementSectionTypes = await yamlToMap({
-  path: path.join(directory, "locations.yml"),
+  path: path.join(directory, "requirement-section-types.yml"),
   schema: z.array(
     z.object({
       id: z.string(),

@@ -1,47 +1,47 @@
 - id: average
-  title: Estimated Cut-off Range
+  name: Estimated Cut-off Range
   type: text
 
 - id: required-courses
-  title: Required Courses
+  name: Required Courses
   type: list
 
 - id: recommended-courses
-  title: Recommended Courses
+  name: Recommended Courses
   type: list
 
 - id: general-requirements
-  title: General Requirements
+  name: General Requirements
   type: list
 
 - id: program-requirements
-  title: Program Requirements
+  name: Program Requirements
   type: list
 
 - id: notes
-  title: Additional Information
+  name: Additional Information
   type: list
 
 - id: average
-  title: Estimated Cut-off Range
+  name: Estimated Cut-off Range
   type: text
 
 - id: required-courses
-  title: Required Courses
+  name: Required Courses
   type: list
 
 - id: recommended-courses
-  title: Recommended Courses
+  name: Recommended Courses
   type: list
 
 - id: general-requirements
-  title: General Requirements
+  name: General Requirements
   type: list
 
 - id: program-requirements
-  title: Program Requirements
+  name: Program Requirements
   type: list
 
 - id: notes
-  title: Additional Information
+  name: Additional Information
   type: list
