@@ -48,7 +48,7 @@ const programs = await yamlToMap({
     url: z.string(),
     types: z.array(z.enum(Object.keys(programTypes))),
     degrees: z.array(z.enum(Object.keys(degrees))),
-    acronym: z.string().optional(),
+    acronym: z.optional(z.string()),
     tags: z.array(z.string()),
   }),
   parser: (program) => ({
