@@ -1,6 +1,6 @@
 import { parseYamlFiles } from "../../../lib/file-utils";
 
-export async function yamlToMap(path, schema) {
+export async function yamlToMap({ path, schema, parser }) {
   const parsedFiles = await parseYamlFiles(path);
 
   return parsedFiles.reduce((acc, { path, content }) => {
@@ -10,7 +10,14 @@ export async function yamlToMap(path, schema) {
       throw new Error(`Failed to parse yaml file ${path}: ${parsed.error.toString()}`);
     }
 
-    acc[content.id] = parsed.data;
+    if (Array.isArray(parsed.data)) {
+      parsed.data.forEach((item) => {
+        acc[item.id] = typeof parser === "function" ? parser(item) : item;
+      });
+    } else {
+      acc[content.id] = typeof parser === "function" ? parser(parsed.data) : parsed.data;
+    }
+
     return acc;
   }, {});
 }

@@ -12,8 +12,3 @@ tags:
   - food
   - business
   - economics
-requirements:
-  - student-type: high-school
-    location: ontario
-    sections:
-      recommended-courses: Advanced Functions (MHF4U)

@@ -3,13 +3,13 @@
   "version": "0.5.0",
   "private": true,
   "scripts": {
-    "dev": "bunx --bun next dev",
-    "build": "bunx --bun next build",
-    "start": "bunx --bun next start",
-    "static-build": "NEXT_STATIC_OUTPUT=true bunx --bun next build",
-    "static-start": "NEXT_STATIC_OUTPUT=true bunx --bun serve@latest out",
-    "analyze": "ANALYZE=true bunx --bun next dev",
-    "export": "next build && bunx --bun next export",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "static-build": "NEXT_STATIC_OUTPUT=true next build",
+    "static-start": "NEXT_STATIC_OUTPUT=true bunx serve@latest out",
+    "analyze": "ANALYZE=true next dev",
+    "export": "next build && next export",
     "format": "prettier -w ./",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -40,7 +40,6 @@
     "react-slick": "^0.30.2",
     "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",
-    "sql-template-strings": "^2.2.2",
     "use-resize-observer": "^9.1.0",
     "uuid": "^10.0.0",
     "webpack-graphql-loader": "^1.0.2",
@@ -78,11 +77,11 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "stemmer": "^2.0.1",
     "storybook": "^8.2.9",
+    "yaml-loader": "^0.8.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",
-    "yaml": "^2.6.1",
-    "yaml-loader": "^0.8.1"
+    "yaml": "^2.6.1"
   },
   "eslintConfig": {
     "extends": [

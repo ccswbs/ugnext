@@ -6,18 +6,8 @@ degrees:
   - bachelor-of-applied-science
 types:
   - major
-  - co-op
 tags:
   - health
   - diet*
   - nutrition*
   - food
-requirements:
-  - student-type: high-school
-    location: ontario
-    sections:
-      required-courses:
-        - English (ENG4U)
-        - One 4U math course
-        - Biology (SBI4U)
-        - Chemistry (SCH4U)

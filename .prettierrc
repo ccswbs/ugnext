@@ -7,10 +7,6 @@
   "printWidth": 120,
   "arrowParens": "always",
   "bracketSameLine": false,
-  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-embed", "prettier-plugin-sql"],
-  "tailwindFunctions": ["twJoin", "twMerge"],
-  "embeddedSqlComments": ["sql"],
-  "embeddedSqlTags": ["sql"],
-  "language": "sqlite",
-  "keywordCase": "upper"
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-embed"],
+  "tailwindFunctions": ["twJoin", "twMerge"]
 }

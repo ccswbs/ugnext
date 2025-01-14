@@ -21,8 +21,3 @@ tags:
   - health
   - family
   - pedagog*
-requirements:
-  - student-type: high-school
-    location: ontario
-    sections:
-      cut-off: 79-84%
