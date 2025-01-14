@@ -80,14 +80,10 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
               <Heading level={1}>{title ?? "Undergraduate Admission Requirements"}</Heading>
               <div className="flex flex-col">
                 {requirements
-                  ?.map((section) => {
-                    if (section.content.length === 0) {
-                      return null;
-                    }
-
-                    return <RequirementsSection key={section.id} {...section} />;
-                  })
-                  ?.filter(Boolean)}
+                  ?.filter((requirement) => requirement.content.length > 0)
+                  ?.map((requirement, index) => (
+                    <RequirementsSection key={index} {...requirement} />
+                  ))}
               </div>
             </>
           }
