@@ -61,7 +61,7 @@ svg.svg-inline--fa {
 
 @layer components {
   .vcard {
-    @apply mb-2 bg-grey-50 p-4;
+    @apply mb-2 bg-gray-50 p-4;
   }
 
   .author {
