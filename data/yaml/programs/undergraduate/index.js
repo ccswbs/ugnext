@@ -108,6 +108,14 @@ export async function getUndergraduateProgramTypes() {
   return [...types, ...degreeTypes];
 }
 
+export async function getUndergraduateStudentTypes() {
+  return Object.values(studentTypes);
+}
+
+export async function getUndergraduateAdmissionLocations() {
+  return Object.values(locations);
+}
+
 export async function getUndergraduateDegrees() {
   return Object.values(degrees);
 }
@@ -121,6 +129,28 @@ export async function getUndergraduatePrograms() {
   const undergraduatePrograms = Object.values(programs);
 
   return [...undergraduatePrograms, ...undergraduateDegrees].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export async function parseAdmissionRequirementsSlug(slug) {
+  const studentType = studentTypes[slug[0]];
+
+  if (!studentType) {
+    return null;
+  }
+
+  const location = locations[slug[1]];
+
+  if (!location) {
+    return null;
+  }
+
+  const program = programs[slug[2]];
+
+  if (!program) {
+    return null;
+  }
+
+  return { studentType, location, program };
 }
 
 /*

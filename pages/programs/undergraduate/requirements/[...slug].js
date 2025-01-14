@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
-import { getUndergraduateRequirements, slugToUndergraduateRequirements } from "@/data/yaml/programs/undergraduate";
+import { getUndergraduateRequirements, parseAdmissionRequirementsSlug } from "@/data/yaml/programs/undergraduate";
 import { List, ListItem } from "@/components/list";
 
 export async function getStaticPaths() {
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const parsed = await slugToUndergraduateRequirements(context.params.slug);
+  const parsed = await parseAdmissionRequirementsSlug(context.params.slug);
 
   if (!parsed) {
     return {
@@ -27,13 +27,12 @@ export async function getStaticProps(context) {
 
   const requirements = await getUndergraduateRequirements(parsed.studentType, parsed.location, parsed.program);
 
-  // Don't pass unnecessary data to the page.
-  delete parsed.program.admission;
-  delete parsed.program.tags;
-
   return {
     props: {
       ...parsed,
+      studentType: { id: parsed.studentType.id, name: parsed.studentType.name },
+      location: { id: parsed.location.id, name: parsed.location.name },
+      program: { id: parsed.program.id, name: parsed.program.name },
       requirements: requirements,
     },
   };

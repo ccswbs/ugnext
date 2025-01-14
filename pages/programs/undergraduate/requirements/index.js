@@ -1,12 +1,15 @@
 import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
-import { getAdmissionLocations } from "@/data/yaml/programs";
 import { useMemo, useState } from "react";
 import { Select } from "@/components/select";
 import { Section } from "@/components/section";
 import { Sidebar } from "@/components/programs/undergraduate/sidebar";
-import { getUndergraduatePrograms, getUndergraduateStudentTypes } from "@/data/yaml/programs/undergraduate";
+import {
+  getUndergraduatePrograms,
+  getUndergraduateStudentTypes,
+  getUndergraduateAdmissionLocations,
+} from "@/data/yaml/programs/undergraduate";
 import { nameAndTagSearch } from "@/lib/use-search";
 import { Button } from "@/components/button";
 import { useRouter } from "next/router";
@@ -15,7 +18,7 @@ export async function getStaticProps() {
   return {
     props: {
       studentTypes: await getUndergraduateStudentTypes(),
-      locations: await getAdmissionLocations(),
+      locations: await getUndergraduateAdmissionLocations(),
       programs: (await getUndergraduatePrograms())
         .filter((program) => {
           const allowedTypes = new Set(["major", "bachelor"]);
