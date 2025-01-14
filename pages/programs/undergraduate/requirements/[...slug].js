@@ -31,7 +31,7 @@ export async function getStaticProps(context) {
     props: {
       studentType: { id: studentType.id, name: studentType.name },
       location: { id: location.id, name: location.name },
-      program: { id: program.id, name: program.name },
+      program: { id: program.id, name: program.name, url: program.url },
       requirements: requirements,
     },
   };
