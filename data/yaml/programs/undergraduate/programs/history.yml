@@ -1,0 +1,13 @@
+id: history
+name: History
+acronym: HIST
+url: https://www.uoguelph.ca/programs/history/
+degree: bachelor-of-arts
+types:
+  - major
+  - co-op
+  - minor
+  - area-of-concentration
+tags:
+  - humanities
+  - history

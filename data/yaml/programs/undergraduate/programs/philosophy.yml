@@ -1,0 +1,11 @@
+id: philosophy
+name: Philosophy
+acronym: PHIL
+url: https://www.uoguelph.ca/programs/philosophy/
+degree: bachelor-of-arts
+types:
+  - major
+  - minor
+  - area-of-concentration
+tags:
+  - humanities
