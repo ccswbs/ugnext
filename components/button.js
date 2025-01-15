@@ -45,7 +45,7 @@ export const Button = ({
             color === "gray" &&
               "border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-white focus:bg-gray-300 focus:text-white focus:ring-gray-300",
             color === "black" &&
-              "border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white focus:bg-gray focus:text-white focus:ring-gray-800",
+              "border-gray-950 text-gray-950 hover:bg-gray-950 hover:text-white focus:bg-gray focus:text-white focus:ring-gray-950",
             color === "white" &&
               "border-white text-black hover:bg-white hover:text-black focus:bg-gray-light focus:text-white focus:ring-white"
           ),
@@ -63,7 +63,7 @@ export const Button = ({
             color === "gray" &&
               "bg-gray text-black hover:bg-gray-400 hover:text-black focus:bg-gray-400 focus:text-black focus:ring-gray",
             color === "black" &&
-              "bg-gray-800 text-white hover:bg-black hover:text-white focus:bg-black focus:text-white focus:ring-black",
+              "bg-gray-950 text-white hover:bg-black hover:text-white focus:bg-black focus:text-white focus:ring-black",
             color === "white" &&
               "border-white bg-white text-black hover:bg-gray-light hover:text-black focus:bg-white focus:text-black focus:ring-white"
           ),

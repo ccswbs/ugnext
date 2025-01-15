@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { useState } from "react";
 import {
   Combobox,
@@ -27,7 +27,7 @@ export const Select = ({
   name,
   description,
   placeholder,
-  autocomplete = false,
+  autocomplete,
 }) => {
   const ContainerTag = autocomplete ? Combobox : Listbox;
   const ButtonTag = autocomplete ? ComboboxButton : ListboxButton;
@@ -40,37 +40,34 @@ export const Select = ({
       : (options.find((option) => option?.selected) ?? null)
   );
 
-  // Create a map of the indices of the options by their value for faster lookup when sorting the selected options
+  // Map the indices of each option by their value for faster lookup when sorting the selected options
   const indices = useMemo(
     () => options.reduce((acc, option, index) => acc.set(option?.value, index), new Map()),
     [options]
   );
 
-  const handleOnChange = (option) => {
-    const selected = multiple
-      ? // Sort the selected options by their original order as was passed in the options prop
-        [...option].sort((a, b) => (indices.get(a?.value) ?? 0) - (indices.get(b?.value) ?? 0))
-      : option;
+  const labelText = multiple
+    ? selected.reduce((acc, option, index) => `${acc}${option?.label}${index < selected?.length - 1 ? ", " : ""}`, "")
+    : selected?.label;
 
-    setSelected(selected);
-    onChange?.(option);
-  };
-
-  const displayText =
-    selected?.reduce?.(
-      (acc, option, index) => `${acc}${option?.label}${index < selected?.length - 1 ? ", " : ""}`,
-      ""
-    ) || selected?.label;
+  const placeholderText = placeholder ?? (autocomplete ? "Select or search for a value" : "Select a value");
 
   const [query, setQuery] = useState("");
+  const filteredOptions = useMemo(() => {
+    if (multiple) {
+      const input = query.trim().split(",");
 
-  const filterer = (option) => {
-    if (!autocomplete) return true;
+      // TODO: handle autocomplete for multi select.
 
-    return option.label.toLowerCase().includes(query.toLowerCase());
-  };
+      return options;
+    }
 
-  placeholder ??= autocomplete ? "Select or search for a value" : "Select a value";
+    if (typeof autocomplete === "function") {
+      return autocomplete(query, options);
+    }
+
+    return options.filter((option) => option.label.toLowerCase().includes(query.toLowerCase()));
+  }, [multiple, autocomplete, options, query]);
 
   return (
     <Field className="flex flex-col gap-0.5">
@@ -80,7 +77,15 @@ export const Select = ({
         name={name}
         value={selected}
         by="value"
-        onChange={handleOnChange}
+        onChange={(options) => {
+          // Sort the selected options by their original order as was passed in the options prop
+          const selected = multiple
+            ? [...options].sort((a, b) => (indices.get(a?.value) ?? 0) - (indices.get(b?.value) ?? 0))
+            : options;
+
+          setSelected(selected);
+          onChange?.(options);
+        }}
         as="div"
         className="group relative"
         multiple={multiple}
@@ -88,9 +93,9 @@ export const Select = ({
         {autocomplete ? (
           <div className="relative flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
             <ComboboxInput
-              className="h-6 flex-1 focus:outline-none"
-              placeholder={placeholder}
-              displayValue={() => displayText ?? ""}
+              className="h-6 flex-1 focus:outline-none "
+              placeholder={placeholderText}
+              displayValue={(option) => labelText}
               onChange={(e) => setQuery(e.target.value)}
             />
 
@@ -104,7 +109,7 @@ export const Select = ({
         ) : (
           <ButtonTag className="flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
             <span className={twJoin("truncate", (!selected || selected?.length === 0) && "text-gray-400")}>
-              {displayText ?? placeholder}
+              {labelText ?? placeholderText}
             </span>
 
             <FontAwesomeIcon
@@ -118,7 +123,7 @@ export const Select = ({
           transition
           className="z-10 max-h-[20rem] w-full overflow-auto rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md group-focus-within:border-blue group-focus-within:outline-none ui-open:border-blue md:absolute transition duration-300 ease-out data-[closed]:opacity-0"
         >
-          {options.filter(filterer).map((option, index) => (
+          {filteredOptions.map((option, index) => (
             <OptionTag
               className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
               key={typeof option?.value === "string" ? option?.value : (option?.key ?? index)}
@@ -170,5 +175,5 @@ Select.propTypes = {
   /**
    * Determines whether the Select should act as a search bar which filters the options displayed to the user.
    */
-  autocomplete: PropTypes.bool,
+  autocomplete: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 };

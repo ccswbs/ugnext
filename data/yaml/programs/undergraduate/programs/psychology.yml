@@ -1,0 +1,18 @@
+id: psychology
+name: Psychology
+acronym: PSYC
+url: https://www.uoguelph.ca/programs/psychology/
+degree: bachelor-of-arts
+types:
+  - major
+  - co-op
+  - minor
+  - area-of-concentration
+tags:
+  - psych*
+  - neuro*
+  - brain
+  - cogni*
+  - human
+  - behav*
+  - cultur*

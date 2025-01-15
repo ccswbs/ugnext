@@ -1,0 +1,11 @@
+id: management
+name: Management
+acronym: MGMT
+url: https://www.uoguelph.ca/programs/management/
+degree: bachelor-of-commerce
+types:
+  - major
+  - co-op
+tags:
+  - business
+  - management
