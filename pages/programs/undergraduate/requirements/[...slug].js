@@ -28,6 +28,8 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   const { studentType, location, program } = await parseAdmissionRequirementsSlug(context.params.slug);
 
+  console.log(studentType?.id, location?.id, program?.id);
+
   if (!studentType || !location || !program) {
     return {
       notFound: true,
