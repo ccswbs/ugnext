@@ -1,28 +1,23 @@
-import undergraduate from "./undergraduate.yml";
-import degrees from "./undergraduate-degrees.yml";
-import graduate from "./graduate.yml";
-import certificateAndDiplomas from "./certificate-and-diploma.yml";
-import continuingEducation from "./continuing-education.yml";
+import { parseYamlFiles } from "../../../lib/file-utils";
 
-export const getUndergraduatePrograms = async () => {
-  return undergraduate;
-};
+export async function yamlToMap({ path, schema, parser }) {
+  const parsedFiles = await parseYamlFiles(path);
 
-export const getGraduatePrograms = async () => {
-  return graduate;
-};
+  return parsedFiles.reduce((acc, { path, content }) => {
+    const parsed = schema.safeParse(content);
 
-export const getCertificateAndDiplomaPrograms = async () => {
-  return certificateAndDiplomas;
-};
+    if (!parsed.success) {
+      throw new Error(`Failed to parse yaml file ${path}: ${parsed.error.toString()}`);
+    }
 
-export const getContinuingEducationPrograms = async () => {
-  return continuingEducation;
-};
+    if (Array.isArray(parsed.data)) {
+      parsed.data.forEach((item) => {
+        acc[item.id] = typeof parser === "function" ? parser(item) : item;
+      });
+    } else {
+      acc[content.id] = typeof parser === "function" ? parser(parsed.data) : parsed.data;
+    }
 
-export const getUndergraduateDegrees = async () => {
-  return degrees.map((degree) => ({
-    ...degree,
-    url: `https://uoguelph.ca${degree.url}`,
-  }));
-};
+    return acc;
+  }, {});
+}

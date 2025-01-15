@@ -1,0 +1,11 @@
+- id: co-op
+  name: Co-op
+
+- id: associate-diploma
+  name: Associate Diploma
+
+- id: certificate
+  name: Certificate
+
+- id: diploma
+  name: Diploma

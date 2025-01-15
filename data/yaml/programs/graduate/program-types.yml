@@ -1,0 +1,8 @@
+- id: course-based
+  name: Course-based
+
+- id: thesis-based
+  name: Thesis-based
+
+- id: collaborative-specialization
+  name: Collaborative Specialization
