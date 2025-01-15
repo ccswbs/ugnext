@@ -1,5 +1,5 @@
 import path from "path";
-import { getYamlData } from "@/data/yaml/programs";
+import { getYamlData } from "@/lib/file-utils";
 import { z } from "zod";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "certificate-and-diploma");
