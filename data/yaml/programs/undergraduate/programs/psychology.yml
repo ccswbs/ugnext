@@ -16,6 +16,8 @@ tags:
   - human
   - behav*
   - cultur*
+alternative-offers:
+  - sociology
 requirements:
   - student-types:
       - high-school

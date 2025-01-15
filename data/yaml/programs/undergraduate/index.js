@@ -1,10 +1,10 @@
 import path from "path";
 import { z } from "zod";
-import { yamlToMap } from "@/data/yaml/programs";
+import { getYamlData } from "@/data/yaml/programs";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
 
-const degreeTypes = await yamlToMap({
+const degreeTypes = await getYamlData({
   path: path.join(directory, "degree-types.yml"),
   schema: z.array(
     z.object({
@@ -14,7 +14,7 @@ const degreeTypes = await yamlToMap({
   ),
 });
 
-const programTypes = await yamlToMap({
+const programTypes = await getYamlData({
   path: path.join(directory, "program-types.yml"),
   schema: z.array(
     z.object({
@@ -24,7 +24,7 @@ const programTypes = await yamlToMap({
   ),
 });
 
-const studentTypes = await yamlToMap({
+const studentTypes = await getYamlData({
   path: path.join(directory, "student-types.yml"),
   schema: z.array(
     z.object({
@@ -34,7 +34,7 @@ const studentTypes = await yamlToMap({
   ),
 });
 
-const locations = await yamlToMap({
+const locations = await getYamlData({
   path: path.join(directory, "locations.yml"),
   schema: z.array(
     z.object({
@@ -45,7 +45,7 @@ const locations = await yamlToMap({
   ),
 });
 
-const requirementSectionTypes = await yamlToMap({
+const requirementSectionTypes = await getYamlData({
   path: path.join(directory, "requirement-section-types.yml"),
   schema: z.array(
     z.object({
@@ -67,7 +67,7 @@ const AdmissionRequirementSchema = z.object({
   ),
 });
 
-const degrees = await yamlToMap({
+const degrees = await getYamlData({
   path: path.join(directory, "degrees", "*.yml"),
   schema: z.object({
     id: z.string(),
@@ -80,7 +80,7 @@ const degrees = await yamlToMap({
   }),
 });
 
-const programs = await yamlToMap({
+const programs = await getYamlData({
   path: path.join(directory, "programs", "*.yml"),
   schema: z.object({
     id: z.string(),
@@ -94,27 +94,40 @@ const programs = await yamlToMap({
     acronym: z.string().nullish(),
     tags: z.array(z.string()),
     "alternative-offers": z.array(z.string()).nullish(),
+    "fully-online": z.boolean().optional(),
     requirements: z.array(AdmissionRequirementSchema).nullish(),
   }),
+  postProcessor: (programs) => {
+    Object.values(programs).forEach((program, index) => {
+      program["alternative-offers"] =
+        program["alternative-offers"]?.map((id) => {
+          const alternativeProgram = programs[id];
+
+          if (!alternativeProgram) {
+            throw new Error(
+              `Failed to parse program ${program}: Alternative offer at ${index} refers to program ${id} which does not exist.`
+            );
+          }
+          return programs[id];
+        }) ?? null;
+    });
+
+    return programs;
+  },
 });
 
-// Process alternative offers after all programs have been parsed.
-Object.values(programs).forEach((program, index) => {
-  program["alternative-offers"] =
-    program["alternative-offers"]?.map((id) => {
-      const alternativeProgram = programs[id];
+export async function getUndergraduateDegreeTypes({ asMap = false }) {
+  const map = await getYamlData({
+    path: path.join(directory, "degree-types.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    ),
+  });
 
-      if (!alternativeProgram) {
-        throw new Error(
-          `Failed to parse program ${program}: Alternative offer at ${index} refers to program ${id} which does not exist.`
-        );
-      }
-      return programs[id];
-    }) ?? null;
-});
-
-export async function getUndergraduateDegreeTypes() {
-  return Object.values(degreeTypes);
+  return Object.values(map);
 }
 
 export async function getUndergraduateProgramTypes() {
@@ -201,6 +214,12 @@ export async function getUndergraduateRequirements(studentType, location, progra
   if (program["alternative-offers"]?.length > 0) {
     sections["notes"].content.push(
       `Students not admissible to this program will automatically be considered for ${program["alternative-offers"].map((program) => `<a href="${program.url}">${program.name}</a>`).join(", ")}. Learn more about <a href="https://www.uoguelph.ca/admission/undergraduate/apply/alternate">Alternate Offers</a>.`
+    );
+  }
+
+  if (program["fully-online"]) {
+    sections["notes"].content.push(
+      "This program is pending Senate approval and is offered fully online. Students enrolled in the online program cannot take in-person courses."
     );
   }
 

@@ -1,10 +1,10 @@
 import path from "path";
-import { yamlToMap } from "@/data/yaml/programs";
+import { getYamlData } from "@/data/yaml/programs";
 import { z } from "zod";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "certificate-and-diploma");
 
-const programTypes = await yamlToMap({
+const programTypes = await getYamlData({
   path: path.join(directory, "program-types.yml"),
   schema: z.array(
     z.object({
@@ -14,7 +14,7 @@ const programTypes = await yamlToMap({
   ),
 });
 
-const programs = await yamlToMap({
+const programs = await getYamlData({
   path: path.join(directory, "programs", "*.yml"),
   schema: z.object({
     id: z.string(),
