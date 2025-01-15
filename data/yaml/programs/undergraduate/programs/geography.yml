@@ -1,0 +1,21 @@
+id: geography
+name: Geography
+acronym: GEOG
+url: https://www.uoguelph.ca/programs/geography/
+degree: bachelor-of-arts
+types:
+  - major
+  - co-op
+  - minor
+  - area-of-concentration
+tags:
+  - geograph*
+  - environment
+  - climat*
+  - conserv*
+  - natur*
+  - resource
+  - land
+  - water
+  - sustain*
+  - science
