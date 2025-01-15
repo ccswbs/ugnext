@@ -200,7 +200,7 @@ export async function getUndergraduateRequirements(studentType, location, progra
   // If this program has aleternative offers, then we mention it in the notes section
   if (program["alternative-offers"]?.length > 0) {
     sections["notes"].content.push(
-      `Students not admitted to ${program.name} will automatically be considered for: ${program["alternative-offers"].map((program) => `<a href="${program.url}">${program.name}</a>`).join(", ")}. Learn more about <a href="https://www.uoguelph.ca/admission/undergraduate/apply/alternate">Alternate Offers</a>.`
+      `Students not admissible to this program will automatically be considered for ${program["alternative-offers"].map((program) => `<a href="${program.url}">${program.name}</a>`).join(", ")}. Learn more about <a href="https://www.uoguelph.ca/admission/undergraduate/apply/alternate">Alternate Offers</a>.`
     );
   }
 

@@ -16,3 +16,11 @@ tags:
   - human
   - behav*
   - cultur*
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 80-86%
