@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import { GoogleTagManager } from "@next/third-parties/google";
-import { Roboto, Roboto_Condensed } from "next/font/google";
+import { Bitter, DM_Sans, Roboto, Roboto_Condensed } from "next/font/google";
 import { useRouter } from "next/router";
 
 const roboto = Roboto({
@@ -15,6 +15,20 @@ const robotoCondensed = Roboto_Condensed({
   subsets: ["latin"],
   display: "swap",
   disabledFontFamilyHashing: true,
+});
+
+const bitter = Bitter({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
 });
 
 function Application({ Component, pageProps }) {
@@ -34,6 +48,17 @@ function Application({ Component, pageProps }) {
         uofg-header {
           font-family: ${robotoCondensed.style.fontFamily};
         }
+        
+        :root {
+        --primary-font: ${bitter.style.fontFamily};
+        --secondary-font: ${dmSans.style.fontFamily};
+        --primary-color-black: #000000;
+        --primary-color-red: #E51937;
+        --primary-color-yellow: #FFC429;
+        --secondary-color-blue: #187BB4;
+        --secondary-color-green: #318738;
+        --secondary-color-light-gray: #DADCD4;
+        --secondary-color-dark-gray: #787673;
       `}</style>
 
       <Component {...pageProps} />

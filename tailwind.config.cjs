@@ -103,6 +103,19 @@ const colors = {
   "uog-blue-muted": {
     DEFAULT: "#f5f7fa",
   },
+  "primary-color": {
+    black: "#000000",
+    red: "#E51937",
+    yellow: "#FFC429",
+    DEFAULT: "#E51937",
+  },
+  "secondary-color": {
+    blue: "#187BB4",
+    green: "#318738",
+    "light-gray": "#DADCD4",
+    "dark-gray": "#787673",
+    DEFAULT: "#187BB4",
+  },
 };
 
 const scaled = (input, scale) => {
@@ -154,6 +167,8 @@ module.exports = {
       fontFamily: {
         condensed: ["Roboto Condensed", "Arial", "sans-serif"],
         sans: ["Roboto", "Arial", "sans-serif"],
+        "primary-bitter": ["Bitter", "Arial", "sans-serif"],
+        "secondary-dm-sans": ["DM Sans", "Arial", "sans-serif"],
         icon: ['"Font Awesome 6 Pro"'],
       },
       colors: colors,
