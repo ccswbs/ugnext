@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import { getUndergraduateRequirements, parseAdmissionRequirementsSlug } from "@/data/yaml/programs/undergraduate";
+import {
+  getUndergraduatePrograms,
+  getUndergraduateRequirements,
+  parseAdmissionRequirementsSlug,
+} from "@/data/yaml/programs/undergraduate";
 import { List, ListItem } from "@/components/list";
 import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import {
@@ -27,6 +31,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { studentType, location, program } = await parseAdmissionRequirementsSlug(context.params.slug);
+
+  console.log(await getUndergraduatePrograms());
 
   console.log(studentType?.id, location?.id, program?.id, context.params.slug);
 
