@@ -4,35 +4,35 @@ import { getYamlData } from "@/lib/file-utils";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "continuing-education");
 
-const programTypes = await getYamlData({
-  path: path.join(directory, "program-types.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-    })
-  ),
-});
-
-const programs = await getYamlData({
-  path: path.join(directory, "programs", "*.yml"),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    url: z.string(),
-    types: z.array(z.enum(Object.keys(programTypes))),
-    tags: z.array(z.string()),
-  }),
-  parser: (program) => ({
-    ...program,
-    types: program.types.map((type) => programTypes[type]),
-  }),
-});
-
 export async function getContinuingEducationProgramTypes() {
-  return Object.values(programTypes).sort((a, b) => a.name.localeCompare(b.name));
+  return await getYamlData({
+    id: "continuing-education-program-types",
+    path: path.join(directory, "program-types.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    ),
+    postProcessor: (data) => data.flat(),
+  });
 }
 
 export async function getContinuingEducationPrograms() {
-  return Object.values(programs).sort((a, b) => a.name.localeCompare(b.name));
+  const programTypes = await getContinuingEducationProgramTypes();
+
+  return await getYamlData({
+    id: "continuing-education-programs",
+    path: path.join(directory, "programs", "*.yml"),
+    schema: z.object({
+      id: z.string(),
+      name: z.string(),
+      url: z.string(),
+      types: z.array(
+        z.enum(programTypes.map((type) => type.id)).transform((value) => programTypes.find((type) => type.id === value))
+      ),
+      tags: z.array(z.string()),
+    }),
+    postProcessor: (data) => data.sort((a, b) => a.name.localeCompare(b.name)),
+  });
 }

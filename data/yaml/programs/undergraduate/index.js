@@ -122,6 +122,7 @@ export async function getUndergraduateDegrees() {
       tags: z.array(z.string()),
       requirements: await getAdmissionRequirementsSchema(),
     }),
+    postProcessor: (data) => data.sort((a, b) => a.name.localeCompare(b.name)),
   });
 }
 
@@ -147,6 +148,7 @@ export async function getUndergraduatePrograms() {
       tags: z.array(z.string()),
       requirements: await getAdmissionRequirementsSchema(),
     }),
+    postProcessor: (data) => data.sort((a, b) => a.name.localeCompare(b.name)),
   });
 }
 
