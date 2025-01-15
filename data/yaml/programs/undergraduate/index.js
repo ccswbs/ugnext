@@ -193,16 +193,18 @@ export async function parseAdmissionRequirementsSlug(slug) {
 export async function getUndergraduateRequirements(studentType, location, program) {
   const degreeRequirements = program.degree?.requirements ?? [];
   const programRequirements = program.requirements ?? [];
-  const requirements = [...degreeRequirements, ...programRequirements].filter(
-    (requirement) =>
-      requirement["student-types"].includes(studentType.id) && requirement.locations.includes(location.id)
-  );
+  const requirements = [...degreeRequirements, ...programRequirements].filter((requirement) => {
+    const matchesStudentType = requirement["student-types"].find((type) => type.id === studentType.id);
+    const matchesLocation = requirement.locations.find((location) => location.id === location.id);
 
-  const sections = Object.keys(requirementSectionTypes).reduce((acc, section) => {
-    acc[section] = {
-      id: requirementSectionTypes[section].id,
-      title: requirementSectionTypes[section].name,
-      type: requirementSectionTypes[section].type,
+    return matchesStudentType && matchesLocation;
+  });
+
+  const admissionRequirementSectionTypes = await getUndergraduateAdmissionRequirementSectionTypes();
+
+  const sections = admissionRequirementSectionTypes.reduce((acc, section) => {
+    acc[section.id] = {
+      ...section,
       content: [],
     };
     return acc;

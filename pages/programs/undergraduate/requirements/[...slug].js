@@ -76,7 +76,7 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
                     return (
                       <Fragment key={index}>
                         <Heading level={3} as="h2">
-                          {requirement.title}
+                          {requirement.name}
                         </Heading>
 
                         <Wrapper>
