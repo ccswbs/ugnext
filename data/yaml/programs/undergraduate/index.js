@@ -1,123 +1,12 @@
 import path from "path";
 import { z } from "zod";
-import { getYamlData } from "@/lib/file-utils";
+import { getYamlData } from "../../../../lib/file-utils";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
 
-const degreeTypes = await getYamlData({
-  path: path.join(directory, "degree-types.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-    })
-  ),
-});
-
-const programTypes = await getYamlData({
-  path: path.join(directory, "program-types.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-    })
-  ),
-});
-
-const studentTypes = await getYamlData({
-  path: path.join(directory, "student-types.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-    })
-  ),
-});
-
-const locations = await getYamlData({
-  path: path.join(directory, "locations.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      type: z.enum(["domestic", "international", "curriculum"]),
-    })
-  ),
-});
-
-const requirementSectionTypes = await getYamlData({
-  path: path.join(directory, "requirement-section-types.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      type: z.enum(["text", "list"]),
-    })
-  ),
-});
-
-const AdmissionRequirementSchema = z.object({
-  "student-types": z.array(z.enum(Object.keys(studentTypes))),
-  locations: z.array(z.enum(Object.keys(locations))),
-  sections: z.object(
-    Object.keys(requirementSectionTypes).reduce((acc, key) => {
-      acc[key] = z.array(z.string()).nullish();
-      return acc;
-    }, {})
-  ),
-});
-
-const degrees = await getYamlData({
-  path: path.join(directory, "degrees", "*.yml"),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    url: z.string(),
-    type: z.enum(Object.keys(degreeTypes)).transform((value) => degreeTypes[value]),
-    acronym: z.string(),
-    tags: z.array(z.string()),
-    requirements: z.array(AdmissionRequirementSchema).nullish(),
-  }),
-});
-
-const programs = await getYamlData({
-  path: path.join(directory, "programs", "*.yml"),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    url: z.string(),
-    types: z.array(z.enum(Object.keys(programTypes)).transform((value) => programTypes[value])),
-    degree: z
-      .enum(Object.keys(degrees))
-      .nullish()
-      .transform((value) => (value === null ? null : degrees[value])),
-    acronym: z.string().nullish(),
-    tags: z.array(z.string()),
-    "alternative-offers": z.array(z.string()).nullish(),
-    "fully-online": z.boolean().optional(),
-    requirements: z.array(AdmissionRequirementSchema).nullish(),
-  }),
-  postProcessor: (programs) => {
-    Object.values(programs).forEach((program, index) => {
-      program["alternative-offers"] =
-        program["alternative-offers"]?.map((id) => {
-          const alternativeProgram = programs[id];
-
-          if (!alternativeProgram) {
-            throw new Error(
-              `Failed to parse program ${program}: Alternative offer at ${index} refers to program ${id} which does not exist.`
-            );
-          }
-          return programs[id];
-        }) ?? null;
-    });
-
-    return programs;
-  },
-});
-
-export async function getUndergraduateDegreeTypes({ asMap = false }) {
-  const map = await getYamlData({
+export async function getUndergraduateDegreeTypes() {
+  return await getYamlData({
+    id: "undergraduate-degree-types",
     path: path.join(directory, "degree-types.yml"),
     schema: z.array(
       z.object({
@@ -125,39 +14,140 @@ export async function getUndergraduateDegreeTypes({ asMap = false }) {
         name: z.string(),
       })
     ),
+    postProcessor: (data) => data.flat(),
   });
-
-  return Object.values(map);
 }
 
 export async function getUndergraduateProgramTypes() {
-  const types = Object.values(programTypes);
-  const degreeTypes = await getUndergraduateDegreeTypes();
-
-  return [...types, ...degreeTypes];
+  return await getYamlData({
+    id: "undergraduate-program-types",
+    path: path.join(directory, "program-types.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    ),
+    postProcessor: (data) => data.flat(),
+  });
 }
 
 export async function getUndergraduateStudentTypes() {
-  return Object.values(studentTypes);
+  return await getYamlData({
+    id: "undergraduate-student-types",
+    path: path.join(directory, "student-types.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    ),
+    postProcessor: (data) => data.flat(),
+  });
 }
 
 export async function getUndergraduateAdmissionLocations() {
-  return Object.values(locations);
+  return await getYamlData({
+    id: "undergraduate-admission-locations",
+    path: path.join(directory, "locations.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        type: z.enum(["domestic", "international", "curriculum"]),
+      })
+    ),
+    postProcessor: (data) => data.flat(),
+  });
+}
+
+export async function getUndergraduateAdmissionRequirementSectionTypes() {
+  return await getYamlData({
+    id: "undergraduate-admission-requirement-section-types",
+    path: path.join(directory, "admission-requirement-section-types.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        type: z.enum(["text", "list"]),
+      })
+    ),
+    postProcessor: (data) => data.flat(),
+  });
+}
+
+async function getAdmissionRequirementsSchema() {
+  const studentTypes = await getUndergraduateStudentTypes();
+  const locations = await getUndergraduateAdmissionLocations();
+  const admissionRequirementSectionTypes = await getUndergraduateAdmissionRequirementSectionTypes();
+
+  return z
+    .array(
+      z.object({
+        "student-types": z.array(
+          z
+            .enum(studentTypes.map((type) => type.id))
+            .transform((value) => studentTypes.find((type) => type.id === value))
+        ),
+        locations: z.array(
+          z
+            .enum(locations.map((location) => location.id))
+            .transform((value) => locations.find((location) => location.id === value))
+        ),
+        sections: z.object(
+          admissionRequirementSectionTypes.reduce((acc, type) => {
+            acc[type.id] = z.array(z.string()).nullish();
+            return acc;
+          }, {})
+        ),
+      })
+    )
+    .nullish();
 }
 
 export async function getUndergraduateDegrees() {
-  return Object.values(degrees);
+  const degreeTypes = await getUndergraduateDegreeTypes();
+
+  return await getYamlData({
+    id: "undergraduate-degrees",
+    path: path.join(directory, "degrees", "*.yml"),
+    schema: z.object({
+      id: z.string(),
+      name: z.string(),
+      url: z.string(),
+      type: z
+        .enum(degreeTypes.map((type) => type.id))
+        .transform((value) => degreeTypes.find((type) => type.id === value)),
+      acronym: z.string(),
+      tags: z.array(z.string()),
+      requirements: await getAdmissionRequirementsSchema(),
+    }),
+  });
 }
 
 export async function getUndergraduatePrograms() {
-  const undergraduateDegrees = Object.values(degrees).map((degree) => ({
-    ...degree,
-    types: [degree.type],
-  }));
+  const programTypes = await getUndergraduateProgramTypes();
+  const degrees = await getUndergraduateDegrees();
 
-  const undergraduatePrograms = Object.values(programs);
-
-  return [...undergraduatePrograms, ...undergraduateDegrees].sort((a, b) => a.name.localeCompare(b.name));
+  return await getYamlData({
+    id: "undergraduate-programs",
+    path: path.join(directory, "programs", "*.yml"),
+    schema: z.object({
+      id: z.string(),
+      name: z.string(),
+      url: z.string(),
+      types: z.array(
+        z.enum(programTypes.map((type) => type.id)).transform((value) => programTypes.find((type) => type.id === value))
+      ),
+      degree: z
+        .enum(degrees.map((degree) => degree.id))
+        .nullish()
+        .transform((value) => degrees.find((degree) => degree.id === value) ?? null),
+      acronym: z.string().optional(),
+      tags: z.array(z.string()),
+      requirements: await getAdmissionRequirementsSchema(),
+    }),
+  });
 }
 
 export async function parseAdmissionRequirementsSlug(slug) {
@@ -225,3 +215,7 @@ export async function getUndergraduateRequirements(studentType, location, progra
 
   return Object.values(sections);
 }
+
+getUndergraduatePrograms().then((programs) => {
+  console.log(programs);
+});
