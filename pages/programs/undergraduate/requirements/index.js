@@ -9,6 +9,7 @@ import {
   getUndergraduatePrograms,
   getUndergraduateStudentTypes,
   getUndergraduateAdmissionLocations,
+  getUndergraduateDegrees,
 } from "@/data/yaml/programs/undergraduate";
 import { nameAndTagSearch } from "@/lib/use-search";
 import { Button } from "@/components/button";
@@ -22,11 +23,14 @@ import {
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
 export async function getStaticProps() {
+  const degrees = (await getUndergraduateDegrees()).map((degree) => ({ ...degree, types: [degree.type] }));
+  const programs = await getUndergraduatePrograms();
+
   return {
     props: {
       studentTypes: await getUndergraduateStudentTypes(),
       locations: await getUndergraduateAdmissionLocations(),
-      programs: (await getUndergraduatePrograms())
+      programs: [...programs, ...degrees]
         .filter((program) => {
           const allowedTypes = new Set(["major", "bachelor"]);
           return program.types.some((type) => allowedTypes.has(type.id));
@@ -38,7 +42,8 @@ export async function getStaticProps() {
             name: program.name,
             tags: program.tags,
           };
-        }),
+        })
+        .sort((a, b) => a.name.localeCompare(b.name)),
     },
   };
 }

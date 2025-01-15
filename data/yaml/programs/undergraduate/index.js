@@ -1,6 +1,6 @@
 import path from "path";
 import { z } from "zod";
-import { getYamlData } from "../../../../lib/file-utils";
+import { getYamlData } from "@/lib/file-utils";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
 
@@ -151,10 +151,40 @@ export async function getUndergraduatePrograms() {
 }
 
 export async function parseAdmissionRequirementsSlug(slug) {
+  const studentTypes = await getUndergraduateStudentTypes();
+  const studentType = studentTypes.find((type) => type.id === slug[0]);
+
+  if (!studentType) {
+    return {
+      studentType: null,
+      location: null,
+      program: null,
+    };
+  }
+
+  const locations = await getUndergraduateAdmissionLocations();
+  const location = locations.find((location) => location.id === slug[1]);
+
+  if (!location) {
+    return {
+      studentType: studentType,
+      location: null,
+      program: null,
+    };
+  }
+
+  const programs = await getUndergraduatePrograms();
+  let program = programs.find((program) => program.id === slug[2]);
+
+  if (!program) {
+    const degrees = await getUndergraduateDegrees();
+    program = degrees.find((degree) => degree.id === slug[2]) ?? null;
+  }
+
   return {
-    studentType: studentTypes[slug[0]],
-    location: locations[slug[1]],
-    program: programs[slug[2]] ?? degrees[slug[2]],
+    studentType: studentType,
+    location: location,
+    program: program,
   };
 }
 
@@ -215,7 +245,3 @@ export async function getUndergraduateRequirements(studentType, location, progra
 
   return Object.values(sections);
 }
-
-getUndergraduatePrograms().then((programs) => {
-  console.log(programs);
-});
