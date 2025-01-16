@@ -7,7 +7,6 @@ import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/ic
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
 import {
-  getUndergraduatePrograms,
   getUndergraduateRequirements,
   parseAdmissionRequirementsSlug,
 } from "@/data/yaml/programs/undergraduate";
