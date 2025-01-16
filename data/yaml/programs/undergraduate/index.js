@@ -91,8 +91,17 @@ async function getAdmissionRequirementsSchema() {
         ),
         locations: z.array(
           z
-            .enum(locations.map((location) => location.id))
-            .transform((value) => locations.find((location) => location.id === value))
+            .enum([...locations.map((location) => location.id), "domestic", "international", "curriculum"])
+            .transform((value) => {
+              switch (value) {
+                case "domestic":
+                case "international":
+                case "curriculum":
+                  return locations.find((location) => location.type === value) ?? null;
+                default:
+                  return locations.find((location) => location.id === value) ?? null;
+              }
+            })
         ),
         sections: z.object(
           admissionRequirementSectionTypes.reduce((acc, type) => {
@@ -217,24 +226,54 @@ export async function getUndergraduateRequirements(studentType, location, progra
   }
 
   const hasAverage = sections["cut-off"].content.length > 0;
+  const isCoop = program.types?.some((type) => type.id === "co-op");
 
-  // If there is an average section in the requirements, add an explanation of cutoff ranges
-  if (hasAverage) {
+  // Below are special cases where we will manually add information to the requirement sections.
+
+  if (studentType.id === "college") {
+    sections["notes"].content.push(
+      "Only applicants who have completed a minimum of one year of study in an appropriate two or three-year college diploma will be considered for admission."
+    );
+  }
+
+  if (studentType.id === "university") {
+    sections["notes"].content.push(
+      "Only applicants who have completed a minimum of 2.0 credits of study will be considered for admission. Those with less than 2.0 completed credits are typically considered for fall entry only"
+    );
+  }
+
+  if (studentType.id === "internal") {
+    sections["notes"].content.push(
+      "Only applicants who have completed a minimum of 2.0 credits of study will be eligible for transfer."
+    );
+
+    sections["notes"].content.push(
+      "If you have previously been required to withdraw from the U of G, please contact Admission Services at <a href='mailto:admission@uoguelph.ca'>admission@uoguelph.ca</a> for more information."
+    );
+  }
+
+  if (isCoop) {
+    if (studentType.id === "high-school") {
+      sections["notes"].content.push(
+        "This program is offered with and without co-op. Students not admissible to co-op will be automatically considered for the regular program."
+      );
+    } else {
+      sections["notes"].content.push(
+        "This program is offered with and without co-op. Transfer students are not eligible for direct entry into co-op. Those who apply for co-op will be considered for the regular program. Once you are enrolled in your program you can connect with your Program Counselor to determine whether you are eligible for co-op. For more information, contact <a href='https://www.uoguelph.ca/experientiallearning/'>Experiential Learning</a>"
+      );
+    }
+  }
+
+  if (hasAverage && studentType.id === "high-school") {
     sections["notes"].content.push(
       "Estimated cutoff ranges are based on admission averages from previous years and are provided as a point of reference. Exact cut-offs are determined by the quantity and quality of applications received and the space available in the program. Having an average within this range does not guarantee admission."
     );
+
+    if (isCoop) {
+      sections["notes"].content.push("Co-op averages will often exceed the estimated cut-off ranges.");
+    }
   }
 
-  // If this is a program that offers co-op add to its notes section
-  if (program.types?.some((type) => type.id === "co-op")) {
-    sections["notes"].content.push(
-      hasAverage
-        ? "This program is offered with and without co-op. Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to co-op will be automatically considered for the regular program."
-        : "This program is offered with and without co-op. Students not admissible to co-op will be automatically considered for the regular program."
-    );
-  }
-
-  // If this program has aleternative offers, then we mention it in the notes section
   if (program["alternative-offers"]?.length > 0) {
     sections["notes"].content.push(
       `Students not admissible to this program will automatically be considered for ${program["alternative-offers"].map((program) => `<a href="${program.url}">${program.name}</a>`).join(", ")}. Learn more about <a href="https://www.uoguelph.ca/admission/undergraduate/apply/alternate">Alternate Offers</a>.`
