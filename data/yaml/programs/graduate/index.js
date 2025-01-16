@@ -2,7 +2,7 @@ import path from "path";
 import { z } from "zod";
 import { getYamlData } from "@/lib/file-utils";
 
-const directory = path.join(process.cwd(), "data", "yaml", "programs", "graduate");
+const directory = path.join("data", "yaml", "programs", "graduate");
 
 export async function getGraduateDegreeTypes() {
   return await getYamlData({
