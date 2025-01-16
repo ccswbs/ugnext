@@ -6,7 +6,7 @@
   package = "@netlify/plugin-nextjs"
 
 [functions]
-  included_files = ["data/yaml/**.yml"]
+  included_files = ["data/yaml/**/*.yml"]
 
 [[redirects]]
   from = '/_next/image/*'
