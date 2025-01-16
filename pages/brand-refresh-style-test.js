@@ -9,6 +9,16 @@ export default function StyledTest() {
         <Heading level={1}>Primary and Secondary Styles Test Page</Heading>
         <hr/>
         <div>
+            <Heading level={1}>This is H1</Heading>
+            <Heading level={2}  className="text-primary-color-red">This is H2</Heading>
+            <Heading level={3}>This is H3</Heading>
+            <Heading level={4}>This is H4</Heading>
+            <Heading level={5}>This is H5</Heading>
+            <Heading level={6}>This is H6</Heading>
+            <p>This is p tag: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        <hr/>
+        <div>
             <Heading level={2}>Use CSS variable styles</Heading>
             <div style={{ color: 'var(--primary-font)' }}>
                <h2 style={{ color: 'var(--primary-color-red)' }}>This is the primary style, font Bitter.</h2>

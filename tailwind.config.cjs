@@ -171,6 +171,15 @@ module.exports = {
         "secondary-dm-sans": ["DM Sans", "Arial", "sans-serif"],
         icon: ['"Font Awesome 6 Pro"'],
       },
+      fontSize: {
+        sm: ['1rem','1.4'],
+        base: '1.5rem',
+        xl: ['2rem','1.4'],
+        'xl-s': ['2.5rem','1.4'],
+        '1.5xl': ['3rem','1.4'],
+        '2xl': ['4rem','1.4'],
+        '4xl': ['8rem','1.4'],
+      },
       colors: colors,
       content: {
         "chevron-right": '"\\f054"',

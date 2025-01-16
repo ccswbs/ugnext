@@ -53,3 +53,45 @@
 svg.svg-inline--fa {
   height: 1em;
 }
+
+
+/*  brand refresh */
+/*
+h1 {
+  font-family: var(--primary-font);
+  line-height: 1.4;
+  font-weight: 700;
+  font-size: 4rem;
+  margin-top: 2rem;
+  margin-bottom: 0rem;
+  color: 'var(--primary-color-black)';
+}
+
+h2,h3,h4,h5,h6 {
+  font-family: var(--secondary-font);
+  line-height: 1.4;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color-black);
+}
+
+h2 {
+  font-size: 3rem;
+  color: var(--primary-color-red);  
+}
+
+h3 {
+  font-size: 2.5rem;
+}
+  */
+p {
+  font-family: var(--secondary-font);
+  line-height: 1.6;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-top: 0rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
