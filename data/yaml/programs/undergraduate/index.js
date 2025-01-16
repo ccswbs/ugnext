@@ -195,7 +195,7 @@ export async function getUndergraduateRequirements(studentType, location, progra
   const programRequirements = program.requirements ?? [];
   const requirements = [...degreeRequirements, ...programRequirements].filter((requirement) => {
     const matchesStudentType = requirement["student-types"].find((type) => type.id === studentType.id);
-    const matchesLocation = requirement.locations.find((location) => location.id === location.id);
+    const matchesLocation = requirement.locations.find((l) => l.id === location.id);
 
     return matchesStudentType && matchesLocation;
   });
