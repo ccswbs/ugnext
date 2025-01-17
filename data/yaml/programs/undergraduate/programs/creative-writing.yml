@@ -14,3 +14,11 @@ tags:
   - crime
   - sustainability
   - film
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 80-85%
