@@ -155,9 +155,28 @@ export async function getUndergraduatePrograms() {
         .transform((value) => degrees.find((degree) => degree.id === value) ?? null),
       acronym: z.string().optional(),
       tags: z.array(z.string()),
+      "alternative-offers": z.array(z.string()).nullish(),
       requirements: await getAdmissionRequirementsSchema(),
     }),
-    postProcessor: (data) => data.sort((a, b) => a.name.localeCompare(b.name)),
+    postProcessor: (data) => {
+      return data
+        .map((program) => {
+          const alternativeOffers = program["alternative-offers"]?.map((alt, index) => {
+            const altProgram = data.find((program) => program.id === alt);
+
+            if (!altProgram) {
+              throw new Error(
+                `In program ${program.name}: alternative offer ${alt} at index ${index} is not a valid program`
+              );
+            }
+
+            return altProgram;
+          });
+
+          return { ...program, "alternative-offers": alternativeOffers };
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+    },
   });
 }
 
