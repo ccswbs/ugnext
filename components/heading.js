@@ -12,11 +12,11 @@ export const Heading = ({ level, children, className, as, ...rest }) => {
       className={twMerge(
         twJoin(
           "font-bold leading-tight",
-          headingLevel === 1 && "mt-[2rem] mb-[0rem] text-2xl font-primary-bitter",
-          headingLevel === 2 && "mt-[3rem] mb-[1.5rem] text-1.5xl font-secondary-dm-sans",
-          headingLevel === 3 && "mt-[3rem] mb-[1.5rem] text-xl-s font-secondary-dm-sans",
-          headingLevel === 4 && "mt-[3rem] mb-[1.5rem] text-xl font-secondary-dm-sans",
-          (headingLevel === 5 || headingLevel === 6) && "mt-[3rem] mb-[1.5rem] text-xl font-secondary-dm-sans"
+          headingLevel === 1 && "mt-[2rem] mb-[0rem] text-4xl font-primary-bitter",
+          headingLevel === 2 && "mt-[3rem] mb-[1.5rem] text-3xl font-dm-sans",
+          headingLevel === 3 && "mt-[3rem] mb-[1.5rem] text-xl-s font-dm-sans",
+          headingLevel === 4 && "mt-[3rem] mb-[1.5rem] text-2xl font-dm-sans",
+          (headingLevel === 5 || headingLevel === 6) && "mt-[3rem] mb-[1.5rem] text-2xl font-dm-sans"
         ),
         className
       )}

@@ -42,23 +42,31 @@ function Application({ Component, pageProps }) {
     <>
       <style jsx global>{`
         html {
-          font-family: ${roboto.style.fontFamily};
+          font-family: ${bitter.style.fontFamily};
         }
 
         uofg-header {
-          font-family: ${robotoCondensed.style.fontFamily};
+          font-family: ${dmSans.style.fontFamily};
         }
         
         :root {
-        --primary-font: ${bitter.style.fontFamily};
-        --secondary-font: ${dmSans.style.fontFamily};
-        --primary-color-black: #000000;
-        --primary-color-red: #E51937;
-        --primary-color-yellow: #FFC429;
-        --secondary-color-blue: #187BB4;
-        --secondary-color-green: #318738;
-        --secondary-color-light-gray: #DADCD4;
-        --secondary-color-dark-gray: #787673;
+        --bitter-font: ${bitter.style.fontFamily};
+        --dmSans-font: ${dmSans.style.fontFamily};
+        --uog-color-black: #000000;
+        --uog-color-black-hover: #353636;
+        --uog-color-red: #E51937;
+        --uog-color-red-hover: #BD2E35;
+        --uog-color-yellow: #FFC429;
+        --uog-color-yellow-hover: #FFE299;
+        --uog-color-blue: #187BB4;
+        --uog-color-blue-hover: #156B9D;
+        --uog-color-green: #318738;
+        --uog-color-green-hover: #2A7430;
+        --uog-color-light-gray: #DADCD4;
+        --uog-color-light-gray-hover: #BFBFBF;
+        --uog-color-dark-gray: #787673;
+        --uog-color-dark-gray-hover: #686764;
+
       `}</style>
 
       <Component {...pageProps} />

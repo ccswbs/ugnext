@@ -31,8 +31,8 @@ export const HomeStory = () => (
       }
       footer={
         <div className="flex items-center justify-center">
-          <span className="mr-1 text-2xl leading-tight">Learn how real-world education and experience will</span>
-          <Button href="https://www.uoguelph.ca/improve-life/" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+          <span className="mr-1 md:text-1.5xl text-xl leading-tight">Learn how real-world education and experience will</span>
+          <Button href="https://www.uoguelph.ca/improve-life/" color="red" className="py-2 px-4 mx-[.25em] md:text-1.5xl text-xl">
             Improve Life
           </Button>
         </div>
