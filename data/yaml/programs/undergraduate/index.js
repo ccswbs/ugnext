@@ -89,20 +89,24 @@ async function getAdmissionRequirementsSchema() {
             .enum(studentTypes.map((type) => type.id))
             .transform((value) => studentTypes.find((type) => type.id === value))
         ),
-        locations: z.array(
-          z
-            .enum([...locations.map((location) => location.id), "domestic", "international", "curriculum"])
-            .transform((value) => {
-              switch (value) {
-                case "domestic":
-                case "international":
-                case "curriculum":
-                  return locations.find((location) => location.type === value) ?? null;
-                default:
-                  return locations.find((location) => location.id === value) ?? null;
-              }
-            })
-        ),
+        locations: z
+          .array(
+            z
+              .enum([...locations.map((location) => location.id), "domestic", "international", "curriculum", "any"])
+              .transform((value) => {
+                switch (value) {
+                  case "any":
+                    return locations;
+                  case "domestic":
+                  case "international":
+                  case "curriculum":
+                    return locations.filter((location) => location.type === value) ?? null;
+                  default:
+                    return locations.find((location) => location.id === value) ?? null;
+                }
+              })
+          )
+          .transform((value) => value.flat()),
         sections: z.object(
           admissionRequirementSectionTypes.reduce((acc, type) => {
             acc[type.id] = z.array(z.string()).nullish();
@@ -120,6 +124,7 @@ export async function getUndergraduateDegrees() {
   return await getYamlData({
     id: "undergraduate-degrees",
     path: path.join(directory, "degrees", "*.yml"),
+    listen: path.join(directory, "*.yml"),
     schema: z.object({
       id: z.string(),
       name: z.string(),
@@ -142,6 +147,7 @@ export async function getUndergraduatePrograms() {
   return await getYamlData({
     id: "undergraduate-programs",
     path: path.join(directory, "programs", "*.yml"),
+    listen: `{${path.join(directory, "degrees", "**", "*.yml")},${path.join(directory, "*.yml")}}`,
     schema: z.object({
       id: z.string(),
       name: z.string(),
