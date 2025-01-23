@@ -81,35 +81,40 @@ async function getAdmissionRequirementsSchema() {
   const locations = await getUndergraduateAdmissionLocations();
   const admissionRequirementSectionTypes = await getUndergraduateAdmissionRequirementSectionTypes();
 
+  const studentTypeSchema = z
+    .enum(studentTypes.map((type) => type.id))
+    .transform((value) => studentTypes.find((type) => type.id === value));
+
+  const locationSchema = z
+    .enum([...locations.map((location) => location.id), "domestic", "international", "curriculum"])
+    .transform((value) => {
+      switch (value) {
+        case "domestic":
+        case "international":
+        case "curriculum":
+          return locations.filter((location) => location.type === value) ?? null;
+        default:
+          return locations.find((location) => location.id === value) ?? null;
+      }
+    });
+
   return z
     .array(
       z.object({
-        "student-types": z.array(
-          z
-            .enum(studentTypes.map((type) => type.id))
-            .transform((value) => studentTypes.find((type) => type.id === value))
-        ),
+        "student-types": z
+          .union([studentTypeSchema, z.array(studentTypeSchema)])
+          .nullable()
+          .transform((value) => (typeof value === "string" ? [value] : (value ?? studentTypes))),
         locations: z
-          .array(
-            z
-              .enum([...locations.map((location) => location.id), "domestic", "international", "curriculum", "any"])
-              .transform((value) => {
-                switch (value) {
-                  case "any":
-                    return locations;
-                  case "domestic":
-                  case "international":
-                  case "curriculum":
-                    return locations.filter((location) => location.type === value) ?? null;
-                  default:
-                    return locations.find((location) => location.id === value) ?? null;
-                }
-              })
-          )
-          .transform((value) => value.flat()),
+          .union([locationSchema, z.array(locationSchema)])
+          .nullable()
+          .transform((value) => (typeof value === "string" ? [value] : (value?.flat() ?? locations))),
         sections: z.object(
           admissionRequirementSectionTypes.reduce((acc, type) => {
-            acc[type.id] = z.array(z.string()).nullish();
+            acc[type.id] = z
+              .union([z.string(), z.array(z.string())])
+              .nullish()
+              .transform((value) => (typeof value === "string" ? [value] : value));
             return acc;
           }, {})
         ),
