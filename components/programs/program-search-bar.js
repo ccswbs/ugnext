@@ -10,7 +10,7 @@ const programFuzzySearch = (programs) => {
   const fuzzySearch = new FuzzySearch(
     programs,
     (program) => {
-      const nameTerms = [new Term(program.name, 100)];
+      const nameTerms = getWords(program.name).map((word) => new Term(word, 100));
       const tagTerms = program.tags
         .map((tag) => getWords(tag).map((word, index) => new Term(word, 30 / (index + 1))))
         .flat();
