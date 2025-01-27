@@ -12,22 +12,31 @@ export class Term {
 
 export class TermDocument {
   readonly terms: Term[];
+  readonly counts: Map<string, number>;
 
   constructor(terms: Term[]) {
     if (terms.length === 0) {
       throw new Error("A TermDocument can not be constructed with 0 terms.");
     }
 
-    // Terms will be sorted alphabetically by word, if they are the same word, then the one with a higher weight will appear first.
-    this.terms = terms.sort((a, b) => {
-      const cmp = a.term.localeCompare(b.term);
+    this.counts = new Map();
 
-      if (cmp === 0) {
-        return b.weight - a.weight;
-      }
+    // Terms will be sorted alphabetically by word, if they are the same word, we combine them into one.
+    this.terms = terms
+      .sort((a, b) => b.weight - a.weight)
+      .map((term) => {
+        const count = this.counts.get(term.term);
 
-      return cmp;
-    });
+        if (count) {
+          this.counts.set(term.term, count + 1);
+          return null;
+        } else {
+          this.counts.set(term.term, 1);
+          return term;
+        }
+      })
+      .filter((term) => term !== null)
+      .sort((a, b) => a.term.localeCompare(b.term));
   }
 
   getTermIndex(term: string): number {
@@ -50,22 +59,13 @@ export class TermDocument {
     return -1; // Term not found
   }
 
-  getTerm(term: string): Term | void {
-    // Due to how terms are sorted, if a term appears in the array multiple times, the one with a higher weight will be returned.
+  getTermWeight(term: string): number {
     const index = this.getTermIndex(term);
-    return index === -1 ? undefined : this.terms[index];
+    return index === -1 ? 0 : this.terms[index].weight;
   }
 
   getTermCount(term: string) {
-    let count = 0;
-    let index = this.getTermIndex(term);
-
-    while (this.terms[index]?.term === term) {
-      count++;
-      index++;
-    }
-
-    return count;
+    return this.counts.get(term) ?? 0;
   }
 
   get total(): number {
@@ -75,27 +75,6 @@ export class TermDocument {
   getTermFrequency(term: string): number {
     return this.getTermCount(term) / this.total;
   }
-
-  /*
-  fuzzySearch(word: string, criteria: FuzzySearchCriteria[]): TermFuzzyMatch[] {
-    return this.terms.reduce((acc, keyword) => {
-      for (const criterion of criteria) {
-        const similarity = criterion.calculateSimilarity(keyword.word, word);
-
-        if (similarity > 0) {
-          acc.push({
-            word: keyword.word,
-            weight: keyword.weight + criterion.weight * similarity,
-          });
-
-          // If a keyword has matched against a criterion, then we don't need to check the other criteria.
-          break;
-        }
-      }
-
-      return acc;
-    }, [] as TermFuzzyMatch[]);
-  }*/
 }
 
 export class TermDocumentCollection {
@@ -107,39 +86,13 @@ export class TermDocumentCollection {
 
   getInverseDocumentFrequency(term: string): number {
     const occurrences = this.documents.reduce((acc, document) => {
-      return acc + (document.getTerm(term) ? 1 : 0);
+      return acc + (document.getTermIndex(term) !== -1 ? 1 : 0);
     }, 0);
 
-    return Math.log((1 + this.documents.length) / (1 + occurrences));
+    if (occurrences === 0) return 0;
+
+    return Math.log(this.documents.length / occurrences);
   }
-
-  /*
-  fuzzySearch(word: string, criteria: FuzzySearchCriteria[], useTdIdf = false): TermDocumentFuzzyMatch[] {
-
-
-    return this.documents.reduce((acc, document) => {
-      let matches = document.fuzzySearch(word, criteria);
-
-      if (matches.length === 0) {
-        return acc;
-      }
-
-      if (useTdIdf) {
-        matches = matches.map((match) => {
-          return {
-            ...match,
-            weight:
-              match.weight * (document.getTermFrequency(match.word) * this.getInverseDocumentFrequency(match.word)),
-          } as TermFuzzyMatch;
-        });
-      }
-
-      return acc.concat({
-        document: document,
-        weight: matches.reduce((acc, match) => acc + match.weight, 0),
-      });
-    }, [] as TermDocumentFuzzyMatch[]);
-  }*/
 }
 
 // A function which returns a number from 0 to 1 indicating similarity (0 meaning not at all similar, and 1 being as similar as can be)
@@ -149,6 +102,7 @@ export class FuzzySearch<T> {
   readonly data: T[];
   readonly collection: TermDocumentCollection;
   readonly criteria: FuzzySearchCriteria[];
+  readonly criteriaWeights: Map<FuzzySearchCriteria, number> = new Map();
   readonly documentToDataMap: Map<TermDocument, T>;
 
   constructor(data: T[], parser: (data: T) => Term[], criteria: FuzzySearchCriteria[]) {
@@ -162,20 +116,15 @@ export class FuzzySearch<T> {
     this.documentToDataMap = new Map();
     this.collection = new TermDocumentCollection(documents);
     this.criteria = [StringSimilarity.exact, ...criteria];
+    this.criteriaWeights = new Map();
+
+    for (let i = 0; i < this.criteria.length; i++) {
+      this.criteriaWeights.set(this.criteria[i], 1 / (i + 1));
+    }
 
     for (let i = 0; i < data.length; i++) {
       this.documentToDataMap.set(documents[i], data[i]);
     }
-  }
-
-  private getCriteriaWeight(criteria: FuzzySearchCriteria): number {
-    const index = this.criteria.indexOf(criteria);
-
-    if(index === -1) {
-      return 0;
-    }
-
-    return 1 / (index + 1);
   }
 
   search(input: string): T[] {
@@ -183,11 +132,46 @@ export class FuzzySearch<T> {
       return this.data;
     }
 
-    const words = getWords(input);
+    const words = getWords(input) as string[];
 
     if (words.length === 0) {
       return this.data;
     }
+
+    const matches = words.map((word) => {
+      return this.collection.documents.reduce(
+        (acc, document) => {
+          const weight = document.terms
+            .map((term) => {
+              for (const criterion of this.criteria) {
+                const similarity = criterion(word, term.term);
+
+                if (similarity > 0) {
+                  return (
+                    similarity *
+                    term.weight *
+                    (this.criteriaWeights.get(criterion) ?? 0) *
+                    document.getTermFrequency(term.term) *
+                    this.collection.getInverseDocumentFrequency(term.term)
+                  );
+                }
+              }
+
+              return 0;
+            })
+            .reduce((acc, value) => acc + value, 0);
+
+          if (weight > 0) {
+            acc.push({ data: this.documentToDataMap.get(document) as T, weight });
+          }
+
+          return acc;
+        },
+        [] as { data: T; weight: number }[]
+      );
+    });
+
+    console.log(matches);
 
     return this.data;
   }

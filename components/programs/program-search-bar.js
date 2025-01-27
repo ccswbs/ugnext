@@ -10,12 +10,14 @@ const programFuzzySearch = (programs) => {
   const fuzzySearch = new FuzzySearch(
     programs,
     (program) => {
-      const nameTerms = getWords(program.name).map((word) => new Term(word, 100));
-      const tagTerms = program.tags.map((tag) => getWords(tag).map((word) => new Term(word, 30))).flat();
+      const nameTerms = [new Term(program.name, 100)];
+      const tagTerms = program.tags
+        .map((tag) => getWords(tag).map((word, index) => new Term(word, 30 / (index + 1))))
+        .flat();
 
       return [...nameTerms, ...tagTerms];
     },
-    [StringSimilarity.levenshtein, StringSimilarity.stemmer, StringSimilarity.startsWith, StringSimilarity.substring]
+    [StringSimilarity.levenshtein, StringSimilarity.stemmer, StringSimilarity.bidirectionalSubstring]
   );
 
   return (input) => {
@@ -49,10 +51,6 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
   useEffect(() => {
     onChange?.(filtered);
   }, [filtered, onChange]);
-
-  useEffect(() => {
-    console.log(testResults);
-  }, [testResults]);
 
   return (
     <div className={twMerge("flex flex-col gap-4 sm:flex-row sm:items-end", className)}>
