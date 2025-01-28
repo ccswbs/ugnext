@@ -127,7 +127,7 @@ export class FuzzySearch<T> {
     }
   }
 
-  search(input: string): T[] {
+  search(input: string, { useTfIdf = false }): T[] {
     if (input.length === 0) {
       return this.data;
     }
@@ -151,8 +151,9 @@ export class FuzzySearch<T> {
                     similarity *
                     term.weight *
                     (this.criteriaWeights.get(criterion) ?? 0) *
-                    document.getTermFrequency(term.term) *
-                    this.collection.getInverseDocumentFrequency(term.term)
+                    (useTfIdf
+                      ? document.getTermFrequency(term.term) * this.collection.getInverseDocumentFrequency(term.term)
+                      : 1)
                   );
                 }
               }
@@ -170,6 +171,9 @@ export class FuzzySearch<T> {
         [] as { data: T; weight: number }[]
       );
     });
+
+    const dataSet = new Set<T>();
+
 
     console.log(matches);
 

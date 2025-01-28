@@ -17,7 +17,7 @@ const programFuzzySearch = (programs) => {
 
       return [...nameTerms, ...tagTerms];
     },
-    [StringSimilarity.levenshtein, StringSimilarity.stemmer, StringSimilarity.bidirectionalSubstring]
+    [StringSimilarity.levenshtein, StringSimilarity.stemmer, StringSimilarity.startsWith]
   );
 
   return (input) => {
