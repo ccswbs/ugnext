@@ -42,11 +42,11 @@ function Application({ Component, pageProps }) {
     <>
       <style jsx global>{`
         html {
-          font-family: ${bitter.style.fontFamily};
+          font-family: ${roboto.style.fontFamily};
         }
 
         uofg-header {
-          font-family: ${dmSans.style.fontFamily};
+          font-family: ${robotoCondensed.style.fontFamily};
         }
         
         :root {
