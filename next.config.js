@@ -55,6 +55,10 @@ const nextConfig = {
       {
         source: '/api/resource',
         destination: process.env.NEXT_PUBLIC_UNIWEB_URL + '/api/resource'
+      },
+      {
+        source: '/api/profiles/:id',
+        destination: `${process.env.NEXT_PUBLIC_UNIWEB_URL}/profiles.php/get/members/profile/:id`
       }
     ];
   }

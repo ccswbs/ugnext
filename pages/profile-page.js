@@ -9,7 +9,7 @@ import React from 'react';
 import { formatPhoneNumber, useUniWebProfile } from '@/lib/uniweb-utils';
 
 export default function ProfilePage() {
-  const userId = 66; // Replace with the desired ID
+  const userId = 770; // Replace with the desired ID
   const userPicture = `${process.env.NEXT_PUBLIC_UNIWEB_URL}/picture.php?action=display&contentType=members&id=${userId}`;
   const { loading, error, data } = useUniWebProfile(userId);
 
@@ -35,11 +35,15 @@ export default function ProfilePage() {
     );
   }
 
-  const membershipInfo = data["membership_information"];
-  const researchInterests = data["research_interests"];
-  const researchDescription = data["research_description"];
-  const biography = data["biography"];
-  
+  const membershipInfo = data.membership_information[0];
+  const researchInterests = data.research_interests;
+  const researchDescription = data?.research_description?.[0]?.research_description
+    ? JSON.parse(data.research_description[0].research_description).en
+    : null;
+  const academicBiography = data?.biography?.[0]?.academic_biography
+    ? JSON.parse(data.biography[0].academic_biography).en
+    : null;
+    
   // Filter out objects without an 'order' property and sort by 'order'
   const sortedInterests = researchInterests.filter(item => item.order).sort((a, b) => parseInt(a.order) - parseInt(b.order));
 
@@ -60,21 +64,19 @@ export default function ProfilePage() {
             {membershipInfo.academic_unit[3]}<br />
             <i className="fa-solid fa-envelope"></i> {membershipInfo.email}<br />
             <i className="fa-solid fa-building"></i> Office: {membershipInfo.office}<br />
-            <i className="fa-solid fa-phone"></i> {formatPhoneNumber(membershipInfo.telephone)}<br />
+            <i className="fa-solid fa-phone"></i> {membershipInfo.telephone ? formatPhoneNumber(membershipInfo.telephone) : "no phone"}<br />
             {membershipInfo.homepage}
           </div>
         </div>
-        <HtmlParser html={biography.academic_biography.en} />
+        <HtmlParser html={academicBiography} />
         <Heading level={3}>Research Description</Heading>
-        <p>{researchDescription.research_description.en}</p>
+        <HtmlParser html={researchDescription} />
         <Heading level={3}>Research Interests</Heading>
         <ul>
         {sortedInterests.map(item => (
             <li key={item.order}>{item.interest[1]}</li>
         ))}
         </ul>
-        {/* <Heading level={2}>Raw Data</Heading>
-        <UniWebProfileRaw id={userId} /> */}
       </Container>
     </Layout>
   );
