@@ -1,73 +1,74 @@
 import path from "path";
 import { z } from "zod";
-import { yamlToMap } from "@/data/yaml/programs";
+import { getYamlData } from "@/lib/file-utils";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "graduate");
 
-const degreeTypes = await yamlToMap({
-  path: path.join(directory, "degree-types.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-    })
-  ),
-});
-
-const programTypes = await yamlToMap({
-  path: path.join(directory, "program-types.yml"),
-  schema: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-    })
-  ),
-});
-
-const degrees = await yamlToMap({
-  path: path.join(directory, "degrees", "*.yml"),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    type: z.enum(Object.keys(degreeTypes)),
-    acronym: z.string(),
-  }),
-  parser: (degree) => ({
-    ...degree,
-    type: degreeTypes[degree.type],
-  }),
-});
-
-const programs = await yamlToMap({
-  path: path.join(directory, "programs", "*.yml"),
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    url: z.string(),
-    types: z.array(z.enum(Object.keys(programTypes))),
-    degrees: z.array(z.enum(Object.keys(degrees))),
-    acronym: z.string().optional(),
-    tags: z.array(z.string()),
-  }),
-  parser: (program) => ({
-    ...program,
-    types: program.types.map((type) => programTypes[type]),
-    degrees: program.degrees.map((degree) => degrees[degree]),
-  }),
-});
-
 export async function getGraduateDegreeTypes() {
-  return Object.values(degreeTypes);
+  return await getYamlData({
+    id: "graduate-degree-types",
+    path: path.join(directory, "degree-types.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    ),
+    postProcessor: (data) => data.flat(),
+  });
 }
 
 export async function getGraduateProgramTypes() {
-  return Object.values(programTypes);
+  return await getYamlData({
+    id: "graduate-program-types",
+    path: path.join(directory, "program-types.yml"),
+    schema: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    ),
+    postProcessor: (data) => data.flat(),
+  });
 }
 
 export async function getGraduateDegrees() {
-  return Object.values(degrees);
+  const degreeTypes = await getGraduateDegreeTypes();
+
+  return await getYamlData({
+    id: "graduate-degrees",
+    path: path.join(directory, "degrees", "*.yml"),
+    schema: z.object({
+      id: z.string(),
+      name: z.string(),
+      type: z
+        .enum(degreeTypes.map((type) => type.id))
+        .transform((degreeType) => degreeTypes.find((type) => type.id === degreeType)),
+      acronym: z.string(),
+    }),
+  });
 }
 
 export async function getGraduatePrograms() {
-  return Object.values(programs).sort((a, b) => a.name.localeCompare(b.name));
+  const programTypes = await getGraduateProgramTypes();
+  const degrees = await getGraduateDegrees();
+
+  return await getYamlData({
+    id: "graduate-programs",
+    path: path.join(directory, "programs", "*.yml"),
+    schema: z.object({
+      id: z.string(),
+      name: z.string(),
+      url: z.string(),
+      types: z.array(
+        z.enum(programTypes.map((type) => type.id)).transform((value) => programTypes.find((type) => type.id === value))
+      ),
+      degrees: z.array(
+        z.enum(degrees.map((degree) => degree.id)).transform((value) => degrees.find((degree) => degree.id === value))
+      ),
+      acronym: z.string().optional(),
+      tags: z.array(z.string()),
+    }),
+    postProcessor: (data) => data.sort((a, b) => a.name.localeCompare(b.name)),
+  });
 }

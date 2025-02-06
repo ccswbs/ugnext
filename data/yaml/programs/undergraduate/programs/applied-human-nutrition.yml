@@ -10,3 +10,15 @@ tags:
   - diet*
   - nutrition*
   - food
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      required-courses:
+        - English (ENG4U)
+        - One 4U math course
+        - Biology (SBI4U)
+        - Chemistry (SCH4U)
+      recommended-courses: ~

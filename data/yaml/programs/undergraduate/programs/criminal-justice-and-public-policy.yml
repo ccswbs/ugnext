@@ -15,3 +15,13 @@ tags:
   - power
   - affairs
   - socio*
+alternative-offers:
+  - justice-and-legal-studies
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 80-86%
