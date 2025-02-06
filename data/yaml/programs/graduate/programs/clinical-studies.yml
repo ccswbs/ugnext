@@ -1,0 +1,27 @@
+id: clinical-studies
+name: Clinical Studies
+url: https://graduatestudies.uoguelph.ca/programs/clin
+degrees:
+  - master-of-science
+  - doctor-of-veterinary-science
+types:
+  - thesis-based
+  - course-based
+tags:
+  - biology
+  - science
+  - health
+  - medical
+  - animal health industry
+  - animal medicine
+  - animal*
+  - biomedical*
+  - clinic*
+  - disease
+  - disorders
+  - health*
+  - illness
+  - medi*
+  - pharma*
+  - vet*
+  - zoo*

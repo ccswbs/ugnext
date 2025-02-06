@@ -1,0 +1,42 @@
+id: public-health
+name: Public Health
+url: https://graduatestudies.uoguelph.ca/programs/phlt
+degrees:
+  - master-of-public-health
+  - doctor-of-veterinary-medicine
+  - graduate-diploma
+types:
+  - course-based
+tags:
+  - health
+  - medical
+  - science
+  - biology
+  - aging
+  - agri*
+  - animal health
+  - animal*
+  - applied modeling
+  - biostatistics
+  - clinical veterinary communications
+  - communications
+  - data*
+  - disease
+  - epidemiology
+  - food safety
+  - food*
+  - government policy
+  - health management
+  - health*
+  - infection control
+  - infectious disease modeling
+  - law*
+  - one health
+  - patho*
+  - population
+  - public health
+  - vaccines
+  - water safety
+  - waterbourne diseases
+  - zoo*
+  - zoontoic disease

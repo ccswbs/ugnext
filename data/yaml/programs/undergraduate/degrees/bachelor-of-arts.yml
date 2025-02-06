@@ -1,0 +1,21 @@
+id: bachelor-of-arts
+name: Bachelor of Arts
+url: https://uoguelph.ca/programs/bachelor-of-arts/
+type: bachelor
+acronym: B.A.
+tags: []
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 75-80%
+      required-courses:
+        - English (ENG4U)
+      recommended-courses:
+        - Any 4U Math
+      general-requirements:
+        - Ontario Secondary School Diploma (OSSD)
+        - A minimum of six 4U/M courses including the required courses for your chosen program/degree, as outlined above.

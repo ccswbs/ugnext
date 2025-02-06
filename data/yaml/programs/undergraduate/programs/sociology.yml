@@ -1,0 +1,20 @@
+id: sociology
+name: Sociology
+acronym: SOC
+url: https://www.uoguelph.ca/programs/sociology/
+degree: bachelor-of-arts
+types:
+  - major
+  - minor
+  - area-of-concentration
+tags:
+  - poli*
+  - crim*
+  - govern*
+  - law
+  - power
+  - institution*
+  - affairs
+  - socio*
+  - justice
+  - public

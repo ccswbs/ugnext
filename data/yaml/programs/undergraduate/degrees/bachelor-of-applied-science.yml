@@ -1,0 +1,23 @@
+id: bachelor-of-applied-science
+name: Bachelor of Applied Science
+url: https://uoguelph.ca/programs/bachelor-of-applied-science/
+type: bachelor
+acronym: B.A.Sc.
+tags: []
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 75-80%
+      required-courses:
+        - English (ENG4U)
+        - One 4U math course
+        - One of Biology (SBI4U), Chemistry (SCH4U) or Introductory Kinesiology (PSK4U)
+      recommended-courses:
+        - 4U Biology
+      general-requirements:
+        - Ontario Secondary School Diploma (OSSD)
+        - A minimum of six 4U/M courses including the required courses for your chosen program/degree, as outlined above.

@@ -1,0 +1,30 @@
+id: child-studies
+name: Child Studies
+acronym: CSTU
+url: https://www.uoguelph.ca/programs/child-studies/
+degree: bachelor-of-applied-science
+types:
+  - major
+tags:
+  - child*
+  - youth
+  - educat*
+  - teach*
+  - early
+  - relation*
+  - socio*
+  - social
+  - cultur*
+  - psych*
+  - sex*
+  - health
+  - family
+  - pedagog*
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 79-84%

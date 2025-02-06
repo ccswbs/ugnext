@@ -1,0 +1,21 @@
+id: food-agricultural-and-resource-economics
+name: Food, Agricultural and Resource Economics
+acronym: FARE
+url: https://www.uoguelph.ca/programs/food-agricultural-resource-economics/
+degree: bachelor-of-arts
+types:
+  - major
+  - co-op
+tags:
+  - agriculture
+  - food
+  - business
+  - economics
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      recommended-courses:
+        - Advanced Functions (MHF4U)

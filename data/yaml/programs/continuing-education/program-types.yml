@@ -1,0 +1,11 @@
+- id: short-course
+  name: Short Course
+
+- id: apprenticeship
+  name: Apprenticeship
+
+- id: certificate
+  name: Certificate
+
+- id: diploma
+  name: Diploma

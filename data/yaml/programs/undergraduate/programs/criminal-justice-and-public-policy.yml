@@ -1,0 +1,27 @@
+id: criminal-justice-and-public-policy
+name: Criminal Justice and Public Policy
+acronym: CJPP
+url: https://www.uoguelph.ca/programs/criminal-justice-and-public-policy/
+degree: bachelor-of-arts
+types:
+  - major
+  - co-op
+  - minor
+tags:
+  - poli*
+  - crim*
+  - govern*
+  - law
+  - power
+  - affairs
+  - socio*
+alternative-offers:
+  - justice-and-legal-studies
+requirements:
+  - student-types:
+      - high-school
+    locations:
+      - ontario
+    sections:
+      cut-off:
+        - 80-86%
