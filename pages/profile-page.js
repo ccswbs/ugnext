@@ -10,12 +10,12 @@ import { formatPhoneNumber, useUniWebProfile } from '@/lib/uniweb-utils';
 
 export default function ProfilePage() {
   const userId = 66; // Replace with the desired ID
-  const userPicture = "https://uoguelph-dev.uniweb.io/picture.php?action=display&contentType=members&id=" + userId;
+  const userPicture = `${process.env.NEXT_PUBLIC_UNIWEB_URL}/picture.php?action=display&contentType=members&id=${userId}`;
   const { loading, error, data } = useUniWebProfile(userId);
 
   if (loading) {
     return (
-      <Layout metadata={{ title: "UniWEB Test" }}>
+      <Layout metadata={{ title: "UniWEB Test" }}>        
         <Container>
           <Heading level={1}>UniWEB Test</Heading>
           <p>Loading...</p>
@@ -35,16 +35,16 @@ export default function ProfilePage() {
     );
   }
 
-  const membershipInfo = data["profile/membership_information"];
-  const researchInterests = data["profile/research_interests"];
-  const researchDescription = data["profile/research_description"];
-  const biography = data["profile/biography"];
+  const membershipInfo = data["membership_information"];
+  const researchInterests = data["research_interests"];
+  const researchDescription = data["research_description"];
+  const biography = data["biography"];
   
   // Filter out objects without an 'order' property and sort by 'order'
   const sortedInterests = researchInterests.filter(item => item.order).sort((a, b) => parseInt(a.order) - parseInt(b.order));
 
   return (
-    <Layout metadata={{ title: "UniWEB Test" }}>
+    <Layout metadata={{ title: `${membershipInfo.first_name} ${membershipInfo.last_name} | Profile` }}>
       <Container centered>
         <Heading level={1}>
           {membershipInfo.first_name} {membershipInfo.last_name}
