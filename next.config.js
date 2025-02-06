@@ -50,11 +50,11 @@ const nextConfig = {
     return [
       {
         source: '/api/token',
-        destination: 'https://uoguelph-dev.uniweb.io/api/token.php'
+        destination: process.env.NEXT_PUBLIC_UNIWEB_URL + '/api/token.php'
       },
       {
         source: '/api/resource',
-        destination: 'https://uoguelph-dev.uniweb.io/api/resource'
+        destination: process.env.NEXT_PUBLIC_UNIWEB_URL + '/api/resource'
       }
     ];
   }
