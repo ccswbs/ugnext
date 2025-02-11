@@ -45,9 +45,9 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
               )}
             >
               {typeof title === "string" ? (
-                <h2 className="font-condensed text-3xl font-bold">{title}</h2>
+                <h2 className="font-dm-sans text-3xl font-bold">{title}</h2>
               ) : (
-                <div className="font-condensed text-3xl font-bold">{title}</div>
+                <div className="font-dm-sans text-3xl font-bold">{title}</div>
               )}
               {caption && <span className="text-xl">{caption}</span>}
               {button && (
