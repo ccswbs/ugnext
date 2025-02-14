@@ -5,13 +5,12 @@ import { Heading } from "@/components/heading";
 import { Container } from "@/components/container";
 import PropTypes from "prop-types";
 
-export const Hero = ({ variant = "spotlight", image, title, caption, button, alignment }) => {
+
+export const Hero = ({ image, title, caption}) => {
   return (
-    <div className={twJoin("relative flex w-full flex-col overflow-hidden", variant !== "spotlight" && " h-fit")}>
+    <div className={"relative flex w-full flex-col overflow-hidden"}>
       <Image
-        className={twMerge(
-          "aspect-[16/9] w-full object-cover md:aspect-[2.625]",
-          variant === "spotlight" ? "max-h-[80vh] " : "max-h-[calc(85vh-14rem)]",
+        className={twMerge("aspect-[16/9] w-full object-cover md:aspect-[2.625]",
           image?.className
         )}
         src={image?.src}
@@ -24,58 +23,14 @@ export const Hero = ({ variant = "spotlight", image, title, caption, button, ali
         blurDataURL={image?.blurred}
       />
 
-      {variant === "spotlight" && (
-        <div className="flex items-center lg:container lg:absolute lg:bottom-0 lg:left-1/2 lg:max-w-max-content lg:-translate-x-1/2 lg:p-4">
-          <div
-            className={twJoin(
-              "flex w-full bg-black p-7 text-white lg:bg-black/80 lg:backdrop-blur",
-              alignment !== "fullWidth" && "lg:max-w-[50%]",
-              alignment === "center" && "mx-auto",
-              alignment === "right" && "ml-auto"
-            )}
-          >
-            <div
-              className={twJoin(
-                "container mx-auto flex flex-col gap-5",
-                alignment === "center" && "lg:text-center",
-                alignment === "right" && "lg:text-right"
-              )}
-            >
-              {typeof title === "string" ? (
-                <h2 className="font-condensed text-3xl font-bold">{title}</h2>
-              ) : (
-                <div className="font-condensed text-3xl font-bold">{title}</div>
-              )}
-              {caption && <span className="text-xl">{caption}</span>}
-              {button && (
-                <Button
-                  color="yellow"
-                  href={button?.href}
-                  className={twJoin(
-                    "w-fit text-lg p-3 hover:bg-red hover:text-white focus:bg-red focus:text-white",
-                    alignment === "center" && "lg:mx-auto",
-                    alignment === "right" && "lg:ml-auto"
-                  )}
-                >
-                  {button?.body}
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {variant !== "spotlight" && (
+     
         <Container centered className="absolute bottom-0 left-1/2 h-fit w-full -translate-x-1/2 p-0">
-          {typeof title === "string" ? (
-            <Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">
+            <Heading level={1} className="mb-0 w-fit p-1 text-3xl text-yellow md:text-4xl">
               {title}
             </Heading>
-          ) : (
-            <div className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">{title}</div>
-          )}
+            <p>A world leader in advancing veterinary science, learning and research to improve the lives of animals, people and our planet</p>
         </Container>
-      )}
+
     </div>
   );
 };
