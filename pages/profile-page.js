@@ -9,7 +9,8 @@ import React from 'react';
 import { formatPhoneNumber, useUniWebProfile } from '@/lib/uniweb-utils';
 
 export default function ProfilePage() {
-  const userId = 770; // Replace with the desired ID
+  //const userId = 770; Daniel Gillis
+  const userId = 324; // Pamela Jacobs
   const userPicture = `${process.env.NEXT_PUBLIC_UNIWEB_URL}/picture.php?action=display&contentType=members&id=${userId}`;
   const { loading, error, data } = useUniWebProfile(userId);
 
@@ -36,6 +37,7 @@ export default function ProfilePage() {
   }
 
   const membershipInfo = data.membership_information[0];
+  const selected_publications = data.selected_publications;
   const researchInterests = data.research_interests;
   const researchDescription = data?.research_description?.[0]?.research_description
     ? JSON.parse(data.research_description[0].research_description).en
