@@ -16,7 +16,7 @@ export const OVCOffers = () => {
       },
       title: "Explore",
       url: "https://ovc.uoguelph.ca/explore",
-      caption: "Start your journy here",
+      caption: <span className="text-2xl">Start your journy here</span>,
     },
     {
       image: {
@@ -28,7 +28,7 @@ export const OVCOffers = () => {
       },
       title: "Learn",
       url: "https://www.uoguelph.ca/ovc/learn",
-      caption: "Doctor of Veterinary Mdicine (DVM), Biomedical Sciences, Graduate Studies",
+      caption: <span className="text-2xl">Doctor of Veterinary Mdicine (DVM), Biomedical Sciences, Graduate Studies</span>,
     },
     {
       image: {
@@ -40,7 +40,7 @@ export const OVCOffers = () => {
       },
       title: "Get Care",
       url: "https://www.uoguelph.ca/study-in-canada/",
-      caption: "Ensuring the best Services",
+      caption: <span className="text-2xl">Ensuring the best Services</span>,
     },
     {
       image: {
@@ -52,7 +52,7 @@ export const OVCOffers = () => {
       },
       title: "Give",
       url: "https://www.uoguelph.ca/ovc/give",
-      caption: "Share our vision",
+      caption:  <span className="text-2xl">Share our vision</span>,
     },
   ];
 

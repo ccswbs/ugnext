@@ -1,0 +1,25 @@
+query OVCSpotlightNewsHero {
+  nodeArticles(sortKey: CREATED_AT, last: 1) {
+    edges {
+      node {
+        title
+        makeSpotlight
+        spotlightCaption
+        spotlightButton
+        path
+        heroImage {
+          ... on MediaImage {
+            image {
+              height
+              alt
+              width
+              variations(styles: SPOTLIGHT_HERO_IMAGE) {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,13 +3,15 @@ import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { SpotlightCards } from "@/components/home/spotlight-cards";
 import { TagLine } from "@/components/ovchome/ovc-tag-line";
-import { Rankings } from "@/components/home/rankings";
+import { OVCRankings } from "@/components/ovchome/ovc-rankings";
 import { WorkAccreditations } from "@/components/ovchome/ovc-work-accreditations";
 import { SpotlightHero } from "@/components/home/spotlight-hero";
 import { HomeStory } from "@/components/home/story";
 import { OVCOffers } from "@/components/ovchome/ovc-offers";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
+import ovcLogo from "@/img/ovc/ovc_version1_full_colour.png";
+import Image from "next/image";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -26,7 +28,7 @@ export async function getStaticProps(context) {
 
 export default function OVCHome({ cards, hero }) {
   const containerClasses = twJoin("pt-6");
-
+  
   return (
     <Layout>
       <h1 className="sr-only">Ontario Veterinary College</h1>
@@ -45,16 +47,23 @@ export default function OVCHome({ cards, hero }) {
 
         <div className={containerClasses}>
           <Heading level={1} as={"h2"} className="font-condensed text-black">
-          Latest OVC News and Events
+          OVC News
           </Heading>
           <SpotlightCards cards={cards} />
         </div>
 
         <div className={containerClasses}>
           <Heading level={1} as={"h2"} className="font-condensed text-black">
+        OVC Events
+          </Heading>
+          {/* <SpotlightCards cards={cards} /> */}
+        </div>
+
+        <div className={containerClasses}>
+          <Heading level={1} as={"h2"} className="font-condensed text-black">
             How We Rank
           </Heading>
-          <Rankings />
+          <OVCRankings />
         </div>
 
         <div className={containerClasses}>
@@ -66,6 +75,28 @@ export default function OVCHome({ cards, hero }) {
       </Container>
 
       {/* <HomeStory /> */}
+
+      <div className={containerClasses}>
+        <div className={"bg-light-blue-50 grid grid-cols-3 gap-4"}>
+              <div className="">
+                <Image 
+                src={ovcLogo.src}
+                width={ovcLogo?.width}
+                height={ovcLogo?.height}
+                alt="Ontario Veterinary College - U of G Logo"
+                placeholder={ovcLogo?.blurred ? "blur" : "empty"}
+                blurDataURL={ovcLogo?.blurred}
+                
+              />
+              </div>
+              <div className="col-span-2 text-lg">
+              The Ontario Veterinary College (OVC) at the University of Guelph is a world leader in advancing veterinary medicine and health research to improve the health of animals, people, and our planet. OVC educates the next generation of health leaders and provides high-value experiential learning opportunities through an interdisciplinary, comparative approach aimed at finding real-world solutions to real-world problems.
+              <br/>
+              At OVC, we are educating the next generation of health leaders, fueling discovery and providing our expertise to improve health and well-being across our world. Discover how you can contribute to the ever-evolving world of medicine, care, scientific discovery, and community.
+              </div>
+            </div>
+        </div>
+
     </Layout>
   );
 }
