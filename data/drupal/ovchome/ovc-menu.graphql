@@ -1,0 +1,12 @@
+query OVCMenu {
+  menu(name: OVC_MAIN) {
+    items {
+      url
+      title
+      children {
+        url
+        title
+      }
+    }
+  }
+}

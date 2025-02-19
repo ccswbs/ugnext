@@ -11,6 +11,7 @@ import { OVCOffers } from "@/components/ovchome/ovc-offers";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
 import ovcLogo from "@/img/ovc/ovc_version1_full_colour.png";
+import ovcEvents from "@/img/ovc/brick_leaf_contactus_background.jpg";
 import Image from "next/image";
 
 export async function getStaticProps(context) {
@@ -56,6 +57,14 @@ export default function OVCHome({ cards, hero }) {
           <Heading level={1} as={"h2"} className="font-condensed text-black">
         OVC Events
           </Heading>
+          <Image 
+                src={ovcEvents.src}
+                width={ovcEvents?.width}
+                height={ovcEvents?.height}
+                alt="Ontario Veterinary College - Close-up of building covered with ivy"
+                placeholder={ovcEvents?.blurred ? "blur" : "empty"}
+                blurDataURL={ovcEvents?.blurred}
+                />
           {/* <SpotlightCards cards={cards} /> */}
         </div>
 
@@ -83,7 +92,7 @@ export default function OVCHome({ cards, hero }) {
                 src={ovcLogo.src}
                 width={ovcLogo?.width}
                 height={ovcLogo?.height}
-                alt="Ontario Veterinary College - U of G Logo"
+                alt="Ontario Veterinary College - Main Bilding Front"
                 placeholder={ovcLogo?.blurred ? "blur" : "empty"}
                 blurDataURL={ovcLogo?.blurred}
                 
