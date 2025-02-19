@@ -110,26 +110,33 @@ export default function OVCHome({ cards, hero }) {
 
       {/* <HomeStory /> */}
 
-      <div className={containerClasses}>
-        <div className={"bg-light-blue-50 grid grid-cols-3 gap-4"}>
+     
+        <div className={"w-full py-5 bg-light-blue-50 "}>
+          <Container centered>
+            {/* <div className={containerClasses}> */}
+              <div className="grid grid-cols-3 gap-4">
               <div className="">
                 <Image 
-                src={ovcLogo.src}
-                width={ovcLogo?.width}
-                height={ovcLogo?.height}
-                alt="Ontario Veterinary College - Main Bilding Front"
-                placeholder={ovcLogo?.blurred ? "blur" : "empty"}
-                blurDataURL={ovcLogo?.blurred}
-                
-              />
-              </div>
+                  src={ovcLogo.src}
+                  width={ovcLogo?.width}
+                  height={ovcLogo?.height}
+                  alt="Ontario Veterinary College - Main Bilding Front"
+                  placeholder={ovcLogo?.blurred ? "blur" : "empty"}
+                  blurDataURL={ovcLogo?.blurred}
+                />
+              </div>   
               <div className="col-span-2 text-lg">
-              The Ontario Veterinary College (OVC) at the University of Guelph is a world leader in advancing veterinary medicine and health research to improve the health of animals, people, and our planet. OVC educates the next generation of health leaders and provides high-value experiential learning opportunities through an interdisciplinary, comparative approach aimed at finding real-world solutions to real-world problems.
-              <br/>
-              At OVC, we are educating the next generation of health leaders, fueling discovery and providing our expertise to improve health and well-being across our world. Discover how you can contribute to the ever-evolving world of medicine, care, scientific discovery, and community.
+                The Ontario Veterinary College (OVC) at the University of Guelph is a world leader in advancing veterinary medicine and health research to improve the health of animals, people, and our planet. OVC educates the next generation of health leaders and provides high-value experiential learning opportunities through an interdisciplinary, comparative approach aimed at finding real-world solutions to real-world problems.
+                <br/>
+                At OVC, we are educating the next generation of health leaders, fueling discovery and providing our expertise to improve health and well-being across our world. Discover how you can contribute to the ever-evolving world of medicine, care, scientific discovery, and community.
+              </div> 
               </div>
+            {/* </div> */}
+          </Container>
+
+             
             </div>
-        </div>
+
 
     </Layout>
   );
