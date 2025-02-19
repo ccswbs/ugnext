@@ -52,6 +52,7 @@ export default function OVCHome({ cards, hero }) {
           OVC News
           </Heading>
           <SpotlightCards cards={cards} />
+          <br/>
           <Button
           className={
             "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6 md:inline-flex"
@@ -77,6 +78,7 @@ export default function OVCHome({ cards, hero }) {
                 placeholder={ovcEvents?.blurred ? "blur" : "empty"}
                 blurDataURL={ovcEvents?.blurred}
                 />
+                <br/>
           <Button
             className={
               "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6 md:inline-flex"
