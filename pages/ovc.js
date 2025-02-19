@@ -13,6 +13,7 @@ import { twJoin } from "tailwind-merge";
 import ovcLogo from "@/img/ovc/ovc_version1_full_colour.png";
 import ovcEvents from "@/img/ovc/brick_leaf_contactus_background.jpg";
 import Image from "next/image";
+import {Button} from "@/components/button";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -51,6 +52,17 @@ export default function OVCHome({ cards, hero }) {
           OVC News
           </Heading>
           <SpotlightCards cards={cards} />
+          <Button
+          className={
+            "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6 md:inline-flex"
+          }
+          href="https://ovc.uoguelph.ca/news/"
+          color="red"
+          outlined="outlined"
+          >
+            OVC News Hub
+          </Button>
+
         </div>
 
         <div className={containerClasses}>
@@ -65,6 +77,17 @@ export default function OVCHome({ cards, hero }) {
                 placeholder={ovcEvents?.blurred ? "blur" : "empty"}
                 blurDataURL={ovcEvents?.blurred}
                 />
+          <Button
+            className={
+              "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6 md:inline-flex"
+            }
+            href="https://ovc.uoguelph.ca/news/"
+            color="red"
+            outlined="outlined"
+            >
+              OVC Events Hub
+          </Button>
+
           {/* <SpotlightCards cards={cards} /> */}
         </div>
 
