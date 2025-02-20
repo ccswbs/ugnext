@@ -21,7 +21,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
-    "@netlify/plugin-nextjs": "^5.8.1",
+    "@netlify/plugin-nextjs": "^5.9.3",
     "@next/bundle-analyzer": "^14.2.7",
     "@next/third-parties": "^14.2.11",
     "classnames": "^2.5.1",
