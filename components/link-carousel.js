@@ -85,7 +85,7 @@ LinkCarousel.propTypes = {
         className: PropTypes.string,
         blurred: PropTypes.string,
       }).isRequired,
-      caption: PropTypes.string,
+      caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     })
   ).isRequired,
 };
