@@ -16,7 +16,7 @@ import Image from 'next/image'
 // }
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
-console.log("status"+status)
+
   // Try to get the ID of the page the user is requesting.
   const id = await getPageID("/ovc" );
 
@@ -90,8 +90,6 @@ export default function Page({ content }) {
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
-            {console.log("content2", content)}
-
 
         <Container centered> 
             <Heading level={1} as={"h2"} className="font-condensed text-black">
