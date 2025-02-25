@@ -5,18 +5,20 @@ import { Hero } from "@/components/hero";
 import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import eventsBG from "@/img/ovc/brick_leaf_background.jpg";
+import Image from 'next/image'
 
-export async function getStaticPaths() {
-  return {
-    paths: [], //await getPaths(),
-    fallback: true,
-  };
-}
+// export async function getStaticPaths() {
+//   return {
+//     paths: [], //await getPaths(),
+//     fallback: true,
+//   };
+// }
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
-
+console.log("status"+status)
   // Try to get the ID of the page the user is requesting.
-  const id = await getPageID("/" + context.params.slug.join("/"));
+  const id = await getPageID("/ovc" );
 
   // If we couldn't resolve an id, then that means this page doesn't exist on content hub, show a 404.
   if (!id) {
@@ -37,12 +39,12 @@ export async function getStaticProps(context) {
   content.menu = await getPageMenu(content);
 
   // Get rid of any data that doesn't need to be passed to the page.
-  delete content.primaryNavigation;
+//   delete content.primaryNavigation;
 
   // Flatten image prop
   content.image = content?.image?.image ?? null;
 
-  content.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
+//   content.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
 
   return {
     props: { content },
@@ -62,15 +64,21 @@ export default function Page({ content }) {
               width: content.image.width,
               alt: content.image.alt,
             }}
+            video={
+              content?.heroWidgets?.video && {
+                src: content.heroWidgets.video.url,
+                title: content.heroWidgets.video.name,
+                transcript: content.heroWidgets.video.transcript?.url,
+              }
+            }
             title={content.title}
           />
 
-          <Breadcrumbs links={content?.breadcrumbs} />
+          {/* <Breadcrumbs links={content?.breadcrumbs} /> */}
         </>
       ) : (
         <>
-          <Breadcrumbs links={content?.breadcrumbs} />
-
+          {/* <Breadcrumbs links={content?.breadcrumbs} /> */}
           <Container centered>
             <Heading level={1} className="mb-0">
               {content?.title}
@@ -82,6 +90,25 @@ export default function Page({ content }) {
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
+            {console.log("content2", content)}
+
+
+        <Container centered> 
+            <Heading level={1} as={"h2"} className="font-condensed text-black">
+                OVC News
+            </Heading>
+            <Heading level={1} as={"h2"} className="font-condensed text-black">
+                OVC Events
+            </Heading>
+            <Image 
+                src = {eventsBG.src}
+                width = {eventsBG.width}
+                height = {eventsBG.height}
+                blurred = {eventsBG.blurDataURL}
+                alt = "Ivey covered building"
+            />
+            
+        </Container>
     </Layout>
   );
 }
