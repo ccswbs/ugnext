@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { HtmlParser } from "@/components/html-parser";
+import { Link } from "@/components/link";
+import { List } from "@/components/list";
 import React from 'react';
 import { formatPhoneNumber, useUniWebProfile } from '@/lib/uniweb-utils';
 
 export default function ProfilePage() {
-  //const userId = 770; Daniel Gillis
-  const userId = 324; // Pamela Jacobs
+  const userId = 770; // Daniel Gillis
+  //const userId = 324; // Pamela Jacobs
   const userPicture = `${process.env.NEXT_PUBLIC_UNIWEB_URL}/picture.php?action=display&contentType=members&id=${userId}`;
   const { loading, error, data } = useUniWebProfile(userId);
 
@@ -36,9 +38,9 @@ export default function ProfilePage() {
     );
   }
 
-  const membershipInfo = data.membership_information[0];
-  const selected_publications = data.selected_publications;
-  const researchInterests = data.research_interests;
+  const membershipInfo = data?.membership_information[0];
+  const selected_publications = data?.selected_publications;
+  const researchInterests = data?.research_interests;
   const researchDescription = data?.research_description?.[0]?.research_description
     ? JSON.parse(data.research_description[0].research_description).en
     : null;
@@ -64,21 +66,33 @@ export default function ProfilePage() {
             {membershipInfo.academic_unit[1]}<br />
             {membershipInfo.academic_unit[2]}<br />
             {membershipInfo.academic_unit[3]}<br />
-            <i className="fa-solid fa-envelope"></i> {membershipInfo.email}<br />
-            <i className="fa-solid fa-building"></i> Office: {membershipInfo.office}<br />
-            <i className="fa-solid fa-phone"></i> {membershipInfo.telephone ? formatPhoneNumber(membershipInfo.telephone) : "no phone"}<br />
-            {membershipInfo.homepage}
+            {membershipInfo.email && <><i className="fa-solid fa-envelope"></i> {membershipInfo.email}<br /></>}
+            {membershipInfo.office && <><i className="fa-solid fa-building"></i> Office: {membershipInfo.office}<br /></>}
+            {membershipInfo.telephone && <><i className="fa-solid fa-phone"></i> {formatPhoneNumber(membershipInfo.telephone)}<br /></>}
+            {membershipInfo.homepage && <><i className="fa-solid fa-globe-pointer"></i> <Link href={membershipInfo.homepage}>Website</Link></>}
           </div>
         </div>
-        <HtmlParser html={academicBiography} />
-        <Heading level={3}>Research Description</Heading>
-        <HtmlParser html={researchDescription} />
-        <Heading level={3}>Research Interests</Heading>
-        <ul>
-        {sortedInterests.map(item => (
-            <li key={item.order}>{item.interest[1]}</li>
-        ))}
-        </ul>
+        {academicBiography && (
+          <>
+            <HtmlParser html={academicBiography} />
+          </>
+        )}
+        {researchDescription && (
+          <>
+            <Heading level={3}>Research Description</Heading>
+            <HtmlParser html={researchDescription} />
+          </>
+        )}
+        {sortedInterests && sortedInterests.length > 0 && (
+          <>
+            <Heading level={3}>Research Interests</Heading>
+            <List>
+              {sortedInterests.map(item => (
+                <li key={item.order}>{item.interest[1]}</li>
+              ))}
+            </List>
+          </>
+        )}
       </Container>
     </Layout>
   );
