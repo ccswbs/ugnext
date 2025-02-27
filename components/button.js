@@ -37,7 +37,7 @@ export const Button = ({
             color === "red" &&
               "border-red text-red hover:bg-red hover:text-white focus:bg-red focus:text-white focus:ring-red",
             color === "yellow" &&
-              "border-yellow text-yellow hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus:ring-yellow",
+              "border-uog-yellow text-uog-yellow hover:bg-uog-yellow hover:text-black focus:bg-uog-yellow focus:text-black focus:ring-uog-yellow",
             color === "blue" &&
               "border-blue text-blue hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue",
             color === "green" &&

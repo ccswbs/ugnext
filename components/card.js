@@ -43,8 +43,8 @@ export const Card = ({ href, image, title, footer, className, centered, children
       {/* Card Main Container */}
       <div
         className={twJoin(
-          "flex flex-1 flex-col gap-2 bg-light-blue-50 p-5",
-          href && "transition-colors group-hover:bg-yellow"
+          "flex flex-1 flex-col gap-2 bg-uog-grey-light-bg p-5",
+          href && "transition-colors group-hover:bg-uog-yellow"
         )}
       >
         {/* Card Title */}
@@ -60,7 +60,7 @@ export const Card = ({ href, image, title, footer, className, centered, children
       {footer && (
         <div
           className={twJoin(
-            "flex gap-2 border-t border-t-blue-200 bg-light-blue-100 px-5 py-2 transition-colors",
+            "flex gap-2 border-t border-t-blue-200 bg-uog-grey-light-bg px-5 py-2 transition-colors",
             centered && "justify-center"
           )}
         >
