@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 export const Tabs = ({ fullWidth = true, tabs }) => (
   <TabGroup>
-    <TabList className={twJoin("flex gap-1 border-b-4 border-yellow", fullWidth ? "w-full" : "w-fit")}>
+    <TabList className={twJoin("flex gap-1 border-b-4 border-uog-yellow", fullWidth ? "w-full" : "w-fit")}>
       {tabs.map((tab, index) => (
         <Tab
           key={index}
