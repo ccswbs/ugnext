@@ -25,7 +25,7 @@ export const Link = ({ href, color = "blue", children, className, ...rest }) => 
         "-ml-0.5 px-0.5 py-1 underline transition-colors hover:decoration-transparent focus:outline-none focus:ring-2 focus:ring-offset-2",
         color === "blue" && "text-blue-600 hover:bg-blue hover:text-white focus:text-blue-800 focus:ring-blue",
         color === "red" && "text-red hover:bg-red hover:text-white focus:text-red-800 focus:ring-red",
-        color === "yellow" && "text-yellow hover:bg-yellow hover:text-white focus:text-yellow-600 focus:ring-yellow",
+        color === "yellow" && "text-yellow hover:bg-uog-yellow hover:text-white focus:text-yellow-600 focus:ring-yellow",
         color === "green" && "text-green hover:bg-green hover:text-white focus:text-green-800 focus:ring-green",
         color === "gray" && "text-gray hover:bg-gray hover:text-white focus:text-gray-600 focus:ring-gray",
         color === "black" && "text-black hover:bg-black hover:text-white focus:text-black-800 focus:ring-black",

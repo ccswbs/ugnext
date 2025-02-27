@@ -60,7 +60,7 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
           <AppArmor />
 
           <a
-            className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
+            className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-uog-yellow underline px-0 focus:px-2 transition-[padding]"
             href="#content"
           >
             Skip to main content

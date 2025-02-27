@@ -13,7 +13,7 @@ export const Heading = ({ level, children, className, as, ...rest }) => {
         twJoin(
           "font-bold leading-tight",
           headingLevel === 1 && "font-serif my-7 text-4xl",
-          headingLevel === 2 && "my-3 text-3xl",
+          headingLevel === 2 && "my-3 text-3xl text-uog-red",
           headingLevel === 3 && "my-3 text-2xl",
           headingLevel === 4 && "my-3 text-xl",
           (headingLevel === 5 || headingLevel === 6) && "my-3 text-xl"

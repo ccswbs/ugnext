@@ -13,7 +13,7 @@ export const Alert = ({ type = "danger", title, subtitle, message, footer }) => 
       className={twJoin(
         "flex items-center gap-2 p-4 text-xl",
         type === "danger" && "bg-red text-white",
-        type === "warning" && "bg-yellow text-black",
+        type === "warning" && "bg-uog-yellow text-black",
         type === "info" && "bg-blue text-white"
       )}
     >

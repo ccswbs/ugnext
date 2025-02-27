@@ -53,9 +53,9 @@ export const Button = ({
           !disabled &&
           twJoin(
             color === "red" &&
-              "bg-red text-white hover:bg-red-800 hover:text-white focus:bg-red-800 focus:text-white focus:ring-red",
+              "bg-uog-red text-white hover:bg-red-800 hover:text-white focus:bg-red-800 focus:text-white focus:ring-red",
             color === "yellow" &&
-              "bg-yellow text-black hover:bg-yellow-500 hover:text-black focus:bg-yellow-500 focus:text-black focus:ring-yellow",
+              "bg-uog-yellow text-black hover:bg-uog-yellow hover:text-black focus:bg-uog-yellow focus:text-black focus:ring-yellow",
             color === "blue" &&
               "bg-blue text-white hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue",
             color === "green" &&
