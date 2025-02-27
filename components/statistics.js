@@ -17,19 +17,19 @@ export const Statistics = ({ data, variant = "gradient-of-solid-colors" }) => {
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-red text-white",
+        "bg-uog-red text-white",
       (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
       variant === "left-border" && "border-l-[1rem] border-red"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-yellow text-black",
+        "bg-uog-yellow text-black",
       (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
       variant === "left-border" && "border-l-[1rem] border-yellow"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-light-blue text-black",
+        "bg-uog-blue text-uog-blue-contrast",
       (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
       variant === "left-border" && "border-l-[1rem] border-light-blue"
     ),

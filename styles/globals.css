@@ -46,7 +46,7 @@
   }
 
   .author {
-    @apply border-l-4 border-l-red pl-4;
+    @apply border-l-4 border-l-uog-red pl-4;
   }
 }
 
