@@ -8,7 +8,7 @@ export const TagLine = () => (
         University of Guelph, Ontario, Canada
       </Heading>
 
-      <span className="text-center text-2xl font-thin">Improve Life</span>
+      <span className="text-center text-2xl">Improve Life</span>
     </div>
 
     <Divider />
