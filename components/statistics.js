@@ -12,25 +12,25 @@ export const Statistics = ({ data, variant = "gradient-of-solid-colors" }) => {
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
         "bg-black text-white",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
       variant === "left-border" && "border-l-[1rem] border-black"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
         "bg-uog-red text-white",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
-      variant === "left-border" && "border-l-[1rem] border-red"
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
+      variant === "left-border" && "border-l-[1rem] border-uog-red"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
         "bg-uog-yellow text-black",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
-      variant === "left-border" && "border-l-[1rem] border-yellow"
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
+      variant === "left-border" && "border-l-[1rem] border-uog-yellow"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
         "bg-uog-blue text-uog-blue-contrast",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
       variant === "left-border" && "border-l-[1rem] border-light-blue"
     ),
   ];
