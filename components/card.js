@@ -60,7 +60,7 @@ export const Card = ({ href, image, title, footer, className, centered, children
       {footer && (
         <div
           className={twJoin(
-            "flex gap-2 border-t border-t-blue-200 bg-uog-grey-light-bg px-5 py-2 transition-colors",
+            "flex gap-2 border-t border-uog-grey-light-focus bg-uog-grey-light px-5 py-2 transition-colors",
             centered && "justify-center"
           )}
         >
