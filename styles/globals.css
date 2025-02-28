@@ -15,6 +15,7 @@
   body,
   #__next {
     @apply flex min-h-full flex-col text-base leading-relaxed;
+    font-size: 1.8rem;
   }
 
   #__next {
@@ -27,12 +28,12 @@
   h4,
   h5,
   h6 {
-    line-height: 1.4rem;
+    line-height: 1.4;
   }
 
   p {
     @apply mb-[1.5rem] mt-0;
-    font-size: 1.8rem;
+    line-height: 1.6;
   }
 }
 
