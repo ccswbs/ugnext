@@ -35,11 +35,11 @@ export const Button = ({
           twJoin(
             "border-2",
             color === "red" &&
-              "border-uog-red text-uog-red hover:bg-red hover:text-white focus:bg-red focus:text-white focus:ring-red",
+              "border-uog-red text-uog-red hover:bg-uog-red hover:text-white focus:bg-red focus:text-white focus:ring-red",
             color === "yellow" &&
               "border-uog-yellow text-uog-yellow hover:bg-uog-yellow hover:text-black focus:bg-uog-yellow focus:text-black focus:ring-uog-yellow",
             color === "blue" &&
-              "border-blue text-blue hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue",
+              "border-blue text-uog-blue hover:bg-uog-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue",
             color === "green" &&
               "border-green text-green hover:bg-green hover:text-white focus:bg-green focus:text-white focus:ring-green",
             color === "gray" &&
@@ -53,11 +53,11 @@ export const Button = ({
           !disabled &&
           twJoin(
             color === "red" &&
-              "bg-uog-red text-white hover:bg-red-800 hover:text-white focus:bg-red-800 focus:text-white focus:ring-red",
+              "bg-uog-red text-white hover:bg-uog-red-focus hover:text-white focus:bg-uog-red-focus focus:text-white focus:ring-red",
             color === "yellow" &&
               "bg-uog-yellow text-black hover:bg-uog-yellow hover:text-black focus:bg-uog-yellow focus:text-black focus:ring-yellow",
             color === "blue" &&
-              "bg-uog-blue text-white hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue",
+              "bg-uog-blue text-white hover:bg-uog-blue-focus hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue",
             color === "green" &&
               "bg-green text-white hover:bg-green-800 hover:text-white focus:bg-green-800 focus:text-white focus:ring-green",
             color === "gray" &&
