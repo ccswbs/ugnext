@@ -21,8 +21,18 @@
     @apply flex-1;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.4rem;
+  }
+
   p {
-    @apply mb-2.5;
+    @apply mb-[1.5rem] mt-0;
+    font-size: 1.8rem;
   }
 }
 
