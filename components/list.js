@@ -13,7 +13,7 @@ export const List = ({ variant = "unordered", children, className, ...rest }) =>
       {...rest}
       className={twMerge(
         twJoin(
-          "my-2 flex flex-col gap-1",
+          "flex flex-col gap-1 my-2",
           variant === "ordered" && "gap-2 [counter-reset:list-number]",
           context?.nested && "mt-0"
         ),
@@ -31,11 +31,11 @@ export const ListItem = ({ className, children }) => {
   return (
     <li
       className={twMerge(
-        "relative h-fit w-full pl-8 before:absolute before:shrink-0 before:items-center before:justify-center has-[ol]:before:content-none has-[ul]:before:content-none",
+        "relative h-fit w-full ml-5",
         variant !== "ordered" &&
-          "before:left-[.5rem] before:top-[0.35rem] before:block before:h-[1.8rem] before:w-[1.1rem] before:text-yellow before:content-chevron-right before:icon",
+          "list-disc",
         variant === "ordered" &&
-          "before:left-0 before:inline-flex before:h-6 before:w-6 before:bg-uog-yellow before:font-black before:text-black before:content-[counter(list-number)] before:[counter-increment:list-number]",
+          "list-decimal",
         className
       )}
     >
