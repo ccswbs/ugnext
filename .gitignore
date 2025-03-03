@@ -34,6 +34,3 @@ yarn-error.log*
 .idea
 *storybook.log!
 /data/sqlite/db.sqlite3
-
-# Not sure what this one does
-next-env.d.ts
