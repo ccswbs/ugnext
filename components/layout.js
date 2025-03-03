@@ -45,7 +45,7 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
       </Head>
 
       <Transition show={isFallback}>
-        <div className="fixed left-0 top-0 z-20 flex h-screen w-screen flex-col items-center justify-center gap-6 bg-white text-red transition-opacity duration-300 data-[closed]:opacity-0">
+        <div className="fixed left-0 top-0 z-20 flex h-screen w-screen flex-col items-center justify-center gap-6 bg-white text-uog-red transition-opacity duration-300 data-[closed]:opacity-0">
           <FontAwesomeIcon className="text-9xl" icon={faGryphonStatue} />
 
           <div className="flex items-center gap-2">
@@ -68,7 +68,7 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
 
           <div className="flex flex-1 flex-col">
             {isPreview && (
-              <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
+              <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-uog-red p-2 text-center text-base font-bold text-white">
                 <span>You are currently in Preview Mode.</span>
 
                 <Button color="yellow" className="p-2" href="/api/exit-preview">
