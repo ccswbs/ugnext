@@ -136,7 +136,7 @@ module.exports = {
         "chevron-right": '"\\f054"',
       },
       backgroundImage: {
-        divider: `linear-gradient(90deg,#000 0%,#000 33%,${colors['uog-red']} 0,${colors['uog-red']} 66%,${colors['uog-yellow']} 0,${colors['uog-yellow']} 90%)`,
+        divider: `linear-gradient(90deg, #000 0%, #000 33.33%, ${colors['uog-red']} 33.33%, ${colors['uog-red']} 66.66%, ${colors['uog-yellow']} 66.66%, ${colors['uog-yellow']} 100%)`,
       },
       aria: {
         "page-current": 'current="page"',
