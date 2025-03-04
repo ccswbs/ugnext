@@ -16,7 +16,8 @@ export const Heading = ({ level, children, className, as, ...rest }) => {
           headingLevel === 2 && "mb-[1.5rem] mt-[3rem] text-[3rem] text-uog-red",
           headingLevel === 3 && "mb-[1.5rem] mt-[3rem] text-[2.5rem]",
           headingLevel === 4 && "mb-[1.5rem] mt-[3rem] text-[2rem]",
-          (headingLevel === 5 || headingLevel === 6) && "mb-[1.5rem] mt-[3rem] text-[2rem]"
+          headingLevel === 5 && "mb-[1.5rem] mt-[3rem] text-[1.75rem]",
+          headingLevel === 6 && "mb-[1.5rem] mt-[3rem] text-[1.5rem]"
         ),
         className
       )}
