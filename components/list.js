@@ -14,7 +14,7 @@ export const List = ({ variant = "unordered", children, className, ...rest }) =>
       className={twMerge(
         twJoin(
           "flex flex-col gap-1 my-2",
-          variant === "ordered" && "gap-2 [counter-reset:list-number]",
+          variant === "ordered" && "gap-2 [counter-reset:list-number] list-decimal",
           context?.nested && "mt-0"
         ),
         className
@@ -32,10 +32,6 @@ export const ListItem = ({ className, children }) => {
     <li
       className={twMerge(
         "relative h-fit w-full ml-5",
-        variant !== "ordered" &&
-          "list-disc",
-        variant === "ordered" &&
-          "list-decimal",
         className
       )}
     >

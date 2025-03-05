@@ -35,6 +35,16 @@
     @apply mb-[1.5rem] mt-0;
     line-height: 1.6;
   }
+  
+  ul {
+    list-style-type: disc;
+  }
+  ul ul {
+    list-style-type: circle;
+  }
+  ul ul ul {
+    list-style-type: square;
+  }
 }
 
 @layer utilities {
