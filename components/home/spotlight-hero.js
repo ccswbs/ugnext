@@ -12,9 +12,9 @@ export const SpotlightHero = ({ hero }) => (
       height: hero.image.image.height,
       className: twJoin(
         "aspect-[3/2] w-full",
-        hero.thumbnailImageCropping === "right" && "object-right",
-        hero.thumbnailImageCropping === "left" && "object-left",
-        (hero.thumbnailImageCropping === "center" || !hero.thumbnailImageCropping) && "object-center"
+        hero.thumbnailImageCrop === "right" && "object-right",
+        hero.thumbnailImageCrop === "left" && "object-left",
+        (hero.thumbnailImageCrop === "center" || !hero.thumbnailImageCrop) && "object-center"
       ),
     }}
     caption={hero.caption}
