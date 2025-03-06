@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
+import { Divider } from "@/components/divider";
 import { Heading } from "@/components/heading";
 import { SpotlightCards } from "@/components/home/spotlight-cards";
 import { TagLine } from "@/components/home/tag-line";
@@ -29,13 +30,14 @@ export default function Home({ cards, hero }) {
 
   return (
     <Layout>
-      <h1 className="sr-only">University of Guelph, Ontario, Canada</h1>
-
-      {hero && <SpotlightHero hero={hero} />}
-
-      <Container centered>
+      <div className="flex flex-col flex-col-reverse">
         <TagLine />
+        {hero && <SpotlightHero hero={hero} />}
+      </div>
 
+      <Container centered>      
+        <Divider />      
+      
         <div className={containerClasses}>
           <Heading level={1} as={"h2"} className="font-condensed">
             Our Latest News and Events
