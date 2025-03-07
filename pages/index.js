@@ -39,28 +39,28 @@ export default function Home({ cards, hero }) {
         <Divider />      
       
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed">
+          <Heading level={2}>
             Our Latest News and Events
           </Heading>
           <SpotlightCards cards={cards} />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed">
+          <Heading level={2}>
             Study Here
           </Heading>
           <StudyHere />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed">
+          <Heading level={2}>
             How We Rank Among the World
           </Heading>
           <Rankings />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed">
+          <Heading level={2}>
             Our Three Campuses
           </Heading>
           <ThreeCampuses />
