@@ -5,9 +5,9 @@ export const Info = ({ children, color = "red" }) => (
   <div
     className={twJoin(
       "flex flex-col gap-1 border-l-4 pl-4",
-      color === "yellow" && "border-l-yellow",
-      color === "red" && "border-l-red",
-      color === "blue" && "border-l-blue"
+      color === "yellow" && "border-l-uog-yellow",
+      color === "red" && "border-l-uog-red",
+      color === "blue" && "border-l-uog-blue"
     )}
   >
     {children}

@@ -8,9 +8,7 @@ query SpotlightCard($status: Boolean = false, $id: String = "") {
               alt
               height
               width
-              variations(styles: SPOTLIGHT_CARD_IMAGE) {
-                url
-              }
+              url
             }
           }
         }

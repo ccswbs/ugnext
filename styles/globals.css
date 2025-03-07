@@ -15,14 +15,35 @@
   body,
   #__next {
     @apply flex min-h-full flex-col text-base leading-relaxed;
+    font-size: 1.8rem;
   }
 
   #__next {
     @apply flex-1;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.4;
+  }
+
   p {
-    @apply mb-2.5;
+    @apply mb-[1.5rem] mt-0;
+    line-height: 1.6;
+  }
+  
+  ul {
+    list-style-type: disc;
+  }
+  ul ul {
+    list-style-type: circle;
+  }
+  ul ul ul {
+    list-style-type: square;
   }
 }
 
@@ -46,7 +67,7 @@
   }
 
   .author {
-    @apply border-l-4 border-l-red pl-4;
+    @apply border-l-4 border-l-uog-red pl-4;
   }
 }
 

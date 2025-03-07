@@ -11,17 +11,16 @@ export const SpotlightCards = ({ cards }) => (
         href={card.url.url}
         centered
         image={{
-          src: card.image.image.variations[0].url,
+          src: card.image.image.url,
           alt: card.image.image.alt,
           width: card.image.image.width,
           height: card.image.image.height,
           className: twJoin(
             "aspect-[3/2] w-full",
-            card.thumbnailImageCropping === "right" && "object-right",
-            card.thumbnailImageCropping === "left" && "object-left",
-            card.thumbnailImageCropping === "center" && "object-center"
+            card.thumbnailImageCrop === "right" && "object-right",
+            card.thumbnailImageCrop === "left" && "object-left",
+            card.thumbnailImageCrop === "center" && "object-center"
           ),
-          sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
         }}
       />
     ))}
