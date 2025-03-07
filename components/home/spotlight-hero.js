@@ -16,6 +16,7 @@ export const SpotlightHero = ({ hero }) => (
         hero.thumbnailImageCrop === "left" && "object-left",
         (hero.thumbnailImageCrop === "center" || !hero.thumbnailImageCrop) && "object-center"
       ),
+      sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
     }}
     caption={hero.caption}
     button={{
