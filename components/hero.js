@@ -22,7 +22,6 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
         width={image?.width}
         height={image?.height}
         priority
-        sizes="100vw"
         placeholder={image?.blurred ? "blur" : "empty"}
         blurDataURL={image?.blurred}
       />

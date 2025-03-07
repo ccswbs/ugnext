@@ -11,7 +11,7 @@ export const SpotlightCards = ({ cards }) => (
         href={card.url.url}
         centered
         image={{
-          src: card.image.image.variations[0].url,
+          src: card.image.image.url,
           alt: card.image.image.alt,
           width: card.image.image.width,
           height: card.image.image.height,
@@ -21,7 +21,6 @@ export const SpotlightCards = ({ cards }) => (
             card.thumbnailImageCrop === "left" && "object-left",
             card.thumbnailImageCrop === "center" && "object-center"
           ),
-          sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
         }}
       />
     ))}
