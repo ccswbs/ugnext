@@ -18,9 +18,6 @@ query SpotlightHero($status: Boolean = null) {
               alt
               width
               url
-              variations(styles: SPOTLIGHT_HERO_IMAGE) {
-                url
-              }
             }
           }
         }
