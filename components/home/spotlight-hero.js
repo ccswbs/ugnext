@@ -6,7 +6,7 @@ export const SpotlightHero = ({ hero }) => (
     variant="spotlight"
     title={<h2>{hero.title}</h2>}
     image={{
-      src: hero.image.image.variations[0].url,
+      src: hero.image.image.url,
       alt: hero.image.image.alt,
       width: hero.image.image.width,
       height: hero.image.image.height,
