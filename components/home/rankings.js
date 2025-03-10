@@ -64,14 +64,14 @@ export const Rankings = () => {
             <UnstyledLink
               className={linkClasses}
               color="none"
-              href="https://researchinfosource.com/top-50-research-universities/2023"
+              href="https://news.uoguelph.ca/2025/02/u-of-g-ranked-among-top-universities-in-world-for-reputation/"
             >
-              Infosource 2023
+              Times Higher Education, 2025
             </UnstyledLink>
           ),
           value: (
             <>
-              <strong>Top Five in Research</strong> among Comprehensive Universities in Canada
+              <strong>Top 10</strong> in Canada for Reputation
             </>
           ),
         },
