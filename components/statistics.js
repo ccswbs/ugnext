@@ -12,25 +12,25 @@ export const Statistics = ({ data, variant = "gradient-of-solid-colors" }) => {
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
         "bg-black text-white",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
       variant === "left-border" && "border-l-[1rem] border-black"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-red text-white",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
-      variant === "left-border" && "border-l-[1rem] border-red"
+        "bg-uog-red text-white",
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
+      variant === "left-border" && "border-l-[1rem] border-uog-red"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-yellow text-black",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
-      variant === "left-border" && "border-l-[1rem] border-yellow"
+        "bg-uog-yellow text-black",
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
+      variant === "left-border" && "border-l-[1rem] border-uog-yellow"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-light-blue text-black",
-      (variant === "light-blue" || variant === "left-border") && "bg-light-blue-50 text-black",
+        "bg-uog-blue text-uog-blue-contrast",
+      (variant === "light-blue" || variant === "left-border") && "bg-uog-grey-light-bg text-black",
       variant === "left-border" && "border-l-[1rem] border-light-blue"
     ),
   ];
@@ -83,7 +83,7 @@ export const Statistics = ({ data, variant = "gradient-of-solid-colors" }) => {
               color
             )}
           >
-            <dt className="break-auto hyphens-auto p-6 pb-0 text-center font-bold leading-tight text-3xl">{value}</dt>
+            <dt className="break-auto p-6 pb-0 text-center font-bold leading-tight text-3xl">{value}</dt>
             <dd className="text-normal p-6 pt-0 text-center font-normal text-lg">{represents}</dd>
 
             {image && (

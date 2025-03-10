@@ -35,17 +35,17 @@ export const Button = ({
           twJoin(
             "border-2",
             color === "red" &&
-              "border-red text-red hover:bg-red hover:text-white focus:bg-red focus:text-white focus:ring-red",
+              "border-uog-red text-uog-red hover:bg-uog-red hover:text-white focus:bg-red focus:text-white focus:ring-red",
             color === "yellow" &&
-              "border-yellow text-yellow hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus:ring-yellow",
+              "border-uog-yellow text-uog-yellow hover:bg-uog-yellow hover:text-black focus:bg-uog-yellow focus:text-black focus:ring-uog-yellow",
             color === "blue" &&
-              "border-blue text-blue hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue",
+              "border-blue text-uog-blue hover:bg-uog-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue",
             color === "green" &&
               "border-green text-green hover:bg-green hover:text-white focus:bg-green focus:text-white focus:ring-green",
             color === "gray" &&
               "border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-white focus:bg-gray-300 focus:text-white focus:ring-gray-300",
             color === "black" &&
-              "border-gray-950 text-gray-950 hover:bg-gray-950 hover:text-white focus:bg-gray focus:text-white focus:ring-gray-950",
+              "border-uog-grey-dark-bg text-uog-grey-dark-bg hover:bg-uog-grey-dark-bg hover:text-white focus:bg-gray focus:text-white focus:ring-gray-950",
             color === "white" &&
               "border-white text-black hover:bg-white hover:text-black focus:bg-gray-light focus:text-white focus:ring-white"
           ),
@@ -53,17 +53,17 @@ export const Button = ({
           !disabled &&
           twJoin(
             color === "red" &&
-              "bg-red text-white hover:bg-red-800 hover:text-white focus:bg-red-800 focus:text-white focus:ring-red",
+              "bg-uog-red text-white hover:bg-uog-red-focus hover:text-white focus:bg-uog-red-focus focus:text-white focus:ring-red",
             color === "yellow" &&
-              "bg-yellow text-black hover:bg-yellow-500 hover:text-black focus:bg-yellow-500 focus:text-black focus:ring-yellow",
+              "bg-uog-yellow text-black hover:bg-uog-yellow hover:text-black focus:bg-uog-yellow focus:text-black focus:ring-yellow",
             color === "blue" &&
-              "bg-blue text-white hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue",
+              "bg-uog-blue text-white hover:bg-uog-blue-focus hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue",
             color === "green" &&
               "bg-green text-white hover:bg-green-800 hover:text-white focus:bg-green-800 focus:text-white focus:ring-green",
             color === "gray" &&
               "bg-gray text-black hover:bg-gray-400 hover:text-black focus:bg-gray-400 focus:text-black focus:ring-gray",
             color === "black" &&
-              "bg-gray-950 text-white hover:bg-black hover:text-white focus:bg-black focus:text-white focus:ring-black",
+              "bg-uog-grey-dark-bg text-white hover:bg-black hover:text-white focus:bg-black focus:text-white focus:ring-black",
             color === "white" &&
               "border-white bg-white text-black hover:bg-gray-light hover:text-black focus:bg-white focus:text-black focus:ring-white"
           ),
