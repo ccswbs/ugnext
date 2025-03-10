@@ -11,9 +11,6 @@ function Application({ Component, pageProps }) {
 
   return (
     <>
-      <style jsx global>{`
-        @import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
-      `}</style>
       <Component {...pageProps} />
       <GoogleTagManager gtmId={gtmId} />
     </>
