@@ -1,0 +1,33 @@
+query GetCustomFooterByTag {
+  customFooterByTag {
+    id
+    results {
+      ... on NodeCustomFooter {
+        id
+        title
+        body {
+          processed
+        }
+        tags {
+          ... on TermUnit {
+            id
+            name
+            acronym
+          }
+        }
+        footerLogo {
+          ... on MediaImage {
+            id
+            name
+            image {
+              alt
+              height
+              url
+              width
+            }
+          }
+        }
+      }
+    }
+  }
+}

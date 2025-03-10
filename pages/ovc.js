@@ -4,7 +4,6 @@ import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
 import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
-import { Breadcrumbs } from "@/components/breadcrumbs";
 import eventsBG from "@/img/ovc/brick_leaf_background.jpg";
 import Image from 'next/image'
 
@@ -73,12 +72,9 @@ export default function Page({ content }) {
             }
             title={content.title}
           />
-
-          {/* <Breadcrumbs links={content?.breadcrumbs} /> */}
         </>
       ) : (
         <>
-          {/* <Breadcrumbs links={content?.breadcrumbs} /> */}
           <Container centered>
             <Heading level={1} className="mb-0">
               {content?.title}
