@@ -18,7 +18,7 @@ export const Layout = ({ children, className, metadata, header, footer, forceApp
 
   const description =
     metadata?.description ??
-    "The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life";
+    "Discover excellence at the University of Guelph - a leading institution fostering innovation, world-class research, and personalized learning. Explore our diverse academic programs, cutting-edge facilities, and vibrant campus life. Join a community dedicated to shaping the future.";
 
   const socialImage = metadata?.image ?? {
     src: "https://www.uoguelph.ca/img/ug-social-thumb.jpg",
