@@ -57,7 +57,7 @@ export const Layout = ({ children, className, metadata, header, footer, appArmor
 
       {!isFallback && (
         <>
-          <AppArmor id={appArmorId} />
+          <AppArmor id={isPreview ? '168' : appArmorId} />
 
           <a
             className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
