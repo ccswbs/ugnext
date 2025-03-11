@@ -40,9 +40,6 @@ steps:
       bun run static-build
     displayName: "Build site"
 
-  - script: ls
-    displayName: "List files in the build directory"
-
   - task: CopyFiles@2
     inputs:
       SourceFolder: '$(System.DefaultWorkingDirectory)/out'
