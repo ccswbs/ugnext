@@ -44,7 +44,7 @@ steps:
     inputs:
       SourceFolder: 'out/_next'
       Contents: '**'
-      TargetFolder: 'out/_next-home'
+      TargetFolder: 'out/_next-home/_next'
 
   - task: ArchiveFiles@2
     inputs:
