@@ -11,14 +11,14 @@ import { twMerge } from "tailwind-merge";
 import PropTypes from "prop-types";
 import AppArmor from "@/components/app-armor";
 
-export const Layout = ({ children, className, metadata, header, footer }) => {
+export const Layout = ({ children, className, metadata, header, footer, forceAppArmorTest = false }) => {
   const { isPreview, isFallback } = useRouter();
 
   const title = metadata?.title ? `${metadata.title} | University of Guelph` : "University of Guelph - Improve Life";
 
   const description =
     metadata?.description ??
-    "The University of Guelph, and everyone who studies here, explores here, teaches here and works here is committed to one simple purpose: To Improve Life";
+    "Discover excellence at the University of Guelph - a leading institution fostering innovation, world-class research, and personalized learning. Explore our diverse academic programs, cutting-edge facilities, and vibrant campus life. Join a community dedicated to shaping the future.";
 
   const socialImage = metadata?.image ?? {
     src: "https://www.uoguelph.ca/img/ug-social-thumb.jpg",
@@ -57,7 +57,7 @@ export const Layout = ({ children, className, metadata, header, footer }) => {
 
       {!isFallback && (
         <>
-          <AppArmor />
+          <AppArmor testing={forceAppArmorTest || isPreview} />
 
           <a
             className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-uog-yellow underline px-0 focus:px-2 transition-[padding]"
@@ -113,4 +113,5 @@ Layout.propTypes = {
   }),
   header: PropTypes.oneOfType([PropTypes.shape({ ...Header.propTypes }), PropTypes.bool]),
   footer: PropTypes.oneOfType([PropTypes.shape({ ...Footer.propTypes }), PropTypes.bool]),
+  forceAppArmorTest: PropTypes.bool
 };
