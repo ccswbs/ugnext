@@ -42,9 +42,9 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: '_next'
+      SourceFolder: 'out/_next'
       Contents: '**'
-      TargetFolder: '_next-home'
+      TargetFolder: 'out/_next-home'
 
   - task: ArchiveFiles@2
     inputs:
