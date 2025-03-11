@@ -27,7 +27,7 @@ steps:
 
   - task: DeleteFiles@1
     inputs:
-      contents: "pages/**/!(404.js|500.js|_app.js|_document.js|index.js)"
+      contents: "pages/**/!(404.js|500.js|_app.js|_document.js|index.js|ens-test.js)"
     displayName: "Remove all pages except home, template and error pages"
 
   - task: Cache@2
