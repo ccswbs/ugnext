@@ -42,7 +42,7 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      SourceFolder: '$(System.DefaultWorkingDirectory)/.next'
       Contents: |
         '**/*'
         '!_next/**/*'
