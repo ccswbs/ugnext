@@ -40,6 +40,12 @@ steps:
       bun run static-build
     displayName: "Build site"
 
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '_next'
+      Contents: '**'
+      TargetFolder: '_next-home'
+
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: "out"
