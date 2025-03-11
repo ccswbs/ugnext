@@ -11,7 +11,7 @@ import { twMerge } from "tailwind-merge";
 import PropTypes from "prop-types";
 import AppArmor from "@/components/app-armor";
 
-export const Layout = ({ children, className, metadata, header, footer, appArmorId = 173 }) => {
+export const Layout = ({ children, className, metadata, header, footer, forceAppArmorTest = false }) => {
   const { isPreview, isFallback } = useRouter();
 
   const title = metadata?.title ? `${metadata.title} | University of Guelph` : "University of Guelph - Improve Life";
@@ -57,7 +57,7 @@ export const Layout = ({ children, className, metadata, header, footer, appArmor
 
       {!isFallback && (
         <>
-          <AppArmor id={isPreview ? '168' : appArmorId} />
+          <AppArmor testing={forceAppArmorTest || isPreview} />
 
           <a
             className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-yellow underline px-0 focus:px-2 transition-[padding]"
@@ -113,5 +113,5 @@ Layout.propTypes = {
   }),
   header: PropTypes.oneOfType([PropTypes.shape({ ...Header.propTypes }), PropTypes.bool]),
   footer: PropTypes.oneOfType([PropTypes.shape({ ...Footer.propTypes }), PropTypes.bool]),
-  appArmorId: PropTypes.string
+  forceAppArmorTest: PropTypes.bool
 };
