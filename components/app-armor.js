@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from "react";
-import { useRouter } from "next/router";
 import Script from "next/script";
 import { Modal } from "@/components/modal";
 import { Alert } from "@/components/alert";
@@ -8,10 +7,9 @@ import { Container } from "@/components/container";
 import { useDismissible } from "@/lib/use-dismissible";
 import objectHash from "object-hash";
 
-const AppArmor = () => {
-  const { pathname } = useRouter();
-  const id = pathname === "/app-armor-test" ? 168 : 169;
+const AppArmor = ({ testing = false }) => {
   const ref = useRef(null);
+  const id = testing ? "168" : "173";
   const [alert, setAlert] = useState(null);
   const [show, setShow] = useState(true);
   const hash = useMemo(() => {
