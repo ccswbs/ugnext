@@ -24,11 +24,11 @@ export async function getStaticProps(context) {
   };
 }
 
-export function HomePage({ cards, hero, appArmorId = '173' }) {
+export function HomePage({ cards, hero, forceAppArmorTest = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
-    <Layout appArmorId={appArmorId}>
+    <Layout forceAppArmorTest={forceAppArmorTest}>
       <h1 className="sr-only">University of Guelph, Ontario, Canada</h1>
 
       {hero && <SpotlightHero hero={hero} />}
