@@ -50,6 +50,7 @@ steps:
       SourceFolder: 'out/_next'
       Contents: '**'
       TargetFolder: 'out/_next-home/_next'
+    displayName: "Copy _next folder to _next-home"
 
   - task: DeleteFiles@1
     inputs:
