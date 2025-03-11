@@ -25,7 +25,7 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function Home({ cards, hero }) {
+export function HomePage({ cards, hero, forceAppArmorTest = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
@@ -35,9 +35,9 @@ export default function Home({ cards, hero }) {
         {hero && <SpotlightHero hero={hero} />}
       </div>
 
-      <Container centered>      
-        <Divider />      
-      
+      <Container centered>
+        <Divider />
+
         <div className={containerClasses}>
           <Heading level={2}>
             Our Latest News and Events
@@ -69,5 +69,11 @@ export default function Home({ cards, hero }) {
 
       <HomeStory />
     </Layout>
+  );
+}
+
+export default function Home({ cards, hero }) {
+  return (
+    <HomePage cards={cards} hero={hero} />
   );
 }
