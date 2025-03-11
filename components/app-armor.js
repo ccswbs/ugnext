@@ -8,9 +8,8 @@ import { Container } from "@/components/container";
 import { useDismissible } from "@/lib/use-dismissible";
 import objectHash from "object-hash";
 
-const AppArmor = () => {
+const AppArmor = ({ id = 173 }) => {
   const { pathname } = useRouter();
-  const id = pathname === "/app-armor-test" ? 168 : 169;
   const ref = useRef(null);
   const [alert, setAlert] = useState(null);
   const [show, setShow] = useState(true);
