@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
+  assetPrefix: process.env.NEXT_STATIC_OUTPUT === "true" ? '/_next-home' : undefined,
   reactStrictMode: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push(
