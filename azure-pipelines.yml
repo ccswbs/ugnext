@@ -27,7 +27,7 @@ steps:
 
   - task: DeleteFiles@1
     inputs:
-      SourceFolder: "$(System.DefaultWorkingDirectory)/pages"
+      SourceFolder: "pages"
       Contents: "**/!(404.js|500.js|_app.js|_document.js|index.js|ens-test.js)"
     displayName: "Remove all pages except home, template and error pages"
 
@@ -43,8 +43,8 @@ steps:
 
   - task: DeleteFiles@1
     inputs:
-      SourceFolder: "$(System.DefaultWorkingDirectory)/out/_next"
-      Contents: "!(static)"
+      SourceFolder: "out/_next"
+      Contents: "**/!(static)"
     displayName: "Remove all folders in _next except static"
 
   - task: CopyFiles@2
@@ -56,7 +56,7 @@ steps:
 
   - task: DeleteFiles@1
     inputs:
-      contents: "$(System.DefaultWorkingDirectory)/out/_next"
+      contents: "out/_next"
     displayName: "Remove _next folder"
 
   - task: ArchiveFiles@2
