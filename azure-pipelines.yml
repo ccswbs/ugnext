@@ -44,6 +44,10 @@ steps:
       bun run static-build
     displayName: "Build site"
 
+  - script: |
+      find out/_next -mindepth 1 -maxdepth 1 ! -name "static" -exec rm -rf {} +
+    displayName: "Remove all folders in _next except static"
+
   - bash: |
       # Define absolute paths
       source_dir="$(Build.SourcesDirectory)/out/_next"
