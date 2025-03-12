@@ -32,7 +32,7 @@ steps:
     displayName: "Cache .next/cache"
 
   - script: |
-      find pages -type f ! -name "404.js" ! -name "500.js" ! -name "_app.js" ! -name "_document.js" ! -name "index.js" ! -name "ens-test.js" -delete
+      find pages -type f ! -name "404.js" ! -name "500.js" ! -name "_app.js" ! -name "_document.js" ! -name "index.js" ! -name "ens-test.js" -exec rm -rf {} +
     displayName: "Remove all pages except home, template and error pages"
 
   - script: |
