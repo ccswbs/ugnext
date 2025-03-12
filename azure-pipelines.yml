@@ -27,7 +27,7 @@ steps:
 
   - task: Cache@2
     inputs:
-      key: "next | $(Agent.OS) | bun.lockb.txt"
+      key: "nextjs | $(Agent.OS) | bun.lockb.txt"
       path: "$(System.DefaultWorkingDirectory)/.next/cache"
     displayName: "Cache .next/cache"
 
