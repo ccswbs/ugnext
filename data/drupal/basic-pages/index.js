@@ -6,6 +6,7 @@ import getPageTitleQuery from "./get-page-title.graphql";
 import getPageQuery from "./get-page-content.graphql";
 import getTestimonialsByTagQuery from "./get-testimonials-by-tag.graphql";
 import getPageMenuQuery from "./get-page-menu.graphql";
+import getCustomFooterByTagQuery from "./get-custom-footer-by-tag.graphql"
 
 export const getPaths = async () => {
   // Here we can decide which pages get pre-rendered.
@@ -40,6 +41,17 @@ export const getPageID = async (url) => {
   });
 
   return data?.route?.entity?.id;
+};
+
+export const getCustomFooter = async (custfoot) => {
+  const { data } = await graphql(getCustomFooterByTagQuery, {
+    tags: custfoot,
+  })
+
+  const customFooter = data;
+  
+  return customFooter;
+
 };
 
 export const getPageContent = async (id, status) => {

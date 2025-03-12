@@ -5,7 +5,7 @@ import { Hero } from "@/components/hero";
 import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-
+import { CustomFooter } from "@/components/custom-footer";
 export async function getStaticPaths() {
   return {
     paths: [], //await getPaths(),
@@ -45,13 +45,14 @@ export async function getStaticProps(context) {
   content.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
 
   return {
-    props: { content },
+    props: { content},
   };
 }
 
 export default function Page({ content }) {
   return (
-    <Layout metadata={{ title: content?.title }} header={content?.menu}>
+    
+    <Layout metadata={{ title: content?.title }} header={content?.menu } custfoot={content?.tags}>
       {content?.image ? (
         <>
           <Hero
@@ -62,13 +63,6 @@ export default function Page({ content }) {
               width: content.image.width,
               alt: content.image.alt,
             }}
-            video={
-              content?.heroWidgets?.video && {
-                src: content.heroWidgets.video.url,
-                title: content.heroWidgets.video.name,
-                transcript: content.heroWidgets.video.transcript?.url,
-              }
-            }
             title={content.title}
           />
 
@@ -89,6 +83,7 @@ export default function Page({ content }) {
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
-    </Layout>
+        {content?.tags !== null && <CustomFooter custfoot={content?.tags}/>}
+      </Layout>
   );
 }

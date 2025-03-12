@@ -1,5 +1,5 @@
-query GetCustomFooterByTag {
-  customFooterByTag {
+query GetCustomFooterByTag($status: Boolean = false, $tags: [String!]!) {
+  customFooterByTag(filter: { tags: $tags, status: $status }) {
     id
     results {
       ... on NodeCustomFooter {
@@ -12,7 +12,7 @@ query GetCustomFooterByTag {
           ... on TermUnit {
             id
             name
-            acronym
+            path
           }
         }
         footerLogo {

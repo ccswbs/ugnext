@@ -9,6 +9,9 @@ query GetPage($id: String = "", $status: Boolean = false) {
         primaryNavigation {
           ...Navigation
         }
+        tags {
+          ...TagUnit
+        }
         image {
           ...Image
         }

@@ -15,3 +15,9 @@ fragment Tag on TermTag {
   name
   path
 }
+
+fragment TagUnit on TermUnit {
+  id
+  name
+  path 
+}
