@@ -51,7 +51,7 @@ steps:
         mv -v "$source_dir" "$target_dir"
 
         # Update links in all .html and .json files under public directory
-        find "$(Build.SourcesDirectory)/.next" -type f \( -name "*.html" -o -name "*.json" \) -exec sed -i 's|/_next|/_home-assets/_next|g' {} +
+        find "$(Build.SourcesDirectory)/_next" -type f \( -name "*.html" -o -name "*.json" \) -exec sed -i 's|/_next|/_home-assets/_next|g' {} +
       fi
 
   - task: ArchiveFiles@2
