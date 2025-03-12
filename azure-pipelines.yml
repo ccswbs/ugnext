@@ -46,17 +46,17 @@ steps:
   - bash: |
       # Define absolute paths
       source_dir="$(Build.SourcesDirectory)/out/_next"
-      target_dir="$(Build.SourcesDirectory)/out/_home-assets"
+      target_dir="$(Build.SourcesDirectory)/out/_next-home"
 
       if [ -d "$source_dir" ]; then
-        # Move contents of _next to _home-assets/_next
+        # Move contents of _next to _next-home/_next
         mkdir -p "$target_dir"
         mv -v "$source_dir" "$target_dir"
 
         # Update links in all .html and .json files under public directory
-        find "$(Build.SourcesDirectory)/out" -type f \( -name "*.html" -o -name "*.json" \) -exec sed -i 's|/_next|/_home-assets/_next|g' {} +
+        find "$(Build.SourcesDirectory)/out" -type f \( -name "*.html" -o -name "*.json" \) -exec sed -i 's|/_next|/_next-home/_next|g' {} +
       fi
-    displayName: "Move _next to _home-assets"
+    displayName: "Move _next to _next-home"
 
   - task: ArchiveFiles@2
     inputs:
