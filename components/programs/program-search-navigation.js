@@ -2,7 +2,7 @@ import { Navigation } from "@/components/navigation";
 
 export const ProgramSearchNavigation = () => {
   return (
-    <div className="my-5">
+    <div className="mt-5">
       <Navigation
         label="Level of Study"
         links={[

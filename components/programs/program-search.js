@@ -7,15 +7,16 @@ export const ProgramSearch = ({ programs, types, degreeTypes, condensedDegrees =
   const [filteredPrograms, setFilteredPrograms] = useState(programs);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col relative">
+    
+      <ProgramSearchNavigation />
+
       <ProgramSearchBar
         programs={programs}
         types={types}
         degreeTypes={degreeTypes}
         onChange={(filtered) => setFilteredPrograms(filtered)}
       />
-
-      <ProgramSearchNavigation />
 
       <ProgramGrid programs={filteredPrograms} condensedDegrees={condensedDegrees} />
 
