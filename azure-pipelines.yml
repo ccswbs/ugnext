@@ -43,17 +43,20 @@ steps:
       find out/_next -mindepth 1 -maxdepth 1 ! -name "static" -exec rm -rf {} +
     displayName: "Remove all folders in _next except static"
 
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: 'out/_next'
-      Contents: '**'
-      TargetFolder: 'out/_next-home/_next'
-    displayName: "Copy _next folder to _next-home"
+  - bash: |
+      # Define absolute paths
+      source_dir="$(Build.SourcesDirectory)/out/_next"
+      target_dir="$(Build.SourcesDirectory)/out/_next-home"
 
-  - task: DeleteFiles@1
-    inputs:
-      contents: "out/_next"
-    displayName: "Remove _next folder"
+      if [ -d "$source_dir" ]; then
+        # Move contents of _next to _next-home/_next
+        mkdir -p "$target_dir"
+        mv -v "$source_dir" "$target_dir"
+
+        # Update links in all .html and .json files under public directory
+        find "$(Build.SourcesDirectory)/out" -type f \( -name "*.html" -o -name "*.json" \) -exec sed -i 's|/_next|/_next-home/_next|g' {} +
+      fi
+    displayName: "Move _next to _next-home"
 
   - task: ArchiveFiles@2
     inputs:
