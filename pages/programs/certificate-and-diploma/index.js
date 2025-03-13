@@ -20,7 +20,7 @@ export async function getStaticProps() {
 export default function ProgramsCertificateAndDiploma({ programs, types }) {
   return (
     <Layout metadata={{ title: "Certificates and Diplomas" }}>
-      <Container centered>
+      <Container className="pb-0" centered>
         <Heading level={1}>Certificates and Diplomas at the University of Guelph</Heading>
       </Container>
 

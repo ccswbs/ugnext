@@ -35,7 +35,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
     <div className="w-full bg-uog-yellow -mt-1">
       <Container
         centered
-        className={twMerge("bg-uog-yellow flex flex-col gap-4 p-5 sm:flex-row sm:items-end", className)}
+        className={twMerge("bg-uog-yellow flex flex-col gap-4 py-[4rem] sm:flex-row sm:items-end", className)}
       >
         <div className="flex-1">
           <TextInput
