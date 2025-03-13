@@ -22,9 +22,9 @@ export default function ProgramsContinuingEducation({ programs, types }) {
     <Layout metadata={{ title: "Continuing Education" }}>
       <Container centered>
         <Heading level={1}>Continuing Education at the University of Guelph</Heading>
-
-        <ProgramSearch programs={programs} types={types} />
       </Container>
+
+      <ProgramSearch programs={programs} types={types} />
     </Layout>
   );
 }

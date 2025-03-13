@@ -22,9 +22,9 @@ export default function ProgramsCertificateAndDiploma({ programs, types }) {
     <Layout metadata={{ title: "Certificates and Diplomas" }}>
       <Container centered>
         <Heading level={1}>Certificates and Diplomas at the University of Guelph</Heading>
-
-        <ProgramSearch programs={programs} types={types} />
       </Container>
+
+      <ProgramSearch programs={programs} types={types} />
     </Layout>
   );
 }

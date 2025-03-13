@@ -19,9 +19,9 @@ export default function ProgramsGraduate({ programs, types, degreeTypes }) {
     <Layout metadata={{ title: "Graduate Programs" }}>
       <Container centered>
         <Heading level={1}>Graduate Programs at the University of Guelph</Heading>
-
-        <ProgramSearch programs={programs} types={types} degreeTypes={degreeTypes} />
       </Container>
+
+      <ProgramSearch programs={programs} types={types} degreeTypes={degreeTypes} />
     </Layout>
   );
 }

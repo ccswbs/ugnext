@@ -33,9 +33,9 @@ export default function ProgramsUndergraduate({ programs, types }) {
     <Layout metadata={{ title: "Undergraduate Programs" }}>
       <Container centered>
         <Heading level={1}>Undergraduate Programs at the University of Guelph</Heading>
-
-        <ProgramSearch programs={programs} types={types} />
       </Container>
+
+      <ProgramSearch programs={programs} types={types} />
     </Layout>
   );
 }
