@@ -1,5 +1,5 @@
-query GetCustomFooterByTag($status: Boolean = false, $tags: [String!]!) {
-  customFooterByTag(filter: { tags: $tags, status: $status }) {
+query GetCustomFooterByTag( $tags: [String!]!) {
+  customFooterByTag(filter: { tags: $tags}) {
     id
     results {
       ... on NodeCustomFooter {

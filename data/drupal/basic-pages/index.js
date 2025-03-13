@@ -44,10 +44,10 @@ export const getPageID = async (url) => {
 };
 
 export const getCustomFooter = async (custfoot) => {
-  const  data = await graphql(getCustomFooterByTagQuery, {
+  const { data } = await graphql(getCustomFooterByTagQuery, {
     tags: custfoot,
   });
- console.log (data)
+
   const customFooter = data;
   
   return customFooter;

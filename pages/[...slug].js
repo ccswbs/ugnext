@@ -6,6 +6,8 @@ import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/d
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CustomFooter } from "@/components/custom-footer";
+import { getCustomFooter} from "@/data/drupal/basic-pages";
+
 export async function getStaticPaths() {
   return {
     paths: [], //await getPaths(),
@@ -33,6 +35,10 @@ export async function getStaticProps(context) {
       notFound: true,
     };
   }
+  if (content?.tags !== null){
+    const tags = content?.tags.map((tag) => tag.path.replace("/taxonomy/term/", ""));
+    content.customFooter = await getCustomFooter(tags);
+  }
 
   content.menu = await getPageMenu(content);
 
@@ -49,7 +55,7 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function Page({ content }) {
+export default function Page({ content, customfooter }) {
   return (
     
     <Layout metadata={{ title: content?.title }} header={content?.menu } custfoot={content?.tags}>
@@ -83,7 +89,7 @@ export default function Page({ content }) {
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
-        {content?.tags !== null && <CustomFooter custfoot={content?.tags}/>}
+        {content?.customFooter !== null && <CustomFooter custfoot={content?.customFooter} />}
       </Layout>
   );
 }
