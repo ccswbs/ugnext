@@ -7,8 +7,9 @@ const units = custfoot;
 
 const tags = units.map((tag) => tag.path.replace("/taxonomy/term/", ""));
 
-console.log("tags",tags)
+console.log("tags",tags, custfoot)
   const customFooter =  getCustomFooter(tags);
+console.log("customFooter", customFooter)
 return (
 
     <div className="bg-gray-50">
