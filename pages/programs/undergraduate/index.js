@@ -31,11 +31,11 @@ export async function getStaticProps() {
 export default function ProgramsUndergraduate({ programs, types }) {
   return (
     <Layout metadata={{ title: "Undergraduate Programs" }}>
-      <Container centered>
+      <Container className="pb-0" centered>
         <Heading level={1}>Undergraduate Programs at the University of Guelph</Heading>
-
-        <ProgramSearch programs={programs} types={types} />
       </Container>
+
+      <ProgramSearch programs={programs} types={types} />
     </Layout>
   );
 }
