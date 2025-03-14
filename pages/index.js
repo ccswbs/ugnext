@@ -24,11 +24,11 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function Home({ cards, hero }) {
+export function HomePage({ cards, hero, forceAppArmorTest = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
-    <Layout>
+    <Layout forceAppArmorTest={forceAppArmorTest}>
       <h1 className="sr-only">University of Guelph, Ontario, Canada</h1>
 
       {hero && <SpotlightHero hero={hero} />}
@@ -67,5 +67,11 @@ export default function Home({ cards, hero }) {
 
       <HomeStory />
     </Layout>
+  );
+}
+
+export default function Home({ cards, hero }) {
+  return (
+    <HomePage cards={cards} hero={hero} />
   );
 }
