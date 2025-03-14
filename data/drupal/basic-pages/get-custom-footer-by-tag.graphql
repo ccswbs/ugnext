@@ -16,6 +16,11 @@ query GetCustomFooterByTag( $tags: [String!]!) {
             name
             path
           }
+           ... on TermTag {
+            id
+            name
+            path
+          }
         }
         footerLogo {
           ... on MediaImage {

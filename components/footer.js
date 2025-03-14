@@ -7,6 +7,7 @@ import { useEffect } from "react";
 export const Footer = ({ links, subFooter, variant = "guelph" }) => {
   return (
     <>
+    {console.log(links, subFooter)}
       {subFooter && (
         <div className="w-full bg-gray-100 py-5">
           <Container centered className="flex flex-col gap-4 sm:grid sm:grid-cols-[1fr_3fr] p-5">

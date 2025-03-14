@@ -11,6 +11,7 @@ query GetPage($id: String = "", $status: Boolean = false) {
         }
         tags {
           ...TagUnit
+          ...Tag
         }
         image {
           ...Image

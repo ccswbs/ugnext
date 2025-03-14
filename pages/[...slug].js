@@ -35,8 +35,10 @@ export async function getStaticProps(context) {
       notFound: true,
     };
   }
+  console.log(content.tags)
   if (content?.tags !== null){
     const tags = content?.tags.map((tag) => tag.path.replace("/taxonomy/term/", ""));
+    console.log("tags::::", tags)
     content.customFooter = await getCustomFooter(tags);
   }
 
