@@ -89,7 +89,7 @@ export default function Page({ content, customfooter }) {
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
-        {content?.customFooter !== null && <CustomFooter custfoot={content?.customFooter} />}
+        {content?.customFooter !== null && <CustomFooter custfoot={content?.customFooter}/>}
       </Layout>
   );
 }

@@ -1,3 +1,5 @@
+#import "../widgets.graphql"
+
 query GetCustomFooterByTag( $tags: [String!]!) {
   customFooterByTag(filter: { tags: $tags}) {
     id
@@ -26,6 +28,21 @@ query GetCustomFooterByTag( $tags: [String!]!) {
               width
             }
           }
+        }
+        widgets {
+          ...Accordion
+          ...Block
+          ...GeneralText
+          ...Buttons
+          ...Links
+          ...MediaText
+          ...ButtonSection
+          ...Tabs
+          ...Statistics
+          ...TestimonialSlider
+          ...Story
+          ...ImageOverlay
+          ...Section
         }
       }
     }
