@@ -21,7 +21,7 @@ export const TestimonialSlider = ({ data }) => {
   }
 
   return (
-    <div className="bg-uog-color-grey-light-bg">
+    <div className="bg-uog-color-light-grey-bg">
       <Container className="px-4 py-14 flex flex-col items-center" centered={true}>
         <Heading level={2} as="h3" className="mb-12 text-black">
           {data?.title}

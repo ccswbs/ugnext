@@ -35,17 +35,17 @@ export const Button = ({
           twJoin(
             "border-2",
             color === "red" &&
-              "border-uog-color-red text-uog-color-red hover:bg-uog-color-red hover:text-white focus:bg-red focus:text-white focus:ring-red",
+              "border-uog-color-red text-uog-color-red hover:bg-uog-color-red hover:text-uog-color-white focus:bg-uog-color-red focus:text-uog-color-white focus:ring-red",
             color === "yellow" &&
               "border-uog-color-yellow text-uog-color-yellow hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus:ring-uog-color-yellow",
             color === "blue" &&
-              "border-blue text-uog-color-blue hover:bg-uog-color-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue",
+              "border-uog-color-blue text-uog-color-blue hover:bg-uog-color-blue hover:text-uog-color-white focus:bg-uog-color-blue focus:text-uog-color-white focus:ring-blue",
             color === "green" &&
               "border-green text-green hover:bg-green hover:text-white focus:bg-green focus:text-white focus:ring-green",
             color === "gray" &&
               "border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-white focus:bg-gray-300 focus:text-white focus:ring-gray-300",
             color === "black" &&
-              "border-uog-color-grey-dark-bg text-uog-color-grey-dark-bg hover:bg-uog-color-grey-dark-bg hover:text-white focus:bg-gray focus:text-white focus:ring-gray-950",
+              "border-uog-color-dark-grey-bg text-uog-color-dark-grey-bg hover:bg-uog-color-dark-grey-bg hover:text-white focus:bg-uog-color-dark-grey-bg focus:text-uog-color-white focus:ring-gray-950",
             color === "white" &&
               "border-white text-black hover:bg-white hover:text-black focus:bg-gray-light focus:text-white focus:ring-white"
           ),
@@ -53,7 +53,7 @@ export const Button = ({
           !disabled &&
           twJoin(
             color === "red" &&
-              "bg-uog-color-red text-white hover:bg-uog-color-red-focus hover:text-white focus:bg-uog-color-red-focus focus:text-white focus:ring-red",
+              "bg-uog-color-red text-uog-color-white hover:bg-uog-color-red-focus hover:text-uog-color-white focus:bg-uog-color-red-focus focus:text-uog-color-white focus:ring-red",
             color === "yellow" &&
               "bg-uog-color-yellow text-black hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus:ring-yellow",
             color === "blue" &&
@@ -63,7 +63,7 @@ export const Button = ({
             color === "gray" &&
               "bg-gray text-black hover:bg-gray-400 hover:text-black focus:bg-gray-400 focus:text-black focus:ring-gray",
             color === "black" &&
-              "bg-uog-color-grey-dark-bg text-white hover:bg-black hover:text-white focus:bg-black focus:text-white focus:ring-black",
+              "bg-uog-color-dark-grey-bg text-uog-color-white hover:bg-uog-color-black hover:text-uog-color-white focus:bg-black focus:text-uog-color-white focus:ring-black",
             color === "white" &&
               "border-white bg-white text-black hover:bg-gray-light hover:text-black focus:bg-white focus:text-black focus:ring-white"
           ),

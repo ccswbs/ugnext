@@ -15,7 +15,7 @@ export const Accordion = ({ title, children }) => (
         <DisclosureButton
           className={twJoin(
             "mb-1 inline-flex w-full cursor-pointer items-center justify-between gap-2 p-2.5 px-5 text-left text-xl transition-colors hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2",
-            open ? "bg-blue text-white" : "bg-uog-color-grey-light-bg text-uog-color-body-copy-link"
+            open ? "bg-blue text-white" : "bg-uog-color-light-grey-bg text-uog-color-body-copy-link"
           )}
         >
           <span>{title}</span>
