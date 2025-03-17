@@ -2,7 +2,8 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
-import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
+import { getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
+import { getFeaturedLegacyNews } from "@/data/drupal/ovchome";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import eventsBG from "@/img/ovc/brick_leaf_background.jpg";
 import Image from 'next/image'
@@ -37,8 +38,13 @@ export async function getStaticProps(context) {
 
   content.menu = await getPageMenu(content);
 
+  // Get the featured OVC News - last 3 entered
+
+  content.featuredLegacyNews = await getFeaturedLegacyNews();
+  console.log(content.featuredLegacyNews);
+
   // Get rid of any data that doesn't need to be passed to the page.
-//   delete content.primaryNavigation;
+   delete content.primaryNavigation;
 
   // Flatten image prop
   content.image = content?.image?.image ?? null;
