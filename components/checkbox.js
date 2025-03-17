@@ -23,7 +23,7 @@ export const Checkbox = ({ checked = false, label, description, color = "red", d
             color === "red" &&
               twJoin("focus-visible:ring-red", disabled ? "ui-checked:bg-red/50" : "ui-checked:bg-red"),
             color === "yellow" &&
-              twJoin("focus-visible:ring-yellow", disabled ? "ui-checked:bg-uog-yellow/50" : "ui-checked:bg-uog-yellow"),
+              twJoin("focus-visible:ring-yellow", disabled ? "ui-checked:bg-uog-color-yellow/50" : "ui-checked:bg-uog-color-yellow"),
             color === "blue" &&
               twJoin("focus-visible:ring-blue", disabled ? "ui-checked:bg-blue/50" : "ui-checked:bg-blue"),
             color === "green" &&
