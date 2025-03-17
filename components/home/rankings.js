@@ -16,14 +16,14 @@ export const Rankings = () => {
             <UnstyledLink
               className={linkClasses}
               color="none"
-              href="https://sustainabilitymag.com/sustainability/inside-the-worlds-most-sustainable-university"
+              href="https://news.uoguelph.ca/2025/03/u-of-gs-ovc-ranks-6th-in-world-oac-in-top-tier-in-new-global-ranking/"
             >
-              QS Sustainability Rankings, 2023
+              QS World University Rankings by Subject, 2025
             </UnstyledLink>
           ),
           value: (
             <>
-              Top 10% for <strong>Sustainability</strong>
+              Among <strong>World's Best</strong> in 12 Subject Areas
             </>
           ),
         },
@@ -50,7 +50,7 @@ export const Rankings = () => {
               color="none"
               href="https://www.timeshighereducation.com/world-university-rankings/by-subject"
             >
-              Times Higher Education, 2023
+              Times Higher Education, 2025
             </UnstyledLink>
           ),
           value: (
