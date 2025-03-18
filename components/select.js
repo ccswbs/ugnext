@@ -131,7 +131,7 @@ export const Select = ({
               disabled={option?.disabled}
             >
               {({ focus, selected }) => (
-                <div className="flex">
+                <div className="flex items-center">
                   <span className="flex-1">{option?.label}</span>
 
                   <FontAwesomeIcon
