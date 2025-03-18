@@ -54,7 +54,7 @@ steps:
         mv -v "$source_dir" "$target_dir"
 
         # Update links in all .html and .json files under public directory
-        find "$(Build.SourcesDirectory)/out" -type f \( -name "*.html" -o -name "*.json" \) -exec sed -i 's|/_next|/_next-home/_next|g' {} +
+        find "$(Build.SourcesDirectory)/out" -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -exec sed -i 's|/_next|/_next-home/_next|g' {} +
       fi
     displayName: "Move _next to _next-home"
 
