@@ -25,11 +25,6 @@ steps:
       bun install --frozen-lockfile
     displayName: "Install dependencies using bun"
 
-  - task: DeleteFiles@1
-    inputs:
-      contents: "pages/**/!(404.js|500.js|_app.js|_document.js|index.js|ens-test.js)"
-    displayName: "Remove all pages except home, template and error pages"
-
   - task: Cache@2
     inputs:
       key: "next | $(Agent.OS) | bun.lockb.txt"
@@ -37,8 +32,31 @@ steps:
     displayName: "Cache .next/cache"
 
   - script: |
+      find pages -mindepth 1 ! -name "404.js" ! -name "500.js" ! -name "_app.js" ! -name "_document.js" ! -name "index.js" ! -name "ens-test.js" -exec rm -rf {} +
+    displayName: "Remove all pages except home, template and error pages"
+
+  - script: |
       bun run static-build
     displayName: "Build site"
+
+  - script: |
+      find out/_next -mindepth 1 -maxdepth 1 ! -name "static" -exec rm -rf {} +
+    displayName: "Remove all folders in _next except static"
+
+  - bash: |
+      # Define absolute paths
+      source_dir="$(Build.SourcesDirectory)/out/_next"
+      target_dir="$(Build.SourcesDirectory)/out/_next-home"
+
+      if [ -d "$source_dir" ]; then
+        # Move contents of _next to _next-home/_next
+        mkdir -p "$target_dir"
+        mv -v "$source_dir" "$target_dir"
+
+        # Update links in all .html and .json files under public directory
+        find "$(Build.SourcesDirectory)/out" -type f \( -name "*.html" -o -name "*.css" \) -exec sed -i 's|/_next|/_next-home/_next|g' {} +
+      fi
+    displayName: "Move _next to _next-home"
 
   - task: ArchiveFiles@2
     inputs:
