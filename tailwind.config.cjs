@@ -32,15 +32,15 @@ const colors = {
   "uog-color-green-on-light": "#2e7f35",
   "uog-color-green-contrast": "#fff",
   
-  "uog-color-light-grey": "#d8d8d8",
-  "uog-color-light-grey-focus": "#bfbfbf",
-  "uog-color-light-grey-contrast": "#000",
-  "uog-color-light-grey-bg": "#f5f5f5",
+  "uog-color-grey-light": "#d8d8d8",
+  "uog-color-grey-light-focus": "#bfbfbf",
+  "uog-color-grey-light-contrast": "#000",
+  "uog-color-grey-light-bg": "#f5f5f5",
   
-  "uog-color-dark-grey": "#747676",
-  "uog-color-dark-grey-focus": "#63625f",
-  "uog-color-dark-grey-contrast": "#fff",
-  "uog-color-dark-grey-bg": "#222",
+  "uog-color-grey-dark": "#747676",
+  "uog-color-grey-dark-focus": "#63625f",
+  "uog-color-grey-dark-contrast": "#fff",
+  "uog-color-grey-dark-bg": "#222",
   
   "uog-color-body-copy": "#555",
   "uog-color-body-copy-on-light": "#555",
