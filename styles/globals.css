@@ -65,7 +65,7 @@
 
 @layer components {
   .vcard {
-    @apply mb-2 bg-uog-color-light-grey-bg p-4;
+    @apply mb-2 bg-uog-color-grey-light-bg p-4;
   }
 
   .author {
