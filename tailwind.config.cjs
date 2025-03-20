@@ -47,7 +47,7 @@ const colors = {
   "uog-color-body-copy-on-dark": "#ccc",
   
   "uog-color-body-copy-bold": "#333",
-  "uog-color-body-copy-bold-on-light": "#000",
+  "uog-color-body-copy-bold-on-light": "#333",
   "uog-color-body-copy-bold-on-dark": "#e2e2e2",
   
   "uog-color-body-copy-link": "#187bb4",
