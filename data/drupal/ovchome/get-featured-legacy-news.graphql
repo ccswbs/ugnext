@@ -1,10 +1,13 @@
+
 query GetFeaturedLegacyNews {
   featuredNews {
     results {
       ... on NodeArticle {
+        id
         title
         created {
           time
+          timestamp
         }
         path
         heroImage {
