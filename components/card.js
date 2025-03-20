@@ -35,6 +35,7 @@ export const Card = ({ href, image, title, footer, className, centered, children
               blurDataURL={image?.blurred}
               sizes={image?.sizes}
               className={twMerge("object-cover", image?.className)}
+              quality={image?.quality || 75}
             />
           </div>
         </div>
