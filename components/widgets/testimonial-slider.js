@@ -21,7 +21,7 @@ export const TestimonialSlider = ({ data }) => {
   }
 
   return (
-    <div className="bg-uog-grey-light-bg">
+    <div className="bg-uog-color-grey-light-bg">
       <Container className="px-4 py-14 flex flex-col items-center" centered={true}>
         <Heading level={2} as="h3" className="mb-12 text-black">
           {data?.title}
@@ -55,7 +55,7 @@ export const TestimonialSlider = ({ data }) => {
                 <Info color="yellow">
                   <div className="flex flex-col gap-0.5">
                     <span className="font-bold text-lg">{title}</span>
-                    {testimonial?.description && <span className="text-uog-red text-lg">{testimonial.description}</span>}
+                    {testimonial?.description && <span className="text-uog-color-red text-lg">{testimonial.description}</span>}
                     {testimonial?.profile && (
                       <Link className="w-fit py-0 text-lg" href={testimonial.profile.url} color="blue">
                         {testimonial.profile.title}

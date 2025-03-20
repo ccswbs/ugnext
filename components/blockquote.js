@@ -6,9 +6,9 @@ import PropTypes from "prop-types";
 export const Blockquote = ({ className, children, color = "yellow" }) => {
   const markClasses = twJoin(
     "inline-block h-[1em]",
-    color === "yellow" && "text-uog-yellow",
-    color === "red" && "text-uog-red",
-    color === "blue" && "text-uog-blue"
+    color === "yellow" && "text-uog-color-yellow",
+    color === "red" && "text-uog-color-red",
+    color === "blue" && "text-uog-color-blue"
   );
 
   return (

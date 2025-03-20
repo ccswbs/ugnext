@@ -30,6 +30,7 @@
   h5,
   h6 {
     line-height: 1.4;
+    margin-top: 3rem;
   }
 
   p {
@@ -64,11 +65,11 @@
 
 @layer components {
   .vcard {
-    @apply mb-2 bg-gray-50 p-4;
+    @apply mb-2 bg-uog-color-grey-light-bg p-4;
   }
 
   .author {
-    @apply border-l-4 border-l-uog-red pl-4;
+    @apply border-l-4 border-l-uog-color-red pl-4;
   }
 }
 

@@ -2,78 +2,57 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 const colors = {
-  "uog-black": "#000",
-  "uog-black-bg": "#000",
-  "uog-black-contrast": "#fff",
-  "uog-black-focus": "#444",
-  "uog-black-on-light": "#000",
-
-  "uog-blue": "#187bb4",
-  "uog-blue-contrast": "#fff",
-  "uog-blue-focus": "#135f8b",
-  "uog-blue-on-light": "#1775ab",
-
-  "uog-body-copy": "#555",
-  "uog-body-copy-on-dark": "#ccc",
-  "uog-body-copy-bold": "#333",
-  "uog-body-copy-bold-on-dark": "#eee",
-  "uog-body-copy-link": "#187bb4",
-  "uog-body-copy-link-on-light": "#166ea2",
-  "uog-body-copy-link-on-dark": "#1d93d7",
-
-  "uog-green": "#318738",
-  "uog-green-contrast": "#fff",
-  "uog-green-focus": "#27682c",
-  "uog-green-on-light": "#2e7f35",
-
-  "uog-grey-dark": "#747676",
-  "uog-grey-dark-bg": "#222222",
-  "uog-grey-dark-contrast": "#fff",
-  "uog-grey-dark-focus": "#63625f",
-  "uog-grey-dark-on-light": "#686764",
-
-  "uog-grey-light": "#d8d8d8",
-  "uog-grey-light-bg": "#f5f5f5",
-  "uog-grey-light-contrast": "#000",
-  "uog-grey-light-focus": "#bfbfbf",
-  /* "uog-grey-light-on-dark": "TBD", */
-
-  "uog-red": "#e51937",
-  "uog-red-contrast": "#fff",
-  "uog-red-focus": "#b3142c",
-  "uog-red-on-light": "#dc1836",
-
-  "uog-yellow": "#ffc429",
-  "uog-yellow-contrast": "#000",
-  "uog-yellow-focus": "#ffe299",
-  "uog-yellow-on-dark": "#ffc429",
-
-  "uog-white": "#fff",
-  "uog-white-bg": "#fff",
-  "uog-white-contrast": "#000",
-  "uog-white-focus": "#ddd",
-  "uog-white-on-dark": "#fff",
-
-  /* legacy */
-  "uog-blue-muted": "#f5f7fa",
-  "uog-blue-muted-contrast": "#000",
-
-  "green": "#318738",
-  "blue": "#187bb4",
-  "white": "#ffffff",
-  "off-white": "#eeeeee",
-  "light-grey": "#dadcd4",
-  "dark-grey": "#787673",
-  "grey": "#555555",
-  "charcoal": "#333333",
-  "black": "#000000",
-  "warning": "#d43900",
-  "danger": "#e51937",
-  "twitter": "#1da1f3",
-  "facebook": "#4267b2",
-  "instagram": "#e53c7e",
-  "linkedin": "#0077b5",
-  "youtube": "#ff0200",
+  "uog-color-white": "#fff",
+  "uog-color-white-focus": "#ddd",
+  "uog-color-white-on-dark": "#fff",
+  "uog-color-white-contrast": "#000",
+  
+  "uog-color-black": "#000",
+  "uog-color-black-focus": "#444",
+  "uog-color-black-on-light": "#000",
+  "uog-color-black-contrast": "#fff",
+  
+  "uog-color-red": "#e51937",
+  "uog-color-red-focus": "#b3142c",
+  "uog-color-red-on-light": "#dc1836",
+  "uog-color-red-contrast": "#fff",
+  
+  "uog-color-yellow": "#ffc429",
+  "uog-color-yellow-focus": "#ffe299",
+  "uog-color-yellow-on-dark": "#ffc429",
+  "uog-color-yellow-contrast": "#000",
+  
+  "uog-color-blue": "#187bb4",
+  "uog-color-blue-focus": "#135f8b",
+  "uog-color-blue-on-light": "#1775ab",
+  "uog-color-blue-contrast": "#fff",
+  
+  "uog-color-green": "#318738",
+  "uog-color-green-focus": "#27682c",
+  "uog-color-green-on-light": "#2e7f35",
+  "uog-color-green-contrast": "#fff",
+  
+  "uog-color-grey-light": "#d8d8d8",
+  "uog-color-grey-light-focus": "#bfbfbf",
+  "uog-color-grey-light-contrast": "#000",
+  "uog-color-grey-light-bg": "#f5f5f5",
+  
+  "uog-color-grey-dark": "#747676",
+  "uog-color-grey-dark-focus": "#63625f",
+  "uog-color-grey-dark-contrast": "#fff",
+  "uog-color-grey-dark-bg": "#222",
+  
+  "uog-color-body-copy": "#555",
+  "uog-color-body-copy-on-light": "#555",
+  "uog-color-body-copy-on-dark": "#ccc",
+  
+  "uog-color-body-copy-bold": "#333",
+  "uog-color-body-copy-bold-on-light": "#333",
+  "uog-color-body-copy-bold-on-dark": "#e2e2e2",
+  
+  "uog-color-body-copy-link": "#187bb4",
+  "uog-color-body-copy-link-on-light": "#166ea2",
+  "uog-color-body-copy-link-on-dark": "#1d93d7"
 };
 
 const scaled = (input, scale) => {
@@ -136,7 +115,7 @@ module.exports = {
         "chevron-right": '"\\f054"',
       },
       backgroundImage: {
-        divider: `linear-gradient(90deg, #000 0%, #000 33.33%, ${colors['uog-red']} 33.33%, ${colors['uog-red']} 66.66%, ${colors['uog-yellow']} 66.66%, ${colors['uog-yellow']} 100%)`,
+        divider: `linear-gradient(90deg, ${colors['uog-color-red']} 0%, ${colors['uog-color-red']} 33.33%, ${colors['uog-color-yellow']} 33.33%, ${colors['uog-color-yellow']} 66.66%, ${colors['uog-color-black']} 66.66%, ${colors['uog-color-black']} 100%)`,
       },
       aria: {
         "page-current": 'current="page"',
