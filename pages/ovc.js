@@ -162,7 +162,7 @@ export default function Page({ content }) {
               </div>
             </div>
           </div>
-          <div classname="tile ">
+          <div className="tile ">
             <div className="container m-auto grid grid-cols-2  gap-4">
               <div class="tile ">
                 <Image
