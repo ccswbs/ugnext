@@ -118,7 +118,7 @@ export default function Page({ content }) {
           </Container>
         </>
       )}
-
+{console.log(content.widgets)}
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
@@ -145,7 +145,7 @@ export default function Page({ content }) {
           </div>
           <div className="tile ">
             <div className="container m-auto grid grid-cols-2 gap-4">
-              <div class="tile">
+              <div className="tile">
                 <Image
                   src={content.featuredLegacyNews[1].heroImage.image.url}
                   width={content.featuredLegacyNews[1].heroImage.image.width}
@@ -164,7 +164,7 @@ export default function Page({ content }) {
           </div>
           <div className="tile ">
             <div className="container m-auto grid grid-cols-2  gap-4">
-              <div class="tile ">
+              <div className="tile ">
                 <Image
                   src={content.featuredLegacyNews[2].heroImage.image.url}
                   width={content.featuredLegacyNews[2].heroImage.image.width}
@@ -183,7 +183,7 @@ export default function Page({ content }) {
           </div>
         </div>
         <br />
-        <div class="relative">
+        <div className="relative">
           <Image
             src={eventsBG.src}
             width={eventsBG.width}
@@ -191,7 +191,7 @@ export default function Page({ content }) {
             blurred={eventsBG.blurDataURL}
             alt="Ivey covered building"
           />
-          <div class="absolute bottom-0 left-0 right-0 top-0 px-4 ">
+          <div className="absolute bottom-0 left-0 right-0 top-0 px-4 ">
             <Heading level={1} as={"h2"} className="font-condensed text-white text-opacity-100">
               OVC Events
             </Heading>
@@ -260,7 +260,7 @@ export default function Page({ content }) {
               <Heading level={1} as={"h2"} className="font-condensed ">
                 Connect with OVC
               </Heading>
-              <ul class="lead font-weight-bold list-unstyled">
+              <ul className="lead font-weight-bold list-unstyled">
                 <li>
                   <a href="https://www.google.com/maps/place/Ontario+Veterinary+College+Health+Sciences+Centre/@43.5312879,-80.2345029,17z/data=!3m1!4b1!4m5!3m4!1s0x882b9ad624240187:0x95a5348b4bf4b543!8m2!3d43.5312879!4d-80.2323142">
                     Find us on a map
