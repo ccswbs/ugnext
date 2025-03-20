@@ -22,6 +22,7 @@ export const SpotlightCards = ({ cards }) => (
             card.thumbnailImageCrop === "center" && "object-center"
           ),
           sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
+          quality: 100,
         }}
       />
     ))}
