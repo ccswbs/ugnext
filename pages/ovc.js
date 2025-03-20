@@ -118,10 +118,10 @@ export default function Page({ content }) {
           </Container>
         </>
       )}
-{console.log(content.widgets)}
+{/* {console.log(content.widgets)}
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
-      ))}
+      ))} */}
 
       <Container centered>
         <Heading level={1} as={"h2"} className="font-condensed">
