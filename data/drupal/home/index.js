@@ -52,9 +52,24 @@ export const getSpotlightCards = async (status, hero) => {
         id: id,
       });
 
+      const card = data.spotlightRevisions.results?.[0];
+
+      if (!card) {
+        throw new Error(`Failed to fetch spotlight card ${id} data.`);
+      }
+
+      // The image is an array of variations, so we need to find the one that matches the thumbnailImageCrop.
+      const image = card.image?.image?.variations?.find((variation) => {
+        return variation.name.toLowerCase().includes(card.thumbnailImageCrop);
+      }) ?? {};
+
       return {
         id: id,
-        ...(data.spotlightRevisions.results?.[0] ?? {}),
+        ...card,
+        image: {
+          alt: card.image.image.alt,
+          ...image
+        }
       };
     })
   );
