@@ -43,6 +43,7 @@ export async function getStaticProps(context) {
     };
   }
 
+
   content.menu = await getPageMenu(content);
 
   // Get the featured OVC News - last 3 entered
@@ -121,7 +122,7 @@ export default function Page({ content }) {
           </Container>
         </>
       )}
-      {console.log(content.widgets)}
+ 
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
