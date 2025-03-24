@@ -60,7 +60,7 @@ export const LinkCarousel = ({ links }) => {
             }}
             key={index}
             href={link.url}
-            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-[2.2rem] text-white backdrop-blur transition-colors hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus-visible:outline-none"
+            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-[2.2rem] text-white backdrop-blur transition-colors hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus-visible:outline-none"
           >
             <span>{link.title}</span>
 
@@ -85,7 +85,7 @@ LinkCarousel.propTypes = {
         className: PropTypes.string,
         blurred: PropTypes.string,
       }).isRequired,
-      caption: PropTypes.string,
+      caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     })
   ).isRequired,
 };

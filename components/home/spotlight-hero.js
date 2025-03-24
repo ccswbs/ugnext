@@ -4,17 +4,17 @@ import { twJoin } from "tailwind-merge";
 export const SpotlightHero = ({ hero }) => (
   <Hero
     variant="spotlight"
-    title={<h2>{hero.title}</h2>}
+    title={<h2 className="mt-0">{hero.title}</h2>}
     image={{
-      src: hero.image.image.variations[0].url,
+      src: hero.image.image.url,
       alt: hero.image.image.alt,
       width: hero.image.image.width,
       height: hero.image.image.height,
       className: twJoin(
         "aspect-[3/2] w-full",
-        hero.thumbnailImageCropping === "right" && "object-right",
-        hero.thumbnailImageCropping === "left" && "object-left",
-        (hero.thumbnailImageCropping === "center" || !hero.thumbnailImageCropping) && "object-center"
+        hero.thumbnailImageCrop === "right" && "object-right",
+        hero.thumbnailImageCrop === "left" && "object-left",
+        (hero.thumbnailImageCrop === "center" || !hero.thumbnailImageCrop) && "object-center"
       ),
     }}
     caption={hero.caption}

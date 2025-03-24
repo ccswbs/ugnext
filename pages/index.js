@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
+import { Divider } from "@/components/divider";
 import { Heading } from "@/components/heading";
 import { SpotlightCards } from "@/components/home/spotlight-cards";
 import { TagLine } from "@/components/home/tag-line";
@@ -24,41 +25,42 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function Home({ cards, hero }) {
+export function HomePage({ cards, hero, forceAppArmorTest = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
     <Layout>
-      <h1 className="sr-only">University of Guelph, Ontario, Canada</h1>
-
-      {hero && <SpotlightHero hero={hero} />}
+      <div className="flex flex-col flex-col-reverse">
+        <TagLine />
+        {hero && <SpotlightHero hero={hero} />}
+      </div>
 
       <Container centered>
-        <TagLine />
+        <Divider />
 
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed text-black">
+          <Heading level={2} className="text-uog-color-black">
             Our Latest News and Events
           </Heading>
           <SpotlightCards cards={cards} />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed text-black">
+          <Heading level={2} className="text-uog-color-black">
             Study Here
           </Heading>
           <StudyHere />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed text-black">
+          <Heading level={2} className="text-uog-color-black">
             How We Rank Among the World
           </Heading>
           <Rankings />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={1} as={"h2"} className="font-condensed text-black">
+          <Heading level={2} className="text-uog-color-black">
             Our Three Campuses
           </Heading>
           <ThreeCampuses />
@@ -67,5 +69,11 @@ export default function Home({ cards, hero }) {
 
       <HomeStory />
     </Layout>
+  );
+}
+
+export default function Home({ cards, hero }) {
+  return (
+    <HomePage cards={cards} hero={hero} />
   );
 }

@@ -22,7 +22,6 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
         width={image?.width}
         height={image?.height}
         priority
-        sizes="100vw"
         placeholder={image?.blurred ? "blur" : "empty"}
         blurDataURL={image?.blurred}
       />
@@ -55,7 +54,7 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
                   color="yellow"
                   href={button?.href}
                   className={twJoin(
-                    "w-fit text-lg p-3 hover:bg-red hover:text-white focus:bg-red focus:text-white",
+                    "w-fit text-lg p-3 hover:bg-uog-color-red hover:text-white focus:bg-uog-color-red focus:text-white",
                     alignment === "center" && "lg:mx-auto",
                     alignment === "right" && "lg:ml-auto"
                   )}
@@ -89,11 +88,11 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
         <>
           <Container centered className="absolute bottom-0 left-1/2 h-fit w-full -translate-x-1/2 p-0">
             {typeof title === "string" ? (
-              <Heading level={1} className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">
+              <Heading level={1} className="mb-0 w-fit bg-uog-color-yellow p-1 text-3xl text-black md:text-4xl">
                 {title}
               </Heading>
             ) : (
-              <div className="mb-0 w-fit bg-yellow p-1 text-3xl text-black md:text-4xl">{title}</div>
+              <div className="mb-0 w-fit bg-uog-color-yellow p-1 text-3xl text-black md:text-4xl">{title}</div>
             )}
           </Container>
 
