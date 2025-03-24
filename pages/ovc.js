@@ -122,10 +122,10 @@ export default function Page({ content }) {
           </Container>
         </>
       )}
- 
+{/*  
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
-      ))}
+      ))} */}
 
       <Container centered>
         <Heading level={2} as={"h2"} className="font-condensed">
