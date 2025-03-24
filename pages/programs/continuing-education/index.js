@@ -20,11 +20,11 @@ export async function getStaticProps() {
 export default function ProgramsContinuingEducation({ programs, types }) {
   return (
     <Layout metadata={{ title: "Continuing Education" }}>
-      <Container centered>
+      <Container className="pb-0" centered>
         <Heading level={1}>Continuing Education at the University of Guelph</Heading>
-
-        <ProgramSearch programs={programs} types={types} />
       </Container>
+
+      <ProgramSearch programs={programs} types={types} />
     </Layout>
   );
 }

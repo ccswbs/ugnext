@@ -12,9 +12,9 @@ export const Alert = ({ type = "danger", title, subtitle, message, footer }) => 
     <div
       className={twJoin(
         "flex items-center gap-2 p-4 text-xl",
-        type === "danger" && "bg-red text-white",
-        type === "warning" && "bg-yellow text-black",
-        type === "info" && "bg-blue text-white"
+        type === "danger" && "bg-uog-color-red text-white",
+        type === "warning" && "bg-uog-color-yellow text-black",
+        type === "info" && "bg-uog-color-blue text-white"
       )}
     >
       <FontAwesomeIcon className="h-[1.5em]" icon={faCircleExclamation} />

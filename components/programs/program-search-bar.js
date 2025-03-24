@@ -3,6 +3,7 @@ import { Select } from "@/components/select";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
 import { useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Container } from "@/components/container";
 
 export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, className }) => {
   const [input, setInput] = useState("");
@@ -31,40 +32,45 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
   }, [filtered, onChange]);
 
   return (
-    <div className={twMerge("flex flex-col gap-4 sm:flex-row sm:items-end", className)}>
-      <div className="flex-1">
-        <TextInput
-          onInput={(value) => setInput(value)}
-          label={<span className="text-xl font-bold mb-1">What would you like to study?</span>}
-          placeholder="ex. programming, engineering, psychology, etc."
-        />
-      </div>
-
-      {types?.length > 0 && (
-        <div className="sm:w-1/3 md:w-1/4">
-          <Select
-            multiple
-            options={types.map((type) => ({ label: type.name, value: type.id, selected: true }))}
-            onChange={(options) => {
-              setSelectedTypes(options.map((option) => option.value));
-            }}
-            label={<span className="text-xl font-bold">Filter by type</span>}
+    <div className="w-full bg-uog-color-yellow -mt-1">
+      <Container
+        centered
+        className={twMerge("bg-uog-color-yellow flex flex-col gap-4 py-[4rem] sm:flex-row sm:items-end", className)}
+      >
+        <div className="flex-1">
+          <TextInput
+            onInput={(value) => setInput(value)}
+            label={<span className="text-l font-bold mb-1">What would you like to study?</span>}
+            placeholder="ex. programming, engineering, psychology, etc."
           />
         </div>
-      )}
 
-      {degreeTypes?.length > 0 && (
-        <div className="sm:w-1/3 md:w-1/4">
-          <Select
-            multiple
-            options={degreeTypes.map((type) => ({ label: type.name, value: type.id, selected: true }))}
-            onChange={(options) => {
-              setSelectedDegreeTypes(options.map((option) => option.value));
-            }}
-            label={<span className="text-xl font-bold">Filter by degree type</span>}
-          />
-        </div>
-      )}
+        {types?.length > 0 && (
+          <div className="sm:w-1/3 md:w-1/4">
+            <Select
+              multiple
+              options={types.map((type) => ({ label: type.name, value: type.id, selected: true }))}
+              onChange={(options) => {
+                setSelectedTypes(options.map((option) => option.value));
+              }}
+              label={<span className="text-l font-bold">Filter by type</span>}
+            />
+          </div>
+        )}
+
+        {degreeTypes?.length > 0 && (
+          <div className="sm:w-1/3 md:w-1/4">
+            <Select
+              multiple
+              options={degreeTypes.map((type) => ({ label: type.name, value: type.id, selected: true }))}
+              onChange={(options) => {
+                setSelectedDegreeTypes(options.map((option) => option.value));
+              }}
+              label={<span className="text-l font-bold">Filter by degree type</span>}
+            />
+          </div>
+        )}
+      </Container>
     </div>
   );
 };
