@@ -17,6 +17,9 @@ import {
   FormatEventMonth,
   FormatEventWeekday,
 } from "@/lib/date-utils";
+import { twJoin, twMerge } from "tailwind-merge";
+import { OVCCards } from "@/components/ovchome/ovc-cards";
+
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -118,13 +121,13 @@ export default function Page({ content }) {
           </Container>
         </>
       )}
-{console.log(content.widgets)}
+      {console.log(content.widgets)}
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
 
       <Container centered>
-        <Heading level={1} as={"h2"} className="font-condensed">
+        <Heading level={2} as={"h2"} className="font-condensed">
           Featured OVC News
           <Divider />
         </Heading>
@@ -138,7 +141,7 @@ export default function Page({ content }) {
               blurred={content.featuredLegacyNews[0].heroImage.image.blurDataURL}
               alt={content.featuredLegacyNews[0].heroImage.image.alt}
             />
-            <Heading level={2} as={"h3"} className="font-condensed">
+            <Heading level={2} as={"h3"} className="font-condensed text-dark">
               {content.featuredLegacyNews[0].title} ({content.featuredLegacyNews[0].path})
             </Heading>
             {content.featuredLegacyNews[0].articleDate}
@@ -183,32 +186,50 @@ export default function Page({ content }) {
           </div>
         </div>
         <br />
-        <div className="relative">
-          <Image
-            src={eventsBG.src}
-            width={eventsBG.width}
-            height={eventsBG.height}
-            blurred={eventsBG.blurDataURL}
-            alt="Ivey covered building"
-          />
-          <div className="absolute bottom-0 left-0 right-0 top-0 px-4 ">
-            <Heading level={1} as={"h2"} className="font-condensed text-white text-opacity-100">
-              OVC Events
-            </Heading>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 border-3 gap-2 p-4 text-opacity-100">
-              {content?.featuredLegacyEvents?.map((legacyEvent, index) => (
-                <div key={index} className="grid grid-cols-8">
-                  <div className="col-span-2  bg-white opacity-100 border-yellow-300 border-8 flex justify-center items-center uppercase">
-                    {legacyEvent.eventMonth}
-                    <br />
-                    {legacyEvent.eventDay}
-                  </div>
-                  <div className="col-span-6 border-white bg-white border-8 flex items-center">{legacyEvent.title}</div>
+
+        <div className="flex w-full flex-col">
+          <div className="relative flex w-full items-center justify-center overflow-hidden">
+            <div className="absolute z-0 h-full max-h-full w-full">
+              <Image
+                src={eventsBG.src}
+                alt={eventsBG.alt}
+                className={twMerge("w-full h-full object-cover", eventsBG?.className)}
+                width={eventsBG?.width}
+                height={eventsBG?.height}
+                sizes="100vw"
+                placeholder={eventsBG?.blurred ? "blur" : "empty"}
+                blurDataURL={eventsBG?.blurred}
+              />
+            </div>
+
+            <div className="container z-10 flex w-full max-w-max-content flex-col gap-6 px-4 ">
+              <Heading level={2} as={"h2"} className="font-condensed text-white ">
+                OVC Events
+              </Heading>
+              <div className="flex w-full px-8 lg:p-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 border-3 gap-2 p-4 ">
+                  {content?.featuredLegacyEvents?.map((legacyEvent, index) => (
+                    <div key={index} className="grid grid-cols-8">
+                      <div className="col-span-2  bg-white opacity-100 border-yellow-300 border-8 flex justify-center items-center uppercase">
+                        {legacyEvent.eventMonth}
+                        <br />
+                        {legacyEvent.eventDay}
+                      </div>
+                      <div className="col-span-6 border-white bg-white border-8 flex items-center">
+                        {legacyEvent.title}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
+        
+        <div className="pt-6">
+          <OVCCards />
+        </div>
+
       </Container>
       <div className={"w-full py-5 bg-gray-100"}>
         <Container centered>
