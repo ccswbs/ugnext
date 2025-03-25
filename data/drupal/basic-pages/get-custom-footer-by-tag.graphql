@@ -1,0 +1,55 @@
+#import "../widgets.graphql"
+
+query GetCustomFooterByTag( $tags: [String!]!) {
+  customFooterByTag(filter: { tags: $tags}) {
+    id
+    results {
+      ... on NodeCustomFooter {
+        id
+        title
+        body {
+          processed
+        }
+        tags {
+          ... on TermUnit {
+            id
+            name
+            path
+          }
+           ... on TermTag {
+            id
+            name
+            path
+          }
+        }
+        footerLogo {
+          ... on MediaImage {
+            id
+            name
+            image {
+              alt
+              height
+              url
+              width
+            }
+          }
+        }
+        widgets {
+          ...Accordion
+          ...Block
+          ...GeneralText
+          ...Buttons
+          ...Links
+          ...MediaText
+          ...ButtonSection
+          ...Tabs
+          ...Statistics
+          ...TestimonialSlider
+          ...Story
+          ...ImageOverlay
+          ...Section
+        }
+      }
+    }
+  }
+}
