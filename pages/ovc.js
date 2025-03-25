@@ -19,6 +19,7 @@ import {
 } from "@/lib/date-utils";
 import { twJoin, twMerge } from "tailwind-merge";
 import { OVCCards } from "@/components/ovchome/ovc-cards";
+import { Link } from "@/components/link";
 
 
 export async function getStaticProps(context) {
@@ -235,7 +236,7 @@ export default function Page({ content }) {
       <div className={"w-full py-5 bg-gray-100"}>
         <Container centered>
           {/* <div className={containerClasses}> */}
-          <div className="flex flex-col gap-4 sm:grid sm:grid-cols-[1fr_3fr] p-5">
+          <div className="grid gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_3fr] p-5">
             <div className="">
               <Image
                 src={ovcLogo.src}
@@ -246,15 +247,12 @@ export default function Page({ content }) {
                 blurDataURL={ovcLogo?.blurred}
               />
             </div>
-            <div className="col-span-2 text-lg">
+            <div className="text-lg">
               The Ontario Veterinary College (OVC) at the University of Guelph is a world leader in advancing veterinary
               medicine and health research to improve the health of animals, people, and our planet. OVC educates the
               next generation of health leaders and provides high-value experiential learning opportunities through an
               interdisciplinary, comparative approach aimed at finding real-world solutions to real-world problems.
-              <br />
-              At OVC, we are educating the next generation of health leaders, fueling discovery and providing our
-              expertise to improve health and well-being across our world. Discover how you can contribute to the
-              ever-evolving world of medicine, care, scientific discovery, and community.
+         
             </div>
             <div className="text-lg">
               <Heading level={1} as={"h2"} className="font-condensed text-black">
@@ -262,19 +260,19 @@ export default function Page({ content }) {
               </Heading>
               <ul>
                 <li>
-                  <a href="https://ovc.uoguelph.ca/biomedical-sciences/">Department of Biomedical Sciences</a>
+                  <Link href="https://ovc.uoguelph.ca/biomedical-sciences/">Department of Biomedical Sciences</Link>
                 </li>
                 <li>
-                  <a href="https://ovc.uoguelph.ca/clinical-studies/">Department of Clinical Studies</a>
+                  <Link href="https://ovc.uoguelph.ca/clinical-studies/">Department of Clinical Studies</Link>
                 </li>
                 <li>
-                  <a href="https://ovc.uoguelph.ca/pathobiology/">Department of Pathobiology</a>
+                  <Link href="https://ovc.uoguelph.ca/pathobiology/">Department of Pathobiology</Link>
                 </li>
                 <li>
-                  <a href="https://ovc.uoguelph.ca/population-medicine/">Department of Population Medicine</a>
+                  <Link href="https://ovc.uoguelph.ca/population-medicine/">Department of Population Medicine</Link>
                 </li>
                 <li>
-                  <a href="https://www.ovchsc.ca/">Health Sciences Centre</a>
+                  <Link href="https://www.ovchsc.ca/">Health Sciences Centre</Link>
                 </li>
               </ul>
             </div>
@@ -284,18 +282,18 @@ export default function Page({ content }) {
               </Heading>
               <ul className="lead font-weight-bold list-unstyled">
                 <li>
-                  <a href="https://www.google.com/maps/place/Ontario+Veterinary+College+Health+Sciences+Centre/@43.5312879,-80.2345029,17z/data=!3m1!4b1!4m5!3m4!1s0x882b9ad624240187:0x95a5348b4bf4b543!8m2!3d43.5312879!4d-80.2323142">
+                  <Link href="https://www.google.com/maps/place/Ontario+Veterinary+College+Health+Sciences+Centre/@43.5312879,-80.2345029,17z/data=!3m1!4b1!4m5!3m4!1s0x882b9ad624240187:0x95a5348b4bf4b543!8m2!3d43.5312879!4d-80.2323142">
                     Find us on a map
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="http://www.ovc.uoguelph.ca/recruitment/en/experienceovc/tours.asp">Take a tour</a>
+                  <Link href="http://www.ovc.uoguelph.ca/recruitment/en/experienceovc/tours.asp">Take a tour</Link>
                 </li>
                 <li>
-                  <a href="https://www.uoguelph.ca/ovc/contact">Contact</a>
+                  <Link href="https://www.uoguelph.ca/ovc/contact">Contact</Link>
                 </li>
                 <li>
-                  <a href="https://uoguelphca.sharepoint.com/sites/OntarioVeterinaryCollege">Intranet</a>
+                  <Link href="https://uoguelphca.sharepoint.com/sites/OntarioVeterinaryCollege">Intranet</Link>
                 </li>
               </ul>
             </div>
