@@ -1,61 +1,86 @@
 import { Card } from "@/components/card";
-import guelph from "@/img/guelph.png";
-import ridgetown from "@/img/ridgetown.png";
-import guelphHumber from "@/img/guelph-humber.png";
+import work from "@/img/ovc/heather-murphy-in_lab.jpg";
+import collaborate from "@/img/ovc/collaborate.png";
+import { Link } from "@/components/link";
+import Image from "next/image";
+import coe from "@/img/ovc/coe_logo.png";
+import aaha from "@/img/ovc/aaha_logo.png";
 
 export const OVCCards = () => {
-  const campuses = [
+  const ovcCards = [
     {
-      title: "Guelph",
-      url: "https://www.uoguelph.ca/admission/undergraduate/tours/",
+      title: "People are our power - Work",
+      url: "/ovc/work",
       image: {
-        src: guelph.src,
-        width: guelph.width,
-        height: guelph.height,
-        blurred: guelph.blurDataURL,
-        alt: "An aerial view of Johnston Hall and the University of Guelph campus",
+        src: work.src,
+        width: work.width,
+        height: work.height,
+        blurred: work.blurDataURL,
+        alt: "work for OVC",
       },
     },
     {
-      title: "Ridgetown",
-      url: "https://www.ridgetownc.com/",
+      title: "Help impove life - Collaborate",
+      url: "/ovc/collaborate",
       image: {
-        src: ridgetown.src,
-        width: ridgetown.width,
-        height: ridgetown.height,
-        blurred: ridgetown.blurDataURL,
-        alt: "An aerial view of the Ridgetown Campus",
-      },
-    },
-    {
-      title: "Guelph-Humber",
-      url: "https://www.guelphhumber.ca/",
-      image: {
-        src: guelphHumber.src,
-        width: guelphHumber.width,
-        height: guelphHumber.height,
-        blurred: guelphHumber.blurDataURL,
-        alt: "The main building of the University of Guelph-Humber campus",
+        src: collaborate.src,
+        width: collaborate.width,
+        height: collaborate.height,
+        blurred: collaborate.blurDataURL,
+        alt: "Collaborate with OVC",
       },
     },
   ];
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-      {campuses.map((campus, index) => (
+      {ovcCards.map((ovcCard, index) => (
         <Card
-          key={campus.title}
+          key={ovcCard.title}
           className="h-full"
-          title={<span className="my-auto w-full text-center text-[2.2rem] font-bold">{`${campus.title} Campus`}</span>}
-          href={campus.url}
+          title={<span className="my-auto w-full text-center text-[2.2rem] font-bold">{ovcCard.title}</span>}
+          href={ovcCard.url}
           centered
           image={{
-            ...campus.image,
+            ...ovcCard.image,
             className: "aspect-[3/2] w-full",
             sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
           }}
         />
       ))}
+      <div className="flex flex-col gap-2 bg-uog-color-grey-light px-5 py-6 transition-colors items-center">
+        <div className="text-2xl">
+          <i class="fa-solid fa-2xl fa-certificate">&nbsp;</i>
+          Accreditations
+        </div>
+        <div className="text-base">
+          <br />
+          OVC is an <Link href="/ovc/accreditation/">accredited institution</Link>, and faculty
+          members are affiliated with a number of other centres and institutes.
+        </div>
+        <div className="grid grid-cols-2 gap-4 ">
+        <div>
+         <Link href="https://www.avma.org/">
+          <Image
+            src={coe.src}
+            width={125}
+            height={125}
+            alt="COE Accredited Logo"
+            placeholder={coe?.blurred ? "blur" : "empty"}
+          /></Link>
+          </div>
+          <div>
+            <Link href="https://www.aaha.org/">
+                    <Image
+            src={aaha.src}
+            width={125}
+            height={125}
+            alt="AAHA Accredited Logo"
+            placeholder={aaha?.blurred ? "blur" : "empty"}
+          /></Link>
+        </div>
+        </div>
+      </div>
     </div>
   );
 };
