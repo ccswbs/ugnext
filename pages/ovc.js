@@ -236,7 +236,7 @@ export default function Page({ content }) {
       <div className={"w-full py-5 bg-gray-100"}>
         <Container centered>
           {/* <div className={containerClasses}> */}
-          <div className="grid gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_3fr] p-5">
+          <div className="grid gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_3fr] p-5 ">
             <div className="">
               <Image
                 src={ovcLogo.src}
