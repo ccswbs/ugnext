@@ -7,7 +7,7 @@ export const ThreeCampuses = () => {
   const campuses = [
     {
       title: "Guelph",
-      url: "https://admission.uoguelph.ca/campus-tour-highlights",
+      url: "https://www.uoguelph.ca/admission/undergraduate/tours/",
       image: {
         src: guelph.src,
         width: guelph.width,

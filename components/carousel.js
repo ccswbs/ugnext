@@ -86,7 +86,7 @@ export const Carousel = ({ children, display = 1, loop = "none" }) => {
   };
 
   const buttonClasses = twJoin(
-    "h-full w-16 flex-1 items-center flex justify-center text-3xl sm:text-6xl md:absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black"
+    "h-full w-16 flex-1 items-center flex justify-center text-3xl sm:text-6xl md:absolute text-uog-color-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black"
   );
 
   return (
