@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   // We want to redirect requests for /node/{ID} to the appropriate place.
-
+  
   // Check the type of the node
   const { data } = await graphql(
     `
@@ -34,6 +34,14 @@ export async function getStaticProps(context) {
       return {
         redirect: {
           destination: "/",
+          permanent: true,
+        },
+      };
+    //  For LegacyNews (Articles) redirect to /ovc-news/
+    case "NodeArticle":
+      return {
+        redirect: {
+          destination: "/ovc/news/",
           permanent: true,
         },
       };

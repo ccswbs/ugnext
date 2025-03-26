@@ -8,7 +8,7 @@ import { getFeaturedLegacyEvents } from "@/data/drupal/ovchome";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import eventsBG from "@/img/ovc/brick_leaf_background_gray.jpg";
 import Image from "next/image";
-import ovcLogo from "@/img/ovc/ovc_version1_full_colour.png";
+import ovcLogo from "@/img/ovc/OVC__GUELPH_FULLCOLOUR_WHITEBG_V1_1.5IN_H_300PPI.png";
 import { Divider } from "@/components/divider";
 import {
   FormatDateFull,
