@@ -7,30 +7,30 @@ import coe from "@/img/ovc/coe_logo.png";
 import aaha from "@/img/ovc/aaha_logo.png";
 
 export const OVCCards = () => {
-  const ovcCards = [
-    {
-      title: "People are our power - Work",
-      url: "/ovc/work",
-      image: {
-        src: work.src,
-        width: work.width,
-        height: work.height,
-        blurred: work.blurDataURL,
-        alt: "work for OVC",
-      },
-    },
-    {
-      title: "Help impove life - Collaborate",
-      url: "/ovc/collaborate",
-      image: {
-        src: collaborate.src,
-        width: collaborate.width,
-        height: collaborate.height,
-        blurred: collaborate.blurDataURL,
-        alt: "Collaborate with OVC",
-      },
-    },
-  ];
+  // const ovcCards = [
+  //   {
+  //     title: "People are our power - Work",
+  //     url: "/ovc/work",
+  //     image: {
+  //       src: work.src,
+  //       width: work.width,
+  //       height: work.height,
+  //       blurred: work.blurDataURL,
+  //       alt: "work for OVC",
+  //     },
+  //   },
+  //   {
+  //     title: "Help impove life - Collaborate",
+  //     url: "/ovc/collaborate",
+  //     image: {
+  //       src: collaborate.src,
+  //       width: collaborate.width,
+  //       height: collaborate.height,
+  //       blurred: collaborate.blurDataURL,
+  //       alt: "Collaborate with OVC",
+  //     },
+  //   },
+  // ];
 
   return (
     <div className="">

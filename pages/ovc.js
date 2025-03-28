@@ -238,7 +238,7 @@ export default function Page({ content }) {
       <div className={"w-full py-5 bg-gray-100"}>
         <Container centered>
           {/* <div className={containerClasses}> */}
-          <div className="grid gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_5fr] p-5 ">
+          <div className="grid items-center gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_5fr] ">
             <div className="place-items-center">
               <Image
                 src={ovcCrest.src}
@@ -249,14 +249,23 @@ export default function Page({ content }) {
                 blurDataURL={ovcCrest?.blurred}
               />
             </div>
-            <div className="text-lg">
+            <div className="text-lg ">
               The Ontario Veterinary College (OVC) at the University of Guelph is a world leader in advancing veterinary
               medicine and health research to improve the health of animals, people, and our planet. OVC educates the
               next generation of health leaders and provides high-value experiential learning opportunities through an
               interdisciplinary, comparative approach aimed at finding real-world solutions to real-world problems.
          
             </div>
-            <div className="text-lg">
+
+          </div>
+          <div className="flex justify-between ">
+            <div>
+            <Heading level={1} as={"h2"} className="font-condensed text-black">
+               Social Media
+              </Heading>
+              Place holder
+            </div>
+          <div className="text-lg">
               <Heading level={1} as={"h2"} className="font-condensed text-black">
                 Units
               </Heading>
