@@ -41,10 +41,10 @@ export async function getStaticProps(context) {
   legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
   // wrap figcaption
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<p', '<div class="col-span-1"')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</p', '</div')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<h2>', '<div class="col-span-1"> <h2>')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</h2>', '</h2> </div>')
+  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<p', '<div class="col-span-1"')
+  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</p', '</div')
+  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<h2>', '<div class="col-span-1"> <h2>')
+  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</h2>', '</h2> </div>')
 
 
   return {
@@ -53,9 +53,6 @@ export async function getStaticProps(context) {
 }
 
 export default function Page({ legacyNewsItem }) {
-  const imagetest =
-    '<figure class="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"> <a href="#"> <img class="rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description"> </a>  <figcaption class=" px-4 text-lg bottom-6">      <p>Do you want to get notified when a new component is added to Flowbite?</p></figcaption></figure>';
-
   return (
     <Layout metadata={{ title: legacyNewsItem?.title }} header={legacyNewsItem?.menu}>
       {legacyNewsItem?.heroImage ? (
