@@ -44,6 +44,8 @@ export async function getStaticProps(context) {
   legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
   // wrap figcaption
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-left', 'float-left')
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-right', 'float-right')
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<p', '<div class="col-span-1"')
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</p', '</div')
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<h2>', '<div class="col-span-1"> <h2>')
