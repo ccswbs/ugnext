@@ -161,7 +161,7 @@ export default function Page({ content }) {
                 />
               </div>
               <div className="tile">
-                <Heading level={4} as={"h3"} className="font-condensed">
+                <Heading level={5} as={"h3"} className="font-condensed">
                 <Link href={content.featuredLegacyNews[1].path}>{content.featuredLegacyNews[1].title}</Link>
                 </Heading>
                 {content.featuredLegacyNews[1].articleDate}
@@ -180,7 +180,7 @@ export default function Page({ content }) {
                 />
               </div>
               <div className="tile ">
-                <Heading level={4} as={"h3"} className="font-condensed">
+                <Heading level={5} as={"h3"} className="font-condensed">
                 <Link href={content.featuredLegacyNews[2].path}>{content.featuredLegacyNews[2].title}</Link>
                 </Heading>
                 {content.featuredLegacyNews[2].articleDate}
