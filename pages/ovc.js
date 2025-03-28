@@ -53,6 +53,7 @@ export async function getStaticProps(context) {
   // format the date created for each atricle
   content?.featuredLegacyNews.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
+    legacyNews.path = "/ovc/news"+legacyNews.path;
   });
 
   // Get the featured OVC Events - last 4 entered
@@ -143,8 +144,8 @@ export default function Page({ content }) {
               blurred={content.featuredLegacyNews[0].heroImage.image.blurDataURL}
               alt={content.featuredLegacyNews[0].heroImage.image.alt}
             />
-            <Heading level={2} as={"h3"} className="font-condensed text-dark">
-              {content.featuredLegacyNews[0].title} ({content.featuredLegacyNews[0].path})
+            <Heading level={3} as={"h3"} className="font-condensed text-dark">
+              <Link href={content.featuredLegacyNews[0].path}>{content.featuredLegacyNews[0].title}</Link>
             </Heading>
             {content.featuredLegacyNews[0].articleDate}
           </div>
@@ -161,7 +162,7 @@ export default function Page({ content }) {
               </div>
               <div className="tile">
                 <Heading level={4} as={"h3"} className="font-condensed">
-                  {content.featuredLegacyNews[1].title} ({content.featuredLegacyNews[1].path})
+                <Link href={content.featuredLegacyNews[1].path}>{content.featuredLegacyNews[1].title}</Link>
                 </Heading>
                 {content.featuredLegacyNews[1].articleDate}
               </div>
@@ -180,7 +181,7 @@ export default function Page({ content }) {
               </div>
               <div className="tile ">
                 <Heading level={4} as={"h3"} className="font-condensed">
-                  {content.featuredLegacyNews[2].title} ({content.featuredLegacyNews[2].path})
+                <Link href={content.featuredLegacyNews[2].path}>{content.featuredLegacyNews[2].title}</Link>
                 </Heading>
                 {content.featuredLegacyNews[2].articleDate}
               </div>

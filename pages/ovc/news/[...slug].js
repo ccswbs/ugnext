@@ -3,9 +3,8 @@ import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
 // import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/legacy-news";
-import { getPageID, getLegacyNews } from "@/data/drupal/legacy-news";
-import { WidgetSelector } from "@/components/widgets/widget-selector";
-import { Breadcrumbs } from "@/components/breadcrumbs";
+import { getPageID, getLegacyNews, getPageMenu } from "@/data/drupal/legacy-news";
+import { FormatDateFull } from "@/lib/date-utils";
 
 export async function getStaticPaths() {
   return {
@@ -17,7 +16,7 @@ export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
 
   // Try to get the ID of the page the user is requesting.
-  const id = await getPageID("/node/" + context.params.slug.join("/"));
+  const id = await getPageID("/" + context.params.slug.join("/"));
 
   // If we couldn't resolve an id, then that means this page doesn't exist on content hub, show a 404.
   if (!id) {
@@ -25,64 +24,67 @@ export async function getStaticProps(context) {
       notFound: true,
     };
   }
-console.log(id)
+
   // Now that we have the ID for the page we can request its content from its latest revision.
   const content = await getLegacyNews(id, status);
-console.log(content)
+
   if (!content) {
     return {
       notFound: true,
     };
   }
+  const legacyNewsItem = content.legacyNews.results[0];
 
-  content.menu = await getPageMenu(content);
-
-  // Get rid of any data that doesn't need to be passed to the page.
-  delete content.primaryNavigation;
+  legacyNewsItem.menu = await getPageMenu();
 
   // Flatten image prop
-  content.image = content?.image?.image ?? null;
+  legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
-  content.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
+  // wrap figcaption
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<p', '<div class="col-span-1"')
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</p', '</div')
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<h2>', '<div class="col-span-1"> <h2>')
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</h2>', '</h2> </div>')
+
 
   return {
-    props: { content },
+    props: { legacyNewsItem },
   };
 }
 
-export default function Page({ content }) {
+export default function Page({ legacyNewsItem }) {
+  const imagetest =
+    '<figure class="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"> <a href="#"> <img class="rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description"> </a>  <figcaption class=" px-4 text-lg bottom-6">      <p>Do you want to get notified when a new component is added to Flowbite?</p></figcaption></figure>';
+
   return (
-    <Layout metadata={{ title: content?.title }} header={content?.menu}>
-      {content?.image ? (
+    <Layout metadata={{ title: legacyNewsItem?.title }} header={legacyNewsItem?.menu}>
+      {legacyNewsItem?.heroImage ? (
         <>
           <Hero
             variant="content-hub"
             image={{
-              src: content.image.url,
-              height: content.image.height,
-              width: content.image.width,
-              alt: content.image.alt,
+              src: legacyNewsItem.heroImage.url,
+              height: legacyNewsItem.heroImage.height,
+              width: legacyNewsItem.heroImage.width,
+              alt: legacyNewsItem.heroImage.alt,
             }}
-            title={content.title}
+            title={legacyNewsItem.title}
           />
-
-          <Breadcrumbs links={content?.breadcrumbs} />
         </>
       ) : (
         <>
-          <Breadcrumbs links={content?.breadcrumbs} />
-
           <Container centered>
             <Heading level={1} className="mb-0">
-              {content?.title}
+              {legacyNewsItem?.title}
             </Heading>
           </Container>
         </>
       )}
-
-      {content?.widgets?.map((widget, index) => (
-        <WidgetSelector key={index} data={widget} />
-      ))}
+      {console.log("........", legacyNewsItem)}
+      <Container centered>
+        {FormatDateFull(legacyNewsItem?.created?.time)}
+        <div className="mt-5 grid grid-cols-1 gap-4" dangerouslySetInnerHTML={{ __html: legacyNewsItem?.body?.processed }} />{" "}
+      </Container>
     </Layout>
   );
 }

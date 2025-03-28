@@ -1,7 +1,7 @@
 #import "../media.graphql"
 
 query GetLegacyNews($id: String = "", $status: Boolean = false) {
-  legacyNews(filter: { id: $id, status: $status}, pageSize: 1) {
+  legacyNews(filter: { id: $id, status: $status, type: "article" }) {
     results {
       ... on NodeArticle {
         id
@@ -14,9 +14,18 @@ query GetLegacyNews($id: String = "", $status: Boolean = false) {
           processed
         }
         heroImage {
-          ...Image
+          ... on MediaImage {
+            path
+            image {
+              alt
+              height
+              url
+              width
+            }
+          }
         }
       }
     }
   }
 }
+
