@@ -5,6 +5,8 @@ import { Hero } from "@/components/hero";
 // import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/legacy-news";
 import { getPageID, getLegacyNews, getPageMenu } from "@/data/drupal/legacy-news";
 import { FormatDateFull } from "@/lib/date-utils";
+import { HtmlParser } from "@/components/html-parser";
+import { GeneralText } from "@/components/widgets/general-text";
 
 export async function getStaticPaths() {
   return {
@@ -12,6 +14,7 @@ export async function getStaticPaths() {
     fallback: true,
   };
 }
+
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
 
@@ -46,13 +49,13 @@ export async function getStaticProps(context) {
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<h2>', '<div class="col-span-1"> <h2>')
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</h2>', '</h2> </div>')
 
-
   return {
     props: { legacyNewsItem },
   };
 }
 
 export default function Page({ legacyNewsItem }) {
+  
   return (
     <Layout metadata={{ title: legacyNewsItem?.title }} header={legacyNewsItem?.menu}>
       {legacyNewsItem?.heroImage ? (
@@ -80,7 +83,11 @@ export default function Page({ legacyNewsItem }) {
       {console.log("........", legacyNewsItem)}
       <Container centered>
         {FormatDateFull(legacyNewsItem?.created?.time)}
-        <div className="mt-5 grid grid-cols-1 gap-4" dangerouslySetInnerHTML={{ __html: legacyNewsItem?.body?.processed }} />{" "}
+     
+        <div className="mt-5 grid grid-cols-1 gap-4" >
+          <HtmlParser key={legacyNewsItem?.id} html={legacyNewsItem?.body?.processed }/>
+          
+          </div>
       </Container>
     </Layout>
   );
