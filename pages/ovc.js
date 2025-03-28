@@ -9,6 +9,7 @@ import { WidgetSelector } from "@/components/widgets/widget-selector";
 import eventsBG from "@/img/ovc/brick_leaf_background_gray.jpg";
 import Image from "next/image";
 import ovcLogo from "@/img/ovc/OVC__GUELPH_FULLCOLOUR_WHITEBG_V1_1.5IN_H_300PPI.png";
+import ovcCrest from "@/img/ovc/OVC-crest.png";
 import { Divider } from "@/components/divider";
 import {
   FormatDateFull,
@@ -237,15 +238,15 @@ export default function Page({ content }) {
       <div className={"w-full py-5 bg-gray-100"}>
         <Container centered>
           {/* <div className={containerClasses}> */}
-          <div className="grid gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_3fr] p-5 ">
-            <div className="">
+          <div className="grid gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_5fr] p-5 ">
+            <div className="place-items-center">
               <Image
-                src={ovcLogo.src}
-                width={ovcLogo?.width}
-                height={ovcLogo?.height}
-                alt="Ontario Veterinary College - Main Bilding Front"
-                placeholder={ovcLogo?.blurred ? "blur" : "empty"}
-                blurDataURL={ovcLogo?.blurred}
+                src={ovcCrest.src}
+                width={200}
+                height={200}
+                alt="Ontario Veterinary College - Crest"
+                placeholder={ovcCrest?.blurred ? "blur" : "empty"}
+                blurDataURL={ovcCrest?.blurred}
               />
             </div>
             <div className="text-lg">
