@@ -1,10 +1,12 @@
+// Note: events code is commented out - but will be used in the future 
+
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
 import { getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { getFeaturedLegacyNews } from "@/data/drupal/ovchome";
-import { getFeaturedLegacyEvents } from "@/data/drupal/ovchome";
+// import { getFeaturedLegacyEvents } from "@/data/drupal/ovchome";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import eventsBG from "@/img/ovc/brick_leaf_background_gray.jpg";
 import Image from "next/image";
@@ -13,15 +15,14 @@ import ovcCrest from "@/img/ovc/OVC-crest.png";
 import { Divider } from "@/components/divider";
 import {
   FormatDateFull,
-  FormatEventDate,
-  FormatEventDay,
-  FormatEventMonth,
-  FormatEventWeekday,
+  // FormatEventDate,
+  // FormatEventDay,
+  // FormatEventMonth,
+  // FormatEventWeekday,
 } from "@/lib/date-utils";
-import { twJoin, twMerge } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 import { OVCCards } from "@/components/ovchome/ovc-cards";
 import { Link } from "@/components/link";
-
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -45,7 +46,6 @@ export async function getStaticProps(context) {
     };
   }
 
-
   content.menu = await getPageMenu(content);
 
   // Get the featured OVC News - last 3 entered
@@ -54,31 +54,31 @@ export async function getStaticProps(context) {
   // format the date created for each atricle
   content?.featuredLegacyNews.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
-    legacyNews.path = "/ovc/news"+legacyNews.path;
+    legacyNews.path = "/ovc/news" + legacyNews.path;
   });
 
   // Get the featured OVC Events - last 4 entered
 
-  content.featuredLegacyEvents = await getFeaturedLegacyEvents();
+  // content.featuredLegacyEvents = await getFeaturedLegacyEvents();
 
-  // format the start and end date created for each event
-  content?.featuredLegacyEvents.map((legacyEvent, index) => {
-    legacyEvent.eventStartDate = FormatEventDate(legacyEvent.date.start.time);
-    legacyEvent.eventEndDate = FormatEventDate(legacyEvent.date.end.time);
-    legacyEvent.eventMonth = FormatEventMonth(legacyEvent.date.start.time);
-    legacyEvent.eventDay = FormatEventDay(legacyEvent.date.start.time);
-    // delete non-current events
+  // format the start and end date created for each event - not needed for now - but keep for future
+  // content?.featuredLegacyEvents.map((legacyEvent, index) => {
+  //   legacyEvent.eventStartDate = FormatEventDate(legacyEvent.date.start.time);
+  //   legacyEvent.eventEndDate = FormatEventDate(legacyEvent.date.end.time);
+  //   legacyEvent.eventMonth = FormatEventMonth(legacyEvent.date.start.time);
+  //   legacyEvent.eventDay = FormatEventDay(legacyEvent.date.start.time);
+  //   // delete non-current events
 
-    if (legacyEvent.date.end.timestamp < Date.now() / 1000) {
-      delete content.featuredLegacyEvents[index];
-    }
-  });
+  //   if (legacyEvent.date.end.timestamp < Date.now() / 1000) {
+  //     delete content.featuredLegacyEvents[index];
+  //   }
+  // });
 
-  // remove emply elements from the featuredLegacyEvents array
-  content.featuredLegacyEvents = content.featuredLegacyEvents.filter((value) => Object.keys(value).length !== 0);
+  // // remove emply elements from the featuredLegacyEvents array
+  // content.featuredLegacyEvents = content.featuredLegacyEvents.filter((value) => Object.keys(value).length !== 0);
 
-  // reversie featuredLegacyEvents to display in right order
-  content.featuredLegacyEvents.reverse();
+  // // reversie featuredLegacyEvents to display in right order
+  // content.featuredLegacyEvents.reverse();
 
   // Get rid of any data that doesn't need to be passed to the page.
   delete content.primaryNavigation;
@@ -125,7 +125,7 @@ export default function Page({ content }) {
           </Container>
         </>
       )}
- 
+
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
@@ -163,7 +163,7 @@ export default function Page({ content }) {
               </div>
               <div className="tile">
                 <Heading level={5} as={"h3"} className="font-condensed">
-                <Link href={content.featuredLegacyNews[1].path}>{content.featuredLegacyNews[1].title}</Link>
+                  <Link href={content.featuredLegacyNews[1].path}>{content.featuredLegacyNews[1].title}</Link>
                 </Heading>
                 {content.featuredLegacyNews[1].articleDate}
               </div>
@@ -182,7 +182,7 @@ export default function Page({ content }) {
               </div>
               <div className="tile ">
                 <Heading level={5} as={"h3"} className="font-condensed">
-                <Link href={content.featuredLegacyNews[2].path}>{content.featuredLegacyNews[2].title}</Link>
+                  <Link href={content.featuredLegacyNews[2].path}>{content.featuredLegacyNews[2].title}</Link>
                 </Heading>
                 {content.featuredLegacyNews[2].articleDate}
               </div>
@@ -205,7 +205,9 @@ export default function Page({ content }) {
                 blurDataURL={eventsBG?.blurred}
               />
             </div>
-{/* 
+
+            {/*  // Events has been put on hold for now - leaving the commented out code for when it is needed 
+
             <div className="container z-10 flex w-full max-w-max-content flex-col gap-6 px-4 ">
               <Heading level={2} as={"h2"} className="font-condensed text-white ">
                 OVC Events
@@ -229,11 +231,10 @@ export default function Page({ content }) {
             </div> */}
           </div>
         </div>
-        
+
         <div className="pt-6">
           <OVCCards />
         </div>
-
       </Container>
       <div className={"w-full py-5 bg-gray-100"}>
         <Container centered>
@@ -254,18 +255,16 @@ export default function Page({ content }) {
               medicine and health research to improve the health of animals, people, and our planet. OVC educates the
               next generation of health leaders and provides high-value experiential learning opportunities through an
               interdisciplinary, comparative approach aimed at finding real-world solutions to real-world problems.
-         
             </div>
-
           </div>
           <div className="flex justify-between ">
             <div>
-            <Heading level={1} as={"h2"} className="font-condensed text-black">
-               Social Media
+              <Heading level={1} as={"h2"} className="font-condensed text-black">
+                Social Media
               </Heading>
               Place holder
             </div>
-          <div className="text-lg">
+            <div className="text-lg">
               <Heading level={1} as={"h2"} className="font-condensed text-black">
                 Units
               </Heading>
