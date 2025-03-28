@@ -33,8 +33,8 @@ export const OVCCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-      {ovcCards.map((ovcCard, index) => (
+    <div className="">
+      {/* {ovcCards.map((ovcCard, index) => (
         <Card
           key={ovcCard.title}
           className="h-full"
@@ -47,7 +47,7 @@ export const OVCCards = () => {
             sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
           }}
         />
-      ))}
+      ))} */}
       <div className="flex flex-col gap-2 bg-uog-color-grey-light px-5 py-6 transition-colors items-center">
         <div className="text-2xl">
           <i className="fa-solid fa-2xl fa-certificate text-uog-color-red">&nbsp;</i>

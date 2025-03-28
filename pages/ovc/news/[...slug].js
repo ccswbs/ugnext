@@ -44,8 +44,8 @@ export async function getStaticProps(context) {
   legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
   // wrap figcaption
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-left', 'float-left')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-right', 'float-right')
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-left', 'float-left mr-4')
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-right', 'float-right ml-4 ')
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<p', '<div class="col-span-1"')
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</p', '</div')
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<h2>', '<div class="col-span-1"> <h2>')
@@ -82,11 +82,10 @@ export default function Page({ legacyNewsItem }) {
           </Container>
         </>
       )}
-      {console.log("........", legacyNewsItem)}
       <Container centered>
         {FormatDateFull(legacyNewsItem?.created?.time)}
      
-        <div className="mt-5 grid grid-cols-1 gap-4" >
+        <div className="mt-5" >
           <HtmlParser key={legacyNewsItem?.id} html={legacyNewsItem?.body?.processed }/>
           
           </div>

@@ -205,7 +205,7 @@ export default function Page({ content }) {
                 blurDataURL={eventsBG?.blurred}
               />
             </div>
-
+{/* 
             <div className="container z-10 flex w-full max-w-max-content flex-col gap-6 px-4 ">
               <Heading level={2} as={"h2"} className="font-condensed text-white ">
                 OVC Events
@@ -226,7 +226,7 @@ export default function Page({ content }) {
                   ))}
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         
