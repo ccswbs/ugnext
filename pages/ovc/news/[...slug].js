@@ -44,15 +44,20 @@ export async function getStaticProps(context) {
   legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
   // wrap figcaption
-  const figCap='<figcaption class="text-wrap width:' + '"350"'
-  console.log(figCap)
+  const figCap = '<figcaption class="text-wrap width:' + '"350"';
+  console.log(figCap);
 
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-left', 'float-left mr-4 ml-4')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('align-right', 'float-right ml-4 mr-4')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<figcaption', '<figcaption class="px-5  text-center text-lg font-semibold"')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('<figure role="group" class="', '<figure role="group" class="w-1/3 ')
-  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll('</figure>', '</figure>')
-
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-left", "float-left mr-4 ml-4");
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-right", "float-right ml-4 mr-4");
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll(
+    "<figcaption",
+    '<figcaption class="px-5  text-center text-lg font-semibold"'
+  );
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll(
+    '<figure role="group" class="',
+    '<figure role="group" class="w-1/3 '
+  );
+  legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("</figure>", "</figure>");
 
   return {
     props: { legacyNewsItem },
@@ -60,9 +65,7 @@ export async function getStaticProps(context) {
 }
 
 export default function Page({ legacyNewsItem }) {
-  
   return (
-
     <Layout metadata={{ title: legacyNewsItem?.title }} header={legacyNewsItem?.menu}>
       {legacyNewsItem?.heroImage ? (
         <>
@@ -87,10 +90,10 @@ export default function Page({ legacyNewsItem }) {
         </>
       )}
       <Container centered>
-        <div className="mt-5" >
-          <HtmlParser key={legacyNewsItem?.id} html={legacyNewsItem?.body?.processed }/>
-          
-          </div>
+        {FormatDateFull(legacyNewsItem?.created?.time)}
+        <div className="mt-5">
+          <HtmlParser key={legacyNewsItem?.id} html={legacyNewsItem?.body?.processed} />
+        </div>
       </Container>
     </Layout>
   );
