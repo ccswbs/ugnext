@@ -23,6 +23,8 @@ import {
 import { twMerge } from "tailwind-merge";
 import { OVCCards } from "@/components/ovchome/ovc-cards";
 import { Link } from "@/components/link";
+import { OVCStudyHere } from "@/components/ovchome/ovc-study-here";
+import { StudyHere } from "@/components/home/study-here";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -57,11 +59,11 @@ export async function getStaticProps(context) {
     legacyNews.path = "/ovc/news" + legacyNews.path;
   });
 
-  // Get the featured OVC Events - last 4 entered
+  // Get the featured OVC Events - last 4 entered  - not needed for now - but keep for future
 
   // content.featuredLegacyEvents = await getFeaturedLegacyEvents();
 
-  // format the start and end date created for each event - not needed for now - but keep for future
+  // format the start and end date created for each event
   // content?.featuredLegacyEvents.map((legacyEvent, index) => {
   //   legacyEvent.eventStartDate = FormatEventDate(legacyEvent.date.start.time);
   //   legacyEvent.eventEndDate = FormatEventDate(legacyEvent.date.end.time);
@@ -131,41 +133,42 @@ export default function Page({ content }) {
       ))}
 
       <Container centered>
+        <StudyHere />
         <Heading level={2} as={"h2"} className="font-condensed">
           Featured OVC News
           <Divider />
         </Heading>
-
+{console.log(content.featuredLegacyNews)}
         <div className="container m-auto grid grid-cols-1 grid-rows-2 gap-4 md:grid-cols-1 lg:grid-cols-2">
           <div className="tile row-span-2 ">
             <Image
-              src={content.featuredLegacyNews[0].heroImage.image.url}
-              width={content.featuredLegacyNews[0].heroImage.image.width}
-              height={content.featuredLegacyNews[0].heroImage.image.height}
-              blurred={content.featuredLegacyNews[0].heroImage.image.blurDataURL}
-              alt={content.featuredLegacyNews[0].heroImage.image.alt}
+              src={content?.featuredLegacyNews[0]?.heroImage.image.url}
+              width={content?.featuredLegacyNews[0]?.heroImage.image.width}
+              height={content?.featuredLegacyNews[0]?.heroImage.image.height}
+              blurred={content?.featuredLegacyNews[0]?.heroImage.image.blurDataURL}
+              alt={content?.featuredLegacyNews[0]?.heroImage.image.alt}
             />
             <Heading level={3} as={"h3"} className="font-condensed text-dark">
-              <Link href={content.featuredLegacyNews[0].path}>{content.featuredLegacyNews[0].title}</Link>
+              <Link href={content?.featuredLegacyNews[0]?.path}>{content?.featuredLegacyNews[0]?.title}</Link>
             </Heading>
-            {content.featuredLegacyNews[0].articleDate}
+            {content?.featuredLegacyNews[0]?.articleDate}
           </div>
           <div className="tile ">
             <div className="container m-auto grid grid-cols-2 gap-4">
               <div className="tile">
                 <Image
-                  src={content.featuredLegacyNews[1].heroImage.image.url}
-                  width={content.featuredLegacyNews[1].heroImage.image.width}
-                  height={content.featuredLegacyNews[1].heroImage.image.height}
-                  blurred={content.featuredLegacyNews[1].heroImage.image.blurDataURL}
-                  alt={content.featuredLegacyNews[1].heroImage.image.alt}
+                  src={content?.featuredLegacyNews[1]?.heroImage.image.url}
+                  width={content?.featuredLegacyNews[1]?.heroImage.image.width}
+                  height={content?.featuredLegacyNews[1]?.heroImage.image.height}
+                  blurred={content?.featuredLegacyNews[1]?.heroImage.image.blurDataURL}
+                  alt={content?.featuredLegacyNews[1]?.heroImage.image.alt}
                 />
               </div>
               <div className="tile">
                 <Heading level={5} as={"h3"} className="font-condensed">
-                  <Link href={content.featuredLegacyNews[1].path}>{content.featuredLegacyNews[1].title}</Link>
+                  <Link href={content?.featuredLegacyNews[1]?.path}>{content?.featuredLegacyNews[1]?.title}</Link>
                 </Heading>
-                {content.featuredLegacyNews[1].articleDate}
+                {content?.featuredLegacyNews[1]?.articleDate}
               </div>
             </div>
           </div>
@@ -173,24 +176,25 @@ export default function Page({ content }) {
             <div className="container m-auto grid grid-cols-2  gap-4">
               <div className="tile ">
                 <Image
-                  src={content.featuredLegacyNews[2].heroImage.image.url}
-                  width={content.featuredLegacyNews[2].heroImage.image.width}
-                  height={content.featuredLegacyNews[2].heroImage.image.height}
-                  blurred={content.featuredLegacyNews[2].heroImage.image.blurDataURL}
-                  alt={content.featuredLegacyNews[2].heroImage.image.alt}
+                  src={content?.featuredLegacyNews[2]?.heroImage.image.url}
+                  width={content?.featuredLegacyNews[2]?.heroImage.image.width}
+                  height={content?.featuredLegacyNews[2]?.heroImage.image.height}
+                  blurred={content?.featuredLegacyNews[2]?.heroImage.image.blurDataURL}
+                  alt={content?.featuredLegacyNews[2]?.heroImage.image.alt}
                 />
               </div>
               <div className="tile ">
                 <Heading level={5} as={"h3"} className="font-condensed">
-                  <Link href={content.featuredLegacyNews[2].path}>{content.featuredLegacyNews[2].title}</Link>
+                  <Link href={content?.featuredLegacyNews[2]?.path}>{content?.featuredLegacyNews[2]?.title}</Link>
                 </Heading>
-                {content.featuredLegacyNews[2].articleDate}
+                {content?.featuredLegacyNews[2]?.articleDate}
               </div>
             </div>
           </div>
         </div>
-        <br />
-
+    
+        {/* // Events has been put on hold for now - leaving the commented out code for when it is needed 
+        
         <div className="flex w-full flex-col">
           <div className="relative flex w-full items-center justify-center overflow-hidden">
             <div className="absolute z-0 h-full max-h-full w-full">
@@ -205,8 +209,6 @@ export default function Page({ content }) {
                 blurDataURL={eventsBG?.blurred}
               />
             </div>
-
-            {/*  // Events has been put on hold for now - leaving the commented out code for when it is needed 
 
             <div className="container z-10 flex w-full max-w-max-content flex-col gap-6 px-4 ">
               <Heading level={2} as={"h2"} className="font-condensed text-white ">
@@ -228,9 +230,9 @@ export default function Page({ content }) {
                   ))}
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="pt-6">
           <OVCCards />

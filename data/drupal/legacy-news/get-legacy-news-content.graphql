@@ -13,6 +13,12 @@ query GetLegacyNews($id: String = "", $status: Boolean = false) {
         body {
           processed
         }
+        newsCategory {
+          ... on TermNewsCategory {
+            id
+            name
+          }
+        }
         heroImage {
           ... on MediaImage {
             path
