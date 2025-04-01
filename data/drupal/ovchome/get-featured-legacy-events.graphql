@@ -1,5 +1,5 @@
 query GetFeaturedLegacyEvents {
-  featuredEvents {
+  featuredLegacyEvents {
     results {
       ... on NodeEvent {
         id

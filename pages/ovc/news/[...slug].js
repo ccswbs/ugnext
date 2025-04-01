@@ -2,11 +2,11 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
-// import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/legacy-news";
-import { getPageID, getLegacyNews, getPageMenu } from "@/data/drupal/legacy-news";
+import { getBreadcrumbs, getLegacyNews, getPageID, getPageMenu } from "@/data/drupal/legacy-news";
+import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { FormatDateFull } from "@/lib/date-utils";
 import { HtmlParser } from "@/components/html-parser";
-import { GeneralText } from "@/components/widgets/general-text";
+
 
 export async function getStaticPaths() {
   return {
@@ -43,9 +43,7 @@ export async function getStaticProps(context) {
   // Flatten image prop
   legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
-  // wrap figcaption
-  const figCap = '<figcaption class="text-wrap width:' + '"350"';
-  console.log(figCap);
+  // wrap figcaption and align images
 
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-left", "float-left mr-4 ml-4");
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-right", "float-right ml-4 mr-4");
@@ -95,6 +93,7 @@ export default function Page({ legacyNewsItem }) {
           <HtmlParser key={legacyNewsItem?.id} html={legacyNewsItem?.body?.processed} />
         </div>
       </Container>
+      <OVCFooter />
     </Layout>
   );
 }
