@@ -1,0 +1,10 @@
+id: agriculture
+name: Agriculture
+acronym: AGR
+url: https://calendar.uoguelph.ca/undergraduate-calendar/programs-majors-minors/agriculture-agr/
+degree: bachelor-of-science-in-agriculture
+types:
+  - minor
+tags:
+  - plant
+  - botany
