@@ -24,7 +24,7 @@ export const OVCCards = () => {
     {
       title: "The Crest",
       footer: "The Research, Teaching, and Health Care Magazine of the Ontario Veterinary College",
-      url: "/ovc/theCrestImage",
+      url: "/ovc/crest",
       image: {
         src: theCrestImage.src,
         width: theCrestImage.width,
