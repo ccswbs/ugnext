@@ -5,7 +5,7 @@ import Image from "next/image";
 import coe from "@/img/ovc/coe_logo.png";
 import aaha from "@/img/ovc/aaha_logo.png";
 import petTrustImage from "@/img/ovc/best_friends_cover.jpg";
-import theCrestImage from "@/img/ovc/the_crest_cover.jpg"
+import theCrestImage from "@/img/ovc/the_crest_cover.jpg";
 
 export const OVCCards = () => {
   const ovcCards = [
@@ -53,35 +53,39 @@ export const OVCCards = () => {
         />
       ))}
       <div className="flex flex-col gap-2 bg-uog-color-grey-light px-5 py-6 transition-colors items-center">
-        <div className="text-2xl mt-8">
+        <div className="text-2xl mt-5">
           <i className="fa-solid fa-2xl fa-certificate text-uog-color-red">&nbsp;</i>
           Accreditations
         </div>
-        <div className="text-base">
-          <br />
-          We are committed to the highest standards of education and animal care. OVC is <Link href="/ovc/accreditation/">accredited</Link> by the <Link href="https://www.avma.org/">American Veterinary Medical Association (AVMA)</Link> and <Link href="https://www.aaha.org/">Canadian Veterinary Medical Association (CVMA)</Link> Council on Accreditation (COE), as well as the American Animal Hospital Association. 
+        <div className="text-base mt-5">
+          We are committed to the highest standards of education and animal care. OVC is{" "}
+          <Link href="/ovc/accreditation/">accredited</Link> by the American Veterinary Medical Association (AVMA) and
+          Canadian Veterinary Medical Association (CVMA) Council on Accreditation (COE), as well as the American Animal
+          Hospital Association.
         </div>
-        <div className="mt-10">
-        <div>
-         
-          <Image
-            src={coe.src}
-            width={125}
-            height={125}
-            alt="COE Accredited Logo"
-            placeholder={coe?.blurred ? "blur" : "empty"}
-          />
+        <div className="p-5">
+          <div>
+            <Image
+              src={coe.src}
+              width={125}
+              height={125}
+              alt="COE Accredited Logo"
+              placeholder={coe?.blurred ? "blur" : "empty"}
+            />
           </div>
-          <div className="mt-10">
-            
-                    <Image
-            src={aaha.src}
-            width={125}
-            height={125}
-            alt="AAHA Accredited Logo"
-            placeholder={aaha?.blurred ? "blur" : "empty"}
-          />
-        </div>
+          <div>
+            <Link href="https://www.avma.org/">AVMA Council on Education</Link>
+          </div>
+          <div>
+            <Image
+              src={aaha.src}
+              width={125}
+              height={125}
+              alt="AAHA Accredited Logo"
+              placeholder={aaha?.blurred ? "blur" : "empty"}
+            />
+            <Link href="https://www.aaha.org/">American Animal Hospital Association </Link>
+          </div>
         </div>
       </div>
     </div>
