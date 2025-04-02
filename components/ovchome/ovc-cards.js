@@ -5,13 +5,13 @@ import Image from "next/image";
 import coe from "@/img/ovc/coe_logo.png";
 import aaha from "@/img/ovc/aaha_logo.png";
 import petTrustImage from "@/img/ovc/best_friends_cover.jpg";
-import theCrestImage from "@/img/ovc/the_crest_cover.jpg"
+import theCrestImage from "@/img/ovc/the_crest_cover.jpg";
 
 export const OVCCards = () => {
   const ovcCards = [
     {
       title: "Best Friends",
-      footer: "The Pet Magazine of the Ontario Veterinary College",
+      footer: "The Pet Magazine of the Ontario Veterinary College, Published by OVC Pet Trust",
       url: "https://pettrust.uoguelph.ca/best-friends",
       image: {
         src: petTrustImage.src,
@@ -47,41 +47,42 @@ export const OVCCards = () => {
           centered
           image={{
             ...ovcCard.image,
-            className: "aspect-[3/2] w-full",
+            className: " h-full",
             sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
           }}
         />
       ))}
       <div className="flex flex-col gap-2 bg-uog-color-grey-light px-5 py-6 transition-colors items-center">
-        <div className="text-2xl">
+        <div className="text-2xl mt-5">
           <i className="fa-solid fa-2xl fa-certificate text-uog-color-red">&nbsp;</i>
           Accreditations
         </div>
-        <div className="text-base">
-          <br />
-          We are committed to the highest standards of education and animal care. OVC is <Link href="/ovc/accreditation/">accredited</Link> by the American Veterinary Medical Association (AVMA) and Canadian Veterinary Medical Association (CVMA) Council on Accreditation (COE), as well as the American Animal Hospital Association. 
+        <div className="text-base mt-8">
+          We are committed to the highest standards of education and animal care. OVC is{" "}
+          <Link href="/ovc/accreditation/">accredited</Link> by the{" "}
+          <Link href="https://www.avma.org/">American Veterinary Medical Association (AVMA)</Link> and{" "}
+          <Link href="https://www.aaha.org/">Canadian Veterinary Medical Association (CVMA)</Link> Council on
+          Accreditation (COE), as well as the American Animal Hospital Association.
         </div>
-        <div className="grid grid-cols-2 gap-4 ">
-        <div>
-         <Link href="https://www.avma.org/">
-          <Image
-            src={coe.src}
-            width={125}
-            height={125}
-            alt="COE Accredited Logo"
-            placeholder={coe?.blurred ? "blur" : "empty"}
-          /></Link>
-          </div>
+        <div className="p-10">
           <div>
-            <Link href="https://www.aaha.org/">
-                    <Image
-            src={aaha.src}
-            width={125}
-            height={125}
-            alt="AAHA Accredited Logo"
-            placeholder={aaha?.blurred ? "blur" : "empty"}
-          /></Link>
-        </div>
+            <Image
+              src={coe.src}
+              width={125}
+              height={125}
+              alt="COE Accredited Logo"
+              placeholder={coe?.blurred ? "blur" : "empty"}
+            />
+          </div>
+          <div className="mt-10">
+            <Image
+              src={aaha.src}
+              width={125}
+              height={125}
+              alt="AAHA Accredited Logo"
+              placeholder={aaha?.blurred ? "blur" : "empty"}
+            />
+          </div>
         </div>
       </div>
     </div>
