@@ -1,6 +1,6 @@
 
 query GetFeaturedLegacyNews {
-  featuredNews {
+  featuredLegacyNews {
     results {
       ... on NodeArticle {
         id

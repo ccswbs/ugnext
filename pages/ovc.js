@@ -32,7 +32,7 @@ export async function getStaticProps(context) {
 
   // Try to get the ID of the page the user is requesting.
   const id = await getPageID("/ovc");
-
+console.log ("id:::::", id)
   // If we couldn't resolve an id, then that means this page doesn't exist on content hub, show a 404.
   if (!id) {
     return {
@@ -54,6 +54,7 @@ export async function getStaticProps(context) {
   // Get the featured OVC News - last 3 entered
 
   content.featuredLegacyNews = await getFeaturedLegacyNews();
+  console.log("ovc - fln", content.featuredLegacyNews)
   // format the date created for each atricle
   content?.featuredLegacyNews?.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
