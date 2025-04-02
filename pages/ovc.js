@@ -49,7 +49,7 @@ export async function getStaticProps(context) {
   // Get the featured OVC News - last 3 entered
 
   content.featuredLegacyNews = await getFeaturedLegacyNews();
-
+ 
   // format the date created for each atricle
   content?.featuredLegacyNews?.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
@@ -165,13 +165,11 @@ export default function Page({ content }) {
             </div>
           </div>
         </div>
-        <div className="pt-4">
-          {" "}
-          <Divider />
-        </div>
+<div className = "pt-4"> <Divider /></div>
         <div className="pt-6">
           <OVCCards />
         </div>
+
       </Container>
       <OVCFooter />
     </Layout>
