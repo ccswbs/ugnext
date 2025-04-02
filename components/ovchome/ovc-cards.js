@@ -4,8 +4,8 @@ import { Link } from "@/components/link";
 import Image from "next/image";
 import coe from "@/img/ovc/coe_logo.png";
 import aaha from "@/img/ovc/aaha_logo.png";
-import petTrustImage from "@/img/ovc/OVCpettrust.jpg";
-import theCrestImage from "@/img/ovc/DSC00139.jpg"
+import petTrustImage from "@/img/ovc/best_friends_cover.jpg";
+import theCrestImage from "@/img/ovc/the_crest_cover.jpg"
 
 export const OVCCards = () => {
   const ovcCards = [
@@ -18,7 +18,7 @@ export const OVCCards = () => {
         width: petTrustImage.width,
         height: petTrustImage.height,
         blurred: petTrustImage.blurDataURL,
-        alt: "Best Friends Magazine",
+        alt: "Best Friends Magazine - Cover Image",
       },
     },
     {
@@ -30,7 +30,7 @@ export const OVCCards = () => {
         width: theCrestImage.width,
         height: theCrestImage.height,
         blurred: theCrestImage.blurDataURL,
-        alt: "The Crest Magazine of OVC",
+        alt: "The Crest Magazine of OVC - Cover Image",
       },
     },
   ];

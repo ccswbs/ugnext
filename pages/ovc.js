@@ -1,17 +1,12 @@
-// Note: events code is commented out - but will be used in the future 
-
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
 import { getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { getFeaturedLegacyNews } from "@/data/drupal/ovchome";
-// import { getFeaturedLegacyEvents } from "@/data/drupal/ovchome";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
-import eventsBG from "@/img/ovc/brick_leaf_background_gray.jpg";
 import Image from "next/image";
-import ovcLogo from "@/img/ovc/OVC__GUELPH_FULLCOLOUR_WHITEBG_V1_1.5IN_H_300PPI.png";
-import ovcCrest from "@/img/ovc/OVC-crest.png";
+
 import { Divider } from "@/components/divider";
 import {
   FormatDateFull,
@@ -32,7 +27,7 @@ export async function getStaticProps(context) {
 
   // Try to get the ID of the page the user is requesting.
   const id = await getPageID("/ovc");
-console.log ("id:::::", id)
+
   // If we couldn't resolve an id, then that means this page doesn't exist on content hub, show a 404.
   if (!id) {
     return {
@@ -54,35 +49,12 @@ console.log ("id:::::", id)
   // Get the featured OVC News - last 3 entered
 
   content.featuredLegacyNews = await getFeaturedLegacyNews();
-  console.log("ovc - fln", content.featuredLegacyNews)
+ 
   // format the date created for each atricle
   content?.featuredLegacyNews?.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
     legacyNews.path = "/ovc/news" + legacyNews.path;
   });
-
-  // Get the featured OVC Events - last 4 entered  - not needed for now - but keep for future
-
-  // content.featuredLegacyEvents = await getFeaturedLegacyEvents();
-
-  // format the start and end date created for each event
-  // content?.featuredLegacyEvents.map((legacyEvent, index) => {
-  //   legacyEvent.eventStartDate = FormatEventDate(legacyEvent.date.start.time);
-  //   legacyEvent.eventEndDate = FormatEventDate(legacyEvent.date.end.time);
-  //   legacyEvent.eventMonth = FormatEventMonth(legacyEvent.date.start.time);
-  //   legacyEvent.eventDay = FormatEventDay(legacyEvent.date.start.time);
-  //   // delete non-current events
-
-  //   if (legacyEvent.date.end.timestamp < Date.now() / 1000) {
-  //     delete content.featuredLegacyEvents[index];
-  //   }
-  // });
-
-  // // remove emply elements from the featuredLegacyEvents array
-  // content.featuredLegacyEvents = content.featuredLegacyEvents.filter((value) => Object.keys(value).length !== 0);
-
-  // // reversie featuredLegacyEvents to display in right order
-  // content.featuredLegacyEvents.reverse();
 
   // Get rid of any data that doesn't need to be passed to the page.
   delete content.primaryNavigation;
@@ -193,47 +165,6 @@ export default function Page({ content }) {
             </div>
           </div>
         </div>
-    
-        {/* // Events has been put on hold for now - leaving the commented out code for when it is needed 
-        
-        <div className="flex w-full flex-col">
-          <div className="relative flex w-full items-center justify-center overflow-hidden">
-            <div className="absolute z-0 h-full max-h-full w-full">
-              <Image
-                src={eventsBG.src}
-                alt={eventsBG.alt}
-                className={twMerge("w-full h-full object-cover", eventsBG?.className)}
-                width={eventsBG?.width}
-                height={eventsBG?.height}
-                sizes="100vw"
-                placeholder={eventsBG?.blurred ? "blur" : "empty"}
-                blurDataURL={eventsBG?.blurred}
-              />
-            </div>
-
-            <div className="container z-10 flex w-full max-w-max-content flex-col gap-6 px-4 ">
-              <Heading level={2} as={"h2"} className="font-condensed text-white ">
-                OVC Events
-              </Heading>
-              <div className="flex w-full px-8 lg:p-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 border-3 gap-2 p-4 ">
-                  {content?.featuredLegacyEvents?.map((legacyEvent, index) => (
-                    <div key={index} className="grid grid-cols-8">
-                      <div className="col-span-2  bg-white opacity-100 border-yellow-300 border-8 flex justify-center items-center uppercase">
-                        {legacyEvent.eventMonth}
-                        <br />
-                        {legacyEvent.eventDay}
-                      </div>
-                      <div className="col-span-6 border-white bg-white border-8 flex items-center">
-                        {legacyEvent.title}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
 
         <div className="pt-6">
           <OVCCards />
