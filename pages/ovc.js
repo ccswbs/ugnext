@@ -165,11 +165,10 @@ export default function Page({ content }) {
             </div>
           </div>
         </div>
-<div className = "pt-4"> <Divider /></div>
+
         <div className="pt-6">
           <OVCCards />
         </div>
-
       </Container>
       <OVCFooter />
     </Layout>

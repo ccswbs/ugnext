@@ -59,7 +59,7 @@ export const MediaText = ({ data }) => {
   const size = data?.mediaImageSize ?? "large";
   const media = getMedia(data);
   const position = getPosition(data, context?.column);
-console.log("mediatext",data)
+
   return (
     <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1 h-full">
       {data?.heading && (
