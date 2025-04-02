@@ -24,6 +24,7 @@
     "@netlify/plugin-nextjs": "^5.9.4",
     "@next/bundle-analyzer": "^14.2.7",
     "@next/third-parties": "^14.2.11",
+    "@radix-ui/react-slot": "^1.1.2",
     "classnames": "^2.5.1",
     "conditional-wrap": "^1.0.2",
     "cross-fetch": "^4.0.0",

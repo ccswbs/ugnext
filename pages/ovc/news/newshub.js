@@ -19,6 +19,12 @@ import { twMerge } from "tailwind-merge";
 import { OVCCards } from "@/components/ovchome/ovc-cards";
 import { Link } from "@/components/link";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
