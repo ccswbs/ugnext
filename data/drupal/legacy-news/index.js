@@ -16,7 +16,7 @@ export const getLegacyNews = async (id, status) => {
     id: id,
     status: status,
   });
-
+  
   return data;
 
 };

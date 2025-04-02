@@ -7,7 +7,6 @@ import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { FormatDateFull } from "@/lib/date-utils";
 import { HtmlParser } from "@/components/html-parser";
 
-
 export async function getStaticPaths() {
   return {
     paths: [], //await getPaths(),
