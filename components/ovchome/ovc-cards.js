@@ -52,7 +52,7 @@ export const OVCCards = () => {
           }}
         />
       ))}
-      <div className="flex flex-col gap-2 bg-uog-color-grey-light px-5 py-6 transition-colors items-center">
+      <div className="flex flex-col gap-2 bg-uog-color-grey-light-bg px-5 py-6 transition-colors items-center">
         <div className="text-2xl mt-5">
           <i className="fa-solid fa-2xl fa-certificate text-uog-color-red">&nbsp;</i>
           Accreditations
