@@ -33,7 +33,7 @@ export async function getStaticProps(context) {
       notFound: true,
     };
   }
-console.log("content...................:", content.primaryNavigation)
+
   content.menu = await getPageMenu(content);
 
   // Get rid of any data that doesn't need to be passed to the page.
