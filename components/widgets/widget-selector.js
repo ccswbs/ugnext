@@ -44,7 +44,7 @@ export const WidgetSelector = ({ data }) => {
       condition={!noWrapWidgets.includes(data.__typename) && !context}
       wrap={(children) => <Container centered={true}>{children}</Container>}
     >
-      {Widget && <Widget data={data} />}
+    {Widget && <Widget data={data} />}
     </ConditionalWrap>
   );
 };

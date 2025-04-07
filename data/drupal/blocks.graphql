@@ -15,6 +15,7 @@ fragment WidgetBlock on BlockContentWidgetBlock {
     ...ButtonSection
     ...GeneralText
     ...MediaText
+    ...SocialMedia
     ...Tabs
   }
 }
