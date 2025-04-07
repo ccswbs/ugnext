@@ -29,39 +29,39 @@ export const OVCFooter = () => {
         </div>
         <div className="grid gap-4 grid-cols-1 md:grid-cols-3  ">
           <div>
-            <div class="md:flex flex-wrap gap-3 mt-8">
-              <a href="https://instagram.com/ontvetcollege/" class="btn btn-outline-secondary text-dark-social">
-                <span class="sr-only">Connect with OVC on Instagram</span>
-                <i class="fa-brands fa-instagram text-2xl p-3" aria-hidden="true"></i>
+            <div className="md:flex flex-wrap gap-3 mt-8">
+              <a href="https://instagram.com/ontvetcollege/" className="btn btn-outline-secondary text-dark-social">
+                <span className="sr-only">Connect with OVC on Instagram</span>
+                <i className="fa-brands fa-instagram text-2xl p-3" aria-hidden="true"></i>
               </a>
               <a
                 href="https://www.linkedin.com/school/ontario-veterinary-college/"
-                class="btn btn-outline-secondary text-dark-social"
+                className="btn btn-outline-secondary text-dark-social"
               >
-                <span class="sr-only">Connect with OVC on LinkedIn</span>
-                <i class="fa-brands fa-linkedin text-2xl p-3" aria-hidden="true">
-                  <span class="hidden">&nbsp;</span>
+                <span className="sr-only">Connect with OVC on LinkedIn</span>
+                <i className="fa-brands fa-linkedin text-2xl p-3" aria-hidden="true">
+                  <span className="hidden">&nbsp;</span>
                 </i>
               </a>
-              <a href="https://www.facebook.com/ontvetcollege" class="btn btn-outline-secondary text-dark-social">
-                <span class="sr-only">Connect with OVC on Facebook</span>
-                <i class="fa-brands fa-facebook text-2xl p-3" aria-hidden="true">
-                  <span class="hidden">&nbsp;</span>
+              <a href="https://www.facebook.com/ontvetcollege" className="btn btn-outline-secondary text-dark-social">
+                <span className="sr-only">Connect with OVC on Facebook</span>
+                <i className="fa-brands fa-facebook text-2xl p-3" aria-hidden="true">
+                  <span className="hidden">&nbsp;</span>
                 </i>
               </a>
-              <a href="https://twitter.com/OntVetCollege/" class="btn btn-outline-secondary text-dark-social">
-                <span class="sr-only">Connect with OVC on Twitter</span>
-                <i class="fa-brands fa-x-twitter text-2xl p-3" aria-hidden="true">
-                  <span class="hidden">&nbsp;</span>
+              <a href="https://twitter.com/OntVetCollege/" className="btn btn-outline-secondary text-dark-social">
+                <span className="sr-only">Connect with OVC on Twitter</span>
+                <i className="fa-brands fa-x-twitter text-2xl p-3" aria-hidden="true">
+                  <span className="hidden">&nbsp;</span>
                 </i>
               </a>
               <a
                 href="https://www.youtube.com/user/OntarioVetCollege"
-                class="btn btn-outline-secondary text-dark-social"
+                className="btn btn-outline-secondary text-dark-social"
               >
-                <span class="sr-only">Connect with OVC on YouTube</span>
-                <i class="fa-brands fa-youtube text-2xl p-3" aria-hidden="true">
-                  <span class="hidden">&nbsp;</span>
+                <span className="sr-only">Connect with OVC on YouTube</span>
+                <i className="fa-brands fa-youtube text-2xl p-3" aria-hidden="true">
+                  <span className="hidden">&nbsp;</span>
                 </i>
               </a>
             </div>
