@@ -18,8 +18,6 @@ import {
 import { twMerge } from "tailwind-merge";
 import { OVCCards } from "@/components/ovchome/ovc-cards";
 import { Link } from "@/components/link";
-import { OVCStudyHere } from "@/components/ovchome/ovc-study-here";
-import { StudyHere } from "@/components/home/study-here";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 
 export async function getStaticProps(context) {
