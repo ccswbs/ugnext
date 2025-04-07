@@ -1,7 +1,7 @@
 #import "../media.graphql"
 
 query GetLegacyNews($id: String = "", $status: Boolean = false) {
-  legacyNewsRevisions(filter: { id: $id, status: $status, type: "article" }) {
+  legacyNews(filter: { id: $id, status: $status, type: "article" }) {
     results {
       ... on NodeArticle {
         id
