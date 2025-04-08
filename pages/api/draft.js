@@ -1,11 +1,12 @@
 import { Drupal } from "@/lib/drupal";
 
-export default function handler(req, res) {
-  const response = Drupal.validateDraftUrl(req.nextUrl.searchParams);
+export default async function handler(req, res) {
+  const response = await Drupal.validateDraftUrl(new URLSearchParams(req.query));
 
   // If validation fails, don't enable draft mode.
   if (!response.ok) {
-    return response;
+    res.status(401);
+    res.end("Invalid draft URL");
   }
 
   res.setDraftMode({ enable: true });
