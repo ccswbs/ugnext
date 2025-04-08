@@ -35,7 +35,7 @@ export async function getStaticProps(context) {
       notFound: true,
     };
   }
-  const legacyNewsItem = content.legacyNews.results[0];
+  const legacyNewsItem = content.legacyNewsRevisions.results[0];
 
   legacyNewsItem.menu = await getPageMenu();
 
