@@ -292,25 +292,3 @@ fragment TestimonialSlider on ParagraphTestimonialSlider {
     ...Tag
   }
 }
-
-fragment BasicBlock on BlockContentBasic {
-  __typename
-  title
-  body {
-    processed
-  }
-}
-
-fragment WidgetBlock on BlockContentWidgetBlock {
-  __typename
-  title
-  content {
-    __typename
-    ...Accordion
-    ...ButtonSection
-    ...GeneralText
-    ...MediaText
-    ...SocialMedia
-    ...Tabs
-  }
-}

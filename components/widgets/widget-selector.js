@@ -4,6 +4,7 @@ import { GeneralText } from "@/components/widgets/general-text";
 import { Links } from "@/components/widgets/links";
 import { MediaText } from "@/components/widgets/media-text";
 import { Section } from "@/components/widgets/section-widget.js";
+import { SocialMedia } from "@/components/widgets/social-media";
 import { Statistics } from "@/components/widgets/statistics";
 import { Tabs } from "@/components/widgets/tabs";
 import { TestimonialSlider } from "@/components/widgets/testimonial-slider";
@@ -31,6 +32,7 @@ export const WidgetSelector = ({ data }) => {
     ParagraphTestimonialSlider: TestimonialSlider,
     ParagraphSection: Section,
     ParagraphSectionTab: Tabs,
+    ParagraphSocialMediaWidget: SocialMedia,
     ParagraphStatisticWidget: Statistics,
     ParagraphImageOverlay: ImageOverlay,
     ParagraphStoryWidget: Story,
@@ -38,8 +40,9 @@ export const WidgetSelector = ({ data }) => {
   };
 
   const Widget = map[data.__typename];
+  console.log(data.__typename);
 
-  return (
+  return (    
     <ConditionalWrap
       condition={!noWrapWidgets.includes(data.__typename) && !context}
       wrap={(children) => <Container centered={true}>{children}</Container>}

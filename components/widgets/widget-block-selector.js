@@ -12,7 +12,7 @@ export const WidgetBlockSelector = ({ data }) => {
     ParagraphGeneralText: GeneralText,
     ParagraphMediaText: MediaText,
     ParagraphSectionTab: Tabs,
-    ParagraphSocialMedia: SocialMedia,
+    ParagraphSocialMediaWidget: SocialMedia,
   };
 
   return (
