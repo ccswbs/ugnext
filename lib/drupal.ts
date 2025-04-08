@@ -1,16 +1,19 @@
 import { NextDrupal } from "next-drupal";
 
-export const Drupal = new NextDrupal(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL?.replace(/\/$/, ""), {
-  auth: {
-    clientId: process.env.DRUPAL_CLIENT_ID,
-    clientSecret: process.env.DRUPAL_CLIENT_SECRET,
-  },
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export const Drupal = new NextDrupal(
+  process.env.NEXT_PUBLIC_DRUPAL_BASE_URL?.replace(/\/$/, "") ?? "https://api.liveugconthub.uoguelph.dev",
+  {
+    auth: {
+      clientId: process.env.DRUPAL_CLIENT_ID ?? "",
+      clientSecret: process.env.DRUPAL_CLIENT_SECRET ?? "",
+    },
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+);
 
-export const graphql = async (query, variables) => {
+export const graphql = async (query: string, variables: any) => {
   const endpoint = Drupal.buildUrl("/graphql").toString();
 
   const response = await Drupal.fetch(endpoint, {
@@ -34,7 +37,7 @@ export const graphql = async (query, variables) => {
 
   if (Array.isArray(body.errors) && body.errors.length > 0) {
     const errorMsg = body.errors
-      .map((error) => {
+      .map((error: { locations: any[]; path: any[]; message: any }) => {
         const locations =
           error.locations
             ?.map((location) => {
