@@ -13,14 +13,33 @@ import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
 
 export async function getStaticProps(context) {
-  const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
+  let status = null;
+
+  // Show draft content if we are in the development environment
+  if (process.env.NODE_ENV === "development") {
+    status = true;
+  }
+
+  // Show draft content if we are in draft mode
+  if (context.draftMode) {
+    status = true;
+  }
+
+  // Show draft content if we are in preview mode
+  if (context.preview) {
+    status = true;
+  }
+
   const hero = await getSpotlightHero(status);
   const cards = await getSpotlightCards(status, hero);
+
+  console.log(context);
 
   return {
     props: {
       cards: cards,
       hero: hero,
+      isDraft: Boolean(context.draftMode),
     },
   };
 }
@@ -73,7 +92,5 @@ export function HomePage({ cards, hero, forceAppArmorTest = false }) {
 }
 
 export default function Home({ cards, hero }) {
-  return (
-    <HomePage cards={cards} hero={hero} />
-  );
+  return <HomePage cards={cards} hero={hero} />;
 }
