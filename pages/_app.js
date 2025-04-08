@@ -3,7 +3,6 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { Button } from "@/components/button";
 
 function Application({ Component, pageProps }) {
-  console.log(pageProps)
   const gtmId =
     process.env.NODE_ENV === "production" && !pageProps?.isDraft
       ? process.env.NEXT_PUBLIC_GTM_ID
