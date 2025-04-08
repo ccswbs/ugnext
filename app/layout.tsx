@@ -13,19 +13,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <Head>
         <link rel="stylesheet" href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} />
       </Head>
-      <Script
-        src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-header.esm.js`}
-        type="module"
-        strategy="beforeInteractive"
-      />
-      <Script
-        src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-footer.esm.js`}
-        type="module"
-        strategy="beforeInteractive"
-      />
-      <Script src="https://kit.fontawesome.com/7993323d0c.js" strategy="lazyOnload" />
 
       <body>
+        <Script
+          src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-header.esm.js`}
+          type="module"
+          strategy="beforeInteractive"
+          async
+        />
+
+        <Script
+          src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-footer.esm.js`}
+          type="module"
+          strategy="beforeInteractive"
+          async
+        />
+
+        <Script src="https://kit.fontawesome.com/7993323d0c.js" strategy="lazyOnload" async />
         {isDraft && (
           <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-uog-color-red p-2 text-center text-base font-bold text-white">
             <span>You are currently in Draft Mode.</span>

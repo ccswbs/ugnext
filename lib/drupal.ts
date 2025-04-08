@@ -1,27 +1,46 @@
 import { NextDrupal } from "next-drupal";
+import { draftMode } from "next/headers";
+
+if (!process.env.DRUPAL_CLIENT_ID) {
+  throw new Error("Missing DRUPAL_CLIENT_ID: Please set the DRUPAL_CLIENT_ID environment variable.");
+}
+
+if (!process.env.DRUPAL_CLIENT_SECRET) {
+  throw new Error("Missing DRUPAL_CLIENT_SECRET: Please set the DRUPAL_CLIENT_SECRET environment variable.");
+}
 
 export const Drupal = new NextDrupal(
   process.env.NEXT_PUBLIC_DRUPAL_BASE_URL?.replace(/\/$/, "") ?? "https://api.liveugconthub.uoguelph.dev",
   {
     auth: {
-      clientId: process.env.DRUPAL_CLIENT_ID ?? "",
-      clientSecret: process.env.DRUPAL_CLIENT_SECRET ?? "",
+      clientId: process.env.DRUPAL_CLIENT_ID as string,
+      clientSecret: process.env.DRUPAL_CLIENT_SECRET as string,
     },
+    withAuth: true,
     headers: {
       "Content-Type": "application/json",
     },
   }
 );
 
-export const graphql = async (query: string, variables: any) => {
+export const graphql = async (
+  query: string,
+  variables: {
+    [key: string]: any;
+  } = {}
+) => {
   const endpoint = Drupal.buildUrl("/graphql").toString();
+  const { isEnabled: isDraftMode } = await draftMode();
 
   const response = await Drupal.fetch(endpoint, {
     method: "POST",
     withAuth: true,
     body: JSON.stringify({
       query: query,
-      variables: variables,
+      variables: {
+        status: process.env.NODE_ENV === "development" || isDraftMode ? true : null,
+        ...variables,
+      },
     }),
   });
 

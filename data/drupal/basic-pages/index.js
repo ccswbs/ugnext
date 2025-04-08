@@ -42,10 +42,9 @@ export const getPageID = async (url) => {
   return data?.route?.entity?.id;
 };
 
-export const getPageContent = async (id, status) => {
+export const getPageContent = async (id) => {
   const { data } = await graphql(getPageQuery, {
     id: id,
-    status: status,
   });
 
   const content = data?.contentRevisions?.results[0];
@@ -60,7 +59,6 @@ export const getPageContent = async (id, status) => {
 
     const { data } = await graphql(getTestimonialsByTagQuery, {
       tags: tags,
-      status: status,
     });
 
     slider.byTags = data.testimonialsByTag.results;
@@ -110,7 +108,7 @@ export const getPageMenu = async (page) => {
   return menu ?? null;
 };
 
-export const getBreadcrumbs = async (slug, status) => {
+export const getBreadcrumbs = async (slug) => {
   // NEED TO IMPROVE THIS TO LOWER THE AMOUNT OF QUERYING
   const crumbs = [];
   const stack = [...slug];
