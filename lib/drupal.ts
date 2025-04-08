@@ -1,5 +1,4 @@
 import { NextDrupal } from "next-drupal";
-import { draftMode } from "next/headers";
 
 if (!process.env.DRUPAL_CLIENT_ID) {
   throw new Error("Missing DRUPAL_CLIENT_ID: Please set the DRUPAL_CLIENT_ID environment variable.");
@@ -27,10 +26,10 @@ export const graphql = async (
   query: string,
   variables: {
     [key: string]: any;
-  } = {}
+  } = {},
+  isDraftMode: boolean = false
 ) => {
   const endpoint = Drupal.buildUrl("/graphql").toString();
-  const { isEnabled: isDraftMode } = await draftMode();
 
   const response = await Drupal.fetch(endpoint, {
     method: "POST",

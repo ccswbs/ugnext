@@ -30,10 +30,8 @@ export async function getStaticProps(context) {
     status = true;
   }
 
-  const hero = await getSpotlightHero(status);
-  const cards = await getSpotlightCards(status, hero);
-
-  console.log(context);
+  const hero = await getSpotlightHero();
+  const cards = await getSpotlightCards(hero);
 
   return {
     props: {
