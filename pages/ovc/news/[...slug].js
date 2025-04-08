@@ -43,7 +43,6 @@ export async function getStaticProps(context) {
   legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
   // wrap figcaption and align images
-ç
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-left", "float-left mr-4 ml-4");
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-right", "float-right ml-4 mr-4");
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll(
