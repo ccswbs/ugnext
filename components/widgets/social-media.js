@@ -1,19 +1,17 @@
 export const SocialMedia = ({ data }) => {
-  console.log("Component props:", data);
-  return (
+  const links = data.socialMediaLinks || [];
+
+  return links.length > 0 ? (
     <div>
-      <p>Test here</p>
-      {data.map((link, index) => {
-        const { name, url, value } = link;
-        const fullLink = url + value;
-        console.log("Rendering link:", fullLink);
-        return (
-          <div key={index}>
-            <a href={fullLink}>{name}</a>
-          </div>
-        );
-      })}
+      <h2>Visit Us on Social Media</h2>
+      <ul>
+        {links.map(({ name, url }, index) => (
+          <li key={index}>
+            <a href={url}>{name}</a>
+          </li>
+        ))}
+      </ul>
     </div>
-  );
+  ) : null;
 };
 
