@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 import AppArmor from "@/components/app-armor";
 
 export const Layout = ({ children, className, metadata, header, footer, forceAppArmorTest = false }) => {
-  const { isPreview, isFallback } = useRouter();
+  const { isPreview: isDraft, isFallback } = useRouter();
 
   const title = metadata?.title ? `${metadata.title} | University of Guelph` : "University of Guelph - Improve Life";
 
@@ -57,7 +57,7 @@ export const Layout = ({ children, className, metadata, header, footer, forceApp
 
       {!isFallback && (
         <>
-          <AppArmor testing={forceAppArmorTest || isPreview} />
+          <AppArmor testing={forceAppArmorTest || isDraft} />
 
           <a
             className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-uog-color-yellow underline px-0 focus:px-2 transition-[padding]"
@@ -67,12 +67,12 @@ export const Layout = ({ children, className, metadata, header, footer, forceApp
           </a>
 
           <div className="flex flex-1 flex-col">
-            {isPreview && (
+            {isDraft && (
               <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-uog-color-red p-2 text-center text-base font-bold text-white">
-                <span>You are currently in Preview Mode.</span>
+                <span>You are currently in Draft Mode.</span>
 
-                <Button color="yellow" className="p-2" href="/api/exit-preview">
-                  Exit Preview Mode
+                <Button color="yellow" className="p-2" href="/api/disable-draft" prefetch={false}>
+                  Exit Draft Mode
                 </Button>
               </div>
             )}

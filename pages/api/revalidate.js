@@ -1,23 +1,29 @@
-export default async function handler(request, response) {
-  let slug = request.query.slug;
-  const secret = request.query.secret;
+import { revalidatePath, revalidateTag } from "next/cache"
+
+async function handler(request) {
+  const searchParams = request.nextUrl.searchParams
+  const path = searchParams.get("path")
+  const tags = searchParams.get("tags")
+  const secret = searchParams.get("secret")
 
   // Validate secret.
   if (secret !== process.env.DRUPAL_REVALIDATE_SECRET) {
-    return response.status(401).json({ message: "Invalid secret." });
+    return new Response("Invalid secret.", { status: 401 })
   }
 
-  // Validate slug.
-  if (!slug) {
-    return response.status(400).json({ message: "Invalid slug." });
+  // Either tags or path must be provided.
+  if (!path && !tags) {
+    return new Response("Missing path or tags.", { status: 400 })
   }
 
   try {
-    await response.revalidate(slug);
-    return response.json({});
+    path && revalidatePath(path)
+    tags?.split(",").forEach((tag) => revalidateTag(tag))
+
+    return new Response("Revalidated.")
   } catch (error) {
-    return response.status(404).json({
-      message: error.message,
-    });
+    return new Response(error.message, { status: 500 })
   }
 }
+
+export { handler as GET, handler as POST }
