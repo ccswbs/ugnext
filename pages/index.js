@@ -11,6 +11,7 @@ import { HomeStory } from "@/components/home/story";
 import { StudyHere } from "@/components/home/study-here";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
+import Link from "next/link";
 
 export async function getStaticProps(context) {
   let status = null;
@@ -37,16 +38,16 @@ export async function getStaticProps(context) {
     props: {
       cards: cards,
       hero: hero,
-      isDraft: Boolean(context.draftMode),
+      isDraftMode: Boolean(context.draftMode),
     },
   };
 }
 
-export function HomePage({ cards, hero, forceAppArmorTest = false }) {
+export function HomePage({ cards, hero, forceAppArmorTest = false, isDraftMode = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
-    <Layout>
+    <Layout isDraftMode={isDraftMode}>
       <div className="flex flex-col flex-col-reverse">
         <TagLine />
         {hero && <SpotlightHero hero={hero} />}
