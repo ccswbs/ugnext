@@ -1,23 +1,34 @@
-import { DrupalClient } from "next-drupal";
+import { NextDrupal } from "next-drupal";
 
-export const Drupal =
-  typeof window !== "undefined"
-    ? null
-    : new DrupalClient(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL?.replace(/\/$/, ""), {
-        auth: {
-          clientId: process.env.DRUPAL_CLIENT_ID,
-          clientSecret: process.env.DRUPAL_CLIENT_SECRET,
-        },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+if (!process.env.DRUPAL_CLIENT_ID) {
+  throw new Error("Missing DRUPAL_CLIENT_ID: Please set the DRUPAL_CLIENT_ID environment variable.");
+}
 
-export const graphql = async (query, variables) => {
-  if (!Drupal) {
-    return null;
+if (!process.env.DRUPAL_CLIENT_SECRET) {
+  throw new Error("Missing DRUPAL_CLIENT_SECRET: Please set the DRUPAL_CLIENT_SECRET environment variable.");
+}
+
+export const Drupal = new NextDrupal(
+  process.env.NEXT_PUBLIC_DRUPAL_BASE_URL?.replace(/\/$/, "") ?? "https://api.liveugconthub.uoguelph.dev",
+  {
+    auth: {
+      clientId: process.env.DRUPAL_CLIENT_ID as string,
+      clientSecret: process.env.DRUPAL_CLIENT_SECRET as string,
+    },
+    withAuth: true,
+    headers: {
+      "Content-Type": "application/json",
+    },
   }
+);
 
+export const graphql = async (
+  query: string,
+  variables: {
+    [key: string]: any;
+  } = {},
+  isDraftMode: boolean = false
+) => {
   const endpoint = Drupal.buildUrl("/graphql").toString();
 
   const response = await Drupal.fetch(endpoint, {
@@ -25,7 +36,10 @@ export const graphql = async (query, variables) => {
     withAuth: true,
     body: JSON.stringify({
       query: query,
-      variables: variables,
+      variables: {
+        status: process.env.NODE_ENV === "development" || isDraftMode ? true : null,
+        ...variables,
+      },
     }),
   });
 
@@ -41,7 +55,7 @@ export const graphql = async (query, variables) => {
 
   if (Array.isArray(body.errors) && body.errors.length > 0) {
     const errorMsg = body.errors
-      .map((error) => {
+      .map((error: { locations: any[]; path: any[]; message: any }) => {
         const locations =
           error.locations
             ?.map((location) => {

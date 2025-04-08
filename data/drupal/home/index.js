@@ -3,15 +3,13 @@ import spotlightHeroQuery from "./spotlight-hero.graphql";
 import spotlightCardIDsQuery from "./spotlight-card-ids.graphql";
 import spotlightCardQuery from "./spotlight-card.graphql";
 
-export const getSpotlightHero = async (status) => {
-  const { data } = await graphql(spotlightHeroQuery, {
-    status: status,
-  });
+export const getSpotlightHero = async () => {
+  const { data } = await graphql(spotlightHeroQuery);
 
   return data?.spotlightRevisions?.results?.[0];
 };
 
-export const getSpotlightCards = async (status, hero) => {
+export const getSpotlightCards = async (hero) => {
   const ids = new Set();
   let isLastPage = false;
   let page = 0;
@@ -19,7 +17,6 @@ export const getSpotlightCards = async (status, hero) => {
   outer: while (!isLastPage) {
     const cards = (
       await graphql(spotlightCardIDsQuery, {
-        status: status,
         page: page,
       })
     )?.data?.spotlightRevisions?.results;
@@ -48,7 +45,6 @@ export const getSpotlightCards = async (status, hero) => {
   const cards = await Promise.all(
     Array.from(ids).map(async (id) => {
       const { data } = await graphql(spotlightCardQuery, {
-        status: status,
         id: id,
       });
 
@@ -59,17 +55,18 @@ export const getSpotlightCards = async (status, hero) => {
       }
 
       // The image is an array of variations, so we need to find the one that matches the thumbnailImageCrop.
-      const image = card.image?.image?.variations?.find((variation) => {
-        return variation.name.toLowerCase().includes(card.thumbnailImageCrop);
-      }) ?? {};
+      const image =
+        card.image?.image?.variations?.find((variation) => {
+          return variation.name.toLowerCase().includes(card.thumbnailImageCrop);
+        }) ?? {};
 
       return {
         id: id,
         ...card,
         image: {
           alt: card.image.image.alt,
-          ...image
-        }
+          ...image,
+        },
       };
     })
   );

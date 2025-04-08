@@ -2,7 +2,6 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import { Transition } from "@headlessui/react";
@@ -10,9 +9,18 @@ import { faSpinner } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { twMerge } from "tailwind-merge";
 import PropTypes from "prop-types";
 import AppArmor from "@/components/app-armor";
+import Link from "next/link";
 
-export const Layout = ({ children, className, metadata, header, footer, forceAppArmorTest = false }) => {
-  const { isPreview, isFallback } = useRouter();
+export const Layout = ({
+  children,
+  className,
+  metadata,
+  header,
+  footer,
+  forceAppArmorTest = false,
+  isDraftMode = false,
+}) => {
+  const { isFallback } = useRouter();
 
   const title = metadata?.title ? `${metadata.title} | University of Guelph` : "University of Guelph - Improve Life";
 
@@ -57,7 +65,17 @@ export const Layout = ({ children, className, metadata, header, footer, forceApp
 
       {!isFallback && (
         <>
-          <AppArmor testing={forceAppArmorTest || isPreview} />
+          {isDraftMode && (
+            <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-uog-color-red p-2 text-center text-base font-bold text-white">
+              <span>You are currently in Draft Mode.</span>
+
+              <Link className="p-2" href="/api/disable-draft" prefetch={false}>
+                Exit Draft Mode
+              </Link>
+            </div>
+          )}
+
+          <AppArmor testing={forceAppArmorTest} />
 
           <a
             className="sr-only focus:not-sr-only fixed top-0 left-0 z-[1000] !w-fit bg-uog-color-yellow underline px-0 focus:px-2 transition-[padding]"
@@ -67,16 +85,6 @@ export const Layout = ({ children, className, metadata, header, footer, forceApp
           </a>
 
           <div className="flex flex-1 flex-col">
-            {isPreview && (
-              <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-uog-color-red p-2 text-center text-base font-bold text-white">
-                <span>You are currently in Preview Mode.</span>
-
-                <Button color="yellow" className="p-2" href="/api/exit-preview">
-                  Exit Preview Mode
-                </Button>
-              </div>
-            )}
-
             {header !== false && (
               <Header topic={header?.topic} navigation={header?.navigation} variant={header?.variant} />
             )}
@@ -113,5 +121,6 @@ Layout.propTypes = {
   }),
   header: PropTypes.oneOfType([PropTypes.shape({ ...Header.propTypes }), PropTypes.bool]),
   footer: PropTypes.oneOfType([PropTypes.shape({ ...Footer.propTypes }), PropTypes.bool]),
-  forceAppArmorTest: PropTypes.bool
+  forceAppArmorTest: PropTypes.bool,
+  isDraftMode: PropTypes.bool,
 };

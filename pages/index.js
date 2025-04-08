@@ -11,25 +11,43 @@ import { HomeStory } from "@/components/home/story";
 import { StudyHere } from "@/components/home/study-here";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
+import Link from "next/link";
 
 export async function getStaticProps(context) {
-  const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
-  const hero = await getSpotlightHero(status);
-  const cards = await getSpotlightCards(status, hero);
+  let status = null;
+
+  // Show draft content if we are in the development environment
+  if (process.env.NODE_ENV === "development") {
+    status = true;
+  }
+
+  // Show draft content if we are in draft mode
+  if (context.draftMode) {
+    status = true;
+  }
+
+  // Show draft content if we are in preview mode
+  if (context.preview) {
+    status = true;
+  }
+
+  const hero = await getSpotlightHero();
+  const cards = await getSpotlightCards(hero);
 
   return {
     props: {
       cards: cards,
       hero: hero,
+      isDraftMode: Boolean(context.draftMode),
     },
   };
 }
 
-export function HomePage({ cards, hero, forceAppArmorTest = false }) {
+export function HomePage({ cards, hero, forceAppArmorTest = false, isDraftMode = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
-    <Layout>
+    <Layout isDraftMode={isDraftMode}>
       <div className="flex flex-col flex-col-reverse">
         <TagLine />
         {hero && <SpotlightHero hero={hero} />}
@@ -73,7 +91,5 @@ export function HomePage({ cards, hero, forceAppArmorTest = false }) {
 }
 
 export default function Home({ cards, hero }) {
-  return (
-    <HomePage cards={cards} hero={hero} />
-  );
+  return <HomePage cards={cards} hero={hero} />;
 }
