@@ -40,7 +40,6 @@ export const WidgetSelector = ({ data }) => {
   };
 
   const Widget = map[data.__typename];
-  console.log(data);
 
   return (    
     <ConditionalWrap
