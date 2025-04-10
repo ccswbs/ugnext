@@ -105,14 +105,20 @@ export default function Page({ content }) {
   const visiblePages = 5; // Limit the number of visible page numbers
   const startPage = Math.max(2, currentPage - Math.floor(visiblePages / 2)); // Start from the second page
   const endPage = Math.min(totalPages - 1, startPage + visiblePages - 1); // End before the last page
-
+  
   const pageNumbers = [];
+  
+  // Always show the first page
   if (startPage > 2) {
     pageNumbers.push("...");
   }
+  
+  // Add the range of visible pages
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
+  
+  // Always show the last page
   if (endPage < totalPages - 1) {
     pageNumbers.push("...");
   }
@@ -149,61 +155,61 @@ export default function Page({ content }) {
           ))}
         </div>
         <div className="pagination-controls flex justify-center items-center mt-6">
-          <button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <div className="flex space-x-2">
-            {/* Always show the first page */}
-            <button
-              onClick={() => handlePageClick(1)}
-              className={`px-3 py-1 rounded ${
-                currentPage === 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-              }`}
-            >
-              1
-            </button>
-            {/* Show ellipses and middle page numbers */}
-            {pageNumbers.map((page, index) =>
-              page === "..." ? (
-                <span key={index} className="px-3 py-1 text-gray-500">
-                  ...
-                </span>
-              ) : (
-                <button
-                  key={page}
-                  onClick={() => handlePageClick(page)}
-                  className={`px-3 py-1 rounded ${
-                    currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-                  }`}
-                >
-                  {page}
-                </button>
-              )
-            )}
-            {/* Always show the last page */}
-            {totalPages > 1 && (
-              <button
-                onClick={() => handlePageClick(totalPages)}
-                className={`px-3 py-1 rounded ${
-                  currentPage === totalPages ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-                }`}
-              >
-                {totalPages}
-              </button>
-            )}
-          </div>
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
+  <button
+    onClick={handlePreviousPage}
+    disabled={currentPage === 1}
+    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
+  >
+    Previous
+  </button>
+  <div className="flex space-x-2">
+    {/* Always show the first page */}
+    <button
+      onClick={() => handlePageClick(1)}
+      className={`px-3 py-1 rounded ${
+        currentPage === 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+      }`}
+    >
+      1
+    </button>
+    {/* Render ellipses and middle page numbers */}
+    {pageNumbers.map((page, index) =>
+      page === "..." ? (
+        <span key={`ellipsis-${index}`} className="px-3 py-1 text-gray-500">
+          ...
+        </span>
+      ) : (
+        <button
+          key={page}
+          onClick={() => handlePageClick(page)}
+          className={`px-3 py-1 rounded ${
+            currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+          }`}
+        >
+          {page}
+        </button>
+      )
+    )}
+    {/* Always show the last page */}
+    {totalPages > 1 && (
+      <button
+        onClick={() => handlePageClick(totalPages)}
+        className={`px-3 py-1 rounded ${
+          currentPage === totalPages ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+        }`}
+      >
+        {totalPages}
+      </button>
+    )}
+  </div>
+  <button
+    onClick={handleNextPage}
+    disabled={currentPage === totalPages}
+    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
+  >
+    Next
+  </button>
+</div>
       </Container>
       <OVCFooter />
     </Layout>
