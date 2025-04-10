@@ -39,7 +39,19 @@ export async function getStaticProps(context) {
     props: { content },
   };
 }
+
 function Pagination({ currentPage, totalPages, onPageClick, onNextPage, onPreviousPage }) {
+  /**
+   * Pagination Component
+   *
+   * @param {number} currentPage - The current active page number.
+   * @param {number} totalPages - The total number of pages available.
+   * @param {function} onPageClick - Callback function to handle clicking on a specific page number.
+   * @param {function} onNextPage - Callback function to handle clicking the "Next" button.
+   * @param {function} onPreviousPage - Callback function to handle clicking the "Previous" button.
+   */
+
+  // Calculate the range of page numbers to display
   const visiblePages = 5; // Limit the number of visible page numbers
   const startPage = Math.max(2, currentPage - Math.floor(visiblePages / 2)); // Start from the second page
   const endPage = Math.min(totalPages - 1, startPage + visiblePages - 1); // End before the last page
@@ -142,10 +154,7 @@ export default function Page({ content }) {
     }
   };
 
-  const paginatedNewsList = content?.legacyNewsList.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <Layout metadata={{ title: content?.title }} header={content?.menu}>
@@ -166,7 +175,6 @@ export default function Page({ content }) {
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
         />
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
             <div key={index} className="border p-4 rounded shadow">
