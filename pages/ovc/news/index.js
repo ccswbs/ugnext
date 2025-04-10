@@ -80,35 +80,43 @@ export default function Page({ content }) {
       setCurrentPage(currentPage + 1);
     }
   };
-  
+
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
-  
+
   const handlePageClick = (page) => {
     setCurrentPage(page);
   };
-  
+
   const handleFirstPage = () => {
     setCurrentPage(1);
   };
-  
+
   const handleLastPage = () => {
     setCurrentPage(totalPages);
   };
-  
-  const paginatedNewsList = content?.legacyNewsList.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-  
+
+  const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   // Calculate the range of page numbers to display
   const visiblePages = 5; // Limit the number of visible page numbers
-  const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
-  const endPage = Math.min(totalPages, startPage + visiblePages - 1);
-  
+  const startPage = Math.max(2, currentPage - Math.floor(visiblePages / 2)); // Start from the second page
+  const endPage = Math.min(totalPages - 1, startPage + visiblePages - 1); // End before the last page
+
+  const pageNumbers = [];
+  if (startPage > 2) {
+    pageNumbers.push("...");
+  }
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+  if (endPage < totalPages - 1) {
+    pageNumbers.push("...");
+  }
+
   return (
     <Layout metadata={{ title: content?.title }} header={content?.menu}>
       <>
@@ -118,7 +126,7 @@ export default function Page({ content }) {
           </Heading>
         </Container>
       </>
-  
+
       <Container centered>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
@@ -142,13 +150,6 @@ export default function Page({ content }) {
         </div>
         <div className="pagination-controls flex justify-center items-center mt-6">
           <button
-            onClick={handleFirstPage}
-            disabled={currentPage === 1}
-            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
-          >
-            First
-          </button>
-          <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
             className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
@@ -156,22 +157,44 @@ export default function Page({ content }) {
             Previous
           </button>
           <div className="flex space-x-2">
-            {Array.from({ length: endPage - startPage + 1 }, (_, index) => {
-              const page = startPage + index;
-              return (
+            {/* Always show the first page */}
+            <button
+              onClick={() => handlePageClick(1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              1
+            </button>
+            {/* Show ellipses and middle page numbers */}
+            {pageNumbers.map((page, index) =>
+              page === "..." ? (
+                <span key={index} className="px-3 py-1 text-gray-500">
+                  ...
+                </span>
+              ) : (
                 <button
                   key={page}
                   onClick={() => handlePageClick(page)}
                   className={`px-3 py-1 rounded ${
-                    currentPage === page
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-700"
+                    currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
                   }`}
                 >
                   {page}
                 </button>
-              );
-            })}
+              )
+            )}
+            {/* Always show the last page */}
+            {totalPages > 1 && (
+              <button
+                onClick={() => handlePageClick(totalPages)}
+                className={`px-3 py-1 rounded ${
+                  currentPage === totalPages ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+                }`}
+              >
+                {totalPages}
+              </button>
+            )}
           </div>
           <button
             onClick={handleNextPage}
@@ -179,13 +202,6 @@ export default function Page({ content }) {
             className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
           >
             Next
-          </button>
-          <button
-            onClick={handleLastPage}
-            disabled={currentPage === totalPages}
-            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
-          >
-            Last
           </button>
         </div>
       </Container>
