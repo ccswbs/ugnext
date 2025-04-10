@@ -158,7 +158,7 @@ export default function Page({ content }) {
   <button
     onClick={handlePreviousPage}
     disabled={currentPage === 1}
-    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
+    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
   >
     Previous
   </button>
@@ -167,7 +167,9 @@ export default function Page({ content }) {
     <button
       onClick={() => handlePageClick(1)}
       className={`px-3 py-1 rounded ${
-        currentPage === 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+        currentPage === 1
+          ? "bg-uog-color-yellow text-black"
+          : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
       }`}
     >
       1
@@ -183,7 +185,9 @@ export default function Page({ content }) {
           key={page}
           onClick={() => handlePageClick(page)}
           className={`px-3 py-1 rounded ${
-            currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+            currentPage === page
+              ? "bg-uog-color-yellow text-black"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
           }`}
         >
           {page}
@@ -195,7 +199,9 @@ export default function Page({ content }) {
       <button
         onClick={() => handlePageClick(totalPages)}
         className={`px-3 py-1 rounded ${
-          currentPage === totalPages ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+          currentPage === totalPages
+            ? "bg-uog-color-yellow text-black"
+            : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
         }`}
       >
         {totalPages}
@@ -205,7 +211,7 @@ export default function Page({ content }) {
   <button
     onClick={handleNextPage}
     disabled={currentPage === totalPages}
-    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50"
+    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
   >
     Next
   </button>
