@@ -127,7 +127,9 @@ export default function Page({ content }) {
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
+            className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 ${
+              currentPage === 1 ? "" : "hover:bg-gray-700 hover:text-white underline"
+            }`}
           >
             Previous
           </button>
@@ -180,7 +182,9 @@ export default function Page({ content }) {
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
+            className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 ${
+              currentPage === totalPages ? "" : "hover:bg-gray-700 hover:text-white underline"
+            }`}
           >
             Next
           </button>
