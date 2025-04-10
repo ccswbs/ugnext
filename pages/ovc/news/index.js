@@ -1,12 +1,8 @@
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
-import { Hero } from "@/components/hero";
-import { getPageID, getLegacyNews, getPageMenu, getLegacyNewsList } from "@/data/drupal/legacy-news";
-import { getFeaturedLegacyNews } from "@/data/drupal/ovchome";
-import { WidgetSelector } from "@/components/widgets/widget-selector";
+import { getPageMenu, getLegacyNewsList } from "@/data/drupal/legacy-news";
 import Image from "next/image";
-import ovcCrest from "@/img/ovc/OVC-crest.png";
 import { Divider } from "@/components/divider";
 import {
   FormatDateFull,
@@ -15,21 +11,19 @@ import {
   // FormatEventMonth,
   // FormatEventWeekday,
 } from "@/lib/date-utils";
-import { twMerge } from "tailwind-merge";
-import { OVCCards } from "@/components/ovchome/ovc-cards";
+
 import { Link } from "@/components/link";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { useState } from "react";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
-
   const content = {};
   content.title = "Ontario Veterinary College News Hub";
   content.menu = await getPageMenu();
   content.img = null;
 
-  //   // Get the featured OVC News - last 3 entered
+  // Get the OVC News feed
 
   content.legacyNewsList = await getLegacyNewsList();
   //  format the date created for each atricle
@@ -37,7 +31,6 @@ export async function getStaticProps(context) {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
     legacyNews.path = "/ovc/news" + legacyNews.path;
   });
-
   // Flatten image prop
   content.image = content?.image?.image ?? null;
 
@@ -109,14 +102,15 @@ export default function Page({ content }) {
           {paginatedNewsList.map((legacyNews, index) => (
             <div key={index} className="border p-4 rounded shadow">
               {legacyNews?.heroImage !== null && (
-                <Image
-                  src={legacyNews?.heroImage?.image.url}
-                  width={legacyNews?.heroImage?.image.width}
-                  height={legacyNews?.heroImage?.image.height}
-                  blurred={legacyNews?.heroImage?.image.blurDataURL}
-                  alt={legacyNews?.heroImage?.image.alt}
-                  className="rounded"
-                />
+                <div className="relative w-full h-[225px] overflow-hidden rounded">
+                  <Image
+                    src={legacyNews?.heroImage?.image.url}
+                    alt={legacyNews?.heroImage?.image.alt}
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="center"
+                  />
+                </div>
               )}
               <Link href={legacyNews?.path}>{legacyNews?.title}</Link>
               <p className="text-sm text-gray-500">{legacyNews?.articleDate}</p>
