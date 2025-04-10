@@ -1,7 +1,8 @@
 import { graphql } from "@/lib/drupal";
 import getPageIDQuery from "./get-page-id.graphql";
-import getLegacyNewsQuery from "./get-legacy-news-content.graphql";
+import getLegacyNewsItemQuery from "./get-legacy-news-content.graphql";
 import getPageMenuQuery from "../basic-pages/get-page-menu.graphql";
+import getLegacyNewsListQuery from "./get-legacy-news-list.graphql";
 
 export const getPageID = async (url) => {
   const { data } = await graphql(getPageIDQuery, {
@@ -12,7 +13,7 @@ export const getPageID = async (url) => {
 };
 
 export const getLegacyNews = async (id, status) => {
-  const { data } = await graphql(getLegacyNewsQuery, {
+  const { data } = await graphql(getLegacyNewsItemQuery, {
     id: id,
     status: status,
   });
@@ -20,6 +21,16 @@ export const getLegacyNews = async (id, status) => {
   return data;
 
 };
+
+
+export const getLegacyNewsList = async () => {
+  const { data } = await graphql(getLegacyNewsListQuery, {
+  });
+  
+  return data.legacyNews.results;
+
+};
+
 
 export const getPageMenu = async (page) => {
   const parse = (node) => {
