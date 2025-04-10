@@ -15,6 +15,7 @@ import {
 import { Link } from "@/components/link";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { useState } from "react";
+import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -101,17 +102,15 @@ export default function Page({ content }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
             <div key={index} className="border p-4 rounded shadow">
-              {legacyNews?.heroImage !== null && (
-                <div className="relative w-full h-[225px] overflow-hidden rounded">
-                  <Image
-                    src={legacyNews?.heroImage?.image.url}
-                    alt={legacyNews?.heroImage?.image.alt}
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
-                  />
-                </div>
-              )}
+              <div className="relative w-full h-[225px] overflow-hidden rounded">
+                <Image
+                  src={legacyNews?.heroImage?.image.url || defaultImage}
+                  alt={legacyNews?.heroImage?.image.alt || "OVC Front Entrance"}
+                  layout="fill"
+                  objectFit="cover"
+                  objectPosition="center"
+                />
+              </div>
               <Link href={legacyNews?.path}>{legacyNews?.title}</Link>
               <p className="text-sm text-gray-500">{legacyNews?.articleDate}</p>
             </div>
