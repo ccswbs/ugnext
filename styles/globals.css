@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap')
 layer(base);
-@import 'tailwindcss';
-
-@config '../tailwind.config.cjs';
+@import '@uoguelph/tailwind-theme';
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -35,11 +33,11 @@ layer(base);
 }
 
 @utility vcard {
-  @apply mb-2 bg-uog-color-grey-light-bg p-4;
+  @apply mb-2 bg-grey-light-bg p-4;
 }
 
 @utility author {
-  @apply border-l-4 border-l-uog-color-red pl-4;
+  @apply border-l-4 border-l-red pl-4;
 }
 
 @layer base {

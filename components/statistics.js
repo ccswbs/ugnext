@@ -12,25 +12,25 @@ export const Statistics = ({ data, variant = "gradient-of-solid-colors" }) => {
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
         "bg-black text-white",
-      (variant === "light-blue" || variant === "left-border") && "bg-uog-color-grey-light-bg text-black",
+      (variant === "light-blue" || variant === "left-border") && "bg-grey-light-bg text-black",
       variant === "left-border" && "border-l-[1rem] border-black"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-uog-color-red text-white",
-      (variant === "light-blue" || variant === "left-border") && "bg-uog-color-grey-light-bg text-black",
-      variant === "left-border" && "border-l-[1rem] border-uog-color-red"
+        "bg-red text-white",
+      (variant === "light-blue" || variant === "left-border") && "bg-grey-light-bg text-black",
+      variant === "left-border" && "border-l-[1rem] border-red"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-uog-color-yellow text-black",
-      (variant === "light-blue" || variant === "left-border") && "bg-uog-color-grey-light-bg text-black",
-      variant === "left-border" && "border-l-[1rem] border-uog-color-yellow"
+        "bg-yellow text-black",
+      (variant === "light-blue" || variant === "left-border") && "bg-grey-light-bg text-black",
+      variant === "left-border" && "border-l-[1rem] border-yellow"
     ),
     twJoin(
       (variant === "gradient-of-solid-colors" || variant === "solid-colors" || variant === "solid-colors-no-gap") &&
-        "bg-uog-color-blue text-uog-color-blue-contrast",
-      (variant === "light-blue" || variant === "left-border") && "bg-uog-color-grey-light-bg text-black",
+        "bg-blue text-blue-contrast",
+      (variant === "light-blue" || variant === "left-border") && "bg-grey-light-bg text-black",
       variant === "left-border" && "border-l-[1rem] border-light-blue"
     ),
   ];

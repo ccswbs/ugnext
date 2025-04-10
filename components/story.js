@@ -15,7 +15,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
             width={backgroundImage?.width}
             height={backgroundImage?.height}
             sizes="100vw"
-            placeholder={backgroundImage?.blurred ? "blur-sm" : "empty"}
+            placeholder={backgroundImage?.blurred ? "blur" : "empty"}
             blurDataURL={backgroundImage?.blurred}
           />
         </div>
@@ -30,7 +30,7 @@ export const Story = ({ backgroundImage, foregroundImage, content, footer }) => 
               width={foregroundImage?.width}
               height={foregroundImage?.height}
               sizes="(max-width: 1024px) 50vw, 100vw"
-              placeholder={foregroundImage?.blurred ? "blur-sm" : "empty"}
+              placeholder={foregroundImage?.blurred ? "blur" : "empty"}
               blurDataURL={foregroundImage?.blurred}
             />
           </div>

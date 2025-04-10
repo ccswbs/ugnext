@@ -31,7 +31,7 @@ export const Card = ({ href, image, title, footer, className, centered, children
               width={image.width}
               height={image.height}
               alt={href ? "" : image.alt}
-              placeholder={image?.blurred ? "blur-sm" : "empty"}
+              placeholder={image?.blurred ? "blur" : "empty"}
               blurDataURL={image?.blurred}
               sizes={image?.sizes}
               className={twMerge("object-cover", image?.className)}
@@ -43,8 +43,8 @@ export const Card = ({ href, image, title, footer, className, centered, children
       {/* Card Main Container */}
       <div
         className={twJoin(
-          "flex flex-1 flex-col gap-2 bg-uog-color-grey-light-bg p-5",
-          href && "transition-colors group-hover:bg-uog-color-yellow"
+          "flex flex-1 flex-col gap-2 bg-grey-light-bg p-5",
+          href && "transition-colors group-hover:bg-yellow"
         )}
       >
         {/* Card Title */}
@@ -58,12 +58,7 @@ export const Card = ({ href, image, title, footer, className, centered, children
 
       {/* Card Footer */}
       {footer && (
-        <div
-          className={twJoin(
-            "flex gap-2 bg-uog-color-grey-light px-5 py-2 transition-colors",
-            centered && "justify-center"
-          )}
-        >
+        <div className={twJoin("flex gap-2 bg-grey-light px-5 py-2 transition-colors", centered && "justify-center")}>
           {footer}
         </div>
       )}

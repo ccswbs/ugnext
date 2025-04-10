@@ -35,17 +35,17 @@ export const Button = ({
           twJoin(
             "border-2",
             color === "red" &&
-              "border-uog-color-red text-uog-color-red hover:bg-uog-color-red hover:text-uog-color-white focus:bg-uog-color-red focus:text-uog-color-white focus:ring-red",
+              "border-red text-red hover:bg-red hover:text-white focus:bg-red focus:text-white focus:ring-red",
             color === "yellow" &&
-              "border-uog-color-yellow text-uog-color-yellow hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus:ring-uog-color-yellow",
+              "border-yellow text-yellow hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus:ring-yellow",
             color === "blue" &&
-              "border-uog-color-blue text-uog-color-blue hover:bg-uog-color-blue hover:text-uog-color-white focus:bg-uog-color-blue focus:text-uog-color-white focus:ring-blue",
+              "border-blue text-blue hover:bg-blue hover:text-white focus:bg-blue focus:text-white focus:ring-blue",
             color === "green" &&
               "border-green text-green hover:bg-green hover:text-white focus:bg-green focus:text-white focus:ring-green",
             color === "gray" &&
               "border-gray-300 text-gray-300 hover:bg-gray-300 hover:text-white focus:bg-gray-300 focus:text-white focus:ring-gray-300",
             color === "black" &&
-              "border-uog-color-grey-dark-bg text-uog-color-grey-dark-bg hover:bg-uog-color-grey-dark-bg hover:text-white focus:bg-uog-color-grey-dark-bg focus:text-uog-color-white focus:ring-gray-950",
+              "border-grey-dark-bg text-grey-dark-bg hover:bg-grey-dark-bg hover:text-white focus:bg-grey-dark-bg focus:text-white focus:ring-gray-950",
             color === "white" &&
               "border-white text-black hover:bg-white hover:text-black focus:bg-gray-light focus:text-white focus:ring-white"
           ),
@@ -53,17 +53,17 @@ export const Button = ({
           !disabled &&
           twJoin(
             color === "red" &&
-              "bg-uog-color-red text-uog-color-white hover:bg-uog-color-red-focus hover:text-uog-color-white focus:bg-uog-color-red-focus focus:text-uog-color-white focus:ring-red",
+              "bg-red text-white hover:bg-red-focus hover:text-white focus:bg-red-focus focus:text-white focus:ring-red",
             color === "yellow" &&
-              "bg-uog-color-yellow text-black hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus:ring-yellow",
+              "bg-yellow text-black hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus:ring-yellow",
             color === "blue" &&
-              "bg-uog-color-blue text-white hover:bg-uog-color-blue-focus hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue",
+              "bg-blue text-white hover:bg-blue-focus hover:text-white focus:bg-blue-700 focus:text-white focus:ring-blue",
             color === "green" &&
               "bg-green text-white hover:bg-green-800 hover:text-white focus:bg-green-800 focus:text-white focus:ring-green",
             color === "gray" &&
               "bg-gray text-black hover:bg-gray-400 hover:text-black focus:bg-gray-400 focus:text-black focus:ring-gray",
             color === "black" &&
-              "bg-uog-color-grey-dark-bg text-uog-color-white hover:bg-uog-color-black hover:text-uog-color-white focus:bg-black focus:text-uog-color-white focus:ring-black",
+              "bg-grey-dark-bg text-white hover:bg-black hover:text-white focus:bg-black focus:text-white focus:ring-black",
             color === "white" &&
               "border-white bg-white text-black hover:bg-gray-light hover:text-black focus:bg-white focus:text-black focus:ring-white"
           ),
