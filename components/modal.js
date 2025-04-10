@@ -10,12 +10,12 @@ export const Modal = ({ open, onClose = () => {}, role = "dialog", labelledBy, c
     open={open}
     role={role}
     onClose={onClose}
-    className="relative z-50 transition duration-300 ease-out data-[closed]:opacity-0"
+    className="relative z-50 transition duration-300 ease-out data-closed:opacity-0"
     aria-labelledby={labelledBy}
   >
     <DialogBackdrop
       transition
-      className="fixed inset-0 bg-black/40 transition duration-300 ease-out data-[closed]:opacity-0"
+      className="fixed inset-0 bg-black/40 transition duration-300 ease-out data-closed:opacity-0"
     />
 
     <div className="fixed inset-0 flex w-screen justify-center p-4 pt-6">

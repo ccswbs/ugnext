@@ -127,7 +127,7 @@ export function EmbeddedVideo({ src, title, transcript, className, options, moda
             src={src}
             title={title}
             transcript={transcript}
-            className={twMerge("max-w-2xl w-[calc(100vw_-_theme(spacing.4))]", className)}
+            className={twMerge("max-w-2xl w-[calc(100vw-(--spacing(4)))]", className)}
             options={options}
           />
         </div>

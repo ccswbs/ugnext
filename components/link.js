@@ -22,7 +22,7 @@ export const Link = ({ href, color = "blue", children, className, ...rest }) => 
     href={href}
     className={twMerge(
       twJoin(
-        "-ml-0.5 px-0.5 py-1 underline transition-colors hover:decoration-transparent focus:outline-none focus:ring-2 focus:ring-offset-2",
+        "-ml-0.5 px-0.5 py-1 underline transition-colors hover:decoration-transparent focus:outline-hidden focus:ring-2 focus:ring-offset-2",
         color === "blue" && "text-uog-color-body-copy-link focus:text-blue-800 focus:ring-blue",
         color === "red" && "text-uog-color-red focus:text-red-800 focus:ring-red",
         color === "yellow" && "text-uog-color-yellow focus:text-yellow-600 focus:ring-yellow",

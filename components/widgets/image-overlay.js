@@ -10,7 +10,7 @@ import { MediaCaption } from "@/components/media-caption";
 import React from "react";
 
 const GeneralTextContent = ({ data }) => (
-  <div key={data?.id ?? index} className="[&_*]:text-inherit">
+  <div key={data?.id ?? index} className="**:text-inherit">
     <HtmlParser html={data.body.processed} />
   </div>
 );

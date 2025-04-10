@@ -10,7 +10,7 @@ export const Card = ({ href, image, title, footer, className, centered, children
   return (
     <Tag
       className={twMerge(
-        "group flex flex-col justify-center transition duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light-blue focus-visible:ring-offset-2",
+        "group flex flex-col justify-center transition duration-200 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-light-blue focus-visible:ring-offset-2",
         !image && href && "hover:scale-105 focus-visible:scale-105",
         className
       )}
@@ -31,7 +31,7 @@ export const Card = ({ href, image, title, footer, className, centered, children
               width={image.width}
               height={image.height}
               alt={href ? "" : image.alt}
-              placeholder={image?.blurred ? "blur" : "empty"}
+              placeholder={image?.blurred ? "blur-sm" : "empty"}
               blurDataURL={image?.blurred}
               sizes={image?.sizes}
               className={twMerge("object-cover", image?.className)}

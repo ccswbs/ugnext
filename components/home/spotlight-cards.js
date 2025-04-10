@@ -15,7 +15,7 @@ export const SpotlightCards = ({ cards }) => (
           alt: card.image.alt,
           width: card.image.width,
           height: card.image.height,
-          className: "aspect-[3/2] w-full",
+          className: "aspect-3/2 w-full",
           sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
         }}
       />

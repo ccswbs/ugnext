@@ -8,7 +8,7 @@ export const ImageOverlay = ({ image, children, alignment = "center", overlay = 
     <div className="flex flex-col relative w-full h-fit lg:min-h-[50rem]">
       <div className="absolute w-full h-full z-10">
         <Image
-          className={twMerge("w-full h-full object-cover", blurred && "blur-sm", image.className)}
+          className={twMerge("w-full h-full object-cover", blurred && "blur-xs", image.className)}
           src={image.src}
           width={image.width}
           height={image.height}

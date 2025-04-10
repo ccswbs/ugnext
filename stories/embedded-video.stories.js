@@ -26,7 +26,7 @@ export const Vimeo = {
   args: {
     src: "https://vimeo.com/618992196",
     title: "Improve Life - One Health",
-    className: "w-full aspect-[16/9]",
+    className: "w-full aspect-16/9",
   },
 };
 

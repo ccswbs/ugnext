@@ -49,7 +49,7 @@ export const WithImage = {
       width: 300,
       height: 200,
       alt: "Placeholder image",
-      className: "aspect-[3/2] w-full",
+      className: "aspect-3/2 w-full",
     },
     children: (
       <div>
@@ -70,7 +70,7 @@ export const WithFooter = {
       width: 300,
       height: 200,
       alt: "Placeholder image",
-      className: "aspect-[3/2] w-full",
+      className: "aspect-3/2 w-full",
     },
     children: (
       <div>
@@ -92,7 +92,7 @@ export const AsALink = {
       width: 300,
       height: 200,
       alt: "Placeholder image",
-      className: "aspect-[3/2] w-full",
+      className: "aspect-3/2 w-full",
     },
     children: (
       <div>
