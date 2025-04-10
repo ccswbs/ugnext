@@ -72,52 +72,60 @@ export async function getStaticProps(context) {
 
 export default function Page({ content }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Number of news items per page
+  const itemsPerPage = 20; // Number of news items per page
   const totalPages = Math.ceil(content?.legacyNewsList.length / itemsPerPage);
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
+  };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
     }
-  };
-
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
   };
 
   const handleFirstPage = () => {
     setCurrentPage(1);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
   };
 
   const handleLastPage = () => {
     setCurrentPage(totalPages);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
   };
 
-  const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedNewsList = content?.legacyNewsList.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // Calculate the range of page numbers to display
   const visiblePages = 5; // Limit the number of visible page numbers
   const startPage = Math.max(2, currentPage - Math.floor(visiblePages / 2)); // Start from the second page
   const endPage = Math.min(totalPages - 1, startPage + visiblePages - 1); // End before the last page
-  
+
   const pageNumbers = [];
-  
+
   // Always show the first page
   if (startPage > 2) {
     pageNumbers.push("...");
   }
-  
+
   // Add the range of visible pages
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
-  
+
   // Always show the last page
   if (endPage < totalPages - 1) {
     pageNumbers.push("...");
@@ -134,7 +142,7 @@ export default function Page({ content }) {
       </>
 
       <Container centered>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
             <div key={index} className="border p-4 rounded shadow">
               {legacyNews?.heroImage !== null && (
@@ -146,78 +154,77 @@ export default function Page({ content }) {
                   alt={legacyNews?.heroImage?.image.alt}
                   className="rounded"
                 />
-              )}
-              <Heading level={3} as={"h3"} className="font-condensed text-dark mt-2">
+              )} 
                 <Link href={legacyNews?.path}>{legacyNews?.title}</Link>
-              </Heading>
               <p className="text-sm text-gray-500">{legacyNews?.articleDate}</p>
             </div>
           ))}
         </div>
         <div className="pagination-controls flex justify-center items-center mt-6">
-  <button
-    onClick={handlePreviousPage}
-    disabled={currentPage === 1}
-    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
-  >
-    Previous
-  </button>
-  <div className="flex space-x-2">
-    {/* Always show the first page */}
-    <button
-      onClick={() => handlePageClick(1)}
-      className={`px-3 py-1 rounded ${
-        currentPage === 1
-          ? "bg-uog-color-yellow text-black"
-          : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
-      }`}
-    >
-      1
-    </button>
-    {/* Render ellipses and middle page numbers */}
-    {pageNumbers.map((page, index) =>
-      page === "..." ? (
-        <span key={`ellipsis-${index}`} className="px-3 py-1 text-gray-500">
-          ...
-        </span>
-      ) : (
-        <button
-          key={page}
-          onClick={() => handlePageClick(page)}
-          className={`px-3 py-1 rounded ${
-            currentPage === page
-              ? "bg-uog-color-yellow text-black"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
-          }`}
-        >
-          {page}
-        </button>
-      )
-    )}
-    {/* Always show the last page */}
-    {totalPages > 1 && (
-      <button
-        onClick={() => handlePageClick(totalPages)}
-        className={`px-3 py-1 rounded ${
-          currentPage === totalPages
-            ? "bg-uog-color-yellow text-black"
-            : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
-        }`}
-      >
-        {totalPages}
-      </button>
-    )}
-  </div>
-  <button
-    onClick={handleNextPage}
-    disabled={currentPage === totalPages}
-    className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
-  >
-    Next
-  </button>
-</div>
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
+          >
+            Previous
+          </button>
+          <div className="flex space-x-2">
+            {/* Always show the first page */}
+            <button
+              onClick={() => handlePageClick(1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === 1
+                  ? "bg-uog-color-yellow text-black"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
+              }`}
+            >
+              1
+            </button>
+            {/* Render ellipses and middle page numbers */}
+            {pageNumbers.map((page, index) =>
+              page === "..." ? (
+                <span key={`ellipsis-${index}`} className="px-3 py-1 text-gray-500">
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={page}
+                  onClick={() => handlePageClick(page)}
+                  className={`px-3 py-1 rounded ${
+                    currentPage === page
+                      ? "bg-uog-color-yellow text-black"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
+                  }`}
+                >
+                  {page}
+                </button>
+              )
+            )}
+            {/* Always show the last page */}
+            {totalPages > 1 && (
+              <button
+                onClick={() => handlePageClick(totalPages)}
+                className={`px-3 py-1 rounded ${
+                  currentPage === totalPages
+                    ? "bg-uog-color-yellow text-black"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
+                }`}
+              >
+                {totalPages}
+              </button>
+            )}
+          </div>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 hover:bg-gray-700 hover:text-white"
+          >
+            Next
+          </button>
+        </div>
       </Container>
       <OVCFooter />
     </Layout>
   );
 }
+
