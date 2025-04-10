@@ -68,11 +68,11 @@ function Pagination({ currentPage, totalPages, onPageClick, onNextPage, onPrevio
       <button
         onClick={onPreviousPage}
         disabled={currentPage === 1}
-        className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 ${
-          currentPage === 1 ? "" : "hover:bg-gray-700 hover:text-white underline"
+        className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-0 ${
+          currentPage === 1 ? "" : "hover:bg-gray-700 hover:text-white"
         }`}
       >
-        Previous
+      <i class="fa-sharp-duotone fa-solid fa-chevrons-left"></i>
       </button>
       <div className="flex space-x-2">
         <button
@@ -120,11 +120,11 @@ function Pagination({ currentPage, totalPages, onPageClick, onNextPage, onPrevio
       <button
         onClick={onNextPage}
         disabled={currentPage === totalPages}
-        className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-50 ${
-          currentPage === totalPages ? "" : "hover:bg-gray-700 hover:text-white underline"
+        className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-0 ${
+          currentPage === totalPages ? "" : "hover:bg-gray-700 hover:text-white"
         }`}
       >
-        Next
+        <i class="fa-sharp-duotone fa-solid fa-chevrons-right"></i>
       </button>
     </div>
   );
