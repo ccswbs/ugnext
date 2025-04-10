@@ -24,24 +24,6 @@ import { useState } from "react";
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
 
-  //   // Try to get the ID of the page the user is requesting.
-  //   const id = await getPageID("/ovc");
-
-  //   // If we couldn't resolve an id, then that means this page doesn't exist on content hub, show a 404.
-  //   if (!id) {
-  //     return {
-  //       notFound: true,
-  //     };
-  //   }
-
-  //   // Now that we have the ID for the page we can request its content from its latest revision.
-  //   const content = await getPageContent(id, status);
-
-  //   if (!content) {
-  //     return {
-  //       notFound: true,
-  //     };
-  //   }
   const content = {};
   content.title = "Ontario Veterinary College News Hub";
   content.menu = await getPageMenu();
@@ -55,15 +37,9 @@ export async function getStaticProps(context) {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
     legacyNews.path = "/ovc/news" + legacyNews.path;
   });
-  console.log(content);
-
-  //   // Get rid of any data that doesn't need to be passed to the page.
-  //   delete content.primaryNavigation;
 
   // Flatten image prop
   content.image = content?.image?.image ?? null;
-
-  //   //   content.breadcrumbs = (await getBreadcrumbs(context.params.slug)) ?? [];
 
   return {
     props: { content },
@@ -94,20 +70,7 @@ export default function Page({ content }) {
     }
   };
 
-  const handleFirstPage = () => {
-    setCurrentPage(1);
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
-  };
-
-  const handleLastPage = () => {
-    setCurrentPage(totalPages);
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
-  };
-
-  const paginatedNewsList = content?.legacyNewsList.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   // Calculate the range of page numbers to display
   const visiblePages = 5; // Limit the number of visible page numbers
@@ -154,8 +117,8 @@ export default function Page({ content }) {
                   alt={legacyNews?.heroImage?.image.alt}
                   className="rounded"
                 />
-              )} 
-                <Link href={legacyNews?.path}>{legacyNews?.title}</Link>
+              )}
+              <Link href={legacyNews?.path}>{legacyNews?.title}</Link>
               <p className="text-sm text-gray-500">{legacyNews?.articleDate}</p>
             </div>
           ))}
@@ -227,4 +190,3 @@ export default function Page({ content }) {
     </Layout>
   );
 }
-
