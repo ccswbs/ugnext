@@ -10,7 +10,7 @@ export const Container = ({ as = "div", centered = false, children, className, .
   return (
     <Tag
       {...rest}
-      className={twMerge(twJoin("container max-w-max-content px-4 pb-4 pt-2", centered && "mx-auto"), className)}
+      className={twMerge(twJoin("container max-w-[137rem] px-4 pb-4 pt-2", centered && "mx-auto"), className)}
     >
       {children}
     </Tag>

@@ -1,7 +1,8 @@
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
-import { Divider } from "@/components/divider";
+import { Divider } from "@uoguelph/react-components/divider";
 import { Heading } from "@/components/heading";
+import { Typography } from "@uoguelph/react-components/typography";
 import { SpotlightCards } from "@/components/home/spotlight-cards";
 import { TagLine } from "@/components/home/tag-line";
 import { Rankings } from "@/components/home/rankings";
@@ -39,9 +40,9 @@ export function HomePage({ cards, hero, forceAppArmorTest = false }) {
         <Divider />
 
         <div className={containerClasses}>
-          <Heading level={2} className="text-black">
+          <Typography className="text-black" type={"h2"}>
             Our Latest News and Events
-          </Heading>
+          </Typography>
           <SpotlightCards cards={cards} />
         </div>
 
