@@ -8,10 +8,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link
-          rel="stylesheet"
-          href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
-        />
+        <link rel="stylesheet" href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} />
         <Script
           src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-header.esm.js`}
           type="module"
