@@ -32,6 +32,7 @@
     "react-animate-height": "^3.2.3",
     "react-dom": "^19.1.0",
     "sharp": "^0.33.5",
+    "tailwind-variants": "^1.0.0",
     "use-resize-observer": "^9.1.0",
     "uuid": "^10.0.0",
     "zod": "^3.24.1"
