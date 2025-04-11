@@ -19,7 +19,7 @@ import { Pagination } from "@/components/pagination";
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
   const content = {};
-  content.title = "Ontario Veterinary College News Archive - Priror to April 2025";
+  content.title = "Ontario Veterinary College News Archive - Prior to April 2025";
   content.menu = await getPageMenu();
   content.img = null;
 
