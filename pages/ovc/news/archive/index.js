@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { getPageMenu, getLegacyNewsList } from "@/data/drupal/legacy-news";
-
+import { Button } from "@/components/button";
 import {
   FormatDateFull,
   // FormatEventDate,
@@ -72,6 +72,9 @@ export default function Page({ content }) {
           <Heading level={1} className="mb-0">
             {content?.title}
           </Heading>
+          <Button href="https://ss-ugnext.netlify.app/ovc/news" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+          OVC News Hub (Current News)
+        </Button>
         </Container>
       </>
       <Container centered>
