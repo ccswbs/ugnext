@@ -28,12 +28,14 @@ export const OVCNewsCard = ({ href, image, title, footer, className, centered, c
             <Image
               src={image.src}
               alt={image.alt || "Image"}
-              layout="fill" // Makes the image fill the parent container
-              objectFit="cover" // Ensures the image covers the container
-              objectPosition="center" // Centers the cropped area
+              fill // Replaces layout="fill"
               placeholder={image?.blurred ? "blur" : "empty"}
               blurDataURL={image?.blurred}
               className={twMerge("object-cover", image?.className)}
+              style={{
+                objectFit: "cover", // Replaces objectFit="cover"
+                objectPosition: "center", // Replaces objectPosition="center"
+              }}
             />
           </div>
         </div>

@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { getPageMenu, getLegacyNewsList } from "@/data/drupal/legacy-news";
+import { Button } from "@/components/button";
 
 import {
   FormatDateFull,
@@ -110,6 +111,9 @@ export default function Page({ content }) {
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
         />
+        <Button href="https://sns-next.netlify.app/ovc/news/archive" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+          OVC News Archive
+        </Button>
       </Container>
       <OVCFooter />
     </Layout>
