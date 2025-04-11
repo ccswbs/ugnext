@@ -35,7 +35,7 @@ export function Pagination({ currentPage, totalPages, onPageClick, onNextPage, o
           currentPage === 1 ? "" : "hover:bg-uog-color-grey-dark-bg hover:text-white"
         }`}
       >
-        <i class="fa-sharp-duotone fa-solid fa-chevrons-left"></i>
+        <i className="fa-sharp-duotone fa-solid fa-chevrons-left"></i>
       </button>
       <div className="flex space-x-2">
         <button
@@ -89,7 +89,7 @@ export function Pagination({ currentPage, totalPages, onPageClick, onNextPage, o
           currentPage === totalPages ? "" : "hover:bg-uog-color-grey-dark-bg hover:text-white"
         }`}
       >
-        <i class="fa-sharp-duotone fa-solid fa-chevrons-right"></i>
+        <i className="fa-sharp-duotone fa-solid fa-chevrons-right"></i>
       </button>
     </div>
   );

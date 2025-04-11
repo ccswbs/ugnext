@@ -26,7 +26,7 @@ export const OVCNewsCard = ({ href, image, title, footer, className, centered, c
             )}
           >
             <Image
-              src={image.src}
+              src={typeof image.src === "string" ? image.src : ""}
               alt={image.alt || "Image"}
               fill // Replaces layout="fill"
               placeholder={image?.blurred ? "blur" : "empty"}

@@ -69,7 +69,7 @@ export async function getStaticProps(context) {
 // It takes the news item and its index as arguments
 function renderFeaturedNewsItem(newsItem, index) {
   return (
-    <div key={index} className={twMerge("tile", index === 0 ? "row-span-2" : "grid grid-cols-2 gap-4")}>
+    <div key={index} className={twMerge("tile", index === 0 ? "row-span-2" : "grid grid-cols-1 lg:grid-cols-2 gap-4")}>
       {/* Image Section */}
       <div className={index === 0 ? "" : "tile"}>
         <Image
