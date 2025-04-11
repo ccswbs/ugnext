@@ -19,6 +19,8 @@ import { twMerge } from "tailwind-merge";
 import { OVCCards } from "@/components/ovchome/ovc-cards";
 import { Link } from "@/components/link";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
+import { Button } from "@/components/button";
+
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -164,7 +166,9 @@ export default function Page({ content }) {
           </div>
         </div>
         <div className="pt-4">
-          {" "}
+        <Button href="/ovc/news/" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+            OVC News Hub
+          </Button>
           <Divider />
         </div>
         <div className="pt-6">
