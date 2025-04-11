@@ -31,16 +31,14 @@ export function HomePage({ cards, hero, forceAppArmorTest = false }) {
 
   return (
     <Layout>
-      <div className="flex flex-col flex-col-reverse">
+      <div className="flex flex-col-reverse">
         <TagLine />
-        {hero && <SpotlightHero hero={hero} />}
+        {hero && <SpotlightHero data={hero} />}
       </div>
 
       <Container centered>
-        <Divider />
-
         <div className={containerClasses}>
-          <Typography className="text-black" type={"h2"}>
+          <Typography className="text-black!" type={"h2"}>
             Our Latest News and Events
           </Typography>
           <SpotlightCards cards={cards} />
