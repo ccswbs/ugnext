@@ -79,6 +79,7 @@ function renderFeaturedNewsItem(newsItem, index) {
           blurred={newsItem?.heroImage.image.blurDataURL}
           alt={newsItem?.heroImage.image.alt || "News Image"}
           className="object-cover"
+          style={{ aspectRatio: "9 / 4" }} // Set the aspect ratio to 9:2
         />
       </div>
 
