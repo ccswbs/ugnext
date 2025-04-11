@@ -52,7 +52,7 @@ layer(base);
 
   body,
   #__next {
-    @apply flex min-h-full flex-col text-base leading-relaxed;
+    @apply flex min-h-full flex-col leading-relaxed;
     font-size: 1.8rem;
   }
 
@@ -74,7 +74,7 @@ layer(base);
     @apply mb-[1.5rem] mt-0;
     line-height: 1.6;
   }
-  
+
   ul {
     list-style-type: disc;
   }
