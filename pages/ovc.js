@@ -88,7 +88,7 @@ function renderFeaturedNewsItem(newsItem, index) {
         <Heading
           level={index === 0 ? 3 : 5}
           as={"h3"}
-          className={twMerge("font-condensed", index === 0 ? "text-dark" : "")}
+          className={twMerge("font-condensed mt-2", index === 0 ? "text-dark" : "")}
         >
           <Link href={newsItem?.path}>{newsItem?.title}</Link>
         </Heading>
