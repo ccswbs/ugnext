@@ -60,8 +60,9 @@ export const OVCCards = () => {
         <div className="text-base mt-8">
           We are committed to the highest standards of education and animal care. OVC is{" "}
           <Link href="/ovc/accreditation/">accredited</Link> by the{" "}
-          <Link href="https://www.avma.org/">American Veterinary Medical Association (AVMA)</Link> and <Link href="https://www.canadianveterinarians.net/">Canadian{" "}
-          Veterinary Medical Association (CVMA)</Link> Council on Accreditation (COE), as well as the{" "}
+          <Link href="https://www.avma.org/">American Veterinary Medical Association (AVMA)</Link> and{" "}
+          <Link href="https://www.canadianveterinarians.net/">Canadian Veterinary Medical Association (CVMA)</Link>{" "}
+          Council on Accreditation (COE), as well as the{" "}
           <Link href="https://www.aaha.org/">American Animal Hospital Association</Link> .
         </div>
         <div className="p-10">

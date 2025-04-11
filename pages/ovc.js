@@ -61,7 +61,6 @@ export async function getStaticProps(context) {
   // Flatten image prop
   content.image = content?.image?.image ?? null;
 
-
   return {
     props: { content },
   };
@@ -134,7 +133,7 @@ export default function Page({ content }) {
       {content?.widgets?.map((widget, index) => (
         <WidgetSelector key={index} data={widget} />
       ))}
-      
+
       <Container centered>
         <Heading level={2} as={"h2"} className="font-condensed">
           Featured OVC News

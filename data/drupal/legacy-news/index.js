@@ -17,20 +17,15 @@ export const getLegacyNews = async (id, status) => {
     id: id,
     status: status,
   });
-  
+
   return data;
-
 };
-
 
 export const getLegacyNewsList = async () => {
-  const { data } = await graphql(getLegacyNewsListQuery, {
-  });
-  
+  const { data } = await graphql(getLegacyNewsListQuery, {});
+
   return data.legacyNews.results;
-
 };
-
 
 export const getPageMenu = async (page) => {
   const parse = (node) => {
@@ -47,7 +42,6 @@ export const getPageMenu = async (page) => {
   };
 
   const name = "OVC_MAIN";
-
 
   const { data } = await graphql(getPageMenuQuery, {
     menu: name,

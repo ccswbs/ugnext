@@ -113,5 +113,5 @@ Layout.propTypes = {
   }),
   header: PropTypes.oneOfType([PropTypes.shape({ ...Header.propTypes }), PropTypes.bool]),
   footer: PropTypes.oneOfType([PropTypes.shape({ ...Footer.propTypes }), PropTypes.bool]),
-  forceAppArmorTest: PropTypes.bool
+  forceAppArmorTest: PropTypes.bool,
 };

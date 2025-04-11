@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   // We want to redirect requests for /node/{ID} to the appropriate place.
-  
+
   // Check the type of the node
   const { data } = await graphql(
     `
