@@ -64,15 +64,20 @@ function Pagination({ currentPage, totalPages, onPageClick, onNextPage, onPrevio
   if (endPage < totalPages - 1) pageNumbers.push("...");
 
   return (
-    <div className="pagination-controls flex justify-center items-center mt-6">
+    <div
+      className="pagination-controls flex justify-center items-center mt-6"
+      role="navigation"
+      aria-label="Pagination"
+    >
       <button
         onClick={onPreviousPage}
         disabled={currentPage === 1}
+        aria-label="Previous page" // Added for screen readers
         className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-0 ${
           currentPage === 1 ? "" : "hover:bg-gray-700 hover:text-white"
         }`}
       >
-      <i class="fa-sharp-duotone fa-solid fa-chevrons-left"></i>
+        <i class="fa-sharp-duotone fa-solid fa-chevrons-left"></i>
       </button>
       <div className="flex space-x-2">
         <button
@@ -99,6 +104,7 @@ function Pagination({ currentPage, totalPages, onPageClick, onNextPage, onPrevio
                   ? "bg-uog-color-yellow text-black"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-700 hover:text-white"
               }`}
+              aria-current={currentPage === page ? "page" : undefined} // Add aria-current for active page
             >
               {page}
             </button>
@@ -120,6 +126,7 @@ function Pagination({ currentPage, totalPages, onPageClick, onNextPage, onPrevio
       <button
         onClick={onNextPage}
         disabled={currentPage === totalPages}
+        aria-label="Next page" // Added for screen readers
         className={`btn btn-primary px-4 py-2 mx-2 disabled:opacity-0 ${
           currentPage === totalPages ? "" : "hover:bg-gray-700 hover:text-white"
         }`}
