@@ -19,7 +19,7 @@ import { Pagination } from "@/components/pagination";
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
   const content = {};
-  content.title = "Ontario Veterinary College News Hub";
+  content.title = "Ontario Veterinary College News Archive - Priror to April 2025";
   content.menu = await getPageMenu();
   content.img = null;
 
@@ -29,7 +29,7 @@ export async function getStaticProps(context) {
   //  format the date created for each atricle
   content?.legacyNewsList.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
-    legacyNews.path = "/ovc/news" + legacyNews.path;
+    legacyNews.path = "/ovc/news/archive" + legacyNews.path;
   });
   // Flatten image prop
   content.image = content?.image?.image ?? null;
