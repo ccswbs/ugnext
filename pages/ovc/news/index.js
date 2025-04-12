@@ -13,9 +13,9 @@ import {
 } from "@/lib/date-utils";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { useState } from "react";
-import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 import { OVCNewsCard } from "@/components/ovc/ovc-news-card";
 import { Pagination } from "@/components/pagination";
+import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -65,7 +65,7 @@ export default function Page({ content }) {
   };
 
   const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
+console.log(defaultImage)
   return (
     <Layout metadata={{ title: content?.title }} header={content?.menu}>
       <>
@@ -90,11 +90,11 @@ export default function Page({ content }) {
               key={index}
               href={legacyNews?.path}
               image={{
-                src: legacyNews?.heroImage?.image.url || defaultImage,
+                src: legacyNews?.heroImage?.image.url || defaultImage.src,
                 alt: legacyNews?.heroImage?.image.alt || "OVC Front Entrance",
-                width: legacyNews?.heroImage?.image.width,
-                height: legacyNews?.heroImage?.image.height,
-                blurred: legacyNews?.heroImage?.image.blurDataURL, // Optional: Add blur placeholder
+                width: legacyNews?.heroImage?.image.width || defaultImage.width,
+                height: legacyNews?.heroImage?.image.height || defaultImage.height,
+                blurred: legacyNews?.heroImage?.image.blurDataURL || defaultImage.blurDataURL,
               }}
               title={legacyNews?.title}
               className="border rounded shadow"

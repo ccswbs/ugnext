@@ -48,7 +48,7 @@ export async function getStaticProps(context) {
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-right", "float-right ml-4 mr-4");
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll(
     "<figcaption",
-    '<figcaption class="px-5  text-center text-lg font-semibold"'
+    '<figcaption class="px-5 text-lg font-semibold"'
   );
   legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll(
     '<figure role="group" class="',
