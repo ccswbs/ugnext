@@ -69,30 +69,38 @@ export async function getStaticProps(context) {
 // It takes the news item and its index as arguments
 function renderFeaturedNewsItem(newsItem, index) {
   return (
-    <div key={index} className={twMerge("tile", index === 0 ? "row-span-2" : "grid grid-cols-1 lg:grid-cols-2 gap-4")}>
+    <div
+      key={index}
+      className={twMerge(
+        "tile overflow-hidden shadow-lg transition-transform transform hover:scale-105",
+        index === 0 ? "row-span-2" : "grid grid-cols-1 lg:grid-cols-2 gap-4"
+      )}
+    >
       {/* Image Section */}
-      <div className={index === 0 ? "" : "tile"}>
+      <div className="relative">
         <Image
           src={newsItem?.heroImage.image.url}
           width={newsItem?.heroImage.image.width}
           height={newsItem?.heroImage.image.height}
           blurred={newsItem?.heroImage.image.blurDataURL}
           alt={newsItem?.heroImage.image.alt || "News Image"}
-          className="object-cover"
-          style={{ aspectRatio: "9 / 4" }} // Set the aspect ratio to 9:2
+          className="object-cover "
+          style={{ aspectRatio: "9 / 4" }}
         />
       </div>
 
       {/* Text Section */}
-      <div className={index === 0 ? "" : "tile"}>
+      <div className="p-4">
         <Heading
           level={index === 0 ? 3 : 5}
           as={"h3"}
-          className={twMerge("font-condensed mt-2", index === 0 ? "text-dark" : "")}
+          className={twMerge("font-condensed mt-0 text-lg", index === 0 ? "text-dark" : "")}
         >
-          <Link href={newsItem?.path}>{newsItem?.title}</Link>
+          <Link href={newsItem?.path} className="hover:underline">
+            {newsItem?.title}
+          </Link>
         </Heading>
-        <p>{newsItem?.articleDate}</p>
+        <p className="text-sm text-gray-600">{newsItem?.articleDate}</p>
       </div>
     </div>
   );
