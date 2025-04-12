@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 
 export const SocialMedia = ({ data }) => {
   const links = data.socialMediaLinks || [];
@@ -14,7 +14,7 @@ export const SocialMedia = ({ data }) => {
             <a
               href={url}
               aria-label={name}
-              className={twMerge(
+              className={twJoin(
                 "aspect-square bg-transparent focus:text-uog-color-white hover:text-uog-color-white size-11 text-4xl text-uog-color-black flex items-center justify-center",
                 name === "Facebook" && "focus:bg-facebook-color-blue hover:bg-facebook-color-blue",
                 name === "Instagram" && "focus:bg-instagram-color-pink hover:bg-instagram-color-pink",
@@ -25,7 +25,7 @@ export const SocialMedia = ({ data }) => {
               )}
             >
               <i
-                className={twMerge(
+                className={twJoin(
                   "fa-brands",
                   name === "Facebook" && "fa-facebook-f",
                   name === "Instagram" && "fa-instagram",
