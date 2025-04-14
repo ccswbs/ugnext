@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@awesome.me/kit-7993323d0c/icons/classic/regular";
 import { twJoin } from "tailwind-merge";
 import PropTypes from "prop-types";
-import { Accordion } from "@/components/accordion";
 
 /**
  * A simple way to inform the user of something, works best within a Modal
