@@ -1,4 +1,4 @@
-import { Accordion } from "@/components/accordion";
+import { Accordion, AccordionButton, AccordionContent } from "@uoguelph/react-components/accordion";
 import { HtmlParser } from "@/components/html-parser";
 import { Heading } from "@/components/heading";
 import { getHeadingLevel } from "@/lib/string-utils";
@@ -11,8 +11,11 @@ export const Accordions = ({ data }) => {
       {data?.accordionSectionTitle && <Heading level={level}>{data?.accordionSectionTitle}</Heading>}
 
       {data?.items.map((item, index) => (
-        <Accordion key={index} title={item.accordionTitle}>
-          <HtmlParser html={item.text.processed} />
+        <Accordion key={index}>
+          <AccordionButton>{item.accordionTitle}</AccordionButton>
+          <AccordionContent>
+            <HtmlParser html={item.text.processed} />
+          </AccordionContent>
         </Accordion>
       ))}
     </>
