@@ -15,6 +15,7 @@ import { tv } from "tailwind-variants";
 export const StudyHere = () => {
   const classes = tv({
     slots: {
+      link: "text-xl!",
       item: "relative",
       image: "h-96",
       caption:
@@ -22,21 +23,21 @@ export const StudyHere = () => {
     },
   });
 
-  const { item, image, caption } = classes();
+  const { link, item, image, caption } = classes();
 
   return (
     <LinkCarousel direction="right" stack>
       <LinkCarouselLinks>
-        <LinkCarouselLink href="https://admission.uoguelph.ca/programs" id="undergraduate-programs">
+        <LinkCarouselLink href="https://admission.uoguelph.ca/programs" id="undergraduate-programs" className={link()}>
           Undergraduate Programs
         </LinkCarouselLink>
-        <LinkCarouselLink href="https://graduatestudies.uoguelph.ca/" id="graduate-programs">
+        <LinkCarouselLink href="https://graduatestudies.uoguelph.ca/" id="graduate-programs" className={link()}>
           Graduate Programs
         </LinkCarouselLink>
-        <LinkCarouselLink href="https://www.uoguelph.ca/study-in-canada/" id="international">
+        <LinkCarouselLink href="https://www.uoguelph.ca/study-in-canada/" id="international" className={link()}>
           International
         </LinkCarouselLink>
-        <LinkCarouselLink href="https://opened.uoguelph.ca/" id="lifelong-learning">
+        <LinkCarouselLink href="https://opened.uoguelph.ca/" id="lifelong-learning" className={link()}>
           Lifelong Learning
         </LinkCarouselLink>
       </LinkCarouselLinks>
