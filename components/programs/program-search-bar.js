@@ -1,4 +1,4 @@
-import { TextInput } from "@/components/text-input";
+import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select } from "@/components/select";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
 import { useEffect, useMemo, useState } from "react";
@@ -39,10 +39,11 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
       >
         <div className="flex-1">
           <TextInput
-            onInput={(value) => setInput(value)}
-            label={<span className="text-l font-bold mb-1">What would you like to study?</span>}
+            onInput={(e) => setInput(e.target.value)}
             placeholder="ex. programming, engineering, psychology, etc."
-          />
+          >
+            <span className="text-l font-bold mb-1">What would you like to study?</span>
+          </TextInput>
         </div>
 
         {types?.length > 0 && (
