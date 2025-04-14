@@ -40,7 +40,12 @@ export const HomeStory = () => {
       </StoryBody>
       <StoryFooter>
         <span className="mr-1 text-2xl leading-tight">Learn how real-world education and experience will</span>
-        <Button href="https://www.uoguelph.ca/improve-life/" color="red" className="py-2! px-4! mx-[.25em] text-2xl!">
+        <Button
+          as="a"
+          href="https://www.uoguelph.ca/improve-life/"
+          color="red"
+          className="py-2! px-4! mx-[.25em] text-2xl!"
+        >
           Improve Life
         </Button>
       </StoryFooter>
