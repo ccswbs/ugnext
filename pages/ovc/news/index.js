@@ -65,7 +65,6 @@ export default function Page({ content }) {
   };
 
   const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-console.log(defaultImage)
   return (
     <Layout metadata={{ title: content?.title }} header={content?.menu}>
       <>
@@ -86,6 +85,7 @@ console.log(defaultImage)
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
+        
             <OVCNewsCard
               key={index}
               href={legacyNews?.path}
@@ -94,7 +94,9 @@ console.log(defaultImage)
                 alt: legacyNews?.heroImage?.image.alt || "OVC Front Entrance",
                 width: legacyNews?.heroImage?.image.width || defaultImage.width,
                 height: legacyNews?.heroImage?.image.height || defaultImage.height,
+                sizes: legacyNews?.heroImage?.image.sizes || "33vw",
                 blurred: legacyNews?.heroImage?.image.blurDataURL || defaultImage.blurDataURL,
+                
               }}
               title={legacyNews?.title}
               className="border rounded shadow"

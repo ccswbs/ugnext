@@ -69,8 +69,8 @@ export const OVCCards = () => {
           <div>
             <Image
               src={coe.src}
-              width={125}
-              height={125}
+              width="125"
+              height="125"
               alt="COE Accredited Logo"
               placeholder={coe?.blurred ? "blur" : "empty"}
             />
@@ -78,8 +78,8 @@ export const OVCCards = () => {
           <div className="mt-10">
             <Image
               src={aaha.src}
-              width={125}
-              height={125}
+              width="125"
+              height="125"
               alt="AAHA Accredited Logo"
               placeholder={aaha?.blurred ? "blur" : "empty"}
             />

@@ -13,8 +13,8 @@ export const OVCFooter = () => {
           <div className="place-items-center">
             <Image
               src={ovcCrest?.src}
-              width={200}
-              height={200}
+              width="200"
+              height="200"
               alt="Ontario Veterinary College - Crest"
               placeholder={ovcCrest?.blurred ? "blur" : "empty"}
               blurDataURL={ovcCrest?.blurred}

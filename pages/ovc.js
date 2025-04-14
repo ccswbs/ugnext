@@ -72,7 +72,7 @@ function renderFeaturedNewsItem(newsItem, index) {
     <div
       key={index}
       className={twMerge(
-        "tile overflow-hidden shadow-lg transition-transform transform hover:scale-105",
+        "tile overflow-hidden shadow-lg ",
         index === 0 ? "row-span-2" : "grid grid-cols-1 lg:grid-cols-2 gap-4"
       )}
     >

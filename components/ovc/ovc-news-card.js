@@ -29,6 +29,7 @@ export const OVCNewsCard = ({ href, image, title, footer, className, centered, c
               src={typeof image.src === "string" ? image.src : ""}
               alt={image.alt || "Image"}
               fill // Replaces layout="fill"
+              sizes={image?.sizes}
               placeholder={image?.blurred ? "blur" : "empty"}
               blurDataURL={image?.blurred}
               className={twMerge("object-cover", image?.className)}
