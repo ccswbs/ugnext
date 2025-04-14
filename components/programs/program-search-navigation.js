@@ -1,5 +1,6 @@
 import { Navigation, NavigationLink } from "@uoguelph/react-components/navigation";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export const ProgramSearchNavigation = () => {
   const { pathname } = useRouter();
@@ -13,7 +14,7 @@ export const ProgramSearchNavigation = () => {
   return (
     <Navigation>
       {links.map((link) => (
-        <NavigationLink key={link.href} href={link.href} active={pathname === link.href}>
+        <NavigationLink key={link.href} href={link.href} active={pathname === link.href} as={Link}>
           {link.label}
         </NavigationLink>
       ))}

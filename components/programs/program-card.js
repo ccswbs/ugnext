@@ -14,8 +14,10 @@ export const ProgramCard = ({ program }) => {
         )}
       </CardContent>
 
-      <CardFooter className="overflow-hidden text-ellipsis whitespace-nowrap">
-        {program?.types?.map((type) => type.name).join(", ")}
+      <CardFooter>
+        <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+          {program?.types?.map((type) => type.name).join(", ")}
+        </span>
       </CardFooter>
     </Card>
   );

@@ -2,14 +2,14 @@ import { ProgramSearchBar } from "@/components/programs/program-search-bar";
 import { ProgramSearchNavigation } from "@/components/programs/program-search-navigation";
 import { ProgramGrid } from "@/components/programs/program-grid";
 import { useState } from "react";
-import { Container } from "@/components/container";
+import { Container } from "@uoguelph/react-components/container";
 
 export const ProgramSearch = ({ programs, types, degreeTypes, condensedDegrees = false }) => {
   const [filteredPrograms, setFilteredPrograms] = useState(programs);
 
   return (
     <div className="flex flex-col relative">
-      <Container centered className="py-0">
+      <Container className="py-0!">
         <ProgramSearchNavigation />
       </Container>
 
@@ -20,7 +20,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, condensedDegrees =
         onChange={(filtered) => setFilteredPrograms(filtered)}
       />
 
-      <Container centered>
+      <Container>
         <ProgramGrid programs={filteredPrograms} condensedDegrees={condensedDegrees} />
 
         {/* No results were found */}
