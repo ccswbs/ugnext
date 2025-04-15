@@ -1,6 +1,7 @@
-import { Button } from "@/components/button";
+import { Button } from "@uoguelph/react-components/button";
 import { Heading } from "@/components/heading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UnstyledLink } from "@/components/link";
 
 export const AdmissionRequirementsSidebar = ({ links = [] }) => {
   return (
@@ -16,6 +17,7 @@ export const AdmissionRequirementsSidebar = ({ links = [] }) => {
               className="flex items-center justify-start gap-4 w-full"
               href={link.url}
               color={link?.highlight ? "red" : "black"}
+              as={UnstyledLink}
             >
               {link.icon && <FontAwesomeIcon className="text-2xl" icon={link.icon} />}
               <span className="font-bold">{link.text}</span>

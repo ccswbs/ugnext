@@ -1,7 +1,9 @@
 import { twJoin } from "tailwind-merge";
-import { Heading } from "@/components/heading";
-import { Button as ButtonComponent } from "@/components/button";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Button as ButtonComponent } from "@uoguelph/react-components/button";
 import { HtmlParser } from "@/components/html-parser";
+import { UnstyledLink } from "@/components/link";
+import { tv } from "tailwind-variants";
 
 const getTitle = (data) => {
   return data?.formattedTitle ? data.formattedTitle.processed : data.link?.title ? data.link.title : "No title entered";
@@ -52,33 +54,66 @@ export const Button = ({ column, data }) => {
   const analyticsGoal = data?.ctaAnalyticsGoal?.name;
   const analyticsAction = data?.ctaAnalyticsGoal?.action;
 
+  const classes = tv({
+    slots: {
+      heading: "block text-black",
+      button: "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6",
+      icon: ["pe-3 text-4xl inline-block align-middle", icon, iconColor],
+    },
+    variants: {
+      column: {
+        left: {
+          button: "md:inline-flex",
+        },
+        right: "",
+        Secondary: "",
+      },
+      hasHeading: {
+        true: {
+          button: "text-2xl! py-4 px-10",
+        },
+        false: {
+          button: "p-4",
+        },
+      },
+    },
+  });
+
+  const {
+    heading: headingClasses,
+    button: buttonClasses,
+    icon: iconClasses,
+  } = classes({
+    column,
+    hasHeading: !!ctaHeading,
+  });
+
+  const analyticsGoalHandler = (e) => {
+    if (analyticsGoal && analyticsAction) {
+      window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
+      window.dataLayer.push({
+        event: "customEvent",
+        category: analyticsGoal,
+        action: analyticsAction,
+      });
+    }
+  };
+
   return (
     <>
       {ctaHeading && (
-        <Heading level={3} as={"h2"} className="block text-black" dangerouslySetInnerHTML={{ __html: ctaHeading }} />
+        <Typography type="h3" as="h2" className={headingClasses()} dangerouslySetInnerHTML={{ __html: ctaHeading }} />
       )}
 
       <ButtonComponent
-        className={twJoin(
-          "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6",
-          ctaHeading ? "text-2xl py-4 px-10" : "p-4",
-          column !== "right" && column !== "Secondary" && "md:inline-flex"
-        )}
+        className={buttonClasses()}
+        as={UnstyledLink}
         href={url}
         color={color}
         outlined={outlined}
-        onClick={(e) => {
-          if (analyticsGoal && analyticsAction) {
-            window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
-            window.dataLayer.push({
-              event: "customEvent",
-              category: analyticsGoal,
-              action: analyticsAction,
-            });
-          }
-        }}
+        onClick={analyticsGoalHandler}
       >
-        {icon && <i className={twJoin("pe-3 text-4xl inline-block align-middle", icon, iconColor)}></i>}
+        {icon && <i className={iconClasses()}></i>}
         <HtmlParser html={title} />
       </ButtonComponent>
     </>

@@ -1,4 +1,5 @@
 import { Card, CardContent, CardTitle, CardFooter } from "@uoguelph/react-components/card";
+
 export const ProgramCard = ({ program }) => {
   return (
     <Card as="a" key={program.id} href={program.url} className="h-full">
