@@ -57,8 +57,8 @@ export const TestimonialSlider = ({ data }) => {
                   }
                 }
               >
-                <Blockquote>
-                  <BlockquoteContent className="leading-tight!">
+                <Blockquote hideQuotationMarks>
+                  <BlockquoteContent className="text-left! uog:text-xl">
                     <HtmlParser html={testimonial?.body?.processed} />
                   </BlockquoteContent>
 
