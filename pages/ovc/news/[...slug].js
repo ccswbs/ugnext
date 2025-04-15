@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
-import { getBreadcrumbs, getLegacyNews, getPageID, getPageMenu } from "@/data/drupal/legacy-news";
+import { getLegacyNews, getPageID, getPageMenu } from "@/data/drupal/legacy-news";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { FormatDateFull } from "@/lib/date-utils";
 import { HtmlParser } from "@/components/html-parser";
@@ -35,14 +35,16 @@ export async function getStaticProps(context) {
       notFound: true,
     };
   }
-  const legacyNewsItem = content.legacyNewsRevisions.results[0];
+  const legacyNewsItem = content.legacyNewsItem.results[0];
+  // Note: change the legacyNewsItem to legacyNewsRevision for the revision query 
+  // Also change the query in the drupal module in get-legacy-news-content.graphql
 
   legacyNewsItem.menu = await getPageMenu();
 
   // Flatten image prop
   legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
 
-  // wrap figcaption and align images
+  // wrap figcaption and align images - moved to html-parser
 
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-left", "float-left mr-4 ml-4");
   // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-right", "float-right ml-4 mr-4");

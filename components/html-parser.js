@@ -122,7 +122,7 @@ export const DEFAULT_INSTRUCTIONS = [
       // If caption exists, wrap in <figure>, otherwise return just the <Image>
       if (caption) {
         return (
-          <figure className="my-4 flex flex-col items-center text-center">
+          <figure className="my-4">
             <Image
               src={node.attribs.src}
               alt={node.attribs.alt ?? null}
