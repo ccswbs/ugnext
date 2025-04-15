@@ -9,11 +9,11 @@ export const SocialMedia = ({ data }) => {
   return sortedLinks.length > 0 ? (
     <>
       <ul className="flex gap-2 list-none">
-        {sortedLinks.map(({ name, url }, index) => (
+        {sortedLinks.map(({ name, url, value }, index) => (
           <li key={index}>
             <a
               href={url}
-              aria-label={name}
+              aria-label={`${value} on ${name}`}
               className={twJoin(
                 "aspect-square bg-transparent focus:text-uog-color-white hover:text-uog-color-white size-11 text-4xl text-uog-color-black flex items-center justify-center",
                 name === "Facebook" && "focus:bg-facebook-color-blue hover:bg-facebook-color-blue",
