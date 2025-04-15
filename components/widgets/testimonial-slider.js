@@ -1,7 +1,16 @@
 import React from "react";
-import { Carousel } from "@/components/carousel";
+import { Carousel } from "@uoguelph/react-components/carousel";
+import { Typography } from "@uoguelph/react-components/typography";
+import {
+  Blockquote,
+  BlockquoteContent,
+  BlockquoteAuthor,
+  BlockquoteAuthorName,
+  BlockquoteAuthorTitle,
+  BlockquoteAuthorLink,
+} from "@uoguelph/react-components/blockquote";
 import { Heading } from "@/components/heading";
-import { Link } from "@/components/link";
+import Link from "next/link";
 import { HtmlParser } from "@/components/html-parser";
 import { Container } from "@/components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
@@ -48,21 +57,25 @@ export const TestimonialSlider = ({ data }) => {
                   }
                 }
               >
-                <blockquote className="italic text-gray-700 text-xl mt-4 md:mt-0">
-                  <HtmlParser html={testimonial?.body?.processed} />
-                </blockquote>
+                <Blockquote>
+                  <BlockquoteContent className="leading-tight!">
+                    <HtmlParser html={testimonial?.body?.processed} />
+                  </BlockquoteContent>
 
-                <Info color="yellow">
-                  <div className="flex flex-col gap-0.5">
-                    <span className="font-bold text-lg">{title}</span>
-                    {testimonial?.description && <span className="text-red text-lg">{testimonial.description}</span>}
-                    {testimonial?.profile && (
-                      <Link className="w-fit py-0 text-lg" href={testimonial.profile.url} color="blue">
-                        {testimonial.profile.title}
-                      </Link>
+                  <BlockquoteAuthor>
+                    <BlockquoteAuthorName>{title}</BlockquoteAuthorName>
+
+                    {testimonial?.description && (
+                      <BlockquoteAuthorTitle>{testimonial.description}</BlockquoteAuthorTitle>
                     )}
-                  </div>
-                </Info>
+
+                    {testimonial?.profile && (
+                      <BlockquoteAuthorLink href={testimonial.profile.url} as={Link}>
+                        {testimonial.profile.title}
+                      </BlockquoteAuthorLink>
+                    )}
+                  </BlockquoteAuthor>
+                </Blockquote>
               </MediaCaption>
             );
           })}

@@ -19,7 +19,7 @@
     "@netlify/plugin-nextjs": "^5.9.4",
     "@next/bundle-analyzer": "^14.2.7",
     "@next/third-parties": "^14.2.11",
-    "@uoguelph/react-components": "^1.2.11-rc.2",
+    "@uoguelph/react-components": "^1.2.11-rc.3",
     "@uoguelph/tailwind-theme": "^1.0.0",
     "conditional-wrap": "^1.0.2",
     "glob": "^11.0.0",
