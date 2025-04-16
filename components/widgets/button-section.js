@@ -47,7 +47,6 @@ export const Button = ({ column, data }) => {
   const title = getTitle(data);
   const ctaHeading = data?.ctaHeading?.processed;
   const icon = data?.fontAwesomeIcon;
-  const iconColor = getIconColor(data?.fontAwesomeIconColour?.name);
   const style = data?.style?.name;
   const color = getColor(style);
   const outlined = isOutlined(style);
@@ -58,7 +57,7 @@ export const Button = ({ column, data }) => {
     slots: {
       heading: "block text-black",
       button: "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6",
-      icon: ["pe-3 text-4xl inline-block align-middle", icon, iconColor],
+      icon: ["pe-3 text-4xl inline-block align-middle", icon],
     },
     variants: {
       column: {
@@ -76,6 +75,17 @@ export const Button = ({ column, data }) => {
           button: "p-4",
         },
       },
+      iconColor: {
+        Yellow: {
+          icon: "text-yellow",
+        },
+        Red: {
+          icon: "text-red",
+        },
+        DarkerRed: {
+          icon: "text-red",
+        },
+      },
     },
   });
 
@@ -86,6 +96,7 @@ export const Button = ({ column, data }) => {
   } = classes({
     column,
     hasHeading: !!ctaHeading,
+    iconColor: data?.fontAwesomeIconColour?.name,
   });
 
   const analyticsGoalHandler = (e) => {

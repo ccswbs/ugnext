@@ -1,14 +1,15 @@
 import { Accordion, AccordionButton, AccordionContent } from "@uoguelph/react-components/accordion";
 import { HtmlParser } from "@/components/html-parser";
-import { Heading } from "@/components/heading";
 import { getHeadingLevel } from "@/lib/string-utils";
+import { Typography } from "@uoguelph/react-components/typography";
 
 export const Accordions = ({ data }) => {
   const level = getHeadingLevel(data.headingLevel);
+  const sectionTitle = data?.accordionSectionTitle;
 
   return (
     <>
-      {data?.accordionSectionTitle && <Heading level={level}>{data?.accordionSectionTitle}</Heading>}
+      {sectionTitle && <Typography type={`h${level}`}>{sectionTitle}</Typography>}
 
       {data?.items.map((item, index) => (
         <Accordion key={index}>
