@@ -1,14 +1,14 @@
 import { Button } from "@uoguelph/react-components/button";
-import { Heading } from "@/components/heading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UnstyledLink } from "@/components/link";
+import { Typography } from "@uoguelph/react-components/typography";
 
 export const AdmissionRequirementsSidebar = ({ links = [] }) => {
   return (
     <>
-      <Heading level={3} as="h2" className="mt-7">
+      <Typography type="h3" as="h2" className="mt-7">
         More Information
-      </Heading>
+      </Typography>
 
       <ul className="flex flex-col w-full gap-4">
         {links.map((link, index) => (
