@@ -5,7 +5,7 @@ import getPageIDQuery from "./get-page-id.graphql";
 import getPageTitleQuery from "./get-page-title.graphql";
 import getPageQuery from "./get-page-content.graphql";
 import getTestimonialsByTagQuery from "./get-testimonials-by-tag.graphql";
-import getPageMenuQuery from "./get-page-menu.graphql";
+//import getPageMenuQuery from "./get-page-menu.graphql";
 
 export const getPaths = async () => {
   // Here we can decide which pages get pre-rendered.
@@ -69,47 +69,6 @@ export const getPageContent = async (id, status) => {
   return content;
 };
 
-export const getPageMenu = async (page) => {
-  const parse = (node) => {
-    if (Array.isArray(node?.items) && node?.items?.length > 0) {
-      const items = node.items.map((item) => parse(item));
-
-      return {
-        title: node.title,
-        items: node.url ? [{ title: node.title, url: node.url }, ...items] : items,
-      };
-    }
-
-    return { title: node?.title, url: node?.url };
-  };
-
-  const name = page?.primaryNavigation?.menuName?.toUpperCase()?.replaceAll("-", "_");
-
-  if (!name || name === "NO_MENU") {
-    return null;
-  }
-
-  const { data } = await graphql(getPageMenuQuery, {
-    menu: name,
-  });
-
-  const menu = data?.menu?.items?.reduce(
-    (acc, item, index) => {
-      if (index === 0 && item.url) {
-        acc.topic.url = item.url;
-        acc.topic.title = item.title;
-      } else {
-        acc.navigation.push(parse(item));
-      }
-
-      return acc;
-    },
-    { topic: {}, navigation: [] }
-  );
-
-  return menu ?? null;
-};
-
 export const getBreadcrumbs = async (slug, status) => {
   // NEED TO IMPROVE THIS TO LOWER THE AMOUNT OF QUERYING
   const crumbs = [];
@@ -133,3 +92,46 @@ export const getBreadcrumbs = async (slug, status) => {
 
   return crumbs;
 };
+
+export const getPageMenu = async (page) => {
+  const name = page?.primaryNavigation?.menuName?.replaceAll("-", "_");
+
+  if (!name || name === "NO_MENU") {
+    return null;
+  }
+
+  // Fetch the menu data using getStaticProps
+  const { props: { menu } } = await getStaticProps(name);
+
+  // Process the linkset array to return the menu data
+  const menuData = menu.linkset.reduce((acc, link) => {
+    link.item.forEach((item, index) => {
+      if (index === 0 && item.href) {
+        acc.topic.url = item.href;
+        acc.topic.title = item.title ?? null;
+      } else {
+        acc.navigation.push({ title: item.title ?? null, url: item.href ?? null });
+      }
+    });
+
+    return acc;
+  }, { topic: {}, navigation: [] });
+
+  console.log('Processed menu data:', menuData);
+
+  return menuData ?? null;
+};
+
+
+// Define the getStaticProps function
+export async function getStaticProps(name) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
+  const menu = await response.json();
+
+   return {
+    props: {
+      menu,
+    },
+  };
+}
+
