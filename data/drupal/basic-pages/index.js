@@ -94,44 +94,57 @@ export const getBreadcrumbs = async (slug, status) => {
 };
 
 export const getPageMenu = async (page) => {
-  const name = page?.primaryNavigation?.menuName?.replaceAll("-", "_");
+  const name = page?.primaryNavigation?.menuName?.replaceAll("-", "_");
 
-  if (!name || name === "NO_MENU") {
-    return null;
-  }
+  if (!name || name === "no_menu") {
+    return null;
+  }
 
-  // Fetch the menu data using getStaticProps
-  const { props: { menu } } = await getStaticProps(name);
-
-  // Process the linkset array to return the menu data
-  const menuData = menu.linkset.reduce((acc, link) => {
-    link.item.forEach((item, index) => {
-      if (index === 0 && item.href) {
-        acc.topic.url = item.href;
-        acc.topic.title = item.title ?? null;
-      } else {
-        acc.navigation.push({ title: item.title ?? null, url: item.href ?? null });
-      }
-    });
-
-    return acc;
-  }, { topic: {}, navigation: [] });
-
-  console.log('Processed menu data:', menuData);
-
-  return menuData ?? null;
-};
-
-
-// Define the getStaticProps function
-export async function getStaticProps(name) {
+  // Fetch the menu data
   const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
-  const menu = await response.json();
+  const menuRaw = await response.json();
 
-   return {
-    props: {
-      menu,
-    },
+  console.log("Raw menu data:", menuRaw.linkset);
+
+  // Helper function to parse the raw menu data
+  const parseMenu = (linkset) => {
+    const topic = {};
+    const navigation = [];
+    const hierarchyMap = {}; // Map to track hierarchy[0] to navigation index
+
+    linkset.forEach((link) => {
+      link.item.forEach((item) => {
+        const hierarchy = item.hierarchy || [];
+        const title = item.title || "Untitled";
+        const url = item.href || "#";
+
+        if (hierarchy.length === 1 && hierarchy[0] === "0") {
+          // Assign the top-level item to the topic object
+          topic.title = title;
+          topic.url = url;
+        } else if (hierarchy.length === 1 && hierarchy[0] !== "0") {
+          // Add second-level menu item to navigation
+          const index = navigation.length;
+          navigation.push({ title, url, items: [] });
+          hierarchyMap[hierarchy[0]] = index; // Map hierarchy[0] to navigation index
+        } else if (hierarchy.length === 2) {
+          // Add third-level menu item as a submenu
+          const parentKey = hierarchy[0]; // Parent key from hierarchy
+          const parentIndex = hierarchyMap[parentKey]; // Get the correct index from the map
+          if (parentIndex !== undefined && navigation[parentIndex]) {
+            navigation[parentIndex].items.push({ title, url });
+          }
+        }
+      });
+    });
+
+    return { topic, navigation };
   };
-}
 
+  // Parse the menu data
+  const menuData = parseMenu(menuRaw.linkset);
+
+  console.log("Processed menu data:", menuData);
+
+  return menuData;
+};
