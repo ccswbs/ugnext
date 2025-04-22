@@ -104,8 +104,6 @@ export const getPageMenu = async (page) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
   const menuRaw = await response.json();
 
-  console.log("Raw menu data:", menuRaw.linkset);
-
   // Helper function to parse the raw menu data
   const parseMenu = (linkset) => {
     const topic = {};
@@ -119,16 +117,16 @@ export const getPageMenu = async (page) => {
         const url = item.href || "#";
 
         if (hierarchy.length === 1 && hierarchy[0] === "0") {
-          // Assign the top-level item to the topic object
+          // Assign the top-level item to the menu topic object
           topic.title = title;
           topic.url = url;
         } else if (hierarchy.length === 1 && hierarchy[0] !== "0") {
-          // Add second-level menu item to navigation
+          // Add other menu items to navigation
           const index = navigation.length;
           navigation.push({ title, url, items: [] });
           hierarchyMap[hierarchy[0]] = index; // Map hierarchy[0] to navigation index
         } else if (hierarchy.length === 2) {
-          // Add third-level menu item as a submenu
+          // Add submenu items
           const parentKey = hierarchy[0]; // Parent key from hierarchy
           const parentIndex = hierarchyMap[parentKey]; // Get the correct index from the map
           if (parentIndex !== undefined && navigation[parentIndex]) {
@@ -137,6 +135,13 @@ export const getPageMenu = async (page) => {
         }
       });
     });
+        
+    // Add parent items with URLs to the beginning of their respective items array
+    navigation.forEach((navItem) => {
+      if (navItem.url !== "#" && navItem.items.length > 1) {
+        navItem.items.unshift({ title: navItem.title, url: navItem.url });
+      }
+    });
 
     return { topic, navigation };
   };
