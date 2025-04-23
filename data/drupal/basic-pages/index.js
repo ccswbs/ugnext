@@ -5,7 +5,6 @@ import getPageIDQuery from "./get-page-id.graphql";
 import getPageTitleQuery from "./get-page-title.graphql";
 import getPageQuery from "./get-page-content.graphql";
 import getTestimonialsByTagQuery from "./get-testimonials-by-tag.graphql";
-//import getPageMenuQuery from "./get-page-menu.graphql";
 
 export const getPaths = async () => {
   // Here we can decide which pages get pre-rendered.
@@ -148,8 +147,6 @@ export const getPageMenu = async (page) => {
 
   // Parse the menu data
   const menuData = parseMenu(menuRaw.linkset);
-
-  console.log("Processed menu data:", menuData);
 
   return menuData;
 };
