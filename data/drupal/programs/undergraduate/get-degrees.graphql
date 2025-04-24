@@ -1,0 +1,18 @@
+query UndergraduateDegrees {
+  nodeUndergraduateDegrees(first: 100) {
+    nodes {
+      id
+      name: title
+      acronym
+      tags
+      type {
+        ... on TermUndergraduateDegreeType {
+          name
+        }
+      }
+      url {
+        url
+      }
+    }
+  }
+}

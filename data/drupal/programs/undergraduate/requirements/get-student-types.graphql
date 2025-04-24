@@ -1,0 +1,7 @@
+query UndergraduateStudentTypes {
+  termUndergraduateStudentTypes(first: 100) {
+    nodes {
+      name
+    }
+  }
+}

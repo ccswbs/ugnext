@@ -1,0 +1,7 @@
+query UndergraduateDegreeTypes {
+  termUndergraduateDegreeTypes(first: 100) {
+    nodes {
+      name
+    }
+  }
+}
