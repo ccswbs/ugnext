@@ -10,7 +10,7 @@ const Menu = ({ title, items }) => {
     <ul data-title={title}>
       {items.map((item, index) => (
         <li key={item?.title + index}>
-          {Array.isArray(item?.items) && item.items.length > 0 ? (
+          {Array.isArray(item?.items) ? (
             <Menu title={item.title} items={item.items} />
           ) : (
             <Link title={item.title} url={item.url}></Link>
@@ -25,12 +25,10 @@ export const Header = ({ topic, navigation, variant = "guelph" }) => {
   return (
     <uofg-header page-title={topic?.title} page-url={topic?.url} variant={variant}>
       {navigation?.map((item, index) => {
-        // Render as <Menu> only if items is an array and has elements
-        if (Array.isArray(item.items) && item.items.length > 0) {
+        if (Array.isArray(item.items)) {
           return <Menu key={item.title + index} title={item.title} items={item.items} />;
         }
 
-        // Render as <Link> if it has a valid title and URL
         if (typeof item.url === "string" && typeof item.title === "string") {
           return <Link key={item.title + item.url + index} title={item.title} url={item.url}></Link>;
         }

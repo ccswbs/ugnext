@@ -5,6 +5,7 @@ import getPageIDQuery from "./get-page-id.graphql";
 import getPageTitleQuery from "./get-page-title.graphql";
 import getPageQuery from "./get-page-content.graphql";
 import getTestimonialsByTagQuery from "./get-testimonials-by-tag.graphql";
+import getPageMenuQuery from "./get-page-menu.graphql";
 
 export const getPaths = async () => {
   // Here we can decide which pages get pre-rendered.
@@ -68,6 +69,47 @@ export const getPageContent = async (id, status) => {
   return content;
 };
 
+export const getPageMenu = async (page) => {
+  const parse = (node) => {
+    if (Array.isArray(node?.items) && node?.items?.length > 0) {
+      const items = node.items.map((item) => parse(item));
+
+      return {
+        title: node.title,
+        items: node.url ? [{ title: node.title, url: node.url }, ...items] : items,
+      };
+    }
+
+    return { title: node?.title, url: node?.url };
+  };
+
+  const name = page?.primaryNavigation?.menuName?.toUpperCase()?.replaceAll("-", "_");
+
+  if (!name || name === "NO_MENU") {
+    return null;
+  }
+
+  const { data } = await graphql(getPageMenuQuery, {
+    menu: name,
+  });
+
+  const menu = data?.menu?.items?.reduce(
+    (acc, item, index) => {
+      if (index === 0 && item.url) {
+        acc.topic.url = item.url;
+        acc.topic.title = item.title;
+      } else {
+        acc.navigation.push(parse(item));
+      }
+
+      return acc;
+    },
+    { topic: {}, navigation: [] }
+  );
+
+  return menu ?? null;
+};
+
 export const getBreadcrumbs = async (slug, status) => {
   // NEED TO IMPROVE THIS TO LOWER THE AMOUNT OF QUERYING
   const crumbs = [];
@@ -90,63 +132,4 @@ export const getBreadcrumbs = async (slug, status) => {
   }
 
   return crumbs;
-};
-
-export const getPageMenu = async (page) => {
-  const name = page?.primaryNavigation?.menuName;
-
-  if (!name || name === "no_menu") {
-    return null;
-  }
-
-  // Fetch the menu data
-  const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
-  const menuRaw = await response.json();
-
-  // Helper function to parse the raw menu data
-  const parseMenu = (linkset) => {
-    const topic = {};
-    const navigation = [];
-    const hierarchyMap = {}; // Map to track hierarchy[0] to navigation index
-
-    linkset.forEach((link) => {
-      link.item.forEach((item) => {
-        const hierarchy = item.hierarchy || [];
-        const title = item.title || "Untitled";
-        const url = item.href || "#";
-
-        if (hierarchy.length === 1 && hierarchy[0] === "0") {
-          // Assign the top-level item to the menu topic object
-          topic.title = title;
-          topic.url = url;
-        } else if (hierarchy.length === 1 && hierarchy[0] !== "0") {
-          // Add other menu items to navigation
-          const index = navigation.length;
-          navigation.push({ title, url, items: [] });
-          hierarchyMap[hierarchy[0]] = index; // Map hierarchy[0] to navigation index
-        } else if (hierarchy.length === 2) {
-          // Add submenu items
-          const parentKey = hierarchy[0]; // Parent key from hierarchy
-          const parentIndex = hierarchyMap[parentKey]; // Get the correct index from the map
-          if (parentIndex !== undefined && navigation[parentIndex]) {
-            navigation[parentIndex].items.push({ title, url });
-          }
-        }
-      });
-    });
-        
-    // Add parent items with URLs to the beginning of their respective items array
-    navigation.forEach((navItem) => {
-      if (navItem.url !== "#" && navItem.items.length > 1) {
-        navItem.items.unshift({ title: navItem.title, url: navItem.url });
-      }
-    });
-
-    return { topic, navigation };
-  };
-
-  // Parse the menu data
-  const menuData = parseMenu(menuRaw.linkset);
-
-  return menuData;
 };
