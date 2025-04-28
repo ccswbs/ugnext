@@ -1,7 +1,6 @@
-query UndergraduateDegrees {
+query UndergraduateDegreeLatestRevision {
   nodeUndergraduateDegrees(first: 100) {
     nodes {
-      id
       name: title
       acronym
       tags

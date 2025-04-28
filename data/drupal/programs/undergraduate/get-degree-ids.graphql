@@ -1,0 +1,13 @@
+query UndergraduateDegrees($after: Cursor = "") {
+  nodeUndergraduateDegrees(first: 1, after: $after) {
+    edges {
+      cursor
+      node {
+        id
+      }
+    }
+    pageInfo {
+      hasNextPage
+    }
+  }
+}
