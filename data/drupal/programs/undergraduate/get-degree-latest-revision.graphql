@@ -1,0 +1,19 @@
+query GetDegreeLatestRevision($id: String!, $status: Boolean) {
+  latestContentRevision(filter: { uuid: $id, status: $status, type: "undergraduate_degree" }) {
+    results {
+      ... on NodeUndergraduateDegree {
+        name: title
+        acronym
+        tags
+        type {
+          ... on TermUndergraduateDegreeType {
+            name
+          }
+        }
+        url {
+          url
+        }
+      }
+    }
+  }
+}

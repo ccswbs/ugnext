@@ -1,5 +1,5 @@
-query GetProgramLatestPublishedRevision($uuid: String!, $status: Boolean) {
-  latestContentRevision(filter: { uuid: $uuid, status: $status, type: "undergraduate_program" }) {
+query GetProgramLatestPublishedRevision($id: String!, $status: Boolean) {
+  latestContentRevision(filter: { uuid: $id, status: $status, type: "undergraduate_program" }) {
     results {
       ... on NodeUndergraduateProgram {
         name: title
@@ -15,7 +15,7 @@ query GetProgramLatestPublishedRevision($uuid: String!, $status: Boolean) {
         }
         degree {
           ... on NodeUndergraduateDegree {
-            title
+            name: title
           }
         }
       }

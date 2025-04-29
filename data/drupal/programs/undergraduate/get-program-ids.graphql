@@ -1,13 +1,11 @@
 query UndergraduatePrograms($after: Cursor = "") {
   nodeUndergraduatePrograms(first: 1, after: $after) {
-    edges {
-      cursor
-      node {
-        id
-      }
-    }
     pageInfo {
       hasNextPage
+      endCursor
+    }
+    nodes {
+      id
     }
   }
 }
