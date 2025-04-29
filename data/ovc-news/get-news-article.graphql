@@ -1,0 +1,29 @@
+#import "../media.graphql"
+#import "../taxonomy.graphql"
+
+query GetNewsArticle ($id: String = "", $status: Boolean = false)  {
+  nodeArticles { id: $id, status: $status, type: "page" }, pageSize: 1) {
+    edges {
+      node {
+        id
+        title
+        created {
+          time
+          timestamp
+        }
+        body {
+          processed
+        }
+        newsCategory {
+          ... on TermNewsCategory {
+            id
+            name
+          }
+        }
+        heroImage {
+          ... Image
+        }
+      }
+    }
+  }
+}

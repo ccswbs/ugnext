@@ -1,0 +1,26 @@
+
+query GetFeaturedLegacyNews {
+  featuredLegacyNews {
+    results {
+      ... on NodeArticle {
+        id
+        title
+        created {
+          time
+          timestamp
+        }
+        path
+        heroImage {
+          ... on MediaImage {
+            image {
+              alt
+              url
+              height
+              width
+            }
+          }
+        }
+      }
+    }
+  }
+}
