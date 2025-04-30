@@ -13,6 +13,7 @@ query GetLegacyNews($id: String = "", $status: Boolean = false) {
         body {
           processed
         }
+        doNotDisplayImage
         newsCategory {
           ... on TermNewsCategory {
             id

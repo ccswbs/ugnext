@@ -33,7 +33,7 @@ export const getPageMenu = async (page) => {
   // Fetch the menu data
   const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
   const menuRaw = await response.json();
-console.log("............................", name, response, menuRaw);
+
   // Helper function to parse the raw menu data
   const parseMenu = (linkset) => {
     const topic = {};

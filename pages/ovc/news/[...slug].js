@@ -41,8 +41,14 @@ export async function getStaticProps(context) {
 
   legacyNewsItem.menu = await getPageMenu();
 
-  // Flatten image prop
-  legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
+  // Flatten image prop if doNoDisplay is false
+
+  if (!legacyNewsItem?.doNotDisplayImage)  {
+       legacyNewsItem.heroImage = legacyNewsItem.heroImage?.image ?? null;
+    } else {
+      legacyNewsItem.heroImage = null;
+    };
+  
 
   // wrap figcaption and align images - moved to html-parser
 
