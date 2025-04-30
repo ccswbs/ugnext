@@ -51,6 +51,7 @@ export async function getPrograms(draft = false) {
   let cursor = "";
   let ids = [];
 
+  // We keep looping a while as long as there is an another page
   while (hasNextPage) {
     const { data } = await graphql(getProgramIdsQuery, {
       after: cursor,

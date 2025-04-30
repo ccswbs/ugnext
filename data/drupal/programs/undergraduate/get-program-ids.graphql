@@ -1,5 +1,5 @@
 query UndergraduatePrograms($after: Cursor = "") {
-  nodeUndergraduatePrograms(first: 1, after: $after) {
+  nodeUndergraduatePrograms(first: 100, after: $after) {
     pageInfo {
       hasNextPage
       endCursor
