@@ -17,6 +17,10 @@ export async function getStaticProps() {
   };
 }
 
+function ProgramCard({ data }) {
+
+}
+
 export default function ProgramsUndergraduate(data) {
   return (
     <Layout metadata={{ title: "Undergraduate Programs" }}>

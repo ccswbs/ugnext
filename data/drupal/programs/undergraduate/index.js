@@ -37,6 +37,7 @@ export async function getDegrees(draft = false) {
 
     return {
       ...result,
+      __typename: 'undergraduate-degree',
       url: result.url?.url ?? "",
       type: result.type?.name ?? null,
       tags: result.tags ?? [],
@@ -77,6 +78,7 @@ export async function getPrograms(draft = false) {
 
     return {
       ...result,
+      __typename: 'undergraduate-program',
       url: result.url?.url ?? "",
       type: result.type?.map((type) => type.name) ?? [],
       degree: result.degree?.name ?? null,
