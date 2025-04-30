@@ -83,6 +83,7 @@ export default function Page({ content }) {
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
         />
+        <div className="mb-4" /> {/* Add space after pagination */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
         
