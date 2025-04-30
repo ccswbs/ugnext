@@ -37,8 +37,8 @@ export const StudyHere = () => {
         <LinkCarouselLink href="https://www.uoguelph.ca/study-in-canada/" id="international" className={link()}>
           International
         </LinkCarouselLink>
-        <LinkCarouselLink href="https://opened.uoguelph.ca/" id="lifelong-learning" className={link()}>
-          Lifelong Learning
+        <LinkCarouselLink href="https://www.uoguelph.ca/continuing-studies/" id="lifelong-learning" className={link()}>
+          Continuing Studies
         </LinkCarouselLink>
       </LinkCarouselLinks>
       <LinkCarouselContent>
