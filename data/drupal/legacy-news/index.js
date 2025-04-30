@@ -28,7 +28,7 @@ export const getLegacyNewsList = async () => {
 };
 
 export const getPageMenu = async (page) => {
-  const name = "ovc-main"; // OVC menu name
+  const name = "ovc-news-archive"; // OVC menu name
 
   // Fetch the menu data
   const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
