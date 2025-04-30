@@ -3,22 +3,30 @@ import { Card, CardContent, CardTitle, CardImage } from "@uoguelph/react-compone
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
 import { UnstyledLink } from "@/components/link";
+import { tv } from "tailwind-variants";
 
 export const Links = ({ data }) => {
   const useCards = data?.links?.every((link) => Boolean(link.image));
+  const classes = tv({
+    slots: {
+      container: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
+      card: "h-full",
+      cardImage: "aspect-[4/3] w-full",
+    }
+  })();
 
   if (useCards) {
     return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className={classes.container()}>
         {data?.links?.map((link, index) => (
-          <Card as={UnstyledLink} href={link.url.url} className="h-full" centered key={link.url.title + index}>
+          <Card as={UnstyledLink} href={link.url.url} className={classes.card()} centered key={link.url.title + index}>
             <CardImage
               as={Image}
               src={link.image.image.url}
               width={link.image.image.width}
               height={link.image.image.height}
               alt={link.image.image.alt}
-              className="aspect-[4/3] w-full"
+              className={classes.cardImage()}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
             <CardContent>
