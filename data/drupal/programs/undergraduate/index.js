@@ -6,6 +6,8 @@ import getDegreeLatestRevisionQuery from "./get-degree-latest-revision.graphql";
 import getProgramIdsQuery from "./get-program-ids.graphql";
 import getProgramLatestRevisionQuery from "./get-program-latest-revision.graphql";
 
+export async function getStudentTypos() {}
+
 export async function getDegreeTypes() {
   const { data } = await graphql(getDegreeTypesQuery);
   return data.termUndergraduateDegreeTypes.nodes.map((node) => node.name);
@@ -64,6 +66,7 @@ export async function getPrograms(draft = false) {
     cursor = data.nodeUndergraduatePrograms.pageInfo.endCursor;
   }
 
+  // Get the latest revisions content for each ID we got from before.
   const programs = ids.map(async (id) => {
     const { data } = await graphql(getProgramLatestRevisionQuery, {
       id: id,
