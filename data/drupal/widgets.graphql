@@ -190,6 +190,9 @@ fragment Section on ParagraphSection {
 fragment SocialMedia on ParagraphSocialMediaWidget {
   __typename
   id
+  socialMediaTitle
+  headingLevel
+  iconAltText
   socialMediaLinks {
     name
     url

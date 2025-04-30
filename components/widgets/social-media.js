@@ -1,19 +1,25 @@
 import { twJoin } from "tailwind-merge";
+import { Heading } from "@/components/heading";
+import { getHeadingLevel } from "@/lib/string-utils";
 
 export const SocialMedia = ({ data }) => {
   const links = data.socialMediaLinks || [];
+  const title = data?.socialMediaTitle;
+  const altText = data?.iconAltText;
+  const level = getHeadingLevel(data.headingLevel);
 
   // Sort links alphabetically by name
   const sortedLinks = links.sort((a, b) => a.name.localeCompare(b.name));
 
   return sortedLinks.length > 0 ? (
     <>
+      {title && <Heading level={level}>{title}</Heading>}
       <ul className="flex gap-2 list-none">
         {sortedLinks.map(({ name, url, value }, index) => (
           <li key={index}>
             <a
               href={url}
-              aria-label={`${value} on ${name}`}
+              aria-label={`${altText ? altText : value} on ${name}`}
               className={twJoin(
                 "aspect-square bg-transparent focus:text-uog-color-white hover:text-uog-color-white size-11 text-4xl text-uog-color-black flex items-center justify-center",
                 name === "Facebook" && "focus:bg-facebook-color-blue hover:bg-facebook-color-blue",
