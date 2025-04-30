@@ -12,14 +12,14 @@ import {
 } from "@/lib/date-utils";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { useState } from "react";
+import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 import { OVCNewsCard } from "@/components/ovc/ovc-news-card";
 import { Pagination } from "@/components/pagination";
-import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
   const content = {};
-  content.title = "Ontario Veterinary College News Hub";
+  content.title = "Ontario Veterinary College News Archive - Prior to May 2025";
   content.menu = await getPageMenu();
   content.img = null;
 
@@ -29,7 +29,7 @@ export async function getStaticProps(context) {
   //  format the date created for each atricle
   content?.legacyNewsList.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
-    legacyNews.path = "/ovc/news" + legacyNews.path;
+    legacyNews.path = "/ovc/news/archive" + legacyNews.path;
   });
   // Flatten image prop
   content.image = content?.image?.image ?? null;
@@ -64,6 +64,7 @@ export default function Page({ content }) {
   };
 
   const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
     <Layout metadata={{ title: content?.title }} header={content?.menu}>
       <>
@@ -85,7 +86,6 @@ export default function Page({ content }) {
         <div className="mb-4" /> {/* Add space after pagination */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
-        
             <OVCNewsCard
               key={index}
               href={legacyNews?.path}
@@ -96,7 +96,6 @@ export default function Page({ content }) {
                 height: legacyNews?.heroImage?.image.height || defaultImage.height,
                 sizes: legacyNews?.heroImage?.image.sizes || "33vw",
                 blurred: legacyNews?.heroImage?.image.blurDataURL || defaultImage.blurDataURL,
-                
               }}
               title={legacyNews?.title}
               className="border rounded shadow"
@@ -113,9 +112,6 @@ export default function Page({ content }) {
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
         />
-        <Button href="https://sns-next.netlify.app/ovc/news/archive" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
-          OVC News Archive
-        </Button>
       </Container>
       <OVCFooter />
     </Layout>
