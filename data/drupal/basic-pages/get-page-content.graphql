@@ -30,7 +30,6 @@ query GetPage($id: String = "", $status: Boolean = false) {
           ...Story
           ...ImageOverlay
           ...Section
-          ...SocialMedia
         }
         changed {
           timestamp
