@@ -31,7 +31,6 @@ export const WidgetSelector = ({ data }) => {
     ParagraphTestimonialSlider: TestimonialSlider,
     ParagraphSection: Section,
     ParagraphSectionTab: Tabs,
-    ParagraphSocialMediaWidget: SocialMedia,
     ParagraphStatisticWidget: Statistics,
     ParagraphImageOverlay: ImageOverlay,
     ParagraphStoryWidget: Story,
