@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import { Select } from "@/components/select";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import { getUndergraduatePrograms, getUndergraduateDegrees } from "@/data/yaml/programs/undergraduate";
 import { nameAndTagSearch } from "@/lib/use-search";
 import { Button } from "@/components/button";
 import { useRouter } from "next/router";
@@ -16,30 +15,17 @@ import {
   faMapLocationDot,
   faCalendarDays,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
-import { getLocations, getStudentTypes } from "@/data/drupal/programs/undergraduate/requirements";
+import { getLocations, getPrograms, getStudentTypes } from "@/data/drupal/programs/undergraduate/requirements";
 
 export async function getStaticProps() {
-  const degrees = (await getUndergraduateDegrees()).map((degree) => ({ ...degree, types: [degree.type] }));
-  const programs = await getUndergraduatePrograms();
-
   return {
     props: {
+      drupal: {
+        programs: await getPrograms(),
+      },
       studentTypes: await getStudentTypes(),
       locations: await getLocations(),
-      programs: [...programs, ...degrees]
-        .filter((program) => {
-          const allowedTypes = new Set(["major", "bachelor"]);
-          return program.types.some((type) => allowedTypes.has(type.id));
-        })
-        .map((program) => {
-          // Remove any data we don't need for the filter
-          return {
-            id: program.id,
-            name: program.name,
-            tags: program.tags,
-          };
-        })
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      programs: (await getPrograms()).sort((a, b) => a.name.localeCompare(b.name)),
     },
   };
 }

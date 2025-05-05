@@ -1,0 +1,16 @@
+query UndergraduateMajorsAndDegrees($page: Int = 0, $status: Boolean = null) {
+  undergraduateMajorsAndDegrees(page: $page, filter: { status: $status }) {
+    results {
+      ... on NodeUndergraduateProgram {
+        id: uuid
+      }
+      ... on NodeUndergraduateDegree {
+        id: uuid
+      }
+    }
+    pageInfo {
+      total
+      page
+    }
+  }
+}

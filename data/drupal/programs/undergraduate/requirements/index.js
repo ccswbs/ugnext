@@ -1,10 +1,13 @@
 import getStudentTypesQuery from "./get-student-types.graphql";
 import getLocationsQuery from "./get-locations.graphql";
+import getProgramIdsQuery from "./get-program-ids.graphql";
+import getProgramDataQuery from "./get-program-data.graphql";
 import { graphql } from "@/lib/drupal";
 import { partition } from "@/lib/array-utils";
 
 export const STUDENT_TYPE_BASE_PATH = "/term/undergraduate/admission/student-types/";
 export const LOCATION_BASE_PATH = "/term/undergraduate/admission/locations/";
+export const PROGRAM_BASE_PATH = "/node/undergraduate/";
 
 export async function getStudentTypes() {
   const { data } = await graphql(getStudentTypesQuery);
@@ -48,4 +51,40 @@ export async function getLocations() {
     international: partitioned[1].map((location) => ({ id: location.id, name: location.name })),
     curriculum: partitioned[2].map((location) => ({ id: location.id, name: location.name })),
   };
+}
+
+export async function getPrograms(draft = false) {
+  let page = 0;
+  let total = 1;
+  let ids = [];
+
+  while (page < total) {
+    const { data } = await graphql(getProgramIdsQuery, {
+      page: page,
+      status: draft ? undefined : true,
+    });
+
+    const results = data.undergraduateMajorsAndDegrees.results.map((node) => node.id);
+    ids = [...ids, ...results];
+
+    page++;
+    total = data.undergraduateMajorsAndDegrees.pageInfo.total;
+  }
+
+  const programs = ids.map(async (id) => {
+    const { data } = await graphql(getProgramDataQuery, {
+      id: id,
+      status: draft ? undefined : true,
+    });
+
+    const result = data.latestContentRevision.results[0];
+
+    return {
+      id: result.path.replace(PROGRAM_BASE_PATH, ""),
+      name: result.name,
+      tags: result.tags ?? [],
+    };
+  });
+
+  return Promise.all(programs);
 }

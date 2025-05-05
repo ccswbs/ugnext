@@ -1,0 +1,18 @@
+query GetProgramDegreeLatestPublishedRevision($id: String!, $status: Boolean = null) {
+  latestContentRevision(
+    filter: { uuid: $id, status: $status, type: ["undergraduate_program", "undergraduate_degree"] }
+  ) {
+    results {
+      ... on NodeUndergraduateProgram {
+        name: title
+        path
+        tags
+      }
+      ... on NodeUndergraduateDegree {
+        name: title
+        path
+        tags
+      }
+    }
+  }
+}
