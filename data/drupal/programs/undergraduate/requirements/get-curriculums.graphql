@@ -1,7 +1,0 @@
-query UndergraduateAdmissionCurriculums {
-  termCurricula(first: 100) {
-    nodes {
-      name
-    }
-  }
-}

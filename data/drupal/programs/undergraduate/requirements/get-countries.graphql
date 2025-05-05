@@ -1,7 +1,0 @@
-query UndergraduateAdmissionCountries {
-  termCountries(first: 100) {
-    nodes {
-      name
-    }
-  }
-}

@@ -1,0 +1,13 @@
+query UndergraduateAdmissionLocations($after: Cursor = "") {
+  termAdmissionLocations(first: 100, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      path
+      type
+      name
+    }
+  }
+}

@@ -1,7 +1,0 @@
-query UndergraduateAdmissionProvinces {
-  termCanadianProvinces(first: 100) {
-    nodes {
-      name
-    }
-  }
-}
