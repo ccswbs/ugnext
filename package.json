@@ -90,6 +90,9 @@
     ]
   },
   "trustedDependencies": [
-    "core-js-pure"
+    "core-js",
+    "core-js-pure",
+    "esbuild",
+    "sharp"
   ]
 }
