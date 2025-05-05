@@ -6,8 +6,6 @@ import getDegreeLatestRevisionQuery from "./get-degree-latest-revision.graphql";
 import getProgramIdsQuery from "./get-program-ids.graphql";
 import getProgramLatestRevisionQuery from "./get-program-latest-revision.graphql";
 
-export async function getStudentTypos() {}
-
 export async function getDegreeTypes() {
   const { data } = await graphql(getDegreeTypesQuery);
   return data.termUndergraduateDegreeTypes.nodes.map((node) => node.name);
@@ -37,7 +35,7 @@ export async function getDegrees(draft = false) {
 
     return {
       ...result,
-      __typename: 'undergraduate-degree',
+      __typename: "undergraduate-degree",
       url: result.url?.url ?? "",
       type: result.type?.name ?? null,
       tags: result.tags ?? [],
@@ -78,7 +76,7 @@ export async function getPrograms(draft = false) {
 
     return {
       ...result,
-      __typename: 'undergraduate-program',
+      __typename: "undergraduate-program",
       url: result.url?.url ?? "",
       type: result.type?.map((type) => type.name) ?? [],
       degree: result.degree?.name ?? null,
