@@ -3,7 +3,7 @@
 
 fragment CustomFooter on NodeCustomFooter {
   __typename
-  id
+  id: uuid
   title
   body {
     processed
