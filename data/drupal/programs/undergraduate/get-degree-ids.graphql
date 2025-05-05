@@ -1,7 +1,7 @@
 query UndergraduateDegrees {
   nodeUndergraduateDegrees(first: 100) {
     nodes {
-      id
+      id: uuid
     }
   }
 }

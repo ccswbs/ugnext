@@ -5,7 +5,7 @@ query UndergraduatePrograms($after: Cursor = "") {
       endCursor
     }
     nodes {
-      id
+      id: uuid
     }
   }
 }

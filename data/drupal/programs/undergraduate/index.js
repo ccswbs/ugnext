@@ -47,7 +47,6 @@ export async function getDegrees(draft = false) {
 
 export async function getPrograms(draft = false) {
   // Similar idea to getDegrees but our assumption of less than 100 fails for programs, so we need to use pagination/cursors.
-
   let hasNextPage = true;
   let cursor = "";
   let ids = [];
