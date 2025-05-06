@@ -52,7 +52,12 @@ const colors = {
   
   "uog-color-body-copy-link": "#187bb4",
   "uog-color-body-copy-link-on-light": "#166ea2",
-  "uog-color-body-copy-link-on-dark": "#1d93d7"
+  "uog-color-body-copy-link-on-dark": "#1d93d7",
+  
+  "facebook-color-blue": "#0866ff",
+  "instagram-color-pink": "#d62976",
+  "linkedin-color-blue": "#0a66c2",
+  "youtube-color-red": "#ff0000"
 };
 
 const scaled = (input, scale) => {
