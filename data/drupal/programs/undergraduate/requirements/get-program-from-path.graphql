@@ -3,12 +3,14 @@ query ProgramFromPath($path: String!) {
     ... on RouteInternal {
       entity {
         ... on NodeUndergraduateProgram {
+          id
           name: title
           url {
             url
           }
         }
         ... on NodeUndergraduateDegree {
+          id
           name: title
           url {
             url

@@ -114,6 +114,7 @@ export async function parseRequirementPageSlug(slug) {
     location: location?.data?.route?.entity?.name ?? null,
     program: program?.data?.route?.entity
       ? {
+          id: program?.data?.route?.entity?.id,
           name: program?.data?.route?.entity?.name,
           url: program?.data?.route?.entity?.url?.url ?? "",
         }

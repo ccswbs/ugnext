@@ -56,7 +56,7 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
               <Heading level={1} className="text-4xl">
                 {title ?? "Undergraduate Admission Requirements"}
               </Heading>
-              <div className="flex flex-col"></div>
+              <div className="flex flex-col">{JSON.stringify(program)}</div>
             </>
           }
           secondary={
