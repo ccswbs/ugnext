@@ -6,10 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import {
-  getUndergraduateRequirements,
-  parseAdmissionRequirementsSlug,
-} from "@/data/yaml/programs/undergraduate";
+import { parseRequirementPageSlug, getRequirements } from "@/data/drupal/programs/undergraduate/requirements";
 import { List, ListItem } from "@/components/list";
 import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import {
@@ -29,7 +26,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const { studentType, location, program } = await parseAdmissionRequirementsSlug(context.params.slug);
+  const { studentType, location, program } = await parseRequirementPageSlug(context.params.slug);
 
   if (!studentType || !location || !program) {
     return {
@@ -37,30 +34,18 @@ export async function getStaticProps(context) {
     };
   }
 
-  const requirements = await getUndergraduateRequirements(studentType, location, program);
-
   return {
     props: {
       studentType: studentType,
       location: location,
-      program: { id: program.id, name: program.name, url: program.url },
-      requirements: requirements,
+      program: program,
+      requirements: await getRequirements(studentType, location, program),
     },
   };
 }
 
 export default function UndergraduateAdmissionRequirements({ studentType, location, program, requirements }) {
-  const title = `${program?.name} Admission Requirements for ${studentType?.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location?.name}`;
-
-  const wrappers = {
-    list: List,
-    text: "p",
-  };
-
-  const items = {
-    list: ListItem,
-    text: Fragment,
-  };
+  const title = `${program?.name} Admission Requirements for ${studentType?.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location}`;
 
   return (
     <Layout title={title ?? "Undergraduate Admission Requirements"}>
@@ -68,31 +53,10 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
         <Section
           primary={
             <>
-              <Heading level={1}>{title ?? "Undergraduate Admission Requirements"}</Heading>
-              <div className="flex flex-col">
-                {requirements
-                  ?.filter((requirement) => requirement.content.length > 0)
-                  ?.map((requirement, index) => {
-                    const Wrapper = wrappers[requirement.type];
-                    const Content = items[requirement.type];
-
-                    return (
-                      <Fragment key={index}>
-                        <Heading level={3} as="h2">
-                          {requirement.name}
-                        </Heading>
-
-                        <Wrapper>
-                          {requirement.content.map((item, index) => (
-                            <Content key={index}>
-                              <HtmlParser html={item} />
-                            </Content>
-                          ))}
-                        </Wrapper>
-                      </Fragment>
-                    );
-                  })}
-              </div>
+              <Heading level={1} className="text-4xl">
+                {title ?? "Undergraduate Admission Requirements"}
+              </Heading>
+              <div className="flex flex-col"></div>
             </>
           }
           secondary={

@@ -1,0 +1,11 @@
+query StudentTypeFromPath($path: String!) {
+  route(path: $path) {
+    ... on RouteInternal {
+      entity {
+        ... on TermUndergraduateStudentType {
+          name
+        }
+      }
+    }
+  }
+}

@@ -2,12 +2,15 @@ import getStudentTypesQuery from "./get-student-types.graphql";
 import getLocationsQuery from "./get-locations.graphql";
 import getProgramIdsQuery from "./get-program-ids.graphql";
 import getProgramDataQuery from "./get-program-data.graphql";
+import getStudentTypeFromPathQuery from "./get-student-type-from-path.graphql";
+import getLocationFromPathQuery from "./get-location-from-path.graphql";
+import getProgramFromPathQuery from "./get-program-from-path.graphql";
 import { graphql } from "@/lib/drupal";
 import { partition } from "@/lib/array-utils";
 
-export const STUDENT_TYPE_BASE_PATH = "/term/undergraduate/admission/student-types/";
-export const LOCATION_BASE_PATH = "/term/undergraduate/admission/locations/";
-export const PROGRAM_BASE_PATH = "/node/undergraduate/";
+const STUDENT_TYPE_BASE_PATH = "/term/undergraduate/admission/student-types/";
+const LOCATION_BASE_PATH = "/term/undergraduate/admission/locations/";
+const PROGRAM_BASE_PATH = "/node/undergraduate/";
 
 export async function getStudentTypes() {
   const { data } = await graphql(getStudentTypesQuery);
@@ -87,4 +90,37 @@ export async function getPrograms(draft = false) {
   });
 
   return Promise.all(programs);
+}
+
+export async function parseRequirementPageSlug(slug) {
+  const studentTypePath = `${STUDENT_TYPE_BASE_PATH}${slug[0]}`;
+  const locationPath = `${LOCATION_BASE_PATH}${slug[1]}`;
+  const programPath = `${PROGRAM_BASE_PATH}${slug[2]}/${slug[3]}`;
+
+  const studentType = await graphql(getStudentTypeFromPathQuery, {
+    path: studentTypePath,
+  });
+
+  const location = await graphql(getLocationFromPathQuery, {
+    path: locationPath,
+  });
+
+  const program = await graphql(getProgramFromPathQuery, {
+    path: programPath,
+  });
+
+  return {
+    studentType: studentType?.data?.route?.entity?.name ?? null,
+    location: location?.data?.route?.entity?.name ?? null,
+    program: program?.data?.route?.entity
+      ? {
+          name: program?.data?.route?.entity?.name,
+          url: program?.data?.route?.entity?.url?.url ?? "",
+        }
+      : null,
+  };
+}
+
+export async function getRequirements(studentType, location, program, draft = false) {
+  return null;
 }
