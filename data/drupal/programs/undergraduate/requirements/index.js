@@ -209,10 +209,14 @@ export async function getRequirements(studentType, location, program, draft = fa
       requirements.sections[type] = requirements.sections[type].splice(0, firstOverridesIndex + 1);
     }
 
-    sections.push({
-      title: type,
-      content: requirements.sections[type].map((section) => section.content).join(" "),
-    });
+    const content = requirements.sections[type].map((section) => section.content).join(" ");
+
+    if (content) {
+      sections.push({
+        title: type,
+        content: requirements.sections[type].map((section) => section.content).join(" "),
+      });
+    }
   }
 
   return {
