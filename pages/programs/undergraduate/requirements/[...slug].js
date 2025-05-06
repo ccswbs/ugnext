@@ -56,7 +56,14 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
               <Heading level={1} className="text-4xl">
                 {title ?? "Undergraduate Admission Requirements"}
               </Heading>
-              <div className="flex flex-col">{JSON.stringify(program)}</div>
+              <div className="flex flex-col">
+                {requirements?.sections?.map((section) => (
+                  <>
+                    <Heading level={2}>{section.title}</Heading>
+                    <HtmlParser html={section.content} />
+                  </>
+                ))}
+              </div>
             </>
           }
           secondary={

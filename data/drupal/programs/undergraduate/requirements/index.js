@@ -5,6 +5,8 @@ import getProgramDataQuery from "./get-program-data.graphql";
 import getStudentTypeFromPathQuery from "./get-student-type-from-path.graphql";
 import getLocationFromPathQuery from "./get-location-from-path.graphql";
 import getProgramFromPathQuery from "./get-program-from-path.graphql";
+import getRequirementIds from "./get-requirement-ids.graphql";
+import getRequirementContent from "./get-requirement-content.graphql";
 import { graphql } from "@/lib/drupal";
 import { partition } from "@/lib/array-utils";
 
@@ -125,5 +127,96 @@ export async function parseRequirementPageSlug(slug) {
 }
 
 export async function getRequirements(studentType, location, program, draft = false) {
-  return null;
+  const { data } = await graphql(getRequirementIds, {
+    studentType: studentType,
+    location: location,
+    program: Number.parseFloat(program.id),
+  });
+
+  const promises = data.undergraduateAdmissionRequirements.results.map(async ({ id }) => {
+    const { data } = await graphql(getRequirementContent, {
+      id: id,
+      status: draft ? undefined : true,
+    });
+
+    const requirement = data.latestContentRevision.results[0];
+
+    // Rank will determine how to order the requirement sections, a lower rank appears first.
+    // Rank is determined by how many/how fields (e.g. type, location, program) are defined.
+    // If a field is null, the rank increases by 2.
+    // If a field has multiple values, it increases by 1.
+    // If a field has a single value, it stays the same.
+    let rank = 0;
+
+    for (const field of ["type", "location", "program"]) {
+      if (requirement[field] === null) {
+        rank += 2;
+      }
+
+      if (Array.isArray(requirement[field]) && requirement[field].length > 1) {
+        rank += 1;
+      }
+    }
+
+    return {
+      ...requirement,
+      rank: rank,
+    };
+  });
+
+  const requirements = (await Promise.all(promises))
+    .sort((a, b) => a.rank - b.rank)
+    .map((requirement) => ({
+      title: requirement.title,
+      path: requirement.path,
+      sections: requirement.sections.map((section) => ({
+        ...section,
+        type: section.type.name,
+        content: section.content.processed,
+      })),
+    }))
+    .reduce(
+      (acc, requirement) => {
+        acc.paths.push({
+          title: requirement.title,
+          url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
+        });
+
+        for (let i = 0; i < requirement.sections.length; i++) {
+          const section = requirement.sections[i];
+
+          acc.sections[section.type] ??= [];
+          acc.sections[section.type].push({
+            overrides: section.overrides,
+            content: section.content,
+          });
+        }
+
+        return acc;
+      },
+      {
+        sections: {},
+        paths: [],
+      }
+    );
+
+  const sections = [];
+
+  for (const type in requirements.sections) {
+    const firstOverridesIndex = requirements.sections[type].findIndex((section) => section.overrides);
+
+    if (firstOverridesIndex >= 0) {
+      requirements.sections[type] = requirements.sections[type].splice(0, firstOverridesIndex + 1);
+    }
+
+    sections.push({
+      title: type,
+      content: requirements.sections[type].map((section) => section.content).join(" "),
+    });
+  }
+
+  return {
+    sections: sections,
+    paths: requirements.paths,
+  };
 }
