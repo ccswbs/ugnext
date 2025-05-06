@@ -3,6 +3,7 @@ query UndergraduateStudentTypes {
     nodes {
       name
       path
+      weight
     }
   }
 }

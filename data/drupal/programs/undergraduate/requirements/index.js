@@ -14,10 +14,12 @@ const PROGRAM_BASE_PATH = "/node/undergraduate/";
 
 export async function getStudentTypes() {
   const { data } = await graphql(getStudentTypesQuery);
-  return data.termUndergraduateStudentTypes.nodes.map((node) => ({
-    id: node.path.replace(STUDENT_TYPE_BASE_PATH, ""),
-    name: node.name,
-  }));
+  return data.termUndergraduateStudentTypes.nodes
+    .sort((a, b) => a.weight - b.weight)
+    .map((node) => ({
+      id: node.path.replace(STUDENT_TYPE_BASE_PATH, ""),
+      name: node.name,
+    }));
 }
 
 export async function getLocations() {
