@@ -50,8 +50,8 @@ export const StudyHere = () => {
         blurred: lifelong.blurDataURL,
         alt: "Kathryn Knowles & Jenna Schamowski working with bee hives",
       },
-      title: "Lifelong Learning",
-      url: "https://opened.uoguelph.ca/",
+      title: "Continuing Studies",
+      url: "https://www.uoguelph.ca/continuing-studies/",
       caption: "Kathryn Knowles & Jenna Schamowski - Environmental Sciences",
     },
   ];
