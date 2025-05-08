@@ -10,8 +10,6 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   // We want to redirect requests for /node/{ID} to the appropriate place.
 
-  console.log("Checking type of " + "/node/" + context.params.slug.join("/"));
-
   // Check the type of the node
   const { data } = await graphql(
     `
@@ -29,8 +27,6 @@ export async function getStaticProps(context) {
       url: "/node/" + context.params.slug.join("/"),
     }
   );
-
-  console.log("type is " + data.route?.entity?.__typename);
 
   switch (data.route?.entity?.__typename) {
     // For spotlight, we want to redirect to the homepage, as that's where they appear
