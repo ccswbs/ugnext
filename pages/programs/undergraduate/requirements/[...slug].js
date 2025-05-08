@@ -52,6 +52,7 @@ export default function UndergraduateAdmissionRequirements({ draft, studentType,
 
   return (
     <Layout title={title ?? "Undergraduate Admission Requirements"}>
+      {/* Show the paths to the requirement blocks that make up this page */}
       {draft && Array.isArray(requirements?.paths) && (
         <div className="fixed bottom-4 left-4 bg-uog-color-red text-white p-2 rounded-md flex gap-2 flex-col">
           {requirements?.paths.map((path) => (
