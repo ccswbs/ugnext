@@ -94,5 +94,8 @@
     "core-js-pure",
     "esbuild",
     "sharp"
-  ]
+  ],
+  "patchedDependencies": {
+    "next-drupal@1.6.0": "patches/next-drupal@1.6.0.patch"
+  }
 }

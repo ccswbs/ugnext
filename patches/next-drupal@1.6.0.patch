@@ -1,0 +1,13 @@
+diff --git a/src/client.ts b/src/client.ts
+index 73141864bb93db753d42a2ba3367805ad904be52..68bd1bde5a403d79776ae6fe5c47f60b71ffc923 100644
+--- a/src/client.ts
++++ b/src/client.ts
+@@ -1081,6 +1081,8 @@ export class DrupalClient {
+         resourceVersion,
+         plugin,
+         ...validationPayload,
++      }, {
++        path: "/"
+       })
+ 
+       // Fix issue with cookie.
