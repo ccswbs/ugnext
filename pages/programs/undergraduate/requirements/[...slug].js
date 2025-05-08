@@ -47,15 +47,15 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ studentType, location, program, requirements }) {
+export default function UndergraduateAdmissionRequirements({ draft, studentType, location, program, requirements }) {
   const title = `${program?.name} Admission Requirements for ${studentType?.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location}`;
 
   return (
     <Layout title={title ?? "Undergraduate Admission Requirements"}>
-      {Array.isArray(requirements?.paths) && (
+      {draft && Array.isArray(requirements?.paths) && (
         <div className="fixed bottom-4 left-4 bg-uog-color-red text-white p-2 rounded-md flex gap-2 flex-col">
           {requirements?.paths.map((path) => (
-            <Link color="white" key={path.url} href={path.url}>
+            <Link color="none" key={path.url} href={path.url}>
               {path.title}
             </Link>
           ))}
