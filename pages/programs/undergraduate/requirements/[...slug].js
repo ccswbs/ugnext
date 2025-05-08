@@ -7,7 +7,6 @@ import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/ic
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
 import { parseRequirementPageSlug, getRequirements } from "@/data/drupal/programs/undergraduate/requirements";
-import { List, ListItem } from "@/components/list";
 import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import {
   faBars,
@@ -17,6 +16,8 @@ import {
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { Fragment } from "react";
 import { HtmlParser } from "@/components/html-parser";
+import { isDraft } from "@/lib/is-draft";
+import { Link, UnstyledLink } from "@/components/link";
 
 export async function getStaticPaths() {
   return {
@@ -26,6 +27,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
+  const draft = isDraft(context);
   const { studentType, location, program } = await parseRequirementPageSlug(context.params.slug);
 
   if (!studentType || !location || !program) {
@@ -36,10 +38,11 @@ export async function getStaticProps(context) {
 
   return {
     props: {
+      draft: draft,
       studentType: studentType,
       location: location,
       program: program,
-      requirements: await getRequirements(studentType, location, program),
+      requirements: await getRequirements(studentType, location, program, draft),
     },
   };
 }
@@ -49,6 +52,15 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
 
   return (
     <Layout title={title ?? "Undergraduate Admission Requirements"}>
+      {Array.isArray(requirements?.paths) && (
+        <div className="fixed bottom-4 left-4 bg-uog-color-red text-white p-2 rounded-md flex gap-2 flex-col">
+          {requirements?.paths.map((path) => (
+            <Link color="white" key={path.url} href={path.url}>
+              {path.title}
+            </Link>
+          ))}
+        </div>
+      )}
       <Container centered>
         <Section
           primary={

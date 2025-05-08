@@ -16,16 +16,17 @@ import {
   faCalendarDays,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { getLocations, getPrograms, getStudentTypes } from "@/data/drupal/programs/undergraduate/requirements";
+import { isDraft } from "@/lib/is-draft";
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
+  const draft = isDraft(context);
+
   return {
     props: {
-      drupal: {
-        programs: await getPrograms(),
-      },
+      draft: draft,
       studentTypes: await getStudentTypes(),
       locations: await getLocations(),
-      programs: (await getPrograms()).sort((a, b) => a.name.localeCompare(b.name)),
+      programs: (await getPrograms(draft)).sort((a, b) => a.name.localeCompare(b.name)),
     },
   };
 }
