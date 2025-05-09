@@ -56,7 +56,7 @@ export async function getStaticProps(context) {
   return {
     props: {
       draft: draft,
-      programs: [...programs, ...degrees],
+      programs: [...programs, ...degrees].sort((a, b) => a.name.localeCompare(b.name)),
       types: [...programTypes, ...degreeTypes],
     },
   };
