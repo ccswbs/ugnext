@@ -5,12 +5,6 @@ import { useMemo, useState } from "react";
 import { Select } from "@/components/select";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import {
-  getUndergraduatePrograms,
-  getUndergraduateStudentTypes,
-  getUndergraduateAdmissionLocations,
-  getUndergraduateDegrees,
-} from "@/data/yaml/programs/undergraduate";
 import { nameAndTagSearch } from "@/lib/use-search";
 import { Button } from "@/components/button";
 import { useRouter } from "next/router";
@@ -21,29 +15,18 @@ import {
   faMapLocationDot,
   faCalendarDays,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { getLocations, getPrograms, getStudentTypes } from "@/data/drupal/programs/undergraduate/requirements";
+import { isDraft } from "@/lib/is-draft";
 
-export async function getStaticProps() {
-  const degrees = (await getUndergraduateDegrees()).map((degree) => ({ ...degree, types: [degree.type] }));
-  const programs = await getUndergraduatePrograms();
+export async function getStaticProps(context) {
+  const draft = isDraft(context);
 
   return {
     props: {
-      studentTypes: await getUndergraduateStudentTypes(),
-      locations: await getUndergraduateAdmissionLocations(),
-      programs: [...programs, ...degrees]
-        .filter((program) => {
-          const allowedTypes = new Set(["major", "bachelor"]);
-          return program.types.some((type) => allowedTypes.has(type.id));
-        })
-        .map((program) => {
-          // Remove any data we don't need for the filter
-          return {
-            id: program.id,
-            name: program.name,
-            tags: program.tags,
-          };
-        })
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      draft: draft,
+      studentTypes: await getStudentTypes(),
+      locations: await getLocations(),
+      programs: (await getPrograms(draft)).sort((a, b) => a.name.localeCompare(b.name)),
     },
   };
 }
@@ -107,13 +90,11 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                     </Heading>
                   }
                   options={[
-                    ...locations
-                      .filter((location) => location.type === "domestic")
-                      .map((location) => ({
-                        label: location.name,
-                        value: location,
-                        key: location.id,
-                      })),
+                    ...locations.domestic.map((location) => ({
+                      label: location.name,
+                      value: location,
+                      key: location.id,
+                    })),
                     {
                       label: "Outside of Canada",
                       value: "international",
@@ -153,13 +134,11 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                         I study/studied in
                       </Heading>
                     }
-                    options={locations
-                      .filter((location) => location.type === "international")
-                      .map((location) => ({
-                        label: location.name,
-                        value: location,
-                        key: location.id,
-                      }))}
+                    options={locations.international.map((location) => ({
+                      label: location.name,
+                      value: location,
+                      key: location.id,
+                    }))}
                     onChange={(selection) => {
                       setSelectedLocation(selection?.value);
                     }}
@@ -173,13 +152,11 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                         My curriculum of study is/was
                       </Heading>
                     }
-                    options={locations
-                      .filter((location) => location.type === "curriculum")
-                      .map((location) => ({
-                        label: location.name,
-                        value: location,
-                        key: location.id,
-                      }))}
+                    options={locations.curriculum.map((location) => ({
+                      label: location.name,
+                      value: location,
+                      key: location.id,
+                    }))}
                     onChange={(selection) => {
                       setSelectedLocation(selection?.value);
                     }}
