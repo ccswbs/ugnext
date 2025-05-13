@@ -2,7 +2,7 @@ query SpotlightHero($status: Boolean = null) {
   spotlightRevisions(pageSize: 1, filter: { rank: ["1"], status: $status }) {
     results {
       ... on NodeSpotlight {
-        id
+        id: uuid
         caption
         captionAlignment
         thumbnailImageCrop

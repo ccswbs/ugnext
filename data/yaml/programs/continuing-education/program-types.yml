@@ -9,3 +9,6 @@
 
 - id: diploma
   name: Diploma
+
+- id: micro-credential
+  name: Micro-Credential
