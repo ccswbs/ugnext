@@ -5,59 +5,40 @@ import { HtmlParser } from "@/components/html-parser";
 import { UnstyledLink } from "@/components/link";
 import { tv } from "tailwind-variants";
 
-const getTitle = (data) => {
-  return data?.formattedTitle ? data.formattedTitle.processed : data.link?.title ? data.link.title : "No title entered";
-};
+function getButtonData(data) {
+  const colors = {
+    primary: "red",
+    secondary: "black",
+    info: "blue",
+  };
 
-const getColor = (style) => {
-  switch (style) {
-    case "Primary":
-    case "Primary (Outline)":
-      return "red";
-    case "Secondary":
-    case "Secondary (Outline)":
-      return "black";
-    case "Info":
-    case "Info (Outline)":
-      return "blue";
-    default:
-      return "none";
-  }
-};
-
-const isOutlined = (style) => {
-  return style.includes("Outline");
-};
-
-const getIconColor = (color) => {
-  switch (color) {
-    case "Yellow":
-      return "text-yellow";
-    case "Red":
-      return "text-red";
-    case "Darker Red":
-      return "text-red-900";
-    default:
-      return "";
-  }
-};
+  return {
+    url: data?.link?.url,
+    title: data?.formattedTitle ? data.formattedTitle.processed : data.link?.title ? data.link.title : "",
+    heading: data?.ctaHeading?.processed,
+    color: colors[data?.style?.name?.toLowerCase()?.replace("(outline)", "").trim()] ?? "red",
+    icon: {
+      data: data?.fontAwesomeIcon,
+      color: data?.fontAwesomeIconColour?.name?.toLowerCase()?.replace("darker", "")?.trim(),
+    },
+    outlined: Boolean(data?.style?.name?.includes("Outline")),
+    analytics: data?.ctaAnalyticsGoal
+      ? {
+          goal: data?.ctaAnalyticsGoal?.name,
+          action: data?.ctaAnalyticsGoal?.action,
+        }
+      : null,
+  };
+}
 
 export const Button = ({ column, data }) => {
-  const url = data?.link?.url;
-  const title = getTitle(data);
-  const ctaHeading = data?.ctaHeading?.processed;
-  const icon = data?.fontAwesomeIcon;
-  const style = data?.style?.name;
-  const color = getColor(style);
-  const outlined = isOutlined(style);
-  const analyticsGoal = data?.ctaAnalyticsGoal?.name;
-  const analyticsAction = data?.ctaAnalyticsGoal?.action;
+  const { url, title, heading, color, icon, outlined, analytics } = getButtonData(data);
 
   const classes = tv({
     slots: {
       heading: "block text-black",
       button: "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6",
-      icon: ["pe-3 text-4xl inline-block align-middle", icon],
+      icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
     variants: {
       column: {
@@ -65,7 +46,7 @@ export const Button = ({ column, data }) => {
           button: "md:inline-flex",
         },
         right: "",
-        Secondary: "",
+        secondary: "",
       },
       hasHeading: {
         true: {
@@ -76,55 +57,48 @@ export const Button = ({ column, data }) => {
         },
       },
       iconColor: {
-        Yellow: {
+        yellow: {
           icon: "text-yellow",
         },
-        Red: {
-          icon: "text-red",
-        },
-        DarkerRed: {
+        red: {
           icon: "text-red",
         },
       },
     },
+  })({
+    column: column?.toLowerCase(),
+    hasHeading: !!heading,
+    iconColor: icon.color,
   });
 
-  const {
-    heading: headingClasses,
-    button: buttonClasses,
-    icon: iconClasses,
-  } = classes({
-    column,
-    hasHeading: !!ctaHeading,
-    iconColor: data?.fontAwesomeIconColour?.name,
-  });
-
-  const analyticsGoalHandler = (e) => {
-    if (analyticsGoal && analyticsAction) {
+  const analyticsHandler = (e) => {
+    if (analytics) {
       window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
       window.dataLayer.push({
         event: "customEvent",
-        category: analyticsGoal,
-        action: analyticsAction,
+        category: analytics.goal,
+        action: analytics.action,
       });
     }
   };
 
   return (
     <>
-      {ctaHeading && (
-        <Typography type="h3" as="h2" className={headingClasses()} dangerouslySetInnerHTML={{ __html: ctaHeading }} />
+      {heading && (
+        <Typography type="h3" as="h2" className={classes.heading()}>
+          <HtmlParser html={heading} />
+        </Typography>
       )}
 
       <ButtonComponent
-        className={buttonClasses()}
+        className={classes.button()}
         as={UnstyledLink}
         href={url}
         color={color}
         outlined={outlined}
-        onClick={analyticsGoalHandler}
+        onClick={analyticsHandler}
       >
-        {icon && <i className={iconClasses()}></i>}
+        {icon && <i className={classes.icon()}></i>}
         <HtmlParser html={title} />
       </ButtonComponent>
     </>
