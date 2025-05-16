@@ -9,7 +9,7 @@ export const AdmissionRequirementsSidebar = ({ links = [] }) => {
         More Information
       </Heading>
 
-      <ul className="flex flex-col w-full gap-4">
+      <ul className="flex flex-col w-full gap-4 !list-none">
         {links.map((link, index) => (
           <li key={link.url} className="w-full">
             <Button

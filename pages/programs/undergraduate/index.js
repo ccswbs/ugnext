@@ -3,30 +3,66 @@ import { Container } from "@/components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
 import { ProgramSearch } from "@/components/programs/program-search";
-import {
-  getUndergraduateDegrees,
-  getUndergraduateDegreeTypes,
-  getUndergraduatePrograms,
-  getUndergraduateProgramTypes,
-} from "@/data/yaml/programs/undergraduate";
+import { getDegrees, getDegreeTypes, getPrograms, getProgramTypes } from "@/data/drupal/programs/undergraduate";
+import { isDraft } from "@/lib/is-draft";
 
-export async function getStaticProps() {
-  const degreeTypes = await getUndergraduateDegreeTypes();
-  const degrees = (await getUndergraduateDegrees()).map((degree) => ({ ...degree, types: [degree.type] }));
-  const programTypes = await getUndergraduateProgramTypes();
-  const programs = await getUndergraduatePrograms();
+export async function getStaticProps(context) {
+  const draft = isDraft(context);
+
+  // We process the data from Drupal to match what we had when using YAML, this is just temporary, at some point we should refactor the program search components
+  const degreeTypes = (await getDegreeTypes()).map((type) => ({
+    id: type,
+    name: type,
+  }));
+
+  const degrees = (await getDegrees(draft)).map((degree) => {
+    const value = {
+      ...degree,
+      types: [
+        {
+          id: degree.type,
+          name: degree.type,
+        },
+      ],
+    };
+
+    delete value.type;
+
+    return value;
+  });
+
+  const programTypes = (await getProgramTypes()).map((type) => ({
+    id: type,
+    name: type,
+  }));
+
+  const programs = (await getPrograms(draft)).map((program) => {
+    const value = {
+      ...program,
+      degree: {
+        name: program.degree,
+      },
+      types: program.type.map((type) => ({
+        id: type,
+        name: type,
+      })),
+    };
+
+    delete value.type;
+
+    return value;
+  });
 
   return {
     props: {
-      programs: [...programs, ...degrees]
-        .map((program) => {
-          return { ...program, requirements: null, "alternative-offers": null };
-        })
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      draft: draft,
+      programs: [...programs, ...degrees].sort((a, b) => a.name.localeCompare(b.name)),
       types: [...programTypes, ...degreeTypes],
     },
   };
 }
+
+function ProgramCard({ data }) {}
 
 export default function ProgramsUndergraduate({ programs, types }) {
   return (
@@ -35,7 +71,7 @@ export default function ProgramsUndergraduate({ programs, types }) {
         <Heading level={1}>Undergraduate Programs at the University of Guelph</Heading>
       </Container>
 
-      <ProgramSearch programs={programs} types={types} />
+      <ProgramSearch programs={programs ?? []} types={types ?? []} />
     </Layout>
   );
 }
