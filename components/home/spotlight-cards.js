@@ -6,6 +6,7 @@ export const SpotlightCards = ({ cards }) => (
     {cards.map((card, index) => (
       <Card
         key={card.id}
+        id={`uofg-homepage-spotlight-card-${index + 2}`}
         className={`h-full spotlight-card-rank-${index + 2}`}
         title={<span className="my-auto w-full text-center text-[2.2rem] leading-[3rem] font-bold">{card.title}</span>}
         href={card.url.url}

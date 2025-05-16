@@ -3,6 +3,7 @@ import { twJoin } from "tailwind-merge";
 
 export const SpotlightHero = ({ hero }) => (
   <Hero
+    id={`uofg-homepage-spotlight-hero`}
     variant="spotlight"
     title={<h2 className="mt-0">{hero.title}</h2>}
     image={{
