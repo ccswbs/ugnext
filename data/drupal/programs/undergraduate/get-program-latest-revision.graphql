@@ -4,7 +4,11 @@ query GetProgramLatestPublishedRevision($id: String!, $status: Boolean) {
       ... on NodeUndergraduateProgram {
         name: title
         acronym
-        tags
+        tags {
+          ... on TermUndergraduateProgramSearchTag {
+            name
+          }
+        }
         type {
           ... on TermUndergraduateProgramType {
             name

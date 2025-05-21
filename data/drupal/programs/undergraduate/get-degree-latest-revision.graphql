@@ -4,7 +4,11 @@ query GetDegreeLatestRevision($id: String!, $status: Boolean) {
       ... on NodeUndergraduateDegree {
         name: title
         acronym
-        tags
+        tags {
+          ... on TermUndergraduateProgramSearchTag {
+            name
+          }
+        }
         type {
           ... on TermUndergraduateDegreeType {
             name
