@@ -1,0 +1,22 @@
+query ProgramFromPath($path: String!) {
+  route(path: $path) {
+    ... on RouteInternal {
+      entity {
+        ... on NodeUndergraduateProgram {
+          id
+          name: title
+          url {
+            url
+          }
+        }
+        ... on NodeUndergraduateDegree {
+          id
+          name: title
+          url {
+            url
+          }
+        }
+      }
+    }
+  }
+}

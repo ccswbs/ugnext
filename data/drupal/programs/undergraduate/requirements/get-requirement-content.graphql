@@ -1,0 +1,49 @@
+query GetRequirementContent($id: String!, $status: Boolean) {
+  latestContentRevision(filter: { uuid: $id, status: $status, type: "undergraduate_requirement" }) {
+    results {
+      ... on NodeUndergraduateRequirement {
+        title
+        path
+        type {
+          ... on TermUndergraduateStudentType {
+            name
+          }
+        }
+        location {
+          ... on TermAdmissionLocation {
+            name
+          }
+        }
+        program {
+          ... on NodeUndergraduateProgram {
+            programType: type {
+              ... on TermUndergraduateProgramType {
+                name
+              }
+            }
+          }
+          ... on NodeUndergraduateDegree {
+            degreeType: type {
+              ... on TermUndergraduateDegreeType {
+                name
+              }
+            }
+          }
+        }
+        sections {
+          ... on ParagraphUndergradReqsSection {
+            type {
+              ... on TermUndergradReqSecType {
+                name
+              }
+            }
+            overrides
+            content {
+              processed
+            }
+          }
+        }
+      }
+    }
+  }
+}
