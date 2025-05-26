@@ -12,7 +12,7 @@ import { HomeStory } from "@/components/home/story";
 import { StudyHere } from "@/components/home/study-here";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
-import { useRouter } from "next/router";
+import AppArmor from "@/components/app-armor";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -27,11 +27,13 @@ export async function getStaticProps(context) {
   };
 }
 
-export function HomePage({ cards, hero, loading, forceAppArmorTest = false }) {
+export function HomePage({ cards, hero, loading, appArmorTest = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
     <>
+      <AppArmor test={appArmorTest} />
+
       <Header></Header>
 
       <Layout>

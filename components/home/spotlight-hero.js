@@ -3,7 +3,6 @@ import Image from "next/image";
 import { tv } from "tailwind-variants";
 
 export const SpotlightHero = ({ data }) => {
-  console.log(data);
   const classes = tv({
     slots: {
       hero: "aspect-3/2 w-full",
