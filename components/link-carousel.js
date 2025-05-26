@@ -60,7 +60,7 @@ export const LinkCarousel = ({ links }) => {
             }}
             key={index}
             href={link.url}
-            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-[2.2rem] text-white backdrop-blur-sm transition-colors hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus-visible:outline-hidden"
+            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-[2.2rem] text-white backdrop-blur-sm transition-colors hover:bg-yellow hover:text-black focus:bg-yellow focus:text-black focus-visible:outline-hidden"
           >
             <span>{link.title}</span>
 

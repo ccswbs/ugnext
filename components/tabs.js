@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 
 export const Tabs = ({ fullWidth = true, tabs }) => (
   <TabGroup>
-    <TabList className={twJoin("flex gap-1 border-b-4 border-uog-color-yellow", fullWidth ? "w-full" : "w-fit")}>
+    <TabList className={twJoin("flex gap-1 border-b-4 border-yellow", fullWidth ? "w-full" : "w-fit")}>
       {tabs.map((tab, index) => (
         <Tab
           key={index}
           className={twJoin(
-            "mb-1 rounded-t-sm bg-uog-color-grey-light-bg px-4 py-3 text-lg font-bold text-black transition-colors hover:bg-uog-color-grey-light focus:bg-uog-color-grey-light focus:outline-hidden ui-selected:mb-0 ui-selected:border-2 ui-selected:border-uog-color-yellow ui-selected:bg-uog-color-yellow",
+            "mb-1 rounded-t-sm bg-grey-light-bg px-4 py-3 text-lg font-bold text-black transition-colors hover:bg-grey-light focus:bg-grey-light focus:outline-hidden ui-selected:mb-0 ui-selected:border-2 ui-selected:border-yellow ui-selected:bg-yellow",
             fullWidth && "flex-1"
           )}
         >

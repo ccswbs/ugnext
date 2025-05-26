@@ -63,8 +63,8 @@ export const MediaCaption = ({
           "p-4",
           position === "right" && "col-start-1 row-start-1",
           position === "above" && "flex-1",
-          background === "light-blue" && "bg-uog-color-grey-light-bg",
-          background === "dark-gray" && "bg-uog-color-grey-dark-bg text-uog-color-white",
+          background === "light-blue" && "bg-grey-light-bg",
+          background === "dark-gray" && "bg-grey-dark-bg text-white",
           background === "none" && position === "left" && "py-0 md:px-4",
           background === "none" && position === "right" && "py-0 md:px-4",
           background === "none" && position === "above" && "px-0"

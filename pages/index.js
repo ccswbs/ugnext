@@ -39,28 +39,28 @@ export function HomePage({ cards, hero, forceAppArmorTest = false }) {
         <Divider />
 
         <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+          <Heading level={2} className="text-black">
             Our Latest News and Events
           </Heading>
           <SpotlightCards cards={cards} />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+          <Heading level={2} className="text-black">
             Study Here
           </Heading>
           <StudyHere />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+          <Heading level={2} className="text-black">
             How We Rank Among the World
           </Heading>
           <Rankings />
         </div>
 
         <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+          <Heading level={2} className="text-black">
             Our Three Campuses
           </Heading>
           <ThreeCampuses />
@@ -73,7 +73,5 @@ export function HomePage({ cards, hero, forceAppArmorTest = false }) {
 }
 
 export default function Home({ cards, hero }) {
-  return (
-    <HomePage cards={cards} hero={hero} />
-  );
+  return <HomePage cards={cards} hero={hero} />;
 }

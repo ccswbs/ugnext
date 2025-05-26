@@ -86,13 +86,11 @@ export const Carousel = ({ children, display = 1, loop = "none" }) => {
   };
 
   const buttonClasses = twJoin(
-    "h-full w-16 flex-1 items-center flex justify-center text-3xl sm:text-6xl md:absolute text-uog-color-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black"
+    "h-full w-16 flex-1 items-center flex justify-center text-3xl sm:text-6xl md:absolute text-yellow transition-[transform,color,opacity,visibility] hover:text-black focus-visible:text-black"
   );
 
   return (
-    <div
-      className={twJoin("flex flex-col-reverse relative w-full min-h-28 h-fit", count > visibleItems && "sm:px-16")}
-    >
+    <div className={twJoin("flex flex-col-reverse relative w-full min-h-28 h-fit", count > visibleItems && "sm:px-16")}>
       {count > visibleItems && (
         <div className="flex w-full h-16 pt-8 md:contents">
           <button

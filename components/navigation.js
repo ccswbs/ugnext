@@ -9,14 +9,14 @@ export const Navigation = ({ fullWidth = true, links, label }) => {
   return (
     <nav aria-label={label}>
       <ul
-        className={twJoin("flex flex-col gap-1 border-b-4 border-uog-color-yellow md:flex-row", fullWidth ? "w-full" : "w-fit")}
+        className={twJoin("flex flex-col gap-1 border-b-4 border-yellow md:flex-row", fullWidth ? "w-full" : "w-fit")}
       >
         {links.map((link, index) => (
           <li className="contents" key={index}>
             <a
               aria-current={pathname === link?.href ? "page" : undefined}
               className={twJoin(
-                "mb-1 flex items-center justify-center rounded-t-sm bg-uog-color-grey-light-bg px-4 py-3 text-center text-lg font-bold text-black transition-colors hover:bg-uog-color-grey-light focus:bg-uog-color-grey-light focus:outline-hidden aria-page-current:mb-0 aria-page-current:border-2 aria-page-current:border-uog-color-yellow aria-page-current:bg-uog-color-yellow aria-page-current:order-last sm:aria-page-current:order-none",
+                "mb-1 flex items-center justify-center rounded-t-sm bg-grey-light-bg px-4 py-3 text-center text-lg font-bold text-black transition-colors hover:bg-grey-light focus:bg-grey-light focus:outline-hidden aria-page-current:mb-0 aria-page-current:border-2 aria-page-current:border-yellow aria-page-current:bg-yellow aria-page-current:order-last sm:aria-page-current:order-none",
                 fullWidth && "flex-1"
               )}
               href={link?.href}

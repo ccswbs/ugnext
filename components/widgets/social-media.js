@@ -21,12 +21,12 @@ export const SocialMedia = ({ data }) => {
               href={url}
               aria-label={`${altText ? altText : value} on ${name}`}
               className={twJoin(
-                "aspect-square bg-transparent focus:text-uog-color-white hover:text-uog-color-white size-11 text-4xl text-uog-color-black flex items-center justify-center",
+                "aspect-square bg-transparent focus:text-white hover:text-white size-11 text-4xl text-black flex items-center justify-center",
                 name === "Facebook" && "focus:bg-facebook-color-blue hover:bg-facebook-color-blue",
                 name === "Instagram" && "focus:bg-instagram-color-pink hover:bg-instagram-color-pink",
                 name === "LinkedIn" && "focus:bg-linkedin-color-blue hover:bg-linkedin-color-blue",
-                name === "TikTok" && "focus:bg-uog-color-black hover:bg-uog-color-black",
-                name === "X" && "focus:bg-uog-color-black hover:bg-uog-color-black",
+                name === "TikTok" && "focus:bg-black hover:bg-black",
+                name === "X" && "focus:bg-black hover:bg-black",
                 name === "Youtube" && "focus:bg-youtube-color-red hover:bg-youtube-color-red"
               )}
             >
