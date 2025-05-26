@@ -1,7 +1,6 @@
 import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
-import { Divider } from "@/components/divider";
-import { Heading } from "@/components/heading";
+import { Container } from "@uoguelph/react-components/container";
+import { Typography } from "@uoguelph/react-components/typography";
 import { SpotlightCards } from "@/components/home/spotlight-cards";
 import { TagLine } from "@/components/home/tag-line";
 import { Rankings } from "@/components/home/rankings";
@@ -30,41 +29,37 @@ export function HomePage({ cards, hero, forceAppArmorTest = false }) {
 
   return (
     <Layout>
-      <div className="flex flex-col flex-col-reverse">
+      <div className="flex flex-col-reverse">
         <TagLine />
-        {hero && <SpotlightHero hero={hero} />}
+        {hero && <SpotlightHero data={hero} />}
       </div>
 
-      <Container centered>
-        <Divider />
+      <Container>
+        <Typography className="text-black!" type="h2" as="h2">
+          Our Latest News and Events
+        </Typography>
+        <SpotlightCards cards={cards} />
+      </Container>
 
-        <div className={containerClasses}>
-          <Heading level={2} className="text-black">
-            Our Latest News and Events
-          </Heading>
-          <SpotlightCards cards={cards} />
-        </div>
+      <Container className={containerClasses}>
+        <Typography className="text-black!" type="h2" as="h2">
+          Study Here
+        </Typography>
+        <StudyHere />
+      </Container>
 
-        <div className={containerClasses}>
-          <Heading level={2} className="text-black">
-            Study Here
-          </Heading>
-          <StudyHere />
-        </div>
+      <Container className={containerClasses}>
+        <Typography className="text-black!" type="h2" as="h2">
+          How We Rank Among the World
+        </Typography>
+        <Rankings />
+      </Container>
 
-        <div className={containerClasses}>
-          <Heading level={2} className="text-black">
-            How We Rank Among the World
-          </Heading>
-          <Rankings />
-        </div>
-
-        <div className={containerClasses}>
-          <Heading level={2} className="text-black">
-            Our Three Campuses
-          </Heading>
-          <ThreeCampuses />
-        </div>
+      <Container className={containerClasses}>
+        <Typography className="text-black!" type="h2" as="h2">
+          Our Three Campuses
+        </Typography>
+        <ThreeCampuses />
       </Container>
 
       <HomeStory />

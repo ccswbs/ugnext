@@ -1,28 +1,43 @@
-import { Hero } from "@/components/hero";
-import { twJoin } from "tailwind-merge";
+import { Hero, HeroCaption, HeroLink, HeroTitle } from "@uoguelph/react-components/hero";
+import Image from "next/image";
+import { tv } from "tailwind-variants";
 
-export const SpotlightHero = ({ hero }) => (
-  <Hero
-    id={`uofg-homepage-spotlight-hero`}
-    variant="spotlight"
-    title={<h2 className="mt-0">{hero.title}</h2>}
-    image={{
-      src: hero.image.image.url,
-      alt: hero.image.image.alt,
-      width: hero.image.image.width,
-      height: hero.image.image.height,
-      className: twJoin(
-        "aspect-3/2 w-full",
-        hero.thumbnailImageCrop === "right" && "object-right",
-        hero.thumbnailImageCrop === "left" && "object-left",
-        (hero.thumbnailImageCrop === "center" || !hero.thumbnailImageCrop) && "object-center"
-      ),
-    }}
-    caption={hero.caption}
-    button={{
-      body: hero.url.title,
-      href: hero.url.url,
-    }}
-    alignment={hero.captionAlignment}
-  />
-);
+export const SpotlightHero = ({ data }) => {
+  console.log(data);
+  const classes = tv({
+    slots: {
+      hero: "aspect-3/2 w-full",
+      title: "mt-0!",
+    },
+    variants: {
+      thumbnailImageCrop: {
+        left: { hero: "object-left" },
+        right: { hero: "object-right" },
+        center: { hero: "object-center" },
+      },
+    },
+  });
+
+  const { hero, title } = classes({
+    thumbnailImageCrop: data.thumbnailImageCrop ?? "center",
+  });
+
+  return (
+    <Hero
+      variant="spotlight"
+      src={data.image.image.url}
+      alt={data.image.image.alt}
+      width={data.image.image.width}
+      height={data.image.image.height}
+      as={Image}
+      alignment={data.captionAlignment ?? "left"}
+      className={hero()}
+    >
+      <HeroTitle as="h2" className={title()}>
+        {data.title}
+      </HeroTitle>
+      <HeroCaption>{data.caption}</HeroCaption>
+      <HeroLink href={data.url.url}>{data.url.title}</HeroLink>
+    </Hero>
+  );
+};

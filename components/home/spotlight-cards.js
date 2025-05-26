@@ -1,25 +1,39 @@
-import { Card } from "@/components/card";
-import { twJoin } from "tailwind-merge";
+import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
+import { UnstyledLink } from "@/components/link";
+import Image from "next/image";
+import { tv } from "tailwind-variants";
 
-export const SpotlightCards = ({ cards }) => (
-  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-    {cards.map((card, index) => (
-      <Card
-        key={card.id}
-        id={`uofg-homepage-spotlight-card-${index + 2}`}
-        className={`h-full spotlight-card-rank-${index + 2}`}
-        title={<span className="my-auto w-full text-center text-[2.2rem] leading-12 font-bold">{card.title}</span>}
-        href={card.url.url}
-        centered
-        image={{
-          src: card.image.url,
-          alt: card.image.alt,
-          width: card.image.width,
-          height: card.image.height,
-          className: "aspect-3/2 w-full",
-          sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
-        }}
-      />
-    ))}
-  </div>
-);
+export const SpotlightCards = ({ cards }) => {
+  const classes = tv({
+    slots: {
+      container: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
+      card: "h-full",
+      image: "aspect-3/2 w-full",
+      content: "flex-1",
+      title: "text-[2.25rem]! font-bold text-center",
+    },
+  });
+
+  const { container, card, image, content, title } = classes();
+
+  return (
+    <div className={container()}>
+      {cards.map((data, index) => (
+        <Card key={data.id} as={UnstyledLink} href={data.url.url} className={card()} centered>
+          <CardImage
+            src={data.image.url}
+            alt={data.image.alt}
+            width={data.image.width}
+            height={data.image.height}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className={image()}
+            as={Image}
+          />
+          <CardContent className={content()}>
+            <CardTitle className={title()}>{data.title}</CardTitle>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+};

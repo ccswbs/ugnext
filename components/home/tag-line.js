@@ -1,12 +1,15 @@
-import { Heading } from "@/components/heading";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Container } from "@uoguelph/react-components/container";
+import { Divider } from "@uoguelph/react-components/divider";
 
 export const TagLine = () => (
-  <>
-    <div className="flex flex-col py-4">
-      <Heading level={1} className="mt-16 text-center">
-        University of Guelph, Ontario, Canada
-      </Heading>
-      <span className="mt-2 text-center text-2xl">Improve Life</span>
-    </div>
-  </>
+  <Container className="flex flex-col py-4 items-center justify-center">
+    <Typography type="h1" className="text-center!">
+      University of Guelph, Ontario, Canada
+    </Typography>
+
+    <span className="mt-9 mb-6 text-center text-2xl">Improve Life</span>
+
+    <Divider />
+  </Container>
 );

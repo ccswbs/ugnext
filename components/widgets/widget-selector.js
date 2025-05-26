@@ -1,19 +1,19 @@
-import ConditionalWrap from "conditional-wrap";
-import { useContext } from "react";
-import { Container } from "@/components/container";
-import { SectionContext } from "@/components/section";
 import { Accordions } from "@/components/widgets/accordions";
-import { Block } from "@/components/widgets/block";
 import { ButtonSection } from "@/components/widgets/button-section";
 import { GeneralText } from "@/components/widgets/general-text";
-import { ImageOverlay } from "@/components/widgets/image-overlay";
 import { Links } from "@/components/widgets/links";
 import { MediaText } from "@/components/widgets/media-text";
 import { Section } from "@/components/widgets/section-widget.js";
 import { Statistics } from "@/components/widgets/statistics";
-import { Story } from "@/components/widgets/story";
 import { Tabs } from "@/components/widgets/tabs";
 import { TestimonialSlider } from "@/components/widgets/testimonial-slider";
+import ConditionalWrap from "conditional-wrap";
+import { Container } from "@/components/container";
+import { useContext } from "react";
+import { SectionContext } from "@/components/section";
+import { ImageOverlay } from "@/components/widgets/image-overlay";
+import { Story } from "@/components/widgets/story";
+import { Block } from "@/components/widgets/block";
 
 export const WidgetSelector = ({ data }) => {
   // If this widget is within a section, we don't want to render a container around it
@@ -39,12 +39,12 @@ export const WidgetSelector = ({ data }) => {
 
   const Widget = map[data.__typename];
 
-  return (    
+  return (
     <ConditionalWrap
       condition={!noWrapWidgets.includes(data.__typename) && !context}
       wrap={(children) => <Container centered={true}>{children}</Container>}
     >
-    {Widget && <Widget data={data} />}
+      {Widget && <Widget data={data} />}
     </ConditionalWrap>
   );
 };

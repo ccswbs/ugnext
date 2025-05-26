@@ -1,84 +1,104 @@
 import { twJoin } from "tailwind-merge";
-import { Heading } from "@/components/heading";
-import { Button as ButtonComponent } from "@/components/button";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Button as ButtonComponent } from "@uoguelph/react-components/button";
 import { HtmlParser } from "@/components/html-parser";
+import { UnstyledLink } from "@/components/link";
+import { tv } from "tailwind-variants";
 
-const getTitle = (data) => {
-  return data?.formattedTitle ? data.formattedTitle.processed : data.link?.title ? data.link.title : "No title entered";
-};
+function getButtonData(data) {
+  const colors = {
+    primary: "red",
+    secondary: "black",
+    info: "blue",
+  };
 
-const getColor = (style) => {
-  switch (style) {
-    case "Primary":
-    case "Primary (Outline)":
-      return "red";
-    case "Secondary":
-    case "Secondary (Outline)":
-      return "black";
-    case "Info":
-    case "Info (Outline)":
-      return "blue";
-    default:
-      return "none";
-  }
-};
-
-const isOutlined = (style) => {
-  return style.includes("Outline");
-};
-
-const getIconColor = (color) => {
-  switch (color) {
-    case "Yellow":
-      return "text-yellow";
-    case "Red":
-      return "text-red";
-    case "Darker Red":
-      return "text-red-900";
-    default:
-      return "";
-  }
-};
+  return {
+    url: data?.link?.url,
+    title: data?.formattedTitle ? data.formattedTitle.processed : data.link?.title ? data.link.title : "",
+    heading: data?.ctaHeading?.processed,
+    color: colors[data?.style?.name?.toLowerCase()?.replace("(outline)", "").trim()] ?? "red",
+    icon: {
+      data: data?.fontAwesomeIcon,
+      color: data?.fontAwesomeIconColour?.name?.toLowerCase()?.replace("darker", "")?.trim(),
+    },
+    outlined: Boolean(data?.style?.name?.includes("Outline")),
+    analytics: data?.ctaAnalyticsGoal
+      ? {
+          goal: data?.ctaAnalyticsGoal?.name,
+          action: data?.ctaAnalyticsGoal?.action,
+        }
+      : null,
+  };
+}
 
 export const Button = ({ column, data }) => {
-  const url = data?.link?.url;
-  const title = getTitle(data);
-  const ctaHeading = data?.ctaHeading?.processed;
-  const icon = data?.fontAwesomeIcon;
-  const iconColor = getIconColor(data?.fontAwesomeIconColour?.name);
-  const style = data?.style?.name;
-  const color = getColor(style);
-  const outlined = isOutlined(style);
-  const analyticsGoal = data?.ctaAnalyticsGoal?.name;
-  const analyticsAction = data?.ctaAnalyticsGoal?.action;
+  const { url, title, heading, color, icon, outlined, analytics } = getButtonData(data);
+
+  const classes = tv({
+    slots: {
+      heading: "block text-black",
+      button: "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6",
+      icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
+    },
+    variants: {
+      column: {
+        left: {
+          button: "md:inline-flex",
+        },
+        right: "",
+        secondary: "",
+      },
+      hasHeading: {
+        true: {
+          button: "text-2xl! py-4 px-10",
+        },
+        false: {
+          button: "p-4",
+        },
+      },
+      iconColor: {
+        yellow: {
+          icon: "text-yellow",
+        },
+        red: {
+          icon: "text-red",
+        },
+      },
+    },
+  })({
+    column: column?.toLowerCase(),
+    hasHeading: !!heading,
+    iconColor: icon.color,
+  });
+
+  const analyticsHandler = (e) => {
+    if (analytics) {
+      window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
+      window.dataLayer.push({
+        event: "customEvent",
+        category: analytics.goal,
+        action: analytics.action,
+      });
+    }
+  };
 
   return (
     <>
-      {ctaHeading && (
-        <Heading level={3} as={"h2"} className="block text-black" dangerouslySetInnerHTML={{ __html: ctaHeading }} />
+      {heading && (
+        <Typography type="h3" as="h2" className={classes.heading()}>
+          <HtmlParser html={heading} />
+        </Typography>
       )}
 
       <ButtonComponent
-        className={twJoin(
-          "mb-3 me-3 font-medium flex items-center justify-start gap-x-1 leading-6",
-          ctaHeading ? "text-2xl py-4 px-10" : "p-4",
-          column !== "right" && column !== "Secondary" && "md:inline-flex"
-        )}
+        className={classes.button()}
+        as={UnstyledLink}
         href={url}
         color={color}
         outlined={outlined}
-        onClick={(e) => {
-          if (analyticsGoal && analyticsAction) {
-            window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
-            window.dataLayer.push({
-              event: "customEvent",
-              category: analyticsGoal,
-              action: analyticsAction,
-            });
-          }
-        }}
+        onClick={analyticsHandler}
       >
-        {icon && <i className={twJoin("pe-3 text-4xl inline-block align-middle", icon, iconColor)}></i>}
+        {icon && <i className={classes.icon()}></i>}
         <HtmlParser html={title} />
       </ButtonComponent>
     </>

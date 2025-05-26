@@ -1,12 +1,19 @@
 import React from "react";
-import { Carousel } from "@/components/carousel";
-import { Heading } from "@/components/heading";
-import { Link } from "@/components/link";
+import { Carousel } from "@uoguelph/react-components/carousel";
+import { Typography } from "@uoguelph/react-components/typography";
+import {
+  Blockquote,
+  BlockquoteContent,
+  BlockquoteAuthor,
+  BlockquoteAuthorName,
+  BlockquoteAuthorTitle,
+  BlockquoteAuthorLink,
+} from "@uoguelph/react-components/blockquote";
+import Link from "next/link";
 import { HtmlParser } from "@/components/html-parser";
-import { Container } from "@/components/container";
+import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
-import { MediaCaption } from "@/components/media-caption";
-import { Info } from "@/components/info";
+import { MediaCaption } from "@uoguelph/react-components/media-caption";
 
 export const TestimonialSlider = ({ data }) => {
   let testimonials = [];
@@ -22,10 +29,10 @@ export const TestimonialSlider = ({ data }) => {
 
   return (
     <div className="bg-grey-light-bg">
-      <Container className="px-4 py-14 flex flex-col items-center" centered={true}>
-        <Heading level={2} as="h3" className="mb-12 text-black">
+      <Container className="px-4 py-14 flex flex-col items-center">
+        <Typography type="h2" as="h3" className="mb-12 text-black">
           {data?.title}
-        </Heading>
+        </Typography>
 
         <Carousel loop="jump" display={showMultiple ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
@@ -35,34 +42,34 @@ export const TestimonialSlider = ({ data }) => {
             return (
               <MediaCaption
                 key={testimonial.id}
-                size="medium"
                 position="left"
-                className="h-full"
-                media={
-                  image && {
-                    src: image?.url,
-                    width: image?.width,
-                    height: image?.height,
-                    alt: image?.alt,
-                    className: "rounded-full",
-                  }
-                }
+                size="medium"
+                src={image?.url}
+                width={image?.width}
+                height={image?.height}
+                alt={image?.alt}
+                className="[&_.uofg-media-caption-media]:rounded-full h-full"
+                as="img"
               >
-                <blockquote className="italic text-gray-700 text-xl mt-4 md:mt-0">
-                  <HtmlParser html={testimonial?.body?.processed} />
-                </blockquote>
+                <Blockquote hideQuotationMarks>
+                  <BlockquoteContent className="text-left! uog:text-xl">
+                    <HtmlParser html={testimonial?.body?.processed} />
+                  </BlockquoteContent>
 
-                <Info color="yellow">
-                  <div className="flex flex-col gap-0.5">
-                    <span className="font-bold text-lg">{title}</span>
-                    {testimonial?.description && <span className="text-red text-lg">{testimonial.description}</span>}
-                    {testimonial?.profile && (
-                      <Link className="w-fit py-0 text-lg" href={testimonial.profile.url} color="blue">
-                        {testimonial.profile.title}
-                      </Link>
+                  <BlockquoteAuthor>
+                    <BlockquoteAuthorName>{title}</BlockquoteAuthorName>
+
+                    {testimonial?.description && (
+                      <BlockquoteAuthorTitle>{testimonial.description}</BlockquoteAuthorTitle>
                     )}
-                  </div>
-                </Info>
+
+                    {testimonial?.profile && (
+                      <BlockquoteAuthorLink href={testimonial.profile.url} as={Link}>
+                        {testimonial.profile.title}
+                      </BlockquoteAuthorLink>
+                    )}
+                  </BlockquoteAuthor>
+                </Blockquote>
               </MediaCaption>
             );
           })}
