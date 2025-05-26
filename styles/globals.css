@@ -2,6 +2,12 @@
 @import "@uoguelph/tailwind-theme";
 @plugin '@headlessui/tailwindcss';
 
+@layer base {
+  #__next {
+    @apply min-h-dvh flex flex-col;
+  }
+}
+
 @utility break-auto {
   word-break: auto-phrase;
 }
