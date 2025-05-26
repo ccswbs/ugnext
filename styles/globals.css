@@ -15,7 +15,7 @@
 
   body,
   #__next {
-    @apply flex min-h-full flex-col text-base leading-relaxed;
+    @apply flex min-h-full flex-col text-base text-uog-color-body-copy leading-relaxed;
     font-size: 1.8rem;
   }
 
@@ -23,14 +23,26 @@
     @apply flex-1;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h3, h4, h5, h6 {
+    @apply text-uog-color-black;
+  }
+
+  h2 {
+    @apply text-uog-color-red;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
     line-height: 1.4;
     margin-top: 3rem;
+  }
+
+  h1 {
+    @apply font-serif;
+    margin-bottom: 3rem;
+  }
+
+  h2, h3, h4, h5, h6 {
+    margin-bottom: 1.5rem;
   }
 
   p {
