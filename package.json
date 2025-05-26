@@ -10,24 +10,18 @@
     "static-start": "NEXT_STATIC_OUTPUT=true bunx serve@latest out",
     "analyze": "ANALYZE=true next dev",
     "export": "next build && next export",
-    "format": "prettier -w ./",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "chromatic": "export $(cat .env | xargs) && bunx chromatic"
+    "format": "prettier -w ./"
   },
   "dependencies": {
     "@awesome.me/kit-7993323d0c": "^1.0.8",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
     "@netlify/plugin-nextjs": "^5.9.4",
     "@next/bundle-analyzer": "^14.2.7",
     "@next/third-parties": "^14.2.11",
     "classnames": "^2.5.1",
     "conditional-wrap": "^1.0.2",
     "cross-fetch": "^4.0.0",
-    "fast-blurhash": "^1.1.4",
     "glob": "^11.0.0",
     "nanoid": "5.0.9",
     "next": "^15.1.4",
@@ -45,37 +39,22 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^1.8.0",
     "@headlessui/react": "^2.1.3",
     "@headlessui/tailwindcss": "^0.2.1",
     "@netlify/edge-functions": "^2.11.1",
-    "@storybook/addon-a11y": "^8.4.0",
-    "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/addon-interactions": "^8.2.9",
-    "@storybook/addon-links": "^8.2.9",
-    "@storybook/addon-onboarding": "^8.2.9",
-    "@storybook/addon-themes": "^8.2.9",
-    "@storybook/blocks": "^8.2.9",
-    "@storybook/nextjs": "^8.2.9",
-    "@storybook/react": "^8.2.9",
-    "@storybook/test": "^8.2.9",
     "@types/node": "^22.5.0",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
-    "ajv": "^8.17.1",
-    "ajv-keywords": "^5.1.0",
     "autoprefixer": "^10.4.20",
     "chromatic": "^11.7.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.7",
-    "eslint-plugin-storybook": "^0.8.0",
     "html-to-react": "^1.7.0",
     "postcss": "^8.4.41",
     "prettier": "^3.4.2",
     "prettier-plugin-embed": "^0.4.15",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "stemmer": "^2.0.1",
-    "storybook": "^8.2.9",
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.4.10",
     "terser-webpack-plugin": "^5.3.11",
@@ -83,11 +62,6 @@
     "webpack-graphql-loader": "^1.0.2",
     "yaml": "^2.6.1",
     "yaml-loader": "^0.8.1"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
   },
   "trustedDependencies": [
     "core-js-pure"
