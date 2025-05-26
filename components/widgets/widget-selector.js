@@ -8,7 +8,7 @@ import { Statistics } from "@/components/widgets/statistics";
 import { Tabs } from "@/components/widgets/tabs";
 import { TestimonialSlider } from "@/components/widgets/testimonial-slider";
 import ConditionalWrap from "conditional-wrap";
-import { Container } from "@/components/container";
+import { Container } from "@uoguelph/react-components/container";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
 import { ImageOverlay } from "@/components/widgets/image-overlay";
@@ -42,7 +42,7 @@ export const WidgetSelector = ({ data }) => {
   return (
     <ConditionalWrap
       condition={!noWrapWidgets.includes(data.__typename) && !context}
-      wrap={(children) => <Container centered={true}>{children}</Container>}
+      wrap={(children) => <Container>{children}</Container>}
     >
       {Widget && <Widget data={data} />}
     </ConditionalWrap>
