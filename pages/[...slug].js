@@ -9,6 +9,7 @@ import { Breadcrumbs, BreadcrumbHome, Breadcrumb } from "@uoguelph/react-compone
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Meta } from "@/components/meta";
 
 export async function getStaticPaths() {
   return {
@@ -144,12 +145,15 @@ export default function Page({ content }) {
   const { isFallback } = useRouter();
 
   return (
-    <PageLayout content={content} loading={isFallback}>
-      {content?.image ? <PageWithHero content={content} /> : <PageWithoutHero content={content} />}
+    <>
+      <Meta title={content?.title + "| University of Guelph"} />
+      <PageLayout content={content} loading={isFallback}>
+        {content?.image ? <PageWithHero content={content} /> : <PageWithoutHero content={content} />}
 
-      {content?.widgets?.map((widget, index) => (
-        <WidgetSelector key={index} data={widget} />
-      ))}
-    </PageLayout>
+        {content?.widgets?.map((widget, index) => (
+          <WidgetSelector key={index} data={widget} />
+        ))}
+      </PageLayout>
+    </>
   );
 }

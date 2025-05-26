@@ -6,6 +6,7 @@ import { Link } from "@uoguelph/react-components/link";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Header } from "@uoguelph/react-components/header";
 import { Footer } from "@uoguelph/react-components/footer";
+import { Meta } from "@/components/meta";
 
 export default function NotFound() {
   const [searchLink, setSearchLink] = useState("https://www.uoguelph.ca/search");
@@ -16,9 +17,7 @@ export default function NotFound() {
 
   return (
     <>
-      <Head>
-        <title>HTTP 404 — File not found</title>
-      </Head>
+      <Meta title="404 Not Found | University of Guelph" description="The page you are looking for does not exist." />
 
       <Header></Header>
 
