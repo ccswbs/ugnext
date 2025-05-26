@@ -13,7 +13,7 @@ export const Hero = ({ id, variant = "spotlight", image, video, title, caption, 
     <div className={twJoin("relative flex w-full flex-col overflow-hidden", variant !== "spotlight" && " h-fit")}>
       <Image
         className={twMerge(
-          "aspect-[16/9] w-full object-cover md:aspect-[2.625]",
+          "aspect-video w-full object-cover md:aspect-[2.625]",
           variant === "spotlight" ? "max-h-[80vh] " : "max-h-[calc(85vh-14rem)]",
           image?.className
         )}
@@ -30,7 +30,7 @@ export const Hero = ({ id, variant = "spotlight", image, video, title, caption, 
         <div className="flex items-center lg:container lg:absolute lg:bottom-0 lg:left-1/2 lg:max-w-max-content lg:-translate-x-1/2 lg:p-4">
           <div
             className={twJoin(
-              "flex w-full bg-black p-7 text-white lg:bg-black/80 lg:backdrop-blur",
+              "flex w-full bg-black p-7 text-white lg:bg-black/80 lg:backdrop-blur-sm",
               alignment !== "fullWidth" && "lg:max-w-[50%]",
               alignment === "center" && "mx-auto",
               alignment === "right" && "ml-auto"

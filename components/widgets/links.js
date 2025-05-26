@@ -22,7 +22,7 @@ export const Links = ({ data }) => {
               alt: link.image.image.alt,
               width: link.image.image.width,
               height: link.image.image.height,
-              className: "aspect-[4/3] w-full",
+              className: "aspect-4/3 w-full",
               sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
             }}
           />

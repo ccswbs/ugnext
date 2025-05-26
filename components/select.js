@@ -91,9 +91,9 @@ export const Select = ({
         multiple={multiple}
       >
         {autocomplete ? (
-          <div className="relative flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
+          <div className="relative flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-xs transition-colors group-focus-within:border-blue group-focus-within:outline-hidden ui-open:rounded-b-none ui-open:border-blue">
             <ComboboxInput
-              className="h-6 flex-1 focus:outline-none "
+              className="h-6 flex-1 focus:outline-hidden "
               placeholder={placeholderText}
               displayValue={(option) => labelText}
               onChange={(e) => setQuery(e.target.value)}
@@ -107,7 +107,7 @@ export const Select = ({
             </ButtonTag>
           </div>
         ) : (
-          <ButtonTag className="bg-white flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-colors group-focus-within:border-blue group-focus-within:outline-none ui-open:rounded-b-none ui-open:border-blue">
+          <ButtonTag className="bg-white flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 shadow-xs transition-colors group-focus-within:border-blue group-focus-within:outline-hidden ui-open:rounded-b-none ui-open:border-blue">
             <span className={twJoin("truncate", (!selected || selected?.length === 0) && "text-gray-400")}>
               {labelText ?? placeholderText}
             </span>
@@ -121,11 +121,11 @@ export const Select = ({
 
         <OptionsTag
           transition
-          className="z-10 max-h-[20rem] w-full overflow-auto rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md group-focus-within:border-blue group-focus-within:outline-none ui-open:border-blue md:absolute transition duration-300 ease-out data-[closed]:opacity-0"
+          className="z-10 max-h-80 w-full overflow-auto rounded-b-md border border-t-0 border-gray-300 bg-white shadow-md group-focus-within:border-blue group-focus-within:outline-hidden ui-open:border-blue md:absolute transition duration-300 ease-out data-closed:opacity-0"
         >
           {filteredOptions.map((option, index) => (
             <OptionTag
-              className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ui-active:bg-gray-100"
+              className="relative cursor-pointer select-none border-b border-gray-300 px-4 py-2 text-gray-900 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 focus:outline-hidden ui-active:bg-gray-100"
               key={typeof option?.value === "string" ? option?.value : (option?.key ?? index)}
               value={option}
               disabled={option?.disabled}

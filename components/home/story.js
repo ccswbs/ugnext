@@ -21,7 +21,7 @@ export const HomeStory = () => (
         height: background.height,
         blurred: background.blurDataURL,
         alt: "Student volunteers",
-        className: "h-full w-full object-cover lg:[object-position:left_20px]",
+        className: "h-full w-full object-cover lg:object-[left_20px]",
       }}
       content={
         <Blockquote className="text-white pt-[40px]">

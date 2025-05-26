@@ -28,7 +28,7 @@ export const Button = ({
       type={href ? undefined : type}
       onClick={onClick}
       className={twMerge(
-        "inline-flex items-center justify-center text-lg px-6 py-4 font-medium no-underline shadow-sm transition-colors focus:outline-none",
+        "inline-flex items-center justify-center text-lg px-6 py-4 font-medium no-underline shadow-xs transition-colors focus:outline-hidden",
         !disabled && "cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2",
         outlined &&
           !disabled &&

@@ -17,7 +17,7 @@ export const TextInput = ({ value = "", type = "text", placeholder = "", onInput
     <Field className="flex flex-col gap-0.5">
       {label && <Label>{label}</Label>}
 
-      <div className="bg-white text-input flex rounded-md border border-gray-300 px-4 py-2 transition-colors focus-within:border-blue focus:outline-none">
+      <div className="bg-white text-input flex rounded-md border border-gray-300 px-4 py-2 transition-colors focus-within:border-blue focus:outline-hidden">
         <Input
           ref={ref}
           value={input}
@@ -27,7 +27,7 @@ export const TextInput = ({ value = "", type = "text", placeholder = "", onInput
             setInput(e?.target?.value);
           }}
           {...rest}
-          className="flex-1 focus:outline-none"
+          className="flex-1 focus:outline-hidden"
         />
 
         <button

@@ -24,16 +24,16 @@ export const MediaCaption = ({
         position === "left" &&
           twJoin(
             "md:grid",
-            size === "small" && "grid-cols-[1fr,4fr]",
-            size === "medium" && "grid-cols-[1fr,2fr]",
-            size === "large" && "grid-cols-[1fr,1fr]"
+            size === "small" && "grid-cols-[1fr_4fr]",
+            size === "medium" && "grid-cols-[1fr_2fr]",
+            size === "large" && "grid-cols-[1fr_1fr]"
           ),
         position === "right" &&
           twJoin(
             "md:grid",
-            size === "small" && "grid-cols-[4fr,1fr]",
-            size === "medium" && "grid-cols-[2fr,1fr]",
-            size === "large" && "grid-cols-[1fr,1fr]"
+            size === "small" && "grid-cols-[4fr_1fr]",
+            size === "medium" && "grid-cols-[2fr_1fr]",
+            size === "large" && "grid-cols-[1fr_1fr]"
           ),
         className
       )}
@@ -46,7 +46,7 @@ export const MediaCaption = ({
             width={media.width}
             height={media.height}
             alt={media.alt}
-            placeholder={media.blurred ? "blur" : "empty"}
+            placeholder={media.blurred ? "blur-sm" : "empty"}
             blurDataURL={media.blurred}
             className={twMerge("object-cover w-full", media?.className)}
           />

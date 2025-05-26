@@ -19,7 +19,7 @@ export const Checkbox = ({ checked = false, label, description, color = "red", d
           }}
           disabled={disabled}
           className={twJoin(
-            "group flex size-4 items-center justify-center rounded border bg-white p-3 transition-colors",
+            "group flex size-4 items-center justify-center rounded-sm border bg-white p-3 transition-colors",
             color === "red" &&
               twJoin("focus-visible:ring-red", disabled ? "ui-checked:bg-red/50" : "ui-checked:bg-red"),
             color === "yellow" &&
@@ -40,7 +40,7 @@ export const Checkbox = ({ checked = false, label, description, color = "red", d
               color === "blue" && "text-white",
               color === "green" && "text-white",
               color === "gray" && "text-black",
-              disabled ? "group-data-[checked]:opacity-70" : "group-data-[checked]:opacity-100"
+              disabled ? "group-data-checked:opacity-70" : "group-data-checked:opacity-100"
             )}
             icon={faCheck}
           />

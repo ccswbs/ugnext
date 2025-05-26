@@ -37,7 +37,7 @@ const AppArmor = ({ testing = false }) => {
 
       {alert && !dismissed && (
         <Modal open={show} onClose={() => setShow(false)}>
-          <Container centered className="p-0 !max-w-[80rem]">
+          <Container centered className="p-0 max-w-7xl!">
             <Alert
               title="University of Guelph Alert"
               subtitle={alert.title}

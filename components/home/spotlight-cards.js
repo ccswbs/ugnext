@@ -8,7 +8,7 @@ export const SpotlightCards = ({ cards }) => (
         key={card.id}
         id={`uofg-homepage-spotlight-card-${index + 2}`}
         className={`h-full spotlight-card-rank-${index + 2}`}
-        title={<span className="my-auto w-full text-center text-[2.2rem] leading-[3rem] font-bold">{card.title}</span>}
+        title={<span className="my-auto w-full text-center text-[2.2rem] leading-12 font-bold">{card.title}</span>}
         href={card.url.url}
         centered
         image={{
@@ -16,7 +16,7 @@ export const SpotlightCards = ({ cards }) => (
           alt: card.image.alt,
           width: card.image.width,
           height: card.image.height,
-          className: "aspect-[3/2] w-full",
+          className: "aspect-3/2 w-full",
           sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
         }}
       />

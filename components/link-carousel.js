@@ -45,7 +45,7 @@ export const LinkCarousel = ({ links }) => {
             {activeLink.caption}
           </div>
 
-          <div className="absolute bottom-0 left-0 z-0 hidden h-1/2 w-full bg-gradient-to-t from-black/60 to-black/0 md:block"></div>
+          <div className="absolute bottom-0 left-0 z-0 hidden h-1/2 w-full bg-linear-to-t from-black/60 to-black/0 md:block"></div>
         </>
       )}
 
@@ -60,7 +60,7 @@ export const LinkCarousel = ({ links }) => {
             }}
             key={index}
             href={link.url}
-            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-[2.2rem] text-white backdrop-blur transition-colors hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus-visible:outline-none"
+            className="flex flex-1 items-center justify-between bg-black/60 p-7 text-[2.2rem] text-white backdrop-blur-sm transition-colors hover:bg-uog-color-yellow hover:text-black focus:bg-uog-color-yellow focus:text-black focus-visible:outline-hidden"
           >
             <span>{link.title}</span>
 

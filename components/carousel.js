@@ -91,7 +91,7 @@ export const Carousel = ({ children, display = 1, loop = "none" }) => {
 
   return (
     <div
-      className={twJoin("flex flex-col-reverse relative w-full min-h-[7rem] h-fit", count > visibleItems && "sm:px-16")}
+      className={twJoin("flex flex-col-reverse relative w-full min-h-28 h-fit", count > visibleItems && "sm:px-16")}
     >
       {count > visibleItems && (
         <div className="flex w-full h-16 pt-8 md:contents">
@@ -121,7 +121,7 @@ export const Carousel = ({ children, display = 1, loop = "none" }) => {
       )}
 
       <div
-        className="grid grid-cols-[repeat(var(--items),calc(100%/var(--display)))] w-full flex-1 overflow-x-hidden [&>*]:[grid-row:1]"
+        className="grid grid-cols-[repeat(var(--items),calc(100%/var(--display)))] w-full flex-1 overflow-x-hidden *:row-1"
         style={{ "--display": visibleItems, "--items": count }}
         ref={ref}
       >

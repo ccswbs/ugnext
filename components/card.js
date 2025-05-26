@@ -11,7 +11,7 @@ export const Card = ({ id, href, image, title, footer, className, centered, chil
     <Tag
       id={id}
       className={twMerge(
-        "group flex flex-col justify-center transition duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light-blue focus-visible:ring-offset-2",
+        "group flex flex-col justify-center transition duration-200 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-light-blue focus-visible:ring-offset-2",
         !image && href && "hover:scale-105 focus-visible:scale-105",
         className
       )}

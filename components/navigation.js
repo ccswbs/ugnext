@@ -16,7 +16,7 @@ export const Navigation = ({ fullWidth = true, links, label }) => {
             <a
               aria-current={pathname === link?.href ? "page" : undefined}
               className={twJoin(
-                "mb-1 flex items-center justify-center rounded-t-sm bg-uog-color-grey-light-bg px-4 py-3 text-center text-lg font-bold text-black transition-colors hover:bg-uog-color-grey-light focus:bg-uog-color-grey-light focus:outline-none aria-page-current:mb-0 aria-page-current:border-2 aria-page-current:border-uog-color-yellow aria-page-current:bg-uog-color-yellow aria-page-current:order-last sm:aria-page-current:order-none",
+                "mb-1 flex items-center justify-center rounded-t-sm bg-uog-color-grey-light-bg px-4 py-3 text-center text-lg font-bold text-black transition-colors hover:bg-uog-color-grey-light focus:bg-uog-color-grey-light focus:outline-hidden aria-page-current:mb-0 aria-page-current:border-2 aria-page-current:border-uog-color-yellow aria-page-current:bg-uog-color-yellow aria-page-current:order-last sm:aria-page-current:order-none",
                 fullWidth && "flex-1"
               )}
               href={link?.href}
