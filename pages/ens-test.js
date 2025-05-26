@@ -1,4 +1,4 @@
-import { HomePage } from "@/pages/index";
+import { HomePage } from "@/components/home/page";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 
 export async function getStaticProps(context) {
@@ -15,7 +15,5 @@ export async function getStaticProps(context) {
 }
 
 export default function EnsTest({ cards, hero }) {
-  return (
-    <HomePage cards={cards} hero={hero} forceAppArmorTest />
-  );
+  return <HomePage cards={cards} hero={hero} appArmorTest />;
 }
