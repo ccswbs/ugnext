@@ -37,7 +37,9 @@ export const SpotlightHero = ({ data }) => {
         {data.title}
       </HeroTitle>
       <HeroCaption>{data.caption}</HeroCaption>
-      <HeroLink href={data.url.url}>{data.url.title}</HeroLink>
+      <HeroLink id="uofg-homepage-spotlight-hero" href={data.url.url}>
+        {data.url.title}
+      </HeroLink>
     </Hero>
   );
 };

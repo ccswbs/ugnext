@@ -44,7 +44,7 @@ export const HomeStory = () => {
           as="a"
           href="https://www.uoguelph.ca/improve-life/"
           color="red"
-          className="py-2! px-4! mx-[.25em] text-2xl!"
+          className="py-2! px-4! mx-[.25em] text-2xl! text-center"
         >
           Improve Life
         </Button>

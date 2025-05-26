@@ -19,7 +19,14 @@ export const SpotlightCards = ({ cards }) => {
   return (
     <div className={container()}>
       {cards.map((data, index) => (
-        <Card key={data.id} as={UnstyledLink} href={data.url.url} className={card()} centered>
+        <Card
+          id={`uofg-homepage-spotlight-card-${index + 2}`}
+          key={data.id}
+          as={UnstyledLink}
+          href={data.url.url}
+          className={card()}
+          centered
+        >
           <CardImage
             src={data.image.url}
             alt={data.image.alt}

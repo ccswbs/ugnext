@@ -1,4 +1,6 @@
-import { Layout } from "@/components/layout";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
+import { Header } from "@uoguelph/react-components/header";
+import { Footer } from "@uoguelph/react-components/footer";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { SpotlightCards } from "@/components/home/spotlight-cards";
@@ -10,6 +12,7 @@ import { HomeStory } from "@/components/home/story";
 import { StudyHere } from "@/components/home/study-here";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
+import { useRouter } from "next/router";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -24,46 +27,54 @@ export async function getStaticProps(context) {
   };
 }
 
-export function HomePage({ cards, hero, forceAppArmorTest = false }) {
+export function HomePage({ cards, hero, loading, forceAppArmorTest = false }) {
   const containerClasses = twJoin("pt-6");
 
   return (
-    <Layout>
-      <div className="flex flex-col-reverse">
-        <TagLine />
-        {hero && <SpotlightHero data={hero} />}
-      </div>
+    <>
+      <Header></Header>
 
-      <Container>
-        <Typography className="text-black!" type="h2" as="h2">
-          Our Latest News and Events
-        </Typography>
-        <SpotlightCards cards={cards} />
-      </Container>
+      <Layout>
+        <LayoutContent container={false}>
+          <div className="flex flex-col-reverse">
+            <TagLine />
+            {hero && <SpotlightHero data={hero} />}
+          </div>
 
-      <Container className={containerClasses}>
-        <Typography className="text-black!" type="h2" as="h2">
-          Study Here
-        </Typography>
-        <StudyHere />
-      </Container>
+          <Container>
+            <Typography className="text-black!" type="h2" as="h2">
+              Our Latest News and Events
+            </Typography>
+            <SpotlightCards cards={cards} />
+          </Container>
 
-      <Container className={containerClasses}>
-        <Typography className="text-black!" type="h2" as="h2">
-          How We Rank Among the World
-        </Typography>
-        <Rankings />
-      </Container>
+          <Container className={containerClasses}>
+            <Typography className="text-black!" type="h2" as="h2">
+              Study Here
+            </Typography>
+            <StudyHere />
+          </Container>
 
-      <Container className={containerClasses}>
-        <Typography className="text-black!" type="h2" as="h2">
-          Our Three Campuses
-        </Typography>
-        <ThreeCampuses />
-      </Container>
+          <Container className={containerClasses}>
+            <Typography className="text-black!" type="h2" as="h2">
+              How We Rank Among the World
+            </Typography>
+            <Rankings />
+          </Container>
 
-      <HomeStory />
-    </Layout>
+          <Container className={containerClasses}>
+            <Typography className="text-black!" type="h2" as="h2">
+              Our Three Campuses
+            </Typography>
+            <ThreeCampuses />
+          </Container>
+
+          <HomeStory />
+        </LayoutContent>
+      </Layout>
+
+      <Footer></Footer>
+    </>
   );
 }
 
