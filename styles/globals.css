@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "@uoguelph/tailwind-theme";
+@plugin '@headlessui/tailwindcss';
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
