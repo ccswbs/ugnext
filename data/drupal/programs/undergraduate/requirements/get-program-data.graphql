@@ -6,12 +6,20 @@ query GetProgramDegreeLatestPublishedRevision($id: String!, $status: Boolean = n
       ... on NodeUndergraduateProgram {
         name: title
         path
-        tags
+        tags {
+          ... on TermUndergraduateProgramSearchTag {
+            name
+          }
+        }
       }
       ... on NodeUndergraduateDegree {
         name: title
         path
-        tags
+        tags {
+          ... on TermUndergraduateProgramSearchTag {
+            name
+          }
+        }
       }
     }
   }
