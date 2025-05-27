@@ -89,7 +89,7 @@ export async function getPrograms(draft = false) {
     return {
       id: result.path.replace(PROGRAM_BASE_PATH, ""),
       name: result.name,
-      tags: result.tags ?? [],
+      tags: result.tags?.map((tag) => tag.name) ?? [],
     };
   });
 
