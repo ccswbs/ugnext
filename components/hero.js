@@ -8,7 +8,7 @@ import { EmbeddedVideo } from "@/components/embedded-video";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
-export const Hero = ({ variant = "spotlight", image, video, title, caption, button, alignment }) => {
+export const Hero = ({ id, variant = "spotlight", image, video, title, caption, button, alignment }) => {
   return (
     <div className={twJoin("relative flex w-full flex-col overflow-hidden", variant !== "spotlight" && " h-fit")}>
       <Image
@@ -51,6 +51,7 @@ export const Hero = ({ variant = "spotlight", image, video, title, caption, butt
               {caption && <span className="text-xl">{caption}</span>}
               {button && (
                 <Button
+                  id={id}
                   color="yellow"
                   href={button?.href}
                   className={twJoin(

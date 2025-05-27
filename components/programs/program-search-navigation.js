@@ -8,7 +8,7 @@ export const ProgramSearchNavigation = () => {
         { href: "/programs/undergraduate", label: "Undergraduate Programs" },
         { href: "/programs/graduate", label: "Graduate Programs" },
         { href: "/programs/certificate-and-diploma", label: "Certificate and Diplomas" },
-        { href: "/programs/continuing-education", label: "Continuing Education" },
+        { href: "/programs/continuing-education", label: "Pre & Post University" },
       ]}
     />
   );
