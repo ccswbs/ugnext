@@ -143,10 +143,11 @@ function PageWithoutHero({ content }) {
 
 export default function Page({ content }) {
   const { isFallback } = useRouter();
+  const title = " | University of Guelph";
 
   return (
     <>
-      <Meta title={content?.title + "| University of Guelph"} />
+      <Meta title={isFallback ? "Loading..." + title : content?.title + title} />
       <PageLayout content={content} loading={isFallback}>
         {content?.image ? <PageWithHero content={content} /> : <PageWithoutHero content={content} />}
 

@@ -1,11 +1,12 @@
 import { Fragment, useMemo } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
-import { Link } from "@/components/link";
-import { Heading } from "@/components/heading";
+import { Link } from "@uoguelph/react-components/link";
+import { Contact, ContactTitle, ContactName, ContactPhone, ContactEmail } from "@uoguelph/react-components/contact";
 import { List, ListItem } from "@/components/list";
-import { Divider } from "@/components/divider";
-import { getHeadingLevel } from "@/lib/string-utils";
-import { Button } from "@/components/button";
+import { Divider } from "@uoguelph/react-components/divider";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Button } from "@uoguelph/react-components/button";
+import { Info } from "@uoguelph/react-components/info";
 import Image from "next/image";
 import Script from "next/script";
 import PropTypes from "prop-types";
@@ -16,20 +17,58 @@ const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
 const parser = new Parser();
 export const DEFAULT_PROCESSOR = new ProcessNodeDefinitions().processDefaultNode;
 export const DEFAULT_INSTRUCTIONS = [
+  // vcard
+  {
+    shouldProcessNode: (node) => node.attribs?.class?.includes("vcard"),
+    processNode: (node, children) => {
+      const name = node.children[0].children[0].data;
+      const title = node?.children[2]?.data;
+      const phone = node?.children?.find((child) => child.attribs?.href?.includes("tel:"));
+      const number = phone?.children?.[0]?.data;
+      const extension = phone?.next?.data?.replaceAll(/[^0-9]/g, "");
+      const email = node?.children?.find((child) => child.attribs?.href?.includes("mailto:"))?.children[0]?.data;
+
+      return (
+        <Contact className={node.attribs.class}>
+          <ContactName>{name}</ContactName>
+          <ContactTitle>{title}</ContactTitle>
+          <ContactPhone number={number} extension={extension}></ContactPhone>
+          <ContactEmail email={email} />
+        </Contact>
+      );
+    },
+  },
+  // Author
+  {
+    shouldProcessNode: (node) => node.attribs?.class?.includes("author"),
+    processNode: (node, children) => {
+      console.log(children);
+      return (
+        <>
+          <div className="mt-4"></div>
+          <Info>{children.filter((child) => child?.type !== "br")}</Info>
+        </>
+      );
+    },
+  },
   // h1, h2, ... h6 tags
   {
     shouldProcessNode: (node) => headingTags.has(node.tagName),
     processNode: (node, children) => {
-      const level = getHeadingLevel(node.tagName);
-
-      node.attribs.className = node.attribs.class;
-      delete node.attribs.class;
-      delete node?.attribs?.style;
-
       return (
-        <Heading {...node.attribs} level={level}>
+        <Typography className={node.attribs.class} type={node.tagName} as={node.tagName}>
           {children}
-        </Heading>
+        </Typography>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "p",
+    processNode: (node, children) => {
+      return (
+        <Typography className={node.attribs.class} type="body" as="p">
+          {children}
+        </Typography>
       );
     },
   },
@@ -37,10 +76,6 @@ export const DEFAULT_INSTRUCTIONS = [
   {
     shouldProcessNode: (node) => node.tagName === "a" && typeof node.attribs?.href === "string",
     processNode: (node, children) => {
-      node.attribs.className = node.attribs.class;
-      delete node.attribs.class;
-      delete node?.attribs?.style;
-
       // Check if the link is a button by looking for the "btn" class or "btn-*" class
       const isButton = node.attribs.className?.includes("btn");
 
@@ -53,21 +88,28 @@ export const DEFAULT_INSTRUCTIONS = [
           success: "green",
           warning: "yellow",
           danger: "red",
-          light: "gray",
+          light: "yellow",
           dark: "black",
         };
 
         const outlined = node.attribs.className?.includes("btn-outline");
 
         return (
-          <Button {...node.attribs} href={node.attribs?.href ?? ""} color={map[type] ?? "red"} outlined={outlined}>
+          <Button
+            id={node.attribs.id}
+            className={node.attribs.class}
+            href={node.attribs?.href ?? ""}
+            color={map[type] ?? "red"}
+            outlined={outlined}
+            as="a"
+          >
             {children}
           </Button>
         );
       }
 
       return (
-        <Link {...node.attribs} href={node.attribs?.href ?? ""}>
+        <Link id={node.attribs.id} className={node.attribs.class} href={node.attribs?.href ?? ""}>
           {children}
         </Link>
       );
