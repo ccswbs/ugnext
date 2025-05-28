@@ -114,7 +114,7 @@ export default function Page({ content }) {
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
         />
-        <Button href="https://sns-next.netlify.app/ovc/news/archive" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+        <Button href="https://sns-next.netlify.app/ovc/news/archive/april2025" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
           OVC News Archive
         </Button>
       </Container>
