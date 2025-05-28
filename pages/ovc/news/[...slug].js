@@ -39,7 +39,7 @@ export async function getStaticProps(context) {
   // Note: change the legacyNewsItem to legacyNewsRevision for the revision query 
   // Also change the query in the drupal module in get-legacy-news-content.graphql
 
-  legacyNewsItem.menu = await getPageMenu();
+  // legacyNewsItem.menu = await getPageMenu();
 
   // Flatten image prop if doNoDisplay is false
 
