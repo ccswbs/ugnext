@@ -29,7 +29,7 @@ export async function getLocations() {
   let cursor = "";
   let locations = [];
 
-  // We keep looping a while as long as there is an another page
+  // We keep looping a while as long as there is another page
   while (hasNextPage) {
     const { data } = await graphql(getLocationsQuery, {
       after: cursor,
