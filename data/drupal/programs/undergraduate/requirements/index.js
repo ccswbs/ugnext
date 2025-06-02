@@ -172,7 +172,7 @@ export async function getRequirements(studentType, location, program, draft = fa
       sections: requirement.sections.map((section) => ({
         ...section,
         type: section.type.name,
-        content: section.content.processed,
+        content: section?.content?.processed ?? "",
       })),
     }))
     .reduce(
