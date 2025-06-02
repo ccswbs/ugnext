@@ -113,6 +113,8 @@ export async function parseRequirementPageSlug(slug) {
     path: programPath,
   });
 
+  console.log(program?.data?.route?.entity?.type);
+
   return {
     studentType: studentType?.data?.route?.entity?.name ?? null,
     location: location?.data?.route?.entity?.name ?? null,
@@ -121,6 +123,7 @@ export async function parseRequirementPageSlug(slug) {
           id: program?.data?.route?.entity?.id,
           name: program?.data?.route?.entity?.name,
           url: program?.data?.route?.entity?.url?.url ?? "",
+          isCoop: program?.data?.route?.entity?.type?.some((type) => type.name === "Co-op") ?? false,
         }
       : null,
   };
@@ -169,11 +172,26 @@ export async function getRequirements(studentType, location, program, draft = fa
     .map((requirement) => ({
       title: requirement.title,
       path: requirement.path,
-      sections: requirement.sections.map((section) => ({
-        ...section,
-        type: section.type.name,
-        content: section?.content?.processed ?? "",
-      })),
+      sections: requirement.sections.map((section) => {
+        let content = section?.content?.processed ?? "";
+        // We can add some default content here.
+
+        if (section.type.name === "Estimated Cut-off Range") {
+          content +=
+            "<p class='italic'>Estimated cutoff ranges are based on admission averages from previous years and are provided as a point of reference. Exact cut-offs are determined by the quantity and quality of applications received and the space available in the program. Having an average within this range does not guarantee admission.</p>";
+
+          if (program.isCoop) {
+            content +=
+              "<p class='italic'>Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to co-op will be automatically considered for the regular program</p>";
+          }
+        }
+
+        return {
+          ...section,
+          type: section.type.name,
+          content: content,
+        };
+      }),
     }))
     .reduce(
       (acc, requirement) => {
