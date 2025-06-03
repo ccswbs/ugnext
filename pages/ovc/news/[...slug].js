@@ -48,21 +48,7 @@ export async function getStaticProps(context) {
     } else {
       legacyNewsItem.heroImage = null;
     };
-  
 
-  // wrap figcaption and align images - moved to html-parser
-
-  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-left", "float-left mr-4 ml-4");
-  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("align-right", "float-right ml-4 mr-4");
-  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll(
-  //   "<figcaption",
-  //   '<figcaption class="px-5 text-lg font-semibold"'
-  // );
-  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll(
-  //   '<figure role="group" class="',
-  //   '<figure role="group" class="w-1/3 '
-  // );
-  // legacyNewsItem.body.processed = legacyNewsItem.body.processed.replaceAll("</figure>", "</figure>");
 
   return {
     props: { legacyNewsItem },
