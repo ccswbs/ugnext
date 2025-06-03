@@ -2,7 +2,7 @@ import { Fragment, useMemo } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
 import { Link } from "@uoguelph/react-components/link";
 import { Contact, ContactTitle, ContactName, ContactPhone, ContactEmail } from "@uoguelph/react-components/contact";
-import { List, ListItem } from "@/components/list";
+import { List, ListItem } from "@uoguelph/react-components/list";
 import { Divider } from "@uoguelph/react-components/divider";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Button } from "@uoguelph/react-components/button";
@@ -119,12 +119,8 @@ export const DEFAULT_INSTRUCTIONS = [
   {
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, children) => {
-      node.attribs.className = node.attribs.class;
-      delete node.attribs.class;
-      delete node?.attribs?.style;
-
       return (
-        <List {...node.attribs} variant={node.tagName === "ol" ? "ordered" : "unordered"}>
+        <List className={node.attribs.class} as={node.tagName}>
           {children
             .filter((child) => child.type === "li")
             .map((child, index) => (
