@@ -73,7 +73,9 @@ export default function UndergraduateAdmissionRequirements({ draft, studentType,
                 {requirements?.sections?.map((section) => (
                   <>
                     <Heading level={2}>{section.title}</Heading>
-                    <WidgetSelector data={section.content} />
+                    {section.content?.map((content) => (
+                      <WidgetSelector key={content.id} data={content} />
+                    ))}
                   </>
                 ))}
               </div>
