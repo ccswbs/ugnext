@@ -1,3 +1,47 @@
+fragment Accordion on ParagraphAccordionSection {
+  __typename
+  id
+  headingLevel
+  accordionSectionTitle: title
+  items {
+    ... on ParagraphAccordionBlock {
+      headingLevel
+      accordionTitle: title
+      text {
+        processed
+      }
+    }
+  }
+  sectionColumn {
+    ...SectionColumn
+  }
+}
+
+fragment Block on ParagraphBlockWidget {
+  __typename
+  sectionColumn {
+    ...SectionColumn
+  }
+  block {
+    __typename
+    ...BasicBlock
+    ...WidgetBlock
+    ...YamlBlock
+  }
+  id
+}
+
+fragment GeneralText on ParagraphGeneralText {
+  __typename
+  id
+  sectionColumn {
+    ...SectionColumn
+  }
+  body {
+    processed
+  }
+}
+
 query GetRequirementContent($id: String!, $status: Boolean) {
   latestContentRevision(filter: { uuid: $id, status: $status, type: "undergraduate_requirement" }) {
     results {
@@ -39,7 +83,7 @@ query GetRequirementContent($id: String!, $status: Boolean) {
             }
             overrides
             content {
-              processed
+              __typename
             }
           }
         }

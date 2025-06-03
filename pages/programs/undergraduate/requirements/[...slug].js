@@ -15,9 +15,9 @@ import {
   faMapLocationDot,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { Fragment } from "react";
-import { HtmlParser } from "@/components/html-parser";
 import { isDraft } from "@/lib/is-draft";
-import { Link, UnstyledLink } from "@/components/link";
+import { Link } from "@/components/link";
+import { WidgetSelector } from "@/components/widgets/widget-selector";
 
 export async function getStaticPaths() {
   return {
@@ -73,7 +73,7 @@ export default function UndergraduateAdmissionRequirements({ draft, studentType,
                 {requirements?.sections?.map((section) => (
                   <>
                     <Heading level={2}>{section.title}</Heading>
-                    <HtmlParser html={section.content} />
+                    <WidgetSelector data={section.content} />
                   </>
                 ))}
               </div>
