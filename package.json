@@ -35,12 +35,12 @@
     "slick-carousel": "^1.8.1",
     "use-resize-observer": "^9.1.0",
     "uuid": "^11.1.0",
-    "zod": "^3.25.48"
+    "zod": "^3.25.49"
   },
   "devDependencies": {
     "@headlessui/react": "^2.2.4",
     "@headlessui/tailwindcss": "^0.2.2",
-    "@netlify/edge-functions": "^2.12.0",
+    "@netlify/edge-functions": "^2.14.1",
     "@next/bundle-analyzer": "^15.3.3",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/node": "^22.15.29",
