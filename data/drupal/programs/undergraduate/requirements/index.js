@@ -174,23 +174,10 @@ export async function getRequirements(studentType, location, program, draft = fa
       title: requirement.title,
       path: requirement.path,
       sections: requirement.sections.map((section) => {
-        let content = section?.content?.processed ?? "";
-        // We can add some default content here.
-
-        if (section.type.name === "Estimated Cut-off Range") {
-          content +=
-            "<p class='italic'>Estimated cutoff ranges are based on admission averages from previous years and are provided as a point of reference. Exact cut-offs are determined by the quantity and quality of applications received and the space available in the program. Having an average within this range does not guarantee admission.</p>";
-
-          if (program.isCoop) {
-            content +=
-              "<p class='italic'>Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to co-op will be automatically considered for the regular program</p>";
-          }
-        }
-
         return {
           ...section,
           type: section.type.name,
-          content: content,
+          content: section?.content ?? [],
         };
       }),
     }))
