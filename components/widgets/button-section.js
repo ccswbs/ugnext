@@ -47,7 +47,7 @@ export const Button = ({ column, data }) => {
         },
         right: "",
         secondary: {
-          button: "w-full",
+          button: "w-full mx-0",
         },
       },
       hasHeading: {
