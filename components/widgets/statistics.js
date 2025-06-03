@@ -1,30 +1,42 @@
-import { Statistics as StatisticsComponent } from "@/components/statistics";
+import {
+  Statistics as StatisticsComponent,
+  StatisticsItem,
+  StatisticsItemImage,
+  StatisticsItemValue,
+  StatisticsItemRepresents,
+} from "@uoguelph/react-components/statistics";
 import { HtmlParser } from "@/components/html-parser";
-import { twJoin } from "tailwind-merge";
+import Image from "next/image";
 
-export const Statistics = ({ data }) => (
-  <StatisticsComponent
-    data={data?.content.map((statistic) => {
-      const image = statistic?.image?.image;
+export function Statistics({ data }) {
+  const variant = data?.style?.name
+    ?.toLowerCase()
+    .replace(/\s/g, "-")
+    .replace("colour", "color")
+    .replace("gradient-of-solid-colors", "solid-colors-full")
+    .replace("light-blue", "light-grey");
 
-      return {
-        image: image
-          ? {
-              src: image.url,
-              width: image.width,
-              height: image.height,
-              alt: image.alt,
-            }
-          : undefined,
-        value: (
-          <div className="flex flex-col gap-3">
-            {statistic?.fontAwesomeIcon && <i className={twJoin(statistic.fontAwesomeIcon, "fa-2x")}></i>}
-            <span>{statistic.value}</span>
-          </div>
-        ),
-        represents: <HtmlParser html={statistic.represents.processed} />,
-      };
-    })}
-    variant={data?.style?.name?.toLowerCase().replace(/\s/g, "-").replace("colour", "color")}
-  />
-);
+  return (
+    <StatisticsComponent variant={variant}>
+      {data?.content.map((statistic, index) => {
+        return (
+          <StatisticsItem key={index}>
+            <StatisticsItemValue>{statistic?.value}</StatisticsItemValue>
+            <StatisticsItemRepresents>
+              <HtmlParser html={statistic?.represents?.processed} />
+            </StatisticsItemRepresents>
+            {statistic?.image && (
+              <StatisticsItemImage
+                src={statistic.image.image.url}
+                alt={statistic.image.image.alt}
+                width={statistic.image.image.width}
+                height={statistic.image.image.height}
+                as={Image}
+              />
+            )}
+          </StatisticsItem>
+        );
+      })}
+    </StatisticsComponent>
+  );
+}
