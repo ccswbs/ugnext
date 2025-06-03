@@ -37,7 +37,7 @@ export const Button = ({ column, data }) => {
   const classes = tv({
     slots: {
       heading: "block text-black",
-      button: "mb-3 font-medium flex items-center justify-start! gap-x-1 leading-6",
+      button: "mb-3 font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1",
       icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
     variants: {
