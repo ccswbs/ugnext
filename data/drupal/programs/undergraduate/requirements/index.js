@@ -217,8 +217,6 @@ export async function getRequirements(studentType, location, program, draft = fa
 
     const content = requirements.sections[type].map((section) => section.content).flat();
 
-    console.log(content);
-
     if (content && content.length > 0) {
       sections.push({
         title: type,
