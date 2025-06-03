@@ -114,6 +114,7 @@ export async function parseRequirementPageSlug(slug) {
   });
 
   console.log(program?.data?.route?.entity?.type);
+  const url = program?.data?.route?.entity?.url?.url;
 
   return {
     studentType: studentType?.data?.route?.entity?.name ?? null,
@@ -122,7 +123,7 @@ export async function parseRequirementPageSlug(slug) {
       ? {
           id: program?.data?.route?.entity?.id,
           name: program?.data?.route?.entity?.name,
-          url: program?.data?.route?.entity?.url?.url ?? "",
+          url: url ? (url?.startsWith("http") ? url : `https://uoguelph.ca${url}`) : "",
           isCoop: program?.data?.route?.entity?.type?.some((type) => type.name === "Co-op") ?? false,
         }
       : null,

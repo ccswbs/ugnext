@@ -36,7 +36,11 @@ export async function getDegrees(draft = false) {
     return {
       ...result,
       __typename: "undergraduate-degree",
-      url: result.url?.url ?? "",
+      url: result.url?.url
+        ? result.url.url?.startsWith("http")
+          ? result.url.url
+          : `https://uoguelph.ca${result.url.url}`
+        : "",
       type: result.type?.name ?? null,
       tags: result.tags?.map((tag) => tag.name) ?? [],
     };
@@ -76,7 +80,11 @@ export async function getPrograms(draft = false) {
     return {
       ...result,
       __typename: "undergraduate-program",
-      url: result.url?.url ?? "",
+      url: result.url?.url
+        ? result.url.url?.startsWith("http")
+          ? result.url.url
+          : `https://uoguelph.ca${result.url.url}`
+        : "",
       type: result.type?.map((type) => type.name) ?? [],
       degree: result.degree?.name ?? null,
       tags: result.tags?.map((tag) => tag.name) ?? [],
