@@ -29,7 +29,7 @@ export async function getStaticProps(context) {
   //  format the date created for each atricle
   content?.legacyNewsList.map((legacyNews) => {
     legacyNews.articleDate = FormatDateFull(legacyNews.created.time);
-    legacyNews.path = "/ovc/news/archive" + legacyNews.path;
+    legacyNews.path = "/ovc/news/archive/april2025" + legacyNews.path;
   });
   // Flatten image prop
   content.image = content?.image?.image ?? null;
