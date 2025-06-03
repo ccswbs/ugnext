@@ -1,12 +1,12 @@
 import { HtmlParser } from "@/components/html-parser";
-import { WidgetSelector } from "@/components/widgets/widget-selector";
+import { WidgetBlockSelector } from "@/components/widgets/widget-block-selector";
 
 const BasicBlock = ({ data }) => {
   return <HtmlParser key={data.id} html={data.body.processed} />;
 };
 
 const WidgetBlock = ({ data }) => {
-  return <WidgetSelector data={data.content} />;
+  return <WidgetBlockSelector data={data.content} />;
 };
 
 const YamlBlock = ({ data }) => {

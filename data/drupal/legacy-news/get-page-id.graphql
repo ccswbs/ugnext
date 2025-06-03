@@ -3,7 +3,7 @@ query GetPageID($url: String!) {
     ... on RouteInternal {
       entity {
         ... on NodeArticle {
-          id
+          id: uuid
         }
       }
     }
