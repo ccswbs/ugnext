@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
 import { Link } from "@/components/link";
 import { Heading } from "@/components/heading";
@@ -10,66 +10,78 @@ import Image from "next/image";
 import Script from "next/script";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
-import { FigureCard } from "./ovc/figure-card";
 
 const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+const withKeys = (children) =>
+  React.Children.map(children, (child, index) =>
+    React.isValidElement(child) ? React.cloneElement(child, { key: index }) : child
+  );
 
 const parser = new Parser();
 export const DEFAULT_PROCESSOR = new ProcessNodeDefinitions().processDefaultNode;
 export const DEFAULT_INSTRUCTIONS = [
-  // h1, h2, ... h6 tags
+  // Headings
   {
     shouldProcessNode: (node) => headingTags.has(node.tagName),
-    processNode: (node, children) => {
+    processNode: (node, children, index) => {
       const level = getHeadingLevel(node.tagName);
-
       node.attribs.className = node.attribs.class;
       delete node.attribs.class;
       delete node?.attribs?.style;
 
       return (
-        <Heading {...node.attribs} level={level}>
-          {children}
+        <Heading {...node.attribs} level={level} key={index}>
+          {withKeys(children)}
         </Heading>
       );
     },
   },
-  // Links
+  // Remove <em> around <i>
+  {
+    shouldProcessNode: (node) =>
+      node.name === "em" &&
+      node.children?.length === 1 &&
+      node.children[0].name === "i" &&
+      node.children[0].attribs?.class?.includes("fa-"),
+    processNode: (node, children, index) => {
+      return React.cloneElement(children[0], { key: index });
+    },
+  },
+  // Links and Buttons
   {
     shouldProcessNode: (node) => node.tagName === "a" && typeof node.attribs?.href === "string",
-    processNode: (node, children) => {
+    processNode: (node, children, index) => {
       node.attribs.className = node.attribs.class;
       delete node.attribs.class;
       delete node?.attribs?.style;
 
-      // Check if the link is a button by looking for the "btn" class or "btn-*" class
       const isButton = node.attribs.className?.includes("btn");
+      const type = node.attribs.className?.match(/btn-(?:outline-)?(\w*)/)?.[1];
+      const map = {
+        primary: "red",
+        secondary: "black",
+        info: "blue",
+        success: "green",
+        warning: "yellow",
+        danger: "red",
+        light: "gray",
+        dark: "black",
+      };
+      const outlined = node.attribs.className?.includes("btn-outline");
 
-      if (isButton) {
-        const type = node.attribs.className?.match(/btn-(?:outline-)?(\w*)/)?.[1];
-        const map = {
-          primary: "red",
-          secondary: "black",
-          info: "blue",
-          success: "green",
-          warning: "yellow",
-          danger: "red",
-          light: "gray",
-          dark: "black",
-        };
-
-        const outlined = node.attribs.className?.includes("btn-outline");
-
-        return (
-          <Button {...node.attribs} href={node.attribs?.href ?? ""} color={map[type] ?? "red"} outlined={outlined}>
-            {children}
-          </Button>
-        );
-      }
-
-      return (
-        <Link {...node.attribs} href={node.attribs?.href ?? ""}>
-          {children}
+      return isButton ? (
+        <Button
+          {...node.attribs}
+          href={node.attribs?.href ?? ""}
+          color={map[type] ?? "red"}
+          outlined={outlined}
+          key={index}
+        >
+          {withKeys(children)}
+        </Button>
+      ) : (
+        <Link {...node.attribs} href={node.attribs?.href ?? ""} key={index}>
+          {withKeys(children)}
         </Link>
       );
     },
@@ -77,17 +89,17 @@ export const DEFAULT_INSTRUCTIONS = [
   // Lists
   {
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
-    processNode: (node, children) => {
+    processNode: (node, children, index) => {
       node.attribs.className = node.attribs.class;
       delete node.attribs.class;
       delete node?.attribs?.style;
 
       return (
-        <List {...node.attribs} variant={node.tagName === "ol" ? "ordered" : "unordered"}>
+        <List {...node.attribs} variant={node.tagName === "ol" ? "ordered" : "unordered"} key={index}>
           {children
             .filter((child) => child.type === "li")
-            .map((child, index) => (
-              <ListItem key={index}>{child.props.children}</ListItem>
+            .map((child, i) => (
+              <ListItem key={i}>{child.props.children}</ListItem>
             ))}
         </List>
       );
@@ -96,16 +108,15 @@ export const DEFAULT_INSTRUCTIONS = [
   // Divider
   {
     shouldProcessNode: (node) => node.tagName === "hr",
-    processNode: (node) => <Divider />,
+    processNode: (node, _, index) => <Divider key={index} />,
   },
-
   // Images
   {
     shouldProcessNode: (node) =>
       node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
-    processNode: (node) => {
+    processNode: (node, _, index) => {
       // Remove the `class` attribute and any inline styles
-      delete node?.attribs?.style;
+      delete node?.attribs?.class;
 
       // Convert Bootstrap alignment classes to Tailwind equivalents
       let imageClass = node.attribs.class || "";
@@ -135,10 +146,10 @@ export const DEFAULT_INSTRUCTIONS = [
           </figure>
         );
       }
-
       // Return just the <Image> if no caption exists
       return (
         <Image
+          key={index}
           src={node.attribs.src}
           alt={node.attribs.alt ?? null}
           loading="lazy"
@@ -171,16 +182,17 @@ export const DEFAULT_INSTRUCTIONS = [
   // Scripts
   {
     shouldProcessNode: (node) => node.tagName === "script",
-    processNode: (node) => <Script src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />,
+    processNode: (node, _, index) => (
+      <Script key={index} src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />
+    ),
   },
   // Fallback
   {
     shouldProcessNode: () => true,
-    processNode: (node, children) => {
-      // Remove inline styles because Next.js doesn't like when they're present
+    processNode: (node, children, index) => {
       delete node?.attribs?.style;
-
-      return DEFAULT_PROCESSOR(node, children);
+      const element = DEFAULT_PROCESSOR(node, children);
+      return React.isValidElement(element) ? React.cloneElement(element, { key: index }) : element;
     },
   },
 ];
@@ -205,14 +217,12 @@ export const HtmlParser = ({ html, instructions }) => {
     );
 
     if (Array.isArray(parsed)) {
-      return parsed.map((child, index) => {
+      return parsed.map((child) => {
         if (typeof child === "object") {
-          // Ensure each child has a unique key
-          return <Fragment key={child.key || nanoid()}>{child}</Fragment>;
+          return <Fragment key={nanoid()}>{child}</Fragment>;
         }
 
-        // For non-object children, use the index as a fallback key
-        return <Fragment key={index}>{child}</Fragment>;
+        return child;
       });
     }
 
@@ -221,6 +231,7 @@ export const HtmlParser = ({ html, instructions }) => {
 
   return <>{parsed}</>;
 };
+
 HtmlParser.propTypes = {
   html: PropTypes.string.isRequired,
   /**
