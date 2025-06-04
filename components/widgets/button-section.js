@@ -83,6 +83,8 @@ export const ButtonWidget = ({ column, data }) => {
     }
   };
 
+  console.log(icon);
+
   return (
     <>
       {heading && (
@@ -99,7 +101,7 @@ export const ButtonWidget = ({ column, data }) => {
         outlined={outlined}
         onClick={analyticsHandler}
       >
-        {icon && <i className={classes.icon()}></i>}
+        {icon && icon.data && <i className={classes.icon()}></i>}
         <HtmlParser html={title} />
       </Button>
     </>

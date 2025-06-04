@@ -1,17 +1,18 @@
-import { Heading } from "@/components/heading";
+import { Typography } from "@uoguelph/react-components/typography";
 import { HtmlParser } from "@/components/html-parser";
 import { ButtonSectionWidget } from "@/components/widgets/button-section";
-import { MediaCaption } from "@/components/media-caption";
+import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
 import { getHeadingLevel } from "@/lib/string-utils";
+import { tv } from "tailwind-variants";
 
 const getBackground = (data) => {
   switch (data?.background?.name) {
     case "Light Blue":
-      return "light-blue";
+      return "grey-light";
     case "Dark Gray":
-      return "dark-gray";
+      return "grey-dark";
     default:
       return "none";
   }
@@ -59,15 +60,37 @@ export function MediaTextWidget({ data }) {
   const media = getMedia(data);
   const position = getPosition(data, context?.column);
 
+  console.log(data?.headingLevel);
+
+  const classes = tv({
+    slots: {
+      base: "col-span-1 h-full",
+      heading: "mt-0!",
+      body: "",
+    },
+    variants: {
+      background: {
+        none: "",
+        "grey-light": "",
+        "grey-dark": {
+          heading: "text-body-copy-bold-on-dark!",
+          body: "[&_*]:text-body-copy-on-dark!",
+        },
+      },
+    },
+  })({ background: background });
+
   return (
-    <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1 h-full">
+    <MediaCaption background={background} size={size} position={position} className={classes.base()}>
       {data?.heading && (
-        <Heading className="mt-0" level={getHeadingLevel(data?.headingLevel) ?? 3}>
+        <Typography className={classes.heading()} type={data?.headingLevel ?? "h3"} as={data?.headingLevel ?? "h3"}>
           {data?.heading}
-        </Heading>
+        </Typography>
       )}
 
-      <HtmlParser html={data?.description?.processed ?? ""} />
+      <div className={classes.body()}>
+        <HtmlParser html={data?.description?.processed ?? ""} />
+      </div>
 
       {data?.buttonSection && <ButtonSectionWidget data={data.buttonSection} />}
     </MediaCaption>
