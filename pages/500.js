@@ -1,10 +1,7 @@
-import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Meta } from "@/components/meta";
 import { Header } from "@uoguelph/react-components/header";
-import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
-import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
 import { Footer } from "@uoguelph/react-components/footer";
 

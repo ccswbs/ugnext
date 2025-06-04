@@ -1,7 +1,10 @@
-import React from "react";
-import { Container } from "@/components/container";
-import { Layout } from "@/components/layout";
-import { Heading } from "@/components/heading";
+import { Container } from "@uoguelph/react-components/container";
+import { Layout } from "@uoguelph/react-components/layout";
+import { Meta } from "@/components/meta";
+import { Header } from "@uoguelph/react-components/header";
+import { LayoutContent } from "@uoguelph/react-components/layout";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Footer } from "@uoguelph/react-components/footer";
 import { ProgramSearch } from "@/components/programs/program-search";
 import {
   getContinuingEducationPrograms,
@@ -19,12 +22,24 @@ export async function getStaticProps() {
 
 export default function ProgramsContinuingEducation({ programs, types }) {
   return (
-    <Layout metadata={{ title: "Continuing Education" }}>
-      <Container className="pb-0" centered>
-        <Heading level={1}>Continuing Education at the University of Guelph</Heading>
-      </Container>
+    <>
+      <Meta title="Continuing Education" />
 
-      <ProgramSearch programs={programs} types={types} />
-    </Layout>
+      <Header></Header>
+
+      <Layout>
+        <LayoutContent container={false}>
+          <Container className="pb-0">
+            <Typography type="h1" as="h1" className="block!">
+              Continuing Education at the University of Guelph
+            </Typography>
+          </Container>
+
+          <ProgramSearch programs={programs} types={types} />
+        </LayoutContent>
+      </Layout>
+
+      <Footer></Footer>
+    </>
   );
 }

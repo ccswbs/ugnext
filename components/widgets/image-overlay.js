@@ -9,7 +9,7 @@ import {
 } from "@uoguelph/react-components/blockquote";
 import { ButtonSectionWidget } from "@/components/widgets/button-section";
 import { ImageOverlay } from "@uoguelph/react-components/image-overlay";
-import { MediaCaption } from "@/components/media-caption";
+import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import React from "react";
 import { GeneralTextWidget } from "@/components/widgets/general-text";
 import Image from "next/image";

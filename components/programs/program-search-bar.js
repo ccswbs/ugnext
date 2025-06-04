@@ -1,9 +1,9 @@
 import { TextInput } from "@uoguelph/react-components/text-input";
+import { Container } from "@uoguelph/react-components/container";
 import { Select } from "@/components/select";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
 import { useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { Container } from "@/components/container";
 
 export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, className }) => {
   const [input, setInput] = useState("");
@@ -33,10 +33,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
 
   return (
     <div className="w-full bg-yellow -mt-1">
-      <Container
-        centered
-        className={twMerge("bg-yellow flex flex-col gap-4 py-[4rem] sm:flex-row sm:items-end", className)}
-      >
+      <Container className={twMerge("bg-yellow flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end", className)}>
         <div className="flex-1">
           <TextInput
             onInput={(e) => setInput(e.target.value)}

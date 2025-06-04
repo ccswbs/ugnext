@@ -1,11 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import Script from "next/script";
-import { Modal } from "@/components/modal";
-import { Alert } from "@/components/alert";
-import { Button } from "@/components/button";
-import { Container } from "@/components/container";
-import { useDismissible } from "@/lib/use-dismissible";
-import objectHash from "object-hash";
+import { useEffect, useState } from "react";
 import { getAlert } from "@/lib/app-armor";
 import { DismissibleAlert } from "@uoguelph/react-components/dismissible-alert";
 

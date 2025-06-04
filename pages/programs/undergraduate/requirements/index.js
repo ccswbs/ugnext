@@ -1,4 +1,4 @@
-import { Container } from "@/components/container";
+import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@/components/layout";
 import { Heading } from "@/components/heading";
 import { useMemo, useState } from "react";

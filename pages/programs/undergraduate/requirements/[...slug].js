@@ -1,16 +1,13 @@
 import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
+import { Container } from "@uoguelph/react-components/container";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import {
-  getUndergraduateRequirements,
-  parseAdmissionRequirementsSlug,
-} from "@/data/yaml/programs/undergraduate";
-import { List, ListItem } from "@/components/list";
+import { getUndergraduateRequirements, parseAdmissionRequirementsSlug } from "@/data/yaml/programs/undergraduate";
+import { List, ListItem } from "@uoguelph/react-components/list";
 import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import {
   faBars,
