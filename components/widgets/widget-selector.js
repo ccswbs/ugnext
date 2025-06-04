@@ -1,21 +1,21 @@
-import { Accordions } from "@/components/widgets/accordions";
-import { ButtonSection } from "@/components/widgets/button-section";
-import { GeneralText } from "@/components/widgets/general-text";
-import { Links } from "@/components/widgets/links";
-import { MediaText } from "@/components/widgets/media-text";
-import { Section } from "@/components/widgets/section-widget.js";
-import { Statistics } from "@/components/widgets/statistics";
-import { Tabs } from "@/components/widgets/tabs";
-import { TestimonialSlider } from "@/components/widgets/testimonial-slider";
 import ConditionalWrap from "conditional-wrap";
 import { Container } from "@uoguelph/react-components/container";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
+import { AccordionWidget } from "@/components/widgets/accordions";
+import { ButtonSectionWidget } from "@/components/widgets/button-section";
+import { GeneralTextWidget } from "@/components/widgets/general-text";
+import { LinksWidget } from "@/components/widgets/links";
+import { MediaTextWidget } from "@/components/widgets/media-text";
+import { SectionWidget } from "@/components/widgets/section.js";
+import { StatisticsWidget } from "@/components/widgets/statistics";
 import { ImageOverlay } from "@/components/widgets/image-overlay";
-import { Story } from "@/components/widgets/story";
-import { Block } from "@/components/widgets/block";
+import { StoryWidget } from "@/components/widgets/story";
+import { BlockWidget } from "@/components/widgets/block";
+import { Tabs } from "@/components/widgets/tabs";
+import { TestimonialSliderWidget } from "@/components/widgets/testimonial-slider";
 
-export const WidgetSelector = ({ data }) => {
+export function WidgetSelector({ data }) {
   // If this widget is within a section, we don't want to render a container around it
   const context = useContext(SectionContext);
 
@@ -23,18 +23,18 @@ export const WidgetSelector = ({ data }) => {
   const noWrapWidgets = ["ParagraphTestimonialSlider", "ParagraphImageOverlay", "ParagraphStoryWidget"];
 
   const map = {
-    ParagraphAccordionSection: Accordions,
-    ParagraphSectionButton: ButtonSection,
-    ParagraphGeneralText: GeneralText,
-    ParagraphLinksWidget: Links,
-    ParagraphMediaText: MediaText,
-    ParagraphTestimonialSlider: TestimonialSlider,
-    ParagraphSection: Section,
+    ParagraphAccordionSection: AccordionWidget,
+    ParagraphSectionButton: ButtonSectionWidget,
+    ParagraphGeneralText: GeneralTextWidget,
+    ParagraphLinksWidget: LinksWidget,
+    ParagraphMediaText: MediaTextWidget,
+    ParagraphTestimonialSlider: TestimonialSliderWidget,
+    ParagraphSection: SectionWidget,
     ParagraphSectionTab: Tabs,
-    ParagraphStatisticWidget: Statistics,
+    ParagraphStatisticWidget: StatisticsWidget,
     ParagraphImageOverlay: ImageOverlay,
-    ParagraphStoryWidget: Story,
-    ParagraphBlockWidget: Block,
+    ParagraphStoryWidget: StoryWidget,
+    ParagraphBlockWidget: BlockWidget,
   };
 
   const Widget = map[data.__typename];
@@ -47,4 +47,4 @@ export const WidgetSelector = ({ data }) => {
       {Widget && <Widget data={data} />}
     </ConditionalWrap>
   );
-};
+}

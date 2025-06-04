@@ -15,7 +15,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
 
-export const TestimonialSlider = ({ data }) => {
+export function TestimonialSliderWidget({ data }) {
   let testimonials = [];
   const showMultiple = useMediaQuery("only screen and (min-width : 1024px)");
 
@@ -77,4 +77,4 @@ export const TestimonialSlider = ({ data }) => {
       </Container>
     </div>
   );
-};
+}

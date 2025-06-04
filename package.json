@@ -33,6 +33,7 @@
     "react-slick": "^0.30.3",
     "sharp": "^0.34.2",
     "slick-carousel": "^1.8.1",
+    "tailwind-variants": "^1.0.0",
     "use-resize-observer": "^9.1.0",
     "uuid": "^11.1.0",
     "zod": "^3.25.49"

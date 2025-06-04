@@ -3,7 +3,7 @@ import { HtmlParser } from "@/components/html-parser";
 import { getHeadingLevel } from "@/lib/string-utils";
 import { Typography } from "@uoguelph/react-components/typography";
 
-export const Accordions = ({ data }) => {
+export function AccordionWidget({ data }) {
   const level = getHeadingLevel(data.headingLevel);
   const sectionTitle = data?.accordionSectionTitle;
 
@@ -21,4 +21,4 @@ export const Accordions = ({ data }) => {
       ))}
     </>
   );
-};
+}

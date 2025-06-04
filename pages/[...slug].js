@@ -135,7 +135,9 @@ function PageWithoutHero({ content }) {
       <PageBreadcrumbs content={content} />
 
       <Container>
-        <Typography type="h1">{content?.title}</Typography>
+        <Typography type="h1" as="h1">
+          {content?.title}
+        </Typography>
       </Container>
     </>
   );

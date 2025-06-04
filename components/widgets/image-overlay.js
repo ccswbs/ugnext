@@ -3,7 +3,7 @@ import yellow from "@/img/yellow-background.webp";
 import { twJoin } from "tailwind-merge";
 import { HtmlParser } from "@/components/html-parser";
 import { Blockquote } from "@/components/blockquote";
-import { ButtonSection } from "@/components/widgets/button-section";
+import { ButtonSectionWidget } from "@/components/widgets/button-section";
 import { ImageOverlay as ImageOverlayComponent } from "@/components/image-overlay";
 import { Info } from "@/components/info";
 import { MediaCaption } from "@/components/media-caption";
@@ -77,7 +77,7 @@ const StoryQuoteContent = ({ data, style }) => {
   );
 };
 
-const SectionButtonContent = ({ data }) => <ButtonSection key={data?.id ?? index} data={data} />;
+const SectionButtonContent = ({ data }) => <ButtonSectionWidget key={data?.id ?? index} data={data} />;
 
 export const ImageOverlay = ({ data }) => {
   const images = {

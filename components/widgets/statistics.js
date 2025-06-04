@@ -8,7 +8,7 @@ import {
 import { HtmlParser } from "@/components/html-parser";
 import Image from "next/image";
 
-export function Statistics({ data }) {
+export function StatisticsWidget({ data }) {
   const variant = data?.style?.name
     ?.toLowerCase()
     .replace(/\s/g, "-")

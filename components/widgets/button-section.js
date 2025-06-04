@@ -1,6 +1,5 @@
-import { twJoin } from "tailwind-merge";
 import { Typography } from "@uoguelph/react-components/typography";
-import { Button as ButtonComponent } from "@uoguelph/react-components/button";
+import { Button } from "@uoguelph/react-components/button";
 import { HtmlParser } from "@/components/html-parser";
 import { UnstyledLink } from "@/components/link";
 import { tv } from "tailwind-variants";
@@ -31,7 +30,7 @@ function getButtonData(data) {
   };
 }
 
-export const Button = ({ column, data }) => {
+export const ButtonWidget = ({ column, data }) => {
   const { url, title, heading, color, icon, outlined, analytics } = getButtonData(data);
 
   const classes = tv({
@@ -92,7 +91,7 @@ export const Button = ({ column, data }) => {
         </Typography>
       )}
 
-      <ButtonComponent
+      <Button
         className={classes.button()}
         as={UnstyledLink}
         href={url}
@@ -102,16 +101,18 @@ export const Button = ({ column, data }) => {
       >
         {icon && <i className={classes.icon()}></i>}
         <HtmlParser html={title} />
-      </ButtonComponent>
+      </Button>
     </>
   );
 };
 
-export const ButtonSection = ({ data }) => {
+export const ButtonSectionWidget = ({ data }) => {
   const buttons = data?.buttons;
   const column = data?.buttonSectionColumn?.name;
 
   return (
-    <>{buttons?.length > 0 && buttons.map((button) => <Button key={button.id} column={column} data={button} />)}</>
+    <>
+      {buttons?.length > 0 && buttons.map((button) => <ButtonWidget key={button.id} column={column} data={button} />)}
+    </>
   );
 };

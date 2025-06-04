@@ -1,9 +1,9 @@
-import { Section as SectionComponent } from "@/components/section";
+import { Section } from "@/components/section";
 import { Heading } from "@/components/heading";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import { getHeadingLevel } from "@/lib/string-utils";
 
-export const Section = ({ data }) => {
+export function SectionWidget({ data }) {
   // Sort widgets into primary, secondary and others
   const {
     primary: ungroupedPrimary,
@@ -63,7 +63,7 @@ export const Section = ({ data }) => {
       {others.length > 0 && <div className="w-full text-center">{others}</div>}
 
       {(primary.length > 0 || secondary.length > 0) && (
-        <SectionComponent
+        <Section
           primary={primary.map((widget, index) => {
             if (Array.isArray(widget)) {
               if (widget.length === 1) {
@@ -88,4 +88,4 @@ export const Section = ({ data }) => {
       )}
     </>
   );
-};
+}

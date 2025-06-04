@@ -17,7 +17,7 @@ const YamlBlock = ({ data }) => {
   );
 };
 
-export const Block = ({ data }) => {
+export const BlockWidget = ({ data }) => {
   const map = {
     BlockContentBasic: BasicBlock,
     BlockContentWidgetBlock: WidgetBlock,

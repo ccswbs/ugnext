@@ -1,11 +1,10 @@
 import { Heading } from "@/components/heading";
 import { HtmlParser } from "@/components/html-parser";
-import { ButtonSection } from "@/components/widgets/button-section";
+import { ButtonSectionWidget } from "@/components/widgets/button-section";
 import { MediaCaption } from "@/components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
 import { getHeadingLevel } from "@/lib/string-utils";
-import { twJoin } from "tailwind-merge";
 
 const getBackground = (data) => {
   switch (data?.background?.name) {
@@ -53,7 +52,7 @@ const getPosition = (data, column) => {
   }
 };
 
-export const MediaText = ({ data }) => {
+export function MediaTextWidget({ data }) {
   const context = useContext(SectionContext);
   const background = getBackground(data);
   const size = data?.mediaImageSize ?? "large";
@@ -70,7 +69,7 @@ export const MediaText = ({ data }) => {
 
       <HtmlParser html={data?.description?.processed ?? ""} />
 
-      {data?.buttonSection && <ButtonSection data={data.buttonSection} />}
+      {data?.buttonSection && <ButtonSectionWidget data={data.buttonSection} />}
     </MediaCaption>
   );
-};
+}
