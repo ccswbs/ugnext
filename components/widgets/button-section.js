@@ -83,8 +83,6 @@ export const ButtonWidget = ({ column, data }) => {
     }
   };
 
-  console.log(icon);
-
   return (
     <>
       {heading && (

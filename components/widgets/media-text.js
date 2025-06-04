@@ -4,8 +4,9 @@ import { ButtonSectionWidget } from "@/components/widgets/button-section";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
-import { getHeadingLevel } from "@/lib/string-utils";
 import { tv } from "tailwind-variants";
+import Image from "next/image";
+import { EmbeddedVideo } from "@uoguelph/react-components/embedded-video";
 
 const getBackground = (data) => {
   switch (data?.background?.name) {
@@ -22,6 +23,7 @@ const getMedia = (data) => {
   switch (data?.media?.__typename) {
     case "MediaImage":
       return {
+        __typename: "image",
         src: data?.media?.image?.url,
         width: data?.media?.image?.width,
         height: data?.media?.image?.height,
@@ -29,6 +31,7 @@ const getMedia = (data) => {
       };
     case "MediaRemoteVideo":
       return {
+        __typename: "video",
         src: data?.media?.url,
         title: data?.media?.name,
         transcript: data?.media?.transcript,
@@ -60,8 +63,6 @@ export function MediaTextWidget({ data }) {
   const media = getMedia(data);
   const position = getPosition(data, context?.column);
 
-  console.log(data?.headingLevel);
-
   const classes = tv({
     slots: {
       base: "col-span-1 h-full",
@@ -81,7 +82,18 @@ export function MediaTextWidget({ data }) {
   })({ background: background });
 
   return (
-    <MediaCaption background={background} size={size} position={position} className={classes.base()}>
+    <MediaCaption
+      src={media.src}
+      height={media?.height}
+      width={media?.width}
+      alt={media?.alt}
+      as={media.__typename === "image" ? Image : EmbeddedVideo}
+      background={background}
+      size={size}
+      position={position}
+      className={classes.base()}
+      transcript={media?.transcript}
+    >
       {data?.heading && (
         <Typography className={classes.heading()} type={data?.headingLevel ?? "h3"} as={data?.headingLevel ?? "h3"}>
           {data?.heading}
