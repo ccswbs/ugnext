@@ -5,8 +5,8 @@ import getProgramDataQuery from "./get-program-data.graphql";
 import getStudentTypeFromPathQuery from "./get-student-type-from-path.graphql";
 import getLocationFromPathQuery from "./get-location-from-path.graphql";
 import getProgramFromPathQuery from "./get-program-from-path.graphql";
-import getRequirementIds from "./get-requirement-ids.graphql";
-import getRequirementContent from "./get-requirement-content.graphql";
+import getRequirementIdsQuery from "./get-requirement-ids.graphql";
+import getRequirementContentQuery from "./get-requirement-content.graphql";
 import { graphql } from "@/lib/drupal";
 import { partition } from "@/lib/array-utils";
 
@@ -131,14 +131,14 @@ export async function parseRequirementPageSlug(slug) {
 }
 
 export async function getRequirements(studentType, location, program, draft = false) {
-  const { data } = await graphql(getRequirementIds, {
+  const { data } = await graphql(getRequirementIdsQuery, {
     studentType: studentType,
     location: location,
     program: Number.parseFloat(program.id),
   });
 
   const promises = data.undergraduateAdmissionRequirements.results.map(async ({ id }) => {
-    const { data } = await graphql(getRequirementContent, {
+    const { data } = await graphql(getRequirementContentQuery, {
       id: id,
       status: draft ? undefined : true,
     });
@@ -173,13 +173,15 @@ export async function getRequirements(studentType, location, program, draft = fa
     .map((requirement) => ({
       title: requirement.title,
       path: requirement.path,
-      sections: requirement.sections.map((section) => {
-        return {
-          ...section,
-          type: section.type.name,
-          content: section?.content ?? [],
-        };
-      }),
+      sections:
+        requirement.sections?.map((section) => {
+          return {
+            ...section,
+            type: section.type.name,
+            content: section?.content ?? [],
+          };
+        }) ?? [],
+      sidebar: requirement.sidebar,
     }))
     .reduce(
       (acc, requirement) => {
@@ -187,6 +189,8 @@ export async function getRequirements(studentType, location, program, draft = fa
           title: requirement.title,
           url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
         });
+
+        acc.sidebar.push(requirement.sidebar);
 
         for (let i = 0; i < requirement.sections.length; i++) {
           const section = requirement.sections[i];
@@ -202,6 +206,7 @@ export async function getRequirements(studentType, location, program, draft = fa
       },
       {
         sections: {},
+        sidebar: [],
         paths: [],
       }
     );
@@ -227,6 +232,7 @@ export async function getRequirements(studentType, location, program, draft = fa
 
   return {
     sections: sections,
+    sidebar: requirements.sidebar.flat().filter(Boolean),
     paths: requirements.paths,
   };
 }

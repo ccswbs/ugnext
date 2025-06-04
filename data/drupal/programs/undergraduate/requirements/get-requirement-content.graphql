@@ -32,6 +32,9 @@ query GetRequirementContent($id: String!, $status: Boolean) {
             }
           }
         }
+        sidebar {
+          ...Buttons
+        }
         sections {
           ... on ParagraphUndergradReqsSection {
             type {
