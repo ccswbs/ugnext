@@ -115,15 +115,16 @@ export const DEFAULT_INSTRUCTIONS = [
     shouldProcessNode: (node) =>
       node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
     processNode: (node, _, index) => {
-      // Remove the `class` attribute and any inline styles
-      delete node?.attribs?.class;
-
+  
       // Convert Bootstrap alignment classes to Tailwind equivalents
       let imageClass = node.attribs.class || "";
       imageClass = imageClass
         .replace("align-left", "float-left mr-4") // Convert `align-left` to `float-left` with margin
         .replace("align-right", "float-right ml-4"); // Convert `align-right` to `float-right` with margin
-      // Handle `data-align` attributes
+        // Handle `data-align` attributes
+
+        // Remove the `class` attribute and any inline styles
+      delete node?.attribs?.class;
 
       // Check for caption (data-caption or figcaption)
       const caption = node.attribs["data-caption"] ? (

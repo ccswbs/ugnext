@@ -36,7 +36,7 @@ export async function getStaticProps(context) {
     };
   }
   const legacyNewsItem = content.legacyNewsItem.results[0];
-  // Note: change the legacyNewsItem to legacyNewsRevision for the revision query 
+  // Note: change the legacyNewsItem to legacyNewsRevision for the revision query (or vice versa) 
   // Also change the query in the drupal module in get-legacy-news-content.graphql
 
   legacyNewsItem.menu = await getPageMenu();
