@@ -7,6 +7,8 @@ import getLocationFromPathQuery from "./get-location-from-path.graphql";
 import getProgramFromPathQuery from "./get-program-from-path.graphql";
 import getRequirementIdsQuery from "./get-requirement-ids.graphql";
 import getRequirementContentQuery from "./get-requirement-content.graphql";
+import getGeneralRequirementId from "./get-general-requirement-id.graphql";
+import getGeneralRequirementSidebar from "./get-general-requirement-sidebar.graphql";
 import { graphql } from "@/lib/drupal";
 import { partition } from "@/lib/array-utils";
 
@@ -113,7 +115,6 @@ export async function parseRequirementPageSlug(slug) {
     path: programPath,
   });
 
-  console.log(program?.data?.route?.entity?.type);
   const url = program?.data?.route?.entity?.url?.url;
 
   return {
@@ -252,4 +253,21 @@ export async function getRequirements(studentType, location, program, draft = fa
     sidebar: sidebar,
     paths: requirements.paths,
   };
+}
+
+export async function getDefaultSidebar(draft = false) {
+  const { data } = await graphql(getGeneralRequirementId);
+
+  const id = data?.undergraduateAdmissionRequirements?.results[0]?.id;
+
+  if (id) {
+    const { data } = await graphql(getGeneralRequirementSidebar, {
+      id: id,
+      status: draft ? undefined : true,
+    });
+
+    return data?.latestContentRevision?.results?.[0]?.sidebar ?? [];
+  }
+
+  return [];
 }

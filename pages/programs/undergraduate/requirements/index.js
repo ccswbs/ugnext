@@ -15,7 +15,12 @@ import {
   faMapLocationDot,
   faCalendarDays,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
-import { getLocations, getPrograms, getStudentTypes } from "@/data/drupal/programs/undergraduate/requirements";
+import {
+  getLocations,
+  getPrograms,
+  getStudentTypes,
+  getDefaultSidebar,
+} from "@/data/drupal/programs/undergraduate/requirements";
 import { isDraft } from "@/lib/is-draft";
 
 export async function getStaticProps(context) {
@@ -27,11 +32,12 @@ export async function getStaticProps(context) {
       studentTypes: await getStudentTypes(),
       locations: await getLocations(),
       programs: (await getPrograms(draft)).sort((a, b) => a.name.localeCompare(b.name)),
+      sidebar: await getDefaultSidebar(),
     },
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ studentTypes, locations, programs }) {
+export default function UndergraduateAdmissionRequirements({ studentTypes, locations, programs, sidebar }) {
   const [selectedStudentType, setSelectedStudentType] = useState(null);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -200,36 +206,7 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
           }
           secondary={
             <div className="flex flex-col gap-2 w-full px-4">
-              <AdmissionRequirementsSidebar
-                links={[
-                  {
-                    url: "https://www.uoguelph.ca/admission/undergraduate/apply/",
-                    text: "Apply Now!",
-                    icon: faGryphonStatue,
-                    highlight: true,
-                  },
-                  {
-                    url: "/programs/undergraduate",
-                    text: "View All Programs",
-                    icon: faBars,
-                  },
-                  {
-                    url: "https://www.uoguelph.ca/admission/undergraduate/tours/",
-                    text: "Register for a Campus Tour",
-                    icon: faMapLocationDot,
-                  },
-                  {
-                    url: "https://www.uoguelph.ca/registrar/forms/spf/",
-                    text: "Fill out our Student Profile Form",
-                    icon: faFileSignature,
-                  },
-                  {
-                    url: "https://www.uoguelph.ca/admission/undergraduate/apply/deadlines/",
-                    text: "Dates & Deadlines",
-                    icon: faCalendarDays,
-                  },
-                ]}
-              />
+              {Array.isArray(sidebar) && sidebar.length > 0 && <AdmissionRequirementsSidebar data={sidebar} />}
             </div>
           }
         />

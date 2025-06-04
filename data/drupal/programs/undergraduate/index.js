@@ -5,6 +5,7 @@ import getDegreeIdsQuery from "./get-degree-ids.graphql";
 import getDegreeLatestRevisionQuery from "./get-degree-latest-revision.graphql";
 import getProgramIdsQuery from "./get-program-ids.graphql";
 import getProgramLatestRevisionQuery from "./get-program-latest-revision.graphql";
+import getRequirementIdsQuery from "@/data/drupal/programs/undergraduate/requirements/get-requirement-ids.graphql";
 
 export async function getDegreeTypes() {
   const { data } = await graphql(getDegreeTypesQuery);

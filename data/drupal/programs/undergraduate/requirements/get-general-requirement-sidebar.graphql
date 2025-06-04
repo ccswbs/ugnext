@@ -1,0 +1,13 @@
+#import "../../../widgets.graphql"
+
+query GetRequirementContent($id: String!, $status: Boolean) {
+  latestContentRevision(filter: { uuid: $id, status: $status, type: "undergraduate_requirement" }) {
+    results {
+      ... on NodeUndergraduateRequirement {
+        sidebar {
+          ...Buttons
+        }
+      }
+    }
+  }
+}
