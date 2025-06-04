@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from "react";
+import { cloneElement, Fragment, isValidElement, useMemo } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
 import { Link } from "@uoguelph/react-components/link";
 import { Contact, ContactTitle, ContactName, ContactPhone, ContactEmail } from "@uoguelph/react-components/contact";
@@ -16,6 +16,11 @@ const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
 
 const parser = new Parser();
 export const DEFAULT_PROCESSOR = new ProcessNodeDefinitions().processDefaultNode;
+export const CATCHALL_INSTRUCTION = {
+  shouldProcessNode: () => true,
+  processNode: DEFAULT_PROCESSOR,
+};
+
 export const DEFAULT_INSTRUCTIONS = [
   // vcard
   {
@@ -29,7 +34,7 @@ export const DEFAULT_INSTRUCTIONS = [
       const email = node?.children?.find((child) => child.attribs?.href?.includes("mailto:"))?.children[0]?.data;
 
       return (
-        <Contact className={node.attribs.class}>
+        <Contact key={nanoid()} className={node.attribs.class}>
           <ContactName>{name}</ContactName>
           <ContactTitle>{title}</ContactTitle>
           <ContactPhone number={number} extension={extension}></ContactPhone>
@@ -42,12 +47,11 @@ export const DEFAULT_INSTRUCTIONS = [
   {
     shouldProcessNode: (node) => node.attribs?.class?.includes("author"),
     processNode: (node, children) => {
-      console.log(children);
       return (
-        <>
+        <Fragment key={nanoid()}>
           <div className="mt-4"></div>
           <Info>{children.filter((child) => child?.type !== "br")}</Info>
-        </>
+        </Fragment>
       );
     },
   },
@@ -56,7 +60,7 @@ export const DEFAULT_INSTRUCTIONS = [
     shouldProcessNode: (node) => headingTags.has(node.tagName),
     processNode: (node, children) => {
       return (
-        <Typography className={node.attribs.class} type={node.tagName} as={node.tagName}>
+        <Typography key={nanoid()} className={node.attribs.class} type={node.tagName} as={node.tagName}>
           {children}
         </Typography>
       );
@@ -66,7 +70,7 @@ export const DEFAULT_INSTRUCTIONS = [
     shouldProcessNode: (node) => node.tagName === "p",
     processNode: (node, children) => {
       return (
-        <Typography className={node.attribs.class} type="body" as="p">
+        <Typography key={nanoid()} className={node.attribs.class} type="body" as="p">
           {children}
         </Typography>
       );
@@ -96,6 +100,7 @@ export const DEFAULT_INSTRUCTIONS = [
 
         return (
           <Button
+            key={nanoid()}
             id={node.attribs.id}
             className={node.attribs.class}
             href={node.attribs?.href ?? ""}
@@ -109,7 +114,7 @@ export const DEFAULT_INSTRUCTIONS = [
       }
 
       return (
-        <Link id={node.attribs.id} className={node.attribs.class} href={node.attribs?.href ?? ""}>
+        <Link key={nanoid()} id={node.attribs.id} className={node.attribs.class} href={node.attribs?.href ?? ""}>
           {children}
         </Link>
       );
@@ -120,7 +125,7 @@ export const DEFAULT_INSTRUCTIONS = [
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, children) => {
       return (
-        <List className={node.attribs.class} as={node.tagName}>
+        <List key={nanoid()} className={node.attribs.class} as={node.tagName}>
           {children
             .filter((child) => child.type === "li")
             .map((child, index) => (
@@ -164,9 +169,16 @@ export const DEFAULT_INSTRUCTIONS = [
     shouldProcessNode: () => true,
     processNode: (node, children) => {
       // Remove inline styles because Next.js doesn't like when they're present
-      delete node?.attribs?.style;
+      node.attribs ??= {};
+      delete node.attribs?.style;
+      node.attribs.key = nanoid();
 
-      return DEFAULT_PROCESSOR(node, children);
+      return DEFAULT_PROCESSOR(
+        node,
+        children.map((child, index) => {
+          return isValidElement(child) ? cloneElement(child, { key: index }) : child;
+        })
+      );
     },
   },
 ];
@@ -179,24 +191,12 @@ export const HtmlParser = ({ html, instructions }) => {
     const parsed = parser.parseWithInstructions(
       html,
       () => true,
-      Array.isArray(instructions)
-        ? [
-            ...instructions,
-            {
-              shouldProcessNode: () => true,
-              processNode: DEFAULT_PROCESSOR,
-            },
-          ]
-        : DEFAULT_INSTRUCTIONS
+      Array.isArray(instructions) ? [...instructions, CATCHALL_INSTRUCTION] : DEFAULT_INSTRUCTIONS
     );
 
     if (Array.isArray(parsed)) {
       return parsed.map((child) => {
-        if (typeof child === "object") {
-          return <Fragment key={nanoid()}>{child}</Fragment>;
-        }
-
-        return child;
+        return isValidElement(child) ? cloneElement(child, { key: nanoid() }) : child;
       });
     }
 
