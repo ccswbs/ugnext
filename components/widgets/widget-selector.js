@@ -9,7 +9,7 @@ import { LinksWidget } from "@/components/widgets/links";
 import { MediaTextWidget } from "@/components/widgets/media-text";
 import { SectionWidget } from "@/components/widgets/section.js";
 import { StatisticsWidget } from "@/components/widgets/statistics";
-import { ImageOverlay } from "@/components/widgets/image-overlay";
+import { ImageOverlayWidget } from "@/components/widgets/image-overlay";
 import { StoryWidget } from "@/components/widgets/story";
 import { BlockWidget } from "@/components/widgets/block";
 import { Tabs } from "@/components/widgets/tabs";
@@ -32,7 +32,7 @@ export function WidgetSelector({ data }) {
     ParagraphSection: SectionWidget,
     ParagraphSectionTab: Tabs,
     ParagraphStatisticWidget: StatisticsWidget,
-    ParagraphImageOverlay: ImageOverlay,
+    ParagraphImageOverlay: ImageOverlayWidget,
     ParagraphStoryWidget: StoryWidget,
     ParagraphBlockWidget: BlockWidget,
   };

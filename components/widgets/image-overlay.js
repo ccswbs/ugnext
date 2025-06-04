@@ -1,21 +1,22 @@
 import red from "@/img/red-background.webp";
 import yellow from "@/img/yellow-background.webp";
-import { twJoin } from "tailwind-merge";
-import { HtmlParser } from "@/components/html-parser";
-import { Blockquote } from "@/components/blockquote";
+import {
+  Blockquote,
+  BlockquoteAuthor,
+  BlockquoteAuthorName,
+  BlockquoteAuthorTitle,
+  BlockquoteContent,
+} from "@uoguelph/react-components/blockquote";
 import { ButtonSectionWidget } from "@/components/widgets/button-section";
-import { ImageOverlay as ImageOverlayComponent } from "@/components/image-overlay";
-import { Info } from "@/components/info";
+import { ImageOverlay } from "@uoguelph/react-components/image-overlay";
 import { MediaCaption } from "@/components/media-caption";
 import React from "react";
+import { GeneralTextWidget } from "@/components/widgets/general-text";
+import Image from "next/image";
+import { Container } from "@uoguelph/react-components/container";
+import { twJoin } from "tailwind-merge";
 
-const GeneralTextContent = ({ data }) => (
-  <div key={data?.id ?? index} className="**:text-inherit">
-    <HtmlParser html={data.body.processed} />
-  </div>
-);
-
-const StoryQuoteContent = ({ data, style }) => {
+const StoryQuoteContent = ({ data, style, overlay }) => {
   const image = data.image?.image
     ? {
         src: data.image?.image.url,
@@ -25,61 +26,57 @@ const StoryQuoteContent = ({ data, style }) => {
       }
     : null;
 
+  const Quote = ({ hideQuotationMarks = false }) => (
+    <Blockquote
+      hideQuotationMarks={hideQuotationMarks}
+      color={style === "Red background" ? "yellow" : "blue"}
+      className={twJoin(
+        "text-inherit text-left mt-4 md:mt-0",
+        (overlay === "dark" || style === "Red background") && "text-white"
+      )}
+    >
+      <BlockquoteContent className="text-4xl!">{data?.quoteContent}</BlockquoteContent>
+
+      <BlockquoteAuthor className="text-xl!">
+        {data?.quoteSource && <BlockquoteAuthorName>{data.quoteSource}</BlockquoteAuthorName>}
+        {data?.quoteDescription && <BlockquoteAuthorTitle>{data?.quoteDescription}</BlockquoteAuthorTitle>}
+      </BlockquoteAuthor>
+    </Blockquote>
+  );
+
   if (image) {
     return (
       <MediaCaption
-        size="medium"
         position="left"
-        className="h-full"
-        media={
-          image && {
-            src: image?.url,
-            width: image?.width,
-            height: image?.height,
-            alt: image?.alt,
-            className: "rounded-full",
-          }
-        }
+        size="medium"
+        src={image?.url}
+        width={image?.width}
+        height={image?.height}
+        alt={image?.alt}
+        className="[&_.uofg-media-caption-media]:rounded-full h-full"
+        as={Image}
       >
-        <Blockquote
-          color={style === "Yellow background" ? "red" : "yellow"}
-          className="text-inherit text-left xl:text-4xl mt-4 md:mt-0"
-        >
-          {data?.quoteContent}
-        </Blockquote>
-
-        <Info color={style === "Yellow background" ? "red" : "yellow"}>
-          <div className="flex flex-col gap-0.5">
-            {data?.quoteSource && <span className="text-xl font-bold">{data.quoteSource}</span>}
-            {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
-          </div>
-        </Info>
+        <Quote hideQuotationMarks />
       </MediaCaption>
     );
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <Blockquote
-        color={style === "Yellow background" ? "red" : "yellow"}
-        className="text-inherit text-left xl:text-4xl mt-4 md:mt-0"
-      >
-        {data?.quoteContent}
-      </Blockquote>
-
-      <Info color={style === "Yellow background" ? "red" : "yellow"}>
-        <div className="flex flex-col gap-0.5">
-          {data?.quoteSource && <span className="text-xl font-bold">{data.quoteSource}</span>}
-          {data?.quoteDescription && <span className="text-xl">{data.quoteDescription}</span>}
-        </div>
-      </Info>
-    </div>
+    <Container className="flex flex-col gap-8">
+      <Quote />
+    </Container>
   );
 };
 
 const SectionButtonContent = ({ data }) => <ButtonSectionWidget key={data?.id ?? index} data={data} />;
 
-export const ImageOverlay = ({ data }) => {
+const GeneralTextContent = ({ data }) => (
+  <Container>
+    <GeneralTextWidget key={data?.id ?? index} data={data} />
+  </Container>
+);
+
+export function ImageOverlayWidget({ data }) {
   const images = {
     "Yellow background": yellow,
     "Red background": red,
@@ -91,9 +88,18 @@ export const ImageOverlay = ({ data }) => {
   };
 
   const alignments = {
-    "Centre middle": "center",
-    "Left middle": "left",
-    "Bottom middle": "bottom",
+    "Centre middle": {
+      horizontal: "center",
+      vertical: "center",
+    },
+    "Left middle": {
+      horizontal: "left",
+      vertical: "center",
+    },
+    "Bottom middle": {
+      horizontal: "center",
+      vertical: "bottom",
+    },
   };
 
   const style = data.imageOverlayStyle?.name;
@@ -102,32 +108,31 @@ export const ImageOverlay = ({ data }) => {
   const alignment = alignments[data?.contentAlignment?.name] ?? "center";
 
   return (
-    <ImageOverlayComponent
-      alignment={alignment}
+    <ImageOverlay
+      alt={image.alt}
+      src={image.url ?? image.src}
+      width={image.width}
+      height={image.height}
       overlay={overlay}
-      image={{
-        src: image.src ?? image.url,
-        width: image.width,
-        height: image.height,
-        alt: image.alt ?? "",
-      }}
+      horizontalAlignment={alignment.horizontal}
+      verticalAlignment={alignment.vertical}
+      blurred={false}
+      as={Image}
     >
-      <div className={twJoin((style === "Dark overlay" || style === "Red background") && "text-white")}>
-        {data.imageOverlayContent
-          ?.map((data, index) => {
-            switch (data?.__typename) {
-              case "ParagraphGeneralText":
-                return <GeneralTextContent key={data?.id ?? index} data={data} />;
-              case "ParagraphStoryQuote":
-                return <StoryQuoteContent key={data?.id ?? index} data={data} style={style} />;
-              case "ParagraphSectionButton":
-                return <SectionButtonContent key={data?.id ?? index} data={data} />;
-              default:
-                return null;
-            }
-          })
-          .filter(Boolean)}
-      </div>
-    </ImageOverlayComponent>
+      {data.imageOverlayContent
+        ?.map((data, index) => {
+          switch (data?.__typename) {
+            case "ParagraphGeneralText":
+              return <GeneralTextContent key={data?.id ?? index} data={data} />;
+            case "ParagraphStoryQuote":
+              return <StoryQuoteContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
+            case "ParagraphSectionButton":
+              return <SectionButtonContent key={data?.id ?? index} data={data} />;
+            default:
+              return null;
+          }
+        })
+        .filter(Boolean)}
+    </ImageOverlay>
   );
-};
+}
