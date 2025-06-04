@@ -1,5 +1,5 @@
 import { twJoin, twMerge } from "tailwind-merge";
-import { UnstyledLink } from "@/components/link";
+import { UnstyledLink } from "@/components/unstyled-link";
 import PropTypes from "prop-types";
 
 export const ButtonColors = ["red", "yellow", "blue", "green", "gray", "black", "white", "none"];

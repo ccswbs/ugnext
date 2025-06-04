@@ -1,6 +1,6 @@
 import { Button } from "@uoguelph/react-components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { UnstyledLink } from "@/components/link";
+import { UnstyledLink } from "@/components/unstyled-link";
 import { Typography } from "@uoguelph/react-components/typography";
 
 export const AdmissionRequirementsSidebar = ({ links = [] }) => {

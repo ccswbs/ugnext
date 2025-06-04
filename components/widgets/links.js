@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Card, CardContent, CardTitle, CardImage } from "@uoguelph/react-components/card";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
-import { UnstyledLink } from "@/components/link";
+import { UnstyledLink } from "@/components/unstyled-link";
 import { tv } from "tailwind-variants";
 
 export function LinksWidget({ data }) {

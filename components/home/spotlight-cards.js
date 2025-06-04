@@ -1,5 +1,5 @@
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
-import { UnstyledLink } from "@/components/link";
+import { UnstyledLink } from "@/components/unstyled-link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 

@@ -1,7 +1,6 @@
 import { Section } from "@/components/section";
-import { Heading } from "@/components/heading";
+import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
-import { getHeadingLevel } from "@/lib/string-utils";
 
 export function SectionWidget({ data }) {
   // Sort widgets into primary, secondary and others
@@ -58,7 +57,11 @@ export function SectionWidget({ data }) {
 
   return (
     <>
-      {data.heading && <Heading level={getHeadingLevel(data.headingLevel) ?? 1}>{data.heading}</Heading>}
+      {data.heading && (
+        <Typography type={data.headingLevel ?? "h1"} as={data.headingLevel ?? "h1"}>
+          {data.heading}
+        </Typography>
+      )}
 
       {others.length > 0 && <div className="w-full text-center">{others}</div>}
 
