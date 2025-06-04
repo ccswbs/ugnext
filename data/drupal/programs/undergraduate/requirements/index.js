@@ -230,9 +230,26 @@ export async function getRequirements(studentType, location, program, draft = fa
     }
   }
 
+  const sidebarButtonTitles = new Set();
+  const sidebar = requirements.sidebar
+    .flat()
+    .map((button) => {
+      if (!button) {
+        return null;
+      }
+
+      if (sidebarButtonTitles.has(button?.link?.title)) {
+        return null;
+      }
+
+      sidebarButtonTitles.add(button?.link?.title);
+      return button;
+    })
+    .filter(Boolean);
+
   return {
     sections: sections,
-    sidebar: requirements.sidebar.flat().filter(Boolean),
+    sidebar: sidebar,
     paths: requirements.paths,
   };
 }
