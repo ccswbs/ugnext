@@ -22,9 +22,9 @@ export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
   const content = {};
   content.title = "Ontario Veterinary College News Hub";
-     let OVCMenu = {};
-  OVCMenu.primaryNavigation =  {};
-  OVCMenu.primaryNavigation.menuName =  "ovc-main";
+  let OVCMenu = {};
+  OVCMenu.primaryNavigation = {};
+  OVCMenu.primaryNavigation.menuName = "ovc-main";
   content.menu = await getPageMenu(OVCMenu);
   content.img = null;
 
@@ -90,7 +90,6 @@ export default function Page({ content }) {
         <div className="mb-4" /> {/* Add space after pagination */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
-        
             <NewsCard
               key={index}
               href={legacyNews?.path}
@@ -101,7 +100,6 @@ export default function Page({ content }) {
                 height: legacyNews?.heroImage?.image.height || defaultImage.height,
                 sizes: legacyNews?.heroImage?.image.sizes || "33vw",
                 blurred: legacyNews?.heroImage?.image.blurDataURL || defaultImage.blurDataURL,
-                
               }}
               title={legacyNews?.title}
               className="border rounded shadow"
