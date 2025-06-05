@@ -11,7 +11,15 @@ import Script from "next/script";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 
+const getImageUrl = (src) => {
+  if (src.startsWith("/sites/default/files")) {
+    return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`;
+  }
+  return src;
+};
+
 const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+
 const withKeys = (children) =>
   React.Children.map(children, (child, index) =>
     React.isValidElement(child) ? React.cloneElement(child, { key: index }) : child
@@ -130,13 +138,16 @@ export const DEFAULT_INSTRUCTIONS = [
       const caption = node.attribs["data-caption"] ? (
         <figcaption className="text-sm text-gray-600 mt-2">{node.attribs["data-caption"]}</figcaption>
       ) : null;
+      
+      // Prepend the base URL to relative paths to prevent broken image links on Netlify
+      const src = getImageUrl(node.attribs.src);
 
       // If caption exists, wrap in <figure>, otherwise return just the <Image>
       if (caption) {
         return (
           <figure className="my-4">
             <Image
-              src={node.attribs.src}
+              src={src}
               alt={node.attribs.alt ?? null}
               loading="lazy"
               className={imageClass} // Use the updated className
@@ -151,7 +162,7 @@ export const DEFAULT_INSTRUCTIONS = [
       return (
         <Image
           key={index}
-          src={node.attribs.src}
+          src={src}
           alt={node.attribs.alt ?? null}
           loading="lazy"
           className={imageClass} // Use the updated className
