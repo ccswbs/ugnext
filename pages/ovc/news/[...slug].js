@@ -2,7 +2,8 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
-import { getLegacyNews, getPageID, getPageMenu } from "@/data/drupal/legacy-news";
+import { getLegacyNews, getPageID } from "@/data/drupal/legacy-news";
+import { getPageMenu } from "@/data/drupal/basic-pages";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { FormatDateFull } from "@/lib/date-utils";
 import { HtmlParser } from "@/components/html-parser";
@@ -39,7 +40,12 @@ export async function getStaticProps(context) {
   // Note: change the legacyNewsItem to legacyNewsRevision for the revision query (or vice versa) 
   // Also change the query in the drupal module in get-legacy-news-content.graphql
 
-  legacyNewsItem.menu = await getPageMenu();
+   let OVCMenu = {};
+  OVCMenu.primaryNavigation =  {};
+  OVCMenu.primaryNavigation.menuName =  "ovc-main";
+  
+
+  legacyNewsItem.menu = await getPageMenu(OVCMenu);
 
   // Flatten image prop if doNoDisplay is false
 

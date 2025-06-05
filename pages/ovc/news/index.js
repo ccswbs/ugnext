@@ -1,7 +1,8 @@
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
-import { getPageMenu, getLegacyNewsList } from "@/data/drupal/legacy-news";
+import { getLegacyNewsList } from "@/data/drupal/legacy-news";
+import { getPageMenu } from "@/data/drupal/basic-pages";
 import { Button } from "@/components/button";
 
 import {
@@ -21,7 +22,10 @@ export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
   const content = {};
   content.title = "Ontario Veterinary College News Hub";
-  content.menu = await getPageMenu();
+     let OVCMenu = {};
+  OVCMenu.primaryNavigation =  {};
+  OVCMenu.primaryNavigation.menuName =  "ovc-main";
+  content.menu = await getPageMenu(OVCMenu);
   content.img = null;
 
   // Get the OVC News feed
