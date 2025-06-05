@@ -1,0 +1,32 @@
+query UndergraduatePrograms($after: Cursor = "") {
+  nodeUndergraduatePrograms(first: 100, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      status
+      id: uuid
+      name: title
+      acronym
+      tags {
+        ... on TermUndergraduateProgramSearchTag {
+          name
+        }
+      }
+      type {
+        ... on TermUndergraduateProgramType {
+          name
+        }
+      }
+      url {
+        url
+      }
+      degree {
+        ... on NodeUndergraduateDegree {
+          name: title
+        }
+      }
+    }
+  }
+}

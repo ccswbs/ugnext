@@ -1,0 +1,11 @@
+query AdmissionLocationFromPath($path: String!) {
+  route(path: $path) {
+    ... on RouteInternal {
+      entity {
+        ... on TermAdmissionLocation {
+          name
+        }
+      }
+    }
+  }
+}

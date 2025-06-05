@@ -1,0 +1,9 @@
+query RequirementsContent {
+  undergraduateAdmissionRequirements(filter: { student_type: null, location: null, program: null }) {
+    results {
+      ... on NodeUndergraduateRequirement {
+        id: uuid
+      }
+    }
+  }
+}

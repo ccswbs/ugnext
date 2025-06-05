@@ -5,50 +5,32 @@ import { useMemo, useState } from "react";
 import { Select } from "@/components/select";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import {
-  getUndergraduatePrograms,
-  getUndergraduateStudentTypes,
-  getUndergraduateAdmissionLocations,
-  getUndergraduateDegrees,
-} from "@/data/yaml/programs/undergraduate";
 import { nameAndTagSearch } from "@/lib/use-search";
 import { Button } from "@/components/button";
 import { useRouter } from "next/router";
-import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import {
-  faBars,
-  faFileSignature,
-  faMapLocationDot,
-  faCalendarDays,
-} from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+  getLocations,
+  getPrograms,
+  getStudentTypes,
+  getDefaultSidebar,
+} from "@/data/drupal/programs/undergraduate/requirements";
+import { isDraft } from "@/lib/is-draft";
 
-export async function getStaticProps() {
-  const degrees = (await getUndergraduateDegrees()).map((degree) => ({ ...degree, types: [degree.type] }));
-  const programs = await getUndergraduatePrograms();
+export async function getStaticProps(context) {
+  const draft = isDraft(context);
 
   return {
     props: {
-      studentTypes: await getUndergraduateStudentTypes(),
-      locations: await getUndergraduateAdmissionLocations(),
-      programs: [...programs, ...degrees]
-        .filter((program) => {
-          const allowedTypes = new Set(["major", "bachelor"]);
-          return program.types.some((type) => allowedTypes.has(type.id));
-        })
-        .map((program) => {
-          // Remove any data we don't need for the filter
-          return {
-            id: program.id,
-            name: program.name,
-            tags: program.tags,
-          };
-        })
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      draft: draft,
+      studentTypes: await getStudentTypes(),
+      locations: await getLocations(),
+      programs: (await getPrograms(draft)).sort((a, b) => a.name.localeCompare(b.name)),
+      sidebar: await getDefaultSidebar(),
     },
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ studentTypes, locations, programs }) {
+export default function UndergraduateAdmissionRequirements({ studentTypes, locations, programs, sidebar }) {
   const [selectedStudentType, setSelectedStudentType] = useState(null);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -107,13 +89,11 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                     </Heading>
                   }
                   options={[
-                    ...locations
-                      .filter((location) => location.type === "domestic")
-                      .map((location) => ({
-                        label: location.name,
-                        value: location,
-                        key: location.id,
-                      })),
+                    ...locations.domestic.map((location) => ({
+                      label: location.name,
+                      value: location,
+                      key: location.id,
+                    })),
                     {
                       label: "Outside of Canada",
                       value: "international",
@@ -153,13 +133,11 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                         I study/studied in
                       </Heading>
                     }
-                    options={locations
-                      .filter((location) => location.type === "international")
-                      .map((location) => ({
-                        label: location.name,
-                        value: location,
-                        key: location.id,
-                      }))}
+                    options={locations.international.map((location) => ({
+                      label: location.name,
+                      value: location,
+                      key: location.id,
+                    }))}
                     onChange={(selection) => {
                       setSelectedLocation(selection?.value);
                     }}
@@ -173,13 +151,11 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                         My curriculum of study is/was
                       </Heading>
                     }
-                    options={locations
-                      .filter((location) => location.type === "curriculum")
-                      .map((location) => ({
-                        label: location.name,
-                        value: location,
-                        key: location.id,
-                      }))}
+                    options={locations.curriculum.map((location) => ({
+                      label: location.name,
+                      value: location,
+                      key: location.id,
+                    }))}
                     onChange={(selection) => {
                       setSelectedLocation(selection?.value);
                     }}
@@ -223,36 +199,7 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
           }
           secondary={
             <div className="flex flex-col gap-2 w-full px-4">
-              <AdmissionRequirementsSidebar
-                links={[
-                  {
-                    url: "https://www.uoguelph.ca/admission/undergraduate/apply/",
-                    text: "Apply Now!",
-                    icon: faGryphonStatue,
-                    highlight: true,
-                  },
-                  {
-                    url: "/programs/undergraduate",
-                    text: "View All Programs",
-                    icon: faBars,
-                  },
-                  {
-                    url: "https://www.uoguelph.ca/admission/undergraduate/tours/",
-                    text: "Register for a Campus Tour",
-                    icon: faMapLocationDot,
-                  },
-                  {
-                    url: "https://www.uoguelph.ca/registrar/forms/spf/",
-                    text: "Fill out our Student Profile Form",
-                    icon: faFileSignature,
-                  },
-                  {
-                    url: "https://www.uoguelph.ca/admission/undergraduate/apply/deadlines/",
-                    text: "Dates & Deadlines",
-                    icon: faCalendarDays,
-                  },
-                ]}
-              />
+              {Array.isArray(sidebar) && sidebar.length > 0 && <AdmissionRequirementsSidebar data={sidebar} />}
             </div>
           }
         />

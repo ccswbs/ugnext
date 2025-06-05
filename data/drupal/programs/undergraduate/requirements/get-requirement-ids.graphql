@@ -1,0 +1,9 @@
+query RequirementsContent($studentType: String!, $location: String!, $program: Float) {
+  undergraduateAdmissionRequirements(filter: { student_type: $studentType, location: $location, program: $program }) {
+    results {
+      ... on NodeUndergraduateRequirement {
+        id: uuid
+      }
+    }
+  }
+}

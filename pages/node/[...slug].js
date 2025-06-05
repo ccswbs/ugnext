@@ -37,6 +37,21 @@ export async function getStaticProps(context) {
           permanent: true,
         },
       };
+    case "NodeUndergraduateProgram":
+    case "NodeUndergraduateDegree":
+      return {
+        redirect: {
+          destination: "/programs/undergraduate",
+          permanent: true,
+        },
+      };
+    case "NodeUndergraduateRequirement":
+      return {
+        redirect: {
+          destination: "/programs/undergraduate/requirements",
+          permanent: true,
+        },
+      };
     // Fallback to showing 404 if we haven't defined redirect logic for a node type.
     default:
       return {
