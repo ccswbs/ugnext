@@ -1,5 +1,5 @@
-query GetDegreeLatestRevision($id: String!, $status: Boolean) {
-  latestContentRevision(filter: { uuid: $id, status: $status, type: "undergraduate_degree" }) {
+query GetDegreeLatestPublishedRevision($id: String!) {
+  latestContentRevision(filter: { uuid: $id, status: true, type: "undergraduate_degree" }) {
     results {
       ... on NodeUndergraduateDegree {
         name: title

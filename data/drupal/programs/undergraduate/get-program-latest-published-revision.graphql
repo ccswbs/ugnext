@@ -1,5 +1,5 @@
-query GetProgramLatestPublishedRevision($id: String!, $status: Boolean) {
-  latestContentRevision(filter: { uuid: $id, status: $status, type: "undergraduate_program" }) {
+query GetProgramLatestPublishedRevision($id: String!) {
+  latestContentRevision(filter: { uuid: $id, status: true, type: "undergraduate_program" }) {
     results {
       ... on NodeUndergraduateProgram {
         name: title

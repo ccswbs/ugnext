@@ -1,7 +1,0 @@
-query UndergraduateDegrees {
-  nodeUndergraduateDegrees(first: 100) {
-    nodes {
-      id: uuid
-    }
-  }
-}
