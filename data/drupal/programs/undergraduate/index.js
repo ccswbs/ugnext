@@ -70,7 +70,9 @@ export async function getPrograms(draft = false) {
   }
 
   // Get the latest revisions content for each ID we got from before.
-  const programs = ids.map(async (id) => {
+  const programs = [];
+
+  for (const id of ids) {
     const { data } = await graphql(getProgramLatestRevisionQuery, {
       id: id,
       status: draft ? undefined : true,
@@ -78,7 +80,7 @@ export async function getPrograms(draft = false) {
 
     const result = data.latestContentRevision.results[0];
 
-    return {
+    programs.push({
       ...result,
       __typename: "undergraduate-program",
       url: result.url?.url
@@ -87,10 +89,10 @@ export async function getPrograms(draft = false) {
           : `https://uoguelph.ca${result.url.url}`
         : "",
       type: result.type?.map((type) => type.name) ?? [],
-      degree: result.degree?.name ?? null,
+      degree: result?.degree?.name ?? null,
       tags: result.tags?.map((tag) => tag.name) ?? [],
-    };
-  });
+    });
+  }
 
-  return Promise.all(programs);
+  return programs;
 }
