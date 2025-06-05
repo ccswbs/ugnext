@@ -80,7 +80,9 @@ export async function getPrograms(draft = false) {
     total = data.undergraduateMajorsAndDegrees.pageInfo.total;
   }
 
-  const programs = ids.map(async (id) => {
+  const programs = [];
+
+  for (const id of ids) {
     const { data } = await graphql(getProgramDataQuery, {
       id: id,
       status: draft ? undefined : true,
@@ -88,14 +90,14 @@ export async function getPrograms(draft = false) {
 
     const result = data.latestContentRevision.results[0];
 
-    return {
+    programs.push({
       id: result.path.replace(PROGRAM_BASE_PATH, ""),
       name: result.name,
       tags: result.tags?.map((tag) => tag.name) ?? [],
-    };
-  });
+    });
+  }
 
-  return Promise.all(programs);
+  return programs;
 }
 
 export async function parseRequirementPageSlug(slug) {
