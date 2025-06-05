@@ -8,13 +8,6 @@ import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduat
 import { nameAndTagSearch } from "@/lib/use-search";
 import { Button } from "@/components/button";
 import { useRouter } from "next/router";
-import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
-import {
-  faBars,
-  faFileSignature,
-  faMapLocationDot,
-  faCalendarDays,
-} from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import {
   getLocations,
   getPrograms,
