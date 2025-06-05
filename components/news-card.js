@@ -4,7 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-export const OVCNewsCard = ({ href, image, title, footer, className, centered, children }) => {
+export const NewsCard = ({ href, image, title, footer, className, centered, children }) => {
   const Tag = href ? UnstyledLink : "div";
 
   return (
@@ -73,7 +73,7 @@ export const OVCNewsCard = ({ href, image, title, footer, className, centered, c
   );
 };
 
-OVCNewsCard.propTypes = {
+NewsCard.propTypes = {
   href: PropTypes.string,
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,

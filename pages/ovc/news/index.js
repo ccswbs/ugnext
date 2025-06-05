@@ -13,7 +13,7 @@ import {
 } from "@/lib/date-utils";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { useState } from "react";
-import { OVCNewsCard } from "@/components/ovc/ovc-news-card";
+import { NewsCard } from "@/components/news-card";
 import { Pagination } from "@/components/pagination";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 
@@ -87,7 +87,7 @@ export default function Page({ content }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {paginatedNewsList.map((legacyNews, index) => (
         
-            <OVCNewsCard
+            <NewsCard
               key={index}
               href={legacyNews?.path}
               image={{
@@ -103,7 +103,7 @@ export default function Page({ content }) {
               className="border rounded shadow"
             >
               <p className="text-sm">{legacyNews?.articleDate}</p>
-            </OVCNewsCard>
+            </NewsCard>
           ))}
         </div>
         {/* Pagination Below */}
