@@ -1,0 +1,21 @@
+query UndergraduateMajors($page: Int = 0, $status: Boolean = null) {
+  undergraduateMajors(page: $page, filter: { status: $status }) {
+    results {
+      ... on NodeUndergraduateProgram {
+        id: uuid
+        status
+        name: title
+        path
+        tags {
+          ... on TermUndergraduateProgramSearchTag {
+            name
+          }
+        }
+      }
+    }
+    pageInfo {
+      total
+      page
+    }
+  }
+}

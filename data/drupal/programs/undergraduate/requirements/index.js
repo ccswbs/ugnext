@@ -1,7 +1,7 @@
 import getStudentTypesQuery from "./get-student-types.graphql";
 import getLocationsQuery from "./get-locations.graphql";
-import getProgramIdsQuery from "./get-program-ids.graphql";
-import getProgramDataQuery from "./get-program-data.graphql";
+import getProgramsQuery from "./get-programs.graphql";
+import getProgramLatestPublishedRevisionQuery from "./get-program-latest-published-revision.graphql";
 import getStudentTypeFromPathQuery from "./get-student-type-from-path.graphql";
 import getLocationFromPathQuery from "./get-location-from-path.graphql";
 import getProgramFromPathQuery from "./get-program-from-path.graphql";
@@ -11,6 +11,7 @@ import getGeneralRequirementId from "./get-general-requirement-id.graphql";
 import getGeneralRequirementSidebar from "./get-general-requirement-sidebar.graphql";
 import { graphql } from "@/lib/drupal";
 import { partition } from "@/lib/array-utils";
+import { browser as program } from "@chromatic-com/storybook/preset";
 
 const STUDENT_TYPE_BASE_PATH = "/term/undergraduate/admission/student-types/";
 const LOCATION_BASE_PATH = "/term/undergraduate/admission/locations/";
@@ -65,39 +66,35 @@ export async function getLocations() {
 export async function getPrograms(draft = false) {
   let page = 0;
   let total = 1;
-  let ids = [];
+  const programs = [];
+  const unpublished = [];
 
   while (page < total) {
-    const { data } = await graphql(getProgramIdsQuery, {
+    const { data } = await graphql(getProgramsQuery, {
       page: page,
-      status: draft ? undefined : true,
     });
 
-    const results = data.undergraduateMajorsAndDegrees.results.map((node) => node.id);
-    ids = [...ids, ...results];
+    for (const program of data.undergraduateMajors.results) {
+      !draft || program.status ? programs.push(program) : unpublished.push(program);
+    }
 
     page++;
-    total = data.undergraduateMajorsAndDegrees.pageInfo.total;
+    total = Math.ceil(data.undergraduateMajors.pageInfo.total / 100);
   }
 
-  const programs = [];
-
-  for (const id of ids) {
-    const { data } = await graphql(getProgramDataQuery, {
+  for (const { id } of unpublished) {
+    const { data } = await graphql(getProgramLatestPublishedRevisionQuery, {
       id: id,
-      status: draft ? undefined : true,
     });
 
-    const result = data.latestContentRevision.results[0];
-
-    programs.push({
-      id: result.path.replace(PROGRAM_BASE_PATH, ""),
-      name: result.name,
-      tags: result.tags?.map((tag) => tag.name) ?? [],
-    });
+    programs.push(data.latestContentRevision.results[0]);
   }
 
-  return programs;
+  return programs.map((program) => ({
+    id: program.path.replace(PROGRAM_BASE_PATH, ""),
+    name: program.name,
+    tags: program.tags?.map((tag) => tag.name) ?? [],
+  }));
 }
 
 export async function parseRequirementPageSlug(slug) {

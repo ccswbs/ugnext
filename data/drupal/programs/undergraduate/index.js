@@ -17,19 +17,6 @@ export async function getProgramTypes() {
 }
 
 export async function getDegrees(draft = false) {
-  function process(degree) {
-    return {
-      ...degree,
-      __typename: "undergraduate-degree",
-      url: degree.url?.url
-        ? degree.url.url?.startsWith("http")
-          ? degree.url.url
-          : `https://uoguelph.ca${degree.url.url}`
-        : "",
-      type: degree.type?.name ?? null,
-      tags: degree.tags?.map((tag) => tag.name) ?? [],
-    };
-  }
   // Get all the degrees.
   // MOTE: we are making the assumption that they're no more than 100 degrees (a fair assumption since no university has 100 different degrees), otherwise this query will need to be refactored to use pagination/cursors.
   const { data } = await graphql(getDegreesQuery);
@@ -50,25 +37,22 @@ export async function getDegrees(draft = false) {
     degrees.push(data.latestContentRevision.results[0]);
   }
 
-  return degrees.map(process).sort((a, b) => a.name.localeCompare(b.name));
+  return degrees
+    .map((degree) => ({
+      ...degree,
+      __typename: "undergraduate-degree",
+      url: degree.url?.url
+        ? degree.url.url?.startsWith("http")
+          ? degree.url.url
+          : `https://uoguelph.ca${degree.url.url}`
+        : "",
+      type: degree.type?.name ?? null,
+      tags: degree.tags?.map((tag) => tag.name) ?? [],
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function getPrograms(draft = false) {
-  function process(program) {
-    return {
-      ...program,
-      __typename: "undergraduate-program",
-      url: program.url?.url
-        ? program.url.url?.startsWith("http")
-          ? program.url.url
-          : `https://uoguelph.ca${program.url.url}`
-        : "",
-      type: program.type?.map((type) => type.name) ?? [],
-      degree: program?.degree?.name ?? null,
-      tags: program.tags?.map((tag) => tag.name) ?? [],
-    };
-  }
-
   // Similar idea to getDegrees but our assumption of less than 100 fails for programs, so we need to use pagination/cursors.
   let hasNextPage = true;
   let cursor = "";
@@ -92,11 +76,23 @@ export async function getPrograms(draft = false) {
   for (const { id } of unpublished) {
     const { data } = await graphql(getProgramLatestRevisionPublishedQuery, {
       id: id,
-      status: draft ? undefined : true,
     });
 
     programs.push(data.latestContentRevision.results[0]);
   }
 
-  return programs.map(process).sort((a, b) => a.name.localeCompare(b.name));
+  return programs
+    .map((program) => ({
+      ...program,
+      __typename: "undergraduate-program",
+      url: program.url?.url
+        ? program.url.url?.startsWith("http")
+          ? program.url.url
+          : `https://uoguelph.ca${program.url.url}`
+        : "",
+      type: program.type?.map((type) => type.name) ?? [],
+      degree: program?.degree?.name ?? null,
+      tags: program.tags?.map((tag) => tag.name) ?? [],
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }

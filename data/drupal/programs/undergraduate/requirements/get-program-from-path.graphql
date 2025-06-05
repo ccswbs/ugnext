@@ -8,18 +8,6 @@ query ProgramFromPath($path: String!) {
           url {
             url
           }
-          type {
-            ... on TermUndergraduateProgramType {
-              name
-            }
-          }
-        }
-        ... on NodeUndergraduateDegree {
-          id
-          name: title
-          url {
-            url
-          }
         }
       }
     }
