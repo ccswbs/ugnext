@@ -1,7 +1,5 @@
-import { Button } from "@uoguelph/react-components/button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { UnstyledLink } from "@/components/unstyled-link";
 import { Typography } from "@uoguelph/react-components/typography";
+import { ButtonWidget } from "@/components/widgets/button-section";
 
 export const AdmissionRequirementsSidebar = ({ data = [] }) => {
   return (

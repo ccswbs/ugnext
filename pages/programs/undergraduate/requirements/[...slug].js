@@ -1,7 +1,3 @@
-import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
-import { Heading } from "@/components/heading";
-import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
@@ -9,8 +5,14 @@ import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduat
 import { parseRequirementPageSlug, getRequirements } from "@/data/drupal/programs/undergraduate/requirements";
 import { Fragment } from "react";
 import { isDraft } from "@/lib/is-draft";
-import { Link } from "@/components/link";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
+import { Meta } from "@/components/meta";
+import { Header } from "@uoguelph/react-components/header";
+import { Footer } from "@uoguelph/react-components/footer";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
+import { UnstyledLink } from "@/components/unstyled-link";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Button } from "@uoguelph/react-components/button";
 
 export async function getStaticPaths() {
   return {
@@ -44,52 +46,51 @@ export default function UndergraduateAdmissionRequirements({ draft, studentType,
   const title = `${program?.name} Admission Requirements for ${studentType?.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location}`;
 
   return (
-    <Layout title={title ?? "Undergraduate Admission Requirements"}>
-      {/* Show the paths to the requirement blocks that make up this page */}
-      {draft && Array.isArray(requirements?.paths) && (
-        <div className="fixed bottom-4 left-4 bg-uog-color-red text-white p-2 rounded-md flex gap-2 flex-col z-10">
-          {requirements?.paths.map((path) => (
-            <Link color="none" key={path.url} href={path.url}>
-              {path.title}
-            </Link>
-          ))}
-        </div>
-      )}
-      <Container centered>
-        <Section
-          primary={
-            <>
-              <Heading level={1} className="text-4xl">
-                {title ?? "Undergraduate Admission Requirements"}
-              </Heading>
-              <div className="flex flex-col">
-                {requirements?.sections?.map((section) => (
-                  <>
-                    <Heading level={2}>{section.title}</Heading>
-                    {section.content?.map((content) => (
-                      <WidgetSelector key={content.id} data={content} />
-                    ))}
-                  </>
-                ))}
-              </div>
-            </>
-          }
-          secondary={
-            <div className="flex flex-col gap-2 w-full px-4 mt-4">
-              <Button
-                className="flex items-center justify-start gap-4 w-full"
-                href="/programs/undergraduate/requirements"
-                color="red"
-              >
-                <FontAwesomeIcon className="text-2xl" icon={faArrowLeftToBracket} />
-                <span className="font-bold">View Other Requirements</span>
-              </Button>
+    <>
+      <Meta title="Undergraduate Admission Requirements" />
+      <Header></Header>
+      <Layout>
+        <LayoutContent className="pb-10!">
+          <Section
+            primary={
+              <>
+                <Typography as="h1" type="h1">
+                  {title ?? "Undergraduate Admission Requirements"}
+                </Typography>
+                <div className="flex flex-col">
+                  {requirements?.sections?.map((section) => (
+                    <>
+                      <Typography as="h2" type="h3">
+                        {section.title}
+                      </Typography>
 
-              <AdmissionRequirementsSidebar data={requirements?.sidebar} />
-            </div>
-          }
-        />
-      </Container>
-    </Layout>
+                      {section.content?.map((content) => (
+                        <WidgetSelector key={content.id} data={content} />
+                      ))}
+                    </>
+                  ))}
+                </div>
+              </>
+            }
+            secondary={
+              <div className="flex flex-col gap-2 w-full px-4 mt-4">
+                <Button
+                  className="flex items-center justify-start gap-4 w-full"
+                  href="/programs/undergraduate/requirements"
+                  color="red"
+                  as={UnstyledLink}
+                >
+                  <FontAwesomeIcon className="text-2xl" icon={faArrowLeftToBracket} />
+                  <span className="font-bold">View Other Requirements</span>
+                </Button>
+
+                <AdmissionRequirementsSidebar data={requirements?.sidebar} />
+              </div>
+            }
+          />
+        </LayoutContent>
+      </Layout>
+      <Footer></Footer>
+    </>
   );
 }
