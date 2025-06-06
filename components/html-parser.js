@@ -18,21 +18,30 @@ export const DEFAULT_PROCESSOR = new ProcessNodeDefinitions().processDefaultNode
 export const DEFAULT_INSTRUCTIONS = [
   // h1, h2, ... h6 tags
   {
-    shouldProcessNode: (node) => headingTags.has(node.tagName),
-    processNode: (node, children) => {
-      const level = getHeadingLevel(node.tagName);
+  shouldProcessNode: (node) => headingTags.has(node.tagName),
+  processNode: (node, children) => {
+    const level = getHeadingLevel(node.tagName);
 
-      node.attribs.className = node.attribs.class;
-      delete node.attribs.class;
-      delete node?.attribs?.style;
+    node.attribs.className = node.attribs.class;
+    delete node.attribs.class;
+    delete node?.attribs?.style;
 
-      return (
-        <Heading {...node.attribs} level={level}>
-          {children}
-        </Heading>
-      );
-    },
+    // Remove <strong> tags inside heading tags
+    const remStrongChildren = children.map(child => {
+      if (child && child.type === 'strong' && child.props && child.props.children) {
+        // Unwrap <strong> by returning its children
+        return child.props.children;
+      }
+      return child;
+    });
+
+    return (
+      <Heading {...node.attribs} level={level}>
+        {remStrongChildren}
+      </Heading>
+    );
   },
+},
   // Links
   {
     shouldProcessNode: (node) => node.tagName === "a" && typeof node.attribs?.href === "string",
