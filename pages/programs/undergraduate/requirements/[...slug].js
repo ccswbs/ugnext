@@ -123,7 +123,7 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
                       highlight: true,
                     },
                     {
-                      url: program?.url,
+                      url: program?.url ?? "",
                       text: "About This Program",
                       icon: faClipboard,
                       highlight: true,
