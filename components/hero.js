@@ -10,7 +10,7 @@ import { faPlay } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
 export const Hero = ({ id, variant = "spotlight", image, video, title, caption, button, alignment }) => {
   return (
-    <div className={twJoin("relative flex w-full flex-col overflow-hidden", variant !== "spotlight" && " h-fit")}>
+    <div className={twJoin("relative flex w-full flex-col overflow-hidden hero", variant !== "spotlight" && " h-fit")}>
       <Image
         className={twMerge(
           "aspect-[16/9] w-full object-cover md:aspect-[2.625]",
@@ -30,7 +30,7 @@ export const Hero = ({ id, variant = "spotlight", image, video, title, caption, 
         <div className="flex items-center lg:container lg:absolute lg:bottom-0 lg:left-1/2 lg:max-w-max-content lg:-translate-x-1/2 lg:p-4">
           <div
             className={twJoin(
-              "flex w-full bg-black p-7 text-white lg:bg-black/80 lg:backdrop-blur",
+              "flex w-full bg-black p-7 text-white lg:bg-black/80 lg:backdrop-blur hero-caption-container",
               alignment !== "fullWidth" && "lg:max-w-[50%]",
               alignment === "center" && "mx-auto",
               alignment === "right" && "ml-auto"

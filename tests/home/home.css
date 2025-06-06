@@ -1,0 +1,23 @@
+.hero {
+  background: seashell !important;
+}
+
+.hero > img {
+  opacity: 0 !important;
+}
+
+.hero .hero-caption-container * {
+  opacity: 0 !important;
+}
+
+.spotlight-card {
+  background: seashell !important;
+}
+
+.spotlight-card img {
+  opacity: 0 !important;
+}
+
+.spotlight-card span {
+  color: transparent !important;
+}

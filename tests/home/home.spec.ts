@@ -26,5 +26,6 @@ test("home-visual-regression", async ({ page, isMobile }) => {
   await page.goto("/");
   await expect(page).toHaveScreenshot("home.png", {
     fullPage: true,
+    stylePath: path.join(__dirname, "home.css"),
   });
 });
