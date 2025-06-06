@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next build && next start",
     "static-build": "NEXT_STATIC_OUTPUT=true next build",
     "static-start": "NEXT_STATIC_OUTPUT=true bunx serve@latest out",
     "analyze": "ANALYZE=true next dev",
     "export": "next build && next export",
     "format": "prettier -w ./",
-    "test": ""
+    "test": "bunx playwright test"
   },
   "dependencies": {
     "@awesome.me/kit-7993323d0c": "^1.0.10",
