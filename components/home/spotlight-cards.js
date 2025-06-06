@@ -24,7 +24,7 @@ export const SpotlightCards = ({ cards }) => {
           key={data.id}
           as={UnstyledLink}
           href={data.url.url}
-          className={card()}
+          className={`uofg-spotlight-card ${card()}`}
           centered
         >
           <CardImage

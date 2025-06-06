@@ -1,23 +1,23 @@
-.hero {
+.uofg-hero {
   background: seashell !important;
 }
 
-.hero > img {
+.uofg-hero > img {
   opacity: 0 !important;
 }
 
-.hero .hero-caption-container * {
+.uofg-hero .uofg-hero-content-container * {
   opacity: 0 !important;
 }
 
-.spotlight-card {
+.uofg-spotlight-card {
   background: seashell !important;
 }
 
-.spotlight-card img {
+.uofg-spotlight-card img {
   opacity: 0 !important;
 }
 
-.spotlight-card span {
+.uofg-spotlight-card span {
   color: transparent !important;
 }
