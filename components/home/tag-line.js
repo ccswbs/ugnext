@@ -4,7 +4,7 @@ import { Divider } from "@uoguelph/react-components/divider";
 
 export const TagLine = () => (
   <Container className="flex flex-col py-4 items-center justify-center">
-    <Typography type="h1" className="text-center!">
+    <Typography type="h1" as="h1" className="text-center!">
       University of Guelph, Ontario, Canada
     </Typography>
 
