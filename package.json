@@ -11,7 +11,8 @@
     "analyze": "ANALYZE=true next dev",
     "export": "next build && next export",
     "format": "prettier -w ./",
-    "test": "bunx playwright test"
+    "test": "bunx playwright test",
+    "update-snapshots": "bunx playwright test --update-snapshots"
   },
   "dependencies": {
     "@awesome.me/kit-7993323d0c": "^1.0.10",
