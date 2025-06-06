@@ -1,0 +1,28 @@
+query GetProgramLatestPublishedRevision($id: String!) {
+  latestContentRevision(filter: { uuid: $id, status: true, type: "undergraduate_program" }) {
+    results {
+      ... on NodeUndergraduateProgram {
+        name: title
+        acronym
+        tags {
+          ... on TermUndergraduateProgramSearchTag {
+            name
+          }
+        }
+        type {
+          ... on TermUndergraduateProgramType {
+            name
+          }
+        }
+        url {
+          url
+        }
+        degree {
+          ... on NodeUndergraduateDegree {
+            name: title
+          }
+        }
+      }
+    }
+  }
+}

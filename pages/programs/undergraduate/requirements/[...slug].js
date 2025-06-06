@@ -1,25 +1,16 @@
-import { Layout, LayoutContent} from "@uoguelph/react-components/components/layout";
-import { Header } from "@uoguelph/react-components/header";
-import { Footer } from "@uoguelph/react-components/footer";
-import { Meta } from "@/components/meta";
-import { Typography } from "@uoguelph/react-components/typography";
-import { Button } from "@uoguelph/react-components/button";
+import { Layout } from "@/components/layout";
+import { Container } from "@/components/container";
+import { Heading } from "@/components/heading";
+import { Button } from "@/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import { getUndergraduateRequirements, parseAdmissionRequirementsSlug } from "@/data/yaml/programs/undergraduate";
-import { List, ListItem } from "@uoguelph/react-components/list";
-import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
-import {
-  faBars,
-  faCalendarDays,
-  faFileSignature,
-  faMapLocationDot,
-} from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { parseRequirementPageSlug, getRequirements } from "@/data/drupal/programs/undergraduate/requirements";
 import { Fragment } from "react";
-import { HtmlParser } from "@/components/html-parser";
-import { UnstyledLink } from "@/components/unstyled-link";
+import { isDraft } from "@/lib/is-draft";
+import { Link } from "@/components/link";
+import { WidgetSelector } from "@/components/widgets/widget-selector";
 
 export async function getStaticPaths() {
   return {
@@ -29,7 +20,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const { studentType, location, program } = await parseAdmissionRequirementsSlug(context.params.slug);
+  const draft = isDraft(context);
+  const { studentType, location, program } = await parseRequirementPageSlug(context.params.slug);
 
   if (!studentType || !location || !program) {
     return {
@@ -37,126 +29,67 @@ export async function getStaticProps(context) {
     };
   }
 
-  const requirements = await getUndergraduateRequirements(studentType, location, program);
-
   return {
     props: {
+      draft: draft,
       studentType: studentType,
       location: location,
-      program: { id: program.id, name: program.name, url: program.url },
-      requirements: requirements,
+      program: program,
+      requirements: await getRequirements(studentType, location, program, draft),
     },
   };
 }
 
-export default function UndergraduateAdmissionRequirements({ studentType, location, program, requirements }) {
-  const title = `${program?.name} Admission Requirements for ${studentType?.name.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location?.name}`;
-
-  const wrappers = {
-    list: List,
-    text: "p",
-  };
-
-  const items = {
-    list: ListItem,
-    text: Fragment,
-  };
+export default function UndergraduateAdmissionRequirements({ draft, studentType, location, program, requirements }) {
+  const title = `${program?.name} Admission Requirements for ${studentType?.replace("Student", "Students").replace("Graduate", "Graduates")} in ${location}`;
 
   return (
-    <>
-    <Meta title={title ?? "Undergraduate Admission Requirements"} />
-      <Header></Header>
+    <Layout title={title ?? "Undergraduate Admission Requirements"}>
+      {/* Show the paths to the requirement blocks that make up this page */}
+      {draft && Array.isArray(requirements?.paths) && (
+        <div className="fixed bottom-4 left-4 bg-uog-color-red text-white p-2 rounded-md flex gap-2 flex-col z-10">
+          {requirements?.paths.map((path) => (
+            <Link color="none" key={path.url} href={path.url}>
+              {path.title}
+            </Link>
+          ))}
+        </div>
+      )}
+      <Container centered>
+        <Section
+          primary={
+            <>
+              <Heading level={1} className="text-4xl">
+                {title ?? "Undergraduate Admission Requirements"}
+              </Heading>
+              <div className="flex flex-col">
+                {requirements?.sections?.map((section) => (
+                  <>
+                    <Heading level={2}>{section.title}</Heading>
+                    {section.content?.map((content) => (
+                      <WidgetSelector key={content.id} data={content} />
+                    ))}
+                  </>
+                ))}
+              </div>
+            </>
+          }
+          secondary={
+            <div className="flex flex-col gap-2 w-full px-4 mt-4">
+              <Button
+                className="flex items-center justify-start gap-4 w-full"
+                href="/programs/undergraduate/requirements"
+                color="red"
+              >
+                <FontAwesomeIcon className="text-2xl" icon={faArrowLeftToBracket} />
+                <span className="font-bold">View Other Requirements</span>
+              </Button>
 
-      <Layout>
-        <LayoutContent>
-            <Section
-              primary={
-                <>
-                  <Typography as={"h1"} type={"h1"}>
-                    {title ?? "Undergraduate Admission Requirements"}
-                  </Typography>
-
-                  <div className="flex flex-col">
-                    {requirements
-                      ?.filter((requirement) => requirement.content.length > 0)
-                      ?.map((requirement, index) => {
-                        const Wrapper = wrappers[requirement.type];
-                        const Content = items[requirement.type];
-
-                        return (
-                          <Fragment key={index}>
-                            <Typography as={"h2"} type={"h3"}>
-                              {requirement.name}
-                            </Typography>
-
-                            <Wrapper>
-                              {requirement.content.map((item, index) => (
-                                <Content key={index}>
-                                  <HtmlParser html={item} />
-                                </Content>
-                              ))}
-                            </Wrapper>
-                          </Fragment>
-                        );
-                      })}
-                  </div>
-                </>
-              }
-              secondary={
-                <div className="flex flex-col gap-2 w-full px-4 mt-4">
-                  <Button
-                    className="flex items-center justify-start gap-4 w-full"
-                    href="/programs/undergraduate/requirements"
-                    color="red"
-                    as={UnstyledLink}
-                  >
-                    <FontAwesomeIcon className="text-2xl" icon={faArrowLeftToBracket} />
-                    <span className="font-bold">View Other Requirements</span>
-                  </Button>
-
-                  <AdmissionRequirementsSidebar
-                    links={[
-                      {
-                        url: "https://www.uoguelph.ca/admission/undergraduate/apply/",
-                        text: "Apply Now!",
-                        icon: faGryphonStatue,
-                        highlight: true,
-                      },
-                      {
-                        url: program?.url,
-                        text: "About This Program",
-                        icon: faClipboard,
-                        highlight: true,
-                      },
-                      {
-                        url: "/programs/undergraduate",
-                        text: "View All Programs",
-                        icon: faBars,
-                      },
-                      {
-                        url: "https://www.uoguelph.ca/admission/undergraduate/tours/",
-                        text: "Register for a Campus Tour",
-                        icon: faMapLocationDot,
-                      },
-                      {
-                        url: "https://www.uoguelph.ca/registrar/forms/spf/",
-                        text: "Fill out our Student Profile Form",
-                        icon: faFileSignature,
-                      },
-                      {
-                        url: "https://www.uoguelph.ca/admission/undergraduate/apply/deadlines/",
-                        text: "Dates & Deadlines",
-                        icon: faCalendarDays,
-                      },
-                    ]}
-                  />
-                </div>
-              }
-            />
-        </LayoutContent>
-      </Layout>
-
-      <Footer>
-    </>
+              <AdmissionRequirementsSidebar data={requirements?.sidebar} />
+            </div>
+          }
+        />
+      </Container>
+    </Layout>
   );
 }

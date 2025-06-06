@@ -1,0 +1,22 @@
+query UndergraduateDegrees {
+  nodeUndergraduateDegrees(first: 100) {
+    nodes {
+      status
+      name: title
+      acronym
+      tags {
+        ... on TermUndergraduateProgramSearchTag {
+          name
+        }
+      }
+      type {
+        ... on TermUndergraduateDegreeType {
+          name
+        }
+      }
+      url {
+        url
+      }
+    }
+  }
+}
