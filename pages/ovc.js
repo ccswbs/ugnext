@@ -20,6 +20,7 @@ import { OVCCards } from "@/components/ovchome/ovc-cards";
 import { Link } from "@/components/link";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { Button } from "@/components/button";
+import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -78,12 +79,12 @@ function renderFeaturedNewsItem(newsItem, index) {
     >
       {/* Image Section */}
       <div className="relative">
-        <Image
-          src={newsItem?.heroImage.image.url}
-          width={newsItem?.heroImage.image.width}
-          height={newsItem?.heroImage.image.height}
-          blurred={newsItem?.heroImage.image.blurDataURL}
-          alt={newsItem?.heroImage.image.alt || "News Image"}
+        <Image 
+          src={newsItem?.heroImage?.image?.url || defaultImage.src}
+          width={newsItem?.heroImage?.image?.width || defaultImage.width}
+          height={newsItem?.heroImage?.image?.height|| defaultImage.height}
+          blurred={newsItem?.heroImage?.image?.blurDataURL || defaultImage.blurDataURL}
+          alt={newsItem?.heroImage?.image?.alt  || "OVC Front Entrance"}
           className="object-cover "
           style={{ aspectRatio: "9 / 4" }}
         />
