@@ -3,7 +3,7 @@ import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
 import { getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
-import { getFeaturedLegacyNews } from "@/data/drupal/ovchome";
+import { getFeaturedLegacyNews } from "@/data/drupal/ovc-news";
 import { WidgetSelector } from "@/components/widgets/widget-selector";
 import Image from "next/image";
 

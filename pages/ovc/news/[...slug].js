@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
-import { getLegacyNews, getPageID } from "@/data/drupal/legacy-news";
+import { getLegacyNews, getPageID } from "@/data/drupal/ovc-news";
 import { getPageMenu } from "@/data/drupal/basic-pages";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { FormatDateFull } from "@/lib/date-utils";

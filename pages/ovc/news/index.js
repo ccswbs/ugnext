@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { Container } from "@/components/container";
 import { Heading } from "@/components/heading";
-import { getLegacyNewsList } from "@/data/drupal/legacy-news";
+import { getLegacyNewsList } from "@/data/drupal/ovc-news";
 import { getPageMenu } from "@/data/drupal/basic-pages";
 import { Button } from "@/components/button";
 

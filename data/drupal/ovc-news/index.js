@@ -1,5 +1,7 @@
 import { graphql } from "@/lib/drupal";
 import { toTitleCase } from "@/lib/string-utils";
+
+import getFeaturedLegacyNewsQuery from "./get-featured-legacy-news.graphql";
 import getPageIDQuery from "./get-page-id.graphql";
 import getLegacyNewsItemQuery from "./get-legacy-news-content.graphql";
 import getLegacyNewsListQuery from "./get-legacy-news-list.graphql";
@@ -27,4 +29,9 @@ export const getLegacyNewsList = async () => {
   return data.legacyNews.results;
 };
 
+export const getFeaturedLegacyNews = async () => {
+  const { data } = await graphql(getFeaturedLegacyNewsQuery, {});
+
+  return data?.featuredLegacyNews?.results;
+};
 
