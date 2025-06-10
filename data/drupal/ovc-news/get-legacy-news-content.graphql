@@ -1,0 +1,38 @@
+#import "../media.graphql"
+
+query GetLegacyNews($id: String = "", $status: Boolean = false) {
+  legacyNewsItem(filter: { id: $id, status: $status, type: "article" }) {
+    results {
+      ... on NodeArticle {
+        id
+        title
+        created {
+          time
+          timestamp
+        }
+        body {
+          processed
+        }
+        doNotDisplayImage
+        newsCategory {
+          ... on TermNewsCategory {
+            id
+            name
+          }
+        }
+        heroImage {
+          ... on MediaImage {
+            path
+            image {
+              alt
+              height
+              url
+              width
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

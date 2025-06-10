@@ -12,6 +12,13 @@ import Script from "next/script";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 
+const getImageUrl = (src) => {
+  if (src.startsWith("/sites/default/files")) {
+    return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`;
+  }
+  return src;
+};
+
 const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
 
 const parser = new Parser();
@@ -76,7 +83,18 @@ export const DEFAULT_INSTRUCTIONS = [
       );
     },
   },
-  // Links
+  // Remove <em> around <i>
+  {
+    shouldProcessNode: (node) =>
+      node.name === "em" &&
+      node.children?.length === 1 &&
+      node.children[0].name === "i" &&
+      node.children[0].attribs?.class?.includes("fa-"),
+    processNode: (node, children, index) => {
+      return React.cloneElement(children[0], { key: index });
+    },
+  },
+  // Links and Buttons
   {
     shouldProcessNode: (node) => node.tagName === "a" && typeof node.attribs?.href === "string",
     processNode: (node, children) => {
@@ -144,19 +162,73 @@ export const DEFAULT_INSTRUCTIONS = [
   {
     shouldProcessNode: (node) =>
       node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
-    processNode: (node) => {
-      delete node?.attribs?.style;
+    processNode: (node, _, index) => {
 
+      // Convert Bootstrap alignment classes to Tailwind equivalents
+      let imageClass = node.attribs.class || "";
+      imageClass = imageClass
+        .replace("align-left", "float-left mr-4") // Convert `align-left` to `float-left` with margin
+        .replace("align-right", "float-right ml-4"); // Convert `align-right` to `float-right` with margin
+        // Handle `data-align` attributes
+
+        // Remove the `class` attribute and any inline styles
+      delete node?.attribs?.class;
+
+      // Check for caption (data-caption or figcaption)
+      const caption = node.attribs["data-caption"] ? (
+        <figcaption className="text-sm text-gray-600 mt-2">{node.attribs["data-caption"]}</figcaption>
+      ) : null;
+
+      // Prepend the base URL to relative paths to prevent broken image links on Netlify
+      const src = getImageUrl(node.attribs.src);
+
+      // If caption exists, wrap in <figure>, otherwise return just the <Image>
+      if (caption) {
+        return (
+          <figure className="my-4">
+            <Image
+              src={src}
+              alt={node.attribs.alt ?? null}
+              loading="lazy"
+              className={imageClass} // Use the updated className
+              width={node.attribs.width}
+              height={node.attribs.height}
+            />
+            {caption}
+          </figure>
+        );
+      }
+      // Return just the <Image> if no caption exists
       return (
         <Image
-          src={node.attribs.src}
+          key={index}
+          src={src}
           alt={node.attribs.alt ?? null}
           loading="lazy"
-          className={node.attribs.class}
+          className={imageClass} // Use the updated className
           width={node.attribs.width}
           height={node.attribs.height}
         />
       );
+    },
+  },
+  // Figure
+  {
+    shouldProcessNode: (node) => node.tagName === "figure",
+    processNode: (node, children) => {
+      // Extract alignment classes from the `class` attribute or `data-align`
+      let figureClass = "my-4"; // Default margin for figures
+      if (node.attribs?.class?.includes("align-left") || node.attribs["data-align"] === "left") {
+        figureClass = "float-left mr-4";
+      } else if (node.attribs?.class?.includes("align-right") || node.attribs["data-align"] === "right") {
+        figureClass = "float-right ml-4";
+      }
+
+      // Remove inline styles
+      delete node?.attribs?.style;
+
+      // Return the <figure> element with processed children
+      return <figure className={figureClass}>{children}</figure>;
     },
   },
   // Scripts
