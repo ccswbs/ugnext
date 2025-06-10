@@ -11,7 +11,15 @@ import Script from "next/script";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 
+const getImageUrl = (src) => {
+  if (src.startsWith("/sites/default/files")) {
+    return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`;
+  }
+  return src;
+};
+
 const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+
 const withKeys = (children) =>
   React.Children.map(children, (child, index) =>
     React.isValidElement(child) ? React.cloneElement(child, { key: index }) : child
@@ -39,10 +47,10 @@ export const DEFAULT_INSTRUCTIONS = [
   // Remove <em> around <i>
   {
     shouldProcessNode: (node) =>
-      node.name === 'em' &&
+      node.name === "em" &&
       node.children?.length === 1 &&
-      node.children[0].name === 'i' &&
-      node.children[0].attribs?.class?.includes('fa-'),
+      node.children[0].name === "i" &&
+      node.children[0].attribs?.class?.includes("fa-"),
     processNode: (node, children, index) => {
       return React.cloneElement(children[0], { key: index });
     },
@@ -95,11 +103,7 @@ export const DEFAULT_INSTRUCTIONS = [
       delete node?.attribs?.style;
 
       return (
-        <List
-          {...node.attribs}
-          variant={node.tagName === "ol" ? "ordered" : "unordered"}
-          key={index}
-        >
+        <List {...node.attribs} variant={node.tagName === "ol" ? "ordered" : "unordered"} key={index}>
           {children
             .filter((child) => child.type === "li")
             .map((child, i) => (
@@ -117,27 +121,33 @@ export const DEFAULT_INSTRUCTIONS = [
   // Images
   {
     shouldProcessNode: (node) =>
-    node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
+      node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
     processNode: (node, _, index) => {
-      delete node?.attribs?.style;
+  
       // Convert Bootstrap alignment classes to Tailwind equivalents
       let imageClass = node.attribs.class || "";
       imageClass = imageClass
         .replace("align-left", "float-left mr-4") // Convert `align-left` to `float-left` with margin
         .replace("align-right", "float-right ml-4"); // Convert `align-right` to `float-right` with margin
-      // Handle `data-align` attributes
+        // Handle `data-align` attributes
+
+        // Remove the `class` attribute and any inline styles
+      delete node?.attribs?.class;
 
       // Check for caption (data-caption or figcaption)
       const caption = node.attribs["data-caption"] ? (
         <figcaption className="text-sm text-gray-600 mt-2">{node.attribs["data-caption"]}</figcaption>
       ) : null;
+      
+      // Prepend the base URL to relative paths to prevent broken image links on Netlify
+      const src = getImageUrl(node.attribs.src);
 
       // If caption exists, wrap in <figure>, otherwise return just the <Image>
       if (caption) {
         return (
           <figure className="my-4">
             <Image
-              src={node.attribs.src}
+              src={src}
               alt={node.attribs.alt ?? null}
               loading="lazy"
               className={imageClass} // Use the updated className
@@ -152,7 +162,7 @@ export const DEFAULT_INSTRUCTIONS = [
       return (
         <Image
           key={index}
-          src={node.attribs.src}
+          src={src}
           alt={node.attribs.alt ?? null}
           loading="lazy"
           className={imageClass} // Use the updated className
@@ -185,12 +195,7 @@ export const DEFAULT_INSTRUCTIONS = [
   {
     shouldProcessNode: (node) => node.tagName === "script",
     processNode: (node, _, index) => (
-      <Script
-        key={index}
-        src={node.attribs.src}
-        type={node.attribs.type}
-        strategy="lazyOnload"
-      />
+      <Script key={index} src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />
     ),
   },
   // Fallback
@@ -199,9 +204,7 @@ export const DEFAULT_INSTRUCTIONS = [
     processNode: (node, children, index) => {
       delete node?.attribs?.style;
       const element = DEFAULT_PROCESSOR(node, children);
-      return React.isValidElement(element)
-        ? React.cloneElement(element, { key: index })
-        : element;
+      return React.isValidElement(element) ? React.cloneElement(element, { key: index }) : element;
     },
   },
 ];
