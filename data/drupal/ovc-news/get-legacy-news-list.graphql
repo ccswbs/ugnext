@@ -1,0 +1,32 @@
+query GetLegacyNewsList {
+  legacyNews {
+    results {
+      ... on NodeArticle {
+        id
+        title
+        path
+        created {
+          time
+          timestamp
+        }
+        newsCategory {
+          ... on TermNewsCategory {
+            id
+            name
+          }
+        }
+        heroImage {
+          ... on MediaImage {
+            id
+            image {
+              alt
+              url
+              height
+              width
+            }
+          }
+        }
+      }
+    }
+  }
+}
