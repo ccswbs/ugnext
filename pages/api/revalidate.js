@@ -12,6 +12,8 @@ export default async function handler(request, response) {
     return response.status(400).json({ message: "Invalid slug." });
   }
 
+  console.log(`Revalidating ${slug}`);
+
   try {
     await response.revalidate(slug);
     return response.json({});
