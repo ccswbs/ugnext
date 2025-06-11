@@ -38,13 +38,13 @@ export async function getStaticProps(context) {
         },
       };
     //  For LegacyNews (Articles) redirect to /ovc-news/
-    // case "NodeArticle":
-    //   return {
-    //     redirect: {
-    //       destination: "/node/",
-    //       permanent: true,
-    //     },
-    //   };
+    case "NodeArticle":
+      return {
+        redirect: {
+          destination: "/ovc/news/",
+          permanent: true,
+        },
+      };
     // Fallback to showing 404 if we haven't defined redirect logic for a node type.
     default:
       return {
