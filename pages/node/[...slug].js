@@ -41,7 +41,7 @@ export async function getStaticProps(context) {
     case "NodeArticle":
       return {
         redirect: {
-          destination: "/node/[...slug]",
+          destination: "/node/",
           permanent: true,
         },
       };
