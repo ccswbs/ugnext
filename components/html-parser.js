@@ -37,9 +37,18 @@ export const DEFAULT_INSTRUCTIONS = [
       delete node.attribs.class;
       delete node?.attribs?.style;
 
+      // Remove <strong> tags inside heading tags
+      const remStrongChildren = children.map(child => {
+        if (child && child.type === 'strong' && child.props && child.props.children) {
+          // Unwrap <strong> by returning its children
+          return child.props.children;
+        }
+        return child;
+      });
+
       return (
         <Heading {...node.attribs} level={level} key={index}>
-          {withKeys(children)}
+          {withKeys(remStrongChildren)}
         </Heading>
       );
     },
