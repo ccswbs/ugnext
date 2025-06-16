@@ -81,7 +81,7 @@ export const Layout = ({ children, className, metadata, header, footer, forceApp
               <Header topic={header?.topic} navigation={header?.navigation} variant={header?.variant} />
             )}
 
-            <main id="content" className={twMerge("flex-1 pb-4", className)}>
+            <main id="content" className={twMerge("flex-1", className)}>
               {children}
             </main>
 
@@ -113,5 +113,5 @@ Layout.propTypes = {
   }),
   header: PropTypes.oneOfType([PropTypes.shape({ ...Header.propTypes }), PropTypes.bool]),
   footer: PropTypes.oneOfType([PropTypes.shape({ ...Footer.propTypes }), PropTypes.bool]),
-  forceAppArmorTest: PropTypes.bool
+  forceAppArmorTest: PropTypes.bool,
 };

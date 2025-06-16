@@ -4,12 +4,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-export const Card = ({ id, href, image, title, footer, className, centered, children }) => {
+export const NewsCard = ({ href, image, title, footer, className, centered, children }) => {
   const Tag = href ? UnstyledLink : "div";
 
   return (
     <Tag
-      id={id}
       className={twMerge(
         "group flex flex-col justify-center transition duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light-blue focus-visible:ring-offset-2",
         !image && href && "hover:scale-105 focus-visible:scale-105",
@@ -19,23 +18,25 @@ export const Card = ({ id, href, image, title, footer, className, centered, chil
     >
       {/* Card Image */}
       {image && (
-        <div className="w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden aspect-[9/4]">
           <div
             className={twJoin(
-              "[&>img]:object-cover",
-              href &&
-                "transition-transform duration-200 ease-in-out group-hover:scale-110 group-focus-visible:scale-105"
+              "relative w-full h-full transition-transform duration-200 ease-in-out",
+              href && "group-hover:scale-110 group-focus-visible:scale-105"
             )}
           >
             <Image
-              src={image.src}
-              width={image.width}
-              height={image.height}
-              alt={href ? "" : image.alt}
+              src={typeof image.src === "string" ? image.src : ""}
+              alt={image.alt || "Image"}
+              fill // Replaces layout="fill"
+              sizes={image?.sizes}
               placeholder={image?.blurred ? "blur" : "empty"}
               blurDataURL={image?.blurred}
-              sizes={image?.sizes}
               className={twMerge("object-cover", image?.className)}
+              style={{
+                objectFit: "cover", // Replaces objectFit="cover"
+                objectPosition: "center", // Replaces objectPosition="center"
+              }}
             />
           </div>
         </div>
@@ -72,7 +73,7 @@ export const Card = ({ id, href, image, title, footer, className, centered, chil
   );
 };
 
-Card.propTypes = {
+NewsCard.propTypes = {
   href: PropTypes.string,
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
