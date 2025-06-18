@@ -1,10 +1,10 @@
-id: economics
-name: Economics
-url: https://graduatestudies.uoguelph.ca/programs/econ
+id: economics-and-finance
+name: Economics and Finance
+url: https://graduatestudies.uoguelph.ca/prospective-students/economics-and-finance
 degrees:
-  - doctor-of-philosophy
+  - master-of-arts
 types:
-  - thesis-based
+  - course-based
 tags:
   - business
   - economics
