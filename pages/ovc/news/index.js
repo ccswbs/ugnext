@@ -78,7 +78,7 @@ export default function Page({ content }) {
             page={currentPage}
             hideInput
             onChange={handlePageChange}
-            className="pt-4! pb-8!"
+            className="pt-8! pb-8!"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
