@@ -66,7 +66,7 @@ export default function Page({ content }) {
 
       <LayoutContent container={false}>
         <Container>
-          <Typography as="h1" type="h1" className="">
+          <Typography as="h1" type="h1">
             {content?.title}
           </Typography>
 
@@ -97,7 +97,7 @@ export default function Page({ content }) {
                   height={legacyNews?.heroImage?.image.height || defaultImage.height}
                   sizes={legacyNews?.heroImage?.image.sizes || "33vw"}
                   blurred={legacyNews?.heroImage?.image.blurDataURL || defaultImage.blurDataURL}
-                  className="aspect-[9/4]"
+                  className="aspect-[9/4] object-cover object-center"
                 />
 
                 <CardContent>
