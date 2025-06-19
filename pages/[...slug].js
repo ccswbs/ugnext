@@ -1,6 +1,5 @@
 import { getBreadcrumbs, getPageContent, getPageID, getPageMenu } from "@/data/drupal/basic-pages";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
-import { Header, HeaderLink, HeaderMenu, HeaderMenuItem } from "@uoguelph/react-components/header";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -10,6 +9,7 @@ import { WidgetSelector } from "@/components/widgets/widget-selector";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Meta } from "@/components/meta";
+import { Header } from "@/components/header";
 
 export async function getStaticPaths() {
   return {
@@ -55,37 +55,13 @@ export async function getStaticProps(context) {
   };
 }
 
-function PageHeaderSubnavigation({ title, url, items }) {
-  if (Array.isArray(items) && items.length > 0) {
-    return (
-      <HeaderMenu title={title}>
-        {items.map((item, index) => (
-          <HeaderMenuItem key={item.title + index}>
-            <PageHeaderSubnavigation title={item.title} url={item.url} items={item.items} />
-          </HeaderMenuItem>
-        ))}
-      </HeaderMenu>
-    );
-  }
-
-  return <HeaderLink href={url}>{title}</HeaderLink>;
-}
-
 function PageLayout({ content, loading, children }) {
   return (
-    <>
-      <Header title={content?.menu?.topic?.title} url={content?.menu?.topic?.url}>
-        {content?.menu?.navigation?.map((item) => (
-          <PageHeaderSubnavigation key={item.title} title={item.title} url={item.url} items={item.items} />
-        ))}
-      </Header>
-
-      <Layout loading={loading}>
-        <LayoutContent container={false}>{children}</LayoutContent>
-      </Layout>
-
+    <Layout loading={loading}>
+      <Header title={content?.menu?.topic?.title} url={content?.menu?.topic?.url} menu={content?.menu?.navigation} />
+      <LayoutContent container={false}>{children}</LayoutContent>
       <Footer />
-    </>
+    </Layout>
   );
 }
 
@@ -148,15 +124,13 @@ export default function Page({ content }) {
   const title = " | University of Guelph";
 
   return (
-    <>
+    <PageLayout content={content} loading={isFallback}>
       <Meta title={isFallback ? "Loading..." + title : content?.title + title} />
-      <PageLayout content={content} loading={isFallback}>
-        {content?.image ? <PageWithHero content={content} /> : <PageWithoutHero content={content} />}
+      {content?.image ? <PageWithHero content={content} /> : <PageWithoutHero content={content} />}
 
-        {content?.widgets?.map((widget, index) => (
-          <WidgetSelector key={index} data={widget} />
-        ))}
-      </PageLayout>
-    </>
+      {content?.widgets?.map((widget, index) => (
+        <WidgetSelector key={index} data={widget} />
+      ))}
+    </PageLayout>
   );
 }

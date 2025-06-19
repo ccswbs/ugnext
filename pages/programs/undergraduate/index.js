@@ -33,24 +33,22 @@ export async function getStaticProps() {
 
 export default function ProgramsUndergraduate({ programs, types }) {
   return (
-    <>
+    <Layout>
       <Meta title="Undergraduate Programs" />
 
       <Header></Header>
 
-      <Layout>
-        <LayoutContent container={false}>
-          <Container className="pb-0">
-            <Typography type="h1" as="h1" className="block!">
-              Undergraduate Programs at the University of Guelph
-            </Typography>
-          </Container>
+      <LayoutContent container={false}>
+        <Container className="pb-0">
+          <Typography type="h1" as="h1" className="block!">
+            Undergraduate Programs at the University of Guelph
+          </Typography>
+        </Container>
 
-          <ProgramSearch programs={programs} types={types} />
-        </LayoutContent>
-      </Layout>
+        <ProgramSearch programs={programs} types={types} />
+      </LayoutContent>
 
       <Footer></Footer>
-    </>
+    </Layout>
   );
 }

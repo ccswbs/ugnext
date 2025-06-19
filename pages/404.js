@@ -16,58 +16,55 @@ export default function NotFound() {
   }, []);
 
   return (
-    <>
+    <Layout>
       <Meta title="404 Not Found | University of Guelph" description="The page you are looking for does not exist." />
 
       <Header></Header>
 
-      <Layout>
-        <LayoutContent>
-          <Typography type="h1" as="h1" className="block!">
-            HTTP 404 — File not found
-          </Typography>
+      <LayoutContent>
+        <Typography type="h1" as="h1" className="block!">
+          HTTP 404 — File not found
+        </Typography>
 
-          <Typography type="h2" as="h2" className="block!">
-            Possible reasons for this error:
-          </Typography>
+        <Typography type="h2" as="h2" className="block!">
+          Possible reasons for this error:
+        </Typography>
 
-          <List as="ol">
-            <ListItem>
-              You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark
-              to avoid this error in the future.
-            </ListItem>
+        <List as="ol">
+          <ListItem>
+            You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark to
+            avoid this error in the future.
+          </ListItem>
 
-            <ListItem>
-              You have mis-typed the web address into the URL bar. Please check your spelling of the URL.
-            </ListItem>
+          <ListItem>
+            You have mis-typed the web address into the URL bar. Please check your spelling of the URL.
+          </ListItem>
 
-            <ListItem>
-              The search engine has an out-of-date listing for this page -{" "}
-              <Link href="mailto:ithelp@uoguelph.ca">please let us know!</Link>
-            </ListItem>
+          <ListItem>
+            The search engine has an out-of-date listing for this page -{" "}
+            <Link href="mailto:ithelp@uoguelph.ca">please let us know!</Link>
+          </ListItem>
 
-            <ListItem>
-              The university has removed this page (either on purpose or by mistake) -{" "}
-              <Link href="mailto:ithelp@uoguelph.ca">please let us know!</Link>
-            </ListItem>
-          </List>
+          <ListItem>
+            The university has removed this page (either on purpose or by mistake) -{" "}
+            <Link href="mailto:ithelp@uoguelph.ca">please let us know!</Link>
+          </ListItem>
+        </List>
 
-          <Typography type="h2" as="h2" className="block!">
-            Try one of these links instead:
-          </Typography>
+        <Typography type="h2" as="h2" className="block!">
+          Try one of these links instead:
+        </Typography>
 
-          <List as="ul">
-            <ListItem>
-              <Link href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</Link>
-            </ListItem>
-            <ListItem>
-              <Link href={searchLink}>Search on the University of Guelph</Link>
-            </ListItem>
-          </List>
-        </LayoutContent>
-      </Layout>
-
+        <List as="ul">
+          <ListItem>
+            <Link href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</Link>
+          </ListItem>
+          <ListItem>
+            <Link href={searchLink}>Search on the University of Guelph</Link>
+          </ListItem>
+        </List>
+      </LayoutContent>
       <Footer></Footer>
-    </>
+    </Layout>
   );
 }

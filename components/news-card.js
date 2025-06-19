@@ -1,5 +1,5 @@
 import { twJoin, twMerge } from "tailwind-merge";
-import { UnstyledLink } from "@/components/link";
+import { UnstyledLink } from "@/components/unstyled-link";
 import React from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";

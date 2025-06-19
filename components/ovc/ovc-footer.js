@@ -1,13 +1,13 @@
-import { Container } from "@/components/container";
-import { Heading } from "@/components/heading";
-import { Link } from "@/components/link";
+import { Container } from "@uoguelph/react-components/container";
+import { Link } from "@uoguelph/react-components/link";
+import { Typography } from "@uoguelph/react-components/typography";
 import Image from "next/image";
 import ovcCrest from "@/img/ovc/OVC-crest.png";
 
 export const OVCFooter = () => {
   return (
     <div className={"w-full py-5 bg-gray-100"}>
-      <Container centered>
+      <Container>
         {/* <div className={containerClasses}> */}
         <div className="grid items-center gap-4 sm:grid sm:grid-cols-[2fr_2fr] md:grid-cols-[2fr_5fr] ">
           <div className="place-items-center">
@@ -67,9 +67,9 @@ export const OVCFooter = () => {
             </div>
           </div>
           <div className="text-lg">
-            <Heading level={1} as={"h2"} className="font-condensed text-black">
+            <Typography type="h1" as="h2" className="font-condensed text-black">
               Units
-            </Heading>
+            </Typography>
             <ul>
               <li>
                 <Link href="https://ovc.uoguelph.ca/biomedical-sciences/">Department of Biomedical Sciences</Link>
@@ -89,9 +89,9 @@ export const OVCFooter = () => {
             </ul>
           </div>
           <div className="text-lg">
-            <Heading level={1} as={"h2"} className="font-condensed ">
+            <Typography type="h1" as="h2" className="font-condensed">
               Connect with OVC
-            </Heading>
+            </Typography>
             <ul className="lead font-weight-bold list-unstyled">
               <li>
                 <Link href="https://www.google.com/maps/place/Ontario+Veterinary+College+Health+Sciences+Centre/@43.5312879,-80.2345029,17z/data=!3m1!4b1!4m5!3m4!1s0x882b9ad624240187:0x95a5348b4bf4b543!8m2!3d43.5312879!4d-80.2323142">

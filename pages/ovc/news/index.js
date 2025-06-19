@@ -1,22 +1,18 @@
-import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
-import { Heading } from "@/components/heading";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
+import { Container } from "@uoguelph/react-components/container";
+import { Button } from "@uoguelph/react-components/button";
+import { Typography } from "@uoguelph/react-components/typography";
+import { UnstyledLink } from "@/components/unstyled-link";
 import { getLegacyNewsList } from "@/data/drupal/ovc-news";
 import { getPageMenu } from "@/data/drupal/basic-pages";
-import { Button } from "@/components/button";
-
-import {
-  FormatDateFull,
-  // FormatEventDate,
-  // FormatEventDay,
-  // FormatEventMonth,
-  // FormatEventWeekday,
-} from "@/lib/date-utils";
+import { FormatDateFull } from "@/lib/date-utils";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { useState } from "react";
 import { NewsCard } from "@/components/news-card";
 import { Pagination } from "@/components/pagination";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
+import { Header } from "@uoguelph/react-components/header";
+import { Meta } from "@/components/meta";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -70,15 +66,15 @@ export default function Page({ content }) {
 
   const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   return (
-    <Layout metadata={{ title: content?.title }} header={content?.menu}>
-      <>
-        <Container centered>
-          <Heading level={1} className="mb-0">
-            {content?.title}
-          </Heading>
-        </Container>
-      </>
-      <Container centered>
+    <Layout>
+      <Meta title={content?.title} />
+
+      <Header></Header>
+
+      <LayoutContent>
+        <Typography as="h1" type="h1" className="mb-0">
+          {content?.title}
+        </Typography>
         {/* Pagination Above */}
         <Pagination
           currentPage={currentPage}
@@ -116,11 +112,16 @@ export default function Page({ content }) {
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
         />
-        <Button href="https://www.uoguelph.ca/ovc/newsarchive/" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+        <Button
+          as={UnstyledLink}
+          href="https://www.uoguelph.ca/ovc/newsarchive/"
+          color="red"
+          className="py-2 px-4 mx-[.25em] text-2xl"
+        >
           OVC News Archive
         </Button>
-      </Container>
-      <OVCFooter />
+        <OVCFooter />
+      </LayoutContent>
     </Layout>
   );
 }

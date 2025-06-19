@@ -36,53 +36,51 @@ export default function Home({ cards, hero }) {
   console.log(query);
 
   return (
-    <>
+    <Layout>
       <Meta></Meta>
 
       <AppArmor test={query["ens-test"] === "true"} />
 
       <Header></Header>
 
-      <Layout>
-        <LayoutContent container={false}>
-          <div className="flex flex-col-reverse">
-            <TagLine />
-            {hero && <SpotlightHero data={hero} />}
-          </div>
+      <LayoutContent container={false}>
+        <div className="flex flex-col-reverse">
+          <TagLine />
+          {hero && <SpotlightHero data={hero} />}
+        </div>
 
-          <Container>
-            <Typography className="text-black!" type="h2" as="h2">
-              Our Latest News and Events
-            </Typography>
-            <SpotlightCards cards={cards} />
-          </Container>
+        <Container>
+          <Typography className="text-black!" type="h2" as="h2">
+            Our Latest News and Events
+          </Typography>
+          <SpotlightCards cards={cards} />
+        </Container>
 
-          <Container className={containerClasses}>
-            <Typography className="text-black!" type="h2" as="h2">
-              Study Here
-            </Typography>
-            <StudyHere />
-          </Container>
+        <Container className={containerClasses}>
+          <Typography className="text-black!" type="h2" as="h2">
+            Study Here
+          </Typography>
+          <StudyHere />
+        </Container>
 
-          <Container className={containerClasses}>
-            <Typography className="text-black!" type="h2" as="h2">
-              How We Rank Among the World
-            </Typography>
-            <Rankings />
-          </Container>
+        <Container className={containerClasses}>
+          <Typography className="text-black!" type="h2" as="h2">
+            How We Rank Among the World
+          </Typography>
+          <Rankings />
+        </Container>
 
-          <Container className={containerClasses}>
-            <Typography className="text-black!" type="h2" as="h2">
-              Our Three Campuses
-            </Typography>
-            <ThreeCampuses />
-          </Container>
+        <Container className={containerClasses}>
+          <Typography className="text-black!" type="h2" as="h2">
+            Our Three Campuses
+          </Typography>
+          <ThreeCampuses />
+        </Container>
 
-          <HomeStory />
-        </LayoutContent>
-      </Layout>
+        <HomeStory />
+      </LayoutContent>
 
       <Footer></Footer>
-    </>
+    </Layout>
   );
 }

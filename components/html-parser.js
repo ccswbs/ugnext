@@ -1,3 +1,4 @@
+import React from "react";
 import { cloneElement, Fragment, isValidElement, useMemo } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
 import { Link } from "@uoguelph/react-components/link";
@@ -13,10 +14,10 @@ import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 
 const getImageUrl = (src) => {
-  if (src.startsWith("/sites/default/files")) {
-    return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`;
-  }
-  return src;
+  if (src.startsWith("/sites/default/files")) {
+    return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`;
+  }
+  return src;
 };
 
 const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
@@ -163,15 +164,14 @@ export const DEFAULT_INSTRUCTIONS = [
     shouldProcessNode: (node) =>
       node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
     processNode: (node, _, index) => {
-
       // Convert Bootstrap alignment classes to Tailwind equivalents
       let imageClass = node.attribs.class || "";
       imageClass = imageClass
         .replace("align-left", "float-left mr-4") // Convert `align-left` to `float-left` with margin
         .replace("align-right", "float-right ml-4"); // Convert `align-right` to `float-right` with margin
-        // Handle `data-align` attributes
+      // Handle `data-align` attributes
 
-        // Remove the `class` attribute and any inline styles
+      // Remove the `class` attribute and any inline styles
       delete node?.attribs?.class;
 
       // Check for caption (data-caption or figcaption)
