@@ -67,9 +67,18 @@ export const DEFAULT_INSTRUCTIONS = [
   {
     shouldProcessNode: (node) => headingTags.has(node.tagName),
     processNode: (node, children) => {
+      // Remove <strong> tags inside heading tags
+      const clean = children.map((child) => {
+        if (child && child.type === "strong" && child.props && child.props.children) {
+          // Unwrap <strong> by returning its children
+          return child.props.children;
+        }
+        return child;
+      });
+
       return (
         <Typography key={nanoid()} className={node.attribs.class} type={node.tagName} as={node.tagName}>
-          {children}
+          {clean}
         </Typography>
       );
     },
