@@ -228,9 +228,9 @@ export const DEFAULT_INSTRUCTIONS = [
       // Extract alignment classes from the `class` attribute or `data-align`
       let figureClass = "my-4"; // Default margin for figures
       if (node.attribs?.class?.includes("align-left") || node.attribs["data-align"] === "left") {
-        figureClass = "float-left mr-4 my-4";
+        figureClass = "float-left mr-4";
       } else if (node.attribs?.class?.includes("align-right") || node.attribs["data-align"] === "right") {
-        figureClass = "float-right ml-4 my-4";
+        figureClass = "float-right ml-4";
       }
 
       // Remove inline styles
