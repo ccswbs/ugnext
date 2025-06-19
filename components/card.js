@@ -50,7 +50,7 @@ export const Card = ({ id, href, image, title, footer, className, centered, chil
       >
         {/* Card Title */}
         <div className={twJoin("flex flex-1", centered && "items-center justify-center")}>
-          {typeof title === "string" ? <span className="text-lg font-bold">{title}</span> : title}
+          {typeof title === "string" ? <span className="text-uog-color-black text-lg font-bold">{title}</span> : title}
         </div>
 
         {/* Card Body */}
@@ -61,7 +61,7 @@ export const Card = ({ id, href, image, title, footer, className, centered, chil
       {footer && (
         <div
           className={twJoin(
-            "flex gap-2 bg-uog-color-grey-light px-5 py-2 transition-colors",
+            "flex gap-2 bg-uog-color-grey-light px-5 py-2 text-uog-color-black transition-colors",
             centered && "justify-center"
           )}
         >

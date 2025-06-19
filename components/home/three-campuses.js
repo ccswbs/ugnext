@@ -46,7 +46,7 @@ export const ThreeCampuses = () => {
         <Card
           key={campus.title}
           className="h-full"
-          title={<span className="my-auto w-full text-center text-[2.2rem] font-bold">{`${campus.title} Campus`}</span>}
+          title={<span className="my-auto w-full text-uog-color-black text-center text-[2.2rem] font-bold">{`${campus.title} Campus`}</span>}
           href={campus.url}
           centered
           image={{
