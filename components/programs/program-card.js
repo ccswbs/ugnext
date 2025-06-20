@@ -7,12 +7,12 @@ export const ProgramCard = ({ program }) => {
       key={program.id}
       title={
         <div className="flex flex-col gap-2 justify-center">
-          <span className="text-lg font-bold">{program.name}</span>
+          <span className="text-uog-color-black text-lg font-bold">{program.name}</span>
 
-          {program.degree && <span className="text-black/65">{program.degree.name}</span>}
+          {program.degree && <span className="text-uog-color-black/65">{program.degree.name}</span>}
 
           {program.degrees && (
-            <span className="text-black/65">
+            <span className="text-uog-color-black/65">
               {program.degrees?.map((degree) => degree.acronym ?? degree.name).join(", ")}
             </span>
           )}
