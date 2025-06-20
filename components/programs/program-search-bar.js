@@ -1,26 +1,30 @@
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Container } from "@uoguelph/react-components/container";
-import { Select } from "@/components/select";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
 import { useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/react-components/select";
+import { Field, Label } from "@headlessui/react";
 
 export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, className }) => {
   const [input, setInput] = useState("");
   const results = useSearch(programs, input, nameAndTagSearch);
-  const [selectedTypes, setSelectedTypes] = useState(types?.map((type) => type.id) ?? []);
-  const [selectedDegreeTypes, setSelectedDegreeTypes] = useState(degreeTypes?.map((degreeType) => degreeType.id) ?? []);
+  const [selectedTypes, setSelectedTypes] = useState(types ?? []);
+  const [selectedDegreeTypes, setSelectedDegreeTypes] = useState(degreeTypes ?? []);
 
   const filtered = useMemo(() => {
     let filtered = results;
 
     if (Array.isArray(types) && types.length > 0) {
-      filtered = filtered.filter((program) => program.types.some((type) => selectedTypes.includes(type.id)));
+      filtered = filtered.filter((program) =>
+        program.types.some((type) => selectedTypes.some((t) => type.id === t.id))
+      );
     }
 
     if (Array.isArray(degreeTypes) && degreeTypes.length > 0) {
+      console.log(filtered);
       filtered = filtered.filter((program) =>
-        program.degrees.some((degree) => selectedDegreeTypes.includes(degree.type.id))
+        program.degrees.some((degree) => selectedDegreeTypes.some((t) => degree.type.id === t.id))
       );
     }
 
@@ -45,27 +49,55 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
 
         {types?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
-            <Select
-              multiple
-              options={types.map((type) => ({ label: type.name, value: type.id, selected: true }))}
-              onChange={(options) => {
-                setSelectedTypes(options.map((option) => option.value));
-              }}
-              label={<span className="text-l font-bold">Filter by type</span>}
-            />
+            <Field>
+              <Label className="text-body-copy-bold font-bold">Filter by type</Label>
+              <Select
+                multiple
+                onChange={(options) => {
+                  setSelectedTypes(options.length > 0 ? options : types);
+                }}
+              >
+                <SelectButton>
+                  <span className="whitespace-nowrap overflow-hidden text-ellipsis w-fit">
+                    {selectedTypes.map((type) => type.name).join(", ")}
+                  </span>
+                </SelectButton>
+                <SelectOptions>
+                  {types.map((type) => (
+                    <SelectOption value={type} key={type.id}>
+                      {type.name}
+                    </SelectOption>
+                  ))}
+                </SelectOptions>
+              </Select>
+            </Field>
           </div>
         )}
 
         {degreeTypes?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
-            <Select
-              multiple
-              options={degreeTypes.map((type) => ({ label: type.name, value: type.id, selected: true }))}
-              onChange={(options) => {
-                setSelectedDegreeTypes(options.map((option) => option.value));
-              }}
-              label={<span className="text-l font-bold">Filter by degree type</span>}
-            />
+            <Field>
+              <Label className="text-body-copy-bold font-bold">Filter by degree type</Label>
+              <Select
+                multiple
+                onChange={(options) => {
+                  setSelectedDegreeTypes(options.length > 0 ? options : degreeTypes);
+                }}
+              >
+                <SelectButton>
+                  <span className="whitespace-nowrap overflow-hidden text-ellipsis w-fit">
+                    {selectedDegreeTypes.map((type) => type.name).join(", ")}
+                  </span>
+                </SelectButton>
+                <SelectOptions>
+                  {degreeTypes.map((type) => (
+                    <SelectOption value={type} key={type.id}>
+                      {type.name}
+                    </SelectOption>
+                  ))}
+                </SelectOptions>
+              </Select>
+            </Field>
           </div>
         )}
       </Container>
