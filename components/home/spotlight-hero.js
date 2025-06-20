@@ -5,7 +5,7 @@ export const SpotlightHero = ({ hero }) => (
   <Hero
     id={`uofg-homepage-spotlight-hero`}
     variant="spotlight"
-    title={<h2 className="mt-0">{hero.title}</h2>}
+    title={<h2 className="mt-0 mb-0 text-uog-color-white">{hero.title}</h2>}
     image={{
       src: hero.image.image.url,
       alt: hero.image.image.alt,

@@ -89,7 +89,7 @@ export const OVCFooter = () => {
             </ul>
           </div>
           <div className="text-lg">
-            <Heading level={1} as={"h2"} className="font-condensed ">
+            <Heading level={1} as={"h2"} className="font-condensed text-uog-color-black">
               Connect with OVC
             </Heading>
             <ul className="lead font-weight-bold list-unstyled">

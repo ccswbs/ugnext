@@ -14,7 +14,7 @@ export const Links = ({ data }) => {
           <Card
             key={link.url.title + index}
             className="h-full"
-            title={<span className="my-auto w-full text-center text-xl font-bold">{link.url.title}</span>}
+            title={<span className="my-auto w-full text-uog-color-black text-center text-xl font-bold">{link.url.title}</span>}
             href={link.url.url}
             centered
             image={{

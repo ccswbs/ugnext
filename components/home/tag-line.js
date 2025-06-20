@@ -6,7 +6,7 @@ export const TagLine = () => (
       <Heading level={1} className="mt-[4rem] text-center">
         University of Guelph, Ontario, Canada
       </Heading>
-      <span className="mt-2 text-center text-2xl">Improve Life</span>
+      <span className="mt-2 text-uog-color-black text-center text-2xl">Improve Life</span>
     </div>
   </>
 );

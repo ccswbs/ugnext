@@ -26,7 +26,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, condensedDegrees =
         {/* No results were found */}
         {filteredPrograms?.length === 0 && (
           <div className="flex w-full items-center justify-center">
-            <span className="text-xl font-bold text-black/50">No programs matching your criteria were found.</span>
+            <span className="text-xl font-bold text-uog-color-black/50">No programs matching your criteria were found.</span>
           </div>
         )}
       </Container>
