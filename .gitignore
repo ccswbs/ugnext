@@ -44,3 +44,5 @@ yarn-error.log*
 /allure-results
 /.allure
 /test-results
+
+public/@uoguelph

@@ -1,4 +1,5 @@
 const CopyPlugin = require("copy-webpack-plugin");
+const path = require("path");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -29,7 +30,7 @@ const nextConfig = {
         patterns: [
           {
             from: "node_modules/@uoguelph/web-components/dist/uofg-web-components",
-            to: "static/uofg-web-components",
+            to: path.resolve(__dirname, "public", "@uoguelph", "web-components"),
           },
         ],
       })
