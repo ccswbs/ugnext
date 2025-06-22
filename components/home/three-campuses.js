@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardImage, CardContent, CardTitle } from "@uoguelph/react-components/card";
 import guelph from "@/img/guelph.png";
 import ridgetown from "@/img/ridgetown.png";

@@ -1,6 +1,8 @@
 import { onlyPublished, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 
+export type SpotlightHeroData = Awaited<ReturnType<typeof getSpotlightHero>>;
+
 export async function getSpotlightHero() {
   const { data } = await query({
     query: gql(`

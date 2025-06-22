@@ -1,3 +1,5 @@
+"use client";
+
 import { Typography } from "@uoguelph/react-components/typography";
 import { Container } from "@uoguelph/react-components/container";
 import { Divider } from "@uoguelph/react-components/divider";
