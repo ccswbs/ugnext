@@ -46,3 +46,4 @@ yarn-error.log*
 /test-results
 
 public/@uoguelph
+lib/graphql
