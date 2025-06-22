@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { DismissibleAlert } from "@uoguelph/react-components/dismissible-alert";
-import { useSearchParams } from "next/navigation";
 
 export type Alert = {
   title: string;
@@ -29,10 +28,11 @@ export async function getAlert(test = false) {
 
 export function AppArmor() {
   const [alert, setAlert] = useState<Alert>();
-  const searchParams = useSearchParams();
-  const test = searchParams?.get("ens-test") === "true";
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const test = searchParams.get("ens-test") === "true" || false;
+
     getAlert(test).then((alert) => {
       if (!alert) return;
 
@@ -42,7 +42,7 @@ export function AppArmor() {
         timestamp: alert.time,
       });
     });
-  }, [test]);
+  }, []);
 
   return <DismissibleAlert alert={alert} />;
 }
