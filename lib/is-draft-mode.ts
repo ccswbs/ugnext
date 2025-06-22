@@ -1,6 +1,6 @@
 import { draftMode } from "next/headers";
 
-export async function isDraft() {
+export async function isDraftMode() {
   if (process.env.NODE_ENV === "development") {
     return true;
   }

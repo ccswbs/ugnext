@@ -1,7 +1,6 @@
 import React from "react";
 import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
-import { isDraft } from "@/lib/is-draft";
 import { Metadata } from "next";
 import AppArmor from "@/components/app-armor";
 
@@ -23,17 +22,9 @@ export const metadata: Metadata = {
   },
 };
 
-function getGoogleTagManagerId(draft: boolean) {
-  if (draft) {
-    return process.env.NEXT_PUBLIC_GTM_ID_DEV ?? "";
-  }
-
-  return process.env.NEXT_PUBLIC_GTM_ID ?? "";
-}
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const isDraftMode = await isDraft();
-  const gtmId = getGoogleTagManagerId(isDraftMode);
+  const gtmId =
+    process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_GTM_ID_DEV : process.env.NEXT_PUBLIC_GTM_ID;
 
   return (
     <html lang="en" className="h-full">
@@ -48,7 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </body>
 
       {/* Analytics */}
-      <GoogleTagManager gtmId={gtmId} />
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
     </html>
   );
 }

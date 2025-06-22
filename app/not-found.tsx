@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@uoguelph/react-components/link";
 import { Header } from "@uoguelph/react-components/header";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -17,7 +17,7 @@ export default function NotFound() {
 
       <LayoutContent>
         <Typography type="h1" as="h1" className="block!">
-          HTTP 404 — File not found sdfsdf
+          HTTP 404 — File not found
         </Typography>
 
         <Typography type="h2" as="h2" className="block!">

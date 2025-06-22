@@ -1,18 +1,48 @@
-import { graphql } from "@/lib/drupal";
-import spotlightHeroQuery from "./spotlight-hero.graphql";
-import spotlightCardIDsQuery from "./spotlight-card-ids.graphql";
-import spotlightCardQuery from "./spotlight-card.graphql";
+import { onlyPublished, query } from "@/lib/apollo";
+import { gql } from "@/lib/graphql";
 
-export const getSpotlightHero = async (status) => {
-  const { data } = await graphql(spotlightHeroQuery, {
-    status: status,
+export async function getSpotlightHero() {
+  const { data } = await query({
+    query: gql(`
+      query SpotlightHero($status: Boolean = null) {
+        spotlightRevisions(pageSize: 1, filter: { rank: ["1"], status: $status }) {
+          results {
+            ... on NodeSpotlight {
+              id: uuid
+              caption
+              captionAlignment
+              thumbnailImageCrop
+              title
+              url {
+                url
+                title
+              }
+              image {
+                ... on MediaImage {
+                  image {
+                    height
+                    alt
+                    width
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `),
+    variables: {
+      status: await onlyPublished(),
+    },
   });
 
   return data?.spotlightRevisions?.results?.[0];
-};
+}
 
-export const getSpotlightCards = async (status, hero) => {
-  const ids = new Set();
+/*
+export const getSpotlightCards = async (status: boolean, hero) => {
+  /*const ids = new Set();
   let isLastPage = false;
   let page = 0;
 
@@ -59,20 +89,24 @@ export const getSpotlightCards = async (status, hero) => {
       }
 
       // The image is an array of variations, so we need to find the one that matches the thumbnailImageCrop.
-      const image = card.image?.image?.variations?.find((variation) => {
-        return variation.name.toLowerCase().includes(card.thumbnailImageCrop);
-      }) ?? {};
+      const image =
+        card.image?.image?.variations?.find((variation) => {
+          return variation.name.toLowerCase().includes(card.thumbnailImageCrop);
+        }) ?? {};
 
       return {
         id: id,
         ...card,
         image: {
           alt: card.image.image.alt,
-          ...image
-        }
+          ...image,
+        },
       };
     })
   );
 
   return cards?.sort((a, b) => a.rank - b.rank) ?? [];
+
+
 };
+*/
