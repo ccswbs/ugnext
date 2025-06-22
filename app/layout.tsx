@@ -1,13 +1,14 @@
 import React from "react";
-import Head from "next/head";
 import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { isDraft } from "@/lib/is-draft";
 import { Metadata } from "next";
+import AppArmor from "@/components/app-armor";
 
 // Stylesheets
 import "@/styles/globals.css";
 import "@uoguelph/react-components/style";
+import "@uoguelph/web-components/style";
 
 export const metadata: Metadata = {
   title: {
@@ -22,25 +23,6 @@ export const metadata: Metadata = {
   },
 };
 
-function getUofGWebComponentsCdnUrl() {
-  const defaultCDN = "https://cdn.jsdelivr.net/npm";
-  let url = process.env.NEXT_PUBLIC_UOFG_WC_CDN_BASE_URL?.trim?.() ?? defaultCDN;
-
-  if (!URL.canParse(url)) {
-    url = defaultCDN;
-  }
-
-  let version = process.env.NEXT_PUBLIC_UOFG_WC_VERSION?.trim?.() ?? "2.x.x";
-
-  if (!/^(\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?|rc|latest)$/.test(version)) {
-    version = "2.x.x";
-  }
-
-  url += `/@uoguelph/web-components@${version}/dist/uofg-web-components`;
-
-  return url;
-}
-
 function getGoogleTagManagerId(draft: boolean) {
   if (draft) {
     return process.env.NEXT_PUBLIC_GTM_ID_DEV ?? "";
@@ -51,22 +33,19 @@ function getGoogleTagManagerId(draft: boolean) {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const isDraftMode = await isDraft();
-  const webComponentsCdn = getUofGWebComponentsCdnUrl();
   const gtmId = getGoogleTagManagerId(isDraftMode);
 
   return (
     <html lang="en">
-      {/* Load web components style from the CDN */}
-      <link rel="stylesheet" href={`${webComponentsCdn}/uofg-web-components.css`} />
+      <body>
+        <Script src="@uoguelph/web-components/uofg-header.esm.js" type="module" strategy="beforeInteractive" />
+        <Script src="@uoguelph/web-components/uofg-footer.esm.js" type="module" strategy="beforeInteractive" />
+        <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
 
-      <body>{children}</body>
+        <AppArmor />
 
-      {/* Load web components scripts from the CDN */}
-      <Script src={`${webComponentsCdn}/uofg-header.esm.js`} type="module" strategy="beforeInteractive" />
-      <Script src={`${webComponentsCdn}/uofg-footer.esm.js`} type="module" strategy="beforeInteractive" />
-
-      {/* Load Font Awesome */}
-      <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
+        {children}
+      </body>
 
       {/* Analytics */}
       <GoogleTagManager gtmId={gtmId} />
