@@ -18,15 +18,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
 
   if (info.__typename === "RouteInternal") {
     switch (info?.entity?.__typename) {
-      // Spotlightss should just
+      // Spotlights should just redirect to the home page, as that's where they are used.
       case "NodeSpotlight":
         permanentRedirect("/");
+        return;
+      default:
+        notFound();
+        return;
     }
   }
-
-  return (
-    <div>
-      {url} {JSON.stringify(info)}
-    </div>
-  );
 }
