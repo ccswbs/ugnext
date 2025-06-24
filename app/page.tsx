@@ -31,8 +31,8 @@ export default async function Page() {
         <Container>
           <Typography className="text-black!" type="h2" as="h2">
             Our Latest News and Events
-            {cards && cards.length > 0 && <SpotlightCards cards={cards} />}
           </Typography>
+          {cards && cards.length > 0 && <SpotlightCards cards={cards} />}
         </Container>
 
         <Container className={containerClasses}>

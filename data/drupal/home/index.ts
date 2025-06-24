@@ -108,8 +108,6 @@ async function getPublishedSpotlights() {
     hasNextPage = data?.nodeSpotlights?.pageInfo?.hasNextPage ?? false;
   }
 
-  console.log(cards);
-
   return { hero, cards: cards as Spotlight[] };
 }
 
