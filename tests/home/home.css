@@ -6,8 +6,8 @@
   opacity: 0 !important;
 }
 
-.hero .hero-caption-container * {
-  opacity: 0 !important;
+.hero .hero-caption-container {
+  display: none !important;
 }
 
 .spotlight-card {
