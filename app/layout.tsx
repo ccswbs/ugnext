@@ -10,6 +10,7 @@ import "@uoguelph/react-components/style";
 import "@uoguelph/web-components/style";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://uoguelph.ca"),
   title: {
     template: "%s | University of Guelph",
     default: "University of Guelph - Improve Life",
