@@ -18,10 +18,8 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...Accordion
       ...Block
       ...GeneralText
-      ...Buttons
       ...Links
       ...MediaText
-      ...ButtonSection
       ...Tabs
       ...Statistics
       ...TestimonialSlider
