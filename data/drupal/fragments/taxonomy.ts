@@ -25,3 +25,11 @@ export const TAG_FRAGMENT = gql(/* gql */ `
     path
   }
 `);
+
+export const UNIT_FRAGMENT = gql(/* gql */ `
+  fragment Unit on TermUnit {
+    id
+    name
+    path
+  }
+`);

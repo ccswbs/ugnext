@@ -16,8 +16,5 @@ export const SPOTLIGHT_FRAGMENT = gql(/* gql */ `
     image {
       ...Image
     }
-    changed {
-      time
-    }
   }
 `);
