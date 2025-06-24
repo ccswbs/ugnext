@@ -20,14 +20,14 @@ export const OVCFooter = () => {
               blurDataURL={ovcCrest?.blurred}
             />
           </div>
-          <div className="text-lg ">
+          <div className="text-lg text-black">
             The Ontario Veterinary College (OVC) at the University of Guelph is a world leader in advancing veterinary
             medicine and health research to improve the health of animals, people, and our planet. OVC educates the next
             generation of health leaders and provides high-value experiential learning opportunities through an
             interdisciplinary, comparative approach aimed at finding real-world solutions to real-world problems.
           </div>
         </div>
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-3  ">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-3 text-black ">
           <div>
             <div className="md:flex flex-wrap gap-3 mt-8">
               <a href="https://instagram.com/ontvetcollege/" className="btn btn-outline-secondary text-dark-social">

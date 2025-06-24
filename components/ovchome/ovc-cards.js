@@ -41,7 +41,7 @@ export const OVCCards = () => {
         <Card
           key={ovcCard.title}
           className="h-full"
-          title={<span className="my-auto w-full text-center text-[2.2rem] font-bold">{ovcCard.title}</span>}
+          title={<span className="my-auto w-full text-center text-[2.2rem] font-bold text-black">{ovcCard.title}</span>}
           footer={<span className="my-auto w-full text-center text-[2.2rem]">{ovcCard.footer}</span>}
           href={ovcCard.url}
           centered
@@ -53,7 +53,7 @@ export const OVCCards = () => {
         />
       ))}
       <div className="flex flex-col gap-2 bg-uog-color-grey-light-bg px-5 py-6 transition-colors items-center">
-        <div className="text-2xl mt-5">
+        <div className="text-2xl mt-5 text-black">
           <i className="fa-solid fa-2xl fa-certificate text-uog-color-red">&nbsp;</i>
           Accreditations
         </div>
