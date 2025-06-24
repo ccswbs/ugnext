@@ -1,110 +1,123 @@
-import { onlyPublished, query } from "@/lib/apollo";
+import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import { DraftSpotlightsQuery, PublishedSpotlightsQuery } from "@/lib/graphql/types";
 
-export async function getSpotlightHero() {
-  const { data } = await query({
-    query: gql(`
-      query SpotlightHero($status: Boolean = null) {
-        spotlightRevisions(pageSize: 1, filter: { rank: ["1"], status: $status }) {
-          results {
-            ... on NodeSpotlight {
-              id: uuid
-              caption
-              captionAlignment
-              thumbnailImageCrop
-              title
-              url {
-                url
-                title
-              }
-              image {
-                image {
-                  height
-                  alt
-                  width
-                  url
-                }
-              }
+async function getDraftSpotlights() {
+  type Spotlight = Extract<
+    NonNullable<DraftSpotlightsQuery["latestContentRevisions"]>["results"][number],
+    { __typename?: "NodeSpotlight" }
+  >;
+
+  const cards: Spotlight[] = [];
+  let hero: Spotlight | null = null;
+  const pageSize = 5;
+  let page = 0;
+  let total = 1;
+
+  do {
+    const { data } = await query({
+      query: gql(/* gql */ `
+        query DraftSpotlights($pageSize: Int = 5, $page: Int = 0) {
+          latestContentRevisions(filter: { type: "spotlight" }, pageSize: $pageSize, page: $page) {
+            pageInfo {
+              total
+            }
+            results {
+              __typename
+              ...Spotlight
             }
           }
         }
-      }
-    `),
-    variables: {
-      status: await onlyPublished(),
-    },
-  });
-
-  return data?.spotlightRevisions?.results?.[0];
-}
-
-/*
-export const getSpotlightCards = async (status: boolean, hero) => {
-  /*const ids = new Set();
-  let isLastPage = false;
-  let page = 0;
-
-  outer: while (!isLastPage) {
-    const cards = (
-      await graphql(spotlightCardIDsQuery, {
-        status: status,
+      `),
+      variables: {
         page: page,
-      })
-    )?.data?.spotlightRevisions?.results;
+        pageSize: pageSize,
+      },
+    });
 
-    for (const card of cards) {
-      if (card.id === hero.id) {
-        continue;
+    total = Math.ceil((data?.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
+
+    for (const spotlight of data?.latestContentRevisions?.results ?? []) {
+      if (spotlight.__typename === "NodeSpotlight") {
+        // We found a hero spotlight
+        if (!hero && spotlight.rank === 1) {
+          hero = spotlight;
+          continue;
+        }
+
+        if (cards.length < 4) {
+          cards.push(spotlight);
+        }
       }
-
-      if (ids.size === 4) {
-        break outer;
-      }
-
-      ids.add(card.id);
-    }
-
-    // The page wasn't full, meaning we were on the last page.
-    if (cards.length < 5) {
-      isLastPage = true;
     }
 
     page++;
+  } while (page < total && (cards.length < 4 || hero === null));
+
+  return { hero, cards };
+}
+
+async function getPublishedSpotlights() {
+  type Spotlight = NonNullable<PublishedSpotlightsQuery["nodeSpotlights"]>["nodes"][number];
+
+  const cards: Spotlight[] = [];
+  let hero: Spotlight | null = null;
+  const pageSize = 5;
+  let cursor: string | null = null;
+  let hasNextPage = true;
+
+  while (hasNextPage && (cards.length < 4 || hero === null)) {
+    const { data } = await query({
+      query: gql(/* gql */ `
+        query PublishedSpotlights($cursor: Cursor = null, $pageSize: Int = 5) {
+          nodeSpotlights(first: $pageSize, after: $cursor) {
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+            nodes {
+              ...Spotlight
+            }
+          }
+        }
+      `),
+      variables: {
+        cursor: cursor,
+        pageSize: pageSize,
+      },
+    });
+
+    for (const spotlight of data?.nodeSpotlights?.nodes ?? []) {
+      if (spotlight.__typename === "NodeSpotlight") {
+        // Ignore unpublished content
+        if (spotlight.status === false) continue;
+
+        // We found a hero spotlight
+        if (!hero && spotlight.rank === 1) {
+          hero = spotlight;
+          continue;
+        }
+
+        if (cards.length < 4) {
+          cards.push(spotlight);
+        }
+      }
+    }
+
+    hasNextPage = data?.nodeSpotlights?.pageInfo?.hasNextPage ?? false;
   }
 
-  // Now that we have the ids, we can retrieve the content.
-  const cards = await Promise.all(
-    Array.from(ids).map(async (id) => {
-      const { data } = await graphql(spotlightCardQuery, {
-        status: status,
-        id: id,
-      });
+  console.log(cards);
 
-      const card = data.spotlightRevisions.results?.[0];
+  return { hero, cards: cards as Spotlight[] };
+}
 
-      if (!card) {
-        throw new Error(`Failed to fetch spotlight card ${id} data.`);
-      }
+export async function getSpotlights() {
+  // Preview
+  if (await showUnpublishedContent()) {
+    return await getDraftSpotlights();
+  }
 
-      // The image is an array of variations, so we need to find the one that matches the thumbnailImageCrop.
-      const image =
-        card.image?.image?.variations?.find((variation) => {
-          return variation.name.toLowerCase().includes(card.thumbnailImageCrop);
-        }) ?? {};
-
-      return {
-        id: id,
-        ...card,
-        image: {
-          alt: card.image.image.alt,
-          ...image,
-        },
-      };
-    })
-  );
-
-  return cards?.sort((a, b) => a.rank - b.rank) ?? [];
-
-
-};
-*/
+  return await getPublishedSpotlights();
+}

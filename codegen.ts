@@ -25,10 +25,13 @@ const config: CodegenConfig = {
   generates: {
     "./lib/graphql/": {
       preset: "client",
-      plugins: [],
       presetConfig: {
         gqlTagName: "gql",
+        fragmentMasking: false,
       },
+    },
+    "./lib/graphql/types.ts": {
+      plugins: ["typescript", "typescript-operations"],
     },
   },
   ignoreNoDocuments: true,

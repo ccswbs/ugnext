@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import { UnstyledLink } from "@/components/unstyled-link";
 import Image from "next/image";
@@ -8,9 +10,9 @@ export const SpotlightCards = ({ cards }) => {
     slots: {
       container: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
       card: "h-full",
-      image: "aspect-3/2 w-full",
+      image: "aspect-3/2 w-full object-cover",
       content: "flex-1",
-      title: "text-[2.25rem]! font-bold text-center",
+      title: "text-[2.25rem]! font-bold text-center my-auto",
     },
   });
 
@@ -28,10 +30,10 @@ export const SpotlightCards = ({ cards }) => {
           centered
         >
           <CardImage
-            src={data.image.url}
-            alt={data.image.alt}
-            width={data.image.width}
-            height={data.image.height}
+            src={data.image.image.url}
+            alt={data.image.image.alt}
+            width={data.image.image.width}
+            height={data.image.image.height}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className={image()}
             as={Image}

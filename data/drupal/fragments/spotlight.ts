@@ -2,6 +2,7 @@ import { gql } from "@/lib/graphql";
 
 export const SPOTLIGHT_FRAGMENT = gql(/* gql */ `
   fragment Spotlight on NodeSpotlight {
+    status
     id
     rank
     title
@@ -14,6 +15,9 @@ export const SPOTLIGHT_FRAGMENT = gql(/* gql */ `
     }
     image {
       ...Image
+    }
+    changed {
+      time
     }
   }
 `);

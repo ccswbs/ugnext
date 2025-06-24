@@ -31,6 +31,7 @@ export const SpotlightHero = ({ data }) => {
       as={Image}
       alignment={data.captionAlignment ?? "left"}
       className={hero()}
+      priority
     >
       <HeroTitle as="h2" className={title()}>
         {data.title}

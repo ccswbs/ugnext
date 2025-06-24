@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Header } from "@uoguelph/react-components/header";
 import { Footer } from "@uoguelph/react-components/footer";
-import { getSpotlightHero } from "@/data/drupal/home";
+import { getSpotlights } from "@/data/drupal/home";
 import { SpotlightHero } from "@/components/home/spotlight-hero";
 import { TagLine } from "@/components/home/tag-line";
 import { HomeStory } from "@/components/home/story";
@@ -12,9 +12,10 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Rankings } from "@/components/home/rankings";
 import { StudyHere } from "@/components/home/study-here";
 import { twJoin } from "tailwind-merge";
+import { SpotlightCards } from "@/components/home/spotlight-cards";
 
 export default async function Page() {
-  const hero = await getSpotlightHero();
+  const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
 
   return (
@@ -30,6 +31,7 @@ export default async function Page() {
         <Container>
           <Typography className="text-black!" type="h2" as="h2">
             Our Latest News and Events
+            {cards && cards.length > 0 && <SpotlightCards cards={cards} />}
           </Typography>
         </Container>
 
