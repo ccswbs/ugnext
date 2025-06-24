@@ -30,8 +30,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className="h-full">
       <body className="flex flex-col min-h-full">
-        <Script src="@uoguelph/web-components/uofg-header.esm.js" type="module" strategy="beforeInteractive" />
-        <Script src="@uoguelph/web-components/uofg-footer.esm.js" type="module" strategy="beforeInteractive" />
+        <Script
+          src="/@uoguelph/web-components/uofg-header.esm.js"
+          type="module"
+          strategy="beforeInteractive"
+          crossOrigin="anonymous"
+        />
+
+        <Script
+          src="/@uoguelph/web-components/uofg-footer.esm.js"
+          type="module"
+          strategy="beforeInteractive"
+          crossOrigin="anonymous"
+        />
+
         <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
 
         <AppArmor />
