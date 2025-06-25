@@ -112,7 +112,11 @@ export const ImageOverlay = ({ data }) => {
         alt: image.alt ?? "",
       }}
     >
-      <div className={twJoin((style === "Dark overlay" || style === "Red background") && "text-white")}>
+      <div
+        className={twJoin(
+          style === "Dark overlay" || style === "Red background" ? "text-uog-color-white" : "text-uog-color-black"
+        )}
+      >
         {data.imageOverlayContent
           ?.map((data, index) => {
             switch (data?.__typename) {
