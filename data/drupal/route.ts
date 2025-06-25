@@ -1,6 +1,13 @@
 import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import { PageTypeQuery } from "@/lib/graphql/types";
+
+export type Route = NonNullable<PageTypeQuery["route"]>;
+export type InternalRoute = Extract<Route, { __typename: "RouteInternal" }>;
+export type RedirectRoute = Extract<Route, { __typename: "RouteRedirect" }>;
+export type InternalRouteEntity = NonNullable<InternalRoute["entity"]>;
+export type InternalRouteEntityWithTitle = Extract<InternalRouteEntity, { title: string }>;
 
 export async function getRouteInfo(url: string) {
   const { data } = await query({
@@ -9,10 +16,6 @@ export async function getRouteInfo(url: string) {
         route(path: $path, revision: $revision) {
           __typename
           ... on RouteInternal {
-            breadcrumbs {
-              url
-              title
-            }
             entity {
               __typename
               ... on MediaAudio {
@@ -38,39 +41,51 @@ export async function getRouteInfo(url: string) {
               }
               ... on NodeArticle {
                 uuid
+                title
               }
               ... on NodeCallToAction {
                 uuid
+                title
               }
               ... on NodeCareer {
                 uuid
+                title
               }
               ... on NodeCourse {
                 uuid
+                title
               }
               ... on NodeCustomFooter {
                 uuid
+                title
               }
               ... on NodeEmployer {
                 uuid
+                title
               }
               ... on NodeEvent {
                 uuid
+                title
               }
               ... on NodePage {
                 uuid
+                title
               }
               ... on NodeProgram {
                 uuid
+                title
               }
               ... on NodeSpotlight {
                 uuid
+                title
               }
               ... on NodeTestimonial {
                 uuid
+                title
               }
               ... on NodeUserDocumentation {
                 uuid
+                title
               }
               ... on BlockContentBasic {
                 uuid
