@@ -89,11 +89,11 @@ export const Hero = ({ id, variant = "spotlight", image, video, title, caption, 
         <>
           <Container centered className="absolute bottom-0 left-1/2 h-fit w-full -translate-x-1/2 p-0">
             {typeof title === "string" ? (
-              <Heading level={1} className="mb-0 w-fit bg-uog-color-yellow p-1 text-3xl text-black md:text-4xl">
+              <Heading level={1} className="mb-0 w-fit bg-uog-color-yellow px-2">
                 {title}
               </Heading>
             ) : (
-              <div className="mb-0 w-fit bg-uog-color-yellow p-1 text-3xl text-black md:text-4xl">{title}</div>
+              <div className="mb-0 w-fit bg-uog-color-yellow p-1 px-2 text-[4rem]">{title}</div>
             )}
           </Container>
 

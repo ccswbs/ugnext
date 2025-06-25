@@ -63,7 +63,10 @@ export const MediaText = ({ data }) => {
   return (
     <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1 h-full">
       {data?.heading && (
-        <Heading className="mt-0" level={getHeadingLevel(data?.headingLevel) ?? 3}>
+        <Heading
+          className={twJoin("mt-0", background === "dark-gray" && "text-uog-color-white")}
+          level={getHeadingLevel(data?.headingLevel) ?? 3}
+        >
           {data?.heading}
         </Heading>
       )}

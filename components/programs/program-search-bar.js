@@ -40,7 +40,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
         <div className="flex-1">
           <TextInput
             onInput={(value) => setInput(value)}
-            label={<span className="text-l font-bold mb-1">What would you like to study?</span>}
+            label={<span className="text-uog-color-black text-l font-bold mb-1">What would you like to study?</span>}
             placeholder="ex. programming, engineering, psychology, etc."
           />
         </div>
@@ -53,7 +53,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
               onChange={(options) => {
                 setSelectedTypes(options.map((option) => option.value));
               }}
-              label={<span className="text-l font-bold">Filter by type</span>}
+              label={<span className="text-uog-color-black text-l font-bold">Filter by type</span>}
             />
           </div>
         )}
@@ -66,7 +66,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
               onChange={(options) => {
                 setSelectedDegreeTypes(options.map((option) => option.value));
               }}
-              label={<span className="text-l font-bold">Filter by degree type</span>}
+              label={<span className="text-uog-color-black text-l font-bold">Filter by degree type</span>}
             />
           </div>
         )}
