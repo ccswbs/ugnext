@@ -54,7 +54,7 @@ export const TestimonialSlider = ({ data }) => {
 
                 <Info color="yellow">
                   <div className="flex flex-col gap-0.5">
-                    <span className="font-bold text-lg">{title}</span>
+                    <span className="font-bold text-lg text-uog-color-black">{title}</span>
                     {testimonial?.description && <span className="text-uog-color-red text-lg">{testimonial.description}</span>}
                     {testimonial?.profile && (
                       <Link className="w-fit py-0 text-lg" href={testimonial.profile.url} color="blue">
