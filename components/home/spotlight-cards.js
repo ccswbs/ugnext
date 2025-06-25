@@ -1,5 +1,4 @@
 import { Card } from "@/components/card";
-import { twJoin } from "tailwind-merge";
 
 export const SpotlightCards = ({ cards }) => (
   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
