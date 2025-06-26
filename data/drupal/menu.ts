@@ -14,12 +14,6 @@ export const MENU_FRAGMENT = gql(/* gql */ `
       ...MenuItem
       children {
         ...MenuItem
-        children {
-          ...MenuItem
-          children {
-            ...MenuItem
-          }
-        }
       }
     }
   }
