@@ -60,8 +60,13 @@ export default async function Page({ params }: Props) {
 
   switch (route.entity.__typename) {
     case "NodePage":
-      return <BasicPage id={route.entity.uuid} title={route.entity.title} />;
+      return <BasicPage id={route.entity.uuid} />;
     default:
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          `Attempted to render a page with an entity type ${route.entity.__typename} but no component is set to render that type in app/[...slug]/page.tsx.`
+        );
+      }
       notFound();
   }
 }
