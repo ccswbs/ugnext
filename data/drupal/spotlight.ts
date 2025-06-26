@@ -22,6 +22,7 @@ export const SPOTLIGHT_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+/* This is for when we are using Playwright, to make sure its getting static content */
 function getTestSpotlights() {
   return {
     hero: {
