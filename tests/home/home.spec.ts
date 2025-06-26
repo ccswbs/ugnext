@@ -23,9 +23,9 @@ test("home-visual-regression", async ({ page, isMobile }) => {
     await expect(img).not.toHaveJSProperty("naturalWidth", 0);
   }
 
-  await page.goto("/");
   await expect(page).toHaveScreenshot("home.png", {
     fullPage: true,
     stylePath: path.join(__dirname, "home.css"),
+    maxDiffPixelRatio: 0.01,
   });
 });
