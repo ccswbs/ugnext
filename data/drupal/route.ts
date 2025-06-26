@@ -6,6 +6,7 @@ import { PageTypeQuery } from "@/lib/graphql/types";
 export type Route = NonNullable<PageTypeQuery["route"]>;
 export type InternalRoute = Extract<Route, { __typename: "RouteInternal" }>;
 export type RedirectRoute = Extract<Route, { __typename: "RouteRedirect" }>;
+export type InternalRouteBreadcrumbs = InternalRoute["breadcrumbs"];
 export type InternalRouteEntity = NonNullable<InternalRoute["entity"]>;
 export type InternalRouteEntityWithTitle = Extract<InternalRouteEntity, { title: string }>;
 
@@ -16,6 +17,10 @@ export async function getRouteInfo(url: string) {
         route(path: $path, revision: $revision) {
           __typename
           ... on RouteInternal {
+            breadcrumbs {
+              url
+              title
+            }
             entity {
               __typename
               ... on MediaAudio {

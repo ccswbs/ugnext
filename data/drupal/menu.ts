@@ -1,4 +1,5 @@
 import { gql } from "@/lib/graphql";
+import { query } from "@/lib/apollo";
 
 export const MENU_CONTENT_FRAGMENT = gql(/* gql */ `
   fragment MenuItem on MenuItem {
@@ -23,3 +24,15 @@ export const MENU_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+export async function getMenuByName(name: string) {
+  const { data } = await query({
+    query: gql(/* gql */ `
+      query MenuByName($name: MenuAvailable!) {
+        menu(name: $name) {
+          ...Menu
+        }
+      }
+    `),
+  });
+}

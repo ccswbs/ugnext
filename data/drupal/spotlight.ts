@@ -1,7 +1,26 @@
-import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
-import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { DraftSpotlightsQuery, PublishedSpotlightsQuery } from "@/lib/graphql/types";
+import { query } from "@/lib/apollo";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+
+export const SPOTLIGHT_FRAGMENT = gql(/* gql */ `
+  fragment Spotlight on NodeSpotlight {
+    status
+    id
+    rank
+    title
+    caption
+    captionAlignment
+    thumbnailImageCrop
+    url {
+      url
+      title
+    }
+    image {
+      ...Image
+    }
+  }
+`);
 
 function getTestSpotlights() {
   return {

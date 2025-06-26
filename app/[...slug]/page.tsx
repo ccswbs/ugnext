@@ -62,7 +62,13 @@ export default async function Page({ params }: Props) {
 
   switch (internalRoute.entity?.__typename) {
     case "NodePage":
-      return <BasicPage id={internalRoute.entity.uuid} title={internalRoute.entity.title} />;
+      return (
+        <BasicPage
+          id={internalRoute.entity.uuid}
+          title={internalRoute.entity.title}
+          breadcrumbs={internalRoute.breadcrumbs}
+        />
+      );
     default:
       notFound();
   }
