@@ -34,3 +34,13 @@ yarn-error.log*
 .idea
 *storybook.log!
 /data/sqlite/db.sqlite3
+# Playwright
+/playwright/.auth
+/playwright/.cache
+/playwright-report
+/.local-browsers
+
+# Test artifacts
+/allure-results
+/.allure
+/test-results

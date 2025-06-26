@@ -102,14 +102,14 @@ export const getPageMenu = async (page) => {
   // Fetch the menu data
   let menuRaw;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch menu: ${response.statusText}`);
-    }
-    menuRaw = await response.json();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch menu: ${response.statusText}`);
+    }
+    menuRaw = await response.json();
   } catch (error) {
-    console.error("Error fetching menu:", error);
-    return null;
+    console.error("Error fetching menu:", error);
+    return null;
   }
 
   // Helper function to parse the raw menu data
@@ -143,13 +143,13 @@ export const getPageMenu = async (page) => {
         }
       });
     });
-        
+
     // Add parent items with URLs to the beginning of their respective items array
-    navigation.forEach((navItem) => {
-      if (navItem.url !== "#" && navItem.items.length > 1) {
-        navItem.items.unshift({ title: navItem.title, url: navItem.url });
-      }
-    });
+    navigation.forEach((navItem) => {
+      if (navItem.url !== "#" && navItem.items.length > 1) {
+        navItem.items.unshift({ title: navItem.title, url: navItem.url });
+      }
+    });
 
     return { topic, navigation };
   };

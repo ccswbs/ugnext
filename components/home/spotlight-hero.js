@@ -12,7 +12,7 @@ export const SpotlightHero = ({ hero }) => (
       width: hero.image.image.width,
       height: hero.image.image.height,
       className: twJoin(
-        "aspect-[3/2] w-full",
+        "aspect-[3/2] w-full spotlight-hero-image",
         hero.thumbnailImageCrop === "right" && "object-right",
         hero.thumbnailImageCrop === "left" && "object-left",
         (hero.thumbnailImageCrop === "center" || !hero.thumbnailImageCrop) && "object-center"
