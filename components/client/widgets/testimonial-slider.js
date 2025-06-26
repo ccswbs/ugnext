@@ -10,7 +10,7 @@ import {
   BlockquoteAuthorLink,
 } from "@uoguelph/react-components/blockquote";
 import Link from "next/link";
-import { HtmlParser } from "@/components/html-parser";
+import { HtmlParser } from "@/components/client/html-parser";
 import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";

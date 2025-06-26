@@ -1,5 +1,5 @@
-import { StatisticsWidget } from "@/components/widgets/statistics";
-import { HtmlParser } from "@/components/html-parser";
+import { StatisticsWidget } from "@/components/client/widgets/statistics";
+import { HtmlParser } from "@/components/client/html-parser";
 import {
   Blockquote,
   BlockquoteContent,

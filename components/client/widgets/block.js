@@ -1,5 +1,5 @@
-import { HtmlParser } from "@/components/html-parser";
-import { WidgetSelector } from "@/components/widgets/widget-selector";
+import { HtmlParser } from "@/components/client/html-parser";
+import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 
 const BasicBlock = ({ data }) => {
   return <HtmlParser key={data.id} html={data.body.processed} />;

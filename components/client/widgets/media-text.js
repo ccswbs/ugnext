@@ -1,9 +1,9 @@
 import { Typography } from "@uoguelph/react-components/typography";
-import { HtmlParser } from "@/components/html-parser";
-import { ButtonSectionWidget } from "@/components/widgets/button-section";
+import { HtmlParser } from "@/components/client/html-parser";
+import { ButtonSectionWidget } from "@/components/client/widgets/button-section";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import { useContext } from "react";
-import { SectionContext } from "@/components/section";
+import { SectionContext } from "@/components/client/section";
 import { tv } from "tailwind-variants";
 import Image from "next/image";
 import { EmbeddedVideo } from "@uoguelph/react-components/embedded-video";

@@ -1,6 +1,6 @@
-import { Section } from "@/components/section";
+import { Section } from "@/components/client/section";
 import { Typography } from "@uoguelph/react-components/typography";
-import { WidgetSelector } from "@/components/widgets/widget-selector";
+import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 
 export function SectionWidget({ data }) {
   // Sort widgets into primary, secondary and others

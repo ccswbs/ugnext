@@ -7,11 +7,11 @@ import {
   BlockquoteAuthorTitle,
   BlockquoteContent,
 } from "@uoguelph/react-components/blockquote";
-import { ButtonSectionWidget } from "@/components/widgets/button-section";
+import { ButtonSectionWidget } from "@/components/client/widgets/button-section";
 import { ImageOverlay } from "@uoguelph/react-components/image-overlay";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import React from "react";
-import { GeneralTextWidget } from "@/components/widgets/general-text";
+import { GeneralTextWidget } from "@/components/client/widgets/general-text";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { twJoin } from "tailwind-merge";

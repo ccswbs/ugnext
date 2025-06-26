@@ -8,6 +8,7 @@ import { Hero, HeroTitle, HeroVideo } from "@uoguelph/react-components/hero";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
+import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 
 export type BasicPageProps = {
   id: string;
@@ -78,6 +79,8 @@ export async function BasicPage({ id }: BasicPageProps) {
 
       <LayoutContent container={false}>
         <PageHero content={content} />
+
+        {content?.widgets?.map((widget, index) => <WidgetSelector key={index} data={widget} />)}
       </LayoutContent>
 
       <Footer></Footer>

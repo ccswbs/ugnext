@@ -1,7 +1,7 @@
 import { Typography } from "@uoguelph/react-components/typography";
 import { Button } from "@uoguelph/react-components/button";
-import { HtmlParser } from "@/components/html-parser";
-import { UnstyledLink } from "@/components/unstyled-link";
+import { HtmlParser } from "@/components/client/html-parser";
+import { UnstyledLink } from "@/components/client/unstyled-link";
 import { tv } from "tailwind-variants";
 
 function getButtonData(data) {

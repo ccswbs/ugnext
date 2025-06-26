@@ -1,5 +1,5 @@
 import { Accordion, AccordionButton, AccordionContent } from "@uoguelph/react-components/accordion";
-import { HtmlParser } from "@/components/html-parser";
+import { HtmlParser } from "@/components/client/html-parser";
 import { getHeadingLevel } from "@/lib/string-utils";
 import { Typography } from "@uoguelph/react-components/typography";
 

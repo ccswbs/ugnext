@@ -5,7 +5,7 @@ import {
   StatisticsItemValue,
   StatisticsItemRepresents,
 } from "@uoguelph/react-components/statistics";
-import { HtmlParser } from "@/components/html-parser";
+import { HtmlParser } from "@/components/client/html-parser";
 import Image from "next/image";
 
 export function StatisticsWidget({ data }) {

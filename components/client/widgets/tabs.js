@@ -1,5 +1,5 @@
 import { Tabs as TabsComponent, TabList, Tab, TabPanels, TabPanel } from "@uoguelph/react-components/tabs";
-import { HtmlParser } from "@/components/html-parser";
+import { HtmlParser } from "@/components/client/html-parser";
 
 export function Tabs({ data }) {
   return (
