@@ -4,10 +4,57 @@ import { Header } from "@/components/server/header";
 import { getPageContent } from "@/data/drupal/basic-page";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/server/breadcrumbs";
+import { Hero, HeroTitle, HeroVideo } from "@uoguelph/react-components/hero";
+import Image from "next/image";
+import { Container } from "@uoguelph/react-components/container";
+import { Typography } from "@uoguelph/react-components/typography";
 
 export type BasicPageProps = {
   id: string;
 };
+
+type PageContent = NonNullable<Awaited<ReturnType<typeof getPageContent>>>;
+
+function PageHero({ content }: { content: NonNullable<PageContent> }) {
+  if (content.image) {
+    return (
+      <>
+        <Hero
+          alt={content.image.image.alt ?? ""}
+          height={content.image.image.height}
+          width={content.image.image.width}
+          src={content.image.image.url}
+          variant="basic"
+          priority
+          as={Image}
+        >
+          <HeroTitle>{content.title}</HeroTitle>
+          {content.heroWidgets?.video && (
+            <HeroVideo
+              src={content.heroWidgets.video.url}
+              title={content.heroWidgets.video.name}
+              transcript={content.heroWidgets.video.transcript?.url}
+            />
+          )}
+        </Hero>
+
+        <Breadcrumbs url={content.path ?? undefined} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Breadcrumbs url={content.path ?? undefined} />
+
+      <Container>
+        <Typography type="h1" as="h1">
+          {content?.title}
+        </Typography>
+      </Container>
+    </>
+  );
+}
 
 export async function BasicPage({ id }: BasicPageProps) {
   const content = await getPageContent(id);
@@ -28,9 +75,10 @@ export async function BasicPage({ id }: BasicPageProps) {
   return (
     <Layout>
       <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
-      <Breadcrumbs url={content.path ?? undefined} />
 
-      <LayoutContent></LayoutContent>
+      <LayoutContent container={false}>
+        <PageHero content={content} />
+      </LayoutContent>
 
       <Footer></Footer>
     </Layout>
