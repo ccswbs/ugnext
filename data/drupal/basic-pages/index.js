@@ -95,7 +95,7 @@ export const getBreadcrumbs = async (slug, status) => {
 export const getPageMenu = async (page) => {
   const name = page?.primaryNavigation?.menuName;
 
-  if (!name || name === "no_menu") {
+  if (!name || name === "no_menu" || name === "no-menu") {
     return null;
   }
 
