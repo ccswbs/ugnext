@@ -7,6 +7,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
     status
     id
     title
+    path
     primaryNavigation {
       ...Navigation
     }

@@ -1,49 +1,19 @@
 import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { PageTypeQuery } from "@/lib/graphql/types";
+import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
 
-export type Route = NonNullable<PageTypeQuery["route"]>;
-export type InternalRoute = Extract<Route, { __typename: "RouteInternal" }>;
-export type RedirectRoute = Extract<Route, { __typename: "RouteRedirect" }>;
-export type InternalRouteBreadcrumbs = InternalRoute["breadcrumbs"];
-export type InternalRouteEntity = NonNullable<InternalRoute["entity"]>;
-export type InternalRouteEntityWithTitle = Extract<InternalRouteEntity, { title: string }>;
+export type Route = NonNullable<RouteQuery["route"]>;
 
-export async function getRouteInfo(url: string) {
+export async function getRoute(url: string) {
   const { data } = await query({
     query: gql(/* gql */ `
-      query PageType($path: String!, $revision: ID = "current") {
+      query Route($path: String!, $revision: ID = "current") {
         route(path: $path, revision: $revision) {
           __typename
           ... on RouteInternal {
-            breadcrumbs {
-              url
-              title
-            }
             entity {
               __typename
-              ... on MediaAudio {
-                uuid
-              }
-              ... on MediaFile {
-                uuid
-              }
-              ... on MediaImage {
-                uuid
-              }
-              ... on MediaRemoteVideo {
-                uuid
-              }
-              ... on MediaVideo {
-                uuid
-              }
-              ... on TermPrimaryNavigation {
-                uuid
-              }
-              ... on TermTag {
-                uuid
-              }
               ... on NodeArticle {
                 uuid
                 title
@@ -92,15 +62,6 @@ export async function getRouteInfo(url: string) {
                 uuid
                 title
               }
-              ... on BlockContentBasic {
-                uuid
-              }
-              ... on BlockContentWidgetBlock {
-                uuid
-              }
-              ... on BlockContentYamlBlock {
-                uuid
-              }
             }
           }
           ... on RouteRedirect {
@@ -120,6 +81,97 @@ export async function getRouteInfo(url: string) {
     case "RouteInternal":
     case "RouteRedirect":
       return data?.route;
+    default:
+      return null;
+  }
+}
+
+export async function getRouteBreadcrumbs(url: string) {
+  const { data } = await query({
+    query: gql(/* gql */ `
+      query RouteBreadcrumbs($path: String!, $revision: ID = "current") {
+        route(path: $path, revision: $revision) {
+          __typename
+          ... on RouteInternal {
+            breadcrumbs {
+              __typename
+              title
+              url
+            }
+            entity {
+              ... on NodeArticle {
+                title
+              }
+              ... on NodeCallToAction {
+                title
+              }
+              ... on NodeCareer {
+                title
+              }
+              ... on NodeCourse {
+                title
+              }
+              ... on NodeCustomFooter {
+                title
+              }
+              ... on NodeEmployer {
+                title
+              }
+              ... on NodeEvent {
+                title
+              }
+              ... on NodePage {
+                title
+              }
+              ... on NodeProgram {
+                title
+              }
+              ... on NodeSpotlight {
+                title
+              }
+              ... on NodeTestimonial {
+                title
+              }
+              ... on NodeUserDocumentation {
+                title
+              }
+            }
+          }
+        }
+      }
+    `),
+    variables: {
+      path: url,
+      revision: (await showUnpublishedContent()) ? "latest" : "current",
+    },
+  });
+
+  switch (data?.route?.__typename) {
+    case "RouteInternal":
+      if (!data.route.entity || !("title" in data.route.entity)) {
+        return null;
+      }
+
+      if (!Array.isArray(data.route.breadcrumbs)) {
+        return [
+          {
+            title: data.route.entity.title,
+          },
+        ];
+      }
+
+      return [
+        ...data.route.breadcrumbs.filter((breadcrumb) => {
+          if (!breadcrumb.title) {
+            return false;
+          }
+
+          return breadcrumb.url !== "/";
+        }),
+        {
+          title: data.route.entity.title,
+        },
+      ];
     default:
       return null;
   }

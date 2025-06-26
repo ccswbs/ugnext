@@ -2,7 +2,7 @@ import React from "react";
 import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Metadata } from "next";
-import AppArmor from "@/components/app-armor";
+import AppArmor from "@/components/client/app-armor";
 
 // Stylesheets
 import "@/styles/globals.css";

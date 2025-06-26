@@ -26,7 +26,7 @@ export const MENU_FRAGMENT = gql(/* gql */ `
 `);
 
 export async function getMenuByName(name: string) {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query MenuByName($name: MenuAvailable!) {
         menu(name: $name) {
@@ -34,5 +34,15 @@ export async function getMenuByName(name: string) {
         }
       }
     `),
+    variables: {
+      // @ts-ignore
+      name: name,
+    },
   });
+
+  if (error) {
+    return null;
+  }
+
+  return data?.menu;
 }

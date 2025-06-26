@@ -1,18 +1,18 @@
 import React from "react";
+import { getSpotlights } from "@/data/drupal/spotlight";
+import { twJoin } from "tailwind-merge";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Header } from "@uoguelph/react-components/header";
 import { Footer } from "@uoguelph/react-components/footer";
-import { getSpotlights } from "@/data/drupal/fragments/spotlight";
-import { SpotlightHero } from "@/components/home/spotlight-hero";
-import { TagLine } from "@/components/home/tag-line";
-import { HomeStory } from "@/components/home/story";
 import { Container } from "@uoguelph/react-components/container";
-import { ThreeCampuses } from "@/components/home/three-campuses";
 import { Typography } from "@uoguelph/react-components/typography";
-import { Rankings } from "@/components/home/rankings";
-import { StudyHere } from "@/components/home/study-here";
-import { twJoin } from "tailwind-merge";
-import { SpotlightCards } from "@/components/home/spotlight-cards";
+import { TagLine } from "@/components/client/home/tag-line";
+import { SpotlightHero } from "@/components/client/home/spotlight-hero";
+import { SpotlightCards } from "@/components/client/home/spotlight-cards";
+import { StudyHere } from "@/components/client/home/study-here";
+import { Rankings } from "@/components/client/home/rankings";
+import { ThreeCampuses } from "@/components/client/home/three-campuses";
+import { HomeStory } from "@/components/client/home/story";
 
 export default async function Page() {
   const { hero, cards } = await getSpotlights();

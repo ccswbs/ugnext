@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { cloneElement, Fragment, isValidElement, useMemo } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
