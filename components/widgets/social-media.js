@@ -1,19 +1,18 @@
 import { twJoin } from "tailwind-merge";
-import { Heading } from "@/components/heading";
-import { getHeadingLevel } from "@/lib/string-utils";
+import { Typography } from "@uoguelph/react-components/typography";
 
 export function SocialMediaWidget({ data }) {
   const links = data.socialMediaLinks || [];
   const title = data?.socialMediaTitle;
   const altText = data?.iconAltText;
-  const level = getHeadingLevel(data.headingLevel);
+  const level = data.headingLevel;
 
   // Sort links alphabetically by name
   const sortedLinks = links.sort((a, b) => a.name.localeCompare(b.name));
 
   return sortedLinks.length > 0 ? (
     <>
-      {title && <Heading level={level}>{title}</Heading>}
+      {title && <Typography type={level} as={level}>{title}</Typography>}
       <ul className="flex gap-2 list-none">
         {sortedLinks.map(({ name, url, value }, index) => (
           <li key={index}>
