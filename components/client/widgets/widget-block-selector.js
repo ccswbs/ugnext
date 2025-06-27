@@ -1,9 +1,9 @@
-import { AccordionWidget } from "@/components/widgets/accordions";
-import { ButtonSectionWidget } from "@/components/widgets/button-section";
-import { GeneralTextWidget } from "@/components/widgets/general-text";
-import { MediaTextWidget } from "@/components/widgets/media-text";
-import { SocialMediaWidget } from "@/components/widgets/social-media";
-import { TabsWidget } from "@/components/widgets/tabs";
+import { AccordionWidget } from "@/components/client/widgets/accordions";
+import { ButtonSectionWidget } from "@/components/client/widgets/button-section";
+import { GeneralTextWidget } from "@/components/client/widgets/general-text";
+import { MediaTextWidget } from "@/components/client/widgets/media-text";
+import { SocialMediaWidget } from "@/components/client/widgets/social-media";
+import { TabsWidget } from "@/components/client/widgets/tabs";
 
 export const WidgetBlockSelector = ({ data }) => {
   const map = {
