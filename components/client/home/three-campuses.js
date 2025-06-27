@@ -4,7 +4,7 @@ import { Card, CardImage, CardContent, CardTitle } from "@uoguelph/react-compone
 import guelph from "@/img/guelph.png";
 import ridgetown from "@/img/ridgetown.png";
 import guelphHumber from "@/img/guelph-humber.png";
-import { UnstyledLink } from "@/components/unstyled-link";
+import { UnstyledLink } from "@/components/client/unstyled-link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 

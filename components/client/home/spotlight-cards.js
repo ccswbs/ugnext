@@ -1,5 +1,7 @@
+'use client';
+
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
-import { UnstyledLink } from "@/components/unstyled-link";
+import { UnstyledLink } from "@/components/client/unstyled-link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 

@@ -1,5 +1,7 @@
+'use client';
+
 import { HtmlParser } from "@/components/client/html-parser";
-import { WidgetBlockSelector } from "@/components/widgets/widget-block-selector";
+import { WidgetBlockSelector } from "@/components/client/widgets/widget-block-selector";
 
 const BasicBlock = ({ data }) => {
   return <HtmlParser key={data.id} html={data.body.processed} />;

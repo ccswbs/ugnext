@@ -1,19 +1,21 @@
+'use client';
+
 import ConditionalWrap from "conditional-wrap";
 import { Container } from "@uoguelph/react-components/container";
 import { useContext } from "react";
-import { SectionContext } from "@/components/section";
-import { AccordionWidget } from "@/components/widgets/accordions";
-import { ButtonSectionWidget } from "@/components/widgets/button-section";
-import { GeneralTextWidget } from "@/components/widgets/general-text";
-import { LinksWidget } from "@/components/widgets/links";
-import { MediaTextWidget } from "@/components/widgets/media-text";
-import { SectionWidget } from "@/components/widgets/section.js";
-import { StatisticsWidget } from "@/components/widgets/statistics";
-import { ImageOverlayWidget } from "@/components/widgets/image-overlay";
-import { StoryWidget } from "@/components/widgets/story";
-import { BlockWidget } from "@/components/widgets/block";
-import { TabsWidget } from "@/components/widgets/tabs";
-import { TestimonialSliderWidget } from "@/components/widgets/testimonial-slider";
+import { SectionContext } from "@/components/client/section";
+import { AccordionWidget } from "@/components/client/widgets/accordions";
+import { ButtonSectionWidget } from "@/components/client/widgets/button-section";
+import { GeneralTextWidget } from "@/components/client/widgets/general-text";
+import { LinksWidget } from "@/components/client/widgets/links";
+import { MediaTextWidget } from "@/components/client/widgets/media-text";
+import { SectionWidget } from "@/components/client/widgets/section.js";
+import { StatisticsWidget } from "@/components/client/widgets/statistics";
+import { ImageOverlayWidget } from "@/components/client/widgets/image-overlay";
+import { StoryWidget } from "@/components/client/widgets/story";
+import { BlockWidget } from "@/components/client/widgets/block";
+import { TabsWidget } from "@/components/client/widgets/tabs";
+import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial-slider";
 
 export function WidgetSelector({ data }) {
   // If this widget is within a section, we don't want to render a container around it
