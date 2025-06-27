@@ -22,7 +22,6 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
     }
 
     if (Array.isArray(degreeTypes) && degreeTypes.length > 0) {
-      console.log(filtered);
       filtered = filtered.filter((program) =>
         program.degrees.some((degree) => selectedDegreeTypes.some((t) => degree.type.id === t.id))
       );
