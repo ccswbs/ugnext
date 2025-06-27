@@ -1,15 +1,15 @@
-import { Container } from "@/components/container";
-import { Heading } from "@/components/heading";
-import { Link } from "@/components/link";
+import { Container } from "@uoguelph/react-components/container";
+import { Link } from "@uoguelph/react-components/link";
+import { Typography } from "@uoguelph/react-components/typography";
 import Image from "next/image";
 import ovcCrest from "@/img/ovc/OVC-crest.png";
 
 export const OVCFooter = () => {
   return (
-    <div className="w-full py-5 bg-gray-100">
-      <Container centered>
-        <div className="grid items-center gap-4 sm:grid-cols-2 md:grid-cols-[2fr_5fr]">
-          <div className="flex justify-center items-center">
+    <div className={"w-full py-5 bg-gray-100"}>
+      <Container>
+        <div className="grid items-center gap-4 sm:grid sm:grid-cols-2 md:grid-cols-[2fr_5fr] ">
+          <div className="place-items-center">
             <Image
               src={ovcCrest?.src}
               width={200}
@@ -28,11 +28,8 @@ export const OVCFooter = () => {
         </div>
         <div className="grid gap-4 grid-cols-1 md:grid-cols-3 mt-8">
           <div>
-            <div className="flex flex-wrap gap-2 mt-8">
-              <a
-                href="https://instagram.com/ontvetcollege/"
-                className="border border-gray-400 rounded px-2 py-1 text-gray-700 hover:bg-gray-200 transition"
-              >
+            <div className="md:flex flex-wrap gap-3 mt-8">
+              <a href="https://instagram.com/ontvetcollege/" className="btn btn-outline-secondary text-dark-social">
                 <span className="sr-only">Connect with OVC on Instagram</span>
                 <i className="fa-brands fa-instagram text-xl p-1" aria-hidden="true"></i>
               </a>
@@ -67,10 +64,10 @@ export const OVCFooter = () => {
             </div>
           </div>
           <div className="text-lg">
-            <Heading level={1} as="h2" className="font-condensed text-black">
+            <Typography type="h1" as="h2" className="font-condensed text-black">
               Units
-            </Heading>
-            <ul className="list-disc ml-5 mt-2 space-y-1">
+            </Typography>
+            <ul>
               <li>
                 <Link href="https://ovc.uoguelph.ca/biomedical-sciences/">Department of Biomedical Sciences</Link>
               </li>
@@ -89,9 +86,9 @@ export const OVCFooter = () => {
             </ul>
           </div>
           <div className="text-lg">
-            <Heading level={1} as="h2" className="font-condensed">
+            <Typography type="h1" as="h2" className="font-condensed">
               Connect with OVC
-            </Heading>
+            </Typography>
             <ul className="font-bold list-none mt-2 space-y-1">
               <li>
                 <Link href="https://www.google.com/maps/place/Ontario+Veterinary+College+Health+Sciences+Centre/@43.5312879,-80.2345029,17z/data=!3m1!4b1!4m5!3m4!1s0x882b9ad624240187:0x95a5348b4bf4b543!8m2!3d43.5312879!4d-80.2323142">
@@ -110,6 +107,7 @@ export const OVCFooter = () => {
             </ul>
           </div>
         </div>
+        {/* </div> */}
       </Container>
     </div>
   );

@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import { UnstyledLink } from "@/components/unstyled-link";
 import Image from "next/image";
@@ -31,7 +29,7 @@ export const SpotlightCards = ({ cards }) => {
         >
           <CardImage
             src={data.image.image.url}
-            alt={data.image.image.alt}
+            alt=""
             width={data.image.image.width}
             height={data.image.image.height}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

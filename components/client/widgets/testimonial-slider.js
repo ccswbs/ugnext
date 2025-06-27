@@ -30,7 +30,7 @@ export function TestimonialSliderWidget({ data }) {
   return (
     <div className="bg-grey-light-bg pb-7.5">
       <Container className="px-4 py-14 flex flex-col items-center">
-        <Typography type="h2" as="h3" className="mb-12 text-black">
+        <Typography type="h2" as="h3" className="mb-12 text-black!">
           {data?.title}
         </Typography>
 
@@ -48,7 +48,7 @@ export function TestimonialSliderWidget({ data }) {
                 width={image?.width}
                 height={image?.height}
                 alt={image?.alt}
-                className="[&_.uofg-media-caption-media]:rounded-full h-full"
+                className="[&_.uofg-media-caption-media]:rounded-full [&_.uofg-media-caption-media]:aspect-square h-full"
                 as="img"
               >
                 <Blockquote hideQuotationMarks>

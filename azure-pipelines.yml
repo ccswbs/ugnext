@@ -18,16 +18,12 @@ steps:
     displayName: "Install bun using npm"
 
   - script: |
-      bun bun.lockb > bun.lockb.txt
-    displayName: "Output text version of bun.lockb"
-
-  - script: |
       bun install --frozen-lockfile
     displayName: "Install dependencies using bun"
 
   - task: Cache@2
     inputs:
-      key: "next | $(Agent.OS) | bun.lockb.txt"
+      key: "next | $(Agent.OS) | bun.lock"
       path: "$(System.DefaultWorkingDirectory)/.next/cache"
     displayName: "Cache .next/cache"
 
