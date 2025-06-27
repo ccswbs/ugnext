@@ -9,7 +9,7 @@
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@netlify/plugin-nextjs": "^5.11.4",
         "@next/third-parties": "^15.3.4",
-        "@uoguelph/react-components": "^1.3.10",
+        "@uoguelph/react-components": "^1.3.11",
         "conditional-wrap": "^1.0.3",
         "glob": "^11.0.3",
         "nanoid": "5.1.5",
@@ -434,7 +434,7 @@
 
     "@unrs/resolver-binding-win32-x64-msvc": ["@unrs/resolver-binding-win32-x64-msvc@1.9.2", "", { "os": "win32", "cpu": "x64" }, "sha512-ryoo+EB19lMxAd80ln9BVf8pdOAxLb97amrQ3SFN9OCRn/5M5wvwDgAe4i8ZjhpbiHoDeP8yavcTEnpKBo7lZg=="],
 
-    "@uoguelph/react-components": ["@uoguelph/react-components@1.3.10", "", { "peerDependencies": { "@fortawesome/fontawesome-svg-core": "^6.7.2", "@fortawesome/react-fontawesome": "^0.2.2", "@headlessui/react": "^2.2.0", "@headlessui/tailwindcss": "^0.2.2", "object-hash": "^3.0.0", "react": "^19.1.0", "react-animate-height": "^3.2.3", "react-dom": "^19.1.0", "tailwind-merge": "^3.0.1", "tailwind-variants": "^1.0.0" } }, "sha512-kt2cJsChgza0Royrbp0Q5weuWeUhep7Fz3aPxyOUUdQ+oY/PiEA9Sm+vtyK8bLWQVUwbwBbzZDKPSkOs0YrbQQ=="],
+    "@uoguelph/react-components": ["@uoguelph/react-components@1.3.11", "", { "peerDependencies": { "@fortawesome/fontawesome-svg-core": "^6.7.2", "@fortawesome/react-fontawesome": "^0.2.2", "@headlessui/react": "^2.2.0", "@headlessui/tailwindcss": "^0.2.2", "object-hash": "^3.0.0", "react": "^19.1.0", "react-animate-height": "^3.2.3", "react-dom": "^19.1.0", "tailwind-merge": "^3.0.1", "tailwind-variants": "^1.0.0" } }, "sha512-tta7HWd+8GlwtSuGkslmnbeCw2Ihu747FXd7YaCTG25f8qSXXz0bjtWZMDWIyfDIAyxZfVUgEr/A2XU0I7xqUA=="],
 
     "@uoguelph/tailwind-theme": ["@uoguelph/tailwind-theme@1.0.2", "", { "dependencies": { "tailwindcss": "^4.0.9" } }, "sha512-T7hQPcXQaprzhYhBCWysIfYfxZINv9yebCs/V1+ZasjnTEIR4YGK5LLwH/6WkNSSa5PJgjp2mYoRRONyUD0iiQ=="],
 
