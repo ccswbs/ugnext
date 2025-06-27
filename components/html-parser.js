@@ -157,7 +157,9 @@ export const DEFAULT_INSTRUCTIONS = [
           {children
             .filter((child) => child.type === "li")
             .map((child, index) => (
-              <ListItem key={index}>{child.props.children}</ListItem>
+              <ListItem key={index}>
+                <Typography type="body">{child.props.children}</Typography>
+              </ListItem>
             ))}
         </List>
       );
