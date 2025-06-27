@@ -1,45 +1,75 @@
-import React, { Fragment, useMemo } from "react";
+import React from "react";
+import { cloneElement, Fragment, isValidElement, useMemo } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
-import { Link } from "@/components/link";
-import { Heading } from "@/components/heading";
-import { List, ListItem } from "@/components/list";
-import { Divider } from "@/components/divider";
-import { getHeadingLevel } from "@/lib/string-utils";
-import { Button } from "@/components/button";
+import { Link } from "@uoguelph/react-components/link";
+import { Contact, ContactTitle, ContactName, ContactPhone, ContactEmail } from "@uoguelph/react-components/contact";
+import { List, ListItem } from "@uoguelph/react-components/list";
+import { Divider } from "@uoguelph/react-components/divider";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Button } from "@uoguelph/react-components/button";
+import { Info } from "@uoguelph/react-components/info";
 import Image from "next/image";
 import Script from "next/script";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 
 const getImageUrl = (src) => {
-  if (src.startsWith("/sites/default/files")) {
-    return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`;
-  }
-  return src;
+  if (src.startsWith("/sites/default/files")) {
+    return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`;
+  }
+  return src;
 };
 
 const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
 
-const withKeys = (children) =>
-  React.Children.map(children, (child, index) =>
-    React.isValidElement(child) ? React.cloneElement(child, { key: index }) : child
-  );
-
 const parser = new Parser();
 export const DEFAULT_PROCESSOR = new ProcessNodeDefinitions().processDefaultNode;
+export const CATCHALL_INSTRUCTION = {
+  shouldProcessNode: () => true,
+  processNode: DEFAULT_PROCESSOR,
+};
+
 export const DEFAULT_INSTRUCTIONS = [
-  // Headings
+  // vcard
+  {
+    shouldProcessNode: (node) => node.attribs?.class?.includes("vcard"),
+    processNode: (node, children) => {
+      const name = node.children[0].children[0].data;
+      const title = node?.children[2]?.data;
+      const phone = node?.children?.find((child) => child.attribs?.href?.includes("tel:"));
+      const number = phone?.children?.[0]?.data;
+      const extension = phone?.next?.data?.replaceAll(/[^0-9]/g, "");
+      const email = node?.children?.find((child) => child.attribs?.href?.includes("mailto:"))?.children[0]?.data;
+
+      return (
+        <Contact key={nanoid()} className={node.attribs.class}>
+          <ContactName>{name}</ContactName>
+          <ContactTitle>{title}</ContactTitle>
+          <ContactPhone number={number} extension={extension}></ContactPhone>
+          <ContactEmail email={email} />
+        </Contact>
+      );
+    },
+  },
+  // Author
+  {
+    shouldProcessNode: (node) => node.attribs?.class?.includes("author"),
+    processNode: (node, children) => {
+      return (
+        <Fragment key={nanoid()}>
+          <div className="mt-4"></div>
+          <Info>{children.filter((child) => child?.type !== "br")}</Info>
+        </Fragment>
+      );
+    },
+  },
+  // h1, h2, ... h6 tags
   {
     shouldProcessNode: (node) => headingTags.has(node.tagName),
-    processNode: (node, children, index) => {
-      const level = getHeadingLevel(node.tagName);
-      node.attribs.className = node.attribs.class;
-      delete node.attribs.class;
-      delete node?.attribs?.style;
-
+    processNode: (node, children) => {
       // Remove <strong> tags inside heading tags
-      const remStrongChildren = children.map(child => {
-        if (child && child.type === 'strong' && child.props && child.props.children) {
+      const clean = children.map((child) => {
+        if (child && child.type === "strong" && child.props && child.props.children) {
           // Unwrap <strong> by returning its children
           return child.props.children;
         }
@@ -47,9 +77,19 @@ export const DEFAULT_INSTRUCTIONS = [
       });
 
       return (
-        <Heading {...node.attribs} level={level} key={index}>
-          {withKeys(remStrongChildren)}
-        </Heading>
+        <Typography key={nanoid()} className={node.attribs.class} type={node.tagName} as={node.tagName}>
+          {clean}
+        </Typography>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "p",
+    processNode: (node, children) => {
+      return (
+        <Typography key={nanoid()} className={node.attribs.class} type="body" as="p">
+          {children}
+        </Typography>
       );
     },
   },
@@ -67,38 +107,43 @@ export const DEFAULT_INSTRUCTIONS = [
   // Links and Buttons
   {
     shouldProcessNode: (node) => node.tagName === "a" && typeof node.attribs?.href === "string",
-    processNode: (node, children, index) => {
-      node.attribs.className = node.attribs.class;
-      delete node.attribs.class;
-      delete node?.attribs?.style;
-
+    processNode: (node, children) => {
+      // Check if the link is a button by looking for the "btn" class or "btn-*" class
       const isButton = node.attribs.className?.includes("btn");
-      const type = node.attribs.className?.match(/btn-(?:outline-)?(\w*)/)?.[1];
-      const map = {
-        primary: "red",
-        secondary: "black",
-        info: "blue",
-        success: "green",
-        warning: "yellow",
-        danger: "red",
-        light: "gray",
-        dark: "black",
-      };
-      const outlined = node.attribs.className?.includes("btn-outline");
 
-      return isButton ? (
-        <Button
-          {...node.attribs}
-          href={node.attribs?.href ?? ""}
-          color={map[type] ?? "red"}
-          outlined={outlined}
-          key={index}
-        >
-          {withKeys(children)}
-        </Button>
-      ) : (
-        <Link {...node.attribs} href={node.attribs?.href ?? ""} key={index}>
-          {withKeys(children)}
+      if (isButton) {
+        const type = node.attribs.className?.match(/btn-(?:outline-)?(\w*)/)?.[1];
+        const map = {
+          primary: "red",
+          secondary: "black",
+          info: "blue",
+          success: "green",
+          warning: "yellow",
+          danger: "red",
+          light: "yellow",
+          dark: "black",
+        };
+
+        const outlined = node.attribs.className?.includes("btn-outline");
+
+        return (
+          <Button
+            key={nanoid()}
+            id={node.attribs.id}
+            className={node.attribs.class}
+            href={node.attribs?.href ?? ""}
+            color={map[type] ?? "red"}
+            outlined={outlined}
+            as="a"
+          >
+            {children}
+          </Button>
+        );
+      }
+
+      return (
+        <Link key={nanoid()} id={node.attribs.id} className={node.attribs.class} href={node.attribs?.href ?? ""}>
+          {children}
         </Link>
       );
     },
@@ -106,17 +151,15 @@ export const DEFAULT_INSTRUCTIONS = [
   // Lists
   {
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
-    processNode: (node, children, index) => {
-      node.attribs.className = node.attribs.class;
-      delete node.attribs.class;
-      delete node?.attribs?.style;
-
+    processNode: (node, children) => {
       return (
-        <List {...node.attribs} variant={node.tagName === "ol" ? "ordered" : "unordered"} key={index}>
+        <List key={nanoid()} className={node.attribs.class} as={node.tagName}>
           {children
             .filter((child) => child.type === "li")
-            .map((child, i) => (
-              <ListItem key={i}>{child.props.children}</ListItem>
+            .map((child, index) => (
+              <ListItem key={index}>
+                <Typography type="body">{child.props.children}</Typography>
+              </ListItem>
             ))}
         </List>
       );
@@ -125,29 +168,28 @@ export const DEFAULT_INSTRUCTIONS = [
   // Divider
   {
     shouldProcessNode: (node) => node.tagName === "hr",
-    processNode: (node, _, index) => <Divider key={index} />,
+    processNode: (node) => <Divider />,
   },
   // Images
   {
     shouldProcessNode: (node) =>
       node.tagName === "img" && node.attribs.src && node.attribs.width && node.attribs.height,
     processNode: (node, _, index) => {
-  
       // Convert Bootstrap alignment classes to Tailwind equivalents
       let imageClass = node.attribs.class || "";
       imageClass = imageClass
         .replace("align-left", "float-left mr-4") // Convert `align-left` to `float-left` with margin
         .replace("align-right", "float-right ml-4"); // Convert `align-right` to `float-right` with margin
-        // Handle `data-align` attributes
+      // Handle `data-align` attributes
 
-        // Remove the `class` attribute and any inline styles
+      // Remove the `class` attribute and any inline styles
       delete node?.attribs?.class;
 
       // Check for caption (data-caption or figcaption)
       const caption = node.attribs["data-caption"] ? (
         <figcaption className="text-sm text-gray-600 mt-2">{node.attribs["data-caption"]}</figcaption>
       ) : null;
-      
+
       // Prepend the base URL to relative paths to prevent broken image links on Netlify
       const src = getImageUrl(node.attribs.src);
 
@@ -203,17 +245,23 @@ export const DEFAULT_INSTRUCTIONS = [
   // Scripts
   {
     shouldProcessNode: (node) => node.tagName === "script",
-    processNode: (node, _, index) => (
-      <Script key={index} src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />
-    ),
+    processNode: (node) => <Script src={node.attribs.src} type={node.attribs.type} strategy="lazyOnload" />,
   },
   // Fallback
   {
     shouldProcessNode: () => true,
-    processNode: (node, children, index) => {
-      delete node?.attribs?.style;
-      const element = DEFAULT_PROCESSOR(node, children);
-      return React.isValidElement(element) ? React.cloneElement(element, { key: index }) : element;
+    processNode: (node, children) => {
+      // Remove inline styles because Next.js doesn't like when they're present
+      node.attribs ??= {};
+      delete node.attribs?.style;
+      node.attribs.key = nanoid();
+
+      return DEFAULT_PROCESSOR(
+        node,
+        children.map((child, index) => {
+          return isValidElement(child) ? cloneElement(child, { key: index }) : child;
+        })
+      );
     },
   },
 ];
@@ -226,24 +274,12 @@ export const HtmlParser = ({ html, instructions }) => {
     const parsed = parser.parseWithInstructions(
       html,
       () => true,
-      Array.isArray(instructions)
-        ? [
-            ...instructions,
-            {
-              shouldProcessNode: () => true,
-              processNode: DEFAULT_PROCESSOR,
-            },
-          ]
-        : DEFAULT_INSTRUCTIONS
+      Array.isArray(instructions) ? [...instructions, CATCHALL_INSTRUCTION] : DEFAULT_INSTRUCTIONS
     );
 
     if (Array.isArray(parsed)) {
       return parsed.map((child) => {
-        if (typeof child === "object") {
-          return <Fragment key={nanoid()}>{child}</Fragment>;
-        }
-
-        return child;
+        return isValidElement(child) ? cloneElement(child, { key: nanoid() }) : child;
       });
     }
 

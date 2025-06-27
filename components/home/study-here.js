@@ -1,60 +1,68 @@
-import { LinkCarousel } from "@/components/link-carousel";
+import {
+  LinkCarousel,
+  LinkCarouselLinks,
+  LinkCarouselLink,
+  LinkCarouselContent,
+  LinkCarouselItem,
+} from "@uoguelph/react-components/link-carousel";
 import undergraduate from "@/img/leah-weller-environmental-engineering-u-of-g.jpg";
 import graduate from "@/img/caroline-pottruff-landscape-architecture-u-of-g.jpg";
 import international from "@/img/ryan-ahlers-theatre-studies-u-of-g.jpg";
 import lifelong from "@/img/kathryn-knowles-jenna-schamowski-environmental-sciences-u-of-g.jpg";
+import Image from "next/image";
+import { tv } from "tailwind-variants";
 
 export const StudyHere = () => {
-  const links = [
-    {
-      image: {
-        src: undergraduate.src,
-        width: undergraduate.width,
-        height: undergraduate.height,
-        blurred: undergraduate.blurDataURL,
-        alt: "Leah Weller and another student in lab coats looking at a computer screen.",
-      },
-      title: "Undergraduate Programs",
-      url: "https://admission.uoguelph.ca/programs",
-      caption: "Leah Weller - Environmental Engineering",
+  const classes = tv({
+    slots: {
+      link: "text-xl!",
+      item: "relative",
+      image: "h-96",
+      caption:
+        "absolute bottom-0 left-0 z-10 text-white bg-linear-to-t from-black to-transparent p-4 pt-6 text-lg w-full",
     },
-    {
-      image: {
-        src: graduate.src,
-        width: graduate.width,
-        height: graduate.height,
-        blurred: graduate.blurDataURL,
-        alt: "Caroline Pottruff working in a forest with a hard hat on",
-      },
-      title: "Graduate Programs",
-      url: "https://graduatestudies.uoguelph.ca/",
-      caption: "Caroline Pottruff - Landscape Architecture",
-    },
-    {
-      image: {
-        src: international.src,
-        width: international.width,
-        height: international.height,
-        blurred: international.blurDataURL,
-        alt: "Ryan Ahlers adjusting a spotlight in a theatre",
-      },
-      title: "International",
-      url: "https://www.uoguelph.ca/study-in-canada/",
-      caption: "Ryan Ahlers - Theatre Studies",
-    },
-    {
-      image: {
-        src: lifelong.src,
-        width: lifelong.width,
-        height: lifelong.height,
-        blurred: lifelong.blurDataURL,
-        alt: "Kathryn Knowles & Jenna Schamowski working with bee hives",
-      },
-      title: "Continuing Studies",
-      url: "https://www.uoguelph.ca/continuing-studies/",
-      caption: "Kathryn Knowles & Jenna Schamowski - Environmental Sciences",
-    },
-  ];
+  });
 
-  return <LinkCarousel links={links} />;
+  const { link, item, image, caption } = classes();
+
+  return (
+    <LinkCarousel direction="right" stack>
+      <LinkCarouselLinks>
+        <LinkCarouselLink href="https://admission.uoguelph.ca/programs" id="undergraduate-programs" className={link()}>
+          Undergraduate Programs
+        </LinkCarouselLink>
+        <LinkCarouselLink href="https://graduatestudies.uoguelph.ca/" id="graduate-programs" className={link()}>
+          Graduate Programs
+        </LinkCarouselLink>
+        <LinkCarouselLink href="https://www.uoguelph.ca/study-in-canada/" id="international" className={link()}>
+          International
+        </LinkCarouselLink>
+        <LinkCarouselLink href="https://www.uoguelph.ca/continuing-studies/" id="lifelong-learning" className={link()}>
+          Continuing Studies
+        </LinkCarouselLink>
+      </LinkCarouselLinks>
+      <LinkCarouselContent>
+        <LinkCarouselItem id="undergraduate-programs" className={item()}>
+          <Image
+            className={image()}
+            src={undergraduate}
+            alt="Leah Weller and another student in lab coats looking at a computer screen."
+          />
+          <span className={caption()}>Leah Weller - Environmental Engineering</span>
+        </LinkCarouselItem>
+        <LinkCarouselItem id="graduate-programs" className={item()}>
+          <Image className={image()} src={graduate} alt="Caroline Pottruff working in a forest with a hard hat on" />
+          <span className={caption()}>Caroline Pottruff - Landscape Architecture</span>
+        </LinkCarouselItem>
+        <LinkCarouselItem id="international" className={item()}>
+          <Image className={image()} src={international} alt="Ryan Ahlers adjusting a spotlight in a theatre" />
+          <span className={caption()}>Ryan Ahlers - Theatre Studies</span>
+        </LinkCarouselItem>
+        <LinkCarouselItem id="lifelong-learning" className={item()}>
+          <Image className={image()} src={lifelong} alt="Kathryn Knowles & Jenna Schamowski working with bee hives." />
+          <span className={caption()}>Kathryn Knowles & Jenna Schamowski - Environmental Sciences</span>
+        </LinkCarouselItem>
+      </LinkCarouselContent>
+    </LinkCarousel>
+  );
 };

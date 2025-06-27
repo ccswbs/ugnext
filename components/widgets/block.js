@@ -9,22 +9,17 @@ const WidgetBlock = ({ data }) => {
   return <WidgetBlockSelector data={data.content} />;
 };
 
-const YamlBlock = ({ data }) => {
-  return (
-    <>
-      <div>YAML BLOCK: {JSON.stringify(data)}</div>
-    </>
-  );
-};
-
-export const Block = ({ data }) => {
+export const BlockWidget = ({ data }) => {
   const map = {
     BlockContentBasic: BasicBlock,
     BlockContentWidgetBlock: WidgetBlock,
-    BlockContentYamlBlock: YamlBlock,
   };
 
-  const Widget = map[data.block.__typename];
+  const Widget = map?.[data.block.__typename];
+
+  if (!Widget) {
+    return <>Invalid block type: {data.block.__typename}</>;
+  }
 
   return <Widget data={data.block} />;
 };

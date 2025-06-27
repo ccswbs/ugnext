@@ -1,16 +1,15 @@
-import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
-import { Heading } from "@/components/heading";
-import { Button } from "@/components/button";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
+import { Header } from "@uoguelph/react-components/header";
+import { Footer } from "@uoguelph/react-components/footer";
+import { Meta } from "@/components/meta";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Button } from "@uoguelph/react-components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftToBracket, faClipboard } from "@awesome.me/kit-7993323d0c/icons/sharp/solid";
 import { Section } from "@/components/section";
 import { AdmissionRequirementsSidebar } from "@/components/programs/undergraduate/admission-requirements-sidebar";
-import {
-  getUndergraduateRequirements,
-  parseAdmissionRequirementsSlug,
-} from "@/data/yaml/programs/undergraduate";
-import { List, ListItem } from "@/components/list";
+import { getUndergraduateRequirements, parseAdmissionRequirementsSlug } from "@/data/yaml/programs/undergraduate";
+import { List, ListItem } from "@uoguelph/react-components/list";
 import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import {
   faBars,
@@ -20,6 +19,7 @@ import {
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { Fragment } from "react";
 import { HtmlParser } from "@/components/html-parser";
+import { UnstyledLink } from "@/components/unstyled-link";
 
 export async function getStaticPaths() {
   return {
@@ -63,12 +63,18 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
   };
 
   return (
-    <Layout title={title ?? "Undergraduate Admission Requirements"}>
-      <Container centered>
+    <Layout>
+      <Meta title={title ?? "Undergraduate Admission Requirements"} />
+      <Header></Header>
+
+      <LayoutContent>
         <Section
           primary={
             <>
-              <Heading level={1}>{title ?? "Undergraduate Admission Requirements"}</Heading>
+              <Typography as={"h1"} type={"h1"}>
+                {title ?? "Undergraduate Admission Requirements"}
+              </Typography>
+
               <div className="flex flex-col">
                 {requirements
                   ?.filter((requirement) => requirement.content.length > 0)
@@ -78,9 +84,9 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
 
                     return (
                       <Fragment key={index}>
-                        <Heading level={3} as="h2">
+                        <Typography as={"h2"} type={"h3"}>
                           {requirement.name}
-                        </Heading>
+                        </Typography>
 
                         <Wrapper>
                           {requirement.content.map((item, index) => (
@@ -101,6 +107,7 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
                 className="flex items-center justify-start gap-4 w-full"
                 href="/programs/undergraduate/requirements"
                 color="red"
+                as={UnstyledLink}
               >
                 <FontAwesomeIcon className="text-2xl" icon={faArrowLeftToBracket} />
                 <span className="font-bold">View Other Requirements</span>
@@ -115,7 +122,7 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
                     highlight: true,
                   },
                   {
-                    url: program?.url,
+                    url: program?.url ?? "",
                     text: "About This Program",
                     icon: faClipboard,
                     highlight: true,
@@ -145,7 +152,9 @@ export default function UndergraduateAdmissionRequirements({ studentType, locati
             </div>
           }
         />
-      </Container>
+      </LayoutContent>
+
+      <Footer></Footer>
     </Layout>
   );
 }

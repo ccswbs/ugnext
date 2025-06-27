@@ -1,18 +1,19 @@
-import { Heading } from "@/components/heading";
+import { Typography } from "@uoguelph/react-components/typography";
 import { HtmlParser } from "@/components/html-parser";
-import { ButtonSection } from "@/components/widgets/button-section";
-import { MediaCaption } from "@/components/media-caption";
+import { ButtonSectionWidget } from "@/components/widgets/button-section";
+import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/section";
-import { getHeadingLevel } from "@/lib/string-utils";
-import { twJoin } from "tailwind-merge";
+import { tv } from "tailwind-variants";
+import Image from "next/image";
+import { EmbeddedVideo } from "@uoguelph/react-components/embedded-video";
 
 const getBackground = (data) => {
   switch (data?.background?.name) {
     case "Light Blue":
-      return "light-blue";
+      return "grey-light";
     case "Dark Gray":
-      return "dark-gray";
+      return "grey-dark";
     default:
       return "none";
   }
@@ -22,6 +23,7 @@ const getMedia = (data) => {
   switch (data?.media?.__typename) {
     case "MediaImage":
       return {
+        __typename: "image",
         src: data?.media?.image?.url,
         width: data?.media?.image?.width,
         height: data?.media?.image?.height,
@@ -29,6 +31,7 @@ const getMedia = (data) => {
       };
     case "MediaRemoteVideo":
       return {
+        __typename: "video",
         src: data?.media?.url,
         title: data?.media?.name,
         transcript: data?.media?.transcript,
@@ -53,24 +56,55 @@ const getPosition = (data, column) => {
   }
 };
 
-export const MediaText = ({ data }) => {
+export function MediaTextWidget({ data }) {
   const context = useContext(SectionContext);
   const background = getBackground(data);
   const size = data?.mediaImageSize ?? "large";
   const media = getMedia(data);
   const position = getPosition(data, context?.column);
 
+  const classes = tv({
+    slots: {
+      base: "col-span-1 h-full",
+      heading: "mt-0!",
+      body: "",
+    },
+    variants: {
+      background: {
+        none: "",
+        "grey-light": "",
+        "grey-dark": {
+          heading: "text-body-copy-bold-on-dark!",
+          body: "[&_*]:text-body-copy-on-dark!",
+        },
+      },
+    },
+  })({ background: background });
+
   return (
-    <MediaCaption media={media} background={background} size={size} position={position} className="col-span-1 h-full">
+    <MediaCaption
+      src={media.src}
+      height={media?.height}
+      width={media?.width}
+      alt={media?.alt}
+      as={media.__typename === "image" ? Image : EmbeddedVideo}
+      background={background}
+      size={size}
+      position={position}
+      className={classes.base()}
+      transcript={media?.transcript}
+    >
       {data?.heading && (
-        <Heading className="mt-0" level={getHeadingLevel(data?.headingLevel) ?? 3}>
+        <Typography className={classes.heading()} type={data?.headingLevel ?? "h3"} as={data?.headingLevel ?? "h3"}>
           {data?.heading}
-        </Heading>
+        </Typography>
       )}
 
-      <HtmlParser html={data?.description?.processed ?? ""} />
+      <div className={classes.body()}>
+        <HtmlParser html={data?.description?.processed ?? ""} />
+      </div>
 
-      {data?.buttonSection && <ButtonSection data={data.buttonSection} />}
+      {data?.buttonSection && <ButtonSectionWidget data={data.buttonSection} />}
     </MediaCaption>
   );
-};
+}

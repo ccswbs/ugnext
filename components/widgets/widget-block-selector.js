@@ -1,18 +1,18 @@
-import { Accordions } from "@/components/widgets/accordions";
-import { ButtonSection } from "@/components/widgets/button-section";
-import { GeneralText } from "@/components/widgets/general-text";
-import { MediaText } from "@/components/widgets/media-text";
-import { SocialMedia } from "@/components/widgets/social-media";
-import { Tabs } from "@/components/widgets/tabs";
+import { AccordionWidget } from "@/components/widgets/accordions";
+import { ButtonSectionWidget } from "@/components/widgets/button-section";
+import { GeneralTextWidget } from "@/components/widgets/general-text";
+import { MediaTextWidget } from "@/components/widgets/media-text";
+import { SocialMediaWidget } from "@/components/widgets/social-media";
+import { TabsWidget } from "@/components/widgets/tabs";
 
 export const WidgetBlockSelector = ({ data }) => {
   const map = {
-    ParagraphAccordionSection: Accordions,
-    ParagraphSectionButton: ButtonSection,
-    ParagraphGeneralText: GeneralText,
-    ParagraphMediaText: MediaText,
-    ParagraphSectionTab: Tabs,
-    ParagraphSocialMediaWidget: SocialMedia,
+    ParagraphAccordionSection: AccordionWidget,
+    ParagraphSectionButton: ButtonSectionWidget,
+    ParagraphGeneralText: GeneralTextWidget,
+    ParagraphMediaText: MediaTextWidget,
+    ParagraphSectionTab: TabsWidget,
+    ParagraphSocialMediaWidget: SocialMediaWidget,
   };
 
   return (

@@ -1,61 +1,27 @@
-import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { Header as HeaderComponent, HeaderLink, HeaderMenu, HeaderMenuItem } from "@uoguelph/react-components/header";
 
-const Link = ({ title, url }) => {
-  return <a href={url}>{title}</a>;
-};
+function SubNavigationItem({ title, url, items }) {
+  if (Array.isArray(items) && items.length > 0) {
+    return (
+      <HeaderMenu title={title}>
+        {items.map((item, index) => (
+          <HeaderMenuItem key={item.title + index}>
+            <SubNavigationItem title={item.title} url={item.url} items={item.items} />
+          </HeaderMenuItem>
+        ))}
+      </HeaderMenu>
+    );
+  }
 
-const Menu = ({ title, items }) => {
+  return <HeaderLink href={url}>{title}</HeaderLink>;
+}
+
+export function Header({ title, url, menu }) {
   return (
-    <ul data-title={title}>
-      {items.map((item, index) => (
-        <li key={item?.title + index}>
-          {Array.isArray(item?.items) && item.items.length > 0 ? (
-            <Menu title={item.title} items={item.items} />
-          ) : (
-            <Link title={item.title} url={item.url}></Link>
-          )}
-        </li>
+    <HeaderComponent title={title} url={url}>
+      {menu?.map((item) => (
+        <SubNavigationItem key={item.title} title={item.title} url={item.url} items={item.items} />
       ))}
-    </ul>
+    </HeaderComponent>
   );
-};
-
-export const Header = ({ topic, navigation, variant = "guelph" }) => {
-  return (
-    <uofg-header page-title={topic?.title} page-url={topic?.url} variant={variant}>
-      {navigation?.map((item, index) => {
-        // Render as <Menu> only if items is an array and has elements
-        if (Array.isArray(item.items) && item.items.length > 0) {
-          return <Menu key={item.title + index} title={item.title} items={item.items} />;
-        }
-
-        // Render as <Link> if it has a valid title and URL
-        if (typeof item.url === "string" && typeof item.title === "string") {
-          return <Link key={item.title + item.url + index} title={item.title} url={item.url}></Link>;
-        }
-
-        return null;
-      })}
-    </uofg-header>
-  );
-};
-
-const link = PropTypes.shape({
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-});
-
-const menu = PropTypes.shape({
-  title: PropTypes.string.isRequired,
-});
-menu.items = PropTypes.arrayOf(PropTypes.oneOfType([link, menu])).isRequired;
-
-Header.propTypes = {
-  topic: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    url: PropTypes.string,
-  }),
-  navigation: PropTypes.arrayOf(PropTypes.oneOfType([link, menu])),
-  variant: PropTypes.oneOf(["guelph", "dual-brand", "ridgetown"]),
-};
+}
