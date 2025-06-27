@@ -48,7 +48,7 @@ export function TestimonialSliderWidget({ data }) {
                 width={image?.width}
                 height={image?.height}
                 alt={image?.alt}
-                className="[&_.uofg-media-caption-media]:rounded-full h-full"
+                className="[&_.uofg-media-caption-media]:rounded-full [&_.uofg-media-caption-media]:aspect-square h-full"
                 as="img"
               >
                 <Blockquote hideQuotationMarks>
