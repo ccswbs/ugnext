@@ -120,6 +120,13 @@
   }
 }
 
+@theme {
+  --color-facebook-blue: #0866ff;
+  --color-instagram-pink: #d62976;
+  --color-linkedin-blue: #0a66c2;
+  --color-youtube-red: #ff0000;
+}
+
 @utility break-auto {
   word-break: auto-phrase;
 }
