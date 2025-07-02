@@ -111,10 +111,10 @@ export const DEFAULT_INSTRUCTIONS = [
     shouldProcessNode: (node) => node.tagName === "a" && typeof node.attribs?.href === "string",
     processNode: (node, children) => {
       // Check if the link is a button by looking for the "btn" class or "btn-*" class
-      const isButton = node.attribs.className?.includes("btn");
+      const isButton = node.attribs.class?.includes("btn");
 
       if (isButton) {
-        const type = node.attribs.className?.match(/btn-(?:outline-)?(\w*)/)?.[1];
+        const type = node.attribs.class?.match(/btn-(?:outline-)?(\w*)/)?.[1];
         const map = {
           primary: "red",
           secondary: "black",
@@ -126,13 +126,12 @@ export const DEFAULT_INSTRUCTIONS = [
           dark: "black",
         };
 
-        const outlined = node.attribs.className?.includes("btn-outline");
+        const outlined = node.attribs.class?.includes("btn-outline");
 
         return (
           <Button
             key={nanoid()}
             id={node.attribs.id}
-            className={node.attribs.class}
             href={node.attribs?.href ?? ""}
             color={map[type] ?? "red"}
             outlined={outlined}
@@ -144,7 +143,7 @@ export const DEFAULT_INSTRUCTIONS = [
       }
 
       return (
-        <Link key={nanoid()} id={node.attribs.id} className={node.attribs.class} href={node.attribs?.href ?? ""}>
+        <Link key={nanoid()} id={node.attribs.id} href={node.attribs?.href ?? ""}>
           {children}
         </Link>
       );
@@ -159,7 +158,9 @@ export const DEFAULT_INSTRUCTIONS = [
           {children
             .filter((child) => child.type === "li")
             .map((child, index) => (
-              <ListItem key={index}>{child.props.children}</ListItem>
+              <ListItem key={index}>
+                <Typography type="body">{child.props.children}</Typography>
+              </ListItem>
             ))}
         </List>
       );
