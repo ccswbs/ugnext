@@ -22,7 +22,7 @@ export default async function Page() {
     <Layout>
       <Header></Header>
 
-      <LayoutContent container={false}>
+      <LayoutContent container={false} className="pb-0!">
         <div className="flex flex-col-reverse">
           <TagLine />
           {hero && <SpotlightHero data={hero} />}
@@ -57,6 +57,7 @@ export default async function Page() {
         </Container>
 
         <HomeStory />
+        <div className="w-full p-5"></div>
       </LayoutContent>
 
       <Footer></Footer>

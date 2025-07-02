@@ -14,6 +14,7 @@ import Image from "next/image";
 import Script from "next/script";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
+import { twMerge } from "tailwind-merge";
 
 const getImageUrl = (src) => {
   if (src.startsWith("/sites/default/files")) {
@@ -67,8 +68,8 @@ export const DEFAULT_INSTRUCTIONS = [
   },
   // h1, h2, ... h6 tags
   {
-    shouldProcessNode: (node) => headingTags.has(node.tagName),
-    processNode: (node, children) => {
+    shouldProcessNode: (node, index) => headingTags.has(node.tagName),
+    processNode: (node, children, index) => {
       // Remove <strong> tags inside heading tags
       const clean = children.map((child) => {
         if (child && child.type === "strong" && child.props && child.props.children) {
@@ -78,8 +79,14 @@ export const DEFAULT_INSTRUCTIONS = [
         return child;
       });
 
+      // Add "mt-0" if this heading is the first child
+      const className = twMerge(
+        node.attribs.class,
+        index === 0 ? "!mt-0" : ""
+      );
+
       return (
-        <Typography key={nanoid()} className={node.attribs.class} type={node.tagName} as={node.tagName}>
+        <Typography key={nanoid()} className={className} type={node.tagName} as={node.tagName}>
           {clean}
         </Typography>
       );

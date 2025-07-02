@@ -22,7 +22,7 @@ export const HomeStory = () => {
       <StoryBody>
         <StoryBackground>
           <StoryBackgroundImage
-            alt="Placeholder image"
+            alt="Student volunteers"
             className="object-cover lg:[object-position:left_20px] brightness-100!"
             src={background}
             as={Image}
@@ -37,7 +37,7 @@ export const HomeStory = () => {
               </BlockquoteContent>
             </Blockquote>
           </StoryForegroundContent>
-          <StoryForegroundImage alt="Placeholder image" src={foreground} as={Image} className="max-w-[40rem]" />
+          <StoryForegroundImage alt="Asha Edwin smiling" src={foreground} as={Image} className="max-w-[40rem]" />
         </StoryForeground>
       </StoryBody>
       <StoryFooter>
