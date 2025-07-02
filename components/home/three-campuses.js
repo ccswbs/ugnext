@@ -22,12 +22,7 @@ export const ThreeCampuses = () => {
   return (
     <div className={container()}>
       <Card as={UnstyledLink} href="https://www.uoguelph.ca/admission/undergraduate/tours/" className={card()} centered>
-        <CardImage
-          src={guelph}
-          className={image()}
-          as={Image}
-          alt="An aerial view of Johnston Hall and the University of Guelph campus"
-        />
+        <CardImage src={guelph} className={image()} as={Image} alt="" />
 
         <CardContent className={content()}>
           <CardTitle className={title()}>Guelph Campus</CardTitle>
@@ -35,7 +30,7 @@ export const ThreeCampuses = () => {
       </Card>
 
       <Card as={UnstyledLink} href="https://www.ridgetownc.com/" className={card()} centered>
-        <CardImage src={ridgetown} className={image()} as={Image} alt="An aerial view of the Ridgetown Campus" />
+        <CardImage src={ridgetown} className={image()} as={Image} alt="" />
 
         <CardContent className={content()}>
           <CardTitle className={title()}>Ridgetown Campus</CardTitle>
@@ -43,12 +38,7 @@ export const ThreeCampuses = () => {
       </Card>
 
       <Card as={UnstyledLink} href="https://www.guelphhumber.ca/" className={card()} centered>
-        <CardImage
-          src={guelphHumber}
-          className={image()}
-          as={Image}
-          alt="The main building of the University of Guelph-Humber campus"
-        />
+        <CardImage src={guelphHumber} className={image()} as={Image} alt="" />
 
         <CardContent className={content()}>
           <CardTitle className={title()}>Guelph-Humber Campus</CardTitle>
