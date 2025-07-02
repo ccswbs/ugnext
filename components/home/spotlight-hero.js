@@ -6,7 +6,7 @@ export const SpotlightHero = ({ data }) => {
   const classes = tv({
     slots: {
       hero: "aspect-3/2 w-full",
-      title: "mt-0!",
+      title: "mt-0! font-sans!",
     },
     variants: {
       thumbnailImageCrop: {
