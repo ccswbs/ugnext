@@ -29,7 +29,7 @@ export const SpotlightCards = ({ cards }) => {
         >
           <CardImage
             src={data.image.url}
-            alt={data.image.alt}
+            alt=""
             width={data.image.width}
             height={data.image.height}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

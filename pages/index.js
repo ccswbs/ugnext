@@ -33,8 +33,6 @@ export default function Home({ cards, hero }) {
   const containerClasses = twJoin("pt-6");
   const { query } = useRouter();
 
-  console.log(query);
-
   return (
     <Layout>
       <Meta></Meta>

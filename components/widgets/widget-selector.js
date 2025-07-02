@@ -12,7 +12,7 @@ import { StatisticsWidget } from "@/components/widgets/statistics";
 import { ImageOverlayWidget } from "@/components/widgets/image-overlay";
 import { StoryWidget } from "@/components/widgets/story";
 import { BlockWidget } from "@/components/widgets/block";
-import { Tabs } from "@/components/widgets/tabs";
+import { TabsWidget } from "@/components/widgets/tabs";
 import { TestimonialSliderWidget } from "@/components/widgets/testimonial-slider";
 
 export function WidgetSelector({ data }) {
@@ -30,7 +30,7 @@ export function WidgetSelector({ data }) {
     ParagraphMediaText: MediaTextWidget,
     ParagraphTestimonialSlider: TestimonialSliderWidget,
     ParagraphSection: SectionWidget,
-    ParagraphSectionTab: Tabs,
+    ParagraphSectionTab: TabsWidget,
     ParagraphStatisticWidget: StatisticsWidget,
     ParagraphImageOverlay: ImageOverlayWidget,
     ParagraphStoryWidget: StoryWidget,
