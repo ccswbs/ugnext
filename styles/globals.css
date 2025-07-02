@@ -39,7 +39,6 @@
   .ug-slate input[type="checkbox"],
   .ug-slate input[type="radio"] {
     @apply mt-1 inline-block h-[1em] w-[1em] appearance-none border border-black/25 bg-white bg-contain bg-center bg-no-repeat align-top;
-    /* print-color-adjust cannot be applied via @apply, set with utilities/raw css if needed */
   }
 
   .ug-slate input[type="radio"] {
