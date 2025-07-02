@@ -13,7 +13,7 @@ export const ThreeCampuses = () => {
       card: "h-full",
       image: "aspect-3/2 w-full",
       content: "flex-1",
-      title: "text-[2.25rem]! font-bold text-center",
+      title: "text-[2.25rem]! font-bold text-center m-auto",
     },
   });
 
