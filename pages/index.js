@@ -41,7 +41,7 @@ export default function Home({ cards, hero }) {
 
       <Header></Header>
 
-      <LayoutContent container={false}>
+      <LayoutContent container={false} className="pb-0!">
         <div className="flex flex-col-reverse">
           <TagLine />
           {hero && <SpotlightHero data={hero} />}
@@ -76,6 +76,7 @@ export default function Home({ cards, hero }) {
         </Container>
 
         <HomeStory />
+        <div className="w-full p-5"></div>
       </LayoutContent>
 
       <Footer></Footer>
