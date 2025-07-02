@@ -118,8 +118,6 @@ export const DEFAULT_INSTRUCTIONS = [
       // Check if the link is a button by looking for the "btn" class or "btn-*" class
       const isButton = node.attribs.class?.includes("btn");
 
-      console.log(node, node.attribs.class, isButton);
-
       if (isButton) {
         const type = node.attribs.class?.match(/btn-(?:outline-)?(\w*)/)?.[1];
         const map = {
