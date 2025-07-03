@@ -1,6 +1,7 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { query } from "@/lib/apollo";
+import { getTestimonialByTag } from "@/data/drupal/testimonial";
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
@@ -54,9 +55,41 @@ export async function getPageContent(id: string) {
     },
   });
 
-  if (data?.nodePage?.status === false && !showUnpublished) {
+  if (!data?.nodePage) {
     return null;
   }
 
-  return data?.nodePage;
+  if (data.nodePage.status === false && !showUnpublished) {
+    return null;
+  }
+
+  if (!data.nodePage.widgets) {
+    return data.nodePage;
+  }
+
+  // We need to resolve testimonials by tag.
+  return {
+    ...data.nodePage,
+    widgets: await Promise.all(
+      data.nodePage.widgets.map(async (widget) => {
+        if (widget.__typename === "ParagraphTestimonialSlider") {
+          const tags =
+            widget.byTags
+              ?.map((tag) => {
+                if (tag.__typename === "TermTag") {
+                  return tag.id;
+                }
+                return null;
+              })
+              .filter((tag) => typeof tag === "string") ?? [];
+
+          return {
+            ...widget,
+            byTags: (await getTestimonialByTag(tags)) ?? [],
+          };
+        }
+        return widget;
+      })
+    ),
+  };
 }
