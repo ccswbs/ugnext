@@ -4,6 +4,7 @@ import path from "path";
 test("home-spotlight-analytics", async ({ page }) => {
   await page.goto("/");
   await page.waitForSelector("#uofg-homepage-spotlight-hero");
+  await page.waitForSelector("#uofg-homepage-improve-life");
 
   for (let i = 2; i <= 5; i++) {
     await page.waitForSelector(`#uofg-homepage-spotlight-card-${i}`);
