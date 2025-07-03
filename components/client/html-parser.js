@@ -113,6 +113,10 @@ export const DEFAULT_INSTRUCTIONS = [
       return React.cloneElement(children[0], { key: index });
     },
   },
+  {
+    shouldProcessNode: (node) => node.tagName === "br",
+    processNode: (node) => <></>,
+  },
   // Links and Buttons
   {
     shouldProcessNode: (node) => node.tagName === "a" && typeof node.attribs?.href === "string",
@@ -166,7 +170,7 @@ export const DEFAULT_INSTRUCTIONS = [
             .filter((child) => child.type === "li")
             .map((child, index) => (
               <ListItem key={index}>
-                <Typography type="body">{child.props.children}</Typography>
+                <Typography key={nanoid()} type="body">{child.props.children}</Typography>
               </ListItem>
             ))}
         </List>
