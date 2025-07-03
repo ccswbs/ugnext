@@ -30,7 +30,7 @@ export function LinksWidget({ data }) {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
             <CardContent>
-              <CardTitle>{link.url.title}</CardTitle>
+              <CardTitle className="my-auto text-center">{link.url.title}</CardTitle>
             </CardContent>
           </Card>
         ))}
