@@ -46,6 +46,16 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: "/ens-test",
+        destination: "/?ens-test=true",
+        permanent: true,
+      },
+    ];
+  },
 };
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",

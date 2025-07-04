@@ -1,6 +1,5 @@
-import { Card } from "@/components/card";
-
-import { Link } from "@/components/link";
+import { Card, CardImage, CardContent, CardTitle, CardFooter } from "@uoguelph/react-components/card";
+import { Link } from "@uoguelph/react-components/link";
 import Image from "next/image";
 import coe from "@/img/ovc/coe_logo.png";
 import aaha from "@/img/ovc/aaha_logo.png";
@@ -38,19 +37,22 @@ export const OVCCards = () => {
   return (
     <div className="grid grid-cols-1 gap-4  md:grid-cols-3">
       {ovcCards.map((ovcCard, index) => (
-        <Card
-          key={ovcCard.title}
-          className="h-full"
-          title={<span className="my-auto w-full text-center text-[2.2rem] font-bold">{ovcCard.title}</span>}
-          footer={<span className="my-auto w-full text-center text-[2.2rem]">{ovcCard.footer}</span>}
-          href={ovcCard.url}
-          centered
-          image={{
-            ...ovcCard.image,
-            className: " h-full",
-            sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
-          }}
-        />
+        <Card key={ovcCard.title} as="a" className="h-full" href={ovcCard.url}>
+          <CardImage
+            src={ovcCard.image.src}
+            alt={ovcCard.image.alt}
+            height={ovcCard.image.height}
+            width={ovcCard.image.width}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="h-full"
+          />
+          <CardContent>
+            <CardTitle className="my-auto w-full text-center text-[2.2rem] font-bold">{ovcCard.title}</CardTitle>
+          </CardContent>
+          <CardFooter>
+            <span className="my-auto w-full text-center text-[2.2rem]">{ovcCard.footer}</span>
+          </CardFooter>
+        </Card>
       ))}
       <div className="flex flex-col gap-2 bg-uog-color-grey-light-bg px-5 py-6 transition-colors items-center">
         <div className="text-2xl mt-5">

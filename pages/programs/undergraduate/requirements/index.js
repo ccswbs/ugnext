@@ -1,6 +1,4 @@
-import { Container } from "@/components/container";
-import { Layout } from "@/components/layout";
-import { Heading } from "@/components/heading";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { useMemo, useState } from "react";
 import { Select } from "@/components/select";
 import { Section } from "@/components/section";
@@ -12,7 +10,7 @@ import {
   getUndergraduateDegrees,
 } from "@/data/yaml/programs/undergraduate";
 import { nameAndTagSearch } from "@/lib/use-search";
-import { Button } from "@/components/button";
+import { Button } from "@uoguelph/react-components/button";
 import { useRouter } from "next/router";
 import { faGryphonStatue } from "@awesome.me/kit-7993323d0c/icons/kit/custom";
 import {
@@ -21,6 +19,10 @@ import {
   faMapLocationDot,
   faCalendarDays,
 } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Meta } from "@/components/meta";
+import { Header } from "@uoguelph/react-components/header";
+import { Footer } from "@uoguelph/react-components/footer";
 
 export async function getStaticProps() {
   const degrees = (await getUndergraduateDegrees()).map((degree) => ({ ...degree, types: [degree.type] }));
@@ -63,12 +65,17 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
   const router = useRouter();
 
   return (
-    <Layout metadata={{ title: "Undergraduate Admission Requirements" }}>
-      <Container centered>
+    <Layout>
+      <Meta title="Undergraduate Admission Requirements" />
+      <Header></Header>
+
+      <LayoutContent>
         <Section
           primary={
             <>
-              <Heading level={1}>Undergraduate Admission Requirements</Heading>
+              <Typography as="h1" type="h1">
+                Undergraduate Admission Requirements
+              </Typography>
 
               <form
                 className="flex flex-col gap-8 w-full pr-4"
@@ -86,9 +93,9 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
               >
                 <Select
                   label={
-                    <Heading level={5} as="h2" className="mb-1 mt-0">
+                    <Typography type="h5" as="h2" className="mb-1 mt-0">
                       I am a
-                    </Heading>
+                    </Typography>
                   }
                   options={studentTypes.map((type) => ({
                     label: type.name,
@@ -102,9 +109,9 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
 
                 <Select
                   label={
-                    <Heading level={5} as="h2" className="mb-1 mt-0">
+                    <Typography type="h5" as="h2" className="mb-1 mt-0">
                       I attend/attended high school in
-                    </Heading>
+                    </Typography>
                   }
                   options={[
                     ...locations
@@ -149,9 +156,9 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                   <Select
                     autocomplete
                     label={
-                      <Heading level={5} as="h2" className="mb-1 mt-0">
+                      <Typography type="h5" as="h2" className="mb-1 mt-0">
                         I study/studied in
-                      </Heading>
+                      </Typography>
                     }
                     options={locations
                       .filter((location) => location.type === "international")
@@ -169,9 +176,9 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
                 {showCurriculums && (
                   <Select
                     label={
-                      <Heading level={5} as="h2" className="mb-1 mt-0">
+                      <Typography type="h5" as="h2" className="mb-1 mt-0">
                         My curriculum of study is/was
-                      </Heading>
+                      </Typography>
                     }
                     options={locations
                       .filter((location) => location.type === "curriculum")
@@ -188,9 +195,9 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
 
                 <Select
                   label={
-                    <Heading level={5} as="h2" className="mb-1 mt-0">
+                    <Typography type="h5" as="h2" className="mb-1 mt-0">
                       I am interested in studying
-                    </Heading>
+                    </Typography>
                   }
                   options={programs.map((program) => ({
                     label: program.name,
@@ -256,7 +263,8 @@ export default function UndergraduateAdmissionRequirements({ studentTypes, locat
             </div>
           }
         />
-      </Container>
+      </LayoutContent>
+      <Footer></Footer>
     </Layout>
   );
 }

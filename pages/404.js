@@ -1,25 +1,36 @@
 import Head from "next/head";
-import { Layout } from "@/components/layout";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { useEffect, useState } from "react";
-import { Container } from "@/components/container";
-import { Heading } from "@/components/heading";
-import { Link } from "@/components/link";
-import { List, ListItem } from "@/components/list";
+import { Typography } from "@uoguelph/react-components/typography";
+import { Link } from "@uoguelph/react-components/link";
+import { List, ListItem } from "@uoguelph/react-components/list";
+import { Header } from "@uoguelph/react-components/header";
+import { Footer } from "@uoguelph/react-components/footer";
+import { Meta } from "@/components/meta";
 
-export default function Home() {
+export default function NotFound() {
   const [searchLink, setSearchLink] = useState("https://www.uoguelph.ca/search");
 
   useEffect(() => {
-    setSearchLink("https://www.uoguelph.ca/search/#gsc.tab=0&gsc.q=" + window.location.pathname + "&gsc.sort=");
+    setSearchLink("https://www.uoguelph.ca/search/#gsc.tab=0&gsc.q=" + window.location.pathname);
   }, []);
 
   return (
-    <Layout metadata={{ title: "404: Not Found" }}>
-      <Container centered>
-        <Heading level={1}>HTTP 404 — File not found</Heading>
-        <Heading level={2}>Possible reasons for this error:</Heading>
+    <Layout>
+      <Meta title="404 Not Found | University of Guelph" description="The page you are looking for does not exist." />
 
-        <List variant="ordered">
+      <Header></Header>
+
+      <LayoutContent>
+        <Typography type="h1" as="h1" className="block!">
+          HTTP 404 — File not found
+        </Typography>
+
+        <Typography type="h2" as="h2" className="block!">
+          Possible reasons for this error:
+        </Typography>
+
+        <List as="ol">
           <ListItem>
             You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark to
             avoid this error in the future.
@@ -40,9 +51,11 @@ export default function Home() {
           </ListItem>
         </List>
 
-        <Heading level={2}>Try one of these links instead:</Heading>
+        <Typography type="h2" as="h2" className="block!">
+          Try one of these links instead:
+        </Typography>
 
-        <List>
+        <List as="ul">
           <ListItem>
             <Link href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</Link>
           </ListItem>
@@ -50,7 +63,8 @@ export default function Home() {
             <Link href={searchLink}>Search on the University of Guelph</Link>
           </ListItem>
         </List>
-      </Container>
+      </LayoutContent>
+      <Footer></Footer>
     </Layout>
   );
 }

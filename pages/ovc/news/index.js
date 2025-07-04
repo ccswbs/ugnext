@@ -1,22 +1,19 @@
-import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
-import { Heading } from "@/components/heading";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
+import { Container } from "@uoguelph/react-components/container";
+import { Button } from "@uoguelph/react-components/button";
+import { Typography } from "@uoguelph/react-components/typography";
+import { UnstyledLink } from "@/components/unstyled-link";
 import { getLegacyNewsList } from "@/data/drupal/ovc-news";
 import { getPageMenu } from "@/data/drupal/basic-pages";
-import { Button } from "@/components/button";
-
-import {
-  FormatDateFull,
-  // FormatEventDate,
-  // FormatEventDay,
-  // FormatEventMonth,
-  // FormatEventWeekday,
-} from "@/lib/date-utils";
+import { FormatDateFull } from "@/lib/date-utils";
 import { OVCFooter } from "@/components/ovc/ovc-footer";
 import { useState } from "react";
-import { NewsCard } from "@/components/news-card";
-import { Pagination } from "@/components/pagination";
+import { Pagination } from "@uoguelph/react-components/pagination";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
+import { Header } from "@/components/header";
+import { Meta } from "@/components/meta";
+import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
+import Image from "next/image";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -49,78 +46,91 @@ export default function Page({ content }) {
   const itemsPerPage = 20; // Number of news items per page
   const totalPages = Math.ceil(content?.legacyNewsList.length / itemsPerPage);
 
-  const handlePageClick = (page) => {
+  const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
+
+    // Scroll to the top smoothly
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
-    }
-  };
+  const paginatedNewsList = content?.legacyNewsList.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top smoothly
-    }
-  };
-
-  const paginatedNewsList = content?.legacyNewsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   return (
-    <Layout metadata={{ title: content?.title }} header={content?.menu}>
-      <>
-        <Container centered>
-          <Heading level={1} className="mb-0">
+    <Layout>
+      <Meta title={content?.title} />
+
+      <Header title={content?.menu?.topic?.title} url={content?.menu?.topic?.url} menu={content?.menu?.navigation} />
+
+      <LayoutContent container={false}>
+        <Container>
+          <Typography as="h1" type="h1">
             {content?.title}
-          </Heading>
+          </Typography>
+
+          {/* Pagination Above */}
+          <Pagination
+            color="yellow"
+            count={totalPages}
+            visible={5}
+            page={currentPage}
+            hideInput
+            onChange={handlePageChange}
+            className="pt-8! pb-8!"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {paginatedNewsList.map((legacyNews, index) => (
+              <Card
+                key={index}
+                as={UnstyledLink}
+                href={legacyNews?.path}
+                className="border border-grey-light rounded shadow"
+              >
+                <CardImage
+                  as={Image}
+                  src={legacyNews?.heroImage?.image.url || defaultImage.src}
+                  alt={legacyNews?.heroImage?.image.alt || "OVC Front Entrance"}
+                  width={legacyNews?.heroImage?.image.width || defaultImage.width}
+                  height={legacyNews?.heroImage?.image.height || defaultImage.height}
+                  sizes={legacyNews?.heroImage?.image.sizes || "33vw"}
+                  blurred={legacyNews?.heroImage?.image.blurDataURL || defaultImage.blurDataURL}
+                  className="aspect-[9/4] object-cover object-center"
+                />
+
+                <CardContent>
+                  <CardTitle>{legacyNews?.title}</CardTitle>
+
+                  <p className="text-sm mt-auto">{legacyNews?.articleDate}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Pagination Below */}
+          <Pagination
+            color="yellow"
+            count={totalPages}
+            visible={5}
+            page={currentPage}
+            hideInput
+            onChange={handlePageChange}
+            className="pt-8!"
+          />
+
+          <Button
+            as={UnstyledLink}
+            href="https://www.uoguelph.ca/ovc/newsarchive/"
+            color="red"
+            className="py-2 px-4 mx-[.25em] text-2xl"
+          >
+            OVC News Archive
+          </Button>
         </Container>
-      </>
-      <Container centered>
-        {/* Pagination Above */}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageClick={handlePageClick}
-          onNextPage={handleNextPage}
-          onPreviousPage={handlePreviousPage}
-        />
-        <div className="mb-4" /> {/* Add space after pagination */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {paginatedNewsList.map((legacyNews, index) => (
-            <NewsCard
-              key={index}
-              href={legacyNews?.path}
-              image={{
-                src: legacyNews?.heroImage?.image.url || defaultImage.src,
-                alt: legacyNews?.heroImage?.image.alt || "OVC Front Entrance",
-                width: legacyNews?.heroImage?.image.width || defaultImage.width,
-                height: legacyNews?.heroImage?.image.height || defaultImage.height,
-                sizes: legacyNews?.heroImage?.image.sizes || "33vw",
-                blurred: legacyNews?.heroImage?.image.blurDataURL || defaultImage.blurDataURL,
-              }}
-              title={legacyNews?.title}
-              className="border rounded shadow"
-            >
-              <p className="text-sm">{legacyNews?.articleDate}</p>
-            </NewsCard>
-          ))}
-        </div>
-        {/* Pagination Below */}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageClick={handlePageClick}
-          onNextPage={handleNextPage}
-          onPreviousPage={handlePreviousPage}
-        />
-        <Button href="https://www.uoguelph.ca/ovc/newsarchive/" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
-          OVC News Archive
-        </Button>
-      </Container>
-      <OVCFooter />
+        <OVCFooter />
+      </LayoutContent>
     </Layout>
   );
 }

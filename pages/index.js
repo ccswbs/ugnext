@@ -1,16 +1,20 @@
-import { Layout } from "@/components/layout";
-import { Container } from "@/components/container";
-import { Divider } from "@/components/divider";
-import { Heading } from "@/components/heading";
-import { SpotlightCards } from "@/components/home/spotlight-cards";
-import { TagLine } from "@/components/home/tag-line";
-import { Rankings } from "@/components/home/rankings";
-import { ThreeCampuses } from "@/components/home/three-campuses";
-import { SpotlightHero } from "@/components/home/spotlight-hero";
-import { HomeStory } from "@/components/home/story";
-import { StudyHere } from "@/components/home/study-here";
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
+import { Meta } from "@/components/meta";
+import AppArmor from "@/components/app-armor";
+import { Header } from "@uoguelph/react-components/header";
+import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
+import { TagLine } from "@/components/home/tag-line";
+import { SpotlightHero } from "@/components/home/spotlight-hero";
+import { Container } from "@uoguelph/react-components/container";
+import { Typography } from "@uoguelph/react-components/typography";
+import { SpotlightCards } from "@/components/home/spotlight-cards";
+import { StudyHere } from "@/components/home/study-here";
+import { Rankings } from "@/components/home/rankings";
+import { ThreeCampuses } from "@/components/home/three-campuses";
+import { HomeStory } from "@/components/home/story";
+import { Footer } from "@uoguelph/react-components/footer";
+import { useRouter } from "next/router";
 
 export async function getStaticProps(context) {
   const status = context?.preview || process.env.NODE_ENV !== "production" ? null : true;
@@ -25,55 +29,57 @@ export async function getStaticProps(context) {
   };
 }
 
-export function HomePage({ cards, hero, forceAppArmorTest = false }) {
+export default function Home({ cards, hero }) {
   const containerClasses = twJoin("pt-6");
+  const { query } = useRouter();
 
   return (
     <Layout>
-      <div className="flex flex-col flex-col-reverse">
-        <TagLine />
-        {hero && <SpotlightHero hero={hero} />}
-      </div>
+      <Meta></Meta>
 
-      <Container centered>
-        <Divider />
+      <AppArmor test={query["ens-test"] === "true"} />
 
-        <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+      <Header></Header>
+
+      <LayoutContent container={false} className="pb-0!">
+        <div className="flex flex-col-reverse">
+          <TagLine />
+          {hero && <SpotlightHero data={hero} />}
+        </div>
+
+        <Container>
+          <Typography className="text-black!" type="h2" as="h2">
             Our Latest News and Events
-          </Heading>
+          </Typography>
           <SpotlightCards cards={cards} />
-        </div>
+        </Container>
 
-        <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+        <Container className={containerClasses}>
+          <Typography className="text-black!" type="h2" as="h2">
             Study Here
-          </Heading>
+          </Typography>
           <StudyHere />
-        </div>
+        </Container>
 
-        <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+        <Container className={containerClasses}>
+          <Typography className="text-black!" type="h2" as="h2">
             How We Rank Among the World
-          </Heading>
+          </Typography>
           <Rankings />
-        </div>
+        </Container>
 
-        <div className={containerClasses}>
-          <Heading level={2} className="text-uog-color-black">
+        <Container className={containerClasses}>
+          <Typography className="text-black!" type="h2" as="h2">
             Our Three Campuses
-          </Heading>
+          </Typography>
           <ThreeCampuses />
-        </div>
-      </Container>
+        </Container>
 
-      <HomeStory />
+        <HomeStory />
+        <div className="w-full p-5"></div>
+      </LayoutContent>
+
+      <Footer></Footer>
     </Layout>
-  );
-}
-
-export default function Home({ cards, hero }) {
-  return (
-    <HomePage cards={cards} hero={hero} />
   );
 }
