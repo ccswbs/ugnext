@@ -6,7 +6,6 @@ import AppArmor from "@/components/client/app-armor";
 
 // Stylesheets
 import "@/styles/globals.css";
-import "@uoguelph/react-components/style";
 import "@uoguelph/web-components/style";
 
 export const metadata: Metadata = {
