@@ -83,6 +83,10 @@ export async function getPageContent(id: string) {
               })
               .filter((tag) => typeof tag === "string") ?? [];
 
+          if(tags.length === 0) {
+            return widget;
+          }
+
           return {
             ...widget,
             byTags: (await getTestimonialByTag(tags)) ?? [],
