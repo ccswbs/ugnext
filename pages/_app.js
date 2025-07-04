@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import "@uoguelph/react-components/style";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { useRouter } from "next/router";
 

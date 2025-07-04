@@ -15,8 +15,8 @@ import { tv } from "tailwind-variants";
 export const StudyHere = () => {
   const classes = tv({
     slots: {
-      link: "text-xl!",
-      item: "relative",
+      link: "text-xl",
+      item: "",
       image: "h-96",
       caption:
         "absolute bottom-0 left-0 z-10 text-white bg-linear-to-t from-black to-transparent p-4 pt-6 text-lg w-full",
