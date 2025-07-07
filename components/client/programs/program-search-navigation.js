@@ -1,9 +1,10 @@
 import { Navigation, NavigationLink } from "@uoguelph/react-components/navigation";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const ProgramSearchNavigation = () => {
-  const { pathname } = useRouter();
+  const pathname = usePathname();
+
   const links = [
     { href: "/programs/undergraduate", label: "Undergraduate Programs" },
     { href: "/programs/graduate", label: "Graduate Programs" },

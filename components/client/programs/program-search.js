@@ -1,6 +1,8 @@
-import { ProgramSearchBar } from "@/components/programs/program-search-bar";
-import { ProgramSearchNavigation } from "@/components/programs/program-search-navigation";
-import { ProgramGrid } from "@/components/programs/program-grid";
+"use client";
+
+import { ProgramSearchBar } from "./program-search-bar";
+import { ProgramSearchNavigation } from "./program-search-navigation";
+import { ProgramGrid } from "./program-grid";
 import { useState } from "react";
 import { Container } from "@uoguelph/react-components/container";
 

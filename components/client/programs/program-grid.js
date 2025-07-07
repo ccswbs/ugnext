@@ -1,4 +1,4 @@
-import { ProgramCard } from "@/components/programs/program-card";
+import { ProgramCard } from "./program-card";
 
 export const ProgramGrid = ({ programs, condensedDegrees = false }) => {
   return (
