@@ -21,10 +21,10 @@ To get started:
    DRUPAL_API_KEY
    ```
    
-   The ```ALWAYS_SHOW_PUBLISHED``` variable can be used to force to show published content in your dev server
+   The `ALWAYS_SHOW_PUBLISHED` variable can be used to force to show published content in your dev server
    
    
 3. Run `bun install` in your terminal
-4. Start the codegen script in watch mode using ```bun run codegen:watch```
+4. Start the codegen script in watch mode using `bun run codegen:watch`
 5. Start the development server using `bun run dev`
 
