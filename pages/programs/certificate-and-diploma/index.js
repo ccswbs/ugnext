@@ -29,7 +29,7 @@ export default function ProgramsCertificateAndDiploma({ programs, types }) {
 
       <Layout>
         <LayoutContent container={false}>
-          <Container className="pb-0">
+          <Container>
             <Typography type="h1" as="h1" className="block!">
               Certificates and Diplomas at the University of Guelph
             </Typography>
