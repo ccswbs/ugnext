@@ -3,6 +3,9 @@ import { Button } from "@uoguelph/react-components/button";
 import { HtmlParser } from "@/components/client/html-parser";
 import { UnstyledLink } from "@/components/client/unstyled-link";
 import { tv } from "tailwind-variants";
+import { Container } from "@uoguelph/react-components/container";
+import { useContext } from "react";
+import { SectionContext } from "@/components/client/section";
 
 function getButtonData(data) {
   const colors = {
@@ -30,24 +33,22 @@ function getButtonData(data) {
   };
 }
 
-export const ButtonWidget = ({ column, data }) => {
+export const ButtonWidget = ({ data, column }) => {
   const { url, title, heading, color, icon, outlined, analytics } = getButtonData(data);
 
   const classes = tv({
     slots: {
       heading: "block text-black",
-      button: "mb-3 mt-3 font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1",
+      button: "w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1",
       icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
     variants: {
       column: {
-        left: {
-          button: "md:inline-flex",
-        },
-        right: "",
+        primary: {},
         secondary: {
-          button: "w-full mx-0",
+          button: "w-full",
         },
+        "call-to-action": {},
       },
       hasHeading: {
         true: {
@@ -67,7 +68,7 @@ export const ButtonWidget = ({ column, data }) => {
       },
     },
   })({
-    column: column?.toLowerCase(),
+    column: column,
     hasHeading: !!heading,
     iconColor: icon.color,
   });
@@ -108,11 +109,23 @@ export const ButtonWidget = ({ column, data }) => {
 
 export const ButtonSectionWidget = ({ data }) => {
   const buttons = data?.buttons;
-  const column = data?.buttonSectionColumn?.name;
+  const column = data?.buttonSectionColumn?.name?.toLowerCase()?.replaceAll(" ", "-") ?? "primary";
+  const context = useContext(SectionContext);
+
+  const classes = tv({
+    base: "flex gap-2",
+    variants: {
+      column: {
+        primary: "flex flex-wrap",
+        secondary: "flex-col",
+        "call-to-action": "flex-col items-center",
+      },
+    },
+  })({ column, section: context?.column ?? "primary" });
 
   return (
-    <>
+    <Container className={classes}>
       {buttons?.length > 0 && buttons.map((button) => <ButtonWidget key={button.id} column={column} data={button} />)}
-    </>
+    </Container>
   );
 };
