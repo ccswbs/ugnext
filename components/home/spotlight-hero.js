@@ -5,14 +5,14 @@ import { tv } from "tailwind-variants";
 export const SpotlightHero = ({ data }) => {
   const classes = tv({
     slots: {
-      hero: "aspect-3/2 w-full",
-      title: "mt-0! font-sans!",
+      hero: "w-full [&_.uofg-hero-img]:object-cover",
+      title: "mt-0 font-sans",
     },
     variants: {
       thumbnailImageCrop: {
-        left: { hero: "object-left" },
-        right: { hero: "object-right" },
-        center: { hero: "object-center" },
+        left: { hero: "[&_.uofg-hero-img]:object-left" },
+        right: { hero: "[&_.uofg-hero-img]:object-right" },
+        center: { hero: "[&_.uofg-hero-img]:object-center" },
       },
     },
   });
