@@ -30,9 +30,9 @@ export function TestimonialSliderWidget({ data }) {
   return (
     <div className="bg-grey-light-bg">
       <Container className="px-4 py-10 flex flex-col items-center">
-        <Typography type="h2" as="h3" className="mb-12 text-black">
-          {data?.title}
-        </Typography>
+        {data?.title && <Typography type="h2" as="h3" className="mb-12 text-black">
+          {data.title}
+        </Typography>}
 
         <Carousel loop="jump" display={showMultiple ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
