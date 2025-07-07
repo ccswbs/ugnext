@@ -10,6 +10,11 @@ import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Typography } from "@uoguelph/react-components/typography";
 import { ProgramSearch } from "@/components/client/programs/program-search";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Certificate and Diplomas | University of Guelph",
+};
 
 export default async function ProgramsCertificateAndDiploma() {
   const programs = await getCertificateAndDiplomaPrograms();

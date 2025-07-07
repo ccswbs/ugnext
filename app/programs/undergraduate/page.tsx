@@ -11,6 +11,11 @@ import {
   getUndergraduatePrograms,
   getUndergraduateProgramTypes,
 } from "@/data/yaml/programs/undergraduate";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Undergraduate Programs | University of Guelph",
+};
 
 export default async function ProgramsUndergraduate() {
   const degreeTypes = await getUndergraduateDegreeTypes();

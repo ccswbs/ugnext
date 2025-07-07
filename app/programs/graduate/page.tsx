@@ -6,6 +6,11 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProgramSearch } from "@/components/client/programs/program-search";
 import { getGraduateDegreeTypes, getGraduatePrograms, getGraduateProgramTypes } from "@/data/yaml/programs/graduate";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Graduate Programs | University of Guelph",
+};
 
 export default async function ProgramsGraduate() {
   const programs = await getGraduatePrograms();
