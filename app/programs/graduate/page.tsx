@@ -17,7 +17,7 @@ export default async function ProgramsGraduate() {
       <Header></Header>
 
       <LayoutContent container={false}>
-        <Container className="pb-0">
+        <Container>
           <Typography type="h1" as="h1" className="block!">
             Graduate Programs at the University of Guelph
           </Typography>

@@ -19,8 +19,8 @@ export default async function ProgramsCertificateAndDiploma() {
     <Layout>
       <Header></Header>
 
-      <LayoutContent container={false} className="pb-0!">
-        <Container className="pb-0">
+      <LayoutContent container={false}>
+        <Container>
           <Typography type="h1" as="h1">
             Certificate and Diplomas at the University of Guelph
           </Typography>

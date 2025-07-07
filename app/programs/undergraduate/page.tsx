@@ -33,7 +33,7 @@ export default async function ProgramsUndergraduate() {
       <Header></Header>
 
       <LayoutContent container={false}>
-        <Container className="pb-0">
+        <Container>
           <Typography type="h1" as="h1" className="block!">
             Undergraduate Programs at the University of Guelph
           </Typography>

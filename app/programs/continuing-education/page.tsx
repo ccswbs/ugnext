@@ -19,8 +19,8 @@ export default async function ProgramsContinuingEducation() {
     <Layout>
       <Header></Header>
 
-      <LayoutContent container={false} className="pb-0!">
-        <Container className="pb-0">
+      <LayoutContent container={false}>
+        <Container>
           <Typography type="h1" as="h1">
             Continuing Education at the University of Guelph
           </Typography>
