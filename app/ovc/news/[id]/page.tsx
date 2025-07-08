@@ -64,7 +64,7 @@ export default async function OVCNewsArticle({ params }: Props) {
           </Container>
         )}
 
-        <Container>
+        <Container className="pt-4">
           <Typography type="body">
             Posted on{" "}
             {date.toLocaleString("en-US", {
