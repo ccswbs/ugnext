@@ -4,11 +4,18 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { Metadata } from "next";
 import AppArmor from "@/components/client/app-armor";
 import { draftMode } from "next/headers";
-
-// Stylesheets
+import { Bitter, Open_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@uoguelph/web-components/style";
 import { Button } from "@uoguelph/react-components/button";
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+});
+
+const bitter = Bitter({
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://uoguelph.ca"),
