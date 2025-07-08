@@ -1,4 +1,4 @@
-import { getNewsArticle } from "@/data/drupal/news";
+import { getNewsArticle } from "@/data/drupal/ovc/news";
 import { Header } from "@/components/server/header";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
