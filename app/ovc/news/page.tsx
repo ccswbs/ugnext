@@ -6,6 +6,11 @@ import { OvcNewsGrid } from "@/components/client/ovc/news/ovc-news-grid";
 import { getNewsArticleCount } from "@/data/drupal/ovc/news";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Container } from "@uoguelph/react-components/container";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Ontario Veterinary College News Hub",
+};
 
 export default async function OVCNewsHub() {
   const articleCount = await getNewsArticleCount();
