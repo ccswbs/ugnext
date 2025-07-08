@@ -61,6 +61,9 @@ export default async function Page({ params }: Props) {
   switch (route.entity.__typename) {
     case "NodePage":
       return <BasicPage id={route.entity.uuid} />;
+    case "NodeArticle":
+      permanentRedirect(`/ovc/news/${route.entity.id}`);
+      break;
     default:
       if (process.env.NODE_ENV === "development") {
         console.warn(
