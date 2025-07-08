@@ -1,5 +1,5 @@
 import { gql } from "@/lib/graphql";
-import { query } from "@/lib/apollo";
+import { getClient, query } from "@/lib/apollo";
 import { NewsWithoutBodyFragment } from "@/lib/graphql/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
@@ -65,17 +65,44 @@ export async function getNewsArticle(id: string) {
   return data.nodeArticle;
 }
 
-export async function getNewsList() {
+export async function getNewsArticlePageCount() {
   const { data } = await query({
     query: gql(/* gql */ `
-      query GetNewsList {
-        legacyNews {
+      query GetNewsArticlePageCount {
+        legacyNews(page: 0) {
+          pageInfo {
+            total
+            pageSize
+          }
+        }
+      }
+    `),
+  });
+
+  if (!data?.legacyNews) {
+    return 0;
+  }
+
+  return Math.ceil(data.legacyNews.pageInfo.total / data.legacyNews.pageInfo.pageSize);
+}
+
+export async function getNewsArticles(page: number) {
+  // This function is used in a Server Active, so we need to use getClient to get the query function, otherwise it will create multiple ApolloClient instances.
+  const query = getClient().query;
+
+  const { data } = await query({
+    query: gql(/* gql */ `
+      query GetNewsArticles($page: Int = 0) {
+        legacyNews(page: $page) {
           results {
             ...NewsWithoutBody
           }
         }
       }
     `),
+    variables: {
+      page: page,
+    },
   });
 
   if (!data?.legacyNews) {
