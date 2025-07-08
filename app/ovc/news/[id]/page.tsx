@@ -15,7 +15,7 @@ export default async function OVCNewsArticle({ params }: { params: Promise<{ id:
   const { id } = await params;
   const content = await getNewsArticle(id);
   const hero = content.doNotDisplayImage === false ? null : content?.heroImage;
-  const date = new Date(content.created?.time);
+  const date = new Date(content.created.time);
 
   return (
     <Layout>
