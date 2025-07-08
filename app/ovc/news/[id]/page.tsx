@@ -68,12 +68,10 @@ export default async function OVCNewsArticle({ params }: Props) {
           <Typography type="body">
             Posted on{" "}
             {date.toLocaleString("en-US", {
+              weekday: "long",
               month: "long",
               day: "2-digit",
               year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
             })}
           </Typography>
 
