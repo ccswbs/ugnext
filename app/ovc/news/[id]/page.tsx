@@ -15,6 +15,7 @@ export default async function OVCNewsArticle({ params }: { params: Promise<{ id:
   const { id } = await params;
   const content = await getNewsArticle(id);
   const hero = content.doNotDisplayImage === false ? null : content?.heroImage;
+  const date = new Date(content.created?.time);
 
   return (
     <Layout>
@@ -39,7 +40,20 @@ export default async function OVCNewsArticle({ params }: { params: Promise<{ id:
           </Typography>
         )}
 
-        <HtmlParser html={content.body.processed} />
+        <Typography type="body">
+          {date.toLocaleString("en-US", {
+            month: "long",
+            day: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })}
+        </Typography>
+
+        <div className="py-4">
+          <HtmlParser html={content.body.processed} />
+        </div>
       </LayoutContent>
 
       <Footer></Footer>
