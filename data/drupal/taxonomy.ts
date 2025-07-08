@@ -22,7 +22,6 @@ export const TAG_FRAGMENT = gql(/* gql */ `
   fragment Tag on TermTag {
     id
     name
-    path
   }
 `);
 
@@ -30,6 +29,12 @@ export const UNIT_FRAGMENT = gql(/* gql */ `
   fragment Unit on TermUnit {
     id
     name
-    path
+  }
+`);
+
+export const NEWS_CATEGORY_FRAGMENT = gql(/* gql */ `
+  fragment NewsCategory on TermNewsCategory {
+    id
+    name
   }
 `);
