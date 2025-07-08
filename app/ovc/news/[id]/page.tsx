@@ -1,19 +1,21 @@
 import { getNewsArticle } from "@/data/drupal/news";
 import { Header } from "@/components/server/header";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
-import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import { Footer } from "@uoguelph/react-components/footer";
 import { HtmlParser } from "@/components/client/html-parser";
-import { getMenu } from "next-drupal";
-import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
 import { Hero, HeroTitle } from "@uoguelph/react-components/hero";
 import Image from "next/image";
-import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
+import { notFound } from "next/navigation";
 
 export default async function OVCNewsArticle({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const content = await getNewsArticle(id);
+
+  if (!content) {
+    notFound();
+  }
+
   const hero = content.doNotDisplayImage === false ? null : content?.heroImage;
   const date = new Date(content.created.time);
 
@@ -52,7 +54,7 @@ export default async function OVCNewsArticle({ params }: { params: Promise<{ id:
         </Typography>
 
         <div className="py-4">
-          <HtmlParser html={content.body.processed} />
+          <HtmlParser key={content.id} html={content.body.processed} />
         </div>
       </LayoutContent>
 
