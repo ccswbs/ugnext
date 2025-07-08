@@ -46,7 +46,7 @@ export async function getNewsArticle(id: string) {
 
   const { data } = await query({
     query: gql(/* gql */ `
-      query GetNewsArticle($id: ID!, $revision: ID = "current") {
+      query GetNewsArticle($id: ID = "", $revision: ID = "current") {
         nodeArticle(id: $id, revision: $revision) {
           ...News
         }
