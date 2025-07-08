@@ -65,7 +65,7 @@ export async function getNewsArticle(id: string) {
   return data.nodeArticle;
 }
 
-export async function getNewsArticlePageCount() {
+export async function getNewsArticleCount() {
   const { data } = await query({
     query: gql(/* gql */ `
       query GetNewsArticlePageCount {
@@ -83,17 +83,17 @@ export async function getNewsArticlePageCount() {
     return 0;
   }
 
-  return Math.ceil(data.legacyNews.pageInfo.total / data.legacyNews.pageInfo.pageSize);
+  return data.legacyNews.pageInfo.total;
 }
 
-export async function getNewsArticles(page: number) {
+export async function getNewsArticles(page: number, size: number = 20) {
   // This function is used in a Server Active, so we need to use getClient to get the query function, otherwise it will create multiple ApolloClient instances.
   const query = getClient().query;
 
   const { data } = await query({
     query: gql(/* gql */ `
-      query GetNewsArticles($page: Int = 0) {
-        legacyNews(page: $page) {
+      query GetNewsArticles($page: Int = 0, $size: Int = 20) {
+        legacyNews(page: $page, pageSize: $size) {
           results {
             ...NewsWithoutBody
           }
@@ -102,6 +102,7 @@ export async function getNewsArticles(page: number) {
     `),
     variables: {
       page: page,
+      size: size,
     },
   });
 
