@@ -24,7 +24,7 @@
     "@netlify/plugin-nextjs": "^5.11.4",
     "@next/third-parties": "^15.3.4",
     "@uoguelph/react-components": "^1.4.2",
-    "@uoguelph/web-components": "^2.0.3",
+    "@uoguelph/web-components": "^2.0.4-rc.0",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
     "nanoid": "5.1.5",
@@ -36,6 +36,7 @@
     "react-animate-height": "^3.2.3",
     "react-dom": "^19.1.0",
     "sharp": "^0.34.2",
+    "swr": "^2.3.4",
     "tailwind-variants": "^1.0.0",
     "uuid": "^11.1.0",
     "zod": "^3.25.67"
