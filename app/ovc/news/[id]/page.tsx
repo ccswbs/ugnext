@@ -7,8 +7,28 @@ import { Hero, HeroTitle } from "@uoguelph/react-components/hero";
 import Image from "next/image";
 import { Typography } from "@uoguelph/react-components/typography";
 import { notFound } from "next/navigation";
+import { Container } from "@uoguelph/react-components/container";
+import { Metadata, ResolvingMetadata } from "next";
+import { getRoute } from "@/data/drupal/route";
 
-export default async function OVCNewsArticle({ params }: { params: Promise<{ id: string }> }) {
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  const { id } = await params;
+  const route = await getRoute(`/node/${id}`);
+
+  if (route && route.__typename === "RouteInternal" && route?.entity && "title" in route.entity) {
+    return {
+      title: route.entity.title,
+    };
+  }
+
+  return {};
+}
+
+export default async function OVCNewsArticle({ params }: Props) {
   const { id } = await params;
   const content = await getNewsArticle(id);
 
@@ -23,39 +43,44 @@ export default async function OVCNewsArticle({ params }: { params: Promise<{ id:
     <Layout>
       <Header name="OVC_MAIN"></Header>
 
-      <LayoutContent>
+      <LayoutContent container={false}>
         {hero ? (
           <Hero
             variant="basic"
-            src={content.heroImage.url}
-            alt={content.heroImage.alt}
-            height={content.heroImage.height}
-            width={content.heroImage.width}
+            src={content.heroImage.image.url}
+            alt={content.heroImage.image.alt}
+            height={content.heroImage.image.height}
+            width={content.heroImage.image.width}
             priority
             as={Image}
           >
             <HeroTitle>{content.title}</HeroTitle>
           </Hero>
         ) : (
-          <Typography type="h1" as="h1" className="mb-0">
-            {content?.title}
-          </Typography>
+          <Container>
+            <Typography type="h1" as="h1" className="mb-0">
+              {content?.title}
+            </Typography>
+          </Container>
         )}
 
-        <Typography type="body">
-          {date.toLocaleString("en-US", {
-            month: "long",
-            day: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          })}
-        </Typography>
+        <Container>
+          <Typography type="body">
+            Posted on{" "}
+            {date.toLocaleString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            })}
+          </Typography>
 
-        <div className="py-4">
-          <HtmlParser key={content.id} html={content.body.processed} />
-        </div>
+          <div className="py-4">
+            <HtmlParser key={content.id} html={content.body.processed} />
+          </div>
+        </Container>
       </LayoutContent>
 
       <Footer></Footer>
