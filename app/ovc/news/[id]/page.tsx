@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@uoguelph/react-components/container";
 import { Metadata, ResolvingMetadata } from "next";
 import { getRoute } from "@/data/drupal/route";
+import { OVCFooter } from "@/components/client/ovc/ovc-footer";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -36,7 +37,6 @@ export default async function OVCNewsArticle({ params }: Props) {
     notFound();
   }
 
-  const hero = content.doNotDisplayImage === false ? null : content?.heroImage;
   const date = new Date(content.created.time);
 
   return (
@@ -44,11 +44,11 @@ export default async function OVCNewsArticle({ params }: Props) {
       <Header name="OVC_MAIN"></Header>
 
       <LayoutContent container={false}>
-        {hero ? (
+        {content.heroImage && !content.doNotDisplayImage ? (
           <Hero
             variant="basic"
             src={content.heroImage.image.url}
-            alt={content.heroImage.image.alt}
+            alt={content.heroImage.image.alt ?? ""}
             height={content.heroImage.image.height}
             width={content.heroImage.image.width}
             priority
@@ -76,11 +76,12 @@ export default async function OVCNewsArticle({ params }: Props) {
           </Typography>
 
           <div className="py-4">
-            <HtmlParser key={content.id} html={content.body.processed} />
+            <HtmlParser key={content.id} html={content.body?.processed} instructions={undefined} />
           </div>
         </Container>
       </LayoutContent>
 
+      <OVCFooter />
       <Footer></Footer>
     </Layout>
   );
