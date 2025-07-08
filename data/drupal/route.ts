@@ -16,50 +16,62 @@ export async function getRoute(url: string) {
               __typename
               ... on NodeArticle {
                 uuid
+                id
                 title
               }
               ... on NodeCallToAction {
                 uuid
+                id
                 title
               }
               ... on NodeCareer {
                 uuid
+                id
                 title
               }
               ... on NodeCourse {
                 uuid
+                id
                 title
               }
               ... on NodeCustomFooter {
                 uuid
+                id
                 title
               }
               ... on NodeEmployer {
                 uuid
+                id
                 title
               }
               ... on NodeEvent {
                 uuid
+                id
                 title
               }
               ... on NodePage {
                 uuid
+                id
                 title
               }
               ... on NodeProgram {
                 uuid
+                id
                 title
               }
               ... on NodeSpotlight {
                 uuid
+                id
                 title
               }
               ... on NodeTestimonial {
                 uuid
+                id
                 title
               }
               ... on NodeUserDocumentation {
                 uuid
+                id
                 title
               }
             }
