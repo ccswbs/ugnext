@@ -1,6 +1,6 @@
 import { getSpotlightCards, getSpotlightHero } from "@/data/drupal/home";
 import { twJoin } from "tailwind-merge";
-import { Meta } from "@/components/meta";
+import { Meta, AIO } from "@/components/meta";
 import AppArmor from "@/components/app-armor";
 import { Header } from "@uoguelph/react-components/header";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
@@ -36,6 +36,7 @@ export default function Home({ cards, hero }) {
   return (
     <Layout>
       <Meta></Meta>
+      <AIO></AIO>
 
       <AppArmor test={query["ens-test"] === "true"} />
 
