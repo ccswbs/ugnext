@@ -7,6 +7,9 @@ export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
     __typename
     status
     title
+    body {
+      processed
+    }
     footerLogo {
       ...Image
     }
