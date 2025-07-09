@@ -4,6 +4,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { HtmlParser } from "@/components/client/html-parser";
 import Image from "next/image";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
+import React from "react";
 
 export type CustomFooterProps = {
   tags?: string[];
@@ -41,7 +42,9 @@ export async function CustomFooter({ tags, units }: CustomFooterProps) {
           <HtmlParser html={content.body?.processed ?? ""} instructions={undefined} />
         </div>
         <div>
-          <WidgetSelector data={content.widgets} />
+          {content?.widgets?.map((widget, index) => (
+            <WidgetSelector key={index} data={widget} />
+          ))}
         </div>
       </Container>
     </div>
