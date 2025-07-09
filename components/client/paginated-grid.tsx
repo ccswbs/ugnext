@@ -80,6 +80,10 @@ export function PaginatedGrid<T>({
 
       <PaginatedGridPage page={currentPage} endpoint={endpoint} render={render} />
 
+      {/* Prefetch the next page. */}
+      <div className="hidden">
+        <PaginatedGridPage page={currentPage + 1} endpoint={endpoint} render={render} />
+      </div>
 
       <Pagination
         color="yellow"
