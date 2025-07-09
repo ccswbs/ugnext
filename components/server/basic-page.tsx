@@ -10,6 +10,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
+import { CustomFooter } from "@/components/server/custom-footer";
 
 export type BasicPageProps = {
   id: string;
@@ -76,6 +77,23 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     notFound();
   }
 
+  const { tags, units } = (content.tags ?? []).reduce(
+    (acc, tag) => {
+      if (tag.__typename === "TermTag") {
+        acc.tags.push(tag.id);
+      }
+
+      if (tag.__typename === "TermUnit") {
+        acc.units.push(tag.id);
+      }
+      return acc;
+    },
+    {
+      tags: [] as string[],
+      units: [] as string[],
+    }
+  );
+
   return (
     <Layout>
       <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
@@ -92,6 +110,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
         {post && post}
       </LayoutContent>
 
+      <CustomFooter tags={tags} units={units} />
       <Footer></Footer>
     </Layout>
   );

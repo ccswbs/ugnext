@@ -23,6 +23,10 @@ export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
 async function getCustomFooterID(tags: string[], units: string[]) {
   const showUnpublished = await showUnpublishedContent();
 
+  if(tags.length === 0 && units.length === 0) {
+    return null;
+  }
+
   const { data } = await query({
     query: gql(/* gql */ `
       query GetCustomFooterID($tags: [String], $units: [String], $status: Boolean) {
