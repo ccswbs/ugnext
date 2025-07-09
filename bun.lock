@@ -10,7 +10,7 @@
         "@netlify/plugin-nextjs": "^5.11.4",
         "@next/third-parties": "^15.3.4",
         "@uoguelph/react-components": "^1.4.2",
-        "@uoguelph/web-components": "^2.0.4-rc.0",
+        "@uoguelph/web-components": "^2.0.4",
         "conditional-wrap": "^1.0.3",
         "glob": "^11.0.3",
         "nanoid": "5.1.5",
@@ -602,7 +602,7 @@
 
     "@uoguelph/tailwind-theme": ["@uoguelph/tailwind-theme@1.0.2", "", { "dependencies": { "tailwindcss": "^4.0.9" } }, "sha512-T7hQPcXQaprzhYhBCWysIfYfxZINv9yebCs/V1+ZasjnTEIR4YGK5LLwH/6WkNSSa5PJgjp2mYoRRONyUD0iiQ=="],
 
-    "@uoguelph/web-components": ["@uoguelph/web-components@2.0.4-rc.0", "", {}, "sha512-7SkgqvZihaXvmY2OZKQLxi42HXUhtWSe2NhcZOfrW3vNYIwnsiBZaLEHBWqeg5r9OERDotHUFIOZFRNyk1WC9Q=="],
+    "@uoguelph/web-components": ["@uoguelph/web-components@2.0.4", "", {}, "sha512-laKsJOZvtRdsanpK2othdWnKV2ZMhPIBrNsyRRHeOhH/K3epNv/q41mrcL448OAo6FgosFPd4VceD3ifJRB6yQ=="],
 
     "@webassemblyjs/ast": ["@webassemblyjs/ast@1.14.1", "", { "dependencies": { "@webassemblyjs/helper-numbers": "1.13.2", "@webassemblyjs/helper-wasm-bytecode": "1.13.2" } }, "sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ=="],
 
