@@ -13,7 +13,6 @@ export type CustomFooterProps = {
 
 export async function CustomFooter({ tags, units }: CustomFooterProps) {
   const content = await getCustomFooterByTagsOrUnits(tags ?? [], units ?? []);
-  console.log(content);
 
   if (!content) {
     return <></>;
