@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@uoguelph/react-components/container";
 import { OVCCards } from "@/components/client/ovc/ovc-cards";
 import { OVCFeaturedNews } from "@/components/client/ovc/ovc-featured-news";
-import { getFeaturedNewsArticles } from "@/data/drupal/ovc/news";
+import { getFeaturedNewsArticles } from "@/data/drupal/ovc-news";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

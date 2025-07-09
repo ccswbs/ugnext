@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getNewsArticles } from "@/data/drupal/ovc/news";
+import { getNewsArticles } from "@/data/drupal/ovc-news";
 
 export async function GET(request: NextRequest) {
   const page = Number.parseInt(request.nextUrl.searchParams.get("page") ?? "");
