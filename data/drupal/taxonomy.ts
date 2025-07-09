@@ -38,3 +38,11 @@ export const NEWS_CATEGORY_FRAGMENT = gql(/* gql */ `
     name
   }
 `);
+
+export const GOAL_FRAGMENT = gql(/* gql */ `
+  fragment Goal on TermGoal {
+    id
+    name
+    action
+  }
+`);
