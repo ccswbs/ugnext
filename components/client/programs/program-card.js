@@ -2,7 +2,7 @@ import { Card, CardContent, CardTitle, CardFooter } from "@uoguelph/react-compon
 
 export const ProgramCard = ({ program }) => {
   return (
-    <Card as="a" key={program.id} href={program.url} className="h-full">
+    <Card as="a" key={program.id} href={program.url} className="h-full hover:scale-105 transition-transform">
       <CardContent className="flex-1 flex justify-center">
         <CardTitle>{program.name}</CardTitle>
 
