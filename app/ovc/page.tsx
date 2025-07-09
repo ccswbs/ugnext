@@ -30,7 +30,8 @@ export default async function OVCHome() {
       id={route.entity.id}
       post={
         <Container>
-          <OVCFeaturedNews />
+          {/* @ts-ignore */}
+          <OVCFeaturedNews articles={featuredNews} />
           <OVCCards />
         </Container>
       }
