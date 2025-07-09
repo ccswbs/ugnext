@@ -9,9 +9,12 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
+import React from "react";
 
 export type BasicPageProps = {
   id: string;
+  pre?: React.ReactNode;
+  post?: React.ReactNode;
 };
 
 type PageContent = NonNullable<Awaited<ReturnType<typeof getPageContent>>>;
@@ -57,7 +60,7 @@ function PageHero({ content }: { content: NonNullable<PageContent> }) {
   );
 }
 
-export async function BasicPage({ id }: BasicPageProps) {
+export async function BasicPage({ id, pre, post }: BasicPageProps) {
   const content = await getPageContent(id);
 
   // Couldn't fetch content for this id.
@@ -80,7 +83,13 @@ export async function BasicPage({ id }: BasicPageProps) {
       <LayoutContent container={false}>
         <PageHero content={content} />
 
-        {content?.widgets?.map((widget, index) => <WidgetSelector key={index} data={widget} />)}
+        {pre && pre}
+
+        {content?.widgets?.map((widget, index) => (
+          <WidgetSelector key={index} data={widget} />
+        ))}
+
+        {post && post}
       </LayoutContent>
 
       <Footer></Footer>
