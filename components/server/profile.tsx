@@ -2,62 +2,23 @@ import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Header } from "@/components/server/header";
 import { getProfileContent } from "@/data/drupal/profile";
+import { HtmlParser } from "@/components/client/html-parser";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/server/breadcrumbs";
-import { Hero, HeroTitle, HeroVideo } from "@uoguelph/react-components/hero";
-import Image from "next/image";
+//import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 //import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 
 export type ProfileProps = {
   id: string;
+  pre?: React.ReactNode;
+  post?: React.ReactNode;
 };
 
 type ProfileContent = NonNullable<Awaited<ReturnType<typeof getProfileContent>>>;
 
-function PageHero({ content }: { content: NonNullable<ProfileContent> }) {
-  if (content.image) {
-    return (
-      <>
-        <Hero
-          alt={content.image.image.alt ?? ""}
-          height={content.image.image.height}
-          width={content.image.image.width}
-          src={content.image.image.url}
-          variant="basic"
-          priority
-          as={Image}
-        >
-          <HeroTitle>{content.title}</HeroTitle>
-          {content.heroWidgets?.video && (
-            <HeroVideo
-              src={content.heroWidgets.video.url}
-              title={content.heroWidgets.video.name}
-              transcript={content.heroWidgets.video.transcript?.url}
-            />
-          )}
-        </Hero>
-
-        <Breadcrumbs url={content.path ?? undefined} />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Breadcrumbs url={content.path ?? undefined} />
-
-      <Container>
-        <Typography type="h1" as="h1">
-          {content?.title}
-        </Typography>
-      </Container>
-    </>
-  );
-}
-
-export async function Profile({ id }: ProfileProps) {
+export async function Profile({ id, pre, post }: ProfileProps) {
   const content = await getProfileContent(id);
 
   // Couldn't fetch content for this id.
@@ -78,9 +39,32 @@ export async function Profile({ id }: ProfileProps) {
       <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
 
       <LayoutContent container={false}>
-        <PageHero content={content} />
+        <Breadcrumbs url={content.path ?? undefined} />
+        <Container>
+        <Typography type="h1" as="h1">
+          {content?.title}
+        </Typography>      
+        {pre && pre}
+        {content.profilePicture && (
+          <img
+            alt={content.profilePicture.image.alt ?? ""}
+          height={content.profilePicture.image.height}
+          width={content.profilePicture.image.width}
+          src={content.profilePicture.image.url}
+          />
+        )}        
+        <HtmlParser key="profile-body" html={content.body.processed} />
+        {content?.profileSections?.map((section, index) => (
+          <div key={index}>
+            <Typography type="h2" as="h2">
+              {section.profilePartLabel}
+            </Typography>
+            <HtmlParser key={section.id} html={section.profilePartText.processed } />
+          </div>
+        ))}
 
-        <p>Profile content is supposed to be here.</p>
+        {post && post}
+        </Container>        
       </LayoutContent>
 
       <Footer></Footer>
