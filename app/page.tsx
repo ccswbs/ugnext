@@ -2,6 +2,7 @@ import React from "react";
 import { getSpotlights } from "@/data/drupal/spotlight";
 import { twJoin } from "tailwind-merge";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
+import { AIO } from "@/components/client/aio";
 import { Header } from "@uoguelph/react-components/header";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Container } from "@uoguelph/react-components/container";
@@ -20,6 +21,7 @@ export default async function Page() {
 
   return (
     <Layout>
+      <AIO></AIO>
       <Header></Header>
 
       <LayoutContent container={false} className="pb-0!">
