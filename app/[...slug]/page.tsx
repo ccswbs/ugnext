@@ -1,6 +1,7 @@
 import { getRoute } from "@/data/drupal/route";
 import { Metadata, ResolvingMetadata } from "next";
 import { BasicPage } from "@/components/server/basic-page";
+import { Profile } from "@/components/server/profile";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 
 type Props = {
@@ -64,6 +65,8 @@ export default async function Page({ params }: Props) {
     case "NodeArticle":
       permanentRedirect(`/ovc/news/${route.entity.id}`);
       break;
+    case "NodeProfile":
+      return <Profile id={route.entity.uuid} />;
     default:
       if (process.env.NODE_ENV === "development") {
         console.warn(

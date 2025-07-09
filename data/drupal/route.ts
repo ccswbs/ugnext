@@ -54,6 +54,11 @@ export async function getRoute(url: string) {
                 id
                 title
               }
+              ... on NodeProfile {
+                uuid
+                id
+                title
+              }
               ... on NodeProgram {
                 uuid
                 id
@@ -82,7 +87,7 @@ export async function getRoute(url: string) {
           }
         }
       }
-    `),
+    `) as import("graphql").DocumentNode,
     variables: {
       path: url,
       revision: (await showUnpublishedContent()) ? "latest" : "current",
@@ -133,6 +138,9 @@ export async function getRouteBreadcrumbs(url: string) {
                 title
               }
               ... on NodePage {
+                title
+              }
+              ... on NodeProfile {
                 title
               }
               ... on NodeProgram {
