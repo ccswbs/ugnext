@@ -41,30 +41,30 @@ export async function Profile({ id, pre, post }: ProfileProps) {
       <LayoutContent container={false}>
         <Breadcrumbs url={content.path ?? undefined} />
         <Container>
-        <Typography type="h1" as="h1">
-          {content?.title}
-        </Typography>      
-        {pre && pre}
-        {content.profilePicture && (
-          <img
-            alt={content.profilePicture.image.alt ?? ""}
-          height={content.profilePicture.image.height}
-          width={content.profilePicture.image.width}
-          src={content.profilePicture.image.url}
-          />
-        )}        
-        <HtmlParser key="profile-body" html={content.body.processed} />
-        {content?.profileSections?.map((section, index) => (
-          <div key={index}>
-            <Typography type="h2" as="h2">
-              {section.profilePartLabel}
-            </Typography>
-            <HtmlParser key={section.id} html={section.profilePartText.processed } />
-          </div>
-        ))}
+          <Typography type="h1" as="h1">
+            {content?.title}
+          </Typography>
+          {pre && pre}
+          {content.profilePicture && (
+            <img
+              alt={content.profilePicture.image.alt ?? ""}
+              height={content.profilePicture.image.height}
+              width={content.profilePicture.image.width}
+              src={content.profilePicture.image.url}
+            />
+          )}
+          <HtmlParser key="profile-body" html={content.body.processed} />
+          {content?.profileSections?.map((section, index) => (
+            <div key={index}>
+              <Typography type="h2" as="h2">
+                {section.profilePartLabel}
+              </Typography>
+              <HtmlParser key={section.id} html={section.profilePartText.processed} />
+            </div>
+          ))}
 
-        {post && post}
-        </Container>        
+          {post && post}
+        </Container>
       </LayoutContent>
 
       <Footer></Footer>

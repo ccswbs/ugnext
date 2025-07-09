@@ -21,7 +21,7 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     }
     profileSections {
       ... on ParagraphProfilePart {
-        id  
+        id
         profilePartText {
           processed
         }
