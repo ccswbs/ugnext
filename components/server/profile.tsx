@@ -3,6 +3,7 @@ import { Footer } from "@uoguelph/react-components/footer";
 import { Header } from "@/components/server/header";
 import { getProfileContent } from "@/data/drupal/profile";
 import { HtmlParser } from "@/components/client/html-parser";
+import { Link } from "@uoguelph/react-components/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/server/breadcrumbs";
 //import Image from "next/image";
@@ -45,15 +46,25 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             {content?.title}
           </Typography>
           {pre && pre}
-          {content.profilePicture && (
-            <img
-              alt={content.profilePicture.image.alt ?? ""}
-              height={content.profilePicture.image.height}
-              width={content.profilePicture.image.width}
-              src={content.profilePicture.image.url}
-            />
-          )}
-          <HtmlParser key="profile-body" html={content.body.processed} />
+          <div className="flex flex-col md:flex-row items-start gap-6 mb-8">
+            {content.profilePicture && (
+              <img
+                alt={content.profilePicture.image.alt ?? ""}
+                height={content.profilePicture.image.height}
+                width={content.profilePicture.image.width}
+                src={content.profilePicture.image.url}
+                className="rounded-lg w-full max-w-full md:w-1/3 md:max-w-1/3 object-cover"
+              />
+            )}
+            <div className="flex-1">
+              <HtmlParser key="profile-body" html={content.body.processed} />
+              {content.uniwebId && (
+                <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
+                  View UniWeb profile
+                </Link>
+              )}
+            </div>
+          </div>
           {content?.profileSections?.map((section, index) => (
             <div key={index}>
               <Typography type="h2" as="h2">
