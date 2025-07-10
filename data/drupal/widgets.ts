@@ -85,6 +85,30 @@ export const BUTTON_SECTION_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const CALL_TO_ACTION_FRAGMENT = gql(/* gql */ `
+  fragment CallToAction on ParagraphCallToAction {
+    __typename
+    id
+    sectionColumn {
+      ...SectionColumn
+    }
+    primaryLink {
+      title
+      url
+    }
+    secondaryLink {
+      title
+      url
+    }
+    buttons {
+      ...Buttons
+    }
+    goal {
+      ...Goal
+    }
+  }
+`);
+
 export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
   fragment GeneralText on ParagraphGeneralText {
     __typename
