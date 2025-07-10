@@ -1,4 +1,5 @@
 import Script from "next/script";
+import serialize from "serialize-javascript"; 
 
 export function AIO () {
   const context = "https://schema.org";
@@ -54,12 +55,14 @@ export function AIO () {
     } 
   }
 
+  const serializedData = serialize(jsonLd, { isJSON: true });
+
   return (
       <Script
         id="app-ld-json"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+          __html: (serializedData),
         }}
       />
   );
