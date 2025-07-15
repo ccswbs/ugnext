@@ -46,3 +46,45 @@ export const GOAL_FRAGMENT = gql(/* gql */ `
     action
   }
 `);
+
+export const UNDERGRADUATE_DEGREE_TYPES = gql(/* gql */ `
+  fragment UndergraduateDegreeType on TermUndergraduateDegreeType {
+    id
+    name
+  }
+`);
+
+export const UNDERGRADUATE_PROGRAM_TYPES = gql(/* gql */ `
+  fragment UndergraduateProgramType on TermUndergraduateProgramType {
+    id
+    name
+  }
+`);
+
+export const UNDERGRADUATE_PROGRAM_SEARCH_TAG = gql(/* gql */ `
+  fragment UndergraduateProgramSearchTag on TermUndergraduateProgramSearchTag {
+    name
+  }
+`);
+
+export const ADMISSION_STUDENT_TYPE = gql(/* gql */ `
+  fragment AdmissionStudentType on TermAdmissionLocation {
+    id
+    name
+  }
+`);
+
+export const ADMISSION_LOCATION = gql(/* gql */ `
+  fragment AdmissionLocation on TermAdmissionLocation {
+    id
+    name
+    type
+  }
+`);
+
+export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SECTION_TYPE = gql(/* gql */ `
+  fragment UndergraduateAdmissionRequirementSectionType on TermUndergradReqSecType {
+    id
+    name
+  }
+`);
