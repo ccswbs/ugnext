@@ -1,6 +1,7 @@
 import Script from "next/script";
 import serialize from "serialize-javascript"; 
-import { CollegeOrUniversity, Graph, WebSite } from 'schema-dts'
+import { CollegeOrUniversity, Graph, WebSite } from 'schema-dts';
+import { json } from "stream/consumers";
 
 export function AIO (jsonLD: any = null) {
   const context = "https://schema.org";
@@ -48,16 +49,16 @@ export function AIO (jsonLD: any = null) {
     publisher: collegeOrUniversity,
   } as WebSite;
 
-  const jsonLdContent = jsonLD || {
+  const jsonLdContent = (Object.keys(jsonLD).length === 0) ? {
       collegeOrUniversity,
       website,
-  };
+  }: jsonLD;
 
   const jsonLdOutput = {
     "@context": context,
     "@graph": jsonLdContent,
   } as Graph;
-
+  
   const serializedData = serialize(jsonLdOutput, { isJSON: true });
 
   return (
