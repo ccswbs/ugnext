@@ -23,6 +23,11 @@ export function AIO ({jsonLD}: any = null) {
     url: url,
   }
 
+  const mainLogo = {
+    "@type": "ImageObject",
+    url: "https://www.uoguelph.ca/img/ug-social-thumb.jpg"
+  }
+
   const collegeOrUniversity = {
     '@context': context,
     "@type": "CollegeOrUniversity",
@@ -34,10 +39,8 @@ export function AIO ({jsonLD}: any = null) {
     contactPoint: contactPoint,
     address: postalAddress,
     telephone: phone,
-    logo: {
-        "@type": "ImageObject",
-        url: "https://www.uoguelph.ca/img/ug-social-thumb.jpg"
-    },
+    image: mainLogo,
+    logo: mainLogo,
   } as CollegeOrUniversity;
 
   const website = {
