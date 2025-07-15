@@ -71,6 +71,22 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/token',
+        destination: process.env.NEXT_PUBLIC_UNIWEB_URL + '/api/token.php'
+      },
+      {
+        source: '/api/resource',
+        destination: process.env.NEXT_PUBLIC_UNIWEB_URL + '/api/resource'
+      },
+      {
+        source: '/api/profiles/:id',
+        destination: `${process.env.NEXT_PUBLIC_UNIWEB_URL}/profiles.php/get/members/profile/:id`
+      }
+    ];
+  }
 };
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
