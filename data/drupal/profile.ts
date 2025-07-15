@@ -1,7 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { query } from "@/lib/apollo";
-//import { getTestimonialByTag } from "@/data/drupal/testimonial";
 
 export const PROFILE_FRAGMENT = gql(/* gql */ `
   fragment Profile on NodeProfile {
@@ -66,4 +65,93 @@ export async function getProfileContent(id: string) {
   return {
     ...data.nodeProfile,
   };
+}
+
+export async function getProfileCount() {
+  const { data } = await query({
+    query: gql(/* gql */ `
+      query GetProfileCount {
+        profiles(page: 0) {
+          pageInfo {
+            total
+            pageSize
+          }
+        }
+      }
+    `),
+  });
+
+  if (!data?.profiles) {
+    return 0;
+  }
+
+  return data.profiles.pageInfo.total;
+}
+
+export async function getProfilesByType(profileType: string) {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetProfilesByType($type: String!) {
+        profiles(filter: { field_profile_type_target_id: $type }) {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileType {
+                ...ProfileType
+              }
+              profilePicture {
+                ...Image
+              }
+            }
+          }
+        }
+      }
+    `),
+    variables: {
+      type: profileType,
+    },
+  });
+
+  if (!data?.profiles) {
+    return { results: [] };
+  }
+
+  return data.profiles;
+}
+
+/* Enhance this with an additional function to check the initial unitName for a parent
+Add people into an array for the parent unit? */
+export async function getProfilesByUnit(unitName: string) {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetProfilesByUnit($unit: String!) {
+        profiles(filter: { field_profile_unit_target_id: $unit }) {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileType {
+                name
+              }
+              profilePicture {
+                ...Image
+              }
+            }
+          }
+        }
+      }
+    `),
+    variables: {
+      unit: unitName,
+    },
+  });
+
+  if (!data?.profiles) {
+    return { results: [] };
+  }
+
+  return data.profiles;
 }
