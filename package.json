@@ -27,7 +27,6 @@
     "@uoguelph/web-components": "^2.0.4",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
-    "install": "^0.13.0",
     "nanoid": "5.1.5",
     "next": "^15.3.4",
     "next-drupal": "^2.0.0",
