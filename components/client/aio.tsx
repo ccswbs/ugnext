@@ -1,9 +1,8 @@
 import Script from "next/script";
 import serialize from "serialize-javascript"; 
 import { CollegeOrUniversity, Graph, WebSite } from 'schema-dts';
-import { json } from "stream/consumers";
 
-export function AIO (jsonLD: any = null) {
+export function AIO ({jsonLD}: any = null) {
   const context = "https://schema.org";
   const id = "https://www.uoguelph.ca";
   const url = "https://www.uoguelph.ca/"
@@ -58,6 +57,8 @@ export function AIO (jsonLD: any = null) {
     "@context": context,
     "@graph": jsonLdContent,
   } as Graph;
+
+  console.log("jsonLdOutput:", jsonLdOutput);
   
   const serializedData = serialize(jsonLdOutput, { isJSON: true });
 
