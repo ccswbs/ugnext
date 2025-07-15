@@ -2,7 +2,7 @@ import Script from "next/script";
 import serialize from "serialize-javascript"; 
 import { CollegeOrUniversity, Graph, WebSite } from 'schema-dts'
 
-export function AIO (jsonLD = null) {
+export function AIO (jsonLD: any = null) {
   const context = "https://schema.org";
   const id = "https://www.uoguelph.ca";
   const url = "https://www.uoguelph.ca/"
