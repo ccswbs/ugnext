@@ -1,5 +1,7 @@
 import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@uoguelph/react-components/layout";
+import { AIO } from "@/components/client/aio";
+import { EducationalOccupationalProgram, ItemList, ListItem } from 'schema-dts'
 import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -33,8 +35,26 @@ export default async function ProgramsUndergraduate() {
     .sort((a, b) => a.name.localeCompare(b.name));
   const combinedTypes = [...programTypes, ...degreeTypes];
 
+  const jsonLDitemListElements = combined.map((program, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "EducationalOccupationalProgram",
+      "@id": program.url,
+      name: program.name,
+      url: program.url,
+      educationalCredentialAwarded: program.degree?.name,
+    } as EducationalOccupationalProgram,
+  } as ListItem));
+
+  const jsonLD = {
+    "@type": "ItemList",
+    "itemListElement": jsonLDitemListElements,
+  } as ItemList;
+
   return (
     <Layout>
+      <AIO jsonLD={jsonLD}></AIO>
       <Header></Header>
 
       <LayoutContent container={false}>

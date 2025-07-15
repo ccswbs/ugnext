@@ -1,7 +1,8 @@
 import Script from "next/script";
 import serialize from "serialize-javascript"; 
+import { CollegeOrUniversity, Graph, WebSite } from 'schema-dts'
 
-export function AIO () {
+export function AIO (jsonLD = null) {
   const context = "https://schema.org";
   const id = "https://www.uoguelph.ca";
   const url = "https://www.uoguelph.ca/"
@@ -37,7 +38,7 @@ export function AIO () {
         "@type": "ImageObject",
         url: "https://www.uoguelph.ca/img/ug-social-thumb.jpg"
     },
-  };
+  } as CollegeOrUniversity;
 
   const website = {
     "@type": "WebSite",
@@ -45,25 +46,27 @@ export function AIO () {
     name: "University of Guelph",
     url: url,
     publisher: collegeOrUniversity,
-  }
+  } as WebSite;
 
-  const jsonLd = {
-    "@context": context,
-    "@graph": {
+  const jsonLdContent = jsonLD || {
       collegeOrUniversity,
       website,
-    } 
-  }
+  };
 
-  const serializedData = serialize(jsonLd, { isJSON: true });
+  const jsonLdOutput = {
+    "@context": context,
+    "@graph": jsonLdContent,
+  } as Graph;
+
+  const serializedData = serialize(jsonLdOutput, { isJSON: true });
 
   return (
-      <Script
-        id="app-ld-json"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: (serializedData),
-        }}
-      />
+    <Script
+      id="app-ld-json"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: (serializedData),
+      }}
+    />
   );
 }
