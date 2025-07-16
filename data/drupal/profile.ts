@@ -107,10 +107,15 @@ export async function getProfiles() {
                 ...ProfileType
               }
               profileUnit {
-                ...Unit
+                id
+                name
               }
               profilePicture {
                 ...Image
+              }
+              tags {
+                ...Tag
+                ...Unit
               }
             }
           }
@@ -202,6 +207,7 @@ export async function getProfileTypes() {
         taxonomyTerms(filter: {vid: "profile_type"}) {
           results {
             ... on TermProfileType {
+              id
               name
             }
           }
@@ -210,7 +216,7 @@ export async function getProfileTypes() {
     `),
   });
   
-  if (!data?.taxonomyTerms.results) {
+  if (!data?.taxonomyTerms?.results) {
     return [];
   }
   
@@ -224,6 +230,7 @@ export async function getUnits() {
         taxonomyTerms(filter: {vid: "units"}) {
           results {
             ... on TermUnit {
+              id
               name
             }
           }
@@ -232,7 +239,7 @@ export async function getUnits() {
     `),
   });
 
-  if (!data?.taxonomyTerms.results) {
+  if (!data?.taxonomyTerms?.results) {
     return [];
   }
 

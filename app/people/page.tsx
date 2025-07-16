@@ -15,29 +15,35 @@ export const metadata: Metadata = {
 
 export default async function People() {
   
-  const profiles = await getProfiles();
+  const rawProfiles = await getProfiles();
   const types = await getProfileTypes();
-  //const types = ["Faculty","Graduate Student"];
   const units = await getUnits();
   
+  // Transform profiles to match search expectations
+  const profiles = rawProfiles.map((profile: any) => ({
+    ...profile,
+    name: profile.title, // Search expects 'name' not 'title'
+    types: profile.profileType ? [profile.profileType] : [], // Convert single type to array
+    units: profile.profileUnit || [], // profileUnit is already an array
+    tags: profile.tags || [] // Ensure tags array exists
+  }));
+  
   const profileCount = getProfileCount();
-  console.log(types);
-  console.log(units);
 
   return (
     <Layout>
       <Header></Header>
 
       <LayoutContent container={false}>
+      
         <Container>
           <Typography type="h1" as="h1" className="block!">
             Our People
           </Typography>
-          <p>There are {profileCount} profiles total</p>
-          
-          <PeopleSearch profiles={profiles} types={types} units={units} />
+        </Container>
+        
+        <PeopleSearch profiles={profiles} types={types} units={units} />
 
-        </Container>        
       </LayoutContent>
 
       <Footer></Footer>

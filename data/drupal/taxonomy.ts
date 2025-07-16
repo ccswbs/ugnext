@@ -41,6 +41,7 @@ export const NEWS_CATEGORY_FRAGMENT = gql(/* gql */ `
 
 export const PROFILE_TYPE_FRAGMENT = gql(/* gql */ `
   fragment ProfileType on TermProfileType {
+    id
     name
   } 
 `);

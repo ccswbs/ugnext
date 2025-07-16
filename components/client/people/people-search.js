@@ -1,7 +1,7 @@
 "use client";
 
 import { PeopleSearchBar } from "./people-search-bar";
-// import { ProgramSearchNavigation } from "./program-search-navigation";
+import { PeopleSearchNavigation } from "./people-search-navigation";
 import { ProfileGrid } from "./profile-grid";
 import { useState } from "react";
 import { Container } from "@uoguelph/react-components/container";
@@ -9,23 +9,26 @@ import { Container } from "@uoguelph/react-components/container";
 export const PeopleSearch = ({ profiles, types, units }) => {
   const [filteredPeople, setFilteredPeople] = useState(profiles);
 
+  const handleFilterChange = (filtered) => {
+    setFilteredPeople(filtered);
+  };
+
   return (
     <div className="flex flex-col relative">
-    {/* <Container className="py-0!">
-        <ProgramSearchNavigation />
-    </Container> */}
+    <Container className="py-0!">
+        <PeopleSearchNavigation />
+    </Container>
 
       <PeopleSearchBar
         profiles={profiles}
         types={types}
         units={units}
-        onChange={(filtered) => setFilteredPeople(filtered)}
+        onChange={handleFilterChange}
       />
 
       <Container>
-      {/*<ProfileGrid profiles={filteredPeople} />*/}
-        <ProfileGrid profiles={profiles} />
-        
+        <ProfileGrid profiles={filteredPeople} />
+                
         {/* No results were found */}
         {filteredPeople?.length === 0 && (
           <div className="flex w-full items-center justify-center">

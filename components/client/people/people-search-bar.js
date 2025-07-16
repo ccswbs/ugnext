@@ -8,35 +8,32 @@ import { Field, Label } from "@headlessui/react";
 
 export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }) => {
   
-  const [selectedTypes, setSelectedTypes] = useState(types ?? []);
-  const [selectedUnits, setSelectedUnits] = useState(units ?? []);
-  
-  {/* const [input, setInput] = useState("");
+  const [input, setInput] = useState("");
   const results = useSearch(profiles, input, nameAndTagSearch);
-  const [selectedTypes, setSelectedTypes] = useState(types ?? []);
-  const [selectedUnits, setSelectedUnits] = useState(units ?? []);
+  const [selectedTypes, setSelectedTypes] = useState(types?.map(type => type.id) ?? []);
+  const [selectedUnits, setSelectedUnits] = useState(units?.map(unit => unit.id) ?? []);
 
   const filtered = useMemo(() => {
     let filtered = results;
 
     if (Array.isArray(types) && types.length > 0) {
       filtered = filtered.filter((profile) =>
-        profile.types.some((type) => selectedTypes.some((t) => type.id === t.id))
+        profile.types?.some((type) => selectedTypes.includes(type.id))
       );
     }
 
-    if (Array.isArray( units) &&  units.length > 0) {
+    if (Array.isArray(units) && units.length > 0) {
       filtered = filtered.filter((profile) =>
-        profile.units.some((unit) => selectedUnits.some((t) => unit.type.id === t.id))
+        profile.units?.some((unit) => selectedUnits.includes(unit.id))
       );
     }
 
     return filtered;
-  }, [results, selectedTypes, selectedUnits, types,  units]);
+  }, [results, selectedTypes, selectedUnits, types, units]);
 
   useEffect(() => {
     onChange?.(filtered);
-  }, [filtered, onChange]); */}
+  }, [filtered, onChange]);
 
   return (
     <div className="w-full bg-yellow -mt-1">
@@ -57,12 +54,12 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
               <Select
                 multiple
                 onChange={(options) => {
-                  setSelectedTypes(options.length > 0 ? options : types);
+                  setSelectedTypes(options.length > 0 ? options.map(option => option.id) : types?.map(type => type.id) ?? []);
                 }}
               >
                 <SelectButton>
                   <span className="whitespace-nowrap overflow-hidden text-ellipsis w-fit">
-                    {selectedTypes.map((type) => type.name).join(", ")}
+                    {types?.filter(type => selectedTypes.includes(type.id)).map(type => type.name).join(", ")}
                   </span>
                 </SelectButton>
                 <SelectOptions>
@@ -84,18 +81,18 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
               <Select
                 multiple
                 onChange={(options) => {
-                  setSelectedUnits(options.length > 0 ? options :  units);
+                  setSelectedUnits(options.length > 0 ? options.map(option => option.id) : units?.map(unit => unit.id) ?? []);
                 }}
               >
                 <SelectButton>
                   <span className="whitespace-nowrap overflow-hidden text-ellipsis w-fit">
-                    {selectedUnits.map((type) => type.name).join(", ")}
+                    {units?.filter(unit => selectedUnits.includes(unit.id)).map(unit => unit.name).join(", ")}
                   </span>
                 </SelectButton>
                 <SelectOptions>
-                  { units.map((type) => (
-                    <SelectOption value={type} key={type.id}>
-                      {type.name}
+                  {units.map((unit) => (
+                    <SelectOption value={unit} key={unit.id}>
+                      {unit.name}
                     </SelectOption>
                   ))}
                 </SelectOptions>
