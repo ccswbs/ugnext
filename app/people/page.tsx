@@ -4,10 +4,9 @@ import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
-import { getProfiles, getProfileCount } from "@/data/drupal/profile";
-import { getProfileTypes, getUnits } from "/data/drupal/taxonomy";
+import { getProfiles, getProfileCount, getProfileTypes, getUnits } from "@/data/drupal/profile";
 //import ProfilesList from "@/components/client/profiles";
-import { PeopleSearch } from "@/components/client/people";
+import { PeopleSearch } from "@/components/client/people/people-search";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,6 +17,7 @@ export default async function People() {
   
   const profiles = await getProfiles();
   const types = await getProfileTypes();
+  //const types = ["Faculty","Graduate Student"];
   const units = await getUnits();
   
   const profileCount = getProfileCount();

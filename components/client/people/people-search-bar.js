@@ -10,7 +10,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
   const [input, setInput] = useState("");
   const results = useSearch(profiles, input, nameAndTagSearch);
   const [selectedTypes, setSelectedTypes] = useState(types ?? []);
-  const [selected units, setSelected units] = useState( units ?? []);
+  const [selectedUnits, setSelectedUnits] = useState(units ?? []);
 
   const filtered = useMemo(() => {
     let filtered = results;
@@ -23,12 +23,12 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
 
     if (Array.isArray( units) &&  units.length > 0) {
       filtered = filtered.filter((profile) =>
-        profile.units.some((unit) => selected units.some((t) => unit.type.id === t.id))
+        profile.units.some((unit) => selectedUnits.some((t) => unit.type.id === t.id))
       );
     }
 
     return filtered;
-  }, [results, selectedTypes, selected units, types,  units]);
+  }, [results, selectedTypes, selectedUnits, types,  units]);
 
   useEffect(() => {
     onChange?.(filtered);
@@ -73,19 +73,19 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
           </div>
         )}
 
-        { units?.length > 0 && (
+        {units?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
             <Field>
               <Label className="text-body-copy-bold font-bold">Filter by unit</Label>
               <Select
                 multiple
                 onChange={(options) => {
-                  setSelected units(options.length > 0 ? options :  units);
+                  setSelectedUnits(options.length > 0 ? options :  units);
                 }}
               >
                 <SelectButton>
                   <span className="whitespace-nowrap overflow-hidden text-ellipsis w-fit">
-                    {selected units.map((type) => type.name).join(", ")}
+                    {selectedUnits.map((type) => type.name).join(", ")}
                   </span>
                 </SelectButton>
                 <SelectOptions>

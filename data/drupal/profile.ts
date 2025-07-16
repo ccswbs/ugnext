@@ -119,11 +119,11 @@ export async function getProfiles() {
     `),
   });
 
-  if (!data?.profiles) {
-    return { results: [] };
+  if (!data?.profiles?.results) {
+    return [];
   }
 
-  return data.profiles;
+  return data.profiles.results;
 }
 
 export async function getProfilesByType(profileType: string) {
@@ -173,7 +173,7 @@ export async function getProfilesByUnit(unitName: string) {
               title
               path
               profileType {
-                name
+                ...ProfileType
               }
               profilePicture {
                 ...Image
@@ -193,4 +193,48 @@ export async function getProfilesByUnit(unitName: string) {
   }
 
   return data.profiles;
+}
+
+export async function getProfileTypes() {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetProfileTypes {
+        taxonomyTerms {
+          results {
+            ... on TermProfileType {
+              ...ProfileType
+            }
+          }
+        }
+      }
+    `),
+  });
+  
+  if (!data?.profileTypes) {
+    return [];
+  }
+  
+  return data.profileTypes;
+}
+
+export async function getUnits() {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetUnits {
+        taxonomyTerms {
+          results {
+            ... on TermUnit {
+              ...Unit
+            }
+          }
+        }
+      }
+    `),
+  });
+
+  if (!data?.units) {
+    return [];
+  }
+
+  return data.units;
 }
