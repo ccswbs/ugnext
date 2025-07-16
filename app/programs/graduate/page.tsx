@@ -1,5 +1,6 @@
 import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@uoguelph/react-components/layout";
+import { getAIOProgramListData, AIO } from "@/components/client/aio";
 import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -16,9 +17,11 @@ export default async function ProgramsGraduate() {
   const programs = await getGraduatePrograms();
   const types = await getGraduateProgramTypes();
   const degreeTypes = await getGraduateDegreeTypes();
+  const jsonLD = getAIOProgramListData(programs);
 
   return (
     <Layout>
+      <AIO jsonLD={jsonLD}></AIO>
       <Header></Header>
 
       <LayoutContent container={false}>

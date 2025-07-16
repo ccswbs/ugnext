@@ -5,6 +5,7 @@ import {
 } from "@/data/yaml/programs/continuing-education";
 import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@uoguelph/react-components/layout";
+import { getAIOProgramListData, AIO } from "@/components/client/aio";
 import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
@@ -19,9 +20,11 @@ export const metadata: Metadata = {
 export default async function ProgramsContinuingEducation() {
   const programs = await getContinuingEducationPrograms();
   const types = await getContinuingEducationProgramTypes();
+  const jsonLD = getAIOProgramListData(programs);
 
   return (
     <Layout>
+      <AIO jsonLD={jsonLD}></AIO>
       <Header></Header>
 
       <LayoutContent container={false}>
