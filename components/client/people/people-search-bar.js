@@ -7,7 +7,11 @@ import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/rea
 import { Field, Label } from "@headlessui/react";
 
 export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }) => {
-  const [input, setInput] = useState("");
+  
+  const [selectedTypes, setSelectedTypes] = useState(types ?? []);
+  const [selectedUnits, setSelectedUnits] = useState(units ?? []);
+  
+  {/* const [input, setInput] = useState("");
   const results = useSearch(profiles, input, nameAndTagSearch);
   const [selectedTypes, setSelectedTypes] = useState(types ?? []);
   const [selectedUnits, setSelectedUnits] = useState(units ?? []);
@@ -32,7 +36,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
 
   useEffect(() => {
     onChange?.(filtered);
-  }, [filtered, onChange]);
+  }, [filtered, onChange]); */}
 
   return (
     <div className="w-full bg-yellow -mt-1">
@@ -40,16 +44,16 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
         <div className="flex-1">
           <TextInput
             onInput={(e) => setInput(e.target.value)}
-            placeholder="ex. profileming, engineering, psychology, etc."
+            placeholder="Enter Name"
           >
-            <span className="text-l font-bold mb-1">What would you like to study?</span>
+            <span className="text-l font-bold mb-1">Search by First or Last Name</span>
           </TextInput>
         </div>
 
         {types?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
             <Field>
-              <Label className="text-body-copy-bold font-bold">Filter by type</Label>
+              <Label className="text-body-copy-bold font-bold">Filter by role</Label>
               <Select
                 multiple
                 onChange={(options) => {
@@ -76,7 +80,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
         {units?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
             <Field>
-              <Label className="text-body-copy-bold font-bold">Filter by unit</Label>
+              <Label className="text-body-copy-bold font-bold">Filter by college, department, or unit</Label>
               <Select
                 multiple
                 onChange={(options) => {

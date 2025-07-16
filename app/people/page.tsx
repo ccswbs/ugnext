@@ -21,6 +21,8 @@ export default async function People() {
   const units = await getUnits();
   
   const profileCount = getProfileCount();
+  console.log(types);
+  console.log(units);
 
   return (
     <Layout>

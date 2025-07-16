@@ -119,7 +119,7 @@ export async function getProfiles() {
     `),
   });
 
-  if (!data?.profiles?.results) {
+  if (!data?.profiles.results) {
     return [];
   }
 
@@ -199,10 +199,10 @@ export async function getProfileTypes() {
   const { data } = await query({
     query: gql(/* GraphQL */ `
       query GetProfileTypes {
-        taxonomyTerms {
+        taxonomyTerms(filter: {vid: "profile_type"}) {
           results {
             ... on TermProfileType {
-              ...ProfileType
+              name
             }
           }
         }
@@ -210,21 +210,21 @@ export async function getProfileTypes() {
     `),
   });
   
-  if (!data?.profileTypes) {
+  if (!data?.taxonomyTerms.results) {
     return [];
   }
   
-  return data.profileTypes;
+  return data.taxonomyTerms.results;
 }
 
 export async function getUnits() {
   const { data } = await query({
     query: gql(/* GraphQL */ `
       query GetUnits {
-        taxonomyTerms {
+        taxonomyTerms(filter: {vid: "units"}) {
           results {
             ... on TermUnit {
-              ...Unit
+              name
             }
           }
         }
@@ -232,9 +232,9 @@ export async function getUnits() {
     `),
   });
 
-  if (!data?.units) {
+  if (!data?.taxonomyTerms.results) {
     return [];
   }
 
-  return data.units;
+  return data.taxonomyTerms.results;
 }

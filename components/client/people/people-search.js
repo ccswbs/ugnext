@@ -23,8 +23,9 @@ export const PeopleSearch = ({ profiles, types, units }) => {
       />
 
       <Container>
-        <ProfileGrid profiles={filteredPeople} />
-
+      {/*<ProfileGrid profiles={filteredPeople} />*/}
+        <ProfileGrid profiles={profiles} />
+        
         {/* No results were found */}
         {filteredPeople?.length === 0 && (
           <div className="flex w-full items-center justify-center">
