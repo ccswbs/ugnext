@@ -1,7 +1,6 @@
 import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@uoguelph/react-components/layout";
-import { AIO } from "@/components/client/aio";
-import { EducationalOccupationalProgram, ItemList, ListItem } from 'schema-dts'
+import { getAIOProgramListData, AIO } from "@/components/client/aio";
 import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -19,6 +18,7 @@ export const metadata: Metadata = {
   title: "Undergraduate Programs | University of Guelph",
 };
 
+
 export default async function ProgramsUndergraduate() {
   const degreeTypes = await getUndergraduateDegreeTypes();
   const degrees = (await getUndergraduateDegrees()).map((degree: { type: any }) => ({
@@ -34,23 +34,7 @@ export default async function ProgramsUndergraduate() {
     })
     .sort((a, b) => a.name.localeCompare(b.name));
   const combinedTypes = [...programTypes, ...degreeTypes];
-
-  const jsonLDitemListElements = combined.map((program, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@type": "EducationalOccupationalProgram",
-      "@id": program.url,
-      name: program.name,
-      url: program.url,
-      educationalCredentialAwarded: program.degree?.name,
-    } as EducationalOccupationalProgram,
-  } as ListItem));
-
-  const jsonLD = {
-    "@type": "ItemList",
-    "itemListElement": jsonLDitemListElements,
-  } as ItemList;
+  const jsonLD = getAIOProgramListData(combined);
 
   return (
     <Layout>
