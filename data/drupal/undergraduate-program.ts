@@ -1,6 +1,7 @@
 import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { UndergraduateProgramsQuery } from "@/lib/graphql/types";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export async function getUndergraduateProgramTypes() {
   const { data } = await query({
@@ -26,7 +27,6 @@ export const UNDERGRADUATE_PROGRAM = gql(/* gql */ `
     acronym
     url {
       url
-      title
     }
     degree {
       id
@@ -41,7 +41,49 @@ export const UNDERGRADUATE_PROGRAM = gql(/* gql */ `
   }
 `);
 
-export async function getUndergraduateProgram() {
+async function getDraftUndergraduatePrograms() {
+  const programsQuery = gql(/* gql */ `
+    query DraftUndergraduatePrograms($pageSize: Int = 100, $page: Int = 0) {
+      latestContentRevisions(filter: { type: "undergraduate_program" }, pageSize: $pageSize, page: $page) {
+        pageInfo {
+          total
+        }
+        results {
+          __typename
+          ...UndergraduateProgram
+        }
+      }
+    }
+  `);
+
+  const degrees: UndergraduateProgramsQuery["nodeUndergraduatePrograms"]["nodes"] = [];
+  const pageSize = 100;
+  let page = 0;
+  let total = 1;
+
+  while (page < total) {
+    const { data } = await query({
+      query: programsQuery,
+      variables: {
+        pageSize,
+        page,
+      },
+    });
+
+    for (const program of data?.latestContentRevisions?.results ?? []) {
+      if (program.__typename === "NodeUndergraduateProgram") {
+        degrees.push(program);
+      }
+    }
+
+    total = Math.ceil((data?.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
+    page++;
+  }
+
+  return degrees;
+}
+
+async function getPublishedUndergraduatePrograms() {
   const programsQuery = gql(/* gql */ `
     query UndergraduatePrograms($after: Cursor = "") {
       nodeUndergraduatePrograms(after: $after, first: 100) {
@@ -58,7 +100,7 @@ export async function getUndergraduateProgram() {
 
   let cursor = "";
   let hasNextPage = true;
-  const programs: UndergraduateProgramsQuery['nodeUndergraduatePrograms']['nodes'] = [];
+  const programs: UndergraduateProgramsQuery["nodeUndergraduatePrograms"]["nodes"] = [];
 
   while (hasNextPage) {
     const { data } = await query({
@@ -73,5 +115,13 @@ export async function getUndergraduateProgram() {
     hasNextPage = data.nodeUndergraduatePrograms.pageInfo.hasNextPage;
   }
 
-  return programs;
+  return programs.filter((program) => program.status);
+}
+
+export async function getUndergraduatePrograms() {
+  if (await showUnpublishedContent()) {
+    return await getDraftUndergraduatePrograms();
+  }
+
+  return await getPublishedUndergraduatePrograms();
 }
