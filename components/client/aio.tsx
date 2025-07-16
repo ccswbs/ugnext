@@ -63,7 +63,7 @@ export function getAIOUniversityData(): CollegeOrUniversity {
     addressLocality: "Guelph",
     addressRegion: "Ontario",
     postalCode: "N1G 2W1",
-    addressCountry: "Canada",
+    addressCountry: "CA",
   };
   const contactPoint = {
     "@type": "ContactPoint",
