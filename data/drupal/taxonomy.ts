@@ -52,3 +52,39 @@ export const GOAL_FRAGMENT = gql(/* gql */ `
     action
   }
 `);
+
+export async function getProfileTypes() {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      ${PROFILE_TYPE_FRAGMENT}
+      query GetProfileTypes {
+        profileTypes {
+          ...ProfileType
+        }
+      }
+    `),
+  });
+  if (!data.profileTypes) {
+    return [];
+  }
+  return data.profileTypes;
+}
+
+export async function getUnits() {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      ${UNIT_FRAGMENT}
+      query GetUnits {
+        units {
+          ...Unit
+        }
+      }
+    `),
+  });
+
+  if (!data?.units) {
+    return [];
+  }
+
+  return data.units;
+}

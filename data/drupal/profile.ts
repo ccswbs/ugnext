@@ -15,8 +15,12 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     body {
       processed
     }
+    profileJobTitle
     profileType {
       ...ProfileType
+    }
+    profileUnit {
+      ...Unit
     }
     profileSections {
       ... on ParagraphProfilePart {
@@ -88,6 +92,40 @@ export async function getProfileCount() {
   return data.profiles.pageInfo.total;
 }
 
+export async function getProfiles() {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetProfiles {
+        profiles {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileJobTitle
+              profileType {
+                ...ProfileType
+              }
+              profileUnit {
+                ...Unit
+              }
+              profilePicture {
+                ...Image
+              }
+            }
+          }
+        }
+      }
+    `),
+  });
+
+  if (!data?.profiles) {
+    return { results: [] };
+  }
+
+  return data.profiles;
+}
+
 export async function getProfilesByType(profileType: string) {
   const { data } = await query({
     query: gql(/* GraphQL */ `
@@ -98,6 +136,7 @@ export async function getProfilesByType(profileType: string) {
               id
               title
               path
+              profileJobTitle
               profileType {
                 ...ProfileType
               }
@@ -116,9 +155,9 @@ export async function getProfilesByType(profileType: string) {
 
   if (!data?.profiles) {
     return { results: [] };
-  }
+  }  
+  return data.profiles.results ?? [];
 
-  return data.profiles;
 }
 
 /* Enhance this with an additional function to check the initial unitName for a parent
