@@ -1,6 +1,6 @@
 // app/api/profiles/route.ts
 import { NextResponse } from 'next/server';
-import { getProfilesByUnit, getProfilesByType } from '@/data/drupal/profile';
+import { getProfiles, getProfilesByUnit, getProfilesByType } from '@/data/drupal/profile';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -13,8 +13,7 @@ export async function GET(request: Request) {
   } else if (profileType) {
     data = await getProfilesByType(profileType);
   } else {
-    // Optionally, return all profiles or an empty array
-    data = { results: [] };
+    data = await getProfiles();
   }
 
   const results = data?.results || [];
