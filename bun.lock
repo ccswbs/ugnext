@@ -5,6 +5,8 @@
       "name": "ugnext",
       "dependencies": {
         "@awesome.me/kit-7993323d0c": "^1.0.10",
+        "@azure/msal-browser": "^4.15.0",
+        "@azure/msal-react": "^3.0.15",
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@netlify/plugin-nextjs": "^5.11.4",
@@ -87,6 +89,12 @@
     "@ardatan/relay-compiler": ["@ardatan/relay-compiler@12.0.3", "", { "dependencies": { "@babel/generator": "^7.26.10", "@babel/parser": "^7.26.10", "@babel/runtime": "^7.26.10", "chalk": "^4.0.0", "fb-watchman": "^2.0.0", "immutable": "~3.7.6", "invariant": "^2.2.4", "nullthrows": "^1.1.1", "relay-runtime": "12.0.0", "signedsource": "^1.0.0" }, "peerDependencies": { "graphql": "*" }, "bin": { "relay-compiler": "bin/relay-compiler" } }, "sha512-mBDFOGvAoVlWaWqs3hm1AciGHSQE1rqFc/liZTyYz/Oek9yZdT5H26pH2zAFuEiTiBVPPyMuqf5VjOFPI2DGsQ=="],
 
     "@awesome.me/kit-7993323d0c": ["@awesome.me/kit-7993323d0c@1.0.11", "https://npm.fontawesome.com/@awesome.me/kit-7993323d0c/-/kit-7993323d0c-1.0.11.tgz", { "dependencies": { "@fortawesome/fontawesome-common-types": "^6.7.2" } }, "sha512-QtUQ7pwnueCEc/E/eLjuiuxsohVqTMJGArXaxReuVNMfoUkrPpVKtVi0N5M0ZwK1r2xjd6hECUEc7p1A3rLSmg=="],
+
+    "@azure/msal-browser": ["@azure/msal-browser@4.15.0", "", { "dependencies": { "@azure/msal-common": "15.8.1" } }, "sha512-+AIGTvpVz+FIx5CsM1y+nW0r/qOb/ChRdM8/Cbp+jKWC0Wdw4ldnwPdYOBi5NaALUQnYITirD9XMZX7LdklEzQ=="],
+
+    "@azure/msal-common": ["@azure/msal-common@15.8.1", "", {}, "sha512-ltIlFK5VxeJ5BurE25OsJIfcx1Q3H/IZg2LjV9d4vmH+5t4c1UCyRQ/HgKLgXuCZShs7qfc/TC95GYZfsUsJUQ=="],
+
+    "@azure/msal-react": ["@azure/msal-react@3.0.15", "", { "peerDependencies": { "@azure/msal-browser": "^4.15.0", "react": "^16.8.0 || ^17 || ^18 || ^19" } }, "sha512-nVOWlPrhemKya7GZyEONISQk4MDV2vOoV3638dqFmIPd+3WIi98ZS1HSpQsOw1YL9nBEImhwqrXKnC/MFWrKoA=="],
 
     "@babel/code-frame": ["@babel/code-frame@7.27.1", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.27.1", "js-tokens": "^4.0.0", "picocolors": "^1.1.1" } }, "sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg=="],
 
