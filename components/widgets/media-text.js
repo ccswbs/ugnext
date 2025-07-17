@@ -25,7 +25,7 @@ const getMedia = (data) => {
         src: data?.media?.image?.url,
         width: data?.media?.image?.width,
         height: data?.media?.image?.height,
-        alt: data?.media?.image?.alt,
+        alt: data?.media?.image?.mediaIsDecorative ? "" : data?.media?.image?.alt
       };
     case "MediaRemoteVideo":
       return {
