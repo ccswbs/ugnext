@@ -36,7 +36,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
   }, [filtered, onChange]);
 
   return (
-    <div className="bg-yellow w-full -mt-1">
+    <div className="border-top-yellow w-full -mt-1">
       <Container className={twMerge("flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end", className)}>
         <div className="flex-1">
           <TextInput
