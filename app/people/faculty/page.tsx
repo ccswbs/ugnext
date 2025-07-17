@@ -20,13 +20,15 @@ export default async function People() {
       <Header></Header>
 
       <LayoutContent container={false}>
+      
         <Container>
           <Typography type="h1" as="h1" className="block!">
             Faculty Directory
           </Typography>
-
-          <FacultyList profiles={profiles} />
         </Container>
+        
+        <FacultyList profiles={profiles} />
+
       </LayoutContent>
 
       <Footer></Footer>
