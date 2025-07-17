@@ -135,6 +135,7 @@ fragment MediaText on ParagraphMediaText {
   __typename
   heading: title
   mediaImageSize
+  mediaIsDecorative
   buttonSection {
     ...ButtonSection
   }
