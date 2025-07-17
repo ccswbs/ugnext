@@ -1,8 +1,18 @@
+"use client";
+
 //import type { Image } from './media';
 import { Typography } from "@uoguelph/react-components/typography";
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import { UnstyledLink } from "@/components/client/unstyled-link";
 import { Fragment } from "react";
+
+type Profile = {
+  id: string;
+  title: string;
+  path: string;
+  profileJobTitle?: string;
+  profilePicture?: Image;
+};
 
 export const ProfileGrid = ({ profiles }) => {
   return (

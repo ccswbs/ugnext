@@ -143,10 +143,19 @@ export async function getProfilesByType(profileType: string) {
               path
               profileJobTitle
               profileType {
-                ...ProfileType
+                id
+                name
+              }
+              profileUnit {
+                id
+                name
               }
               profilePicture {
                 ...Image
+              }
+              tags {
+                ...Tag
+                ...Unit
               }
             }
           }
@@ -158,11 +167,11 @@ export async function getProfilesByType(profileType: string) {
     },
   });
 
-  if (!data?.profiles) {
-    return { results: [] };
-  }  
-  return data.profiles.results ?? [];
+  if (!data?.profiles.results) {
+    return [];
+  }
 
+  return data.profiles.results;
 }
 
 /* Enhance this with an additional function to check the initial unitName for a parent

@@ -1,3 +1,6 @@
+"use client";
+
+import { Checkbox } from "@uoguelph/react-components/checkbox";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Container } from "@uoguelph/react-components/container";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
@@ -6,21 +9,23 @@ import { twMerge } from "tailwind-merge";
 import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
 
-export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }) => {
+export const FacultySearchBar = ({ profiles, units, onChange, className }) => {
   
   const [input, setInput] = useState("");
   const results = useSearch(profiles, input, nameAndTagSearch);
-  const [selectedTypes, setSelectedTypes] = useState(types?.map(type => type.id) ?? []);
+  //const [selectedTypes, setSelectedTypes] = useState(types?.map(type => type.id) ?? []);
   const [selectedUnits, setSelectedUnits] = useState(units?.map(unit => unit.id) ?? []);
 
   const filtered = useMemo(() => {
     let filtered = results;
 
+    {/* Change this to a research topic search
     if (Array.isArray(types) && types.length > 0) {
       filtered = filtered.filter((profile) =>
         profile.types?.some((type) => selectedTypes.includes(type.id))
       );
     }
+    */}
 
     if (Array.isArray(units) && units.length > 0) {
       filtered = filtered.filter((profile) =>
@@ -29,7 +34,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
     }
 
     return filtered;
-  }, [results, selectedTypes, selectedUnits, types, units]);
+  }, [results, selectedUnits, units]);
 
   useEffect(() => {
     onChange?.(filtered);
@@ -47,6 +52,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
           </TextInput>
         </div>
 
+        {/* Change to research topic search
         {types?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
             <Field>
@@ -72,7 +78,17 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
               </Select>
             </Field>
           </div>
-        )}
+        )} 
+        */}
+        
+        <div className="sm:w-1/3 md:w-1/4">
+          <TextInput
+            onInput={(e) => setInput(e.target.value)}
+            placeholder="Placeholder - to be implemented"
+          >
+            <span className="text-l font-bold mb-1">Search by Research Topic</span>
+          </TextInput>
+          </div>
 
         {units?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
@@ -100,6 +116,11 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
             </Field>
           </div>
         )}
+        
+        <div className="flex flex-row">
+          <span className="pe-3 text-body-copy-bold font-bold">Accepting new grad students</span>
+          <Checkbox />
+        </div>
       </Container>
     </div>
   );
