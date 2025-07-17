@@ -5,7 +5,6 @@ import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { getProfiles, getProfileCount, getProfileTypes, getUnits } from "@/data/drupal/profile";
-//import ProfilesList from "@/components/client/profiles";
 import { PeopleSearch } from "@/components/client/people/people-search";
 import { Metadata } from "next";
 
