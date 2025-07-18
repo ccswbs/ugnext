@@ -1,6 +1,9 @@
 import "dotenv/config";
 import { CodegenConfig } from "@graphql-codegen/cli";
 
+console.log("DRUPAL_BASE_URL:", process.env.NEXT_PUBLIC_DRUPAL_BASE_URL);
+console.log("DRUPAL_API_KEY present:", !!process.env.DRUPAL_API_KEY);
+
 const DRUPAL_BASE_URL = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev";
 
 const schema: {
