@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "private": true,
   "scripts": {
-    "prebuild": "bun run codegen:compile",
+    "prebuild": "node scripts/codegen-with-fallback.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
