@@ -90,22 +90,25 @@ export function getAIOUniversityData(): CollegeOrUniversity {
   return collegeOrUniversity;
 }
 
-export function AIO({ jsonLD }: any = null) {
-  let jsonLdContent = jsonLD;
+export function AIO({ schema }: any = null) {
+  let schemaContent = schema;
 
-  if (jsonLD === null || jsonLD === undefined) {
+  if (schema === null || schema === undefined) {
     const collegeOrUniversity = getAIOUniversityData();
     const website = getAIOMainWebsiteData();
 
-    jsonLdContent = [collegeOrUniversity, website];
+    schemaContent = {collegeOrUniversity, website};
   }
 
-  const jsonLdOutput = {
-    "@context": "https://schema.org",
-    "@graph": jsonLdContent,
+  const schemaOutput = {
+    "@context": 'https://schema.org',
+    "@graph": schemaContent,
   } as Graph;
 
-  const serializedData = serialize(jsonLdOutput, { isJSON: true });
+
+  // Serialize escapes forward slashes, which causes issues with JSON-LD parsers.
+  // This replaces escaped forward slashes with unescaped ones.
+  const serializedData = serialize(schemaOutput, { isJSON: true }).replace(/\\u002F/g, '/');
 
   return (
     <Script
