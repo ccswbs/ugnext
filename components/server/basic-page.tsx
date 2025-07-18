@@ -12,7 +12,6 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
-import { MetaTagScript } from "@/lib/graphql/graphql";
 
 export type BasicPageProps = {
   id: string;
@@ -72,8 +71,22 @@ function getSchemaFromContent(content: PageContent) {
   );
 
   const schema = metaTagScript && "content" in metaTagScript ? metaTagScript.content : undefined;
+  let parsedSchema: any = undefined;
 
-  return schema;
+  if (schema && typeof schema === "string") {
+    try {
+      parsedSchema = JSON.parse(schema);
+    } catch (e) {
+      console.error("Failed to parse schema JSON:", e);
+    }
+  }
+
+  // Only return schemas that have a valid @type property
+  const graphWithType = Array.isArray(parsedSchema?.["@graph"])
+  ? parsedSchema["@graph"].filter((el: any) => el && "@type" in el)
+  : [];
+
+  return graphWithType;
 }
 
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
