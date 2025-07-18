@@ -90,22 +90,22 @@ export function getAIOUniversityData(): CollegeOrUniversity {
   return collegeOrUniversity;
 }
 
-export function AIO({ jsonLD }: any = null) {
-  let jsonLdContent = jsonLD;
+export function AIO({ schema }: any = null) {
+  let schemaContent = schema;
 
-  if (jsonLD === null || jsonLD === undefined) {
+  if (schema === null || schema === undefined) {
     const collegeOrUniversity = getAIOUniversityData();
     const website = getAIOMainWebsiteData();
 
-    jsonLdContent = [collegeOrUniversity, website];
+    schemaContent = [collegeOrUniversity, website];
   }
 
-  const jsonLdOutput = {
+  const schemaOutput = {
     "@context": "https://schema.org",
-    "@graph": jsonLdContent,
+    "@graph": schemaContent,
   } as Graph;
 
-  const serializedData = serialize(jsonLdOutput, { isJSON: true });
+  const serializedData = serialize(schemaOutput, { isJSON: true });
 
   return (
     <Script

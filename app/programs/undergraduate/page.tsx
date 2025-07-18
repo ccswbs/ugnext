@@ -34,11 +34,11 @@ export default async function ProgramsUndergraduate() {
     })
     .sort((a, b) => a.name.localeCompare(b.name));
   const combinedTypes = [...programTypes, ...degreeTypes];
-  const jsonLD = getAIOProgramListData(combined);
+  const schema = getAIOProgramListData(combined);
 
   return (
     <Layout>
-      <AIO jsonLD={jsonLD}></AIO>
+      <AIO schema={schema}></AIO>
       <Header></Header>
 
       <LayoutContent container={false}>

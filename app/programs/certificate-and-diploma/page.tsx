@@ -20,11 +20,11 @@ export const metadata: Metadata = {
 export default async function ProgramsCertificateAndDiploma() {
   const programs = await getCertificateAndDiplomaPrograms();
   const types = await getCertificateAndDiplomaProgramTypes();
-  const jsonLD = getAIOProgramListData(programs);
+  const schema = getAIOProgramListData(programs);
 
   return (
     <Layout>
-      <AIO jsonLD={jsonLD}></AIO>
+      <AIO schema={schema}></AIO>
       <Header></Header>
 
       <LayoutContent container={false}>

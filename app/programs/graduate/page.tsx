@@ -17,11 +17,11 @@ export default async function ProgramsGraduate() {
   const programs = await getGraduatePrograms();
   const types = await getGraduateProgramTypes();
   const degreeTypes = await getGraduateDegreeTypes();
-  const jsonLD = getAIOProgramListData(programs);
+  const schema = getAIOProgramListData(programs);
 
   return (
     <Layout>
-      <AIO jsonLD={jsonLD}></AIO>
+      <AIO schema={schema}></AIO>
       <Header></Header>
 
       <LayoutContent container={false}>
