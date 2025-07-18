@@ -141,9 +141,9 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
           </div>
         )}
         
-        <div className="flex flex-row">
-          <span className="pe-3 text-body-copy-bold font-bold">Accepting new grad students</span>
+        <div className="flex flex-row items-center self-start mt-9">
           <Checkbox />
+          <span className="ps-3 text-body-copy-bold font-bold"> Accepting new grad students</span>          
         </div>
       </Container>
     </div>

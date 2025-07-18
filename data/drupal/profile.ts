@@ -186,6 +186,8 @@ export async function getProfilesByUnit(unitName: string) {
               id
               title
               path
+              profileFirstName
+              profileLastName        
               profileType {
                 ...ProfileType
               }
@@ -252,5 +254,7 @@ export async function getUnits() {
     return [];
   }
 
-  return data.taxonomyTerms.results;
+  return data.taxonomyTerms.results
+    .filter((term): term is { id: string; name: string } => 'name' in term)
+    .sort((a, b) => a.name.localeCompare(b.name));
 }

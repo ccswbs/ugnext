@@ -20,12 +20,19 @@ type Profile = {
   path: string;
   profileJobTitle?: string;
   profilePicture?: Image;
+  profileFirstName?: string;
+  profileLastName?: string;
 };
 
 export const ProfileGrid = ({ profiles }: { profiles: Profile[] }) => {
+  // Sort profiles by title (full name) alphabetically
+  const sortedProfiles = [...profiles].sort((a, b) => {
+    return a.title.localeCompare(b.title);
+  });
+
   return (
     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-      {profiles.map(profile => (
+      {sortedProfiles.map(profile => (
         <Card
           id={`profile-card-${profile.id}`}
           key={profile.id}
