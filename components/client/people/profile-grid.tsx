@@ -14,7 +14,7 @@ type Profile = {
   profilePicture?: Image;
 };
 
-export const ProfileGrid = ({ profiles }) => {
+export const ProfileGrid = ({ profiles }: { profiles: Profile[] }) => {
   return (
     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
       {profiles.map(profile => (

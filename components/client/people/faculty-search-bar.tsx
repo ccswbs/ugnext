@@ -9,7 +9,28 @@ import { twMerge } from "tailwind-merge";
 import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
 
-export const FacultySearchBar = ({ profiles, units, onChange, className }) => {
+type Profile = {
+  id: string;
+  name: string;
+  types?: { id: string; name: string }[];
+  units?: { id: string; name: string }[];
+  // Add other properties as needed
+};
+
+type Unit = {
+  id: string;
+  name: string;
+  // Add other properties as needed
+};
+
+type FacultySearchBarProps = {
+  profiles: Profile[];
+  units: Unit[];
+  onChange?: (filtered: Profile[]) => void;
+  className?: string;
+};
+
+export const FacultySearchBar = ({ profiles, units, onChange, className }: FacultySearchBarProps) => {
   
   const [input, setInput] = useState("");
   const results = useSearch(profiles, input, nameAndTagSearch);

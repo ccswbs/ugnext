@@ -6,10 +6,15 @@ import { ProfileGrid } from "./profile-grid";
 import { useState } from "react";
 import { Container } from "@uoguelph/react-components/container";
 
-export const FacultySearch = ({ profiles, units }) => {
+interface FacultySearchProps {
+  profiles: any[]; // Replace 'any[]' with the actual type if known
+  units: any[];    // Replace 'any[]' with the actual type if known
+}
+
+export const FacultySearch = ({ profiles, units }: FacultySearchProps) => {
   const [filteredPeople, setFilteredPeople] = useState(profiles);
 
-  const handleFilterChange = (filtered) => {
+  const handleFilterChange = (filtered: typeof profiles) => {
     setFilteredPeople(filtered);
   };
 
