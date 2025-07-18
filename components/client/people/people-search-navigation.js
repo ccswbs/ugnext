@@ -9,8 +9,8 @@ export const PeopleSearchNavigation = () => {
     { href: "/people", label: "All" },
     { href: "/people/faculty", label: "Faculty" },
     { href: "/people/staff", label: "Staff" },
-    { href: "/people/graduate", label: "Graduate" },
-    { href: "/people/postgraduate", label: "Postgraduate" },
+    { href: "/people/graduate", label: "Graduate Students" },
+    { href: "/people/postgraduate", label: "Postdoctoral Scholars" },
   ];
 
   return (
