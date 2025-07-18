@@ -49,8 +49,8 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
     */}
 
     if (Array.isArray(units) && units.length > 0) {
-      filtered = filtered.filter((profile) =>
-        profile.units?.some((unit) => selectedUnits.includes(unit.id))
+      filtered = filtered.filter((profile: Profile) =>
+        profile.units?.some((unit: Unit) => selectedUnits.includes(unit.id))
       );
     }
 
@@ -66,22 +66,23 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
       <Container className={twMerge("flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end", className)}>
         <div className="flex-1">
           <TextInput
-            onInput={(e) => setInput(e.target.value)}
+            onInput={(e) => setInput((e.target as HTMLInputElement).value)}
             placeholder="Enter Name"
           >
             <span className="text-l font-bold mb-1">Search by First or Last Name</span>
           </TextInput>
         </div>
 
-        {/* Change to research topic search
+        {/* TODO: Change to research topic search
         {types?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
             <Field>
               <Label className="text-body-copy-bold font-bold">Filter by role</Label>
               <Select
                 multiple
-                onChange={(options) => {
-                  setSelectedTypes(options.length > 0 ? options.map(option => option.id) : types?.map(type => type.id) ?? []);
+                onChange={(value) => {
+                  const selectedIds = Array.isArray(value) ? value : [];
+                  setSelectedTypes(selectedIds.length > 0 ? selectedIds : types?.map(type => type.id) ?? []);
                 }}
               >
                 <SelectButton>
@@ -91,7 +92,7 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
                 </SelectButton>
                 <SelectOptions>
                   {types.map((type) => (
-                    <SelectOption value={type} key={type.id}>
+                    <SelectOption value={type.id} key={type.id}>
                       {type.name}
                     </SelectOption>
                   ))}
@@ -104,7 +105,7 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
         
         <div className="sm:w-1/3 md:w-1/4">
           <TextInput
-            onInput={(e) => setInput(e.target.value)}
+            onInput={(e) => setInput((e.target as HTMLInputElement).value)}
             placeholder="Placeholder - to be implemented"
           >
             <span className="text-l font-bold mb-1">Search by Research Topic</span>
@@ -117,8 +118,10 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
               <Label className="text-body-copy-bold font-bold">Filter by college, department, or unit</Label>
               <Select
                 multiple
-                onChange={(options) => {
-                  setSelectedUnits(options.length > 0 ? options.map(option => option.id) : units?.map(unit => unit.id) ?? []);
+                onChange={(value) => {
+                  // Handle the case where value might be a string, array, or other type
+                  const selectedIds = Array.isArray(value) ? value : [];
+                  setSelectedUnits(selectedIds.length > 0 ? selectedIds : units?.map(unit => unit.id) ?? []);
                 }}
               >
                 <SelectButton>
@@ -128,7 +131,7 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
                 </SelectButton>
                 <SelectOptions>
                   {units.map((unit) => (
-                    <SelectOption value={unit} key={unit.id}>
+                    <SelectOption value={unit.id} key={unit.id}>
                       {unit.name}
                     </SelectOption>
                   ))}

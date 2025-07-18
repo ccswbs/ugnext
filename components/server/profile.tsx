@@ -6,7 +6,7 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Link } from "@uoguelph/react-components/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/server/breadcrumbs";
-//import Image from "next/image";
+import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 //import { WidgetSelector } from "@/components/client/widgets/widget-selector";
@@ -48,7 +48,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
           {pre && pre}
           <div className="flex flex-col md:flex-row items-start gap-6 mb-8">
             {content.profilePicture && (
-              <img
+              <Image
                 alt={content.profilePicture.image.alt ?? ""}
                 height={content.profilePicture.image.height}
                 width={content.profilePicture.image.width}
@@ -57,7 +57,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               />
             )}
             <div className="flex-1">
-              <HtmlParser key="profile-body" html={content.body.processed} />
+              <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
               {content.uniwebId && (
                 <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
                   View UniWeb profile
@@ -70,7 +70,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               <Typography type="h2" as="h2">
                 {section.profilePartLabel}
               </Typography>
-              <HtmlParser key={section.id} html={section.profilePartText.processed} />
+              <HtmlParser key={section.id} html={section.profilePartText?.processed ?? ""} instructions={undefined} />
             </div>
           ))}
 

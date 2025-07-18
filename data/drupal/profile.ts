@@ -124,7 +124,7 @@ export async function getProfiles() {
     `),
   });
 
-  if (!data?.profiles.results) {
+  if (!data?.profiles?.results) {
     return [];
   }
 
@@ -167,7 +167,7 @@ export async function getProfilesByType(profileType: string) {
     },
   });
 
-  if (!data?.profiles.results) {
+  if (!data?.profiles?.results) {
     return [];
   }
 

@@ -1,10 +1,18 @@
 "use client";
 
-//import type { Image } from './media';
 import { Typography } from "@uoguelph/react-components/typography";
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import { UnstyledLink } from "@/components/client/unstyled-link";
 import { Fragment } from "react";
+
+type Image = {
+  image: {
+    url: string;
+    alt: string | null;
+    width: number;
+    height: number;
+  };
+};
 
 type Profile = {
   id: string;
@@ -30,8 +38,8 @@ export const ProfileGrid = ({ profiles }: { profiles: Profile[] }) => {
             <CardImage
               src={profile.profilePicture.image.url}
               alt={profile.profilePicture.image.alt ?? ""}
-              width={profile.profilePicture.image.width}
-              height={profile.profilePicture.image.height}
+              width={profile.profilePicture.image.width.toString()}
+              height={profile.profilePicture.image.height.toString()}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
               className="aspect-square object-cover object-top w-full"
             />
