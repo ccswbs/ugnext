@@ -105,7 +105,7 @@ export function AIO({ schema }: any = null) {
     "@graph": schemaContent,
   } as Graph;
 
-  const serializedData = serialize(schemaOutput, { isJSON: true });
+  const serializedData = serialize(schemaOutput, { isJSON: true }).replace(/\\u002F/g, '/');
 
   return (
     <Script
