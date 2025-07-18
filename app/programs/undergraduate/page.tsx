@@ -1,5 +1,6 @@
 import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@uoguelph/react-components/layout";
+import { getAIOProgramListData, AIO } from "@/components/client/aio";
 import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   title: "Undergraduate Programs | University of Guelph",
 };
 
+
 export default async function ProgramsUndergraduate() {
   const degreeTypes = await getUndergraduateDegreeTypes();
   const degrees = (await getUndergraduateDegrees()).map((degree: { type: any }) => ({
@@ -32,9 +34,11 @@ export default async function ProgramsUndergraduate() {
     })
     .sort((a, b) => a.name.localeCompare(b.name));
   const combinedTypes = [...programTypes, ...degreeTypes];
+  const schema = getAIOProgramListData(combined);
 
   return (
     <Layout>
+      <AIO schema={schema}></AIO>
       <Header></Header>
 
       <LayoutContent container={false}>
