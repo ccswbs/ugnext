@@ -1,6 +1,7 @@
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Header } from "@/components/server/header";
+import { AIO } from "@/components/server/aio";
 import { getPageContent } from "@/data/drupal/basic-page";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/server/breadcrumbs";
@@ -11,6 +12,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
+import { MetaTagScript } from "@/lib/graphql/graphql";
 
 export type BasicPageProps = {
   id: string;
@@ -61,6 +63,19 @@ function PageHero({ content }: { content: NonNullable<PageContent> }) {
   );
 }
 
+function getSchemaFromContent(content: PageContent) {
+  const metaTagScript = content?.metatag?.find(
+    (tag) =>
+      tag.__typename === "MetaTagScript" &&
+      "tag" in tag &&
+      tag.tag === "script"
+  );
+
+  const schema = metaTagScript && "content" in metaTagScript ? metaTagScript.content : undefined;
+
+  return schema;
+}
+
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
   const content = await getPageContent(id);
 
@@ -76,6 +91,8 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
     notFound();
   }
+
+  const schema = content && getSchemaFromContent(content);
 
   const { tags, units } = (content.tags ?? []).reduce(
     (acc, tag) => {
@@ -97,6 +114,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
   return (
     <Layout>
       <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
+      <AIO schema={schema}></AIO>
 
       <LayoutContent container={false}>
         <PageHero content={content} />

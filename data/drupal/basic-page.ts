@@ -35,6 +35,12 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...Tag
       ...Unit
     }
+    metatag {
+      ... on MetaTagScript {
+        content
+        tag
+      }
+    }
   }
 `);
 
