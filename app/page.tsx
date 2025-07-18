@@ -2,7 +2,7 @@ import React from "react";
 import { getSpotlights } from "@/data/drupal/spotlight";
 import { twJoin } from "tailwind-merge";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
-import { AIO } from "@/components/client/aio";
+import { AIO } from "@/components/server/aio";
 import { Header } from "@uoguelph/react-components/header";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Container } from "@uoguelph/react-components/container";

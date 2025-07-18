@@ -1,6 +1,6 @@
 import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@uoguelph/react-components/layout";
-import { getAIOProgramListData, AIO } from "@/components/client/aio";
+import { getAIOProgramListData, AIO } from "@/components/server/aio";
 import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
