@@ -25,7 +25,7 @@ export function getAIOProgramListData(programs: any): ItemList {
 }
 
 export function getAIOMainId() {
-  return "https://www.uoguelph.ca/";
+  return "https://www.uoguelph.ca";
 }
 
 export function getAIOMainPhone() {
@@ -33,7 +33,7 @@ export function getAIOMainPhone() {
 }
 
 export function getAIOMainUrl() {
-  return "https://www.uoguelph.ca/";
+  return "https://www.uoguelph.ca";
 }
 
 export function getAIOMainLogo() {
