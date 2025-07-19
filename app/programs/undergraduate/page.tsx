@@ -8,40 +8,43 @@ import { ProgramSearch } from "@/components/client/programs/program-search";
 import { getUndergraduateDegrees, getUndergraduateDegreeTypes } from "@/data/drupal/undergraduate-degree";
 import { getUndergraduatePrograms, getUndergraduateProgramTypes } from "@/data/drupal/undergraduate-program";
 import { Metadata } from "next";
-/*
+
 import { Card, CardContent, CardFooter, CardTitle } from "@uoguelph/react-components/card";
 import { UndergraduateDegreeFragment, UndergraduateProgramFragment } from "@/lib/graphql/types";
+import { tv } from "tailwind-variants";
 
-type CombinedUndergraduateProgram = UndergraduateProgramFragment | UndergraduateDegreeFragment
+type CombinedUndergraduateProgram = UndergraduateProgramFragment | UndergraduateDegreeFragment;
 
 const ProgramCard = ({ program }: { program: CombinedUndergraduateProgram }) => {
-  if(!program.url.url) {
+  const url = program.url.url;
 
-  }
+  const styles = tv({
+    slots: {
+      card: "h-full hover:scale-105 transition-transform",
+      content: "flex-1 flex justify-center",
+      degree: "text-black/65",
+      footer: "overflow-hidden text-ellipsis whitespace-nowrap",
+    },
+  })();
 
   return (
-    <Card as="a" key={program.id} href={program.url.url} className="h-full hover:scale-105 transition-transform">
-      <CardContent className="flex-1 flex justify-center">
-        <CardTitle>{program.name}</CardTitle>
+    <Card as={url ? "a" : "div"} key={program.id} href={url ? url : undefined} className={styles.card()}>
+      <CardContent className={styles.content()}>
+        <CardTitle>{program.title}</CardTitle>
 
-        {program.degree && <span className="text-black/65">{program.degree.name}</span>}
-
-        {program.degrees && (
-          <span className="text-black/65">
-            {program.degrees?.map((degree) => degree.acronym ?? degree.name).join(", ")}
-          </span>
+        {program.__typename === "NodeUndergraduateProgram" && program.degree && (
+          <span className="text-black/65">{program.degree.title}</span>
         )}
       </CardContent>
 
       <CardFooter>
-        <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-          {program?.types?.map((type) => type.name).join(", ")}
+        <span className={styles.footer()}>
+          {Array.isArray(program.type) ? program.type.map((type) => type.name).join(", ") : program.type.name}
         </span>
       </CardFooter>
     </Card>
   );
 };
-*/
 
 export const metadata: Metadata = {
   title: "Undergraduate Programs | University of Guelph",
