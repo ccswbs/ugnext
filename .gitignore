@@ -31,7 +31,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-.idea
 *storybook.log!
 /data/sqlite/db.sqlite3
 # Playwright
