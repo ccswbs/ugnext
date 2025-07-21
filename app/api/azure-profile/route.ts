@@ -1,4 +1,3 @@
-// app/api/azure-profile/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -18,7 +17,7 @@ export async function GET(req: NextRequest) {
 
   const { access_token } = await tokenRes.json();
 
-  const graphRes = await fetch(`https://graph.microsoft.com/v1.0/users/${email}`, {
+  const graphRes = await fetch(`https://graph.microsoft.com/v1.0/users/${email}?$select=mail,officeLocation,mobilePhone`, {
     headers: { Authorization: `Bearer ${access_token}` },
   });
 
@@ -27,5 +26,13 @@ export async function GET(req: NextRequest) {
   }
 
   const user = await graphRes.json();
-  return NextResponse.json(user);
+
+  const sanitized = {
+    email: user.mail,
+    officeLocation: user.officeLocation,
+    phone: user.mobilePhone,
+  };
+
+  return NextResponse.json(sanitized);
 }
+
