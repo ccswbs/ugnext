@@ -15,7 +15,7 @@ export async function GET(request: Request): Promise<Response> {
       tlsOptions: { rejectUnauthorized: false },
     });
 
-    client.bind(process.env.LDAP_BIND_DN!, process.env.LDAP_PASSWORD!, (err) => {
+    client.bind(process.env.LDAP_BIND_DN!, process.env.LDAP_PASSWORD!, (err: any) => {
       if (err) {
         console.error('LDAP bind error:', err);
         resolve(NextResponse.json({ error: 'LDAP bind failed' }, { status: 500 }));
@@ -24,14 +24,14 @@ export async function GET(request: Request): Promise<Response> {
 
       const opts = {
         filter: `(uid=${uid})`,
-        scope: 'sub',
+        scope: 'sub' as const,
         attributes: ['mail', 'telephonenumber', 'roomnumber', 'ou'],
       };
 
-      client.search(process.env.LDAP_BASE_DN!, opts, (err, res) => {
+      client.search(process.env.LDAP_BASE_DN!, opts, (err: any, res: any) => {
         const entries: any[] = [];
 
-        res.on('searchEntry', (entry) => {
+        res.on('searchEntry', (entry: any) => {
           console.log('Raw LDAP entry:', entry);
 
           if (entry?.object) {
@@ -49,13 +49,13 @@ export async function GET(request: Request): Promise<Response> {
           }
         });
 
-        res.on('error', (err) => {
+        res.on('error', (err: any) => {
           console.error('LDAP search error:', err);
           client.unbind();
           resolve(NextResponse.json({ error: 'LDAP search failed' }, { status: 500 }));
         });
 
-        res.on('end', (result) => {
+        res.on('end', (result: any) => {
           console.log('LDAP search ended with status:', result.status);
           client.unbind();
 
