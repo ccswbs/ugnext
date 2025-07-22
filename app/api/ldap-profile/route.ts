@@ -19,9 +19,51 @@ export async function GET(request: Request): Promise<Response> {
       tlsOptions: { rejectUnauthorized: false },
     });
 
+    // Add connection event listeners to detect network issues
+    client.on('connect', () => {
+      console.log('LDAP client connected successfully to server');
+    });
+
+    client.on('connectError', (err: any) => {
+      console.error('LDAP connection error:', err);
+      console.error('This likely indicates a network/firewall issue - Netlify may not be whitelisted');
+      resolve(NextResponse.json({ error: 'LDAP connection failed - network issue' }, { status: 500 }));
+    });
+
+    client.on('error', (err: any) => {
+      console.error('LDAP client error:', err);
+    });
+
+    client.on('close', () => {
+      console.log('LDAP connection closed');
+    });
+
+    // Add a timeout to detect hanging connections
+    const connectionTimeout = setTimeout(() => {
+      console.error('LDAP connection timeout - likely network/firewall blocking');
+      client.unbind();
+      resolve(NextResponse.json({ error: 'LDAP connection timeout - network blocked' }, { status: 500 }));
+    }, 10000); // 10 second timeout
+
     client.bind(process.env.LDAP_BIND_DN!, process.env.LDAP_PASSWORD!, (err: any) => {
+      clearTimeout(connectionTimeout); // Clear timeout if we get a response
+      
       if (err) {
         console.error('LDAP bind error:', err);
+        console.error('Error code:', err.code);
+        console.error('Error message:', err.message);
+        
+        // Check for specific network-related error codes
+        if (err.code === 'ECONNREFUSED') {
+          console.error('Connection refused - server not reachable or port blocked');
+        } else if (err.code === 'ETIMEDOUT') {
+          console.error('Connection timed out - likely firewall blocking');
+        } else if (err.code === 'ENOTFOUND') {
+          console.error('DNS resolution failed - hostname not found');
+        } else if (err.code === 'ECONNRESET') {
+          console.error('Connection reset - server dropped connection (possibly firewall)');
+        }
+        
         resolve(NextResponse.json({ error: 'LDAP bind failed' }, { status: 500 }));
         return;
       }
