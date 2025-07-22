@@ -22,6 +22,9 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     profileUnit {
       ...Unit
     }
+    profileResearchAreas {
+      ...Research
+    }
     profileSections {
       ... on ParagraphProfilePart {
         id
@@ -103,6 +106,9 @@ export async function getProfiles() {
               title
               path
               profileJobTitle
+              profileResearchAreas {
+                ...Research
+              }
               profileType {
                 ...ProfileType
               }
@@ -149,6 +155,9 @@ export async function getProfilesByType(profileType: string) {
               profileUnit {
                 id
                 name
+              }
+              profileResearchAreas {
+                ...Research
               }
               profilePicture {
                 ...Image
@@ -267,6 +276,31 @@ export async function getProfileTypes() {
   }
   
   return data.taxonomyTerms.results;
+}
+
+export async function getResearch() {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetResearch {
+        taxonomyTerms(filter: {vid: "research"}) {
+          results {
+            ... on TermResearch {
+              id
+              name
+            }
+          }
+        }
+      }
+    `),
+  });
+
+  if (!data?.taxonomyTerms?.results) {
+    return [];
+  }
+
+  return data.taxonomyTerms.results
+    .filter((term): term is { id: string; name: string } => 'name' in term)
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function getTags() {

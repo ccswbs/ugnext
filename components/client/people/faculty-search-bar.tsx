@@ -12,12 +12,12 @@ import { Field, Label } from "@headlessui/react";
 type Profile = {
   id: string;
   name: string;
-  tags?: { id: string; name: string }[];
+  research?: { id: string; name: string }[];
   units?: { id: string; name: string }[];
   // Add other properties as needed
 };
 
-type Tags = {
+type research = {
   id: string;
   name: string;
   // Add other properties as needed
@@ -32,27 +32,32 @@ type Unit = {
 type FacultySearchBarProps = {
   profiles: Profile[];
   units: Unit[];
-  tags: Tags[];
+  research: research[];
   onChange?: (filtered: Profile[]) => void;
   className?: string;
 };
 
-export const FacultySearchBar = ({ profiles, tags, units, onChange, className }: FacultySearchBarProps) => {
+export const FacultySearchBar = ({ profiles, research, units, onChange, className }: FacultySearchBarProps) => {
   
   const [input, setInput] = useState("");
   const results = useSearch(profiles, input, nameAndTagSearch);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedResearch, setSelectedResearch] = useState<string[]>([]);
   const [selectedUnits, setSelectedUnits] = useState(units?.map(unit => unit.id) ?? []);
-  const [tagSearchInput, setTagSearchInput] = useState("");
-  const [showTagDropdown, setShowTagDropdown] = useState(false);
-  const [filteredTags, setFilteredTags] = useState(tags);
+  const [researchInput, setResearchInput] = useState("");
+  const [showResearchDropdown, setShowResearchDropdown] = useState(false);
+  const [filteredResearch, setFilteredResearch] = useState(research);
+
+  // Update filteredResearch when research prop changes
+  useEffect(() => {
+    setFilteredResearch(research);
+  }, [research]);
 
   const filtered = useMemo(() => {
     let filtered = results;
 
-    if (selectedTags.length > 0) {
+    if (selectedResearch.length > 0) {
       filtered = filtered.filter((profile: Profile) =>
-        profile.tags?.some((tag) => selectedTags.includes(tag.id))
+        profile.research?.some((research) => selectedResearch.includes(research.id))
       );
     }
   
@@ -63,7 +68,7 @@ export const FacultySearchBar = ({ profiles, tags, units, onChange, className }:
     }
 
     return filtered;
-  }, [results, selectedTags, selectedUnits, tags, units]);
+  }, [results, selectedResearch, selectedUnits, research, units]);
 
   useEffect(() => {
     onChange?.(filtered);
@@ -81,61 +86,62 @@ export const FacultySearchBar = ({ profiles, tags, units, onChange, className }:
           </TextInput>
         </div>
 
-        {tags?.length > 0 && (
+        {research?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
             <Field>
-              <Label className="text-body-copy-bold font-bold">Filter by research topic</Label>
+              <Label className="text-body-copy-bold font-bold">Filter by Research Area</Label>
               <div className="relative">
                 <TextInput
-                  placeholder="Type to search research topics..."
+                  value={researchInput}
+                  placeholder="Type to search research areas..."
                   onInput={(e) => {
                     const value = (e.target as HTMLInputElement).value;
-                    setTagSearchInput(value);
-                    // Filter tags based on input
-                    const filteredTags = tags.filter(tag => 
-                      tag.name.toLowerCase().includes(value.toLowerCase())
+                    setResearchInput(value);
+                    // Filter research based on input
+                    const filteredResearch = research.filter(research => 
+                      research.name.toLowerCase().includes(value.toLowerCase())
                     );
-                    setFilteredTags(filteredTags);
+                    setFilteredResearch(filteredResearch);
                   }}
-                  onFocus={() => setShowTagDropdown(true)}
-                  onBlur={() => setTimeout(() => setShowTagDropdown(false), 200)}
+                  onFocus={() => setShowResearchDropdown(true)}
+                  onBlur={() => setTimeout(() => setShowResearchDropdown(false), 200)}
                 />
-                {showTagDropdown && filteredTags.length > 0 && (
+                {showResearchDropdown && filteredResearch.length > 0 && (
                   <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto">
-                    {filteredTags.map((tag) => (
+                    {filteredResearch.map((research) => (
                       <div
-                        key={tag.id}
+                        key={research.id}
                         className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                         onClick={() => {
-                          if (!selectedTags.includes(tag.id)) {
-                            setSelectedTags([...selectedTags, tag.id]);
+                          if (!selectedResearch.includes(research.id)) {
+                            setSelectedResearch([...selectedResearch, research.id]);
                           }
-                          setTagSearchInput('');
-                          setShowTagDropdown(false);
+                          setResearchInput('');
+                          setShowResearchDropdown(false);
                         }}
                       >
-                        {tag.name}
+                        {research.name}
                       </div>
                     ))}
                   </div>
                 )}
               </div>
-              {/* Display selected tags */}
-              {selectedTags.length > 0 && (
+              {/* Display selected research */}
+              {selectedResearch.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {tags
-                    .filter(tag => selectedTags.includes(tag.id))
-                    .map((tag) => (
+                  {research
+                    .filter(research => selectedResearch.includes(research.id))
+                    .map((research) => (
                       <span
-                        key={tag.id}
+                        key={research.id}
                         className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
                       >
-                        {tag.name}
+                        {research.name}
                         <button
                           type="button"
                           className="ml-1 text-blue-600 hover:text-blue-800"
                           onClick={() => {
-                            setSelectedTags(selectedTags.filter(id => id !== tag.id));
+                            setSelectedResearch(selectedResearch.filter(id => id !== research.id));
                           }}
                         >
                           ×
