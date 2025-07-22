@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import ldap from 'ldapjs';
 
-export async function GET(request: Request): Promise<NextResponse> {
+export async function GET(request: Request): Promise<Response> {
   const { searchParams } = new URL(request.url);
   const uid = searchParams.get('uid');
 
@@ -9,7 +9,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: 'Missing uid parameter' }, { status: 400 });
   }
 
-  return new Promise<NextResponse>((resolve) => {
+  return new Promise<Response>((resolve) => {
     const client = ldap.createClient({
       url: process.env.LDAP_URL!,
       tlsOptions: { rejectUnauthorized: false },
