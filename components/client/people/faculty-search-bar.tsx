@@ -12,8 +12,14 @@ import { Field, Label } from "@headlessui/react";
 type Profile = {
   id: string;
   name: string;
-  types?: { id: string; name: string }[];
+  tags?: { id: string; name: string }[];
   units?: { id: string; name: string }[];
+  // Add other properties as needed
+};
+
+type Tags = {
+  id: string;
+  name: string;
   // Add other properties as needed
 };
 
@@ -26,28 +32,30 @@ type Unit = {
 type FacultySearchBarProps = {
   profiles: Profile[];
   units: Unit[];
+  tags: Tags[];
   onChange?: (filtered: Profile[]) => void;
   className?: string;
 };
 
-export const FacultySearchBar = ({ profiles, units, onChange, className }: FacultySearchBarProps) => {
+export const FacultySearchBar = ({ profiles, tags, units, onChange, className }: FacultySearchBarProps) => {
   
   const [input, setInput] = useState("");
   const results = useSearch(profiles, input, nameAndTagSearch);
-  //const [selectedTypes, setSelectedTypes] = useState(types?.map(type => type.id) ?? []);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedUnits, setSelectedUnits] = useState(units?.map(unit => unit.id) ?? []);
+  const [tagSearchInput, setTagSearchInput] = useState("");
+  const [showTagDropdown, setShowTagDropdown] = useState(false);
+  const [filteredTags, setFilteredTags] = useState(tags);
 
   const filtered = useMemo(() => {
     let filtered = results;
 
-    {/* Change this to a research topic search
-    if (Array.isArray(types) && types.length > 0) {
-      filtered = filtered.filter((profile) =>
-        profile.types?.some((type) => selectedTypes.includes(type.id))
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter((profile: Profile) =>
+        profile.tags?.some((tag) => selectedTags.includes(tag.id))
       );
     }
-    */}
-
+  
     if (Array.isArray(units) && units.length > 0) {
       filtered = filtered.filter((profile: Profile) =>
         profile.units?.some((unit: Unit) => selectedUnits.includes(unit.id))
@@ -55,7 +63,7 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
     }
 
     return filtered;
-  }, [results, selectedUnits, units]);
+  }, [results, selectedTags, selectedUnits, tags, units]);
 
   useEffect(() => {
     onChange?.(filtered);
@@ -73,44 +81,81 @@ export const FacultySearchBar = ({ profiles, units, onChange, className }: Facul
           </TextInput>
         </div>
 
-        {/* TODO: Change to research topic search
-        {types?.length > 0 && (
+        {tags?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">
             <Field>
-              <Label className="text-body-copy-bold font-bold">Filter by role</Label>
-              <Select
-                multiple
-                onChange={(value) => {
-                  const selectedIds = Array.isArray(value) ? value : [];
-                  setSelectedTypes(selectedIds.length > 0 ? selectedIds : types?.map(type => type.id) ?? []);
-                }}
-              >
-                <SelectButton>
-                  <span className="whitespace-nowrap overflow-hidden text-ellipsis w-fit">
-                    {types?.filter(type => selectedTypes.includes(type.id)).map(type => type.name).join(", ")}
-                  </span>
-                </SelectButton>
-                <SelectOptions>
-                  {types.map((type) => (
-                    <SelectOption value={type.id} key={type.id}>
-                      {type.name}
-                    </SelectOption>
-                  ))}
-                </SelectOptions>
-              </Select>
+              <Label className="text-body-copy-bold font-bold">Filter by research topic</Label>
+              <div className="relative">
+                <TextInput
+                  placeholder="Type to search research topics..."
+                  onInput={(e) => {
+                    const value = (e.target as HTMLInputElement).value;
+                    setTagSearchInput(value);
+                    // Filter tags based on input
+                    const filteredTags = tags.filter(tag => 
+                      tag.name.toLowerCase().includes(value.toLowerCase())
+                    );
+                    setFilteredTags(filteredTags);
+                  }}
+                  onFocus={() => setShowTagDropdown(true)}
+                  onBlur={() => setTimeout(() => setShowTagDropdown(false), 200)}
+                />
+                {showTagDropdown && filteredTags.length > 0 && (
+                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                    {filteredTags.map((tag) => (
+                      <div
+                        key={tag.id}
+                        className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => {
+                          if (!selectedTags.includes(tag.id)) {
+                            setSelectedTags([...selectedTags, tag.id]);
+                          }
+                          setTagSearchInput('');
+                          setShowTagDropdown(false);
+                        }}
+                      >
+                        {tag.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {/* Display selected tags */}
+              {selectedTags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {tags
+                    .filter(tag => selectedTags.includes(tag.id))
+                    .map((tag) => (
+                      <span
+                        key={tag.id}
+                        className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                      >
+                        {tag.name}
+                        <button
+                          type="button"
+                          className="ml-1 text-blue-600 hover:text-blue-800"
+                          onClick={() => {
+                            setSelectedTags(selectedTags.filter(id => id !== tag.id));
+                          }}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                </div>
+              )}
             </Field>
           </div>
-        )} 
-        */}
+        )}
         
-        <div className="sm:w-1/3 md:w-1/4">
+        {/* <div className="sm:w-1/3 md:w-1/4">
           <TextInput
             onInput={(e) => setInput((e.target as HTMLInputElement).value)}
             placeholder="Placeholder - to be implemented"
           >
             <span className="text-l font-bold mb-1">Search by Research Topic</span>
           </TextInput>
-          </div>
+          </div> */}
 
         {units?.length > 0 && (
           <div className="sm:w-1/3 md:w-1/4">

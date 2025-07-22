@@ -8,10 +8,11 @@ import { Container } from "@uoguelph/react-components/container";
 
 interface FacultySearchProps {
   profiles: any[]; // Replace 'any[]' with the actual type if known
+  tags: any[];    // Replace 'any[]' with the actual type if known
   units: any[];    // Replace 'any[]' with the actual type if known
 }
 
-export const FacultySearch = ({ profiles, units }: FacultySearchProps) => {
+export const FacultySearch = ({ profiles, tags, units }: FacultySearchProps) => {
   const [filteredPeople, setFilteredPeople] = useState(profiles);
 
   const handleFilterChange = (filtered: typeof profiles) => {
@@ -26,6 +27,7 @@ export const FacultySearch = ({ profiles, units }: FacultySearchProps) => {
 
       <FacultySearchBar
         profiles={profiles}
+        tags={tags}
         units={units}
         onChange={handleFilterChange}
       />

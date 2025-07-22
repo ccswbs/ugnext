@@ -5,7 +5,7 @@ import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { FacultySearch } from "@/components/client/people/faculty-search";
-import { getProfilesByType, getUnits } from "@/data/drupal/profile";
+import { getProfilesByType, getTags, getUnits } from "@/data/drupal/profile";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Faculty() {
-    const rawProfiles = await getProfilesByType("Faculty");
-  //const types = await getProfileTypes();
+  const rawProfiles = await getProfilesByType("Faculty");
+  const tags = await getTags();
   const units = await getUnits();
   
   // Transform profiles to match search expectations
@@ -36,8 +36,8 @@ export default async function Faculty() {
             Faculty Directory
           </Typography>
         </Container>
-        
-        <FacultySearch profiles={profiles} units={units} />
+
+        <FacultySearch profiles={profiles} tags={tags} units={units} />
 
       </LayoutContent>
 

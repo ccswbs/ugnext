@@ -211,6 +211,41 @@ export async function getProfilesByUnit(unitName: string) {
   return data.profiles;
 }
 
+export async function getProfilesByTag(tagName: string) {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetProfilesByTag($tag: String!) {
+        profiles(filter: { field_tags_target_id: $tag }) {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileFirstName
+              profileLastName        
+              profileType {
+                ...ProfileType
+              }
+              profilePicture {
+                ...Image
+              }
+            }
+          }
+        }
+      }
+    `),
+    variables: {
+      tag: tagName,
+    },
+  });
+
+  if (!data?.profiles) {
+    return { results: [] };
+  }
+
+  return data.profiles;
+}
+
 export async function getProfileTypes() {
   const { data } = await query({
     query: gql(/* GraphQL */ `
@@ -232,6 +267,31 @@ export async function getProfileTypes() {
   }
   
   return data.taxonomyTerms.results;
+}
+
+export async function getTags() {
+  const { data } = await query({
+    query: gql(/* GraphQL */ `
+      query GetTags {
+        taxonomyTerms(filter: {vid: "tags"}) {
+          results {
+            ... on TermTag {
+              id
+              name
+            }
+          }
+        }
+      }
+    `),
+  });
+
+  if (!data?.taxonomyTerms?.results) {
+    return [];
+  }
+
+  return data.taxonomyTerms.results
+    .filter((term): term is { id: string; name: string } => 'name' in term)
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function getUnits() {
