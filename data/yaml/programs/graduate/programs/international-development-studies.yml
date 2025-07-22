@@ -5,6 +5,9 @@ degrees:
   - doctor-of-philosophy
   - master-of-science
   - master-of-arts
+  - master-of-applied-science
+  - master-of-food-agricultural-and-resource-economics
+  - master-of-public-health
 types:
   - collaborative-specialization
 tags:

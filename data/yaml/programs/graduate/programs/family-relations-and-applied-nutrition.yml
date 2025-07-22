@@ -5,7 +5,6 @@ degrees:
   - master-of-science
   - doctor-of-philosophy
 types:
-  - course-based
   - thesis-based
 tags:
   - health
