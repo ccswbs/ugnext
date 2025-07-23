@@ -78,102 +78,34 @@ export async function GET(request: Request): Promise<Response> {
 
       diagnostics.push('✓ LDAP bind successful');
 
-      // Try multiple search strategies
+      // Simple focused search - just try the most likely scenarios
       const searchStrategies = [
         { filter: `(uid=${uid})`, description: 'Standard uid search', baseDN: 'ou=People,o=uoguelph.ca' },
-        { filter: `(uid=${uid})`, description: 'Standard uid search (lowercase)', baseDN: 'ou=people,o=uoguelph.ca' },
         { filter: `(uid=${uid})`, description: 'Standard uid search (env variable)', baseDN: process.env.LDAP_BASE_DN! },
-        { filter: `(cn=${uid})`, description: 'Common name search', baseDN: 'ou=People,o=uoguelph.ca' },
-        { filter: `(edupersonprincipalname=${uid}@uoguelph.ca)`, description: 'EduPerson principal name search', baseDN: 'ou=People,o=uoguelph.ca' },
-        { filter: `(displayname=*${uid}*)`, description: 'Display name search', baseDN: 'ou=People,o=uoguelph.ca' },
-        { filter: `(mail=${uid}@uoguelph.ca)`, description: 'Email exact search', baseDN: 'ou=People,o=uoguelph.ca' },
-        { filter: `(|(uid=${uid})(cn=${uid})(mail=${uid}@uoguelph.ca))`, description: 'Multi-attribute OR search', baseDN: 'ou=People,o=uoguelph.ca' }
+        { filter: `(mail=${uid}@uoguelph.ca)`, description: 'Email exact search', baseDN: 'ou=People,o=uoguelph.ca' }
       ];
 
       let strategyIndex = 0;
       
       function tryNextStrategy() {
         if (strategyIndex >= searchStrategies.length) {
-          // If all strategies failed, try a broader search to see what's actually there
-          diagnostics.push('All specific searches failed. Trying broader search to see directory structure...');
+          diagnostics.push('All searches failed. This could indicate:');
+          diagnostics.push('1. The user does not exist in the LDAP directory');
+          diagnostics.push('2. Insufficient search permissions for the bind user');
+          diagnostics.push('3. Network connectivity issues between Netlify and LDAP server');
+          diagnostics.push('4. Different LDAP server configuration between local and production');
           
-          // Try both People and people for the broad search
-          const broadSearchBases = ['ou=People,o=uoguelph.ca', 'ou=people,o=uoguelph.ca', process.env.LDAP_BASE_DN!];
-          let broadSearchIndex = 0;
-          
-          function tryBroadSearch() {
-            if (broadSearchIndex >= broadSearchBases.length) {
-              diagnostics.push('All broad searches failed');
-              client.unbind();
-              resolve(NextResponse.json({ 
-                error: 'No entry found with any search strategy', 
-                diagnostics
-              }, { status: 404 }));
-              return;
+          client.unbind();
+          resolve(NextResponse.json({ 
+            error: 'No entry found with any search strategy', 
+            diagnostics,
+            troubleshooting: {
+              bindSuccessful: true,
+              connectionSuccessful: true,
+              searchesAttempted: searchStrategies.length,
+              recommendedAction: 'Verify LDAP search permissions and user existence'
             }
-            
-            const currentBase = broadSearchBases[broadSearchIndex];
-            diagnostics.push(`Trying broad search on base: ${currentBase}`);
-            
-            const broadOpts = {
-              filter: '(objectClass=person)',
-              scope: 'one' as const,
-              attributes: ['uid', 'cn', 'displayname', 'objectClass', 'mail', 'edupersonprincipalname'],
-              sizeLimit: 3
-            };
-            
-            client.search(currentBase, broadOpts, (err: any, res: any) => {
-              if (err) {
-                diagnostics.push(`✗ Broad search failed on ${currentBase}: ${err.message}`);
-                broadSearchIndex++;
-                tryBroadSearch();
-                return;
-              }
-              
-              const sampleEntries: any[] = [];
-              
-              res.on('searchEntry', (entry: any) => {
-                if (entry?.attributes) {
-                  const result: Record<string, any> = {};
-                  entry.attributes.forEach((attr: any) => {
-                    result[attr.type] = attr.vals || [];
-                  });
-                  sampleEntries.push(result);
-                }
-              });
-              
-              res.on('end', () => {
-                diagnostics.push(`Found ${sampleEntries.length} sample entries in ${currentBase}`);
-                if (sampleEntries.length > 0) {
-                  diagnostics.push('Sample entry structure:');
-                  const sample = sampleEntries[0];
-                  Object.keys(sample).forEach(key => {
-                    diagnostics.push(`  ${key}: ${Array.isArray(sample[key]) ? sample[key].join(', ') : sample[key]}`);
-                  });
-                  
-                  client.unbind();
-                  resolve(NextResponse.json({ 
-                    error: 'No entry found with any search strategy', 
-                    diagnostics,
-                    sampleEntries: sampleEntries.slice(0, 3),
-                    workingBaseDN: currentBase
-                  }, { status: 404 }));
-                  return;
-                } else {
-                  broadSearchIndex++;
-                  tryBroadSearch();
-                }
-              });
-              
-              res.on('error', (err: any) => {
-                diagnostics.push(`✗ Broad search error on ${currentBase}: ${err.message}`);
-                broadSearchIndex++;
-                tryBroadSearch();
-              });
-            });
-          }
-          
-          tryBroadSearch();
+          }, { status: 404 }));
           return;
         }
 
@@ -183,10 +115,9 @@ export async function GET(request: Request): Promise<Response> {
           scope: 'sub' as const,
           attributes: [
             'mail', 'telephonenumber', 'roomnumber', 'ou', 
-            'uid', 'cn', 'displayname', 'edupersonprincipalname',
-            'uogschool', 'departmentnumber', 'givenname', 'sn',
-            'uoglegalfirstname', 'uoglegallastname', 'uognickname'
+            'uid', 'cn', 'displayname', 'givenname', 'sn'
           ],
+          sizeLimit: 1  // Only need one result
         };
 
         diagnostics.push(`Trying strategy ${strategyIndex + 1}: ${strategy.description}`);
@@ -196,12 +127,16 @@ export async function GET(request: Request): Promise<Response> {
         client.search(strategy.baseDN, opts, (err: any, res: any) => {
           if (err) {
             diagnostics.push(`✗ Strategy ${strategyIndex + 1} search error: ${err.message}`);
+            if (err.code) {
+              diagnostics.push(`Error code: ${err.code}`);
+            }
             strategyIndex++;
             tryNextStrategy();
             return;
           }
           
           const entries: any[] = [];
+          let searchCompleted = false;
 
           res.on('searchEntry', (entry: any) => {
             diagnostics.push(`✓ Strategy ${strategyIndex + 1} found entry!`);
@@ -214,17 +149,25 @@ export async function GET(request: Request): Promise<Response> {
                 result[attr.type] = attr.vals?.[0] || null;
               });
               entries.push(result);
+              diagnostics.push(`Entry attributes found: ${Object.keys(result).join(', ')}`);
             }
           });
 
           res.on('error', (err: any) => {
-            diagnostics.push(`✗ Strategy ${strategyIndex + 1} search error: ${err.message}`);
-            strategyIndex++;
-            tryNextStrategy();
+            if (!searchCompleted) {
+              diagnostics.push(`✗ Strategy ${strategyIndex + 1} search error: ${err.message}`);
+              if (err.code) {
+                diagnostics.push(`Error code: ${err.code}`);
+              }
+              strategyIndex++;
+              tryNextStrategy();
+            }
           });
 
           res.on('end', (result: any) => {
+            searchCompleted = true;
             diagnostics.push(`Strategy ${strategyIndex + 1} completed with ${entries.length} entries`);
+            diagnostics.push(`Search result status: ${result?.status || 'unknown'}`);
             
             if (entries.length > 0) {
               const entry = entries[0];
@@ -234,6 +177,7 @@ export async function GET(request: Request): Promise<Response> {
               const ou = entry.ou || null;
 
               diagnostics.push(`✓ Successfully found data using: ${strategy.description}`);
+              diagnostics.push(`Retrieved data: mail=${mail}, phone=${telephoneNumber}, room=${roomNumber}, ou=${ou}`);
               client.unbind();
 
               resolve(NextResponse.json({ 
@@ -242,7 +186,8 @@ export async function GET(request: Request): Promise<Response> {
                 roomNumber, 
                 ou, 
                 diagnostics,
-                foundWith: strategy.description
+                foundWith: strategy.description,
+                fullEntry: entry  // Include full entry for debugging
               }));
               return;
             }
