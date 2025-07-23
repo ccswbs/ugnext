@@ -1,4 +1,4 @@
-import { Program, ProgramCard } from "./program-card";
+import { type Program, ProgramCard } from "./program-card";
 import { Grid } from "@uoguelph/react-components/grid";
 
 export function ProgramGrid({
