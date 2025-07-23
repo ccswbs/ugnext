@@ -5,8 +5,8 @@ import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Metadata } from "next";
-import SemanticSearch from "../../components/client/people/semantic-search";
-import { getResearch } from "../../data/drupal/profile";
+import SemanticSearch from "@/components/client/people/semantic-search";
+import { getResearch } from "@/data/drupal/profile";
 
 export const metadata: Metadata = {
   title: "Search Test | University of Guelph",
