@@ -27,6 +27,9 @@ export default async function Faculty() {
     //tags: profile.tags || []  Ensure tags array exists
   }));
 
+  // Extract research topic names for semantic search
+  const researchTopics = research?.map((item: any) => item.name).filter(Boolean) || [];
+
   return (
     <Layout>
       <Header></Header>
@@ -39,7 +42,7 @@ export default async function Faculty() {
           </Typography>
         </Container>
 
-        <FacultySearch profiles={profiles} research={research} units={units} />
+        <FacultySearch profiles={profiles} units={units} researchTopics={researchTopics} />
 
       </LayoutContent>
 
