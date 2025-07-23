@@ -29,3 +29,11 @@ export async function* yaml(pattern: string | string[]) {
     yield { path: filePath, filename: filename, data: parsed };
   }
 }
+
+export async function yamlFile(filePath: string) {
+  const content = await readFile(filePath, "utf8");
+  const parsed = YAML.parse(content);
+  const filename = path.parse(filePath).name;
+
+  return { path: filePath, filename: filename, data: parsed };
+}
