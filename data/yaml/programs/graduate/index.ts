@@ -26,7 +26,7 @@ namespace GraduatePrograms {
   export type Program = {
     __typename: "GraduateProgram";
     id: string;
-    name: string;
+    title: string;
     url: string;
     types: ProgramType[];
     degrees: Pick<Degree, "id" | "title" | "__typename">[];
@@ -221,7 +221,7 @@ export async function getGraduateProgram(filepath: string) {
   return {
     __typename: "GraduateProgram",
     id: program.filename,
-    name: program.data.name,
+    title: program.data.name,
     url: program.data.url,
     types: programTypes,
     degrees: degrees,
@@ -233,5 +233,5 @@ export async function getGraduatePrograms() {
   const paths = await glob(path.join(GRADUATE_PROGRAMS_PROGRAMS_ROOT, "*.yml"));
   const programs = await Promise.all(paths.map((path) => getGraduateProgram(path)));
 
-  return programs.sort((a, b) => a.name.localeCompare(b.name));
+  return programs.sort((a, b) => a.title.localeCompare(b.title));
 }
