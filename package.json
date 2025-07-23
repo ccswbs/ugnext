@@ -23,7 +23,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@netlify/plugin-nextjs": "^5.11.4",
     "@next/third-parties": "^15.3.4",
-    "@uoguelph/react-components": "^1.4.5",
+    "@uoguelph/react-components": "1.5.0-rc.2",
     "@uoguelph/web-components": "^2.0.5",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
@@ -36,6 +36,8 @@
     "react-animate-height": "^3.2.3",
     "react-dom": "^19.1.0",
     "sharp": "^0.34.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "swr": "^2.3.4",
     "tailwind-variants": "^1.0.0",
     "uuid": "^11.1.0",
@@ -67,6 +69,7 @@
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "prettier-plugin-embed": "^0.5.0",
+    "prettier-plugin-sql": "^0.19.2",
     "prettier-plugin-tailwindcss": "^0.6.13",
     "stemmer": "^2.0.1",
     "tailwind-merge": "^3.3.1",
@@ -84,6 +87,7 @@
     "core-js-pure",
     "esbuild",
     "sharp",
+    "sqlite3",
     "unrs-resolver"
   ]
 }
