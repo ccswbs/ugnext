@@ -1,5 +1,6 @@
 import path from "path";
 import { yaml, YAML_DATA_ROOT } from "@/data/yaml";
+import { glob } from "glob";
 
 namespace GraduatePrograms {
   export type DegreeType = {
@@ -18,9 +19,8 @@ namespace GraduatePrograms {
     __typename: "GraduateDegree";
     id: string;
     title: string;
-    type: DegreeType;
     acronym: string;
-    types: DegreeType[];
+    type: DegreeType;
   }
 
   export type Program = {
@@ -34,33 +34,105 @@ namespace GraduatePrograms {
   }
 }
 
-const GRADUATE_PROGRAMS_ROOT = path.join(YAML_DATA_ROOT, "graduate");
+const GRADUATE_PROGRAMS_ROOT = path.join(YAML_DATA_ROOT, "programs", "graduate");
 const GRADUATE_PROGRAMS_DEGREE_TYPES_ROOT = path.join(GRADUATE_PROGRAMS_ROOT, "degree-types");
 const GRADUATE_PROGRAMS_PROGRAM_TYPES_ROOT = path.join(GRADUATE_PROGRAMS_ROOT, "program-types");
 const GRADUATE_PROGRAMS_DEGREES_ROOT = path.join(GRADUATE_PROGRAMS_ROOT, "degrees");
 const GRADUATE_PROGRAMS_PROGRAMS_ROOT = path.join(GRADUATE_PROGRAMS_ROOT, "programs");
 
-export async function getGraduateDegreeTypes() {
-  const types = [];
+export async function getGraduateDegreeType(filepath: string) {
+  const degreeType = await yaml(filepath);
 
-  for await (const type of yaml(path.join(GRADUATE_PROGRAMS_DEGREE_TYPES_ROOT, "*.yml"))) {
-    if(!('name' in type.data)) {
-      throw new Error(`Missing name field in ${type.path}`);
-    }
-
-    if(typeof type.data.name !== 'string') {
-      throw new Error(`Invalid name field in ${type.path}, expected string, got ${typeof type.data.name}`);
-    }
-
-    types.push({
-      id: type.filename,
-      name: type.data.name,
-    })
+  if(!('name' in degreeType.data)) {
+    throw new Error(`Missing name field in ${degreeType.path}`);
   }
 
-  return types;
+  if(typeof degreeType.data.name !== 'string') {
+    throw new Error(`Invalid name field in ${degreeType.path}, expected string, got ${typeof degreeType.data.name}`);
+  }
+
+  return {
+    __typename: "GraduateDegreeType",
+    id: degreeType.filename,
+    name: degreeType.data.name,
+  } as GraduatePrograms.DegreeType;
 }
 
-export async function getGraduatePrograms() {
+export async function getGraduateDegreeTypes() {
+  const paths = await glob(path.join(GRADUATE_PROGRAMS_DEGREE_TYPES_ROOT, "*.yml"));
+  const degreeTypes = await Promise.all(paths.map((path) => getGraduateDegreeType(path)));
 
+  return degreeTypes.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export async function getGraduateProgramType(filepath: string) {
+  const programType = await yaml(filepath);
+
+  if(!('name' in programType.data)) {
+    throw new Error(`Missing name field in ${programType.path}`);
+  }
+
+  if(typeof programType.data.name !== 'string') {
+    throw new Error(`Invalid name field in ${programType.path}, expected string, got ${typeof programType.data.name}`);
+  }
+
+  return {
+    __typename: "GraduateProgramType",
+    id: programType.filename,
+    name: programType.data.name,
+  } as GraduatePrograms.ProgramType;
+}
+
+export async function getGraduateProgramTypes() {
+  const paths = await glob(path.join(GRADUATE_PROGRAMS_PROGRAM_TYPES_ROOT, "*.yml"));
+  const programTypes = await Promise.all(paths.map((path) => getGraduateProgramType(path)));
+
+  return programTypes.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export async function getGraduateDegree(filepath: string) {
+  const degree = await yaml(filepath);
+
+  if(!('name' in degree.data)) {
+    throw new Error(`Missing name field in ${degree.path}`);
+  }
+
+  if(typeof degree.data.name !== 'string') {
+    throw new Error(`Invalid name field in ${degree.path}, expected string, got ${typeof degree.data.name}`);
+  }
+
+  if(typeof degree.data.acronym !== 'string' && typeof degree.data.acronym !== 'undefined') {
+    throw new Error(`Invalid acronym field in ${degree.path}, expected string or undefined, got ${typeof degree.data.acronym}`);
+  }
+
+  if(!('type' in degree.data)) {
+    throw new Error(`Missing type field in ${degree.path}`);
+  }
+
+  if(typeof degree.data.type !== 'string') {
+    throw new Error(`Invalid type field in ${degree.path}, expected string, got ${typeof degree.data.types}`);
+  }
+
+  let degreeType: GraduatePrograms.DegreeType;
+
+  try {
+    degreeType = await getGraduateDegreeType(path.join(GRADUATE_PROGRAMS_DEGREE_TYPES_ROOT, `${degree.data.type}.yml`));
+  } catch(e) {
+    throw new Error(`Invalid type in types field in ${degree.path}, no such degree type: ${degree.data.type}`);
+  }
+
+  return {
+    __typename: "GraduateDegree",
+    id: degree.filename,
+    title: degree.data.name,
+    acronym: degree.data.acronym,
+    type: degreeType,
+  } as GraduatePrograms.Degree;
+}
+
+export async function getGraduateDegrees() {
+  const paths = await glob(path.join(GRADUATE_PROGRAMS_DEGREES_ROOT, "*.yml"));
+  const degrees = await Promise.all(paths.map((path) => getGraduateDegree(path)));
+
+  return degrees.sort((a, b) => a.title.localeCompare(b.title));
 }
