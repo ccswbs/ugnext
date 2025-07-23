@@ -9,10 +9,12 @@ export async function GET(request: Request): Promise<Response> {
     return NextResponse.json({ error: 'Missing uid parameter' }, { status: 400 });
   }
 
+  const diagnostics: string[] = [];
+  
   return new Promise<Response>((resolve) => {
-    console.log('LDAP_URL:', process.env.LDAP_URL ? 'SET' : 'NOT SET');
-    console.log('LDAP_BIND_DN:', process.env.LDAP_BIND_DN ? 'SET' : 'NOT SET');
-    console.log('LDAP_BASE_DN:', process.env.LDAP_BASE_DN ? 'SET' : 'NOT SET');
+    diagnostics.push(`Environment check: LDAP_URL=${process.env.LDAP_URL ? 'SET' : 'NOT SET'}`);
+    diagnostics.push(`Environment check: LDAP_BIND_DN=${process.env.LDAP_BIND_DN ? 'SET' : 'NOT SET'}`);
+    diagnostics.push(`Environment check: LDAP_BASE_DN=${process.env.LDAP_BASE_DN ? 'SET' : 'NOT SET'}`);
     
     const client = ldap.createClient({
       url: process.env.LDAP_URL!,
@@ -21,54 +23,60 @@ export async function GET(request: Request): Promise<Response> {
 
     // Add connection event listeners to detect network issues
     client.on('connect', () => {
-      console.log('LDAP client connected successfully to server');
+      diagnostics.push('✓ LDAP client connected successfully to server');
     });
 
     client.on('connectError', (err: any) => {
-      console.error('LDAP connection error:', err);
-      console.error('This likely indicates a network/firewall issue - Netlify may not be whitelisted');
-      resolve(NextResponse.json({ error: 'LDAP connection failed - network issue' }, { status: 500 }));
+      diagnostics.push(`✗ LDAP connection error: ${err.message}`);
+      diagnostics.push('This likely indicates a network/firewall issue - Netlify may not be whitelisted');
+      resolve(NextResponse.json({ 
+        error: 'LDAP connection failed - network issue', 
+        diagnostics 
+      }, { status: 500 }));
     });
 
     client.on('error', (err: any) => {
-      console.error('LDAP client error:', err);
-    });
-
-    client.on('close', () => {
-      console.log('LDAP connection closed');
+      diagnostics.push(`✗ LDAP client error: ${err.message}`);
     });
 
     // Add a timeout to detect hanging connections
     const connectionTimeout = setTimeout(() => {
-      console.error('LDAP connection timeout - likely network/firewall blocking');
+      diagnostics.push('✗ LDAP connection timeout (10s) - likely network/firewall blocking');
       client.unbind();
-      resolve(NextResponse.json({ error: 'LDAP connection timeout - network blocked' }, { status: 500 }));
+      resolve(NextResponse.json({ 
+        error: 'LDAP connection timeout - network blocked', 
+        diagnostics 
+      }, { status: 500 }));
     }, 10000); // 10 second timeout
 
     client.bind(process.env.LDAP_BIND_DN!, process.env.LDAP_PASSWORD!, (err: any) => {
       clearTimeout(connectionTimeout); // Clear timeout if we get a response
       
       if (err) {
-        console.error('LDAP bind error:', err);
-        console.error('Error code:', err.code);
-        console.error('Error message:', err.message);
+        diagnostics.push(`✗ LDAP bind failed: ${err.message}`);
+        if (err.code) {
+          diagnostics.push(`Error code: ${err.code}`);
+        }
         
         // Check for specific network-related error codes
         if (err.code === 'ECONNREFUSED') {
-          console.error('Connection refused - server not reachable or port blocked');
+          diagnostics.push('Analysis: Connection refused - server not reachable or port blocked');
         } else if (err.code === 'ETIMEDOUT') {
-          console.error('Connection timed out - likely firewall blocking');
+          diagnostics.push('Analysis: Connection timed out - likely firewall blocking');
         } else if (err.code === 'ENOTFOUND') {
-          console.error('DNS resolution failed - hostname not found');
+          diagnostics.push('Analysis: DNS resolution failed - hostname not found');
         } else if (err.code === 'ECONNRESET') {
-          console.error('Connection reset - server dropped connection (possibly firewall)');
+          diagnostics.push('Analysis: Connection reset - server dropped connection (possibly firewall)');
         }
         
-        resolve(NextResponse.json({ error: 'LDAP bind failed' }, { status: 500 }));
+        resolve(NextResponse.json({ 
+          error: 'LDAP bind failed', 
+          diagnostics 
+        }, { status: 500 }));
         return;
       }
 
-      console.log('LDAP bind successful');
+      diagnostics.push('✓ LDAP bind successful');
 
       const opts = {
         filter: `(uid=${uid})`,
@@ -76,73 +84,84 @@ export async function GET(request: Request): Promise<Response> {
         attributes: ['mail', 'telephonenumber', 'roomnumber', 'ou'],
       };
 
-      console.log('Starting LDAP search with filter:', opts.filter);
-      console.log('Search base DN:', process.env.LDAP_BASE_DN);
+      diagnostics.push(`Starting LDAP search with filter: ${opts.filter}`);
+      diagnostics.push(`Search base DN: ${process.env.LDAP_BASE_DN}`);
 
       client.search(process.env.LDAP_BASE_DN!, opts, (err: any, res: any) => {
         if (err) {
-          console.error('LDAP search initiation error:', err);
+          diagnostics.push(`✗ LDAP search initiation error: ${err.message}`);
           client.unbind();
-          resolve(NextResponse.json({ error: 'LDAP search failed to start' }, { status: 500 }));
+          resolve(NextResponse.json({ 
+            error: 'LDAP search failed to start', 
+            diagnostics 
+          }, { status: 500 }));
           return;
         }
         
         const entries: any[] = [];
 
         res.on('searchEntry', (entry: any) => {
-          console.log('LDAP search entry found!');
-          console.log('Raw LDAP entry:', entry);
+          diagnostics.push('✓ LDAP search entry found!');
 
           if (entry?.object) {
-            console.log('LDAP entry object:', entry.object);
             entries.push(entry.object);
           } else if (entry?.attributes) {
             const result: Record<string, string> = {};
             entry.attributes.forEach((attr: any) => {
               result[attr.type] = attr.vals?.[0] || null;
             });
-            console.log('Manually built entry:', result);
             entries.push(result);
-          } else {
-            console.warn('LDAP entry received but no usable data:', entry);
           }
         });
 
         res.on('searchReference', (referral: any) => {
-          console.log('LDAP search referral:', referral);
+          diagnostics.push(`LDAP search referral received: ${referral}`);
         });
 
         res.on('error', (err: any) => {
-          console.error('LDAP search error:', err);
+          diagnostics.push(`✗ LDAP search error: ${err.message}`);
           client.unbind();
-          resolve(NextResponse.json({ error: 'LDAP search failed' }, { status: 500 }));
+          resolve(NextResponse.json({ 
+            error: 'LDAP search failed', 
+            diagnostics 
+          }, { status: 500 }));
         });
 
         res.on('end', (result: any) => {
-          console.log('LDAP search ended with status:', result?.status);
-          console.log('Total entries found:', entries.length);
-          console.log('Search result object:', result);
+          diagnostics.push(`LDAP search completed with status: ${result?.status || 'unknown'}`);
+          diagnostics.push(`Total entries found: ${entries.length}`);
           client.unbind();
 
           if (entries.length === 0) {
-            console.warn(`No LDAP entry found for uid=${uid}`);
-            console.warn('This could mean:');
-            console.warn('1. The uid does not exist in the LDAP directory');
-            console.warn('2. The uid exists but not in the search base DN');
-            console.warn('3. The search filter is not matching the entry format');
-            console.warn('4. Insufficient permissions to read the entry');
-            resolve(NextResponse.json({ error: 'No entry found' }, { status: 404 }));
+            diagnostics.push(`✗ No LDAP entry found for uid=${uid}`);
+            diagnostics.push('Possible causes:');
+            diagnostics.push('- The uid does not exist in the LDAP directory');
+            diagnostics.push('- The uid exists but not in the search base DN');
+            diagnostics.push('- The search filter is not matching the entry format');
+            diagnostics.push('- Insufficient permissions to read the entry');
+            
+            resolve(NextResponse.json({ 
+              error: 'No entry found', 
+              diagnostics 
+            }, { status: 404 }));
             return;
           }
 
           const entry = entries[0];
-          console.log('Using first entry:', entry);
           const mail = entry.mail || null;
           const telephoneNumber = entry.telephonenumber || null;
           const roomNumber = entry.roomnumber || null;
           const ou = entry.ou || null;
 
-          resolve(NextResponse.json({ mail, telephoneNumber, roomNumber, ou }));
+          diagnostics.push('✓ Successfully retrieved LDAP data');
+
+          resolve(NextResponse.json({ 
+            mail, 
+            telephoneNumber, 
+            roomNumber, 
+            ou, 
+            diagnostics 
+          }));
         });
       });
     });
