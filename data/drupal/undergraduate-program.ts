@@ -1,7 +1,13 @@
 import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
-import { UndergraduateProgramsQuery } from "@/lib/graphql/types";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import type {
+  UndergraduateProgramsQuery,
+  UndergraduateProgramFragment, UndergraduateProgramTypeFragment,
+} from "@/lib/graphql/types";
+
+export type UndergraduateProgramType = UndergraduateProgramTypeFragment;
+export type UndergraduateProgram = UndergraduateProgramFragment;
 
 export async function getUndergraduateProgramTypes() {
   const { data } = await query({
