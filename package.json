@@ -32,6 +32,7 @@
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
     "ldapjs": "^3.0.7",
+    "ldapts": "^8.0.8",
     "nanoid": "5.1.5",
     "next": "^15.3.4",
     "next-drupal": "^2.0.0",
