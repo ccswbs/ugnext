@@ -1,6 +1,7 @@
 import path from "path";
 import { yaml, YAML_DATA_ROOT } from "@/data/yaml";
 import { glob } from "glob";
+import Degree = GraduatePrograms.Degree;
 
 namespace GraduatePrograms {
   export type DegreeType = {
@@ -29,7 +30,7 @@ namespace GraduatePrograms {
     name: string;
     url: string;
     types: ProgramType[];
-    degrees: Pick<Degree, "id" | "title">[];
+    degrees: Pick<Degree, "id" | "title" | "__typename">[];
     tags: string[];
   }
 }
@@ -105,6 +106,7 @@ export async function getGraduateDegree(filepath: string) {
     throw new Error(`Invalid acronym field in ${degree.path}, expected string or undefined, got ${typeof degree.data.acronym}`);
   }
 
+  // Parse type field
   if(!('type' in degree.data)) {
     throw new Error(`Missing type field in ${degree.path}`);
   }
@@ -135,4 +137,102 @@ export async function getGraduateDegrees() {
   const degrees = await Promise.all(paths.map((path) => getGraduateDegree(path)));
 
   return degrees.sort((a, b) => a.title.localeCompare(b.title));
+}
+
+export async function getGraduateProgram(filepath: string) {
+  const program = await yaml(filepath);
+
+  if(!('name' in program.data)) {
+    throw new Error(`Missing name field in ${program.path}`);
+  }
+
+  if(typeof program.data.name !== 'string') {
+    throw new Error(`Invalid name field in ${program.path}, expected string, got ${typeof program.data.name}`);
+  }
+
+  if(!('url' in program.data)) {
+    throw new Error(`Missing url field in ${program.path}`);
+  }
+
+  if(typeof program.data.url !== 'string') {
+    throw new Error(`Invalid url field in ${program.path}, expected string, got ${typeof program.data.url}`);
+  }
+
+  if(!('tags' in program.data)) {
+    throw new Error(`Missing tags field in ${program.path}`);
+  }
+
+  if(!Array.isArray(program.data.tags)) {
+    throw new Error(`Invalid tags field in ${program.path}, expected array, got ${typeof program.data.tags}`);
+  }
+
+  // Parse types field
+  if(!('types' in program.data)) {
+    throw new Error(`Missing types field in ${program.path}`);
+  }
+
+  if(!Array.isArray(program.data.types)) {
+    throw new Error(`Invalid types field in ${program.path}, expected array, got ${typeof program.data.types}`);
+  }
+
+  if(program.data.types.length === 0) {
+    throw new Error(`Invalid types field in ${program.path}, expected at least one type, got ${program.data.types.length}`);
+  }
+
+  const programTypes: GraduatePrograms.ProgramType[] = [];
+
+  for(const type of program.data.types) {
+    try {
+      programTypes.push(await getGraduateProgramType(path.join(GRADUATE_PROGRAMS_PROGRAM_TYPES_ROOT, `${type}.yml`)));
+    } catch(e) {
+      throw new Error(`Invalid type in types field in ${program.path}, no such program type: ${type}`);
+    }
+  }
+
+  // Parse degrees
+
+  if(!('degrees' in program.data)) {
+    throw new Error(`Missing degrees field in ${program.path}`);
+  }
+
+  if(!Array.isArray(program.data.degrees)) {
+    throw new Error(`Invalid degrees field in ${program.path}, expected array, got ${typeof program.data.degrees}`);
+  }
+
+  if(program.data.degrees.length === 0) {
+    throw new Error(`Invalid degrees field in ${program.path}, expected at least one degree, got ${program.data.degrees.length}`);
+  }
+
+  const degrees: GraduatePrograms.Program["degrees"] = [];
+
+  for(const degree of program.data.degrees) {
+    try {
+      const fullDegree = await getGraduateDegree(path.join(GRADUATE_PROGRAMS_DEGREES_ROOT, `${degree}.yml`));
+
+      degrees.push({
+        __typename: fullDegree.__typename,
+        id: fullDegree.id,
+        title: fullDegree.title,
+      });
+    } catch(e) {
+      throw new Error(`Invalid degree in degrees field in ${program.path}, no such degree: ${degree}`);
+    }
+  }
+
+  return {
+    __typename: "GraduateProgram",
+    id: program.filename,
+    name: program.data.name,
+    url: program.data.url,
+    types: programTypes,
+    degrees: degrees,
+    tags: program.data.tags,
+  } as GraduatePrograms.Program;
+}
+
+export async function getGraduatePrograms() {
+  const paths = await glob(path.join(GRADUATE_PROGRAMS_PROGRAMS_ROOT, "*.yml"));
+  const programs = await Promise.all(paths.map((path) => getGraduateProgram(path)));
+
+  return programs.sort((a, b) => a.name.localeCompare(b.name));
 }
