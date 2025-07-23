@@ -35,38 +35,38 @@ export type Program =
   | CertificateAndDiplomaProgram
   | ContinuingEducationProgram;
 
-function getProgramUrl(program: Program) {
-  if (typeof program.url === "string") {
-    return program.url;
-  }
-
-  if (typeof program.url === "object") {
-    return program.url.url ?? null;
-  }
-
-  return null;
-}
-
-function getProgramDegrees(program: Program) {
-  if (program.__typename === "NodeUndergraduateProgram" && program.degree) {
-    return [program.degree];
-  }
-
-  if (program.__typename === "GraduateProgram") {
-    return program.degrees;
-  }
-
-  return null;
-}
-
 type ProgramCardProps = {
   program: Program;
   useDegreeAcronym?: boolean;
 };
 
 function ProgramCard({ program, useDegreeAcronym = false }: ProgramCardProps) {
-  const url = getProgramUrl(program);
-  const degrees = getProgramDegrees(program);
+  function getProgramUrl() {
+    if (typeof program.url === "string") {
+      return program.url;
+    }
+
+    if (typeof program.url === "object") {
+      return program.url.url ?? null;
+    }
+
+    return null;
+  }
+
+  function getProgramDegrees() {
+    if (program.__typename === "NodeUndergraduateProgram" && program.degree) {
+      return [program.degree];
+    }
+
+    if (program.__typename === "GraduateProgram") {
+      return program.degrees;
+    }
+
+    return null;
+  }
+
+  const url = getProgramUrl();
+  const degrees = getProgramDegrees();
 
   const styles = tv({
     slots: {
@@ -131,7 +131,7 @@ function ProgramGrid({ programs, useDegreeAcronym = false }: ProgramGridProps) {
   );
 }
 
-export const ProgramSearchNavigation = () => {
+function ProgramSearchNavigation() {
   const pathname = usePathname();
 
   const links = [
@@ -150,7 +150,7 @@ export const ProgramSearchNavigation = () => {
       ))}
     </Navigation>
   );
-};
+}
 
 type ProgramSearchProps = {
   programs: Program[];
