@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import path from "path";
 
 test("home-spotlight-analytics", async ({ page }) => {
   await page.goto("/");
