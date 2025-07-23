@@ -3,11 +3,21 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import type {
   UndergraduateProgramsQuery,
-  UndergraduateProgramFragment, UndergraduateProgramTypeFragment,
+  UndergraduateProgramFragment,
+  UndergraduateProgramTypeFragment,
 } from "@/lib/graphql/types";
 
 export type UndergraduateProgramType = UndergraduateProgramTypeFragment;
-export type UndergraduateProgram = UndergraduateProgramFragment;
+export type UndergraduateProgram = Omit<UndergraduateProgramFragment, "tags"> & {
+  tags: string[];
+};
+
+function parse(degree: UndergraduateProgramFragment) {
+  return {
+    ...degree,
+    tags: degree?.tags?.map((tag) => tag.name) ?? [],
+  } as UndergraduateProgram;
+}
 
 export async function getUndergraduateProgramTypes() {
   const { data } = await query({
@@ -62,7 +72,7 @@ async function getDraftUndergraduatePrograms() {
     }
   `);
 
-  const degrees: UndergraduateProgramsQuery["nodeUndergraduatePrograms"]["nodes"] = [];
+  const programs: UndergraduateProgramsQuery["nodeUndergraduatePrograms"]["nodes"] = [];
   const pageSize = 100;
   let page = 0;
   let total = 1;
@@ -78,7 +88,7 @@ async function getDraftUndergraduatePrograms() {
 
     for (const program of data?.latestContentRevisions?.results ?? []) {
       if (program.__typename === "NodeUndergraduateProgram") {
-        degrees.push(program);
+        programs.push(program);
       }
     }
 
@@ -86,7 +96,7 @@ async function getDraftUndergraduatePrograms() {
     page++;
   }
 
-  return degrees;
+  return programs.map(parse);
 }
 
 async function getPublishedUndergraduatePrograms() {
@@ -121,7 +131,7 @@ async function getPublishedUndergraduatePrograms() {
     hasNextPage = data.nodeUndergraduatePrograms.pageInfo.hasNextPage;
   }
 
-  return programs.filter((program) => program.status);
+  return programs.filter((program) => program.status).map(parse);
 }
 
 export async function getUndergraduatePrograms() {

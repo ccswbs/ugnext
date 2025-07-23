@@ -8,7 +8,16 @@ import type {
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export type UndergraduateDegreeType = UndergraduateDegreeTypeFragment;
-export type UndergraduateDegree = UndergraduateDegreeFragment;
+export type UndergraduateDegree = Omit<UndergraduateDegreeFragment, "tags"> & {
+  tags: string[];
+};
+
+function parse(degree: UndergraduateDegreeFragment) {
+  return {
+    ...degree,
+    tags: degree?.tags?.map((tag) => tag.name) ?? [],
+  } as UndergraduateDegree;
+}
 
 export async function getUndergraduateDegreeTypes() {
   const { data } = await query({
@@ -84,7 +93,7 @@ async function getDraftUndergraduateDegrees() {
     page++;
   }
 
-  return degrees;
+  return degrees.map(parse);
 }
 
 async function getPublishedUndergraduateDegrees() {
@@ -119,7 +128,7 @@ async function getPublishedUndergraduateDegrees() {
     hasNextPage = data.nodeUndergraduateDegrees.pageInfo.hasNextPage;
   }
 
-  return degrees.filter((degree) => degree.status);
+  return degrees.filter((degree) => degree.status).map(parse);
 }
 
 export async function getUndergraduateDegrees() {
