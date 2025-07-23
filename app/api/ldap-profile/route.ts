@@ -166,8 +166,6 @@ export async function GET(request: Request): Promise<Response> {
       });
 
       function proceedWithUserSearch() {
-
-      function proceedWithUserSearch() {
         // Simple focused search - just try the most likely scenarios
         const searchStrategies = [
           { filter: `(uid=${uid})`, description: 'Standard uid search', baseDN: 'ou=People,o=uoguelph.ca' },
