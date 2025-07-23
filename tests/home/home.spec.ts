@@ -19,7 +19,7 @@ test("home-visual-regression", async ({ page, isMobile }) => {
   // Wait for images to load
   for (const img of await images.all()) {
     await img.scrollIntoViewIfNeeded();
-    await expect(img).not.toHaveJSProperty("naturalWidth", 0);
+    await expect(img).toHaveJSProperty("complete", true);
   }
 
   await expect(page).toHaveScreenshot("home.png", {

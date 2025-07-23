@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
-    "static-build": "NEXT_STATIC_OUTPUT=true next build",
+    "static-build": "NEXT_STATIC_OUTPUT=true bun run build",
     "static-start": "NEXT_STATIC_OUTPUT=true bunx serve@latest out",
     "analyze": "ANALYZE=true next dev",
     "export": "next build && next export",
@@ -83,7 +83,6 @@
     "core-js-pure",
     "esbuild",
     "sharp",
-    "sqlite3",
     "unrs-resolver"
   ]
 }
