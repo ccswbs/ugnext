@@ -107,63 +107,10 @@ export async function GET(request: Request): Promise<Response> {
 
       diagnostics.push('✓ LDAP bind successful');
 
-      // Test bind permissions with a simple search to verify the bind actually works
-      diagnostics.push('Testing bind permissions with root search...');
-      const testOpts = {
-        filter: '(objectClass=organization)',
-        scope: 'base' as const,
-        attributes: ['o'],
-        sizeLimit: 1
-      };
-
-      client.search('o=uoguelph.ca', testOpts, (testErr: any, testRes: any) => {
-        if (testErr) {
-          diagnostics.push(`✗ Bind permission test failed: ${testErr.message}`);
-          diagnostics.push('This suggests the LDAP credentials may be incorrect or have insufficient permissions');
-          if (testErr.code) {
-            diagnostics.push(`Permission test error code: ${testErr.code}`);
-          }
-          
-          client.unbind();
-          resolve(NextResponse.json({ 
-            error: 'LDAP bind succeeded but permissions test failed - check credentials', 
-            diagnostics 
-          }, { status: 500 }));
-          return;
-        }
-
-        let permissionTestPassed = false;
-
-        testRes.on('searchEntry', (entry: any) => {
-          diagnostics.push('✓ Bind permission test passed - credentials are working');
-          permissionTestPassed = true;
-        });
-
-        testRes.on('error', (testResErr: any) => {
-          diagnostics.push(`✗ Bind permission test error: ${testResErr.message}`);
-          client.unbind();
-          resolve(NextResponse.json({ 
-            error: 'LDAP permissions insufficient', 
-            diagnostics 
-          }, { status: 500 }));
-        });
-
-        testRes.on('end', () => {
-          if (!permissionTestPassed) {
-            diagnostics.push('✗ Bind permission test failed - no results returned');
-            diagnostics.push('This indicates insufficient LDAP permissions or incorrect credentials');
-            client.unbind();
-            resolve(NextResponse.json({ 
-              error: 'LDAP permissions insufficient or credentials incorrect', 
-              diagnostics 
-            }, { status: 500 }));
-            return;
-          }
-
-          // Permissions verified, proceed with user search
-          proceedWithUserSearch();
-        });
-      });
+      // Skip permission test and go directly to user search
+      // The bind user might only have permission to search specific OUs, not the root
+      diagnostics.push('Skipping root permission test - proceeding directly to user search');
+      proceedWithUserSearch();
 
       function proceedWithUserSearch() {
         // Simple focused search - just try the most likely scenarios
