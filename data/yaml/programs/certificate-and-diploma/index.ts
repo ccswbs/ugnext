@@ -2,22 +2,20 @@ import path from "path";
 import { yaml, YAML_DATA_ROOT } from "@/data/yaml";
 import { glob } from "glob";
 
-namespace CertificateAndDiplomaPrograms {
-  export type ProgramType = {
-    __typename: "CertificateAndDiplomaProgramType";
-    id: string;
-    name: string;
-  }
+export type CertificateAndDiplomaProgramType = {
+  __typename: "CertificateAndDiplomaProgramType";
+  id: string;
+  name: string;
+};
 
-  export type Program = {
-    __typename: "CertificateAndDiplomaProgram";
-    id: string;
-    title: string;
-    url: string;
-    types: ProgramType[];
-    tags: string[];
-  }
-}
+export type CertificateAndDiplomaProgram = {
+  __typename: "CertificateAndDiplomaProgram";
+  id: string;
+  title: string;
+  url: string;
+  types: CertificateAndDiplomaProgramType[];
+  tags: string[];
+};
 
 const CERTIFICATE_AND_DIPLOMA_ROOT = path.join(YAML_DATA_ROOT, "programs", "certificate-and-diploma");
 const CERTIFICATE_AND_DIPLOMA_PROGRAM_TYPES_ROOT = path.join(CERTIFICATE_AND_DIPLOMA_ROOT, "program-types");
@@ -26,11 +24,11 @@ const CERTIFICATE_AND_DIPLOMA_PROGRAMS_ROOT = path.join(CERTIFICATE_AND_DIPLOMA_
 export async function getCertificateAndDiplomaProgramType(filepath: string) {
   const programType = await yaml(filepath);
 
-  if(!('name' in programType.data)) {
+  if (!("name" in programType.data)) {
     throw new Error(`Missing name field in ${programType.path}`);
   }
 
-  if(typeof programType.data.name !== 'string') {
+  if (typeof programType.data.name !== "string") {
     throw new Error(`Invalid name field in ${programType.path}, expected string, got ${typeof programType.data.name}`);
   }
 
@@ -38,7 +36,7 @@ export async function getCertificateAndDiplomaProgramType(filepath: string) {
     __typename: "CertificateAndDiplomaProgramType",
     id: programType.filename,
     name: programType.data.name,
-  } as CertificateAndDiplomaPrograms.ProgramType;
+  } as CertificateAndDiplomaProgramType;
 }
 
 export async function getCertificateAndDiplomaProgramTypes() {
@@ -51,49 +49,53 @@ export async function getCertificateAndDiplomaProgramTypes() {
 export async function getCertificateAndDiplomaProgram(filepath: string) {
   const program = await yaml(filepath);
 
-  if(!('name' in program.data)) {
+  if (!("name" in program.data)) {
     throw new Error(`Missing name field in ${program.path}`);
   }
 
-  if(typeof program.data.name !== 'string') {
+  if (typeof program.data.name !== "string") {
     throw new Error(`Invalid name field in ${program.path}, expected string, got ${typeof program.data.name}`);
   }
 
-  if(!('url' in program.data)) {
+  if (!("url" in program.data)) {
     throw new Error(`Missing url field in ${program.path}`);
   }
 
-  if(typeof program.data.url !== 'string') {
+  if (typeof program.data.url !== "string") {
     throw new Error(`Invalid url field in ${program.path}, expected string, got ${typeof program.data.url}`);
   }
 
-  if(!('tags' in program.data)) {
+  if (!("tags" in program.data)) {
     throw new Error(`Missing tags field in ${program.path}`);
   }
 
-  if(!Array.isArray(program.data.tags)) {
+  if (!Array.isArray(program.data.tags)) {
     throw new Error(`Invalid tags field in ${program.path}, expected array, got ${typeof program.data.tags}`);
   }
 
   // Parse types field
-  if(!('types' in program.data)) {
+  if (!("types" in program.data)) {
     throw new Error(`Missing types field in ${program.path}`);
   }
 
-  if(!Array.isArray(program.data.types)) {
+  if (!Array.isArray(program.data.types)) {
     throw new Error(`Invalid types field in ${program.path}, expected array, got ${typeof program.data.types}`);
   }
 
-  if(program.data.types.length === 0) {
-    throw new Error(`Invalid types field in ${program.path}, expected at least one type, got ${program.data.types.length}`);
+  if (program.data.types.length === 0) {
+    throw new Error(
+      `Invalid types field in ${program.path}, expected at least one type, got ${program.data.types.length}`
+    );
   }
 
-  const programTypes: CertificateAndDiplomaPrograms.ProgramType[] = [];
+  const programTypes: CertificateAndDiplomaProgramType[] = [];
 
-  for(const type of program.data.types) {
+  for (const type of program.data.types) {
     try {
-      programTypes.push(await getCertificateAndDiplomaProgramType(path.join(CERTIFICATE_AND_DIPLOMA_PROGRAM_TYPES_ROOT, `${type}.yml`)));
-    } catch(e) {
+      programTypes.push(
+        await getCertificateAndDiplomaProgramType(path.join(CERTIFICATE_AND_DIPLOMA_PROGRAM_TYPES_ROOT, `${type}.yml`))
+      );
+    } catch (e) {
       throw new Error(`Invalid type in types field in ${program.path}, no such program type: ${type}`);
     }
   }
@@ -105,7 +107,7 @@ export async function getCertificateAndDiplomaProgram(filepath: string) {
     url: program.data.url,
     types: programTypes,
     tags: program.data.tags,
-  } as CertificateAndDiplomaPrograms.Program;
+  } as CertificateAndDiplomaProgram;
 }
 
 export async function getCertificateAndDiplomaPrograms() {
