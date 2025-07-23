@@ -1,7 +1,6 @@
 import path from "path";
 import { yaml, YAML_DATA_ROOT } from "@/data/yaml";
 import { glob } from "glob";
-import Degree = GraduatePrograms.Degree;
 
 namespace GraduatePrograms {
   export type DegreeType = {
