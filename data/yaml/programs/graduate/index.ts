@@ -27,8 +27,8 @@ export type GraduateProgram = {
   id: string;
   title: string;
   url: string;
-  types: GraduateProgramType[];
-  degrees: Pick<GraduateDegree, "id" | "title" | "__typename">[];
+  type: GraduateProgramType[];
+  degrees: Pick<GraduateDegree, "id" | "title" | "__typename" | "acronym">[];
   tags: string[];
 };
 
@@ -216,6 +216,7 @@ export async function getGraduateProgram(filepath: string) {
         __typename: fullDegree.__typename,
         id: fullDegree.id,
         title: fullDegree.title,
+        acronym: fullDegree.acronym,
       });
     } catch (e) {
       throw new Error(`Invalid degree in degrees field in ${program.path}, no such degree: ${degree}`);
@@ -227,7 +228,7 @@ export async function getGraduateProgram(filepath: string) {
     id: program.filename,
     title: program.data.name,
     url: program.data.url,
-    types: programTypes,
+    type: programTypes,
     degrees: degrees,
     tags: program.data.tags,
   } as GraduateProgram;

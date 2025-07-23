@@ -13,7 +13,7 @@ export type ContinuingEducationProgram = {
   id: string;
   title: string;
   url: string;
-  types: ContinuingEducationProgramType[];
+  type: ContinuingEducationProgramType[];
   tags: string[];
 };
 
@@ -105,7 +105,7 @@ export async function getContinuingEducationProgram(filepath: string) {
     id: program.filename,
     title: program.data.name,
     url: program.data.url,
-    types: programTypes,
+    type: programTypes,
     tags: program.data.tags,
   } as ContinuingEducationProgram;
 }

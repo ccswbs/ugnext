@@ -13,7 +13,7 @@ export type CertificateAndDiplomaProgram = {
   id: string;
   title: string;
   url: string;
-  types: CertificateAndDiplomaProgramType[];
+  type: CertificateAndDiplomaProgramType[];
   tags: string[];
 };
 
@@ -105,7 +105,7 @@ export async function getCertificateAndDiplomaProgram(filepath: string) {
     id: program.filename,
     title: program.data.name,
     url: program.data.url,
-    types: programTypes,
+    type: programTypes,
     tags: program.data.tags,
   } as CertificateAndDiplomaProgram;
 }
