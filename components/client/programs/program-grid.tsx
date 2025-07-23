@@ -1,7 +1,13 @@
-import { ProgramCard } from "./program-card";
+import { Program, ProgramCard } from "./program-card";
 import { Grid } from "@uoguelph/react-components/grid";
 
-export const ProgramGrid = ({ programs, condensedDegrees = false }) => {
+export function ProgramGrid({
+  programs,
+  useDegreeAcronym = false,
+}: {
+  programs: Program[];
+  useDegreeAcronym?: boolean;
+}) {
   return (
     <Grid
       template={{
@@ -20,8 +26,8 @@ export const ProgramGrid = ({ programs, condensedDegrees = false }) => {
       }}
     >
       {programs?.map((program) => (
-        <ProgramCard key={program.id} program={program} condensedDegrees={condensedDegrees} />
+        <ProgramCard key={program.id} program={program} useDegreeAcronym={useDegreeAcronym} />
       ))}
     </Grid>
   );
-};
+}
