@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { Container } from "@uoguelph/react-components/container";
 import { Card, CardContent, CardTitle, CardFooter } from "@uoguelph/react-components/card";
+import { Grid } from "@uoguelph/react-components/grid";
+import { Navigation, NavigationLink } from "@uoguelph/react-components/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { tv } from "tailwind-variants";
 import type { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import type { UndergraduateDegree } from "@/data/drupal/undergraduate-degree";
@@ -14,10 +18,6 @@ import type { GraduateDegreeType, GraduateProgramType } from "@/data/yaml/progra
 import type { CertificateAndDiplomaProgramType } from "@/data/yaml/programs/certificate-and-diploma";
 import type { ContinuingEducationProgramType } from "@/data/yaml/programs/continuing-education";
 import type { UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree";
-import { Grid } from "@uoguelph/react-components/grid";
-import { usePathname } from "next/navigation";
-import { Navigation, NavigationLink } from "@uoguelph/react-components/navigation";
-import Link from "next/link";
 
 export type ProgramType =
   | UndergraduateProgramType
