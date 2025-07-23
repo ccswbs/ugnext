@@ -78,92 +78,150 @@ export async function GET(request: Request): Promise<Response> {
 
       diagnostics.push('✓ LDAP bind successful');
 
-      const opts = {
-        filter: `(uid=${uid})`,
-        scope: 'sub' as const,
-        attributes: ['mail', 'telephonenumber', 'roomnumber', 'ou'],
-      };
+      // Try multiple search strategies
+      const searchStrategies = [
+        { filter: `(uid=${uid})`, description: 'Standard uid search' },
+        { filter: `(sAMAccountName=${uid})`, description: 'Windows AD style search' },
+        { filter: `(cn=${uid})`, description: 'Common name search' },
+        { filter: `(userPrincipalName=${uid})`, description: 'UPN search' },
+        { filter: `(mail=${uid}*)`, description: 'Email prefix search' },
+        { filter: `(|(uid=${uid})(sAMAccountName=${uid})(cn=${uid}))`, description: 'Multi-attribute OR search' }
+      ];
 
-      diagnostics.push(`Starting LDAP search with filter: ${opts.filter}`);
-      diagnostics.push(`Search base DN: ${process.env.LDAP_BASE_DN}`);
-
-      client.search(process.env.LDAP_BASE_DN!, opts, (err: any, res: any) => {
-        if (err) {
-          diagnostics.push(`✗ LDAP search initiation error: ${err.message}`);
-          client.unbind();
-          resolve(NextResponse.json({ 
-            error: 'LDAP search failed to start', 
-            diagnostics 
-          }, { status: 500 }));
+      let strategyIndex = 0;
+      
+      function tryNextStrategy() {
+        if (strategyIndex >= searchStrategies.length) {
+          // If all strategies failed, try a broader search to see what's actually there
+          diagnostics.push('All specific searches failed. Trying broader search to see directory structure...');
+          
+          const broadOpts = {
+            filter: '(objectClass=*)',
+            scope: 'one' as const,
+            attributes: ['uid', 'sAMAccountName', 'cn', 'objectClass', 'mail'],
+            sizeLimit: 10
+          };
+          
+          client.search(process.env.LDAP_BASE_DN!, broadOpts, (err: any, res: any) => {
+            if (err) {
+              diagnostics.push(`✗ Broad search failed: ${err.message}`);
+              client.unbind();
+              resolve(NextResponse.json({ error: 'All searches failed', diagnostics }, { status: 500 }));
+              return;
+            }
+            
+            const sampleEntries: any[] = [];
+            
+            res.on('searchEntry', (entry: any) => {
+              if (entry?.attributes) {
+                const result: Record<string, any> = {};
+                entry.attributes.forEach((attr: any) => {
+                  result[attr.type] = attr.vals || [];
+                });
+                sampleEntries.push(result);
+              }
+            });
+            
+            res.on('end', () => {
+              diagnostics.push(`Found ${sampleEntries.length} sample entries in base DN`);
+              if (sampleEntries.length > 0) {
+                diagnostics.push('Sample entry structure:');
+                const sample = sampleEntries[0];
+                Object.keys(sample).forEach(key => {
+                  diagnostics.push(`  ${key}: ${Array.isArray(sample[key]) ? sample[key].join(', ') : sample[key]}`);
+                });
+              }
+              
+              client.unbind();
+              resolve(NextResponse.json({ 
+                error: 'No entry found with any search strategy', 
+                diagnostics,
+                sampleEntries: sampleEntries.slice(0, 3) // Include first 3 sample entries
+              }, { status: 404 }));
+            });
+            
+            res.on('error', (err: any) => {
+              diagnostics.push(`✗ Broad search error: ${err.message}`);
+              client.unbind();
+              resolve(NextResponse.json({ error: 'Broad search failed', diagnostics }, { status: 500 }));
+            });
+          });
           return;
         }
-        
-        const entries: any[] = [];
 
-        res.on('searchEntry', (entry: any) => {
-          diagnostics.push('✓ LDAP search entry found!');
+        const strategy = searchStrategies[strategyIndex];
+        const opts = {
+          filter: strategy.filter,
+          scope: 'sub' as const,
+          attributes: ['mail', 'telephonenumber', 'roomnumber', 'ou', 'uid', 'sAMAccountName', 'cn'],
+        };
 
-          if (entry?.object) {
-            entries.push(entry.object);
-          } else if (entry?.attributes) {
-            const result: Record<string, string> = {};
-            entry.attributes.forEach((attr: any) => {
-              result[attr.type] = attr.vals?.[0] || null;
-            });
-            entries.push(result);
-          }
-        });
+        diagnostics.push(`Trying strategy ${strategyIndex + 1}: ${strategy.description}`);
+        diagnostics.push(`Search filter: ${strategy.filter}`);
 
-        res.on('searchReference', (referral: any) => {
-          diagnostics.push(`LDAP search referral received: ${referral}`);
-        });
-
-        res.on('error', (err: any) => {
-          diagnostics.push(`✗ LDAP search error: ${err.message}`);
-          client.unbind();
-          resolve(NextResponse.json({ 
-            error: 'LDAP search failed', 
-            diagnostics 
-          }, { status: 500 }));
-        });
-
-        res.on('end', (result: any) => {
-          diagnostics.push(`LDAP search completed with status: ${result?.status || 'unknown'}`);
-          diagnostics.push(`Total entries found: ${entries.length}`);
-          client.unbind();
-
-          if (entries.length === 0) {
-            diagnostics.push(`✗ No LDAP entry found for uid=${uid}`);
-            diagnostics.push('Possible causes:');
-            diagnostics.push('- The uid does not exist in the LDAP directory');
-            diagnostics.push('- The uid exists but not in the search base DN');
-            diagnostics.push('- The search filter is not matching the entry format');
-            diagnostics.push('- Insufficient permissions to read the entry');
-            
-            resolve(NextResponse.json({ 
-              error: 'No entry found', 
-              diagnostics 
-            }, { status: 404 }));
+        client.search(process.env.LDAP_BASE_DN!, opts, (err: any, res: any) => {
+          if (err) {
+            diagnostics.push(`✗ Strategy ${strategyIndex + 1} search error: ${err.message}`);
+            strategyIndex++;
+            tryNextStrategy();
             return;
           }
+          
+          const entries: any[] = [];
 
-          const entry = entries[0];
-          const mail = entry.mail || null;
-          const telephoneNumber = entry.telephonenumber || null;
-          const roomNumber = entry.roomnumber || null;
-          const ou = entry.ou || null;
+          res.on('searchEntry', (entry: any) => {
+            diagnostics.push(`✓ Strategy ${strategyIndex + 1} found entry!`);
 
-          diagnostics.push('✓ Successfully retrieved LDAP data');
+            if (entry?.object) {
+              entries.push(entry.object);
+            } else if (entry?.attributes) {
+              const result: Record<string, string> = {};
+              entry.attributes.forEach((attr: any) => {
+                result[attr.type] = attr.vals?.[0] || null;
+              });
+              entries.push(result);
+            }
+          });
 
-          resolve(NextResponse.json({ 
-            mail, 
-            telephoneNumber, 
-            roomNumber, 
-            ou, 
-            diagnostics 
-          }));
+          res.on('error', (err: any) => {
+            diagnostics.push(`✗ Strategy ${strategyIndex + 1} search error: ${err.message}`);
+            strategyIndex++;
+            tryNextStrategy();
+          });
+
+          res.on('end', (result: any) => {
+            diagnostics.push(`Strategy ${strategyIndex + 1} completed with ${entries.length} entries`);
+            
+            if (entries.length > 0) {
+              const entry = entries[0];
+              const mail = entry.mail || null;
+              const telephoneNumber = entry.telephonenumber || null;
+              const roomNumber = entry.roomnumber || null;
+              const ou = entry.ou || null;
+
+              diagnostics.push(`✓ Successfully found data using: ${strategy.description}`);
+              client.unbind();
+
+              resolve(NextResponse.json({ 
+                mail, 
+                telephoneNumber, 
+                roomNumber, 
+                ou, 
+                diagnostics,
+                foundWith: strategy.description
+              }));
+              return;
+            }
+            
+            // Try next strategy
+            strategyIndex++;
+            tryNextStrategy();
+          });
         });
-      });
+      }
+
+      // Start with the first strategy
+      tryNextStrategy();
     });
   });
 }
