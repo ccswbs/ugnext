@@ -70,7 +70,7 @@ export default async function ProgramsUndergraduate() {
           </Typography>
         </Container>
 
-        {JSON.stringify(combined)}
+        <ProgramSearch programs={combined} types={combinedTypes} />
       </LayoutContent>
 
       <Footer></Footer>

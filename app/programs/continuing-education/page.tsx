@@ -20,8 +20,6 @@ export default async function ProgramsContinuingEducation() {
   const programs = await getContinuingEducationPrograms();
   const types = await getContinuingEducationProgramTypes();
 
-  console.log(types, programs);
-
   return (
     <Layout>
       <Header></Header>
@@ -33,7 +31,7 @@ export default async function ProgramsContinuingEducation() {
           </Typography>
         </Container>
 
-
+        <ProgramSearch programs={programs} types={types} />
       </LayoutContent>
 
       <Footer></Footer>

@@ -20,8 +20,6 @@ export default async function ProgramsCertificateAndDiploma() {
   const programs = await getCertificateAndDiplomaPrograms();
   const types = await getCertificateAndDiplomaProgramTypes();
 
-  console.log(types, programs);
-
   return (
     <Layout>
       <Header></Header>
@@ -33,6 +31,7 @@ export default async function ProgramsCertificateAndDiploma() {
           </Typography>
         </Container>
 
+        <ProgramSearch programs={programs} types={types} />
       </LayoutContent>
 
       <Footer></Footer>

@@ -45,6 +45,7 @@ export function ProgramCard({ program, useDegreeAcronym = false }: { program: Pr
     slots: {
       card: "h-full hover:scale-105 transition-transform",
       content: "flex-1 flex justify-center",
+      degrees: "flex flex-wrap gap-2",
       degree: "text-black/65",
       footer: "overflow-hidden text-ellipsis whitespace-nowrap",
     },
@@ -55,11 +56,13 @@ export function ProgramCard({ program, useDegreeAcronym = false }: { program: Pr
       <CardContent className={styles.content()}>
         <CardTitle>{program.title}</CardTitle>
 
-        {degrees?.map((degree) => (
-          <span key={degree.id} className="text-black/65">
-            {degree.__typename === "GraduateDegree" && useDegreeAcronym ? degree.acronym : degree.title}
-          </span>
-        ))}
+        <div className={styles.degrees()}>
+          {degrees?.map((degree) => (
+            <span key={degree.id} className="text-black/65">
+              {degree.__typename === "GraduateDegree" && useDegreeAcronym ? degree.acronym : degree.title}
+            </span>
+          ))}
+        </div>
       </CardContent>
 
       <CardFooter>

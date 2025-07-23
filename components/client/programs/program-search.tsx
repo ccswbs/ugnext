@@ -14,6 +14,7 @@ import type { UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree
 
 type ProgramType =
   | UndergraduateProgramType
+  | UndergraduateDegreeType
   | GraduateProgramType
   | CertificateAndDiplomaProgramType
   | ContinuingEducationProgramType;
