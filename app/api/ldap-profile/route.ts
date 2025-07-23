@@ -18,23 +18,6 @@ export async function GET(request: Request): Promise<Response> {
   diagnostics.push(`Environment check: LDAP_BASE_DN=${process.env.LDAP_BASE_DN ? 'SET' : 'NOT SET'}`);
   diagnostics.push(`Environment check: LDAP_PASSWORD=${process.env.LDAP_PASSWORD ? 'SET' : 'NOT SET'}`);
 
-  {/*   if (process.env.LDAP_URL) {
-    diagnostics.push(`LDAP_URL length: ${process.env.LDAP_URL.length} chars`);
-    diagnostics.push(`LDAP_URL starts with: ${process.env.LDAP_URL.substring(0, 10)}...`);
-  }
-  if (process.env.LDAP_BIND_DN) {
-    diagnostics.push(`LDAP_BIND_DN length: ${process.env.LDAP_BIND_DN.length} chars`);
-    diagnostics.push(`LDAP_BIND_DN value: ${process.env.LDAP_BIND_DN}`);
-  }
-  if (process.env.LDAP_BASE_DN) {
-    diagnostics.push(`LDAP_BASE_DN length: ${process.env.LDAP_BASE_DN.length} chars`);
-    diagnostics.push(`LDAP_BASE_DN value: ${process.env.LDAP_BASE_DN}`);
-  }
-  if (process.env.LDAP_PASSWORD) {
-    diagnostics.push(`LDAP_PASSWORD length: ${process.env.LDAP_PASSWORD.length} chars`);
-    diagnostics.push(`LDAP_PASSWORD starts with: ${process.env.LDAP_PASSWORD.substring(0, 3)}...`);
-  } */}
-
   if (!process.env.LDAP_URL || !process.env.LDAP_BIND_DN || !process.env.LDAP_PASSWORD || !process.env.LDAP_BASE_DN) {
     diagnostics.push('✗ Critical LDAP environment variables are missing!');
     return NextResponse.json({
@@ -55,9 +38,9 @@ export async function GET(request: Request): Promise<Response> {
     diagnostics.push('Skipping root permission test - proceeding directly to user search');
 
     const searchStrategies = [
-      { filter: `(uid=${uid})`, description: 'Standard uid search', baseDN: 'ou=People,o=uoguelph.ca' },
-      { filter: `(uid=${uid})`, description: 'Standard uid search (env variable)', baseDN: process.env.LDAP_BASE_DN },
-      { filter: `(mail=${uid}@uoguelph.ca)`, description: 'Email exact search', baseDN: 'ou=People,o=uoguelph.ca' }
+      { filter: `(uid=${uid})`, description: 'Standard uid search with hardcoded baseDN' },
+      { filter: `(uid=${uid})`, description: 'Standard uid search with env variable baseDN' },
+      { filter: `(mail=${uid}@uoguelph.ca)`, description: 'Email exact search with hardcoded baseDN' }
     ];
 
     for (let i = 0; i < searchStrategies.length; i++) {
