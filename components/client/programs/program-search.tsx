@@ -68,6 +68,8 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
   });
 
   const filtered = useMemo(() => {
+    if (input === "") return programs;
+
     const results = search({
       term: input,
       properties: ["title", "tags"],
@@ -80,7 +82,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
     // console.log(`Found ${results.count} results in ${results.elapsed.formatted}`);
 
     return results.hits.map((hit) => hit.document as Program);
-  }, [input, search]);
+  }, [input, programs, search]);
 
   return (
     <div className="flex flex-col relative">
@@ -104,10 +106,10 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
       </div>
 
       <Container>
-        <ProgramGrid programs={input === "" ? programs : filtered} useDegreeAcronym={useDegreeAcronym} />
+        <ProgramGrid programs={filtered} useDegreeAcronym={useDegreeAcronym} />
 
         {/* No results were found */}
-        {filtered?.length === 0 && (
+        {filtered.length === 0 && (
           <div className="flex w-full items-center justify-center">
             <span className="text-xl font-bold text-black/50">No programs matching your criteria were found.</span>
           </div>
