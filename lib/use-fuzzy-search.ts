@@ -17,6 +17,7 @@ type Props<TSchema extends AnySchema, TData extends PartialSchemaDeep<Schema<TSc
   schema: TSchema;
   data: TData[];
   stopwords?: string[];
+  stemming?: boolean;
   plugins?: OramaPlugin[];
 };
 
@@ -24,6 +25,7 @@ export function useFuzzySearch<TSchema extends AnySchema, TData extends PartialS
   schema,
   data,
   stopwords = [],
+  stemming = false,
   plugins,
 }: Props<TSchema, TData>) {
   return useMemo(() => {
@@ -32,6 +34,7 @@ export function useFuzzySearch<TSchema extends AnySchema, TData extends PartialS
       components: {
         tokenizer: {
           stopWords: [...englishStopwords, ...(stopwords ?? [])],
+          stemming: stemming,
         },
       },
       plugins: plugins,
