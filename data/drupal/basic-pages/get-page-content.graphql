@@ -3,7 +3,7 @@
 #import "../widgets.graphql"
 
 query GetPage($id: String = "", $status: Boolean = false) {
-  contentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
+  latestContentRevisions(filter: { id: $id, status: $status, type: "page" }, pageSize: 1) {
     results {
       ... on NodePage {
         primaryNavigation {
