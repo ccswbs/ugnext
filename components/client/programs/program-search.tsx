@@ -6,6 +6,7 @@ import { TextInput } from "@uoguelph/react-components/text-input";
 import { ProgramGrid } from "@/components/client/programs/program-grid";
 import { ProgramSearchNavigation } from "@/components/client/programs/program-search-navigation";
 import { Container } from "@uoguelph/react-components/container";
+import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import type { UndergraduateProgram, UndergraduateProgramType } from "@/data/drupal/undergraduate-program";
 import type { UndergraduateDegree, UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree";
 import type { GraduateDegreeType, GraduateProgram, GraduateProgramType } from "@/data/yaml/programs/graduate";
@@ -18,6 +19,7 @@ import type {
   ContinuingEducationProgramType,
 } from "@/data/yaml/programs/continuing-education";
 import { pluginQPS } from "@orama/plugin-qps";
+import { Field, Label } from "@headlessui/react";
 
 export type ProgramType =
   | UndergraduateProgramType
@@ -58,6 +60,7 @@ const defaultParams = {
 
 export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym = false }: ProgramSearchProps) => {
   const [input, setInput] = useState("");
+  const [selectedTypes, setSelectedTypes] = useState<ProgramType[]>(types);
 
   // The fuzzy search function
   const search = useFuzzySearch({
@@ -67,7 +70,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
     stopwords: ["development"],
   });
 
-  const filtered = useMemo(() => {
+  const fuzzyMatches = useMemo(() => {
     if (input === "") return programs;
 
     const results = search({
@@ -84,6 +87,19 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
     return results.hits.map((hit) => hit.document as Program);
   }, [input, programs, search]);
 
+  const filtered = useMemo(() => {
+    if (selectedTypes.length === 0) return fuzzyMatches;
+
+    return fuzzyMatches.filter((program) => {
+      if (Array.isArray(program.type)) {
+        return program.type.some((type) => selectedTypes.some((t) => t.id === type.id));
+      }
+
+      // @ts-ignore
+      return selectedTypes.some((type) => type.id === program.type.id);
+    });
+  }, [fuzzyMatches, selectedTypes]);
+
   return (
     <div className="flex flex-col relative">
       <Container className="py-0!">
@@ -91,7 +107,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
       </Container>
 
       <div className="w-full bg-yellow -mt-1">
-        <Container className="bg-yellow flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end">
+        <Container className="w-full bg-yellow flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end">
           <div className="flex-1">
             <TextInput
               placeholder="ex. programming, engineering, psychology, etc."
@@ -102,6 +118,31 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
               <span className="text-l font-bold mb-1">What would you like to study?</span>
             </TextInput>
           </div>
+
+          <Field className="sm:w-1/3 md:w-1/4">
+            <Label className="text-body-copy-bold font-bold">Filter by type</Label>
+            <Select
+              value={selectedTypes}
+              multiple
+              onChange={(value) => {
+                setSelectedTypes(value);
+              }}
+              as="div"
+            >
+              <SelectButton>
+                <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                  {(selectedTypes.length > 0 ? selectedTypes : types).map((type) => type.name).join(", ")}
+                </span>
+              </SelectButton>
+              <SelectOptions>
+                {types.map((type) => (
+                  <SelectOption value={type} key={type.id}>
+                    {type.name}
+                  </SelectOption>
+                ))}
+              </SelectOptions>
+            </Select>
+          </Field>
         </Container>
       </div>
 
