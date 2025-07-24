@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useFuzzySearch } from "@/lib/use-fuzzy-search";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { ProgramGrid } from "@/components/client/programs/program-grid";
