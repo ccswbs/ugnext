@@ -9,15 +9,13 @@ import { Breadcrumbs } from "@/components/server/breadcrumbs";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
-//import { WidgetSelector } from "@/components/client/widgets/widget-selector";
+import { fetchLdapProfile } from "@/lib/ldap-utils";
 
 export type ProfileProps = {
   id: string;
   pre?: React.ReactNode;
   post?: React.ReactNode;
 };
-
-type ProfileContent = NonNullable<Awaited<ReturnType<typeof getProfileContent>>>;
 
 export async function Profile({ id, pre, post }: ProfileProps) {
   const content = await getProfileContent(id);
@@ -33,6 +31,39 @@ export async function Profile({ id, pre, post }: ProfileProps) {
     }
 
     notFound();
+  }
+
+  // Use centralLoginId from GraphQL data
+  const uid = (content as any).centralLoginId;
+  
+  // Fetch LDAP data if any directory fields are enabled and we have a uid
+  const shouldFetchLdap = uid && ((content as any).directoryEmail || (content as any).directoryOffice || (content as any).directoryPhone);
+  const ldapData = shouldFetchLdap ? await fetchLdapProfile(uid) : null;
+
+  // Build contact info array to avoid complex conditional markup
+  const contactInfo = [];
+  if ((content as any).directoryEmail && ldapData?.mail) {
+    contactInfo.push(
+      <>
+        <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
+        <span className="sr-only">Email:</span>{ldapData.mail}
+      </>
+    );
+  }
+  if ((content as any).directoryOffice && ldapData?.roomNumber && typeof ldapData.roomNumber === 'string' && ldapData.roomNumber.trim()) {
+    contactInfo.push(
+      <>
+        <strong>Office:</strong> {ldapData.roomNumber}
+      </>
+    );
+  }
+  if ((content as any).directoryPhone && ldapData?.telephoneNumber && typeof ldapData.telephoneNumber === 'string' && ldapData.telephoneNumber.trim()) {
+    contactInfo.push(
+      <>
+        <i className="fa-solid fa-phone me-2" aria-hidden="true"></i>
+        <span className="sr-only">Phone:</span>{ldapData.telephoneNumber}
+      </>
+    );
   }
 
   return (
@@ -57,6 +88,17 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               />
             )}
             <div className="flex-1">
+              {/* Directory contact info from LDAP */}
+              {contactInfo.length > 0 && (
+                <Typography type="body" className="mb-4">
+                  {contactInfo.map((info, index) => (
+                    <>
+                      {index > 0 && <br />}
+                      {info}
+                    </>
+                  ))}
+                </Typography>
+              )}
               <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
               {content.uniwebId && (
                 <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>

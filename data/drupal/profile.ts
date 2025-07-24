@@ -11,6 +11,10 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     primaryNavigation {
       ...Navigation
     }
+    centralLoginId
+    directoryEmail
+    directoryOffice
+    directoryPhone
     uniwebId
     body {
       processed
