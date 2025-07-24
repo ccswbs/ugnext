@@ -44,27 +44,17 @@ type ProgramSearchProps = {
   useDegreeAcronym?: boolean;
 };
 
-const ProgramSearchSchema = {
-  id: "string",
-  title: "string",
-  tags: "string[]",
-} as const;
-
-const defaultParams = {
-  properties: ["title", "tags"],
-  boost: {
-    title: 2,
-  },
-  tolerance: 1,
-};
-
 export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym = false }: ProgramSearchProps) => {
   const [input, setInput] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<ProgramType[]>(types);
 
   // The fuzzy search function
   const search = useFuzzySearch({
-    schema: ProgramSearchSchema,
+    schema: {
+      id: "string",
+      title: "string",
+      tags: "string[]",
+    },
     data: programs,
     plugins: [pluginQPS()],
     stopwords: ["development"],
