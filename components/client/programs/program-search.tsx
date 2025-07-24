@@ -17,6 +17,7 @@ import type {
   ContinuingEducationProgram,
   ContinuingEducationProgramType,
 } from "@/data/yaml/programs/continuing-education";
+import { pluginQPS } from "@orama/plugin-qps";
 
 export type ProgramType =
   | UndergraduateProgramType
@@ -62,6 +63,8 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
   const search = useFuzzySearch({
     schema: ProgramSearchSchema,
     data: programs,
+    plugins: [pluginQPS()],
+    stopwords: ["development"],
   });
 
   const filtered = useMemo(() => {
@@ -73,6 +76,8 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
       },
       tolerance: 1,
     });
+
+    // console.log(`Found ${results.count} results in ${results.elapsed.formatted}`);
 
     return results.hits.map((hit) => hit.document as Program);
   }, [input, search]);
