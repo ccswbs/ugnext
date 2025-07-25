@@ -11,6 +11,40 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { fetchLdapProfile } from "@/lib/ldap-utils";
+import { getProfile } from "@/lib/uniweb-utils";
+
+// Component to display Uniweb research interests
+async function UniwebResearchInterests({ uniwebId }: { uniwebId: string }) {
+  try {
+    const uniwebProfile = await getProfile(uniwebId);
+    
+    if (uniwebProfile.research_interests && uniwebProfile.research_interests.length > 0) {
+      const sortedInterests = uniwebProfile.research_interests
+        .sort((a, b) => parseInt(a.order) - parseInt(b.order));
+      
+      return (
+        <div className="mb-4">
+          <Typography type="h3" as="h3" className="mb-2">
+            Research Interests
+          </Typography>
+          <ul className="list-disc list-inside space-y-1 ml-4">
+            {sortedInterests.map((interest) => (
+              <li key={interest.id}>
+                <Typography type="body" className="inline">
+                  {interest.interest[1]}
+                </Typography>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+  } catch (error) {
+    console.error('Error fetching Uniweb research interests:', error);
+  }
+  
+  return null;
+}
 
 interface ProfileContent {
   status: boolean;
@@ -22,6 +56,12 @@ interface ProfileContent {
   directoryOffice: boolean;
   directoryPhone: boolean;
   uniwebId?: string;
+  uniwebAffiliations?: boolean;
+  uniwebCurrentTeaching?: boolean;
+  uniwebDegrees?: boolean;
+  uniwebPublications?: boolean;
+  uniwebResearchDesc?: boolean;
+  uniwebResearchInterests?: boolean;
   primaryNavigation?: {
     menuName?: string;
   };
@@ -141,6 +181,10 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
                   View UniWeb profile
                 </Link>          
+              )}
+              
+              {content.uniwebResearchInterests && content.uniwebId && (
+                <UniwebResearchInterests uniwebId={content.uniwebId} />
               )}
             </div>
                       

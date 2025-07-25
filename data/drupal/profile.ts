@@ -43,8 +43,13 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     }
     tags {
       ...Tag
-      ...Unit
     }
+    uniwebAffiliations
+    uniwebCurrentTeaching
+    uniwebDegrees
+    uniwebPublications
+    uniwebResearchDesc
+    uniwebResearchInterests
   }
 `);
 
