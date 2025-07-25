@@ -3,6 +3,7 @@ import { Client } from 'ldapts';
 type LdapProfile = {
   mail: string | null;
   telephoneNumber: string | null;
+  telephoneNumber2: string | null;
   roomNumber: string | null;
   ou: string | null;
   uid?: string | null;
@@ -53,7 +54,7 @@ export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null>
           scope: 'sub',
           filter: strategy.filter,
           attributes: [
-            'mail', 'telephonenumber', 'roomnumber', 'ou',
+            'mail', 'telephonenumber', 'telephonenumber2', 'roomnumber', 'ou',
             'uid', 'cn', 'displayname', 'givenname', 'sn'
           ],
           sizeLimit: 1
@@ -66,6 +67,7 @@ export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null>
           return {
             mail: getFirst(entry.mail),
             telephoneNumber: getFirst(entry.telephonenumber),
+            telephoneNumber2: getFirst(entry.telephonenumber2),
             roomNumber: getFirst(entry.roomnumber),
             ou: getFirst(entry.ou),
             uid: getFirst(entry.uid),

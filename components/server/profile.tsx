@@ -11,6 +11,39 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { fetchLdapProfile } from "@/lib/ldap-utils";
 
+interface ProfileContent {
+  status: boolean;
+  id: string;
+  title: string;
+  path?: string;
+  centralLoginId: string;
+  directoryEmail: boolean;
+  directoryOffice: boolean;
+  directoryPhone: boolean;
+  uniwebId?: string;
+  primaryNavigation?: {
+    menuName?: string;
+  };
+  body?: {
+    processed?: string;
+  };
+  profilePicture?: {
+    image: {
+      alt?: string;
+      height: number;
+      width: number;
+      url: string;
+    };
+  };
+  profileSections?: Array<{
+    id: string;
+    profilePartLabel: string;
+    profilePartText?: {
+      processed?: string;
+    };
+  }>;
+}
+
 export type ProfileProps = {
   id: string;
   pre?: React.ReactNode;
@@ -18,7 +51,7 @@ export type ProfileProps = {
 };
 
 export async function Profile({ id, pre, post }: ProfileProps) {
-  const content = await getProfileContent(id);
+  const content = await getProfileContent(id) as ProfileContent | null;
 
   // Couldn't fetch content for this id.
   if (!content) {
@@ -34,15 +67,15 @@ export async function Profile({ id, pre, post }: ProfileProps) {
   }
 
   // Use centralLoginId from GraphQL data
-  const uid = (content as any).centralLoginId;
+  const uid = content.centralLoginId;
   
   // Fetch LDAP data if any directory fields are enabled and we have a uid
-  const shouldFetchLdap = uid && ((content as any).directoryEmail || (content as any).directoryOffice || (content as any).directoryPhone);
+  const shouldFetchLdap = uid && (content.directoryEmail || content.directoryOffice || content.directoryPhone);
   const ldapData = shouldFetchLdap ? await fetchLdapProfile(uid) : null;
 
   // Build contact info array to avoid complex conditional markup
   const contactInfo = [];
-  if ((content as any).directoryEmail && ldapData?.mail) {
+  if (content.directoryEmail && ldapData?.mail) {
     contactInfo.push(
       <>
         <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
@@ -50,7 +83,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
       </>
     );
   }
-  if ((content as any).directoryOffice && ldapData?.roomNumber && typeof ldapData.roomNumber === 'string' && ldapData.roomNumber.trim()) {
+  if (content.directoryOffice && ldapData?.roomNumber && typeof ldapData.roomNumber === 'string' && ldapData.roomNumber.trim()) {
     contactInfo.push(
       <>
         <i className="fa-solid fa-building-columns me-2" aria-hidden="true"></i>
@@ -58,11 +91,17 @@ export async function Profile({ id, pre, post }: ProfileProps) {
       </>
     );
   }
-  if ((content as any).directoryPhone && ldapData?.telephoneNumber && typeof ldapData.telephoneNumber === 'string' && ldapData.telephoneNumber.trim()) {
+  if (content.directoryPhone && ldapData?.telephoneNumber && typeof ldapData.telephoneNumber === 'string' && ldapData.telephoneNumber.trim()) {
     contactInfo.push(
       <>
         <i className="fa-solid fa-phone me-2" aria-hidden="true"></i>
         <span className="sr-only">Phone:</span>{ldapData.telephoneNumber}
+        {ldapData.telephoneNumber2 && typeof ldapData.telephoneNumber2 === 'string' && ldapData.telephoneNumber2.trim() && (
+          <>
+            <br />
+            <span className="ms-6">{ldapData.telephoneNumber2}</span>
+          </>
+        )}
       </>
     );
   }
@@ -101,6 +140,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 </Typography>
               )}
               <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
+              {/* TODO: add a Boolean field for profile users to choose if they want this displayed */}
               {content.uniwebId && (
                 <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
                   View UniWeb profile
