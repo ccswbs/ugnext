@@ -11,7 +11,6 @@ type LdapProfile = {
   displayName?: string | null;
   givenName?: string | null;
   sn?: string | null;
-  diagnostics?: string[];
 };
 
 const getFirst = (value: any): string | null => {
@@ -20,15 +19,8 @@ const getFirst = (value: any): string | null => {
 };
 
 export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null> {
-  const diagnostics: string[] = [];
-
-  diagnostics.push(`Environment check: LDAP_URL=${process.env.LDAP_URL ? 'SET' : 'NOT SET'}`);
-  diagnostics.push(`Environment check: LDAP_BIND_DN=${process.env.LDAP_BIND_DN ? 'SET' : 'NOT SET'}`);
-  diagnostics.push(`Environment check: LDAP_BASE_DN=${process.env.LDAP_BASE_DN ? 'SET' : 'NOT SET'}`);
-  diagnostics.push(`Environment check: LDAP_PASSWORD=${process.env.LDAP_PASSWORD ? 'SET' : 'NOT SET'}`);
-
   if (!process.env.LDAP_URL || !process.env.LDAP_BIND_DN || !process.env.LDAP_PASSWORD || !process.env.LDAP_BASE_DN) {
-    console.warn('Missing LDAP environment variables', diagnostics);
+    console.warn('Missing LDAP environment variables');
     return null;
   }
 
@@ -39,7 +31,6 @@ export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null>
 
   try {
     await client.bind(process.env.LDAP_BIND_DN, process.env.LDAP_PASSWORD);
-    diagnostics.push('✓ LDAP bind successful');
 
     const searchStrategies = [
       { filter: `(uid=${uid})`, baseDN: process.env.LDAP_BASE_DN },
@@ -74,22 +65,19 @@ export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null>
             cn: getFirst(entry.cn),
             displayName: getFirst(entry.displayname),
             givenName: getFirst(entry.givenname),
-            sn: getFirst(entry.sn),
-            diagnostics
+            sn: getFirst(entry.sn)
           };
         }
       } catch (searchError: any) {
-        diagnostics.push(`Search strategy ${i} failed: ${searchError.message}`);
+        // Search strategy failed, continue to next strategy
       }
     }
 
     await client.unbind();
-    diagnostics.push('No LDAP entry found');
     return null;
 
   } catch (err: any) {
-    diagnostics.push(`LDAP bind failed: ${err.message}`);
-    console.warn('LDAP error:', diagnostics);
+    console.warn('LDAP error:', err.message);
     return null;
   }
 }
