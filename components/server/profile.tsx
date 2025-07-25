@@ -1,3 +1,4 @@
+import React from "react";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Header } from "@/components/server/header";
@@ -27,6 +28,7 @@ interface ProfileContent {
   body?: {
     processed?: string;
   };
+  profileJobTitle?: string;
   profilePicture?: {
     image: {
       alt?: string;
@@ -113,41 +115,46 @@ export async function Profile({ id, pre, post }: ProfileProps) {
       <LayoutContent container={false}>
         <Breadcrumbs url={content.path ?? undefined} />
         <Container>
-          <Typography type="h1" as="h1">
-            {content?.title}
-          </Typography>
-          {pre && pre}
-          <div className="flex flex-col md:flex-row items-start gap-6 mb-8">
+          <div className="md:flex md:flex-row-reverse md:gap-6">
+            <div className="md:flex-1">
+              <Typography type="h1" as="h1" className="mb-4">
+                {content?.title}
+              </Typography>
+              {pre && pre}
+
+              {content.profileJobTitle && <Typography type="h3" as="p">{content.profileJobTitle}</Typography>}
+                  
+              {/* Directory contact info from LDAP */}
+              {contactInfo.length > 0 && (
+                <Typography type="body" className="mb-4">
+                  {contactInfo.map((info, index) => (
+                    <React.Fragment key={index}>
+                      {index > 0 && <br />}
+                      {info}
+                    </React.Fragment>
+                  ))}
+                </Typography>
+              )}
+              
+              {/* TODO: add a Boolean field for profile users to choose if they want this displayed */}
+              {content.uniwebId && (
+                <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
+                  View UniWeb profile
+                </Link>          
+              )}
+            </div>
+                      
             {content.profilePicture && (
               <Image
                 alt={content.profilePicture.image.alt ?? ""}
                 height={content.profilePicture.image.height}
                 width={content.profilePicture.image.width}
                 src={content.profilePicture.image.url}
-                className="rounded-lg w-full max-w-full md:w-1/3 md:max-w-1/3 object-cover"
+                className="w-full max-w-full md:w-1/3 md:max-w-1/3 object-cover mb-4 md:mb-0"
               />
             )}
-            <div className="flex-1">
-              {/* Directory contact info from LDAP */}
-              {contactInfo.length > 0 && (
-                <Typography type="body" className="mb-4">
-                  {contactInfo.map((info, index) => (
-                    <>
-                      {index > 0 && <br />}
-                      {info}
-                    </>
-                  ))}
-                </Typography>
-              )}
-              <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
-              {/* TODO: add a Boolean field for profile users to choose if they want this displayed */}
-              {content.uniwebId && (
-                <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
-                  View UniWeb profile
-                </Link>
-              )}
-            </div>
           </div>
+          <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
           {content?.profileSections?.map((section, index) => (
             <div key={index}>
               <Typography type="h2" as="h2">
