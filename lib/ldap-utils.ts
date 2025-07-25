@@ -8,6 +8,7 @@ export interface LdapProfile {
 
 export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null> {
   try {
+    console.log('process.env.URL:', process.env.URL); // Diagnostic output
     // Dynamically construct the full URL for server-side fetch
     // Use HTTP for localhost/development, HTTPS for production domains
     const host = process.env.URL || 'localhost:3000';
