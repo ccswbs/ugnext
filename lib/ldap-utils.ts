@@ -1,7 +1,5 @@
 import { Client } from 'ldapts';
 
-export const runtime = 'nodejs';
-
 type LdapProfile = {
   mail: string | null;
   telephoneNumber: string | null;
@@ -13,6 +11,11 @@ type LdapProfile = {
   givenName?: string | null;
   sn?: string | null;
   diagnostics?: string[];
+};
+
+const getFirst = (value: any): string | null => {
+  if (Array.isArray(value)) return value[0] || null;
+  return typeof value === 'string' ? value : null;
 };
 
 export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null> {
@@ -61,15 +64,15 @@ export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null>
           await client.unbind();
 
           return {
-            mail: entry.mail || null,
-            telephoneNumber: entry.telephonenumber || null,
-            roomNumber: entry.roomnumber || null,
-            ou: entry.ou || null,
-            uid: entry.uid || null,
-            cn: entry.cn || null,
-            displayName: entry.displayname || null,
-            givenName: entry.givenname || null,
-            sn: entry.sn || null,
+            mail: getFirst(entry.mail),
+            telephoneNumber: getFirst(entry.telephonenumber),
+            roomNumber: getFirst(entry.roomnumber),
+            ou: getFirst(entry.ou),
+            uid: getFirst(entry.uid),
+            cn: getFirst(entry.cn),
+            displayName: getFirst(entry.displayname),
+            givenName: getFirst(entry.givenname),
+            sn: getFirst(entry.sn),
             diagnostics
           };
         }
