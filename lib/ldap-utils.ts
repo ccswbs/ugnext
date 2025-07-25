@@ -2,6 +2,19 @@ import { Client } from 'ldapts';
 
 export const runtime = 'nodejs';
 
+type LdapProfile = {
+  mail: string | null;
+  telephoneNumber: string | null;
+  roomNumber: string | null;
+  ou: string | null;
+  uid?: string | null;
+  cn?: string | null;
+  displayName?: string | null;
+  givenName?: string | null;
+  sn?: string | null;
+  diagnostics?: string[];
+};
+
 export async function fetchLdapProfile(uid: string): Promise<LdapProfile | null> {
   const diagnostics: string[] = [];
 
