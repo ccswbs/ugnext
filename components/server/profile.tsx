@@ -53,7 +53,8 @@ export async function Profile({ id, pre, post }: ProfileProps) {
   if ((content as any).directoryOffice && ldapData?.roomNumber && typeof ldapData.roomNumber === 'string' && ldapData.roomNumber.trim()) {
     contactInfo.push(
       <>
-        <strong>Office:</strong> {ldapData.roomNumber}
+        <i className="fa-solid fa-building-columns me-2" aria-hidden="true"></i>
+        <span className="sr-only">Office:</span>{ldapData.roomNumber}
       </>
     );
   }
