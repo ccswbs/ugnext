@@ -78,6 +78,12 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             {content?.title}
           </Typography>
           {pre && pre}
+          
+          <div>
+            <h2>Debug Info</h2>
+            <p><strong>process.env.URL:</strong> {process.env.URL || 'Not set'}</p>
+          </div>
+
           <div className="flex flex-col md:flex-row items-start gap-6 mb-8">
             {content.profilePicture && (
               <Image
