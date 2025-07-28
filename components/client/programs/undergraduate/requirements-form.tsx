@@ -19,6 +19,7 @@ import {
 import { useFuzzySearch } from "@/lib/use-fuzzy-search";
 import { pluginQPS } from "@orama/plugin-qps";
 import { Button } from "@uoguelph/react-components/button";
+import { useRouter } from "next/navigation";
 
 export const UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH = "/term/undergraduate/admission/student-types/";
 
@@ -33,6 +34,8 @@ type RequirementsFormProps = {
 };
 
 export default function RequirementsForm({ studentTypes, locations, programs }: RequirementsFormProps) {
+  const router = useRouter();
+
   const [studentType, setStudentType] = useState<UndergraduateAdmissionStudentType | null>(null);
 
   const [locationType, setLocationType] = useState<UndergraduateAdmissionLocationType | null>(null);
@@ -78,12 +81,15 @@ export default function RequirementsForm({ studentTypes, locations, programs }: 
     return `/programs/undergraduate/requirements/${studentTypePath}/${locationPath}/${programPath}`;
   }, [studentType, location, program]);
 
-  useEffect(() => {
-    console.log(url);
-  }, [url]);
-
   return (
-    <form className="w-2/3 flex flex-col" action={url ?? undefined} method="get">
+    <form
+      className="w-2/3 flex flex-col"
+      onSubmit={() => {
+        if (url) {
+          router.push(url);
+        }
+      }}
+    >
       <Field>
         <Label>
           <Typography type={"h3"} as={"h2"}>
