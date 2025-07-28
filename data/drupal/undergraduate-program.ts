@@ -141,3 +141,8 @@ export async function getUndergraduatePrograms() {
 
   return await getPublishedUndergraduatePrograms();
 }
+
+export async function getUndergraduateMajors() {
+  const programs = await getUndergraduatePrograms();
+  return programs.filter((program) => program.type.some((type) => type.name.toLowerCase() === "major"));
+}

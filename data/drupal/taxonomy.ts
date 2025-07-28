@@ -68,7 +68,7 @@ export const UNDERGRADUATE_PROGRAM_SEARCH_TAG = gql(/* gql */ `
 `);
 
 export const ADMISSION_STUDENT_TYPE = gql(/* gql */ `
-  fragment AdmissionStudentType on TermAdmissionLocation {
+  fragment UndergraduateAdmissionStudentType on TermUndergraduateStudentType {
     id
     name
   }
