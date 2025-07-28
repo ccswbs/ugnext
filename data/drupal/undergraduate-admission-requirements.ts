@@ -1,6 +1,7 @@
 import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type { AdmissionLocationFragment, UndergraduateAdmissionStudentTypeFragment } from "@/lib/graphql/types";
+import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 
 export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
@@ -56,6 +57,8 @@ export async function getLocations() {
   }) as UndergraduateAdmissionLocation[];
 }
 
-export const UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH = "/term/undergraduate/admission/student-types/";
-
-export const UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH = "/term/undergraduate/admission/locations/";
+export async function getPageTitle(
+  studentType: UndergraduateAdmissionStudentType,
+  location: UndergraduateAdmissionLocation,
+  program: UndergraduateProgram
+) {}

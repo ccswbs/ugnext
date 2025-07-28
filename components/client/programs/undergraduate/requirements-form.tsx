@@ -2,7 +2,7 @@
 
 import { Typography } from "@uoguelph/react-components/typography";
 import { Field, Label } from "@headlessui/react";
-import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
+import type { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import type {
   UndergraduateAdmissionLocation,
   UndergraduateAdmissionLocationType,
@@ -18,7 +18,13 @@ import {
 } from "@uoguelph/react-components/autocomplete";
 import { useFuzzySearch } from "@/lib/use-fuzzy-search";
 import { pluginQPS } from "@orama/plugin-qps";
-import { toTitleCase } from "@/lib/string-utils";
+import { Button } from "@uoguelph/react-components/button";
+
+export const UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH = "/term/undergraduate/admission/student-types/";
+
+export const UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH = "/term/undergraduate/admission/locations/";
+
+export const UNDERGRADUATE_PROGRAMS_NODE_PATH = "/node/undergraduate/programs/";
 
 type RequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
@@ -29,6 +35,7 @@ type RequirementsFormProps = {
 export default function RequirementsForm({ studentTypes, locations, programs }: RequirementsFormProps) {
   const [studentType, setStudentType] = useState<UndergraduateAdmissionStudentType | null>(null);
 
+  const [locationType, setLocationType] = useState<UndergraduateAdmissionLocationType | null>(null);
   const [locationQuery, setLocationQuery] = useState<string>("");
   const [location, setLocation] = useState<UndergraduateAdmissionLocation | null>(null);
 
@@ -61,12 +68,22 @@ export default function RequirementsForm({ studentTypes, locations, programs }: 
     return results.hits.map((hit) => hit.document as UndergraduateProgram);
   }, [programQuery, programSearch, programs]);
 
+  const url = useMemo(() => {
+    if (!studentType || !location || !program) return null;
+
+    const studentTypePath = studentType.path?.replace(UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH, "");
+    const locationPath = location.path?.replace(UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH, "");
+    const programPath = program.path?.replace(UNDERGRADUATE_PROGRAMS_NODE_PATH, "");
+
+    return `/programs/undergraduate/requirements/${studentTypePath}/${locationPath}/${programPath}`;
+  }, [studentType, location, program]);
+
   useEffect(() => {
-    console.log(studentType, location, program);
-  }, [location, program, studentType]);
+    console.log(url);
+  }, [url]);
 
   return (
-    <form className="w-2/3 flex flex-col">
+    <form className="w-2/3 flex flex-col" action={url ?? undefined} method="get">
       <Field>
         <Label>
           <Typography type={"h3"} as={"h2"}>
@@ -90,34 +107,68 @@ export default function RequirementsForm({ studentTypes, locations, programs }: 
       <Field>
         <Label>
           <Typography type={"h3"} as={"h2"}>
-            I attend/attended high school in
+            I attend/attended high school
           </Typography>
         </Label>
 
-        <Autocomplete
-          value={location}
-          multiple={false}
-          onClose={() => setLocationQuery("")}
-          onChange={setLocation}
-          immediate
+        <Select
+          value={locationType}
+          onChange={(type) => {
+            setLocationType(type);
+            setLocation(null);
+            setLocationQuery("");
+          }}
         >
-          <AutocompleteInput
-            onChange={(event) => setLocationQuery(event.target.value.toLowerCase())}
-            displayValue={(selected: UndergraduateAdmissionLocation | null) => selected?.name ?? ""}
-          />
+          <SelectButton>
+            {locationType === "domestic" && "Within Canada"}
+            {locationType === "international" && "Outside of Canada"}
+            {locationType === "curriculum" && "Under a Specific Curriculum of Study"}
+            <span>&nbsp;</span>
+          </SelectButton>
 
-          <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
-            {locations
-              .filter((location) => location.name.toLowerCase().includes(locationQuery))
-              .map((location) => (
-                <AutocompleteOption key={location.id} value={location} className="flex flex-col">
-                  <div>{location.name}</div>
-                  <span className="text-sm">{toTitleCase(location.type)}</span>
-                </AutocompleteOption>
-              ))}
-          </AutocompleteOptions>
-        </Autocomplete>
+          <SelectOptions anchor="bottom">
+            <SelectOption value="domestic">Within Canada</SelectOption>
+            <SelectOption value="international">Outside of Canada</SelectOption>
+            <SelectOption value="curriculum">Under a Specific Curriculum of Study</SelectOption>
+          </SelectOptions>
+        </Select>
       </Field>
+
+      {locationType && (
+        <Field>
+          <Label>
+            <Typography type={"h3"} as={"h2"}>
+              {locationType === "domestic" && "My province/territory of study is/was"}
+              {locationType === "international" && "My country of study is/was"}
+              {locationType === "curriculum" && "My curriculum of study is/was"}
+            </Typography>
+          </Label>
+
+          <Autocomplete
+            value={location}
+            multiple={false}
+            onClose={() => setLocationQuery("")}
+            onChange={setLocation}
+            immediate
+          >
+            <AutocompleteInput
+              onChange={(event) => setLocationQuery(event.target.value.toLowerCase())}
+              displayValue={(selected: UndergraduateAdmissionLocation | null) => selected?.name ?? ""}
+            />
+
+            <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
+              {locations
+                .filter((location) => location.type === locationType)
+                .filter((location) => location.name.toLowerCase().includes(locationQuery))
+                .map((location) => (
+                  <AutocompleteOption key={location.id} value={location} className="flex flex-col">
+                    {location.name}
+                  </AutocompleteOption>
+                ))}
+            </AutocompleteOptions>
+          </Autocomplete>
+        </Field>
+      )}
 
       <Field>
         <Label>
@@ -147,6 +198,10 @@ export default function RequirementsForm({ studentTypes, locations, programs }: 
           </AutocompleteOptions>
         </Autocomplete>
       </Field>
+
+      <Button type="submit" disabled={!url} className="w-fit mt-8">
+        View Requirements
+      </Button>
     </form>
   );
 }
