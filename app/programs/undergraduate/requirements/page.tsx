@@ -23,7 +23,7 @@ export default async function ProgramsUndergraduate() {
       <Header></Header>
 
       <LayoutContent>
-        <Typography type="h1" as="h1" className="block!">
+        <Typography type="h1" as="h1" className="block">
           Undergraduate Admission Requirements
         </Typography>
 

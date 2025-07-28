@@ -71,6 +71,7 @@ export const ADMISSION_STUDENT_TYPE = gql(/* gql */ `
   fragment UndergraduateAdmissionStudentType on TermUndergraduateStudentType {
     id
     name
+    path
   }
 `);
 
@@ -79,6 +80,7 @@ export const ADMISSION_LOCATION = gql(/* gql */ `
     id
     name
     type
+    path
   }
 `);
 

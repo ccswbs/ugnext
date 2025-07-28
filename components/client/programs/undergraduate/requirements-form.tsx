@@ -2,12 +2,6 @@
 
 import { Typography } from "@uoguelph/react-components/typography";
 import { Field, Label } from "@headlessui/react";
-import {
-  Autocomplete,
-  AutocompleteInput,
-  AutocompleteOptions,
-  AutocompleteOption,
-} from "@uoguelph/react-components/autocomplete";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import type {
   AdmissionLocation,
@@ -15,6 +9,13 @@ import type {
   StudentType,
 } from "@/data/drupal/undergraduate-admission-requirements";
 import { useEffect, useState } from "react";
+import { Select, SelectButton, SelectOption, SelectOptions } from "@uoguelph/react-components/select";
+import {
+  Autocomplete,
+  AutocompleteInput,
+  AutocompleteOption,
+  AutocompleteOptions,
+} from "@uoguelph/react-components/autocomplete";
 
 type RequirementsFormProps = {
   studentTypes: StudentType[];
@@ -24,7 +25,7 @@ type RequirementsFormProps = {
 
 export default function RequirementsForm({ studentTypes, locations, programs }: RequirementsFormProps) {
   const [studentType, setStudentType] = useState<StudentType | null>(null);
-  const [locationType, setLocationType] = useState<AdmissionLocationType>("domestic");
+  const [locationQuery, setLocationQuery] = useState<string>("");
   const [location, setLocation] = useState<AdmissionLocation | null>(null);
   const [program, setProgram] = useState<UndergraduateProgram | null>(null);
 
@@ -33,13 +34,25 @@ export default function RequirementsForm({ studentTypes, locations, programs }: 
   }, [location, program, studentType]);
 
   return (
-    <form>
+    <form className="w-2/3 flex flex-col">
       <Field>
         <Label>
           <Typography type={"h3"} as={"h2"}>
             I am a
           </Typography>
         </Label>
+
+        <Select value={studentType} multiple={false} onChange={setStudentType}>
+          <SelectButton>{studentType ? studentType.name : "Select a student type"}</SelectButton>
+
+          <SelectOptions anchor="bottom">
+            {studentTypes.map((type) => (
+              <SelectOption key={type.id} value={type}>
+                {type.name}
+              </SelectOption>
+            ))}
+          </SelectOptions>
+        </Select>
       </Field>
 
       <Field>
@@ -48,27 +61,30 @@ export default function RequirementsForm({ studentTypes, locations, programs }: 
             I attend/attended high school in
           </Typography>
         </Label>
+
+        <Autocomplete
+          value={location}
+          multiple={false}
+          onClose={() => setLocationQuery("")}
+          onChange={setLocation}
+          immediate
+        >
+          <AutocompleteInput
+            onChange={(event) => setLocationQuery(event.target.value.toLowerCase())}
+            displayValue={(selected: AdmissionLocation | null) => selected?.name ?? "Select or search a location"}
+          />
+
+          <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
+            {locations
+              .filter((location) => location.name.toLowerCase().includes(locationQuery))
+              .map((location) => (
+                <AutocompleteOption key={location.id} value={location}>
+                  {location.name}
+                </AutocompleteOption>
+              ))}
+          </AutocompleteOptions>
+        </Autocomplete>
       </Field>
-
-      {locationType === "international" && (
-        <Field>
-          <Label>
-            <Typography type={"h3"} as={"h2"}>
-              I study/studied in
-            </Typography>
-          </Label>
-        </Field>
-      )}
-
-      {locationType === "curriculum" && (
-        <Field>
-          <Label>
-            <Typography type={"h3"} as={"h2"}>
-              My curriculum of study is/was
-            </Typography>
-          </Label>
-        </Field>
-      )}
 
       <Field>
         <Label>
