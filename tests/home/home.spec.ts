@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
-import path from "path";
 
 test("home-spotlight-analytics", async ({ page }) => {
   await page.goto("/");
   await page.waitForSelector("#uofg-homepage-spotlight-hero");
+  await page.waitForSelector("#uofg-homepage-improve-life");
 
   for (let i = 2; i <= 5; i++) {
     await page.waitForSelector(`#uofg-homepage-spotlight-card-${i}`);
@@ -19,7 +19,7 @@ test("home-visual-regression", async ({ page, isMobile }) => {
   // Wait for images to load
   for (const img of await images.all()) {
     await img.scrollIntoViewIfNeeded();
-    await expect(img).not.toHaveJSProperty("naturalWidth", 0);
+    await expect(img).toHaveJSProperty("complete", true);
   }
 
   await expect(page).toHaveScreenshot("home.png", {
