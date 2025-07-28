@@ -48,6 +48,7 @@ export const UNDERGRADUATE_PROGRAM = gql(/* gql */ `
       id
       title
     }
+    path
     type {
       ...UndergraduateProgramType
     }
@@ -144,5 +145,9 @@ export async function getUndergraduatePrograms() {
 
 export async function getUndergraduateMajors() {
   const programs = await getUndergraduatePrograms();
-  return programs.filter((program) => program.type.some((type) => type.name.toLowerCase() === "major"));
+  return programs
+    .filter((program) => program.type.some((type) => type.name.toLowerCase() === "major"))
+    .sort((a, b) => a.title.localeCompare(b.title));
 }
+
+export const UNDERGRADUATE_PROGRAMS_NODE_PATH = "/node/undergraduate/programs/";

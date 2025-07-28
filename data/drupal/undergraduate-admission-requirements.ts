@@ -2,7 +2,7 @@ import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type { AdmissionLocationFragment, UndergraduateAdmissionStudentTypeFragment } from "@/lib/graphql/types";
 
-export type StudentType = UndergraduateAdmissionStudentTypeFragment;
+export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
 export async function getStudentTypes() {
   const { data } = await query({
@@ -18,11 +18,11 @@ export async function getStudentTypes() {
     `),
   });
 
-  return data.termUndergraduateStudentTypes.nodes as StudentType[];
+  return data.termUndergraduateStudentTypes.nodes as UndergraduateAdmissionStudentType[];
 }
 
-export type AdmissionLocation = AdmissionLocationFragment;
-export type AdmissionLocationType = "domestic" | "international" | "curriculum";
+export type UndergraduateAdmissionLocation = AdmissionLocationFragment;
+export type UndergraduateAdmissionLocationType = "domestic" | "international" | "curriculum";
 
 export async function getLocations() {
   const { data } = await query({
@@ -38,5 +38,24 @@ export async function getLocations() {
     `),
   });
 
-  return data.termAdmissionLocations.nodes as AdmissionLocation[];
+  return data.termAdmissionLocations.nodes.toSorted((a, b) => {
+    const typeOrder = {
+      domestic: 0,
+      international: 1,
+      curriculum: 2,
+    };
+
+    const aOrder = a.type in typeOrder ? typeOrder[a.type as UndergraduateAdmissionLocationType] : 3;
+    const bOrder = b.type in typeOrder ? typeOrder[b.type as UndergraduateAdmissionLocationType] : 3;
+
+    if (aOrder !== bOrder) {
+      return aOrder - bOrder;
+    }
+
+    return a.name.localeCompare(b.name);
+  }) as UndergraduateAdmissionLocation[];
 }
+
+export const UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH = "/term/undergraduate/admission/student-types/";
+
+export const UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH = "/term/undergraduate/admission/locations/";
