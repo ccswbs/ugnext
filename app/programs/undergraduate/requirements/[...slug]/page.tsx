@@ -6,7 +6,7 @@ import { Footer } from "@uoguelph/react-components/footer";
 import { Metadata, ResolvingMetadata } from "next";
 import {
   getLocationByPath,
-  getRequirements,
+  getUndergraduateAdmissionRequirementPageContent,
   getStudentTypeByPath,
   UndergraduateAdmissionLocation,
   UndergraduateAdmissionStudentType,
@@ -23,6 +23,7 @@ import { Button } from "@uoguelph/react-components/button";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -77,8 +78,8 @@ export default async function ProgramsUndergraduate({ params }: Props) {
   const { studentType, location, program } = await slugToData(slug);
   const title = getPageTitle(studentType, location, program);
 
-  const requirements = await getRequirements(studentType, location, program);
-  console.log(requirements);
+  const content = await getUndergraduateAdmissionRequirementPageContent(studentType, location, program);
+  console.log(content);
 
   return (
     <Layout>
@@ -99,6 +100,18 @@ export default async function ProgramsUndergraduate({ params }: Props) {
             <Typography type="h2" as="h1" className="block! text-black">
               {title}
             </Typography>
+
+            {content?.sections?.map((section) => (
+              <>
+                <Typography type="h3" as="h2">
+                  {section.type.name}
+                </Typography>
+
+                {section.content?.map((content) => (
+                  <WidgetSelector key={content.id} data={content} />
+                ))}
+              </>
+            ))}
           </div>
 
           <div>

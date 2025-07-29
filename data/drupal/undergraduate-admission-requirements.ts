@@ -1,6 +1,10 @@
 import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
-import type { AdmissionLocationFragment, UndergraduateAdmissionStudentTypeFragment } from "@/lib/graphql/types";
+import type {
+  AdmissionLocationFragment,
+  UndergraduateAdmissionRequirementFragment,
+  UndergraduateAdmissionStudentTypeFragment,
+} from "@/lib/graphql/types";
 import { getRoute } from "@/data/drupal/route";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
@@ -105,6 +109,7 @@ export async function getLocationByPath(path: string) {
 
 export const UNDERGRADUATE_ADMISSION_REQUIREMENT_FRAGMENT = gql(/* gql */ `
   fragment UndergraduateAdmissionRequirement on NodeUndergraduateRequirement {
+    __typename
     title
     path
     type {
@@ -138,6 +143,7 @@ export const UNDERGRADUATE_ADMISSION_REQUIREMENT_FRAGMENT = gql(/* gql */ `
     }
     sections {
       ... on ParagraphUndergradReqsSection {
+        __typename
         type {
           ... on TermUndergradReqSecType {
             name
@@ -149,13 +155,18 @@ export const UNDERGRADUATE_ADMISSION_REQUIREMENT_FRAGMENT = gql(/* gql */ `
           ...Accordion
           ...Block
           ...GeneralText
+          ...ButtonSection
         }
       }
     }
   }
 `);
 
-export async function getRequirements(
+export type UndergraduateAdmissionRequirement = UndergraduateAdmissionRequirementFragment & {
+  rank: number;
+};
+
+export async function getUndergraduateAdmissionRequirements(
   studentType: UndergraduateAdmissionStudentType,
   location: UndergraduateAdmissionLocation,
   program: UndergraduateProgram
@@ -196,7 +207,7 @@ export async function getRequirements(
     }
   `);
 
-  const requirements = ids.map((id) => {
+  const requirementPromises = ids.map((id) => {
     return query({
       query: requirementsQuery,
       variables: {
@@ -206,7 +217,95 @@ export async function getRequirements(
     });
   });
 
-  return (await Promise.all(requirements)).map((result) => result.data.nodeUndergraduateRequirement);
+  return (
+    (await Promise.all(requirementPromises))
+      // Add the rank to each requirement
+      .map((result) => {
+        let rank = 0;
+        let requirement = result.data.nodeUndergraduateRequirement;
+
+        if (!requirement) {
+          return null;
+        }
+
+        for (const field of ["type", "location", "program"]) {
+          const value = requirement[field as keyof typeof requirement];
+
+          if (value === null) {
+            rank += 2;
+          }
+
+          if (Array.isArray(value) && value.length > 1) {
+            rank += 1;
+          }
+        }
+
+        return {
+          ...requirement,
+          rank: rank,
+        } as UndergraduateAdmissionRequirement;
+      })
+      // Remove nulls
+      .filter((requirement) => requirement !== null)
+      // Sort by rank
+      .sort((a, b) => a.rank - b.rank)
+  );
+}
+
+export type UndergraduateAdmissionRequirementPageContent = {
+  sidebar: NonNullable<UndergraduateAdmissionRequirement["sidebar"]>;
+  sections: NonNullable<UndergraduateAdmissionRequirement["sections"]>;
+  paths: {
+    title: string;
+    url: string;
+  }[];
+};
+
+export async function getUndergraduateAdmissionRequirementPageContent(
+  studentType: UndergraduateAdmissionStudentType,
+  location: UndergraduateAdmissionLocation,
+  program: UndergraduateProgram
+) {
+  const requirements = await getUndergraduateAdmissionRequirements(studentType, location, program);
+
+  const sidebarButtonTitles = new Set<string>();
+
+  return requirements.reduce(
+    (acc, requirement) => {
+      acc.paths.push({
+        title: requirement.title,
+        url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
+      });
+
+      if (requirement?.sidebar) {
+        for (const button of requirement.sidebar) {
+          const buttonTitle = button.link?.title ?? (button.formattedTitle?.processed as string);
+
+          if (!buttonTitle) {
+            continue;
+          }
+
+          if (sidebarButtonTitles.has(buttonTitle)) {
+            continue;
+          }
+
+          sidebarButtonTitles.add(buttonTitle);
+          acc.sidebar.push(button);
+        }
+      }
+
+      if (requirement?.sections) {
+        acc.sections.push(...requirement.sections);
+      }
+
+      return acc;
+    },
+    {
+      sidebar: [],
+      sections: [],
+      paths: [],
+    } as UndergraduateAdmissionRequirementPageContent
+  );
 }
 
 export async function getDefaultSidebar() {}
