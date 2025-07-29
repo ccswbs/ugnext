@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import { Grid } from "@uoguelph/react-components/grid";
 import {
   getUndergraduateAdmissionLocations,
-  getStudentTypes,
+  getUndergraduateAdmissionStudentTypes,
 } from "@/data/drupal/undergraduate-admission-requirements";
 import AdmissionRequirementsForm from "@/components/client/programs/undergraduate/admission-requirements-form";
 import { getUndergraduateMajors } from "@/data/drupal/undergraduate-program";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProgramsUndergraduate() {
-  const studentTypes = await getStudentTypes();
+  const studentTypes = await getUndergraduateAdmissionStudentTypes();
   const locations = await getUndergraduateAdmissionLocations();
   const programs = await getUndergraduateMajors();
 

@@ -7,7 +7,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import {
   getUndergraduateAdmissionLocationByPath,
   getUndergraduateAdmissionRequirementPageContent,
-  getStudentTypeByPath,
+  getUndergraduateAdmissionStudentTypeByPath,
   UndergraduateAdmissionLocation,
   UndergraduateAdmissionStudentType,
 } from "@/data/drupal/undergraduate-admission-requirements";
@@ -30,7 +30,9 @@ type Props = {
 };
 
 async function slugToData(slug: string[]) {
-  const studentType = await getStudentTypeByPath(`${UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH}${slug[0]}`);
+  const studentType = await getUndergraduateAdmissionStudentTypeByPath(
+    `${UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH}${slug[0]}`
+  );
 
   if (!studentType) {
     notFound();

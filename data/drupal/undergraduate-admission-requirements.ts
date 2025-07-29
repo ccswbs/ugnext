@@ -11,7 +11,7 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
-export async function getStudentTypes() {
+export async function getUndergraduateAdmissionStudentTypes() {
   const { data } = await query({
     query: gql(/* gql */ `
       query UndergraduateAdmissionStudentTypes {
@@ -28,7 +28,7 @@ export async function getStudentTypes() {
   return data.termUndergraduateStudentTypes.nodes as UndergraduateAdmissionStudentType[];
 }
 
-export async function getStudentTypeByPath(path: string) {
+export async function getUndergraduateAdmissionStudentTypeByPath(path: string) {
   const route = await getRoute(path);
 
   if (!route) {
