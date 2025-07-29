@@ -5,7 +5,10 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Metadata } from "next";
 import { Grid } from "@uoguelph/react-components/grid";
-import { getLocations, getStudentTypes } from "@/data/drupal/undergraduate-admission-requirements";
+import {
+  getUndergraduateAdmissionLocations,
+  getStudentTypes,
+} from "@/data/drupal/undergraduate-admission-requirements";
 import AdmissionRequirementsForm from "@/components/client/programs/undergraduate/admission-requirements-form";
 import { getUndergraduateMajors } from "@/data/drupal/undergraduate-program";
 
@@ -15,7 +18,7 @@ export const metadata: Metadata = {
 
 export default async function ProgramsUndergraduate() {
   const studentTypes = await getStudentTypes();
-  const locations = await getLocations();
+  const locations = await getUndergraduateAdmissionLocations();
   const programs = await getUndergraduateMajors();
 
   return (

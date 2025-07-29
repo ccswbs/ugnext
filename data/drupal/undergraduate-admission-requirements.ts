@@ -53,7 +53,7 @@ export async function getStudentTypeByPath(path: string) {
 export type UndergraduateAdmissionLocation = AdmissionLocationFragment;
 export type UndergraduateAdmissionLocationType = "domestic" | "international" | "curriculum";
 
-export async function getLocations() {
+export async function getUndergraduateAdmissionLocations() {
   const { data } = await query({
     query: gql(/* gql */ `
       query UndergraduateAdmissionLocations {
@@ -85,7 +85,7 @@ export async function getLocations() {
   }) as UndergraduateAdmissionLocation[];
 }
 
-export async function getLocationByPath(path: string) {
+export async function getUndergraduateAdmissionLocationByPath(path: string) {
   const route = await getRoute(path);
 
   if (!route) {

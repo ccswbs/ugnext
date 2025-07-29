@@ -5,7 +5,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Metadata, ResolvingMetadata } from "next";
 import {
-  getLocationByPath,
+  getUndergraduateAdmissionLocationByPath,
   getUndergraduateAdmissionRequirementPageContent,
   getStudentTypeByPath,
   UndergraduateAdmissionLocation,
@@ -36,7 +36,9 @@ async function slugToData(slug: string[]) {
     notFound();
   }
 
-  const location = await getLocationByPath(`${UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH}${slug[1]}`);
+  const location = await getUndergraduateAdmissionLocationByPath(
+    `${UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH}${slug[1]}`
+  );
 
   if (!location) {
     notFound();
