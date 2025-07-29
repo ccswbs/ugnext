@@ -20,6 +20,8 @@ import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drup
 import { Grid } from "@uoguelph/react-components/grid";
 import { Button } from "@uoguelph/react-components/button";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -96,8 +98,9 @@ export default async function ProgramsUndergraduate({ params }: Props) {
           </div>
 
           <div>
-            <Button className="mt-7.5" as={Link} href="/programs/undergraduate/requirements">
-              View Other Requirements
+            <Button className="mt-7.5 gap-2" as={Link} href="/programs/undergraduate/requirements">
+              <FontAwesomeIcon icon={faArrowLeftFromBracket} />
+              <span>View Other Requirements</span>
             </Button>
           </div>
         </Grid>
