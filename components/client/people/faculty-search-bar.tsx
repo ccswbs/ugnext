@@ -197,6 +197,7 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
               <Label className="text-body-copy-bold font-bold">Filter by college, department, or unit</Label>
               <Select
                 multiple
+                as="div"
                 onChange={(value) => {
                   // Handle the case where value might be a string, array, or other type
                   const selectedIds = Array.isArray(value) ? value : [];

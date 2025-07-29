@@ -53,6 +53,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
               <Label className="text-body-copy-bold font-bold">Filter by role</Label>
               <Select
                 multiple
+                as="div"
                 onChange={(options) => {
                   setSelectedTypes(options.length > 0 ? options.map(option => option.id) : types?.map(type => type.id) ?? []);
                 }}
@@ -80,6 +81,7 @@ export const PeopleSearchBar = ({ profiles, types,  units, onChange, className }
               <Label className="text-body-copy-bold font-bold">Filter by college, department, or unit</Label>
               <Select
                 multiple
+                as="div"
                 onChange={(options) => {
                   setSelectedUnits(options.length > 0 ? options.map(option => option.id) : units?.map(unit => unit.id) ?? []);
                 }}

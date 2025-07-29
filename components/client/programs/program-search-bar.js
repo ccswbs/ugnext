@@ -52,6 +52,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
               <Label className="text-body-copy-bold font-bold">Filter by type</Label>
               <Select
                 multiple
+                as="div"
                 onChange={(options) => {
                   setSelectedTypes(options.length > 0 ? options : types);
                 }}
@@ -79,6 +80,7 @@ export const ProgramSearchBar = ({ programs, types, degreeTypes, onChange, class
               <Label className="text-body-copy-bold font-bold">Filter by degree type</Label>
               <Select
                 multiple
+                as="div"
                 onChange={(options) => {
                   setSelectedDegreeTypes(options.length > 0 ? options : degreeTypes);
                 }}
