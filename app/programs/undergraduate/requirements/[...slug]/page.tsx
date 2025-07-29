@@ -25,6 +25,7 @@ import { Link as LinkComponent } from "@uoguelph/react-components/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
+import { ButtonWidget } from "@/components/client/widgets/button-section";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -120,21 +121,29 @@ export default async function ProgramsUndergraduate({ params }: Props) {
             {content?.sections?.map((section) => (
               <>
                 <Typography type="h3" as="h2">
-                  {section.type.name}
+                  {section.title}
                 </Typography>
 
-                {section.content?.map((content) => (
+                {/*section.content?.map((content) => (
                   <WidgetSelector key={content.id} data={content} />
-                ))}
+                ))*/}
               </>
             ))}
           </div>
 
-          <div>
-            <Button className="mt-7.5 gap-2" as={Link} href="/programs/undergraduate/requirements">
-              <FontAwesomeIcon icon={faArrowLeftFromBracket} />
+          <div className="flex flex-col gap-4 mt-7.5">
+            <Button
+              className="w-full font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1"
+              as={Link}
+              href="/programs/undergraduate/requirements"
+            >
+              <FontAwesomeIcon className="pe-3 text-4xl inline-block align-middle" icon={faArrowLeftFromBracket} />
               <span>View Other Requirements</span>
             </Button>
+
+            {content.sidebar.map((button) => (
+              <ButtonWidget key={button.id} data={button} column="secondary" />
+            ))}
           </div>
         </Grid>
       </LayoutContent>

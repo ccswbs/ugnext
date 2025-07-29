@@ -254,7 +254,10 @@ export async function getUndergraduateAdmissionRequirements(
 
 export type UndergraduateAdmissionRequirementPageContent = {
   sidebar: NonNullable<UndergraduateAdmissionRequirement["sidebar"]>;
-  sections: NonNullable<UndergraduateAdmissionRequirement["sections"]>;
+  sections: {
+    title: string;
+    content: NonNullable<UndergraduateAdmissionRequirement["sections"][0]["content"]>[];
+  }[];
   paths?: {
     title: string;
     url: string;
@@ -269,18 +272,46 @@ export async function getUndergraduateAdmissionRequirementPageContent(
   const showUnpublished = await showUnpublishedContent();
   const requirements = await getUndergraduateAdmissionRequirements(studentType, location, program);
 
-  const sidebarButtonTitles = new Set<string>();
+  const paths = requirements.map((requirement) => ({
+    title: requirement.title,
+    url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
+  }));
 
-  const content = requirements.reduce(
-    (acc, requirement) => {
-      acc.paths ??= [];
+  const sidebarTitles = new Set<string>();
+  const sidebar = requirements
+    // Filter out requirements that have no sidebar
+    .filter((requirement) => !!requirement?.sidebar)
+    // Create an array of only sidebars
+    .map((requirement) => requirement.sidebar)
+    // Flatten the array so we have one big array of sidebar content
+    .flat()
+    // Remove any null content from that array
+    .filter((value) => !!value)
+    // Remove content with a duplicate title; since the original array is sorted by rank, the content from the highest ranking requirement will appear in the final array.
+    .reduce(
+      (acc, value) => {
+        const title = value.link?.title ?? (value.formattedTitle?.processed as string) ?? "";
 
-      acc.paths.push({
-        title: requirement.title,
-        url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
-      });
+        if (title && !sidebarTitles.has(title)) {
+          acc.push(value);
+        }
 
-      if (requirement?.sidebar) {
+        return acc;
+      },
+      [] as NonNullable<UndergraduateAdmissionRequirement["sidebar"]>
+    );
+
+  return {
+    sidebar: sidebar,
+    paths: showUnpublished ? paths : null,
+    sections: [],
+  } as UndergraduateAdmissionRequirementPageContent;
+}
+
+export async function getDefaultSidebar() {}
+
+/*
+*  if (requirement?.sidebar) {
         for (const button of requirement.sidebar) {
           const buttonTitle = button.link?.title ?? (button.formattedTitle?.processed as string);
 
@@ -295,47 +326,4 @@ export async function getUndergraduateAdmissionRequirementPageContent(
           sidebarButtonTitles.add(buttonTitle);
           acc.sidebar.push(button);
         }
-      }
-
-      if (requirement?.sections) {
-        acc.sections.push(...requirement.sections);
-      }
-
-      return acc;
-    },
-    {
-      sidebar: [],
-      sections: [],
-      paths: [],
-    } as UndergraduateAdmissionRequirementPageContent
-  );
-
-  const sections: UndergraduateAdmissionRequirementPageContent["sections"] = [];
-  const sectionsMap = new Map<string, UndergraduateAdmissionRequirementPageContent["sections"]>();
-
-  // Need to handle override for sections
-  for (const section of content.sections) {
-    const sections = sectionsMap.get(section.type.name);
-
-    if (!Array.isArray(sections)) {
-      sectionsMap.set(section.type.name, [section]);
-      continue;
-    }
-
-    const lastSection = sections[sections.length - 1];
-
-    if (!lastSection.overrides) {
-      sections.push(section);
-    }
-  }
-
-  console.log(sectionsMap);
-
-  return {
-    sidebar: content.sidebar,
-    paths: showUnpublished ? content.paths : null,
-    sections: content.sections,
-  } as UndergraduateAdmissionRequirementPageContent;
-}
-
-export async function getDefaultSidebar() {}
+      }*/
