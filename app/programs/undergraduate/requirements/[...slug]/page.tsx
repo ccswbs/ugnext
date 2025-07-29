@@ -137,7 +137,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
               as={Link}
               href="/programs/undergraduate/requirements"
             >
-              <FontAwesomeIcon className="pe-3 text-4xl inline-block align-middle" icon={faArrowLeftFromBracket} />
+              <FontAwesomeIcon className="pe-3 text-3xl inline-block align-middle" icon={faArrowLeftFromBracket} />
               <span>View Other Requirements</span>
             </Button>
 

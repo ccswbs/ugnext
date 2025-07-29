@@ -42,7 +42,7 @@ export const ButtonWidget = ({ data, column }) => {
     slots: {
       heading: "block text-black",
       button: "w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1",
-      icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
+      icon: ["pe-3 text-3xl inline-block align-middle", icon.data],
     },
     variants: {
       column: {
