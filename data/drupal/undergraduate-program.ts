@@ -6,6 +6,7 @@ import type {
   UndergraduateProgramFragment,
   UndergraduateProgramTypeFragment,
 } from "@/lib/graphql/types";
+import { getRoute } from "@/data/drupal/route";
 
 export type UndergraduateProgramType = UndergraduateProgramTypeFragment;
 export type UndergraduateProgram = Omit<UndergraduateProgramFragment, "tags"> & {
@@ -150,4 +151,42 @@ export async function getUndergraduateMajors() {
     .sort((a, b) => a.title.localeCompare(b.title));
 }
 
-export const UNDERGRADUATE_PROGRAMS_NODE_PATH = "/node/undergraduate/programs/";
+export async function getUndergraduateProgramByPath(path: string) {
+  const route = await getRoute(path);
+
+  if (!route) {
+    return null;
+  }
+
+  if (route.__typename !== "RouteInternal") {
+    return null;
+  }
+
+  if (!route.entity) {
+    return null;
+  }
+
+  if (route.entity.__typename !== "NodeUndergraduateProgram") {
+    return null;
+  }
+
+  const programQuery = gql(/* gql */ `
+    query UndergraduateProgramByID($id: ID!, $revision: ID = "latest") {
+      nodeUndergraduateProgram(id: $id, revision: $revision) {
+        ...UndergraduateProgram
+      }
+    }
+  `);
+
+  const showUnpublished = await showUnpublishedContent();
+
+  const { data } = await query({
+    query: programQuery,
+    variables: {
+      id: route.entity.id,
+      revision: showUnpublished ? "latest" : "current",
+    },
+  });
+
+  return data.nodeUndergraduateProgram as UndergraduateProgram | null;
+}

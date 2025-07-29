@@ -1,7 +1,7 @@
 import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type { AdmissionLocationFragment, UndergraduateAdmissionStudentTypeFragment } from "@/lib/graphql/types";
-import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
+import { getRoute } from "@/data/drupal/route";
 
 export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
@@ -20,6 +20,28 @@ export async function getStudentTypes() {
   });
 
   return data.termUndergraduateStudentTypes.nodes as UndergraduateAdmissionStudentType[];
+}
+
+export async function getStudentTypeByPath(path: string) {
+  const route = await getRoute(path);
+
+  if (!route) {
+    return null;
+  }
+
+  if (route.__typename !== "RouteInternal") {
+    return null;
+  }
+
+  if (!route.entity) {
+    return null;
+  }
+
+  if (route.entity.__typename !== "TermUndergraduateStudentType") {
+    return null;
+  }
+
+  return route.entity as UndergraduateAdmissionStudentType;
 }
 
 export type UndergraduateAdmissionLocation = AdmissionLocationFragment;
@@ -57,8 +79,24 @@ export async function getLocations() {
   }) as UndergraduateAdmissionLocation[];
 }
 
-export async function getPageTitle(
-  studentType: UndergraduateAdmissionStudentType,
-  location: UndergraduateAdmissionLocation,
-  program: UndergraduateProgram
-) {}
+export async function getLocationByPath(path: string) {
+  const route = await getRoute(path);
+
+  if (!route) {
+    return null;
+  }
+
+  if (route.__typename !== "RouteInternal") {
+    return null;
+  }
+
+  if (!route.entity) {
+    return null;
+  }
+
+  if (route.entity.__typename !== "TermAdmissionLocation") {
+    return null;
+  }
+
+  return route.entity as UndergraduateAdmissionLocation;
+}

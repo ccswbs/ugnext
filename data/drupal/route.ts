@@ -74,6 +74,22 @@ export async function getRoute(url: string) {
                 id
                 title
               }
+              ... on NodeUndergraduateProgram {
+                uuid
+                id
+                title
+              }
+              ... on TermUndergraduateStudentType {
+                uuid
+                id
+                name
+              }
+              ... on TermAdmissionLocation {
+                uuid
+                id
+                name
+                type
+              }
             }
           }
           ... on RouteRedirect {

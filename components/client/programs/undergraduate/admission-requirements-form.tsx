@@ -2,7 +2,7 @@
 
 import { Typography } from "@uoguelph/react-components/typography";
 import { Field, Label } from "@headlessui/react";
-import type { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
+import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import type {
   UndergraduateAdmissionLocation,
   UndergraduateAdmissionLocationType,
@@ -20,12 +20,11 @@ import { useFuzzySearch } from "@/lib/use-fuzzy-search";
 import { pluginQPS } from "@orama/plugin-qps";
 import { Button } from "@uoguelph/react-components/button";
 import { useRouter } from "next/navigation";
-
-export const UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH = "/term/undergraduate/admission/student-types/";
-
-export const UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH = "/term/undergraduate/admission/locations/";
-
-export const UNDERGRADUATE_PROGRAMS_NODE_PATH = "/node/undergraduate/programs/";
+import {
+  UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH,
+  UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH,
+  UNDERGRADUATE_PROGRAMS_NODE_PATH,
+} from "@/lib/undergraduate-admission-requirements";
 
 type AdmissionRequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
