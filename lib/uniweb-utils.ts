@@ -23,6 +23,38 @@ export interface UniwebProfile {
     description: string | null;
     _attributes_: any[];
   }>;
+  affiliations: Array<{
+    id: string;
+    position_title: string;
+    organization: string;
+    department: string | null;
+    activity_description: string | null;
+    start_date: string;
+    end_date: string | null;
+    _attributes_: any[];
+  }>;
+  research_description: Array<{
+    research_description: string;
+  }>;
+  current_teaching: Array<{
+    course_name: string;
+    role: string;
+  }>;
+  selected_degrees: Array<{
+    degree_name: string;
+    specialty: string;
+    institution: string;
+    year: string;
+  }>;
+  selected_publications: {
+    pubmed_articles: Array<any>;
+    journal_articles: Array<{
+      article_title: string;
+      journal: string;
+      authors: string;
+      date: string;
+    }>;
+  };
   // Add other top-level fields as needed when you discover them
 }
 

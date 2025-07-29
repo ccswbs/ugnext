@@ -11,40 +11,14 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { fetchLdapProfile } from "@/lib/ldap-utils";
-import { getProfile } from "@/lib/uniweb-utils";
-
-// Component to display Uniweb research interests
-async function UniwebResearchInterests({ uniwebId }: { uniwebId: string }) {
-  try {
-    const uniwebProfile = await getProfile(uniwebId);
-    
-    if (uniwebProfile.research_interests && uniwebProfile.research_interests.length > 0) {
-      const sortedInterests = uniwebProfile.research_interests
-        .sort((a, b) => parseInt(a.order) - parseInt(b.order));
-      
-      return (
-        <div className="mb-4">
-          <Typography type="h3" as="h3" className="mb-2">
-            Research Interests
-          </Typography>
-          <ul className="list-disc list-inside space-y-1 ml-4">
-            {sortedInterests.map((interest) => (
-              <li key={interest.id}>
-                <Typography type="body" className="inline">
-                  {interest.interest[1]}
-                </Typography>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    }
-  } catch (error) {
-    console.error('Error fetching Uniweb research interests:', error);
-  }
-  
-  return null;
-}
+import { 
+  UniwebAffiliations,
+  UniwebCurrentTeaching,
+  UniwebDegrees,
+  UniwebPublications,
+  UniwebResearchDesc,
+  UniwebResearchInterests 
+} from "@/components/server/uniweb-components";
 
 interface ProfileContent {
   status: boolean;
@@ -185,7 +159,8 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               
               {content.uniwebResearchInterests && content.uniwebId && (
                 <UniwebResearchInterests uniwebId={content.uniwebId} />
-              )}
+              )}             
+
             </div>
                       
             {content.profilePicture && (
@@ -198,7 +173,29 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               />
             )}
           </div>
+          {content.uniwebAffiliations && content.uniwebId && (
+            <UniwebAffiliations uniwebId={content.uniwebId} />
+          )}
+
+          {content.uniwebResearchDesc && content.uniwebId && (
+            <UniwebResearchDesc uniwebId={content.uniwebId} />
+          )}
+          {content.uniwebCurrentTeaching && content.uniwebId && (
+            <UniwebCurrentTeaching uniwebId={content.uniwebId} />
+          )}
+          
+          {content.uniwebDegrees && content.uniwebId && (
+            <UniwebDegrees uniwebId={content.uniwebId} />
+          )}
+          
+          {content.uniwebPublications && content.uniwebId && (
+            <UniwebPublications uniwebId={content.uniwebId} />
+          )}              
+
+          {/* Parse and render the Body field */}
           <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
+          
+          {/* Parse and render the Profile Parts */}
           {content?.profileSections?.map((section, index) => (
             <div key={index}>
               <Typography type="h2" as="h2">
