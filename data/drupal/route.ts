@@ -79,6 +79,11 @@ export async function getRoute(url: string) {
                 id
                 title
               }
+              ... on NodeUndergraduateDegree {
+                uuid
+                id
+                title
+              }
               ... on TermUndergraduateStudentType {
                 uuid
                 id
@@ -89,6 +94,11 @@ export async function getRoute(url: string) {
                 id
                 name
                 type
+              }
+              ... on NodeUndergraduateRequirement {
+                uuid
+                id
+                title
               }
             }
           }
