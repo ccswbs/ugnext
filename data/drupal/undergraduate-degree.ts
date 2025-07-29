@@ -37,6 +37,7 @@ export async function getUndergraduateDegreeTypes() {
 
 export const UNDERGRADUATE_DEGREE = gql(/* gql */ `
   fragment UndergraduateDegree on NodeUndergraduateDegree {
+    __typename
     id
     title
     status

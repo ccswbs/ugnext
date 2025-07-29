@@ -38,6 +38,7 @@ export async function getUndergraduateProgramTypes() {
 
 export const UNDERGRADUATE_PROGRAM = gql(/* gql */ `
   fragment UndergraduateProgram on NodeUndergraduateProgram {
+    __typename
     id
     title
     status
