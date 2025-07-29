@@ -1,4 +1,3 @@
-import { Container } from "@uoguelph/react-components/container";
 import { Layout } from "@uoguelph/react-components/layout";
 import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
@@ -18,6 +17,9 @@ import {
 } from "@/lib/undergraduate-admission-requirements";
 import { notFound } from "next/navigation";
 import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drupal/undergraduate-program";
+import { Grid } from "@uoguelph/react-components/grid";
+import { Button } from "@uoguelph/react-components/button";
+import Link from "next/link";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -76,12 +78,29 @@ export default async function ProgramsUndergraduate({ params }: Props) {
     <Layout>
       <Header></Header>
 
-      <LayoutContent container={false}>
-        <Container>
-          <Typography type="h2" as="h1" className="block! text-black">
-            {title}
-          </Typography>
-        </Container>
+      <LayoutContent>
+        <Grid
+          template={{
+            base: ["minmax(0, 1fr)"],
+            md: ["minmax(0, 9fr)", "minmax(0, 3fr)"],
+          }}
+          gap={{
+            x: 10,
+            y: 0,
+          }}
+        >
+          <div>
+            <Typography type="h2" as="h1" className="block! text-black">
+              {title}
+            </Typography>
+          </div>
+
+          <div>
+            <Button className="mt-7.5" as={Link} href="/programs/undergraduate/requirements">
+              View Other Requirements
+            </Button>
+          </div>
+        </Grid>
       </LayoutContent>
 
       <Footer></Footer>
