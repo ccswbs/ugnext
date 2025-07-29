@@ -53,7 +53,7 @@ async function slugToData(slug: string[]) {
   };
 }
 
-export function getPageTitle(
+function getPageTitle(
   studentType: UndergraduateAdmissionStudentType,
   location: UndergraduateAdmissionLocation,
   program: UndergraduateProgram
