@@ -7,6 +7,10 @@
     @apply flex min-h-dvh flex-col;
   }
 
+  body, main {
+    @apply text-body-copy dark:text-body-copy-on-dark light:text-body-copy-on-light text-lg leading-[1.6] font-normal;
+  }
+
   /* Slate form styles (pulled from gus, converted to use tailwind apply) */
   /* @todo clean up when time permits */
   .ug-slate {
