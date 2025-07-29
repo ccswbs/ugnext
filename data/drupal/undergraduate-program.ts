@@ -152,6 +152,7 @@ export async function getUndergraduateMajors() {
 }
 
 export async function getUndergraduateProgramByPath(path: string) {
+  const showUnpublished = await showUnpublishedContent();
   const route = await getRoute(path);
 
   if (!route) {
@@ -177,8 +178,6 @@ export async function getUndergraduateProgramByPath(path: string) {
       }
     }
   `);
-
-  const showUnpublished = await showUnpublishedContent();
 
   const { data } = await query({
     query: programQuery,

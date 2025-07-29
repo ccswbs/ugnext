@@ -6,6 +6,7 @@ import { Footer } from "@uoguelph/react-components/footer";
 import { Metadata, ResolvingMetadata } from "next";
 import {
   getLocationByPath,
+  getRequirements,
   getStudentTypeByPath,
   UndergraduateAdmissionLocation,
   UndergraduateAdmissionStudentType,
@@ -75,6 +76,9 @@ export default async function ProgramsUndergraduate({ params }: Props) {
   const { slug } = await params;
   const { studentType, location, program } = await slugToData(slug);
   const title = getPageTitle(studentType, location, program);
+
+  const requirements = await getRequirements(studentType, location, program);
+  console.log(requirements);
 
   return (
     <Layout>

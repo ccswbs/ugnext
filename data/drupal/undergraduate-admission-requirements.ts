@@ -2,6 +2,8 @@ import { query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type { AdmissionLocationFragment, UndergraduateAdmissionStudentTypeFragment } from "@/lib/graphql/types";
 import { getRoute } from "@/data/drupal/route";
+import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
@@ -100,3 +102,111 @@ export async function getLocationByPath(path: string) {
 
   return route.entity as UndergraduateAdmissionLocation;
 }
+
+export const UNDERGRADUATE_ADMISSION_REQUIREMENT_FRAGMENT = gql(/* gql */ `
+  fragment UndergraduateAdmissionRequirement on NodeUndergraduateRequirement {
+    title
+    path
+    type {
+      ... on TermUndergraduateStudentType {
+        name
+      }
+    }
+    location {
+      ... on TermAdmissionLocation {
+        name
+      }
+    }
+    program {
+      ... on NodeUndergraduateProgram {
+        programType: type {
+          ... on TermUndergraduateProgramType {
+            name
+          }
+        }
+      }
+      ... on NodeUndergraduateDegree {
+        degreeType: type {
+          ... on TermUndergraduateDegreeType {
+            name
+          }
+        }
+      }
+    }
+    sidebar {
+      ...Buttons
+    }
+    sections {
+      ... on ParagraphUndergradReqsSection {
+        type {
+          ... on TermUndergradReqSecType {
+            name
+          }
+        }
+        overrides
+        content {
+          __typename
+          ...Accordion
+          ...Block
+          ...GeneralText
+        }
+      }
+    }
+  }
+`);
+
+export async function getRequirements(
+  studentType: UndergraduateAdmissionStudentType,
+  location: UndergraduateAdmissionLocation,
+  program: UndergraduateProgram
+) {
+  const showUnpublished = await showUnpublishedContent();
+
+  const { data: idResults } = await query({
+    query: gql(/* gql */ `
+      query UndergraduateAdmissionRequirementsIDs($studentType: String!, $location: String!, $program: Float) {
+        undergraduateAdmissionRequirements(
+          filter: { student_type: $studentType, location: $location, program: $program }
+        ) {
+          results {
+            ... on NodeUndergraduateRequirement {
+              id: uuid
+            }
+          }
+        }
+      }
+    `),
+    variables: {
+      studentType: studentType.name,
+      location: location.name,
+      program: Number.parseFloat(program.id),
+    },
+  });
+
+  const ids =
+    idResults?.undergraduateAdmissionRequirements?.results
+      .map((result) => (result.__typename === "NodeUndergraduateRequirement" ? result.id : null))
+      .filter((id) => id !== null) ?? [];
+
+  const requirementsQuery = gql(/* gql */ `
+    query UndergraduateAdmissionRequirement($id: ID!, $revision: ID!) {
+      nodeUndergraduateRequirement(id: $id, revision: $revision) {
+        ...UndergraduateAdmissionRequirement
+      }
+    }
+  `);
+
+  const requirements = ids.map((id) => {
+    return query({
+      query: requirementsQuery,
+      variables: {
+        id: id,
+        revision: showUnpublished ? "latest" : "current",
+      },
+    });
+  });
+
+  return (await Promise.all(requirements)).map((result) => result.data.nodeUndergraduateRequirement);
+}
+
+export async function getDefaultSidebar() {}
