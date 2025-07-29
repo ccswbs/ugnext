@@ -309,21 +309,3 @@ export async function getUndergraduateAdmissionRequirementPageContent(
 }
 
 export async function getDefaultSidebar() {}
-
-/*
-*  if (requirement?.sidebar) {
-        for (const button of requirement.sidebar) {
-          const buttonTitle = button.link?.title ?? (button.formattedTitle?.processed as string);
-
-          if (!buttonTitle) {
-            continue;
-          }
-
-          if (sidebarButtonTitles.has(buttonTitle)) {
-            continue;
-          }
-
-          sidebarButtonTitles.add(buttonTitle);
-          acc.sidebar.push(button);
-        }
-      }*/
