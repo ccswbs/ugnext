@@ -44,5 +44,5 @@ export function useFuzzySearch<TSchema extends AnySchema, TData extends PartialS
 
     return (params: SearchParams<typeof database>) =>
       search(database, params) as Results<TypedDocument<typeof database>>;
-  }, [data, plugins, schema, stopwords]);
+  }, [data, plugins, schema, stemming, stopwords]);
 }
