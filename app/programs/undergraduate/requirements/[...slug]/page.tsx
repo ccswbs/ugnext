@@ -78,7 +78,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
 
       <LayoutContent container={false}>
         <Container>
-          <Typography type="h1" as="h1" className="block!">
+          <Typography type="h2" as="h1" className="block! text-black">
             {title}
           </Typography>
         </Container>
