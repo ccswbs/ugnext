@@ -21,6 +21,7 @@ import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drup
 import { Grid } from "@uoguelph/react-components/grid";
 import { Button } from "@uoguelph/react-components/button";
 import Link from "next/link";
+import { Link as LinkComponent } from "@uoguelph/react-components/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
@@ -90,6 +91,17 @@ export default async function ProgramsUndergraduate({ params }: Props) {
       <Header></Header>
 
       <LayoutContent>
+        {Array.isArray(content.paths) && content.paths.length > 0 && (
+          <div className="fixed bottom-4 right-4 max-w-96 bg-grey-light-bg shadow-2xl p-4 rounded-md flex gap-2 flex-col z-10">
+            <span>The following Undergraduate Admission Requirements were used to build this page</span>
+            {content.paths.map((path) => (
+              <LinkComponent key={path.url} href={path.url}>
+                {path.title}
+              </LinkComponent>
+            ))}
+          </div>
+        )}
+
         <Grid
           template={{
             base: ["minmax(0, 1fr)"],

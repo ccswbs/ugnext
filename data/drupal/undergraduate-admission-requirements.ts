@@ -255,7 +255,7 @@ export async function getUndergraduateAdmissionRequirements(
 export type UndergraduateAdmissionRequirementPageContent = {
   sidebar: NonNullable<UndergraduateAdmissionRequirement["sidebar"]>;
   sections: NonNullable<UndergraduateAdmissionRequirement["sections"]>;
-  paths: {
+  paths?: {
     title: string;
     url: string;
   }[];
@@ -266,12 +266,15 @@ export async function getUndergraduateAdmissionRequirementPageContent(
   location: UndergraduateAdmissionLocation,
   program: UndergraduateProgram
 ) {
+  const showUnpublished = await showUnpublishedContent();
   const requirements = await getUndergraduateAdmissionRequirements(studentType, location, program);
 
   const sidebarButtonTitles = new Set<string>();
 
-  return requirements.reduce(
+  const content = requirements.reduce(
     (acc, requirement) => {
+      acc.paths ??= [];
+
       acc.paths.push({
         title: requirement.title,
         url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
@@ -306,6 +309,33 @@ export async function getUndergraduateAdmissionRequirementPageContent(
       paths: [],
     } as UndergraduateAdmissionRequirementPageContent
   );
+
+  const sections: UndergraduateAdmissionRequirementPageContent["sections"] = [];
+  const sectionsMap = new Map<string, UndergraduateAdmissionRequirementPageContent["sections"]>();
+
+  // Need to handle override for sections
+  for (const section of content.sections) {
+    const sections = sectionsMap.get(section.type.name);
+
+    if (!Array.isArray(sections)) {
+      sectionsMap.set(section.type.name, [section]);
+      continue;
+    }
+
+    const lastSection = sections[sections.length - 1];
+
+    if (!lastSection.overrides) {
+      sections.push(section);
+    }
+  }
+
+  console.log(sectionsMap);
+
+  return {
+    sidebar: content.sidebar,
+    paths: showUnpublished ? content.paths : null,
+    sections: content.sections,
+  } as UndergraduateAdmissionRequirementPageContent;
 }
 
 export async function getDefaultSidebar() {}
