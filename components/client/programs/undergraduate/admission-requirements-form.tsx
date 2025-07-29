@@ -27,13 +27,17 @@ export const UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH = "/term/undergraduate/
 
 export const UNDERGRADUATE_PROGRAMS_NODE_PATH = "/node/undergraduate/programs/";
 
-type RequirementsFormProps = {
+type AdmissionRequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
   locations: UndergraduateAdmissionLocation[];
   programs: UndergraduateProgram[];
 };
 
-export default function RequirementsForm({ studentTypes, locations, programs }: RequirementsFormProps) {
+export default function AdmissionRequirementsForm({
+  studentTypes,
+  locations,
+  programs,
+}: AdmissionRequirementsFormProps) {
   const router = useRouter();
 
   const [studentType, setStudentType] = useState<UndergraduateAdmissionStudentType | null>(null);
