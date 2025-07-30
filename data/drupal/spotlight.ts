@@ -188,6 +188,7 @@ export async function getSpotlights() {
       variables: {
         page: page,
         pageSize: pageSize,
+        status: showUnpublished ? null : true,
       },
     });
 
@@ -199,10 +200,6 @@ export async function getSpotlights() {
       }
 
       if (seen.has(spotlight.id)) {
-        continue;
-      }
-
-      if (!showUnpublished && spotlight.status === false) {
         continue;
       }
 
@@ -221,6 +218,8 @@ export async function getSpotlights() {
 
     page++;
   } while (page < total && (cards.length < 4 || hero === null));
+
+  console.log(cards);
 
   return { hero, cards: cards.toSorted((a, b) => a.rank - b.rank) } as { hero: Spotlight | null; cards: Spotlight[] };
 }
