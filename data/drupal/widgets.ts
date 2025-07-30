@@ -170,6 +170,7 @@ export const MEDIA_TEXT_FRAGMENT = gql(/* gql */ `
     __typename
     heading: title
     mediaImageSize
+    mediaIsDecorative
     buttonSection {
       ...ButtonSection
     }
