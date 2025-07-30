@@ -26,6 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import { ButtonWidget } from "@/components/client/widgets/button-section";
+import { AdmissionRequirementsSidebarButton } from "@/components/client/programs/undergraduate/admission-requirements-sidebar-button";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -93,7 +94,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
 
       <LayoutContent>
         {Array.isArray(content.paths) && content.paths.length > 0 && (
-          <div className="fixed bottom-4 right-4 max-w-96 bg-grey-light-bg shadow-2xl p-4 rounded-md flex gap-2 flex-col z-10">
+          <div className="fixed bottom-4 right-4 max-w-96 bg-grey-light-bg border border-grey-light shadow-2xl p-4 rounded-md flex gap-2 flex-col z-10">
             <span>The following Undergraduate Admission Requirements were used to build this page</span>
             {content.paths.map((path) => (
               <LinkComponent key={path.url} href={path.url}>
@@ -120,9 +121,9 @@ export default async function ProgramsUndergraduate({ params }: Props) {
 
             {content?.sections?.map((section) => (
               <>
-                <Typography type="h3" as="h2">
+                {/*<Typography type="h3" as="h2">
                   {section.title}
-                </Typography>
+                </Typography>*/}
 
                 {/*section.content?.map((content) => (
                   <WidgetSelector key={content.id} data={content} />
@@ -132,17 +133,20 @@ export default async function ProgramsUndergraduate({ params }: Props) {
           </div>
 
           <div className="flex flex-col gap-4 mt-7.5">
-            <Button
-              className="w-full font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1"
-              as={Link}
-              href="/programs/undergraduate/requirements"
-            >
-              <FontAwesomeIcon className="pe-3 text-3xl inline-block align-middle" icon={faArrowLeftFromBracket} />
-              <span>View Other Requirements</span>
-            </Button>
+            <AdmissionRequirementsSidebarButton
+              url="/programs/undergraduate/requirements"
+              title="View Other Requirements"
+              icon={faArrowLeftFromBracket}
+            />
 
             {content.sidebar.map((button) => (
-              <ButtonWidget key={button.id} data={button} column="secondary" />
+              <AdmissionRequirementsSidebarButton
+                key={button.id}
+                color="black"
+                url={button.link.url ?? ""}
+                title={button.link.title ?? ""}
+                icon={button.fontAwesomeIcon ?? ""}
+              />
             ))}
           </div>
         </Grid>

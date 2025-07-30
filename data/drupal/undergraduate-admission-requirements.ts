@@ -4,6 +4,7 @@ import type {
   AdmissionLocationFragment,
   UndergraduateAdmissionRequirementFragment,
   UndergraduateAdmissionStudentTypeFragment,
+  UndergraduateAdmissionRequirementSectionFragment,
 } from "@/lib/graphql/types";
 import { getRoute } from "@/data/drupal/route";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
@@ -51,6 +52,7 @@ export async function getUndergraduateAdmissionStudentTypeByPath(path: string) {
 }
 
 export type UndergraduateAdmissionLocation = AdmissionLocationFragment;
+
 export type UndergraduateAdmissionLocationType = "domestic" | "international" | "curriculum";
 
 export async function getUndergraduateAdmissionLocations() {
@@ -107,57 +109,52 @@ export async function getUndergraduateAdmissionLocationByPath(path: string) {
   return route.entity as UndergraduateAdmissionLocation;
 }
 
+export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SIDEBAR_BUTTON_FRAGMENT = gql(/* gql */ `
+  fragment UndergraduateAdmissionRequirementSidebarButton on ParagraphUndergradReqSidebarButton {
+    __typename
+    id
+    link {
+      title
+      url
+    }
+    fontAwesomeIcon
+  }
+`);
+
+export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SECTION_FRAGMENT = gql(/* gql */ `
+  fragment UndergraduateAdmissionRequirementSection on ParagraphUndergradReqsSection {
+    __typename
+    type {
+      ... on TermUndergradReqSecType {
+        name
+      }
+    }
+    overrides
+    content {
+      processed
+    }
+  }
+`);
+
 export const UNDERGRADUATE_ADMISSION_REQUIREMENT_FRAGMENT = gql(/* gql */ `
   fragment UndergraduateAdmissionRequirement on NodeUndergraduateRequirement {
     __typename
     title
     path
     type {
-      ... on TermUndergraduateStudentType {
-        name
-      }
+      __typename
     }
     location {
-      ... on TermAdmissionLocation {
-        name
-      }
+      __typename
     }
     program {
-      ... on NodeUndergraduateProgram {
-        programType: type {
-          ... on TermUndergraduateProgramType {
-            name
-          }
-        }
-      }
-      ... on NodeUndergraduateDegree {
-        degreeType: type {
-          ... on TermUndergraduateDegreeType {
-            name
-          }
-        }
-      }
+      __typename
     }
     sidebar {
-      ...Buttons
+      ...UndergraduateAdmissionRequirementSidebarButton
     }
     sections {
-      ... on ParagraphUndergradReqsSection {
-        __typename
-        type {
-          ... on TermUndergradReqSecType {
-            name
-          }
-        }
-        overrides
-        content {
-          __typename
-          ...Accordion
-          ...Block
-          ...GeneralText
-          ...ButtonSection
-        }
-      }
+      ...UndergraduateAdmissionRequirementSection
     }
   }
 `);
@@ -252,18 +249,6 @@ export async function getUndergraduateAdmissionRequirements(
   );
 }
 
-export type UndergraduateAdmissionRequirementPageContent = {
-  sidebar: NonNullable<UndergraduateAdmissionRequirement["sidebar"]>;
-  sections: {
-    title: string;
-    content: NonNullable<UndergraduateAdmissionRequirement["sections"][0]["content"]>[];
-  }[];
-  paths?: {
-    title: string;
-    url: string;
-  }[];
-};
-
 export async function getUndergraduateAdmissionRequirementPageContent(
   studentType: UndergraduateAdmissionStudentType,
   location: UndergraduateAdmissionLocation,
@@ -277,10 +262,9 @@ export async function getUndergraduateAdmissionRequirementPageContent(
     url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
   }));
 
-  const sidebarTitles = new Set<string>();
-  const sidebar = requirements
+  const { sidebar } = requirements
     // Filter out requirements that have no sidebar
-    .filter((requirement) => !!requirement?.sidebar)
+    .filter((requirement) => !!requirement.sidebar)
     // Create an array of only sidebars
     .map((requirement) => requirement.sidebar)
     // Flatten the array so we have one big array of sidebar content
@@ -290,22 +274,38 @@ export async function getUndergraduateAdmissionRequirementPageContent(
     // Remove content with a duplicate title; since the original array is sorted by rank, the content from the highest ranking requirement will appear in the final array.
     .reduce(
       (acc, value) => {
-        const title = value.link?.title ?? (value.formattedTitle?.processed as string) ?? "";
+        const title = value.link.title;
 
-        if (title && !sidebarTitles.has(title)) {
-          acc.push(value);
+        if (title && !acc.titles.has(title)) {
+          acc.sidebar.push(value);
         }
 
         return acc;
       },
-      [] as NonNullable<UndergraduateAdmissionRequirement["sidebar"]>
+      {
+        sidebar: [] as NonNullable<UndergraduateAdmissionRequirement["sidebar"]>,
+        titles: new Set<string>(),
+      }
     );
+
+  const sections = requirements
+    .filter((requirement) => !!requirement.sections)
+    .map((requirement) => requirement.sections)
+    .flat()
+    .filter((value) => !!value)
+    .reduce((acc, value) => {
+      const sections = acc.get(value.type.name);
+
+      return acc;
+    }, new Map<string, NonNullable<UndergraduateAdmissionRequirement["sections"]>[0]>());
+
+  console.log(sections);
 
   return {
     sidebar: sidebar,
     paths: showUnpublished ? paths : null,
     sections: [],
-  } as UndergraduateAdmissionRequirementPageContent;
+  };
 }
 
 export async function getDefaultSidebar() {}
