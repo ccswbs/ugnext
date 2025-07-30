@@ -19,13 +19,8 @@ import {
 import { notFound } from "next/navigation";
 import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Grid } from "@uoguelph/react-components/grid";
-import { Button } from "@uoguelph/react-components/button";
-import Link from "next/link";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
-import { WidgetSelector } from "@/components/client/widgets/widget-selector";
-import { ButtonWidget } from "@/components/client/widgets/button-section";
 import { AdmissionRequirementsSidebarButton } from "@/components/client/programs/undergraduate/admission-requirements-sidebar-button";
 
 type Props = {
