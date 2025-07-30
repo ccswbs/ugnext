@@ -1,5 +1,5 @@
 import { gql } from "@/lib/graphql";
-import { DraftSpotlightsQuery, PublishedSpotlightsQuery } from "@/lib/graphql/types";
+import { SpotlightFragment } from "@/lib/graphql/types";
 import { query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
@@ -155,12 +155,15 @@ function getTestSpotlights() {
   };
 }
 
-async function getDraftSpotlights() {
-  type Spotlight = Extract<
-    NonNullable<DraftSpotlightsQuery["latestContentRevisions"]>["results"][number],
-    { __typename?: "NodeSpotlight" }
-  >;
+export type Spotlight = SpotlightFragment;
 
+export async function getSpotlights() {
+  if (process.env.USE_TESTING_DATA) {
+    return getTestSpotlights();
+  }
+
+  const showUnpublished = await showUnpublishedContent();
+  const seen = new Set<string>();
   const cards: Spotlight[] = [];
   let hero: Spotlight | null = null;
   const pageSize = 5;
@@ -170,8 +173,8 @@ async function getDraftSpotlights() {
   do {
     const { data } = await query({
       query: gql(/* gql */ `
-        query DraftSpotlights($pageSize: Int = 5, $page: Int = 0) {
-          latestContentRevisions(filter: { type: "spotlight" }, pageSize: $pageSize, page: $page) {
+        query Spotlights($pageSize: Int = 5, $page: Int = 0, $status: Boolean = null) {
+          spotlightRevisions(filter: { status: $status }, pageSize: $pageSize, page: $page) {
             pageInfo {
               total
             }
@@ -188,91 +191,36 @@ async function getDraftSpotlights() {
       },
     });
 
-    total = Math.ceil((data?.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
+    total = Math.ceil((data?.spotlightRevisions?.pageInfo?.total ?? 0) / pageSize);
 
-    for (const spotlight of data?.latestContentRevisions?.results ?? []) {
-      if (spotlight.__typename === "NodeSpotlight") {
-        // We found a hero spotlight
-        if (!hero && spotlight.rank === 1) {
-          hero = spotlight;
-          continue;
-        }
+    for (const spotlight of data?.spotlightRevisions?.results ?? []) {
+      if (spotlight.__typename !== "NodeSpotlight") {
+        continue;
+      }
 
-        if (cards.length < 4) {
-          cards.push(spotlight);
-        }
+      if (seen.has(spotlight.id)) {
+        continue;
+      }
+
+      if (!showUnpublished && spotlight.status === false) {
+        continue;
+      }
+
+      // We found a hero spotlight
+      if (!hero && spotlight.rank === 1) {
+        hero = spotlight;
+        seen.add(spotlight.id);
+        continue;
+      }
+
+      if (cards.length < 4) {
+        cards.push(spotlight);
+        seen.add(spotlight.id);
       }
     }
 
     page++;
   } while (page < total && (cards.length < 4 || hero === null));
 
-  return { hero, cards };
-}
-
-async function getPublishedSpotlights() {
-  type Spotlight = NonNullable<PublishedSpotlightsQuery["nodeSpotlights"]>["nodes"][number];
-
-  const cards: Spotlight[] = [];
-  let hero: Spotlight | null = null;
-  const pageSize = 5;
-  let cursor: string | null = null;
-  let hasNextPage = true;
-
-  while (hasNextPage && (cards.length < 4 || hero === null)) {
-    const { data } = await query({
-      query: gql(/* gql */ `
-        query PublishedSpotlights($cursor: Cursor = null, $pageSize: Int = 5) {
-          nodeSpotlights(first: $pageSize, after: $cursor) {
-            pageInfo {
-              endCursor
-              hasNextPage
-            }
-            nodes {
-              ...Spotlight
-            }
-          }
-        }
-      `),
-      variables: {
-        cursor: cursor,
-        pageSize: pageSize,
-      },
-    });
-
-    for (const spotlight of data?.nodeSpotlights?.nodes ?? []) {
-      if (spotlight.__typename === "NodeSpotlight") {
-        // Ignore unpublished content
-        if (spotlight.status === false) continue;
-
-        // We found a hero spotlight
-        if (!hero && spotlight.rank === 1) {
-          hero = spotlight;
-          continue;
-        }
-
-        if (cards.length < 4) {
-          cards.push(spotlight);
-        }
-      }
-    }
-
-    hasNextPage = data?.nodeSpotlights?.pageInfo?.hasNextPage ?? false;
-  }
-
-  return { hero, cards: cards as Spotlight[] };
-}
-
-export async function getSpotlights() {
-  if (process.env.USE_TESTING_DATA) {
-    console.log("Using test data for spotlights");
-    return getTestSpotlights();
-  }
-
-  // Preview
-  if (await showUnpublishedContent()) {
-    return await getDraftSpotlights();
-  }
-
-  return await getPublishedSpotlights();
+  return { hero, cards } as { hero: Spotlight | null; cards: Spotlight[] };
 }
