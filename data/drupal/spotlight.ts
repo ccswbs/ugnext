@@ -219,7 +219,5 @@ export async function getSpotlights() {
     page++;
   } while (page < total && (cards.length < 4 || hero === null));
 
-  console.log(cards);
-
   return { hero, cards: cards.toSorted((a, b) => a.rank - b.rank) } as { hero: Spotlight | null; cards: Spotlight[] };
 }
