@@ -163,16 +163,14 @@ export type UndergraduateAdmissionRequirement = UndergraduateAdmissionRequiremen
   rank: number;
 };
 
-export async function getUndergraduateAdmissionRequirements(
-  studentType: UndergraduateAdmissionStudentType,
-  location: UndergraduateAdmissionLocation,
-  program: UndergraduateProgram
+export async function getUndergraduateAdmissionRequirementIDs(
+  studentType?: UndergraduateAdmissionStudentType,
+  location?: UndergraduateAdmissionLocation,
+  program?: UndergraduateProgram
 ) {
-  const showUnpublished = await showUnpublishedContent();
-
-  const { data: idResults } = await query({
+  const { data } = await query({
     query: gql(/* gql */ `
-      query UndergraduateAdmissionRequirementsIDs($studentType: String!, $location: String!, $program: Float) {
+      query UndergraduateAdmissionRequirementsIDs($studentType: String, $location: String, $program: Float) {
         undergraduateAdmissionRequirements(
           filter: { student_type: $studentType, location: $location, program: $program }
         ) {
@@ -185,17 +183,21 @@ export async function getUndergraduateAdmissionRequirements(
       }
     `),
     variables: {
-      studentType: studentType.name,
-      location: location.name,
-      program: Number.parseFloat(program.id),
+      studentType: studentType?.name ?? null,
+      location: location?.name ?? null,
+      program: program ? Number.parseFloat(program.id) : null,
     },
   });
 
-  const ids =
-    idResults?.undergraduateAdmissionRequirements?.results
+  return (
+    data?.undergraduateAdmissionRequirements?.results
       .map((result) => (result.__typename === "NodeUndergraduateRequirement" ? result.id : null))
-      .filter((id) => id !== null) ?? [];
+      .filter((id) => id !== null) ?? []
+  );
+}
 
+export async function getUndergraduateAdmissionRequirementsByID(ids: string[]) {
+  const showUnpublished = await showUnpublishedContent();
   const requirementsQuery = gql(/* gql */ `
     query UndergraduateAdmissionRequirement($id: ID!, $revision: ID!) {
       nodeUndergraduateRequirement(id: $id, revision: $revision) {
@@ -249,13 +251,18 @@ export async function getUndergraduateAdmissionRequirements(
   );
 }
 
-export async function getUndergraduateAdmissionRequirementPageContent(
+export async function getUndergraduateAdmissionRequirements(
   studentType: UndergraduateAdmissionStudentType,
   location: UndergraduateAdmissionLocation,
   program: UndergraduateProgram
 ) {
+  const ids = await getUndergraduateAdmissionRequirementIDs(studentType, location, program);
+  return await getUndergraduateAdmissionRequirementsByID(ids);
+}
+
+async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]) {
   const showUnpublished = await showUnpublishedContent();
-  const requirements = await getUndergraduateAdmissionRequirements(studentType, location, program);
+  const requirements = await getUndergraduateAdmissionRequirementsByID(ids);
 
   const paths: { title: string; url: string }[] = [];
   const sidebarTitles = new Set<string>();
@@ -320,4 +327,16 @@ export async function getUndergraduateAdmissionRequirementPageContent(
   };
 }
 
-export async function getDefaultSidebar() {}
+export async function getUndergraduateAdmissionRequirementPageContent(
+  studentType: UndergraduateAdmissionStudentType,
+  location: UndergraduateAdmissionLocation,
+  program: UndergraduateProgram
+) {
+  const ids = await getUndergraduateAdmissionRequirementIDs(studentType, location, program);
+  return await getUndergraduateAdmissionRequirementPageContentByID(ids);
+}
+
+export async function getGeneralAdmissionRequirementPageContent() {
+  const ids = await getUndergraduateAdmissionRequirementIDs();
+  return await getUndergraduateAdmissionRequirementPageContentByID(ids);
+}

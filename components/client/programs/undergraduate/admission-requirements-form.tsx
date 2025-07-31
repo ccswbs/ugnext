@@ -86,7 +86,7 @@ export default function AdmissionRequirementsForm({
 
   return (
     <form
-      className="w-2/3 flex flex-col"
+      className="w-3/4 flex flex-col"
       onSubmit={() => {
         if (url) {
           router.push(url);
