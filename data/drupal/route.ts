@@ -1,4 +1,4 @@
-import { query } from "@/lib/apollo";
+import { getClient, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
@@ -6,6 +6,7 @@ import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
 export type Route = NonNullable<RouteQuery["route"]>;
 
 export async function getRoute(url: string) {
+  const query = getClient().query;
   const { data } = await query({
     query: gql(/* gql */ `
       query Route($path: String!, $revision: ID = "current") {
