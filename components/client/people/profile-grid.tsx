@@ -25,9 +25,11 @@ type Profile = {
 };
 
 export const ProfileGrid = ({ profiles }: { profiles: Profile[] }) => {
-  // Sort profiles by title (full name) alphabetically
+  // Sort profiles by last name alphabetically
   const sortedProfiles = [...profiles].sort((a, b) => {
-    return a.title.localeCompare(b.title);
+    const lastNameA = a.profileLastName || '';
+    const lastNameB = b.profileLastName || '';
+    return lastNameA.localeCompare(lastNameB);
   });
 
   return (

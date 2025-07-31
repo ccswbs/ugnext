@@ -8,8 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
-import * as use from '@tensorflow-models/universal-sentence-encoder';
-import * as tf from '@tensorflow/tfjs';
+import { OramaClient } from '@oramacloud/client';
 
 type Profile = {
   id: string;
@@ -39,103 +38,95 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
   const results = useSearch(profiles, input, nameAndTagSearch);
   const [selectedUnits, setSelectedUnits] = useState(units?.map(unit => unit.id) ?? []);
 
-  // Semantic search states
-  const [model, setModel] = useState<use.UniversalSentenceEncoder | null>(null);
-  const [embeddings, setEmbeddings] = useState<tf.Tensor2D | null>(null);
+  // Orama Cloud semantic search states
+  const [oramaCloud, setOramaCloud] = useState<OramaClient | null>(null);
   const [semanticQuery, setSemanticQuery] = useState('');
   const [semanticResults, setSemanticResults] = useState<string[]>([]);
-  const [isModelLoading, setIsModelLoading] = useState(false);
+  const [isIndexLoading, setIsIndexLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [searchStatus, setSearchStatus] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [useVectorSearch, setUseVectorSearch] = useState(true); // Toggle between vector and full-text search
 
-  // Load semantic search model and embed topics
+  // Initialize Orama Cloud connection and upload research topics
   useEffect(() => {
-    const loadModelAndEmbed = async () => {
+    const initializeOramaCloud = async () => {
       if (researchTopics.length === 0) return;
       
-      setIsModelLoading(true);
+      setIsIndexLoading(true);
       setError(null);
       
       try {
-        setSearchStatus('Initializing AI model...');
-        const loadedModel = await use.load();
-        setModel(loadedModel);
+        setSearchStatus('Connecting to Orama Cloud...');
         
-        setSearchStatus('Processing research topics...');
-        const topicEmbeddings = await loadedModel.embed(researchTopics);
-        setEmbeddings(topicEmbeddings);
+        // Check for required environment variables
+        const apiKey = process.env.NEXT_PUBLIC_ORAMA_API_KEY;
+        const endpoint = process.env.NEXT_PUBLIC_ORAMA_ENDPOINT;
         
-        setSearchStatus('Ready for semantic search!');
+        if (!apiKey || !endpoint) {
+          throw new Error('Missing Orama Cloud configuration. Please check your environment variables.');
+        }
+        
+        // Initialize Orama Cloud client
+        const client = new OramaClient({
+          api_key: apiKey,
+          endpoint: endpoint
+        });
+        
+        setOramaCloud(client);
+        setSearchStatus('AI-powered search ready!');
+        
         setTimeout(() => {
-          setIsModelLoading(false);
+          setIsIndexLoading(false);
           setSearchStatus('');
-        }, 1000);
+        }, 500);
         
       } catch (err) {
-        console.error('Error loading semantic search model:', err);
-        setError('Failed to initialize semantic search.');
-        setIsModelLoading(false);
+        console.error('Error initializing Orama Cloud:', err);
+        setError('Failed to initialize AI search. Please try again.');
+        setIsIndexLoading(false);
         setSearchStatus('');
       }
     };
     
-    loadModelAndEmbed();
+    initializeOramaCloud();
   }, [researchTopics]);
 
-  const handleSemanticSearch = async () => {
-    if (!model || !semanticQuery || !embeddings) return;
+  const handleSemanticSearch = useMemo(() => async () => {
+    if (!oramaCloud || !semanticQuery) return;
 
     setIsSearching(true);
-    setSearchStatus('Analyzing your query...');
+    setSearchStatus(useVectorSearch ? 'Performing vector search...' : 'Performing full-text search...');
     setError(null);
 
     try {
-      const queryEmbedding = await model.embed([semanticQuery]);
-      setSearchStatus('Computing similarities...');
+      // Perform search with Orama Cloud's AI
+      // Switch between vector search (semantic) and full-text search (keyword)
+      const searchResults = await oramaCloud.search({
+        term: semanticQuery,
+        mode: useVectorSearch ? 'vector' : 'fulltext',
+        limit: 20
+      });
       
-      const scores = await computeSimilarities(queryEmbedding, embeddings);
-      
-      // Get top matching topics (with threshold for relevance)
-      const threshold = 0.3; // Adjust this threshold as needed
-      const topMatches = scores
-        .map((score: number, i: number) => ({ topic: researchTopics[i], score }))
-        .filter(result => result.score > threshold)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 10) // top 10 matches
-        .map(result => result.topic);
+      // Extract unique topics from search results
+      const matchingTopics = searchResults?.hits
+        ?.map((hit: any) => hit.document?.topic || hit.document?.title || hit.document?.name || '')
+        .filter((topic: string) => topic.trim() !== '')
+        .filter((topic: string, index: number, arr: string[]) => arr.indexOf(topic) === index) || [];
 
-      setSemanticResults(topMatches);
-      setSearchStatus(`Found ${topMatches.length} matching research areas.`);
+      setSemanticResults(matchingTopics);
+      setSearchStatus(`${useVectorSearch ? 'Vector' : 'Full-text'} search found ${matchingTopics.length} matching areas.`);
       
       setTimeout(() => setSearchStatus(''), 3000);
       
     } catch (err) {
-      console.error('Semantic search error:', err);
-      setError('Semantic search failed. Please try again.');
+      console.error('Orama Cloud search error:', err);
+      setError('Search failed. Please try again.');
       setSearchStatus('');
     } finally {
       setIsSearching(false);
     }
-  };
-
-  const computeSimilarities = async (queryVec: tf.Tensor2D, topicVecs: tf.Tensor2D): Promise<number[]> => {
-    const dotProduct = tf.matMul(topicVecs, queryVec, false, true).arraySync() as number[][];
-    const queryNorm = tf.norm(queryVec, 2).arraySync() as number;
-    const topicNorms = tf.norm(topicVecs, 2, 1).arraySync() as number[];
-    
-    return dotProduct.map((val: number[], i: number) => {
-      const dot = val[0];
-      const topicNorm = topicNorms[i];
-      
-      if (queryNorm === 0 || topicNorm === 0 || !isFinite(dot) || !isFinite(queryNorm) || !isFinite(topicNorm)) {
-        return 0;
-      }
-      
-      const similarity = dot / (queryNorm * topicNorm);
-      return isFinite(similarity) ? Math.max(0, Math.min(1, similarity)) : 0;
-    });
-  };
+  }, [oramaCloud, semanticQuery, useVectorSearch]);
 
   const filtered = useMemo(() => {
     let filtered = results;
@@ -162,6 +153,20 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
     return filtered;
   }, [results, semanticResults, selectedUnits, units]);
 
+  // Auto-search when user stops typing (debounced)
+  useEffect(() => {
+    if (!semanticQuery || !oramaCloud) {
+      setSemanticResults([]);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      handleSemanticSearch();
+    }, 300); // Debounce for 300ms
+
+    return () => clearTimeout(timeoutId);
+  }, [semanticQuery, oramaCloud, handleSemanticSearch, useVectorSearch]);
+
   useEffect(() => {
     onChange?.(filtered);
   }, [filtered, onChange]);
@@ -173,8 +178,8 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
         {searchStatus}
       </div>
 
-      {/* Loading Progress Bar for Semantic Search */}
-      {isModelLoading && (
+      {/* Loading Progress Bar for Search Index */}
+      {isIndexLoading && (
         <div className="w-full bg-gray-200 h-1">
           <div className="bg-blue-600 h-1 transition-all duration-1000 ease-out w-full animate-pulse" />
         </div>
@@ -228,7 +233,7 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
       </Container>
       <Container className="pb-8">
         {/* Status Messages */}
-        {(isModelLoading || isSearching || error) && (
+        {(isIndexLoading || isSearching || error) && (
           <div className="w-full mb-4">
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-center gap-2">
@@ -241,7 +246,7 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
               </div>
             )}
             
-            {(isModelLoading || isSearching) && !error && (
+            {(isIndexLoading || isSearching) && !error && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-2">
                 <div className="flex-shrink-0">
                   <svg className="animate-spin w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24">
@@ -258,13 +263,32 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
         {researchTopics.length > 0 && (
           <div className="w-full">
             <Field>
-              <Label className="text-body-copy-bold font-bold">Search by Research Area</Label>
+              <div className="flex items-center justify-between mb-2">
+                <Label className="text-body-copy-bold font-bold">Search by Research Area</Label>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">Search Mode:</span>
+                  <button
+                    type="button"
+                    onClick={() => setUseVectorSearch(!useVectorSearch)}
+                    className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                      useVectorSearch 
+                        ? 'bg-purple-100 text-purple-800 border border-purple-300' 
+                        : 'bg-blue-100 text-blue-800 border border-blue-300'
+                    }`}
+                  >
+                    {useVectorSearch ? '🧠 Vector' : '🔤 Full-text'}
+                  </button>
+                </div>
+              </div>
               <div className="flex gap-2">
                 <div className="sm:w-full md:w-3/4">
                   <TextInput
                     value={semanticQuery}
-                    placeholder="Enter research topic or keyword..."
-                    disabled={!model || isModelLoading}
+                    placeholder={useVectorSearch 
+                      ? "Vector search: 'cancer research', 'sustainability', 'machine learning'..." 
+                      : "Full-text search (exact word matching)"
+                    }
+                    disabled={!oramaCloud || isIndexLoading}
                     onInput={(e) => setSemanticQuery((e.target as HTMLInputElement).value)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
@@ -273,12 +297,17 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
                       }
                     }}
                   />
+                  {useVectorSearch && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      🤖 <strong>Vector Search:</strong> Uses AI embeddings to understand meaning and context - finds related concepts without exact word matches
+                    </p>
+                  )}
                 </div>
                 <div className="sm:w-full md:w-1/4">
                   <button
                     type="button"
                     onClick={handleSemanticSearch}
-                    disabled={!model || !semanticQuery || isSearching || isModelLoading}
+                    disabled={!oramaCloud || !semanticQuery || isSearching || isIndexLoading}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 w-full justify-center"
                   >
                   {isSearching && (
@@ -288,7 +317,7 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
                     </svg>
                   )}
                   <span>
-                    {isSearching ? 'Searching...' : isModelLoading ? 'Loading...' : !model ? 'Initializing...' : 'AI-powered Search'}
+                    {isSearching ? 'Searching...' : isIndexLoading ? 'Loading...' : !oramaCloud ? 'Initializing...' : 'Search Now'}
                   </span>
                 </button>
                 </div>
@@ -296,7 +325,16 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
               {/* Display semantic search results */}
               {semanticResults.length > 0 && (
                 <div className="mt-3">
-                  <p className="text-sm text-gray-600 mb-2">AI found {semanticResults.length} matching areas:</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <p className="text-sm text-gray-600">
+                      {useVectorSearch ? '🧠' : '🔤'} {useVectorSearch ? 'Vector' : 'Full-text'} search found {semanticResults.length} matching areas:
+                    </p>
+                    {useVectorSearch && (
+                      <span className="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded">
+                        Vector embeddings
+                      </span>
+                    )}
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     {semanticResults.slice(0, 10).map((topic, index) => (
                       <span
@@ -326,7 +364,7 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
                     onClick={() => setSemanticResults([])}
                     className="text-sm text-blue-600 hover:text-blue-800 mt-2"
                   >
-                    Clear semantic search
+                    Clear search results
                   </button>
                 </div>
               )}
