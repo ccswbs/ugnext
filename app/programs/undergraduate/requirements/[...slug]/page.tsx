@@ -22,6 +22,7 @@ import { Grid } from "@uoguelph/react-components/grid";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { AdmissionRequirementsSidebarButton } from "@/components/client/programs/undergraduate/admission-requirements-sidebar-button";
+import { HtmlParser } from "@/components/client/html-parser";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -81,7 +82,6 @@ export default async function ProgramsUndergraduate({ params }: Props) {
   const title = getPageTitle(studentType, location, program);
 
   const content = await getUndergraduateAdmissionRequirementPageContent(studentType, location, program);
-  console.log(content);
 
   return (
     <Layout>
@@ -114,17 +114,27 @@ export default async function ProgramsUndergraduate({ params }: Props) {
               {title}
             </Typography>
 
-            {content?.sections?.map((section) => (
-              <>
-                {/*<Typography type="h3" as="h2">
-                  {section.title}
-                </Typography>*/}
+            {content?.sections
+              ?.map((section) => {
+                if (!section.content) {
+                  return null;
+                }
 
-                {/*section.content?.map((content) => (
+                return (
+                  <>
+                    <Typography type="h3" as="h2">
+                      {section.title}
+                    </Typography>
+
+                    <HtmlParser html={section.content} instructions={undefined} />
+
+                    {/*section.content?.map((content) => (
                   <WidgetSelector key={content.id} data={content} />
                 ))*/}
-              </>
-            ))}
+                  </>
+                );
+              })
+              .filter((section) => section !== null)}
           </div>
 
           <div className="flex flex-col gap-4 mt-7.5">
@@ -134,7 +144,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
               icon={faArrowLeftFromBracket}
             />
 
-            {content.sidebar.map((button) => (
+            {content?.sidebar?.map((button) => (
               <AdmissionRequirementsSidebarButton
                 key={button.id}
                 color="black"

@@ -257,54 +257,66 @@ export async function getUndergraduateAdmissionRequirementPageContent(
   const showUnpublished = await showUnpublishedContent();
   const requirements = await getUndergraduateAdmissionRequirements(studentType, location, program);
 
-  const paths = requirements.map((requirement) => ({
-    title: requirement.title,
-    url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
-  }));
+  const paths: { title: string; url: string }[] = [];
+  const sidebarTitles = new Set<string>();
+  const sidebar: NonNullable<UndergraduateAdmissionRequirement["sidebar"]> = [];
+  const sectionsMap = new Map<string, NonNullable<UndergraduateAdmissionRequirement["sections"]>>();
 
-  const { sidebar } = requirements
-    // Filter out requirements that have no sidebar
-    .filter((requirement) => !!requirement.sidebar)
-    // Create an array of only sidebars
-    .map((requirement) => requirement.sidebar)
-    // Flatten the array so we have one big array of sidebar content
-    .flat()
-    // Remove any null content from that array
-    .filter((value) => !!value)
-    // Remove content with a duplicate title; since the original array is sorted by rank, the content from the highest ranking requirement will appear in the final array.
-    .reduce(
-      (acc, value) => {
-        const title = value.link.title;
+  for (const requirement of requirements) {
+    if (requirement === null) {
+      continue;
+    }
 
-        if (title && !acc.titles.has(title)) {
-          acc.sidebar.push(value);
+    // Only add to the paths array if we are in dev/draft mode
+    if (showUnpublished) {
+      paths.push({
+        title: requirement.title,
+        url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
+      });
+    }
+
+    // Only include the higher ranking sidebar buttons if there are multiple with the same title.
+    if (requirement.sidebar && requirement.sidebar.length > 0) {
+      for (const button of requirement.sidebar) {
+        if (button.link.title && !sidebarTitles.has(button.link.title)) {
+          sidebar.push(button);
+          sidebarTitles.add(button.link.title);
+        }
+      }
+    }
+
+    if (requirement.sections && requirement.sections.length > 0) {
+      for (const section of requirement.sections) {
+        const type = section.type.name;
+
+        if (!sectionsMap.has(type)) {
+          sectionsMap.set(type, []);
         }
 
-        return acc;
-      },
-      {
-        sidebar: [] as NonNullable<UndergraduateAdmissionRequirement["sidebar"]>,
-        titles: new Set<string>(),
+        sectionsMap.get(type)?.push(section);
       }
-    );
+    }
+  }
 
-  const sections = requirements
-    .filter((requirement) => !!requirement.sections)
-    .map((requirement) => requirement.sections)
-    .flat()
-    .filter((value) => !!value)
-    .reduce((acc, value) => {
-      const sections = acc.get(value.type.name);
+  const sections: { title: string; content: string }[] = [];
 
-      return acc;
-    }, new Map<string, NonNullable<UndergraduateAdmissionRequirement["sections"]>[0]>());
+  for (const entry of sectionsMap.entries()) {
+    const overrideIndex = entry[1].findIndex((section) => section.overrides === true);
 
-  console.log(sections);
+    const reducedSections = overrideIndex === -1 ? entry[1] : entry[1].slice(0, overrideIndex + 1);
+
+    const content = reducedSections.map((section) => (section.content?.processed as string) ?? "").join("");
+
+    sections.push({
+      title: entry[0],
+      content: content,
+    });
+  }
 
   return {
     sidebar: sidebar,
-    paths: showUnpublished ? paths : null,
-    sections: [],
+    paths: paths,
+    sections: sections,
   };
 }
 

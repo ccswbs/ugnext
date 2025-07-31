@@ -29,7 +29,7 @@ export function AdmissionRequirementsSidebarButton({
   return (
     <Button color={color} className={classes.button()} as={UnstyledLink} href={url}>
       {typeof icon === "string" ? (
-        <i className={`${classes.icon()} ${icon}`}></i>
+        <i className={`${classes.icon()} ${icon}`} aria-hidden="true"></i>
       ) : (
         <FontAwesomeIcon className={classes.icon()} icon={icon} />
       )}
