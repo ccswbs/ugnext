@@ -125,6 +125,7 @@ export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
 export const IMAGE_OVERLAY_FRAGMENT = gql(/* gql */ `
   fragment ImageOverlay on ParagraphImageOverlay {
     __typename
+    id
     backgroundImage {
       ...Image
     }
@@ -150,6 +151,7 @@ export const IMAGE_OVERLAY_FRAGMENT = gql(/* gql */ `
 export const LINKS_FRAGMENT = gql(/* gql */ `
   fragment Links on ParagraphLinksWidget {
     __typename
+    id
     links {
       ... on ParagraphLinkItem {
         url {
@@ -168,6 +170,7 @@ export const LINKS_FRAGMENT = gql(/* gql */ `
 export const MEDIA_TEXT_FRAGMENT = gql(/* gql */ `
   fragment MediaText on ParagraphMediaText {
     __typename
+    id
     heading: title
     mediaImageSize
     buttonSection {
@@ -198,6 +201,7 @@ export const MEDIA_TEXT_FRAGMENT = gql(/* gql */ `
 export const MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   fragment ModalVideo on ParagraphModalVideoWidget {
     __typename
+    id
     video {
       ...RemoteVideo
     }
@@ -267,6 +271,7 @@ export const STATISTICS_FRAGMENT = gql(/* gql */ `
 export const STORY_FRAGMENT = gql(/* gql */ `
   fragment Story on ParagraphStoryWidget {
     __typename
+    id
     content {
       ...Statistics
       ... on ParagraphStoryImageCutoutBackground {
@@ -338,6 +343,7 @@ export const TABS_FRAGMENT = gql(/* gql */ `
 export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
   fragment TestimonialSlider on ParagraphTestimonialSlider {
     __typename
+    id
     title
     byTitle {
       ...Testimonial
