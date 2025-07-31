@@ -202,7 +202,7 @@ export async function UniwebResearchInterests({ uniwebId }: { uniwebId: string }
       return (
         <div className="mb-4">
           <Typography type="h3" as="h3" className="mb-2">
-            Research Interests
+            Research Interests (UniWeb)
           </Typography>
           <ul className="list-disc list-inside space-y-1 ml-4">
             {sortedInterests.map((interest) => (
