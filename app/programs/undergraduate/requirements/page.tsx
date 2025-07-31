@@ -30,10 +30,6 @@ export default async function ProgramsUndergraduate() {
       <Header></Header>
 
       <LayoutContent>
-        <Typography type="h1" as="h1" className="block">
-          Undergraduate Admission Requirements
-        </Typography>
-
         <Grid
           template={{
             base: ["minmax(0, 1fr)"],
@@ -44,7 +40,13 @@ export default async function ProgramsUndergraduate() {
             y: 0,
           }}
         >
-          <AdmissionRequirementsForm studentTypes={studentTypes} locations={locations} programs={programs} />
+          <div>
+            <Typography type="h1" as="h1" className="block">
+              Undergraduate Admission Requirements
+            </Typography>
+
+            <AdmissionRequirementsForm studentTypes={studentTypes} locations={locations} programs={programs} />
+          </div>
 
           <div className="flex flex-col gap-4 mt-7.5">
             {sidebar?.map((button) => (
