@@ -115,6 +115,8 @@ export async function getProfiles() {
               title
               path
               profileJobTitle
+              profileFirstName
+              profileLastName
               profileResearchAreas {
                 ...Research
               }
@@ -157,6 +159,8 @@ export async function getProfilesByType(profileType: string) {
               title
               path
               profileJobTitle
+              profileFirstName
+              profileLastName
               profileType {
                 id
                 name

@@ -51,6 +51,10 @@ interface ProfileContent {
       url: string;
     };
   };
+  profileResearchAreas?: Array<{
+    id: string;
+    name: string;
+  }>;
   profileSections?: Array<{
     id: string;
     profilePartLabel: string;
@@ -150,16 +154,42 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 </Typography>
               )}
               
+              {/* Research Areas and Research Interests in two columns */}
+              {(content.profileResearchAreas?.length || (content.uniwebResearchInterests && content.uniwebId)) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                  {/* Profile Research Areas */}
+                  {content.profileResearchAreas?.length && (
+                    <div>
+                      <Typography type="h3" as="h3" className="mb-2">
+                        Research Areas
+                      </Typography>
+                      <ul className="list-disc list-inside">
+                        {content.profileResearchAreas.map((area) => (
+                          <li key={area.id}>
+                            <Typography type="body" as="span">
+                              {area.name}
+                            </Typography>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* UniWeb Research Interests */}
+                  {content.uniwebResearchInterests && content.uniwebId && (
+                    <div>
+                      <UniwebResearchInterests uniwebId={content.uniwebId} />
+                    </div>
+                  )}
+                </div>
+              )}
+              
               {/* TODO: add a Boolean field for profile users to choose if they want this displayed */}
               {content.uniwebId && (
                 <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
                   View UniWeb profile
                 </Link>          
               )}
-              
-              {content.uniwebResearchInterests && content.uniwebId && (
-                <UniwebResearchInterests uniwebId={content.uniwebId} />
-              )}             
 
             </div>
                       
