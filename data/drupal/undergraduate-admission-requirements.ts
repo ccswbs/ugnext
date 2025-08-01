@@ -274,13 +274,10 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
       continue;
     }
 
-    // Only add to the paths array if we are in dev/draft mode
-    if (showUnpublished) {
-      paths.push({
-        title: requirement.title,
-        url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
-      });
-    }
+    paths.push({
+      title: requirement.title,
+      url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
+    });
 
     // Only include the higher ranking sidebar buttons if there are multiple with the same title.
     if (requirement.sidebar && requirement.sidebar.length > 0) {

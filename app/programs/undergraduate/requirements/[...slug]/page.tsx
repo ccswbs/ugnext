@@ -23,8 +23,9 @@ import { Link as LinkComponent } from "@uoguelph/react-components/link";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { AdmissionRequirementsSidebarButton } from "@/components/client/programs/undergraduate/admission-requirements-sidebar-button";
 import { HtmlParser } from "@/components/client/html-parser";
-import { Alert, AlertFooter, AlertMessage, AlertSubtitle, AlertTitle } from "@uoguelph/react-components/alert";
+import { Alert, AlertMessage, AlertSubtitle } from "@uoguelph/react-components/alert";
 import { List, ListItem } from "@uoguelph/react-components/list";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -83,6 +84,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
   const { studentType, location, program } = await slugToData(slug);
   const title = getPageTitle(studentType, location, program);
 
+  const showPaths = await showUnpublishedContent();
   const content = await getUndergraduateAdmissionRequirementPageContent(studentType, location, program);
 
   return (
@@ -90,7 +92,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
       <Header></Header>
 
       <LayoutContent className="pb-8">
-        {Array.isArray(content.paths) && content.paths.length > 0 && (
+        {showPaths && (
           <Alert>
             <AlertMessage className="border-t">
               <AlertSubtitle>
