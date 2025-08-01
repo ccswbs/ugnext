@@ -23,6 +23,8 @@ import { Link as LinkComponent } from "@uoguelph/react-components/link";
 import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { AdmissionRequirementsSidebarButton } from "@/components/client/programs/undergraduate/admission-requirements-sidebar-button";
 import { HtmlParser } from "@/components/client/html-parser";
+import { Alert, AlertFooter, AlertMessage, AlertSubtitle, AlertTitle } from "@uoguelph/react-components/alert";
+import { List, ListItem } from "@uoguelph/react-components/list";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -87,16 +89,23 @@ export default async function ProgramsUndergraduate({ params }: Props) {
     <Layout>
       <Header></Header>
 
-      <LayoutContent>
+      <LayoutContent className="pb-8">
         {Array.isArray(content.paths) && content.paths.length > 0 && (
-          <div className="fixed bottom-4 right-4 max-w-96 bg-grey-light-bg border border-grey-light shadow-2xl p-4 rounded-md flex gap-2 flex-col z-10">
-            <span>The following Undergraduate Admission Requirements were used to build this page</span>
-            {content.paths.map((path) => (
-              <LinkComponent key={path.url} href={path.url}>
-                {path.title}
-              </LinkComponent>
-            ))}
-          </div>
+          <Alert>
+            <AlertMessage className="border-t">
+              <AlertSubtitle>
+                The following Undergraduate Admission Requirements were used to build this page
+              </AlertSubtitle>
+
+              <List as="ol">
+                {content.paths.map((path) => (
+                  <ListItem key={path.url}>
+                    <LinkComponent href={path.url}>{path.title}</LinkComponent>
+                  </ListItem>
+                ))}
+              </List>
+            </AlertMessage>
+          </Alert>
         )}
 
         <Grid
