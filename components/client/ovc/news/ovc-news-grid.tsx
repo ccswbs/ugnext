@@ -6,14 +6,16 @@ import Image from "next/image";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 import { UnstyledLink } from "@/components/client/unstyled-link";
 import { Container } from "@uoguelph/react-components/container";
+import type { OVCNewsWithoutBody } from "@/data/drupal/ovc-news";
 
-export function OvcNewsGrid({ totalPages = 2 }: { totalPages?: number }) {
+export function OvcNewsGrid({ totalPages = 2, fallback }: { totalPages?: number; fallback?: OVCNewsWithoutBody[] }) {
   return (
     <Container>
       <PaginatedGrid
         hidePaginationInput={true}
         totalPages={totalPages}
         endpoint={(page: number) => `/api/ovc/news/get-news-articles?page=${page}`}
+        fallback={fallback ? (page) => fallback : undefined}
         render={(item: any, index: number) => {
           return (
             <Card
