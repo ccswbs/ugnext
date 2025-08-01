@@ -3,7 +3,7 @@ import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
 import { OVCFooter } from "@/components/client/ovc/ovc-footer";
 import { OvcNewsGrid } from "@/components/client/ovc/news/ovc-news-grid";
-import { getNewsArticleCount } from "@/data/drupal/ovc-news";
+import { getNewsArticleCount, getNewsArticles } from "@/data/drupal/ovc-news";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Container } from "@uoguelph/react-components/container";
 import { Metadata } from "next";
@@ -16,6 +16,7 @@ export default async function OVCNewsHub() {
   const articleCount = await getNewsArticleCount();
   const displayCount = 20;
   const totalPages = Math.ceil(articleCount / displayCount);
+  const fallback = await getNewsArticles(0);
 
   return (
     <Layout>
@@ -28,7 +29,7 @@ export default async function OVCNewsHub() {
           </Typography>
         </Container>
 
-        <OvcNewsGrid totalPages={totalPages} />
+        <OvcNewsGrid totalPages={totalPages} fallback={fallback} />
       </LayoutContent>
 
       <OVCFooter />

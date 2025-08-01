@@ -86,6 +86,8 @@ export async function getNewsArticleCount() {
   return data.legacyNews.pageInfo.total;
 }
 
+export type OVCNewsWithoutBody = NewsWithoutBodyFragment;
+
 export async function getNewsArticles(page: number, size: number = 20) {
   // This function is used in a Server Active, so we need to use getClient to get the query function, otherwise it will create multiple ApolloClient instances.
   const query = getClient().query;
@@ -110,7 +112,7 @@ export async function getNewsArticles(page: number, size: number = 20) {
     return [];
   }
 
-  return data.legacyNews.results as NewsWithoutBodyFragment[];
+  return data.legacyNews.results as OVCNewsWithoutBody[];
 }
 
 export async function getFeaturedNewsArticles() {
