@@ -8,6 +8,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 type PaginatedGridSharedProps<T> = {
   endpoint: (page: number) => string;
   render: (item: T, index: number) => React.ReactNode;
+  fallback?: (page: number) => T[];
 };
 
 type PaginatedGridPageProps<T> = {
@@ -18,7 +19,7 @@ async function fetcher(...args: Parameters<typeof fetch>) {
   return (await fetch(...args)).json();
 }
 
-function PaginatedGridPage<T>({ page, endpoint, render }: PaginatedGridPageProps<T>) {
+function PaginatedGridPage<T>({ page, endpoint, render, fallback }: PaginatedGridPageProps<T>) {
   const url = endpoint(page);
   const { data, error, isLoading } = useSWR<T[]>(url, fetcher);
   const classes = twJoin("grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5");
@@ -33,9 +34,24 @@ function PaginatedGridPage<T>({ page, endpoint, render }: PaginatedGridPageProps
   }
 
   if (error || !data) {
+    if (fallback) {
+      const fallbackData = fallback(page);
+      return (
+        <>
+          <Typography type="body" className="text-body-copy-bold font-bold text-center w-full mb-10">
+            An error occurred while loading data. Please try again later.
+          </Typography>
+
+          <div className={classes}>{fallbackData.map(render)}</div>
+        </>
+      );
+    }
+
     return (
       <div className="flex w-full items-center justify-center flex-1 py-5">
-        <Typography type="h1">An error occurred while loading the data.</Typography>
+        <Typography type="body" className="text-body-copy-bold font-bold text-center w-full">
+          An error occurred while loading the data. Please try again later.
+        </Typography>
       </div>
     );
   }
@@ -52,6 +68,7 @@ export function PaginatedGrid<T>({
   totalPages = 2,
   endpoint,
   render,
+  fallback,
   hidePaginationInput = false,
 }: PaginatedGridProps<T>) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -78,11 +95,11 @@ export function PaginatedGrid<T>({
         className="pb-8 pt-0"
       />
 
-      <PaginatedGridPage page={currentPage} endpoint={endpoint} render={render} />
+      <PaginatedGridPage page={currentPage} endpoint={endpoint} render={render} fallback={fallback} />
 
       {/* Prefetch the next page. */}
       <div className="hidden">
-        <PaginatedGridPage page={currentPage + 1} endpoint={endpoint} render={render} />
+        <PaginatedGridPage page={currentPage + 1} endpoint={endpoint} render={render} fallback={fallback} />
       </div>
 
       <Pagination
