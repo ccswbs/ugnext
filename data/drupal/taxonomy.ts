@@ -47,6 +47,11 @@ export const SPECIAL_REGIONS_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const UNIWEB_FRAGMENT = gql(/* gql */ `
+  fragment UniwebPart on TermUniwebProfilePart {
+    name
+  }
+`);
 export const TAG_FRAGMENT = gql(/* gql */ `
   fragment Tag on TermTag {
     id

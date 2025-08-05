@@ -37,6 +37,11 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
         }
         profilePartLabel
       }
+      ... on ParagraphUniwebPart {
+        uniwebSelect {
+          name
+        }
+      }
     }
     profilePicture {
       ...Image
@@ -44,12 +49,6 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     tags {
       ...Tag
     }
-    uniwebAffiliations
-    uniwebCurrentTeaching
-    uniwebDegrees
-    uniwebPublications
-    uniwebResearchDesc
-    uniwebResearchInterests
   }
 `);
 

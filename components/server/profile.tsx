@@ -30,12 +30,6 @@ interface ProfileContent {
   directoryOffice: boolean;
   directoryPhone: boolean;
   uniwebId?: string;
-  uniwebAffiliations?: boolean;
-  uniwebCurrentTeaching?: boolean;
-  uniwebDegrees?: boolean;
-  uniwebPublications?: boolean;
-  uniwebResearchDesc?: boolean;
-  uniwebResearchInterests?: boolean;
   primaryNavigation?: {
     menuName?: string;
   };
@@ -56,10 +50,13 @@ interface ProfileContent {
     name: string;
   }>;
   profileSections?: Array<{
-    id: string;
-    profilePartLabel: string;
+    id?: string;
+    profilePartLabel?: string;
     profilePartText?: {
       processed?: string;
+    };
+    uniwebSelect?: {
+      name: string;
     };
   }>;
 }
@@ -154,33 +151,21 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 </Typography>
               )}
               
-              {/* Research Areas and Research Interests in two columns */}
-              {(content.profileResearchAreas?.length || (content.uniwebResearchInterests && content.uniwebId)) && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                  {/* Profile Research Areas */}
-                  {content.profileResearchAreas?.length && (
-                    <div>
-                      <Typography type="h3" as="h3" className="mb-2">
-                        Research Areas
-                      </Typography>
-                      <ul className="list-disc list-inside">
-                        {content.profileResearchAreas.map((area) => (
-                          <li key={area.id}>
-                            <Typography type="body" as="span">
-                              {area.name}
-                            </Typography>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {/* UniWeb Research Interests */}
-                  {content.uniwebResearchInterests && content.uniwebId && (
-                    <div>
-                      <UniwebResearchInterests uniwebId={content.uniwebId} />
-                    </div>
-                  )}
+              {/* Research Areas */}
+              {content.profileResearchAreas?.length && (
+                <div className="mb-4">
+                  <Typography type="h3" as="h3" className="mb-2">
+                    Research Areas
+                  </Typography>
+                  <ul className="list-disc list-inside">
+                    {content.profileResearchAreas.map((area) => (
+                      <li key={area.id}>
+                        <Typography type="body" as="span">
+                          {area.name}
+                        </Typography>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
               
@@ -203,37 +188,48 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               />
             )}
           </div>
-          {content.uniwebAffiliations && content.uniwebId && (
-            <UniwebAffiliations uniwebId={content.uniwebId} />
-          )}
-
-          {content.uniwebResearchDesc && content.uniwebId && (
-            <UniwebResearchDesc uniwebId={content.uniwebId} />
-          )}
-          {content.uniwebCurrentTeaching && content.uniwebId && (
-            <UniwebCurrentTeaching uniwebId={content.uniwebId} />
-          )}
-          
-          {content.uniwebDegrees && content.uniwebId && (
-            <UniwebDegrees uniwebId={content.uniwebId} />
-          )}
-          
-          {content.uniwebPublications && content.uniwebId && (
-            <UniwebPublications uniwebId={content.uniwebId} />
-          )}              
-
           {/* Parse and render the Body field */}
           <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
           
-          {/* Parse and render the Profile Parts */}
-          {content?.profileSections?.map((section, index) => (
-            <div key={index}>
-              <Typography type="h2" as="h2">
-                {section.profilePartLabel}
-              </Typography>
-              <HtmlParser key={section.id} html={section.profilePartText?.processed ?? ""} instructions={undefined} />
-            </div>
-          ))}
+          {/* Render all Profile Sections in order (both regular parts and UniWeb parts) */}
+          {content?.profileSections?.map((section, index) => {
+            // Regular profile part with custom content
+            if (section.profilePartLabel && !section.uniwebSelect) {
+              return (
+                <div key={section.id || index}>
+                  <Typography type="h2" as="h2">
+                    {section.profilePartLabel}
+                  </Typography>
+                  <HtmlParser key={section.id} html={section.profilePartText?.processed ?? ""} instructions={undefined} />
+                </div>
+              );
+            }
+            
+            // UniWeb profile part
+            if (section.uniwebSelect?.name && content.uniwebId) {
+              const sectionName = section.uniwebSelect.name;
+              
+              switch (sectionName) {
+                case 'Affiliations':
+                  return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
+                case 'Research Description':
+                  return <UniwebResearchDesc key={index} uniwebId={content.uniwebId} />;
+                case 'Current Teaching':
+                  return <UniwebCurrentTeaching key={index} uniwebId={content.uniwebId} />;
+                case 'Selected Degrees':
+                  return <UniwebDegrees key={index} uniwebId={content.uniwebId} />;
+                case 'Selected Publications':
+                  return <UniwebPublications key={index} uniwebId={content.uniwebId} />;
+                case 'Research Interests':
+                  return <UniwebResearchInterests key={index} uniwebId={content.uniwebId} />;
+                default:
+                  return null;
+              }
+            }
+            
+            // Empty section or unrecognized format
+            return null;
+          })}
 
           {post && post}
         </Container>
