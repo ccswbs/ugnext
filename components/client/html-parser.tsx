@@ -7,10 +7,19 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
 import Script from "next/script";
 
-type ParserNodeProps = ReturnType<typeof attributesToProps>;
 type ParserInstruction = {
-  shouldParse: (node: Element, props: ParserNodeProps, index: number) => boolean;
-  parse: (node: Element, props: ParserNodeProps, index: number, options: HTMLReactParserOptions) => React.JSX.Element;
+  shouldParse: (
+    node: Element,
+    props: ReturnType<typeof attributesToProps>,
+    children: ReturnType<typeof domToReact>,
+    index: number
+  ) => boolean;
+  parse: (
+    node: Element,
+    props: ReturnType<typeof attributesToProps>,
+    children: ReturnType<typeof domToReact>,
+    index: number
+  ) => React.JSX.Element;
 };
 
 function isElement(domNode: DOMNode): domNode is Element {
@@ -29,7 +38,7 @@ const defaultInstructions: ParserInstruction[] = [
       node.tagName === "h4" ||
       node.tagName === "h5" ||
       node.tagName === "h6",
-    parse: (node, props, index, options) => {
+    parse: (node, props, children, index) => {
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
 
@@ -41,22 +50,22 @@ const defaultInstructions: ParserInstruction[] = [
           as={level}
           className={twMerge(index === 0 && "mt-0", className)}
         >
-          {domToReact(node.children as DOMNode[], options)}
+          {children}
         </Typography>
       );
     },
   },
   {
     shouldParse: (node) => node.tagName === "p",
-    parse: (node, props, index, options) => (
+    parse: (node, props, children, index) => (
       <Typography {...props} key={nanoid()} type="body" as="p">
-        {domToReact(node.children as DOMNode[], options)}
+        {children}
       </Typography>
     ),
   },
   {
     shouldParse: (node) => node.tagName === "script",
-    parse: (node, props, index, options) => {
+    parse: (node, props, children, index) => {
       if (typeof props.src !== "string" || props.src === "") {
         return <></>;
       }
@@ -86,7 +95,11 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
         delete props.dangerouslySetInnerHTML;
 
         for (const instruction of [...instructions, ...defaultInstructions]) {
-          if (instruction.shouldParse(node, props, index)) return instruction.parse(node, props, index, options);
+          const children = domToReact(node.children as DOMNode[], options);
+
+          if (instruction.shouldParse(node, props, children, index)) {
+            return instruction.parse(node, props, children, index);
+          }
         }
       },
       trim: true,
