@@ -100,7 +100,7 @@ export const ButtonWidget = ({ data, column }) => {
         outlined={outlined}
         onClick={analyticsHandler}
       >
-        {icon && icon.data && <i className={classes.icon()}></i>}
+        {icon && icon.data && <i className={classes.icon()} aria-hidden="true"></i>}
         <HtmlParser html={title} />
       </Button>
     </>
