@@ -199,6 +199,24 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "hr",
     processNode: (node) => <Divider />,
   },
+  // Figure
+  {
+    shouldProcessNode: (node) => node.tagName === "figure",
+    processNode: (node, props, children) => {
+      const className = typeof props.className === "string" ? props.className : "";
+      const classes = twMerge(
+        "my-4",
+        (className.includes("align-left") || props["data-align"] === "left") && "float-left mr-4 ml-0",
+        (className.includes("align-right") || props["data-align"] === "right") && "float-right ml-4 mr-0"
+      );
+
+      return (
+        <figure {...props} className={classes}>
+          {children}
+        </figure>
+      );
+    },
+  },
   // Scripts
   {
     shouldProcessNode: (node) => node.tagName === "script",
