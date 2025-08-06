@@ -171,6 +171,23 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children, index) => {
       const className = typeof props.className === "string" ? props.className : "";
 
+      const hasInvalidChildren = React.Children.toArray(children).some((child) => {
+        if (!React.isValidElement(child)) {
+          return false;
+        }
+
+        switch (child.type) {
+          case "figure":
+            return true;
+          default:
+            return false;
+        }
+      });
+
+      if (hasInvalidChildren) {
+        return <>{children}</>;
+      }
+
       return (
         <Typography {...props} key={nanoid()} type="body" as="p" className={twMerge(index === 0 && "mt-0", className)}>
           {children}
