@@ -22,6 +22,23 @@ type ParserInstruction = {
   ) => React.JSX.Element;
 };
 
+const selfClosingTags = new Set([
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr",
+]);
+
 function isElement(domNode: DOMNode): domNode is Element {
   const isTag = ["tag", "script"].includes(domNode.type);
   const hasAttributes = (domNode as Element).attribs !== undefined;
@@ -31,13 +48,19 @@ function isElement(domNode: DOMNode): domNode is Element {
 
 const defaultInstructions: ParserInstruction[] = [
   {
-    shouldParse: (node) =>
-      node.tagName === "h1" ||
-      node.tagName === "h2" ||
-      node.tagName === "h3" ||
-      node.tagName === "h4" ||
-      node.tagName === "h5" ||
-      node.tagName === "h6",
+    shouldParse: (node) => {
+      switch (node.tagName) {
+        case "h1":
+        case "h2":
+        case "h3":
+        case "h4":
+        case "h5":
+        case "h6":
+          return true;
+        default:
+          return false;
+      }
+    },
     parse: (node, props, children, index) => {
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
@@ -93,14 +116,28 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
         delete props.style;
         delete props.key;
         delete props.dangerouslySetInnerHTML;
+        delete props.children;
+
+        const children = domToReact(node.children as DOMNode[], options);
 
         for (const instruction of [...instructions, ...defaultInstructions]) {
-          const children = domToReact(node.children as DOMNode[], options);
-
           if (instruction.shouldParse(node, props, children, index)) {
             return instruction.parse(node, props, children, index);
           }
         }
+
+        // Fallback renderer for nodes that are self-closing and as a result cannot have children passed to them
+        if (selfClosingTags.has(node.tagName)) {
+          return <node.name key={nanoid()} {...props} />;
+        }
+
+        // Fallback renderer for nodes that can have children passed to them
+        return (
+          // @ts-ignore
+          <node.name key={nanoid()} {...props}>
+            {children}
+          </node.name>
+        );
       },
       trim: true,
     };
