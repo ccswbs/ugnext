@@ -152,7 +152,14 @@ const defaultInstructions: ParserInstruction[] = [
           as={level}
           className={twMerge(index === 0 && "mt-0", className)}
         >
-          {children}
+          {React.Children.map(children, (child) => {
+            // Remove strong tags from headings
+            if (typeof child !== "string" && child.type === "strong") {
+              return child.props.children;
+            }
+
+            return child;
+          })}
         </Typography>
       );
     },
