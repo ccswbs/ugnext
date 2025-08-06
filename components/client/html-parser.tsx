@@ -1,7 +1,7 @@
 "use client";
 
 import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { Children, useMemo, Fragment } from "react";
+import React, { useMemo } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
@@ -160,11 +160,15 @@ const defaultInstructions: ParserInstruction[] = [
   // Paragraphs
   {
     shouldProcessNode: (node) => node.tagName === "p",
-    processNode: (node, props, children, index) => (
-      <Typography {...props} key={nanoid()} type="body" as="p">
-        {children}
-      </Typography>
-    ),
+    processNode: (node, props, children, index) => {
+      const className = typeof props.className === "string" ? props.className : "";
+
+      return (
+        <Typography {...props} key={nanoid()} type="body" as="p" className={twMerge(index === 0 && "mt-0", className)}>
+          {children}
+        </Typography>
+      );
+    },
   },
   // Lists
   {
