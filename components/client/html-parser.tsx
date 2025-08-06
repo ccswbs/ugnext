@@ -9,6 +9,8 @@ import Script from "next/script";
 import { Info } from "@uoguelph/react-components/info";
 import { Button, type ButtonProps } from "@uoguelph/react-components/button";
 import { Link } from "@uoguelph/react-components/link";
+import { List, ListItem } from "@uoguelph/react-components/list";
+import { Divider } from "@uoguelph/react-components/divider";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -164,6 +166,28 @@ const defaultInstructions: ParserInstruction[] = [
       </Typography>
     ),
   },
+  // Lists
+  {
+    shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
+    processNode: (node, props, children, index) => {
+      return (
+        <List {...props} as={node.tagName as "ul" | "ol"}>
+          {children}
+        </List>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "li",
+    processNode: (node, props, children, index) => {
+      return <ListItem {...props}>{children}</ListItem>;
+    },
+  },
+  // Divider
+  {
+    shouldProcessNode: (node) => node.tagName === "hr",
+    processNode: (node) => <Divider />,
+  },
   // Scripts
   {
     shouldProcessNode: (node) => node.tagName === "script",
@@ -199,15 +223,13 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
 
         // Fallback renderer for nodes that are self-closing and as a result cannot have children passed to them
         if (selfClosingTags.has(node.tagName)) {
-          return <node.name key={nanoid()} {...props} />;
+          return <node.name {...props} />;
         }
 
         // Fallback renderer for nodes that can have children passed to them
         return (
           // @ts-ignore
-          <node.name key={nanoid()} {...props}>
-            {children}
-          </node.name>
+          <node.name {...props}>{children}</node.name>
         );
       },
       trim: true,
