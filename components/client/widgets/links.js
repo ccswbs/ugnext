@@ -11,7 +11,7 @@ export function LinksWidget({ data }) {
     slots: {
       container: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
       card: "h-full",
-      cardImage: "aspect-[4/3] w-full",
+      cardImage: "aspect-[4/3] w-full object-cover",
     },
   })();
 
