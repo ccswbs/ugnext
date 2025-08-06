@@ -1,20 +1,23 @@
 "use client";
 
 import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { useMemo } from "react";
+import React, { Children, useMemo, Fragment } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
 import Script from "next/script";
+import { Info } from "@uoguelph/react-components/info";
+import { Button, type ButtonProps } from "@uoguelph/react-components/button";
+import { Link } from "@uoguelph/react-components/link";
 
 type ParserInstruction = {
-  shouldParse: (
+  shouldProcessNode: (
     node: Element,
     props: ReturnType<typeof attributesToProps>,
     children: ReturnType<typeof domToReact>,
     index: number
   ) => boolean;
-  parse: (
+  processNode: (
     node: Element,
     props: ReturnType<typeof attributesToProps>,
     children: ReturnType<typeof domToReact>,
@@ -47,8 +50,82 @@ function isElement(domNode: DOMNode): domNode is Element {
 }
 
 const defaultInstructions: ParserInstruction[] = [
+  // Author
   {
-    shouldParse: (node) => {
+    shouldProcessNode: (node, props) => (props.className as string)?.includes("author"),
+    processNode: (node, props, children) => {
+      return (
+        <>
+          <div className="mt-4"></div>
+          <Info>
+            {React.Children.toArray(children).filter((child) => React.isValidElement(child) && child.type !== "br")}
+          </Info>
+        </>
+      );
+    },
+  },
+  // Links
+  {
+    shouldProcessNode: (node, props) => node.tagName === "a" && typeof props.href === "string",
+    processNode: (node, props, children) => {
+      if (props.href === "") {
+        return <></>;
+      }
+
+      const href = props.href as string;
+
+      // Check if the link is a button by looking for the "btn" class or "btn-*" class
+      const className = (props.className as string) ?? "";
+      const isButton = className.includes("btn");
+
+      if (isButton) {
+        const outlined = className.includes("btn-outline");
+        let color: ButtonProps["color"];
+
+        switch (className.match(/btn-(?:outline-)?(\w*)/)?.[1]) {
+          case "primary":
+            color = "red";
+            break;
+          case "secondary":
+            color = "black";
+            break;
+          case "info":
+            color = "blue";
+            break;
+          case "success":
+            color = "green";
+            break;
+          case "warning":
+            color = "yellow";
+            break;
+          case "danger":
+            color = "red";
+            break;
+          case "light":
+            color = "yellow";
+            break;
+          case "dark":
+            color = "black";
+            break;
+        }
+
+        return (
+          <Button {...props} key={nanoid()} color={color ?? "red"} outlined={outlined} href={href} as="a">
+            {children}
+          </Button>
+        );
+      }
+
+      return (
+        <Link {...props} key={nanoid()} href={href}>
+          {children}
+        </Link>
+      );
+    },
+  },
+  // Headings
+  {
+    shouldProcessNode: (node) => {
       switch (node.tagName) {
         case "h1":
         case "h2":
@@ -61,7 +138,7 @@ const defaultInstructions: ParserInstruction[] = [
           return false;
       }
     },
-    parse: (node, props, children, index) => {
+    processNode: (node, props, children, index) => {
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
 
@@ -78,26 +155,20 @@ const defaultInstructions: ParserInstruction[] = [
       );
     },
   },
+  // Paragraphs
   {
-    shouldParse: (node) => node.tagName === "p",
-    parse: (node, props, children, index) => (
+    shouldProcessNode: (node) => node.tagName === "p",
+    processNode: (node, props, children, index) => (
       <Typography {...props} key={nanoid()} type="body" as="p">
         {children}
       </Typography>
     ),
   },
+  // Scripts
   {
-    shouldParse: (node) => node.tagName === "script",
-    parse: (node, props, children, index) => {
-      if (typeof props.src !== "string" || props.src === "") {
-        return <></>;
-      }
-
-      if (typeof props.type !== "string") {
-        return <></>;
-      }
-
-      return <Script src={props.src} type={props.type} strategy="lazyOnload" />;
+    shouldProcessNode: (node) => node.tagName === "script",
+    processNode: (node, props, children, index) => {
+      return <Script src={props.src as string} type={props.type as string} strategy="lazyOnload" />;
     },
   },
 ];
@@ -121,8 +192,8 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
         const children = domToReact(node.children as DOMNode[], options);
 
         for (const instruction of [...instructions, ...defaultInstructions]) {
-          if (instruction.shouldParse(node, props, children, index)) {
-            return instruction.parse(node, props, children, index);
+          if (instruction.shouldProcessNode(node, props, children, index)) {
+            return instruction.processNode(node, props, children, index);
           }
         }
 
