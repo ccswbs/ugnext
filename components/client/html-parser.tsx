@@ -1,7 +1,7 @@
 "use client";
 
 import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
@@ -58,12 +58,12 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node, props) => (props.className as string)?.includes("author"),
     processNode: (node, props, children) => {
       return (
-        <>
+        <Fragment key={nanoid()}>
           <div className="mt-4"></div>
           <Info>
             {React.Children.toArray(children).filter((child) => React.isValidElement(child) && child.type !== "br")}
           </Info>
-        </>
+        </Fragment>
       );
     },
   },
@@ -150,7 +150,7 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children) => {
       // Font Awesome's library adds aria-hidden automatically on the client side, but this causes a hydration error because React doesn't see that aria-hidden on the server side rendered code. So adding it here should fix that error
       return (
-        <i {...props} aria-hidden="true">
+        <i {...props} key={nanoid()} aria-hidden="true">
           {children}
         </i>
       );
@@ -215,7 +215,7 @@ const defaultInstructions: ParserInstruction[] = [
       });
 
       if (hasInvalidChildren) {
-        return <>{children}</>;
+        return <Fragment key={nanoid()}>{children}</Fragment>;
       }
 
       return (
@@ -230,7 +230,7 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, props, children, index) => {
       return (
-        <List {...props} as={node.tagName as "ul" | "ol"}>
+        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"}>
           {children}
         </List>
       );
@@ -239,13 +239,17 @@ const defaultInstructions: ParserInstruction[] = [
   {
     shouldProcessNode: (node) => node.tagName === "li",
     processNode: (node, props, children, index) => {
-      return <ListItem {...props}>{children}</ListItem>;
+      return (
+        <ListItem {...props} key={nanoid()}>
+          {children}
+        </ListItem>
+      );
     },
   },
   // Divider
   {
     shouldProcessNode: (node) => node.tagName === "hr",
-    processNode: (node) => <Divider />,
+    processNode: (node) => <Divider key={nanoid()} />,
   },
   // Figure
   {
@@ -260,7 +264,7 @@ const defaultInstructions: ParserInstruction[] = [
       );
 
       return (
-        <figure {...props} className={classes}>
+        <figure {...props} key={nanoid()} className={classes}>
           {children}
         </figure>
       );
@@ -283,7 +287,7 @@ const defaultInstructions: ParserInstruction[] = [
         : (props.src as string);
 
       return (
-        <figure className="my-4">
+        <figure className="my-4" key={nanoid()}>
           <Image {...props} src={src} loading="lazy" alt={(props.alt as string) ?? ""} className={classes} />
 
           {props["data-caption"] && (
@@ -297,7 +301,7 @@ const defaultInstructions: ParserInstruction[] = [
   {
     shouldProcessNode: (node) => node.tagName === "script",
     processNode: (node, props, children, index) => {
-      return <Script src={props.src as string} type={props.type as string} strategy="lazyOnload" />;
+      return <Script key={nanoid()} src={props.src as string} type={props.type as string} strategy="lazyOnload" />;
     },
   },
 ];
@@ -328,13 +332,15 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
 
         // Fallback renderer for nodes that are self-closing and as a result cannot have children passed to them
         if (selfClosingTags.has(node.tagName)) {
-          return <node.name {...props} />;
+          return <node.name {...props} key={nanoid()} />;
         }
 
         // Fallback renderer for nodes that can have children passed to them
         return (
           // @ts-ignore
-          <node.name {...props}>{children}</node.name>
+          <node.name {...props} key={nanoid()}>
+            {children}
+          </node.name>
         );
       },
       trim: true,
