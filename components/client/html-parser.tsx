@@ -11,6 +11,7 @@ import { Button, type ButtonProps } from "@uoguelph/react-components/button";
 import { Link } from "@uoguelph/react-components/link";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Divider } from "@uoguelph/react-components/divider";
+import Image from "next/image";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -207,12 +208,40 @@ const defaultInstructions: ParserInstruction[] = [
       const classes = twMerge(
         "my-4",
         (className.includes("align-left") || props["data-align"] === "left") && "float-left mr-4 ml-0",
-        (className.includes("align-right") || props["data-align"] === "right") && "float-right ml-4 mr-0"
+        (className.includes("align-right") || props["data-align"] === "right") && "float-right ml-4 mr-0",
+        props.className as string
       );
 
       return (
         <figure {...props} className={classes}>
           {children}
+        </figure>
+      );
+    },
+  },
+  // Images
+  {
+    shouldProcessNode: (node) => node.tagName === "img",
+    processNode: (node, props) => {
+      const className = typeof props.className === "string" ? props.className : "";
+      const classes = twMerge(
+        "my-4",
+        (className.includes("align-left") || props["data-align"] === "left") && "float-left mr-4 ml-0",
+        (className.includes("align-right") || props["data-align"] === "right") && "float-right ml-4 mr-0",
+        props.className as string
+      );
+
+      const src = (props.src as string).startsWith("/sites/default/files")
+        ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${props.src}`
+        : (props.src as string);
+
+      return (
+        <figure className="my-4">
+          <Image {...props} src={src} loading="lazy" alt={(props.alt as string) ?? ""} className={classes} />
+
+          {props["data-caption"] && (
+            <figcaption className="text-sm text-body-copy-on-light mt-2">{props["data-caption"]}</figcaption>
+          )}
         </figure>
       );
     },
