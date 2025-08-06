@@ -135,6 +135,27 @@ const defaultInstructions: ParserInstruction[] = [
       );
     },
   },
+  // Font Awesome Icons
+  {
+    shouldProcessNode: (node, props) => {
+      if (node.tagName !== "i") {
+        return false;
+      }
+
+      const className = (props.className as string) ?? "";
+
+      // Match against Font Awesome classes like fas or fa-solid
+      return /\b(fa[srlbdt]?|fa-[a-z0-9-]+)\b/g.test(className);
+    },
+    processNode: (node, props, children) => {
+      // Font Awesome's library adds aria-hidden automatically on the client side, but this causes a hydration error because React doesn't see that aria-hidden on the server side rendered code. So adding it here should fix that error
+      return (
+        <i {...props} aria-hidden="true">
+          {children}
+        </i>
+      );
+    },
+  },
   // Headings
   {
     shouldProcessNode: (node) => {
