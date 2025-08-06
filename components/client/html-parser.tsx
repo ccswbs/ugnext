@@ -12,6 +12,7 @@ import { Link } from "@uoguelph/react-components/link";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Divider } from "@uoguelph/react-components/divider";
 import Image from "next/image";
+import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -53,6 +54,55 @@ function isElement(domNode: DOMNode): domNode is Element {
 }
 
 const defaultInstructions: ParserInstruction[] = [
+  // vcard
+  {
+    shouldProcessNode: (node, props) => {
+      const className = (props.className as string) ?? "";
+      return className.includes("vcard");
+    },
+    processNode: (node, props, children) => {
+      const childArray = React.Children.toArray(children);
+      let name = "",
+        title = "",
+        phone = "",
+        extension = "",
+        email = "";
+
+      for (const child of childArray) {
+        const isElement = React.isValidElement(child);
+
+        if (isElement && child.type === "strong") {
+          name = (child as React.JSX.Element)?.props.children;
+        }
+
+        if (typeof child === "string" && child.length > 2 && !title) {
+          title = child;
+        }
+
+        const href = (child as React.JSX.Element).props?.href;
+
+        if (isElement && typeof href === "string") {
+          if (href.startsWith("tel:")) {
+            const tokens = href.replace("tel:", "").split("p");
+
+            phone = (child as React.JSX.Element)?.props.children;
+            extension = tokens[1];
+          } else if (href.startsWith("mailto:")) {
+            email = href.replace("mailto:", "");
+          }
+        }
+      }
+
+      return (
+        <Contact {...props} key={nanoid()}>
+          <ContactName key="name">{name}</ContactName>
+          <ContactTitle key="title">{title}</ContactTitle>
+          <ContactPhone key="phone" number={phone} extension={extension}></ContactPhone>
+          <ContactEmail key="email" email={email} />
+        </Contact>
+      );
+    },
+  },
   // Author
   {
     shouldProcessNode: (node, props) => (props.className as string)?.includes("author"),
