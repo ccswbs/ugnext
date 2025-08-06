@@ -84,6 +84,7 @@ const defaultInstructions: ParserInstruction[] = [
       if (isButton) {
         const outlined = className.includes("btn-outline");
         let color: ButtonProps["color"];
+        const classes = twMerge("mr-2", className);
 
         switch (className.match(/btn-(?:outline-)?(\w*)/)?.[1]) {
           case "primary":
@@ -113,7 +114,15 @@ const defaultInstructions: ParserInstruction[] = [
         }
 
         return (
-          <Button {...props} key={nanoid()} color={color ?? "red"} outlined={outlined} href={href} as="a">
+          <Button
+            {...props}
+            key={nanoid()}
+            className={classes}
+            color={color ?? "red"}
+            outlined={outlined}
+            href={href}
+            as="a"
+          >
             {children}
           </Button>
         );
