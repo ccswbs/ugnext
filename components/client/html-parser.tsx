@@ -208,7 +208,7 @@ const defaultInstructions: ParserInstruction[] = [
   },
 ];
 
-export function HtmlParser({ html, instructions = [] }: { html: string; instructions: ParserInstruction[] }) {
+export function HtmlParser({ html, instructions = [] }: { html: string; instructions?: ParserInstruction[] }) {
   const options: HTMLReactParserOptions = useMemo(() => {
     return {
       replace: (node, index) => {
