@@ -156,6 +156,19 @@ const defaultInstructions: ParserInstruction[] = [
       );
     },
   },
+  // Remove <em> around <i>
+  {
+    shouldProcessNode: (node, props, children) => {
+      if (node.tagName !== "em") {
+        return false;
+      }
+
+      return React.Children.toArray(children).some((child) => React.isValidElement(child) && child.type === "i");
+    },
+    processNode: (node, props, children, index) => {
+      return <Fragment key={nanoid()}>{children}</Fragment>;
+    },
+  },
   // Headings
   {
     shouldProcessNode: (node) => {
