@@ -46,7 +46,7 @@ export const ButtonWidget = ({ data, column }) => {
       column: {
         primary: {},
         secondary: {
-          button: "w-full",
+          button: "w-full mx-0",
         },
         "call-to-action": {},
       },
@@ -117,7 +117,7 @@ export const ButtonSectionWidget = ({ data }) => {
     variants: {
       column: {
         primary: "flex flex-wrap",
-        secondary: "flex-col",
+        secondary: "flex-col px-0 mx-0",
         "call-to-action": "flex-col items-center",
       },
     },
