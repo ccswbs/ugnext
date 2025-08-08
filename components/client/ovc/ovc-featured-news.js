@@ -3,11 +3,11 @@
 import { Typography } from "@uoguelph/react-components/typography";
 import { Divider } from "@uoguelph/react-components/divider";
 import { Button } from "@uoguelph/react-components/button";
-import { UnstyledLink } from "@/components/client/unstyled-link";
 import { twMerge } from "tailwind-merge";
 import Image from "next/image";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 import { Link } from "@uoguelph/react-components/link";
+import NextLink from "next/link";
 
 function FeaturedNewsArticle({ data, index }) {
   const date = new Date(data.created.time);
@@ -62,7 +62,7 @@ export function OVCFeaturedNews({ articles = [] }) {
           <FeaturedNewsArticle data={article} index={index} key={index} />
         ))}
       </div>
-      <Button as={UnstyledLink} href="/ovc/news/" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
+      <Button as={NextLink} href="/ovc/news/" color="red" className="py-2 px-4 mx-[.25em] text-2xl">
         OVC News Hub
       </Button>
       <Divider />

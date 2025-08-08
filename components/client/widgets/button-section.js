@@ -3,11 +3,11 @@
 import { Typography } from "@uoguelph/react-components/typography";
 import { Button } from "@uoguelph/react-components/button";
 import { HtmlParser } from "@/components/client/html-parser";
-import { UnstyledLink } from "@/components/client/unstyled-link";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
+import Link from "next/link";
 
 function getButtonData(data) {
   const colors = {
@@ -96,7 +96,7 @@ export const ButtonWidget = ({ data, column }) => {
 
       <Button
         className={classes.button()}
-        as={UnstyledLink}
+        as={Link}
         href={url}
         color={color}
         outlined={outlined}
