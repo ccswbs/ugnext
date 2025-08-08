@@ -1,3 +1,5 @@
+"use client";
+
 import { Typography } from "@uoguelph/react-components/typography";
 import { Button } from "@uoguelph/react-components/button";
 import { HtmlParser } from "@/components/client/html-parser";

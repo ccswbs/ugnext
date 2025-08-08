@@ -64,6 +64,13 @@ export default async function Page({ params }: Props) {
     case "NodeArticle":
       permanentRedirect(`/ovc/news/${route.entity.id}`);
       break;
+    case "NodeUndergraduateProgram":
+    case "NodeUndergraduateDegree":
+      permanentRedirect("/programs/undergraduate/");
+      break;
+    case "NodeUndergraduateRequirement":
+      permanentRedirect("/programs/undergraduate/requirements/");
+      break;
     default:
       if (process.env.NODE_ENV === "development") {
         console.warn(

@@ -31,7 +31,7 @@ export default async function ProgramsCertificateAndDiploma() {
           </Typography>
         </Container>
 
-        <ProgramSearch programs={programs} types={types} degreeTypes={undefined} />
+        <ProgramSearch programs={programs} types={types} />
       </LayoutContent>
 
       <Footer></Footer>

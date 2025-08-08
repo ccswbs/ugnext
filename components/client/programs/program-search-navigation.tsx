@@ -1,8 +1,8 @@
+import { usePathname } from "next/navigation";
 import { Navigation, NavigationLink } from "@uoguelph/react-components/navigation";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-export const ProgramSearchNavigation = () => {
+export function ProgramSearchNavigation() {
   const pathname = usePathname();
 
   const links = [
@@ -21,4 +21,4 @@ export const ProgramSearchNavigation = () => {
       ))}
     </Navigation>
   );
-};
+}
