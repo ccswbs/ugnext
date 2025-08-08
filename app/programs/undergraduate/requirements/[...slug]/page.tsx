@@ -26,6 +26,7 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Alert, AlertMessage, AlertSubtitle } from "@uoguelph/react-components/alert";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import { Fragment } from "react";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -132,17 +133,13 @@ export default async function ProgramsUndergraduate({ params }: Props) {
                 }
 
                 return (
-                  <>
+                  <Fragment key={section.title}>
                     <Typography type="h3" as="h2">
                       {section.title}
                     </Typography>
 
                     <HtmlParser html={section.content} instructions={undefined} />
-
-                    {/*section.content?.map((content) => (
-                  <WidgetSelector key={content.id} data={content} />
-                ))*/}
-                  </>
+                  </Fragment>
                 );
               })
               .filter((section) => section !== null)}
