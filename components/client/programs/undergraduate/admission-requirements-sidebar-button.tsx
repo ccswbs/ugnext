@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import { tv } from "tailwind-variants";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { UnstyledLink } from "@/components/client/unstyled-link";
+import Link from "next/link";
 
 export type AdmissionRequirementsSidebarButtonProps = {
   url: string;
@@ -27,7 +27,7 @@ export function AdmissionRequirementsSidebarButton({
   })();
 
   return (
-    <Button color={color} className={classes.button()} as={UnstyledLink} href={url}>
+    <Button color={color} className={classes.button()} as={Link} href={url}>
       {typeof icon === "string" ? (
         <i className={`${classes.icon()} ${icon}`} aria-hidden="true"></i>
       ) : (
