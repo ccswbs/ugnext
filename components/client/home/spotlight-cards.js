@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
-import { UnstyledLink } from "@/components/client/unstyled-link";
+import Link from "next/link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 
@@ -24,7 +24,7 @@ export const SpotlightCards = ({ cards }) => {
         <Card
           id={`uofg-homepage-spotlight-card-${index + 2}`}
           key={data.id}
-          as={UnstyledLink}
+          as={Link}
           href={data.url.url}
           className={`uofg-spotlight-card ${card()}`}
           centered

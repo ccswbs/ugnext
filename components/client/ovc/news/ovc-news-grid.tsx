@@ -4,7 +4,7 @@ import { PaginatedGrid } from "@/components/client/paginated-grid";
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import Image from "next/image";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
-import { UnstyledLink } from "@/components/client/unstyled-link";
+import Link from "next/link";
 import { Container } from "@uoguelph/react-components/container";
 import type { OVCNewsWithoutBody } from "@/data/drupal/ovc-news";
 
@@ -20,7 +20,7 @@ export function OvcNewsGrid({ totalPages = 2, fallback }: { totalPages?: number;
           return (
             <Card
               key={index}
-              as={UnstyledLink}
+              as={Link}
               href={`/ovc/news/${item.id}`}
               className="border border-grey-light rounded shadow"
             >

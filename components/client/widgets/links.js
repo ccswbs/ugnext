@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Card, CardContent, CardTitle, CardImage } from "@uoguelph/react-components/card";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
-import { UnstyledLink } from "@/components/client/unstyled-link";
+import NextLink from "next/link";
 import { tv } from "tailwind-variants";
 
 export function LinksWidget({ data }) {
@@ -19,7 +19,7 @@ export function LinksWidget({ data }) {
     return (
       <div className={classes.container()}>
         {data?.links?.map((link, index) => (
-          <Card as={UnstyledLink} href={link.url.url} className={classes.card()} centered key={link.url.title + index}>
+          <Card as={NextLink} href={link.url.url} className={classes.card()} centered key={link.url.title + index}>
             <CardImage
               as={Image}
               src={link.image.image.url}
