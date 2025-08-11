@@ -13,6 +13,7 @@ import { List, ListItem } from "@uoguelph/react-components/list";
 import { Divider } from "@uoguelph/react-components/divider";
 import Image from "next/image";
 import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
+import NextLink from "next/link";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -171,7 +172,7 @@ const defaultInstructions: ParserInstruction[] = [
             color={color ?? "red"}
             outlined={outlined}
             href={href}
-            as="a"
+            as={NextLink}
           >
             {children}
           </Button>
@@ -179,7 +180,7 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       return (
-        <Link {...props} key={nanoid()} href={href}>
+        <Link {...props} key={nanoid()} href={href} as={NextLink}>
           {children}
         </Link>
       );
