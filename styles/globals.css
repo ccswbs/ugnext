@@ -8,7 +8,7 @@
   }
 
   body, main {
-    @apply text-body-copy dark:text-body-copy-on-dark light:text-body-copy-on-light text-lg leading-[1.6] font-normal;
+    @apply text-body-copy dark:text-body-copy-on-dark light:text-body-copy-on-light text-lg leading-[1.6] font-normal font-sans;
   }
 
   /* Slate form styles (pulled from gus, converted to use tailwind apply) */
