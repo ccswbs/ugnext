@@ -27,6 +27,7 @@ import { Alert, AlertMessage, AlertSubtitle } from "@uoguelph/react-components/a
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { Fragment } from "react";
+import { Divider } from "@uoguelph/react-components/divider";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -93,24 +94,6 @@ export default async function ProgramsUndergraduate({ params }: Props) {
       <Header></Header>
 
       <LayoutContent className="pb-8">
-        {showPaths && (
-          <Alert>
-            <AlertMessage className="border-t">
-              <AlertSubtitle>
-                The following Undergraduate Admission Requirements were used to build this page
-              </AlertSubtitle>
-
-              <List as="ol">
-                {content.paths.map((path) => (
-                  <ListItem key={path.url}>
-                    <LinkComponent href={path.url}>{path.title}</LinkComponent>
-                  </ListItem>
-                ))}
-              </List>
-            </AlertMessage>
-          </Alert>
-        )}
-
         <Grid
           template={{
             base: ["minmax(0, 1fr)"],
@@ -163,6 +146,24 @@ export default async function ProgramsUndergraduate({ params }: Props) {
             ))}
           </div>
         </Grid>
+
+        {showPaths && (
+          <div>
+            <Divider />
+
+            <Typography type="h4" as="h2" className="mt-0">
+              The following Undergraduate Admission Requirements were used to build this page
+            </Typography>
+
+            <List as="ol">
+              {content.paths.map((path) => (
+                <ListItem key={path.url}>
+                  <LinkComponent href={path.url}>{path.title}</LinkComponent>
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        )}
       </LayoutContent>
 
       <Footer></Footer>
