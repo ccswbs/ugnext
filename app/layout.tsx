@@ -4,17 +4,19 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { Metadata } from "next";
 import AppArmor from "@/components/client/app-armor";
 import { draftMode } from "next/headers";
-import { Bitter, Open_Sans } from "next/font/google";
+import { Bitter, DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@uoguelph/web-components/style";
 import { Button } from "@uoguelph/react-components/button";
 
-const openSans = Open_Sans({
+const dmSans = DM_Sans({
   subsets: ["latin"],
+  weight: "variable",
 });
 
 const bitter = Bitter({
   subsets: ["latin"],
+  weight: "variable",
 });
 
 export const metadata: Metadata = {

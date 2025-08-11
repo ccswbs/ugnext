@@ -29,7 +29,7 @@
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-converter": "^4.22.0",
     "@tensorflow/tfjs-core": "^4.22.0",
-    "@uoguelph/react-components": "^1.5.1",
+    "@uoguelph/react-components": "^1.5.2",
     "@uoguelph/web-components": "^2.0.5",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
