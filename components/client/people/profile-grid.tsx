@@ -2,7 +2,7 @@
 
 import { Typography } from "@uoguelph/react-components/typography";
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
-import { UnstyledLink } from "@/components/client/unstyled-link";
+import Link from "next/link";
 import { Fragment } from "react";
 
 type Image = {
@@ -38,7 +38,7 @@ export const ProfileGrid = ({ profiles }: { profiles: Profile[] }) => {
         <Card
           id={`profile-card-${profile.id}`}
           key={profile.id}
-          as={UnstyledLink}
+          as={Link}
           href={profile.path}
           className="flex flex-col h-full"
           centered
