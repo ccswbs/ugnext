@@ -36,7 +36,24 @@ interface ProfileContent {
   body?: {
     processed?: string;
   };
+  customLink?: Array<{
+    title: string;
+    url: string;
+  }>;
   profileJobTitle?: string;
+  profileUnit?: Array<{
+    id: string;
+    name: string;
+    __typename?: string;
+  }>;
+  profileFields?: Array<{
+    label: {
+      processed: string;
+    };
+    value: {
+      processed: string;
+    };
+  }>;
   profilePicture?: {
     image: {
       alt?: string;
@@ -69,6 +86,51 @@ export type ProfileProps = {
 
 export async function Profile({ id, pre, post }: ProfileProps) {
   const content = await getProfileContent(id) as ProfileContent | null;
+
+  // Helper function to get icon based on URL
+  const getIconForUrl = (url: string) => {
+    const lowerUrl = url.toLowerCase();
+    
+    // Social/Academic platforms
+    if (lowerUrl.includes('scholar.google')) {
+      return 'fa-brands fa-google-scholar';
+    }
+    if (lowerUrl.includes('linkedin.com')) {
+      return 'fa-brands fa-linkedin';
+    }
+    if (lowerUrl.includes('twitter.com') || lowerUrl.includes('x.com')) {
+      return 'fa-brands fa-twitter';
+    }
+    if (lowerUrl.includes('facebook.com')) {
+      return 'fa-brands fa-facebook';
+    }
+    if (lowerUrl.includes('instagram.com')) {
+      return 'fa-brands fa-instagram';
+    }
+    if (lowerUrl.includes('youtube.com')) {
+      return 'fa-brands fa-youtube';
+    }
+    if (lowerUrl.includes('orcid.org')) {
+      return 'fa-brands fa-orcid';
+    }
+    if (lowerUrl.includes('researchgate.net')) {
+      return 'fa-brands fa-researchgate';
+    }
+    if (lowerUrl.includes('github.com')) {
+      return 'fa-brands fa-github';
+    }
+    
+    // Academic/Research platforms
+    if (lowerUrl.includes('academia.edu')) {
+      return 'fa-solid fa-graduation-cap';
+    }
+    if (lowerUrl.includes('pubmed') || lowerUrl.includes('ncbi.nlm.nih.gov')) {
+      return 'fa-solid fa-microscope';
+    }
+    
+    // Generic website/external link
+    return 'fa-solid fa-external-link';
+  };
 
   // Couldn't fetch content for this id.
   if (!content) {
@@ -130,15 +192,19 @@ export async function Profile({ id, pre, post }: ProfileProps) {
       <LayoutContent container={false}>
         <Breadcrumbs url={content.path ?? undefined} />
         <Container>
+          <Typography type="h1" as="h1" className="mb-4">
+            {content?.title}       
+          </Typography>
           <div className="md:flex md:flex-row-reverse md:gap-6">
-            <div className="md:flex-1">
-              <Typography type="h1" as="h1" className="mb-4">
-                {content?.title}
-              </Typography>
+            <div className="md:flex-1">              
               {pre && pre}
-
               {content.profileJobTitle && <Typography type="h3" as="p">{content.profileJobTitle}</Typography>}
-                  
+              {content.profileUnit && content.profileUnit.length > 0 && (
+                <Typography type="body" as="p" className="mb-2">
+                  {content.profileUnit.map(unit => unit.name).join(', ')}
+                </Typography>
+              )}
+              
               {/* Directory contact info from LDAP */}
               {contactInfo.length > 0 && (
                 <Typography type="body" className="mb-4">
@@ -150,11 +216,41 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   ))}
                 </Typography>
               )}
+
+              {/* Custom links if available */}
+              {content.customLink && content.customLink.length > 0 && (
+                <div className="mb-4">
+                  {content.customLink.map((link, idx) => (
+                    <div key={idx} className="mb-2">
+                      <Link href={link.url} className="flex items-center gap-2">
+                        <i className={`${getIconForUrl(link.url)} w-4`} aria-hidden="true"></i>
+                        <span>{link.title}</span>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Profile Fields */}
+              {content.profileFields && content.profileFields.length > 0 && (
+                <div className="mb-4">
+                  {content.profileFields.map((field, index) => (
+                    <div key={index} className="mb-3">
+                      <div className="font-bold mb-1">
+                        <HtmlParser html={field.label.processed} instructions={undefined} />
+                      </div>
+                      <div>
+                        <HtmlParser html={field.value.processed} instructions={undefined} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
               
               {/* Research Areas */}
               {content.profileResearchAreas?.length && (
                 <div className="mb-4">
-                  <Typography type="h3" as="h3" className="mb-2">
+                  <Typography type="h3" as="h2" className="mb-2">
                     Research Areas
                   </Typography>
                   <ul className="list-disc list-inside">
@@ -167,13 +263,6 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                     ))}
                   </ul>
                 </div>
-              )}
-              
-              {/* TODO: add a Boolean field for profile users to choose if they want this displayed */}
-              {content.uniwebId && (
-                <Link href={`https://uniweb.uoguelph.ca/members/${content.uniwebId}/profile`}>
-                  View UniWeb profile
-                </Link>          
               )}
 
             </div>

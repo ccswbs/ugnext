@@ -19,12 +19,24 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     body {
       processed
     }
+    customLink {
+      title
+      url
+    }
     profileJobTitle
     profileType {
       ...ProfileType
     }
     profileUnit {
       ...Unit
+    }
+    profileFields {
+      label {
+        processed
+      }
+      value {
+        processed
+      }
     }
     profileResearchAreas {
       ...Research
