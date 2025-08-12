@@ -125,7 +125,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
 
                     {section.title === "Estimated Cut-off Range" && section.content !== "" && (
                       <>
-                        <Typography type="body" as="p">
+                        <Typography type="body" as="p" className="italic">
                           Estimated cutoff ranges are based on admission averages from previous years and are provided
                           as a point of reference. Exact cut-offs are determined by the quantity and quality of
                           applications received and the space available in the program. Having an average within this
@@ -133,7 +133,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
                         </Typography>
 
                         {program.type.some((type) => type.name === "Co-op") && (
-                          <Typography type="body" as="p">
+                          <Typography type="body" as="p" className="italic">
                             If you are applying for co-op, note that co-op averages will often exceed the estimated
                             cut-off ranges. Students not admissible to co-op will be automatically considered for the
                             regular program.
