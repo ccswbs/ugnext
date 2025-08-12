@@ -100,7 +100,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
             md: ["minmax(0, 9fr)", "minmax(0, 3fr)"],
           }}
           gap={{
-            x: 10,
+            x: 30,
             y: 0,
           }}
         >
