@@ -85,24 +85,22 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
 
   return (
     <Container>
-      <div className="mb-6 @container">
-        <Typography type="h2" as="h2" className="mb-4">
-          {generateTitle()}
-        </Typography>
-        
-        {filteredProfiles.length > 0 ? (
-          <ProfileGrid 
-            profiles={filteredProfiles} 
-            gridClasses="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
-          />
-        ) : (
-          <div className="flex w-full items-center justify-center py-8">
-            <Typography type="body" className="text-black/50">
-              No profiles matching the specified criteria were found.
-            </Typography>
-          </div>
-        )}
-      </div>
+      <Typography type="h2" as="h2" className="mb-4">
+        {generateTitle()}
+      </Typography>
+      
+      {filteredProfiles.length > 0 ? (
+        <ProfileGrid 
+          profiles={filteredProfiles} 
+          gridClasses="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4"
+        />
+      ) : (
+        <div className="flex w-full items-center justify-center py-8">
+          <Typography type="body" className="text-black/50">
+            No profiles matching the specified criteria were found.
+          </Typography>
+        </div>
+      )}
     </Container>
   );
 };
