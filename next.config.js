@@ -1,3 +1,6 @@
+const CopyPlugin = require("copy-webpack-plugin");
+const path = require("path");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
@@ -21,6 +24,18 @@ const nextConfig = {
         use: "yaml-loader",
       }
     );
+
+    config.plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: "node_modules/@uoguelph/web-components/dist/uofg-web-components",
+            to: path.resolve(__dirname, "public", "@uoguelph", "web-components"),
+          },
+        ],
+      })
+    );
+
     return config;
   },
   images: {
@@ -45,6 +60,16 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+  },
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: "/ens-test",
+        destination: "/?ens-test=true",
+        permanent: true,
+      },
+    ];
   },
 };
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
