@@ -208,6 +208,31 @@ export const MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
+  fragment ProfileBlock on ParagraphProfileBlock {
+    __typename
+    id
+    sectionColumn {
+      ...SectionColumn
+    }
+    profileType {
+      ... on TermProfileType {
+        name
+      }
+    }
+    researchArea {
+      ... on TermResearch {
+        name
+      }
+    }
+    unit {
+      ... on TermUnit {
+        name
+      }
+    }
+  }
+`);
+
 export const SECTION_FRAGMENT = gql(/* gql */ `
   fragment Section on ParagraphSection {
     __typename
@@ -225,6 +250,7 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
       ...Tabs
       ...Statistics
       ...ImageOverlay
+      ...ProfileBlock
     }
   }
 `);

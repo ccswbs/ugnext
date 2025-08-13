@@ -94,27 +94,6 @@ export async function getProfileContent(id: string) {
   };
 }
 
-export async function getProfileCount() {
-  const { data } = await query({
-    query: gql(/* gql */ `
-      query GetProfileCount {
-        profiles(page: 0) {
-          pageInfo {
-            total
-            pageSize
-          }
-        }
-      }
-    `),
-  });
-
-  if (!data?.profiles) {
-    return 0;
-  }
-
-  return data.profiles.pageInfo.total;
-}
-
 export async function getProfiles() {
   const { data } = await query({
     query: gql(/* GraphQL */ `
