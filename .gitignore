@@ -46,3 +46,4 @@ yarn-error.log*
 
 public/@uoguelph
 lib/graphql
+/data/yaml/*.db

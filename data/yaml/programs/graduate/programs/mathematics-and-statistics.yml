@@ -6,6 +6,7 @@ degrees:
   - doctor-of-philosophy
 types:
   - thesis-based
+  - course-based
 tags:
   - mathematics
   - statistics

@@ -23,6 +23,9 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@netlify/plugin-nextjs": "^5.11.6",
     "@next/third-parties": "^15.4.3",
+    "@orama/orama": "^3.1.11",
+    "@orama/plugin-qps": "^3.1.11",
+    "@orama/stopwords": "^3.1.11",
     "@uoguelph/react-components": "^1.5.2",
     "@uoguelph/web-components": "^2.0.5",
     "conditional-wrap": "^1.0.3",
@@ -39,8 +42,7 @@
     "sharp": "^0.34.3",
     "swr": "^2.3.4",
     "tailwind-variants": "^1.0.0",
-    "uuid": "^11.1.0",
-    "zod": "^3.25.67"
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@apollo/client": "^3.13.8",
