@@ -29,8 +29,8 @@ steps:
     displayName: "Cache .next/cache"
 
   - script: |
-      find pages -mindepth 1 ! -name "404.js" ! -name "500.js" ! -name "_app.js" ! -name "_document.js" ! -name "index.js" ! -name "ens-test.js" -exec rm -rf {} +
-    displayName: "Remove all pages except home, template and error pages"
+      find app -mindepth 1 ! -name "error.tsx" ! -name "layout.tsx" ! -name "loading.tsx" ! -name "not-found.tsx" ! -name "opengraph-image.alt.txt" ! -name "opengraph-image.jpg" ! -name "page.tsx" ! -name "twitter-image.alt.txt" ! -name "twitter-image.jpg" -exec rm -rf {} +
+    displayName: "Remove all files and folder in app dir except for home, template and error pages"
 
   - script: |
       bun run static-build
