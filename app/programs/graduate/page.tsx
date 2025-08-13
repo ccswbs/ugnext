@@ -5,7 +5,7 @@ import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProgramSearch } from "@/components/client/programs/program-search";
-import { getGraduateDegreeTypes, getGraduatePrograms, getGraduateProgramTypes } from "@/data/yaml/programs/graduate";
+import { getGraduateDegreeTypes, getGraduateProgramTypes, getGraduatePrograms } from "@/data/yaml/programs/graduate";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default async function ProgramsGraduate() {
-  const programs = await getGraduatePrograms();
   const types = await getGraduateProgramTypes();
   const degreeTypes = await getGraduateDegreeTypes();
+  const programs = await getGraduatePrograms();
 
   return (
     <Layout>
@@ -28,7 +28,7 @@ export default async function ProgramsGraduate() {
           </Typography>
         </Container>
 
-        <ProgramSearch programs={programs} types={types} degreeTypes={degreeTypes} />
+        <ProgramSearch programs={programs} types={types} degreeTypes={degreeTypes} useDegreeAcronym={true} />
       </LayoutContent>
 
       <Footer></Footer>

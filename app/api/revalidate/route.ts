@@ -1,5 +1,6 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
+import { getRoute } from "@/data/drupal/route";
 
 async function handler(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -15,6 +16,19 @@ async function handler(request: NextRequest) {
   // Either tags or path must be provided.
   if (!path && !tags) {
     return new Response("Missing path or tags.", { status: 400 });
+  }
+
+  // Some node types might require some custom revalidation logic.
+  if (path) {
+    const route = await getRoute(path);
+
+    if (route && route.__typename === "RouteInternal" && route.entity) {
+      switch (route.entity.__typename) {
+        case "NodeUndergraduateRequirement":
+          revalidatePath("/programs/undergraduate/requirements/[...slug]", "page");
+          break;
+      }
+    }
   }
 
   try {
