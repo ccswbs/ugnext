@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { fetchLdapProfile } from "@/lib/ldap-utils";
+import { getIconForUrl } from "@/lib/ug-utils";
 import { 
   UniwebAffiliations,
   UniwebCurrentTeaching,
@@ -86,51 +87,6 @@ export type ProfileProps = {
 
 export async function Profile({ id, pre, post }: ProfileProps) {
   const content = await getProfileContent(id) as ProfileContent | null;
-
-  // Helper function to get icon based on URL
-  const getIconForUrl = (url: string) => {
-    const lowerUrl = url.toLowerCase();
-    
-    // Social/Academic platforms
-    if (lowerUrl.includes('scholar.google')) {
-      return 'fa-brands fa-google-scholar';
-    }
-    if (lowerUrl.includes('linkedin.com')) {
-      return 'fa-brands fa-linkedin';
-    }
-    if (lowerUrl.includes('twitter.com') || lowerUrl.includes('x.com')) {
-      return 'fa-brands fa-twitter';
-    }
-    if (lowerUrl.includes('facebook.com')) {
-      return 'fa-brands fa-facebook';
-    }
-    if (lowerUrl.includes('instagram.com')) {
-      return 'fa-brands fa-instagram';
-    }
-    if (lowerUrl.includes('youtube.com')) {
-      return 'fa-brands fa-youtube';
-    }
-    if (lowerUrl.includes('orcid.org')) {
-      return 'fa-brands fa-orcid';
-    }
-    if (lowerUrl.includes('researchgate.net')) {
-      return 'fa-brands fa-researchgate';
-    }
-    if (lowerUrl.includes('github.com')) {
-      return 'fa-brands fa-github';
-    }
-    
-    // Academic/Research platforms
-    if (lowerUrl.includes('academia.edu')) {
-      return 'fa-solid fa-graduation-cap';
-    }
-    if (lowerUrl.includes('pubmed') || lowerUrl.includes('ncbi.nlm.nih.gov')) {
-      return 'fa-solid fa-microscope';
-    }
-    
-    // Generic website/external link
-    return 'fa-solid fa-external-link';
-  };
 
   // Couldn't fetch content for this id.
   if (!content) {
