@@ -6,6 +6,7 @@ degrees:
   - doctor-of-philosophy
 types:
   - course-based
+  - thesis-based
 tags:
   - business
   - management

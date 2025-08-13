@@ -3,6 +3,7 @@ import { twJoin } from "tailwind-merge";
 
 export const SpotlightHero = ({ hero }) => (
   <Hero
+    id={`uofg-homepage-spotlight-hero`}
     variant="spotlight"
     title={<h2 className="mt-0">{hero.title}</h2>}
     image={{
@@ -11,7 +12,7 @@ export const SpotlightHero = ({ hero }) => (
       width: hero.image.image.width,
       height: hero.image.image.height,
       className: twJoin(
-        "aspect-[3/2] w-full",
+        "aspect-[3/2] w-full spotlight-hero-image",
         hero.thumbnailImageCrop === "right" && "object-right",
         hero.thumbnailImageCrop === "left" && "object-left",
         (hero.thumbnailImageCrop === "center" || !hero.thumbnailImageCrop) && "object-center"

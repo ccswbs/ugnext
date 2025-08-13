@@ -4,11 +4,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-export const Card = ({ href, image, title, footer, className, centered, children }) => {
+export const Card = ({ id, href, image, title, footer, className, centered, children }) => {
   const Tag = href ? UnstyledLink : "div";
 
   return (
     <Tag
+      id={id}
       className={twMerge(
         "group flex flex-col justify-center transition duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light-blue focus-visible:ring-offset-2",
         !image && href && "hover:scale-105 focus-visible:scale-105",

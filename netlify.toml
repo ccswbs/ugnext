@@ -1,6 +1,15 @@
 [build]
   command = "bun run build"
   publish = ".next"
+  
+[images]
+remote_images = [
+  "https://cdn.uoguelph.ca/.*",
+  "https://api.liveugconthub.uoguelph.dev/.*",
+  "https://api.testugconthub.uoguelph.dev/.*",
+  "https://api.devugconthub.uoguelph.dev/.*",
+  "https://.*.pantheonsite.io/.*"
+]
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
