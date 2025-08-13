@@ -27,7 +27,10 @@ export const PeopleSearch = ({ profiles, types, units }) => {
       />
 
       <Container>
-        <ProfileGrid profiles={filteredPeople} />
+        <ProfileGrid 
+          profiles={filteredPeople} 
+          gridClasses="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+        />
                 
         {/* No results were found */}
         {filteredPeople?.length === 0 && (
