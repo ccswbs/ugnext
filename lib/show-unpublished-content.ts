@@ -1,6 +1,10 @@
 import { draftMode } from "next/headers";
 
 export async function showUnpublishedContent() {
+  if (process.env.NEXT_STATIC_OUTPUT === "true") {
+    return false;
+  }
+
   if ((await draftMode()).isEnabled) {
     return true;
   }
