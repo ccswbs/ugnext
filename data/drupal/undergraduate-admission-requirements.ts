@@ -141,6 +141,7 @@ export const UNDERGRADUATE_ADMISSION_REQUIREMENT_FRAGMENT = gql(/* gql */ `
     __typename
     title
     path
+    status
     type {
       __typename
     }
@@ -271,6 +272,10 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 
   for (const requirement of requirements) {
     if (requirement === null) {
+      continue;
+    }
+
+    if (!requirement.status && !showUnpublished) {
       continue;
     }
 
