@@ -4,7 +4,7 @@ import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
-import { getProfiles, getProfileCount, getProfileTypes, getUnits } from "@/data/drupal/profile";
+import { getProfiles, getProfileTypes, getUnits } from "@/data/drupal/profile";
 import { PeopleSearch } from "@/components/client/people/people-search";
 import { Metadata } from "next";
 
@@ -26,8 +26,6 @@ export default async function People() {
     units: profile.profileUnit || [], // profileUnit is already an array
     tags: profile.tags || [] // Ensure tags array exists
   }));
-  
-  const profileCount = getProfileCount();
 
   return (
     <Layout>
