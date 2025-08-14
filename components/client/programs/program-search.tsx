@@ -105,12 +105,12 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
                 setInput((e.target as HTMLInputElement).value);
               }}
             >
-              <span className="text-l font-bold mb-1">What would you like to study?</span>
+              <span className="text-yellow-contrast text-l font-bold mb-1">What would you like to study?</span>
             </TextInput>
           </div>
 
           <Field className="sm:w-1/3 md:w-1/4">
-            <Label className="text-body-copy-bold font-bold">Filter by type</Label>
+            <Label className="text-yellow-contrast font-bold">Filter by type</Label>
             <Select
               value={selectedTypes}
               multiple
