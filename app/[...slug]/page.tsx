@@ -67,6 +67,13 @@ export default async function Page({ params }: Props) {
       break;
     case "NodeProfile":
       return <Profile id={route.entity.uuid} />;
+    case "NodeUndergraduateProgram":
+    case "NodeUndergraduateDegree":
+      permanentRedirect("/programs/undergraduate/");
+      break;
+    case "NodeUndergraduateRequirement":
+      permanentRedirect("/programs/undergraduate/requirements/");
+      break;
     default:
       if (process.env.NODE_ENV === "development") {
         console.warn(
