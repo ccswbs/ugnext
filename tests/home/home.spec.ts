@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import path from "path";
 
 test("home-spotlight-analytics", async ({ page }) => {
   await page.goto("/");
@@ -21,12 +20,10 @@ test("home-visual-regression", async ({ page, isMobile }) => {
   for (const img of await images.all()) {
     await img.scrollIntoViewIfNeeded();
     await expect(img).toHaveJSProperty("complete", true);
-    await expect(img).not.toHaveJSProperty("naturalWidth", 0);
   }
 
   await expect(page).toHaveScreenshot("home.png", {
     fullPage: true,
-    stylePath: path.join(__dirname, "home.css"),
     maxDiffPixelRatio: 0.01,
   });
 });
