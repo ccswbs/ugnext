@@ -5,6 +5,7 @@
       "name": "ugnext",
       "dependencies": {
         "@awesome.me/kit-7993323d0c": "^1.0.10",
+        "@drupal/linkset": "^1.0.3",
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "@fortawesome/react-fontawesome": "^0.2.3",
         "@netlify/plugin-nextjs": "^5.12.0",
@@ -129,6 +130,8 @@
     "@babel/types": ["@babel/types@7.28.0", "", { "dependencies": { "@babel/helper-string-parser": "^7.27.1", "@babel/helper-validator-identifier": "^7.27.1" } }, "sha512-jYnje+JyZG5YThjHiF28oT4SIZLnYOcSBb6+SDaFIyzDVSkXQmQQYclJ2R+YxcdmK0AX6x1E5OQNtuh3jHDrUg=="],
 
     "@discoveryjs/json-ext": ["@discoveryjs/json-ext@0.5.7", "", {}, "sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw=="],
+
+    "@drupal/linkset": ["@drupal/linkset@1.0.3", "", {}, "sha512-BMusbcNKAVV7v8vhOP1cfM0wkAL8iwARc9zU1R2VxEn85f8F08hHY4IbFB5axTgfMEED4QJJCiXrOGZwN3HMLQ=="],
 
     "@emnapi/core": ["@emnapi/core@1.4.4", "", { "dependencies": { "@emnapi/wasi-threads": "1.0.3", "tslib": "^2.4.0" } }, "sha512-A9CnAbC6ARNMKcIcrQwq6HeHCjpcBZ5wSx4U01WXCqEKlrzB9F9315WDNHkrs2xbx7YjjSxbUYxuN6EQzpcY2g=="],
 
