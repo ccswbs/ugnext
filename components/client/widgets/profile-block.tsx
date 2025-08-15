@@ -8,7 +8,7 @@ import { ProfileGrid } from "../people/profile-grid";
 interface ProfileBlockData {
   __typename: "ParagraphProfileBlock";
   id: string;
-  headingLevel: string;
+  headingLevel: "h2" | "h3" | "h4" | "h5" | "h6" | null;
   profileBlockTitle: string;
   profileType?: {
     name: string;
@@ -69,7 +69,10 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
   return (
     <Container>
       {data.profileBlockTitle && (
-        <Typography type={data.headingLevel ?? "h2"} as={data.headingLevel ?? "h2"}>
+        <Typography 
+          type={data.headingLevel ?? "h2"} 
+          as={data.headingLevel ?? "h2"}
+        >
           {data.profileBlockTitle}
         </Typography>
       )}
