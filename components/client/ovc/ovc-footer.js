@@ -29,7 +29,10 @@ export const OVCFooter = () => {
         <div className="grid gap-4 grid-cols-1 md:grid-cols-3 mt-8">
           <div>
             <div className="md:flex flex-wrap gap-3 mt-8">
-              <a href="https://instagram.com/ontvetcollege/" className="btn btn-outline-secondary text-dark-social">
+              <a
+                href="https://instagram.com/ontvetcollege/"
+                className="border border-gray-400 rounded px-2 py-1 text-gray-700 hover:bg-gray-200 transition"
+              >
                 <span className="sr-only">Connect with OVC on Instagram</span>
                 <i className="fa-brands fa-instagram text-xl p-1" aria-hidden="true"></i>
               </a>
