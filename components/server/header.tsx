@@ -1,5 +1,5 @@
 import { Header as HeaderComponent, HeaderLink, HeaderMenu, HeaderMenuItem } from "@uoguelph/react-components/header";
-import { getMenuByName } from "@/data/drupal/menu";
+import { getMenuByName, getMenuByNameLinkset } from "@/data/drupal/menu";
 
 type Menu = NonNullable<Awaited<ReturnType<typeof getMenuByName>>>;
 type MenuItem = Menu["items"][number];
@@ -21,7 +21,7 @@ async function HeaderSubNavigationItem({ item }: { item: MenuItem }) {
 }
 
 export async function Header({ name }: { name?: string }) {
-  const menu = name ? await getMenuByName(name) : null;
+  const menu = name ? await getMenuByNameLinkset(name) : null;
 
   if (!menu) {
     return <HeaderComponent></HeaderComponent>;
