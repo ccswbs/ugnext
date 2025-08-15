@@ -215,6 +215,8 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
     sectionColumn {
       ...SectionColumn
     }
+    headingLevel
+    profileBlockTitle
     profileType {
       ... on TermProfileType {
         name

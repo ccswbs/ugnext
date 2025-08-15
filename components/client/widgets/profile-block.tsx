@@ -8,6 +8,8 @@ import { ProfileGrid } from "../people/profile-grid";
 interface ProfileBlockData {
   __typename: "ParagraphProfileBlock";
   id: string;
+  headingLevel: string;
+  profileBlockTitle: string;
   profileType?: {
     name: string;
   }[];
@@ -64,30 +66,13 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
     return true;
   });
 
-  // Generate a title based on the filters
-  const generateTitle = () => {
-    const parts = [];
-    if (data.profileType && data.profileType.length > 0) {
-      const types = data.profileType.map(t => t.name);
-      parts.push(types.join(' & '));
-    }
-    if (data.researchArea && data.researchArea.length > 0) {
-      const areas = data.researchArea.map(r => r.name);
-      parts.push(`in ${areas.join(' & ')}`);
-    }
-    if (data.unit && data.unit.length > 0) {
-      const units = data.unit.map(u => u.name);
-      parts.push(`from ${units.join(' & ')}`);
-    }
-    
-    return parts.length > 0 ? parts.join(' ') : 'Profiles';
-  };
-
   return (
     <Container>
-      <Typography type="h2" as="h2" className="mb-4">
-        {generateTitle()}
-      </Typography>
+      {data.profileBlockTitle && (
+        <Typography type={data.headingLevel ?? "h2"} as={data.headingLevel ?? "h2"}>
+          {data.profileBlockTitle}
+        </Typography>
+      )}
       
       {filteredProfiles.length > 0 ? (
         <ProfileGrid 
