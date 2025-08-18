@@ -24,7 +24,7 @@ steps:
 
   - task: Cache@2
     inputs:
-      key: "next | $(Agent.OS) | bun.lock"
+      key: "next | $(Agent.OS) | bun.lock | $(Build.SourceBranch)"
       path: "$(System.DefaultWorkingDirectory)/.next/cache"
     displayName: "Cache .next/cache"
 
