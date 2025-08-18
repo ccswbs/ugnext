@@ -33,7 +33,7 @@
     "glob": "^11.0.3",
     "html-react-parser": "^5.2.6",
     "nanoid": "5.1.5",
-    "next": "^15.4.3",
+    "next": "^15.4.6",
     "next-drupal": "^2.0.0",
     "object-hash": "^3.0.0",
     "prop-types": "^15.8.1",
