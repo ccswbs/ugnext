@@ -27,7 +27,7 @@
         "react-animate-height": "^3.2.3",
         "react-dom": "^19.1.1",
         "sharp": "^0.34.3",
-        "swr": "^2.3.4",
+        "swr": "^2.3.6",
         "tailwind-variants": "^1.0.0",
         "uuid": "^11.1.0",
       },
