@@ -21,7 +21,7 @@ export function OvcNewsGrid({ totalPages = 2, fallback }: { totalPages?: number;
             <Card
               key={index}
               as={Link}
-              href={`/ovc/news/${item.id}`}
+              href={`/ovc/news/node/${item.id}`}
               className="border border-grey-light rounded shadow"
             >
               <CardImage

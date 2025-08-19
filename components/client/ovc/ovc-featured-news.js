@@ -35,7 +35,7 @@ function FeaturedNewsArticle({ data, index }) {
       {/* Text Section */}
       <div className="p-4">
         <Typography type={"h5"} as={"h3"} className={twMerge("mt-0 text-lg", index === 0 ? "text-dark" : "")}>
-          <Link href={`/ovc/news/${data.id}`}>{data?.title}</Link>
+          <Link href={`/ovc/news/node/${data.id}`}>{data?.title}</Link>
         </Typography>
         <Typography type="body">
           {date.toLocaleString("en-US", {
