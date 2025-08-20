@@ -32,6 +32,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...ImageOverlay
       ...Section
       ...ProfileBlock
+      ...ProfileCard
     }
     tags {
       ...Tag
@@ -91,6 +92,12 @@ export async function getPageContent(id: string) {
         ...widget,
         byTags: (await getTestimonialByTag(tags)) ?? [],
       };
+    }
+
+    if (widget.__typename === "ParagraphProfileCard") {
+      // ProfileCard should already have the profileInfo populated by the GraphQL query
+      // No additional fetching needed since the profile data comes directly from the CMS
+      return widget;
     }
 
     if (widget.__typename === "ParagraphProfileBlock") {

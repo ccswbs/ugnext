@@ -232,6 +232,30 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
         name
       }
     }
+    enableNameSearch
+    enableUnitFilter
+    enableResearchFilter
+  }
+`);
+
+export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
+  fragment ProfileCard on ParagraphProfileCard {
+    __typename
+    id
+    profileInfo {
+      ... on NodeProfile {
+        id
+        title
+        directoryEmail
+        directoryOffice
+        directoryPhone
+        profileJobTitle
+        path
+        profilePicture {
+          ...Image
+        }
+      }
+    }
   }
 `);
 

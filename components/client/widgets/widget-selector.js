@@ -17,6 +17,7 @@ import { BlockWidget } from "@/components/client/widgets/block";
 import { TabsWidget } from "@/components/client/widgets/tabs";
 import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial-slider";
 import { ProfileBlock } from "@/components/client/widgets/profile-block";
+import { ProfileCard } from "@/components/client/widgets/profile-card";
 
 export function WidgetSelector({ data }) {
   
@@ -40,6 +41,7 @@ export function WidgetSelector({ data }) {
     ParagraphStoryWidget: StoryWidget,
     ParagraphBlockWidget: BlockWidget,
     ParagraphProfileBlock: ProfileBlock,
+    ParagraphProfileCard: ProfileCard,
   };
 
   const Widget = map[data.__typename];
