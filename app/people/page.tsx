@@ -5,7 +5,7 @@ import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { getProfiles, getProfileTypes, getUnits } from "@/data/drupal/profile";
-import { PeopleSearch } from "@/components/client/people/people-search";
+import { ProfileSearch } from "@/components/client/profiles/profile-search";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -39,7 +39,7 @@ export default async function People() {
           </Typography>
         </Container>
         
-        <PeopleSearch profiles={profiles} types={types} units={units} />
+        <ProfileSearch profiles={profiles} types={types} units={units} />
 
       </LayoutContent>
 
