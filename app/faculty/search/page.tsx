@@ -4,7 +4,7 @@ import { Header } from "@uoguelph/react-components/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
-import { FacultySearch } from "@/components/client/people/faculty-search";
+import { FacultySearch } from "@/components/client/profiles/faculty-search";
 import { getProfilesByType, getResearch, getUnits } from "@/data/drupal/profile";
 import { Metadata } from "next";
 
