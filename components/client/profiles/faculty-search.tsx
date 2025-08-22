@@ -1,7 +1,6 @@
 "use client";
 
 import { FacultySearchBar } from "@/components/client/profiles/faculty-search-bar";
-import { ProfileSearchNavigation } from "@/components/client/profiles/profile-search-navigation";
 import { ProfileGrid } from "@/components/client/profiles/profile-grid";
 import { useState } from "react";
 import { Container } from "@uoguelph/react-components/container";
@@ -21,9 +20,6 @@ export const FacultySearch = ({ profiles, units, researchTopics }: FacultySearch
 
   return (
     <div className="flex flex-col relative">
-      <Container className="py-0!">
-        <ProfileSearchNavigation />
-      </Container>
 
       <FacultySearchBar
         profiles={profiles}
