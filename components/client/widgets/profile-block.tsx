@@ -5,7 +5,8 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
-import { ProfileGrid } from "../people/profile-grid";
+import { ProfileGrid } from "@/components/client/profiles/profile-grid";
+import { ProfileSearchNavigation } from "@/components/client/profiles/profile-search-navigation";
 import { useState, useMemo, useEffect } from "react";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
 import { twMerge } from "tailwind-merge";
@@ -28,8 +29,9 @@ interface ProfileBlockData {
   profiles?: any[];
   // New CMS-configurable search/filter options
   enableNameSearch?: boolean;
-  enableUnitFilter?: boolean;
   enableResearchFilter?: boolean;
+  enableTypeFilter?: boolean;
+  enableUnitFilter?: boolean;
 }
 
 interface ProfileBlockProps {
@@ -44,11 +46,13 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
   const enableSearch = data.enableNameSearch ?? false;
   const enableUnitFilter = data.enableUnitFilter ?? false;
   const enableResearchFilter = data.enableResearchFilter ?? false;
+  const enableTypeFilter = data.enableTypeFilter ?? false;
   
   // Search and filter state
   const [searchInput, setSearchInput] = useState("");
   const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
   const [selectedResearchAreas, setSelectedResearchAreas] = useState<string[]>([]);
+  const [selectedType, setSelectedType] = useState<string>("all");
   
   // Search functionality using the same hook as faculty search
   const searchResults = useSearch(profiles, searchInput, nameAndTagSearch);
@@ -73,6 +77,28 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
     });
     return Array.from(areas).sort();
   }, [profiles]);
+
+  const availableTypes = useMemo(() => {
+    const types = new Set<string>();
+    profiles.forEach(profile => {
+      if (profile.profileType?.name) {
+        types.add(profile.profileType.name);
+      }
+    });
+    return Array.from(types).sort();
+  }, [profiles]);
+
+  // Create tabs for type filtering
+  const typeTabs = useMemo(() => {
+    if (!enableTypeFilter || availableTypes.length === 0) return null;
+    
+    const tabs = [
+      { value: "all", label: "All" },
+      ...availableTypes.map(type => ({ value: type, label: type }))
+    ];
+    
+    return tabs;
+  }, [availableTypes, enableTypeFilter]);
   
   // Initialize filters with all available options
   useEffect(() => {
@@ -82,6 +108,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
     if (enableResearchFilter && selectedResearchAreas.length === 0 && availableResearchAreas.length > 0) {
       setSelectedResearchAreas(availableResearchAreas);
     }
+    // Type filter uses "all" as default, no need to initialize
   }, [availableUnits, availableResearchAreas, enableUnitFilter, enableResearchFilter]);
 
   // Apply all filtering logic
@@ -131,6 +158,13 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
       );
     }
 
+    // Apply client-side type filtering if enabled
+    if (enableTypeFilter && selectedType !== "all") {
+      filtered = filtered.filter((profile: any) =>
+        profile.profileType?.name === selectedType
+      );
+    }
+
     // Apply client-side research area filtering if enabled
     if (enableResearchFilter && selectedResearchAreas.length > 0 && selectedResearchAreas.length < availableResearchAreas.length) {
       filtered = filtered.filter((profile: any) =>
@@ -139,17 +173,31 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
     }
 
     return filtered;
-  }, [searchResults, data, selectedUnits, selectedResearchAreas, availableUnits.length, availableResearchAreas.length, enableUnitFilter, enableResearchFilter]);
+  }, [searchResults, data, selectedUnits, selectedResearchAreas, selectedType, availableUnits.length, availableResearchAreas.length, enableUnitFilter, enableResearchFilter, enableTypeFilter]);
 
   return (
-    <Container>
+    <>
       {data.profileBlockTitle && (
-        <Typography 
-          type={data.headingLevel ?? "h2"} 
-          as={data.headingLevel ?? "h2"}
-        >
-          {data.profileBlockTitle}
-        </Typography>
+        <Container>
+          <Typography 
+            type={data.headingLevel ?? "h2"} 
+            as={data.headingLevel ?? "h2"}
+          >
+            {data.profileBlockTitle}
+          </Typography>
+        </Container>
+      )}
+      
+      {/* Type Filter Navigation */}
+      {enableTypeFilter && typeTabs && (
+        <Container className="mb-[-0.5rem] py-0!">
+          <ProfileSearchNavigation 
+            tabs={typeTabs}
+            selectedTab={selectedType}
+            onTabChange={setSelectedType}
+            useRouting={false}
+          />
+        </Container>
       )}
       
       {/* Search and Filter Controls */}
@@ -158,7 +206,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
           <Container className="flex flex-col gap-4 py-8 sm:flex-row sm:items-end">
             {/* Name Search */}
             {enableSearch && (
-              <div className="md:w-1/3">
+              <div className="md:w-1/2">
                 <TextInput
                   onInput={(e) => setSearchInput((e.target as HTMLInputElement).value)}
                   placeholder="Start typing to search"
@@ -170,7 +218,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
             
             {/* Unit Filter */}
             {enableUnitFilter && availableUnits.length > 0 && (
-              <div className="md:w-1/3">
+              <div className="md:w-1/2">
                 <Field>
                   <Label className="text-body-copy-bold font-bold">Filter by Unit</Label>
                   <Select
@@ -205,7 +253,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
             
             {/* Research Area Filter */}
             {enableResearchFilter && availableResearchAreas.length > 0 && (
-              <div className="md:w-1/3">
+              <div className="md:w-1/2">
                 <Field>
                   <Label className="text-body-copy-bold font-bold">Filter by Research Area</Label>
                   <Select
@@ -238,23 +286,20 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
               </div>
             )}
           </Container>
-          
-          {/* Results count */}
-          {(enableSearch || enableUnitFilter || enableResearchFilter) && (
-            <Container className="pb-4">
-              <Typography type="body" className="text-gray-600">
-                Showing {filteredProfiles.length} of {profiles.length} profiles
-              </Typography>
-            </Container>
-          )}
         </div>
       )}
       
       {filteredProfiles.length > 0 ? (
-        <ProfileGrid 
-          profiles={filteredProfiles} 
-          gridClasses="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4"
-        />
+        <Container>
+          <ProfileGrid
+            profiles={filteredProfiles}
+            gridClasses={
+              enableSearch || enableUnitFilter || enableResearchFilter || enableTypeFilter
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+                : "grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]"
+            }
+          />
+        </Container>
       ) : (
         <div className="flex w-full items-center justify-center py-8">
           <Typography type="body" className="text-black/50">
@@ -262,6 +307,6 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
           </Typography>
         </div>
       )}
-    </Container>
+    </>
   );
 };

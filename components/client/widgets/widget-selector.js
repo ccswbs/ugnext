@@ -25,7 +25,7 @@ export function WidgetSelector({ data }) {
   const context = useContext(SectionContext);
 
   // Some widgets need to span the full width of the page
-  const noWrapWidgets = ["ParagraphTestimonialSlider", "ParagraphImageOverlay", "ParagraphStoryWidget"];
+  const noWrapWidgets = ["ParagraphTestimonialSlider", "ParagraphImageOverlay", "ParagraphStoryWidget", "ParagraphProfileBlock"];
 
   const map = {
     ParagraphAccordionSection: AccordionWidget,

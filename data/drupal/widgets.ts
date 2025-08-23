@@ -233,8 +233,9 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
       }
     }
     enableNameSearch
-    enableUnitFilter
     enableResearchFilter
+    enableTypeFilter
+    enableUnitFilter    
   }
 `);
 
