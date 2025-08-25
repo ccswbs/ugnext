@@ -63,7 +63,7 @@ export default async function Page({ params }: Props) {
     case "NodePage":
       return <BasicPage id={route.entity.uuid} />;
     case "NodeArticle":
-      permanentRedirect(`/ovc/news/${route.entity.id}`);
+      permanentRedirect(`/ovc/news/node/${route.entity.id}`);
       break;
     case "NodeProfile":
       return <Profile id={route.entity.uuid} />;
