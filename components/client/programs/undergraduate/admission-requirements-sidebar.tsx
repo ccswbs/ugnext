@@ -5,9 +5,14 @@ import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import { tv } from "tailwind-variants";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import Link from "next/link";
-import type { UndergraduateAdmissionRequirementSidebar } from "@/data/drupal/undergraduate-admission-requirements";
-import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import type {
+  UndergraduateAdmissionLocation,
+  UndergraduateAdmissionRequirementSidebar,
+  UndergraduateAdmissionStudentType,
+} from "@/data/drupal/undergraduate-admission-requirements";
+import { faArrowLeftFromBracket, faCircleInfo } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import React from "react";
+import type { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 
 type AdmissionRequirementsSidebarButtonProps = {
   url: string;
@@ -37,7 +42,19 @@ function AdmissionRequirementsSidebarButton({ url, title, icon, color }: Admissi
   );
 }
 
-export function AdmissionRequirementsSidebar({ sidebar }: { sidebar?: UndergraduateAdmissionRequirementSidebar }) {
+type AdmissionRequirementsSidebarProps = {
+  studentType?: UndergraduateAdmissionStudentType;
+  location?: UndergraduateAdmissionLocation;
+  program?: UndergraduateProgram;
+  sidebar: UndergraduateAdmissionRequirementSidebar;
+};
+
+export function AdmissionRequirementsSidebar({
+  sidebar,
+  program,
+  studentType,
+  location,
+}: AdmissionRequirementsSidebarProps) {
   return (
     <div className="flex flex-col gap-4 mt-7.5">
       <AdmissionRequirementsSidebarButton
@@ -49,12 +66,22 @@ export function AdmissionRequirementsSidebar({ sidebar }: { sidebar?: Undergradu
       {sidebar?.map((button) => (
         <AdmissionRequirementsSidebarButton
           key={button.id}
-          color="black"
+          color={button.link.title === "Apply Now!" ? "red" : "black"}
           url={button.link.url ?? ""}
           title={button.link.title ?? ""}
           icon={button.fontAwesomeIcon ?? ""}
         />
       ))}
+
+      {program && (
+        <AdmissionRequirementsSidebarButton
+          key={program.id}
+          color="black"
+          url={program.url.url ?? ""}
+          title={`Learn more about ${program.title}`}
+          icon={faCircleInfo}
+        />
+      )}
     </div>
   );
 }
