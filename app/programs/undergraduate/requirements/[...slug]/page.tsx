@@ -20,14 +20,12 @@ import { notFound } from "next/navigation";
 import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Grid } from "@uoguelph/react-components/grid";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
-import { faArrowLeftFromBracket } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
-import { AdmissionRequirementsSidebarButton } from "@/components/client/programs/undergraduate/admission-requirements-sidebar-button";
-import { HtmlParser } from "@/components/client/html-parser";
-import { Alert, AlertMessage, AlertSubtitle } from "@uoguelph/react-components/alert";
+import { AdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/admission-requirements-sidebar";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { Fragment } from "react";
+import React from "react";
 import { Divider } from "@uoguelph/react-components/divider";
+import { AdmissionRequirementsSections } from "@/components/client/programs/undergraduate/admission-requirements-sections";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -109,61 +107,15 @@ export default async function ProgramsUndergraduate({ params }: Props) {
               {title}
             </Typography>
 
-            {content?.sections
-              ?.map((section) => {
-                if (!section.content) {
-                  return null;
-                }
-
-                return (
-                  <Fragment key={section.title}>
-                    <Typography type="h3" as="h2">
-                      {section.title}
-                    </Typography>
-
-                    <HtmlParser html={section.content} />
-
-                    {section.title === "Estimated Cut-off Range" && section.content !== "" && (
-                      <>
-                        <Typography type="body" as="p" className="italic">
-                          Estimated cutoff ranges are based on admission averages from previous years and are provided
-                          as a point of reference. Exact cut-offs are determined by the quantity and quality of
-                          applications received and the space available in the program. Having an average within this
-                          range does not guarantee admission.
-                        </Typography>
-
-                        {program.type.some((type) => type.name === "Co-op") && (
-                          <Typography type="body" as="p" className="italic">
-                            If you are applying for co-op, note that co-op averages will often exceed the estimated
-                            cut-off ranges. Students not admissible to co-op will be automatically considered for the
-                            regular program.
-                          </Typography>
-                        )}
-                      </>
-                    )}
-                  </Fragment>
-                );
-              })
-              .filter((section) => section !== null)}
-          </div>
-
-          <div className="flex flex-col gap-4 mt-7.5">
-            <AdmissionRequirementsSidebarButton
-              url="/programs/undergraduate/requirements"
-              title="View Other Requirements"
-              icon={faArrowLeftFromBracket}
+            <AdmissionRequirementsSections
+              sections={content.sections}
+              program={program}
+              studentType={studentType}
+              location={location}
             />
-
-            {content?.sidebar?.map((button) => (
-              <AdmissionRequirementsSidebarButton
-                key={button.id}
-                color="black"
-                url={button.link.url ?? ""}
-                title={button.link.title ?? ""}
-                icon={button.fontAwesomeIcon ?? ""}
-              />
-            ))}
           </div>
+
+          <AdmissionRequirementsSidebar sidebar={content?.sidebar} />
         </Grid>
 
         {showPaths && (

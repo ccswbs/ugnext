@@ -261,13 +261,19 @@ export async function getUndergraduateAdmissionRequirements(
   return await getUndergraduateAdmissionRequirementsByID(ids);
 }
 
+export type UndergraduateAdmissionRequirementSidebar = NonNullable<UndergraduateAdmissionRequirement["sidebar"]>;
+export type UndergraduateAdmissionRequirementSection = {
+  title: string;
+  content: string;
+};
+
 async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]) {
   const showUnpublished = await showUnpublishedContent();
   const requirements = await getUndergraduateAdmissionRequirementsByID(ids);
 
   const paths: { title: string; url: string }[] = [];
   const sidebarTitles = new Set<string>();
-  const sidebar: NonNullable<UndergraduateAdmissionRequirement["sidebar"]> = [];
+  const sidebar: UndergraduateAdmissionRequirementSidebar = [];
   const sectionsMap = new Map<string, NonNullable<UndergraduateAdmissionRequirement["sections"]>>();
 
   for (const requirement of requirements) {
@@ -307,7 +313,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
     }
   }
 
-  const sections: { title: string; content: string }[] = [];
+  const sections: UndergraduateAdmissionRequirementSection[] = [];
 
   for (const entry of sectionsMap.entries()) {
     const overrideIndex = entry[1].findIndex((section) => section.overrides === true);
