@@ -11,6 +11,7 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Fragment } from "react";
 import { List } from "@uoguelph/react-components/list";
 import { nanoid } from "nanoid";
+import { ElementType } from "domelementtype";
 
 type AdmissionRequirementsSectionsProps = {
   studentType: UndergraduateAdmissionStudentType;
@@ -44,12 +45,29 @@ export function AdmissionRequirementsSections({
                 instructions={[
                   {
                     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
-                    processNode: (node, props, children, index) => {
-                      console.log(node.nextSibling);
+                    processNode: (node, props, children, index, childParser) => {
+                      // Merge lists that are next to each other
+                      const tag = node.tagName;
+
+                      if (node.previousSibling?.type === ElementType.Tag && node.previousSibling.tagName === tag) {
+                        return <></>;
+                      }
+
+                      const neighboringLists = [];
+                      let current = node.nextSibling;
+
+                      while (current?.type === ElementType.Tag && current.tagName === tag) {
+                        neighboringLists.push(...current.children);
+                        current = current.nextSibling;
+                      }
 
                       return (
-                        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"}>
+                        <List {...props} key={nanoid()} as={tag as "ul" | "ol"}>
                           {children}
+                          {
+                            // @ts-ignore
+                            childParser(neighboringLists as Element[])
+                          }
                         </List>
                       );
                     },
