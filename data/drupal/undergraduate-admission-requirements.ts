@@ -302,7 +302,10 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 
     if (requirement.sections && requirement.sections.length > 0) {
       for (const section of requirement.sections) {
-        const type = section.type.name;
+        const type =
+          section.type.name === "General Requirements" || section.type.name === "Program Requirements"
+            ? "Admission Requirements"
+            : section.type.name;
 
         if (!sectionsMap.has(type)) {
           sectionsMap.set(type, []);
