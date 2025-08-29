@@ -8,10 +8,11 @@ import type {
 import type { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Typography } from "@uoguelph/react-components/typography";
 import { HtmlParser } from "@/components/client/html-parser";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { List } from "@uoguelph/react-components/list";
 import { nanoid } from "nanoid";
 import { ElementType } from "domelementtype";
+import { Link } from "@uoguelph/react-components/link";
 
 type AdmissionRequirementsSectionsProps = {
   studentType: UndergraduateAdmissionStudentType;
@@ -28,6 +29,13 @@ export function AdmissionRequirementsSections({
 }: AdmissionRequirementsSectionsProps) {
   return (
     <>
+      {program.type.some((type) => type.name === "Co-op") && (
+        <Typography type="body" as="span" className="block! italic">
+          This program is offered with and without{" "}
+          <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
+        </Typography>
+      )}
+
       {sections
         ?.map((section) => {
           if (!section.content) {

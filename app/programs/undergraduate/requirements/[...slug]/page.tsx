@@ -107,12 +107,6 @@ export default async function ProgramsUndergraduate({ params }: Props) {
               {title}
             </Typography>
 
-            {program.type.some((type) => type.name === "Co-op") && (
-              <Typography type="body" as="span" className="block! italic">
-                This program is offered with and without co-op.
-              </Typography>
-            )}
-
             <AdmissionRequirementsSections
               sections={content.sections}
               program={program}
