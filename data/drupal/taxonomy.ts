@@ -91,7 +91,11 @@ export const ADMISSION_LOCATION = gql(/* gql */ `
     __typename
     id
     name
-    type
+    parent {
+      ... on TermAdmissionLocation {
+        name
+      }
+    }
     path
   }
 `);

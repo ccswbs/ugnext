@@ -5,6 +5,7 @@ import type {
   UndergraduateAdmissionRequirementFragment,
   UndergraduateAdmissionStudentTypeFragment,
   UndergraduateAdmissionRequirementSectionFragment,
+  TermAdmissionLocation,
 } from "@/lib/graphql/types";
 import { getRoute } from "@/data/drupal/route";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
@@ -51,40 +52,63 @@ export async function getUndergraduateAdmissionStudentTypeByPath(path: string) {
   return route.entity as UndergraduateAdmissionStudentType;
 }
 
-export type UndergraduateAdmissionLocation = AdmissionLocationFragment;
-
 export type UndergraduateAdmissionLocationType = "domestic" | "international" | "curriculum";
 
+export type UndergraduateAdmissionLocation = AdmissionLocationFragment & {
+  type: UndergraduateAdmissionLocationType;
+};
+
 export async function getUndergraduateAdmissionLocations() {
-  const { data } = await query({
-    query: gql(/* gql */ `
-      query UndergraduateAdmissionLocations {
-        termAdmissionLocations(first: 100) {
-          nodes {
-            __typename
-            ...AdmissionLocation
-          }
+  const locationsQuery = gql(/* gql */ `
+    query UndergraduateAdmissionLocations($after: Cursor = "") {
+      termAdmissionLocations(first: 100, after: $after) {
+        nodes {
+          __typename
+          ...AdmissionLocation
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
         }
       }
-    `),
-  });
-
-  return data.termAdmissionLocations.nodes.toSorted((a, b) => {
-    const typeOrder = {
-      domestic: 0,
-      international: 1,
-      curriculum: 2,
-    };
-
-    const aOrder = a.type in typeOrder ? typeOrder[a.type as UndergraduateAdmissionLocationType] : 3;
-    const bOrder = b.type in typeOrder ? typeOrder[b.type as UndergraduateAdmissionLocationType] : 3;
-
-    if (aOrder !== bOrder) {
-      return aOrder - bOrder;
     }
+  `);
 
-    return a.name.localeCompare(b.name);
-  }) as UndergraduateAdmissionLocation[];
+  let cursor = "";
+  let hasNextPage = true;
+  const locations: UndergraduateAdmissionLocation[] = [];
+
+  while (hasNextPage) {
+    const { data } = await query({
+      query: locationsQuery,
+      variables: {
+        after: cursor,
+      },
+    });
+
+    const values = data.termAdmissionLocations.nodes
+      .filter((node) => !!node.parent)
+      .map((node) => {
+        const typeMap: Record<string, UndergraduateAdmissionLocationType> = {
+          Countries: "international",
+          Curriculums: "curriculum",
+          "Provinces and Territories": "domestic",
+        };
+
+        const parent = node.parent as TermAdmissionLocation;
+
+        return {
+          ...node,
+          type: typeMap[parent.name] ?? "international",
+        };
+      });
+
+    locations.push(...values);
+    hasNextPage = data.termAdmissionLocations.pageInfo.hasNextPage;
+    cursor = data.termAdmissionLocations.pageInfo.endCursor;
+  }
+
+  return locations;
 }
 
 export async function getUndergraduateAdmissionLocationByPath(path: string) {
