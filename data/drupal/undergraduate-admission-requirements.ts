@@ -58,6 +58,19 @@ export type UndergraduateAdmissionLocation = AdmissionLocationFragment & {
   type: UndergraduateAdmissionLocationType;
 };
 
+function getAdmissionLocationType(location: TermAdmissionLocation): UndergraduateAdmissionLocationType {
+  switch (location.parent?.name) {
+    case "Countries":
+      return "international";
+    case "Curriculums":
+      return "curriculum";
+    case "Provinces and Territories":
+      return "domestic";
+    default:
+      return "international";
+  }
+}
+
 export async function getUndergraduateAdmissionLocations() {
   const locationsQuery = gql(/* gql */ `
     query UndergraduateAdmissionLocations($after: Cursor = "") {
@@ -89,17 +102,9 @@ export async function getUndergraduateAdmissionLocations() {
     const values = data.termAdmissionLocations.nodes
       .filter((node) => !!node.parent)
       .map((node) => {
-        const typeMap: Record<string, UndergraduateAdmissionLocationType> = {
-          Countries: "international",
-          Curriculums: "curriculum",
-          "Provinces and Territories": "domestic",
-        };
-
-        const parent = node.parent as TermAdmissionLocation;
-
         return {
           ...node,
-          type: typeMap[parent.name] ?? "international",
+          type: getAdmissionLocationType(node as TermAdmissionLocation),
         };
       });
 
@@ -108,7 +113,7 @@ export async function getUndergraduateAdmissionLocations() {
     cursor = data.termAdmissionLocations.pageInfo.endCursor;
   }
 
-  return locations;
+  return locations.toSorted((a, b) => a.weight - b.weight);
 }
 
 export async function getUndergraduateAdmissionLocationByPath(path: string) {
@@ -130,7 +135,10 @@ export async function getUndergraduateAdmissionLocationByPath(path: string) {
     return null;
   }
 
-  return route.entity as UndergraduateAdmissionLocation;
+  return {
+    ...route.entity,
+    type: getAdmissionLocationType(route.entity as TermAdmissionLocation),
+  } as Omit<UndergraduateAdmissionLocation, "weight">;
 }
 
 export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SIDEBAR_BUTTON_FRAGMENT = gql(/* gql */ `

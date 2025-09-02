@@ -91,6 +91,7 @@ export const ADMISSION_LOCATION = gql(/* gql */ `
     __typename
     id
     name
+    weight
     parent {
       ... on TermAdmissionLocation {
         name

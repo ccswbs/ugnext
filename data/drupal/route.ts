@@ -94,7 +94,6 @@ export async function getRoute(url: string) {
                 uuid
                 id
                 name
-                type
               }
               ... on NodeUndergraduateRequirement {
                 uuid
