@@ -26,7 +26,8 @@ type ParserInstruction = {
     node: Element,
     props: ReturnType<typeof attributesToProps>,
     children: ReturnType<typeof domToReact>,
-    index: number
+    index: number,
+    childParser: (children: DOMNode[]) => ReturnType<typeof domToReact>
   ) => React.JSX.Element;
 };
 
@@ -390,7 +391,9 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
 
         for (const instruction of [...instructions, ...defaultInstructions]) {
           if (instruction.shouldProcessNode(node, props, children, index)) {
-            return instruction.processNode(node, props, children, index);
+            return instruction.processNode(node, props, children, index, (children) =>
+              domToReact(children as DOMNode[], options)
+            );
           }
         }
 
