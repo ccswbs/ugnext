@@ -86,16 +86,14 @@ export function AdmissionRequirementsSections({
               {section.title === "Estimated Cut-off Range" && section.content !== "" && (
                 <>
                   <Typography type="body" as="p" className="italic">
-                    Estimated cutoff ranges are based on admission averages from previous years and are provided as a
-                    point of reference. Exact cut-offs are determined by the quantity and quality of applications
-                    received and the space available in the program. Having an average within this range does not
-                    guarantee admission.
+                    Cut-off ranges are estimates based on past years. Actual cut-offs depend on the number and strength
+                    of applicants and available space. Meeting the range does not guarantee admission.
                   </Typography>
 
                   {program.type.some((type) => type.name === "Co-op") && (
                     <Typography type="body" as="p" className="italic">
-                      If you are applying for co-op, note that co-op averages will often exceed the estimated cut-off
-                      ranges. Students not admissible to co-op will be automatically considered for the regular program.
+                      Co-op cut-offs are usually higher. If you don’t qualify, you’ll be considered for the regular
+                      program.
                     </Typography>
                   )}
                 </>
