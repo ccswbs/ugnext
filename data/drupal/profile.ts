@@ -340,6 +340,11 @@ export async function getUnits() {
             ... on TermUnit {
               id
               name
+              parent {
+                ... on TermUnit {
+                  name
+                }
+              }
             }
           }
         }
