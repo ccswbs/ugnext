@@ -68,9 +68,11 @@ export const UNIT_FRAGMENT = gql(/* gql */ `
     __typename
     id
     name
-    parent
-    ... on TermUnit {
-      name
+    parent {
+      __typename
+      ... on TermUnit {
+        name
+      }
     }
   }
 `);
