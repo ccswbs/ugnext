@@ -193,10 +193,10 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   {content.profileFields.map((field, index) => (
                     <div key={index} className="mb-3">
                       <div className="font-bold mb-1">
-                        <HtmlParser html={field.label.processed} instructions={undefined} />
+                        <HtmlParser html={field.label?.processed ?? ""} instructions={undefined} />
                       </div>
                       <div>
-                        <HtmlParser html={field.value.processed} instructions={undefined} />
+                        <HtmlParser html={field.value?.processed ?? ""} instructions={undefined} />
                       </div>
                     </div>
                   ))}
