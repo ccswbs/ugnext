@@ -39,8 +39,20 @@ interface ProfileBlockProps {
 }
 
 export const ProfileBlock = ({ data }: ProfileBlockProps) => {
-  // Use the pre-fetched profiles from the data object
-  const profiles = data.profiles || [];
+  // Use the pre-fetched profiles from the data object and deduplicate by ID
+  const profiles = useMemo(() => {
+    const rawProfiles = data.profiles || [];
+    const uniqueProfiles = new Map();
+    
+    // Deduplicate profiles by ID (in case backend returns same profile from multiple type queries)
+    rawProfiles.forEach((profile: any) => {
+      if (profile.id && !uniqueProfiles.has(profile.id)) {
+        uniqueProfiles.set(profile.id, profile);
+      }
+    });
+    
+    return Array.from(uniqueProfiles.values());
+  }, [data.profiles]);
   
   // Get search/filter configuration from CMS data
   const enableSearch = data.enableNameSearch ?? false;
@@ -81,7 +93,14 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
   const availableTypes = useMemo(() => {
     const types = new Set<string>();
     profiles.forEach(profile => {
-      if (profile.profileType?.name) {
+      // Handle profileType as either array or single object
+      if (Array.isArray(profile.profileType)) {
+        profile.profileType.forEach((type: any) => {
+          if (type?.name) {
+            types.add(type.name);
+          }
+        });
+      } else if (profile.profileType?.name) {
         types.add(profile.profileType.name);
       }
     });
@@ -120,7 +139,14 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
       // Filter by profile type if specified in backend
       if (data.profileType && data.profileType.length > 0) {
         const typeNames = data.profileType.map(t => t.name);
-        const hasMatchingType = typeNames.includes(profile.profileType?.name);
+        // Handle profileType as either array or single object
+        const profileTypeNames = Array.isArray(profile.profileType) 
+          ? profile.profileType.map((t: any) => t.name)
+          : profile.profileType?.name ? [profile.profileType.name] : [];
+        
+        const hasMatchingType = typeNames.some(typeName => 
+          profileTypeNames.includes(typeName)
+        );
         if (!hasMatchingType) {
           return false;
         }
@@ -160,9 +186,14 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
 
     // Apply client-side type filtering if enabled
     if (enableTypeFilter && selectedType !== "all") {
-      filtered = filtered.filter((profile: any) =>
-        profile.profileType?.name === selectedType
-      );
+      filtered = filtered.filter((profile: any) => {
+        // Handle profileType as either array or single object
+        const profileTypeNames = Array.isArray(profile.profileType) 
+          ? profile.profileType.map((t: any) => t.name)
+          : profile.profileType?.name ? [profile.profileType.name] : [];
+        
+        return profileTypeNames.includes(selectedType);
+      });
     }
 
     // Apply client-side research area filtering if enabled

@@ -105,14 +105,78 @@ export async function getPageContent(id: string) {
       let profiles = [];
 
       try {
-        // If specific profile types are specified, try to fetch by type first
+        // Define mapping from backend profile types to frontend categories
+        const profileTypeMapping = {
+          "Faculty": ["Faculty", "Adjunct Faculty", "Sessional", "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", "Professors Emeriti/Retired Faculty", "University Professor Emerita", "University Professor Emeritus"],
+          "Staff": ["Admin Staff", "Research and Technical Staff", "Staff"],
+          "Graduate Student": ["Grad Student"],
+          "Postdoctoral Scholars": ["Post Doc", "Postdocs"]
+        };
+        
+        // If specific profile types are specified, only fetch the allowed ones
         if (widget.profileType && widget.profileType.length > 0) {
-          // For multiple types, we'll fetch all and filter client-side for simplicity
-          // In a more optimized version, you could make multiple calls and merge
-          profiles = await getProfiles();
+          // Filter the requested types to only include allowed frontend types
+          const requestedTypes = widget.profileType.map((type: any) => type.name);
+          const allowedFrontendTypes = Object.keys(profileTypeMapping);
+          const typesToProcess = requestedTypes.filter((type: string) => allowedFrontendTypes.includes(type));
+          
+          // Get all backend types that map to the requested frontend types
+          const backendTypesToFetch = typesToProcess.flatMap((frontendType: string) => 
+            profileTypeMapping[frontendType as keyof typeof profileTypeMapping]
+          );
+          
+          // Fetch profiles for each backend type and merge results
+          const profilePromises = backendTypesToFetch.map((type: string) => getProfilesByType(type));
+          const profileResults = await Promise.all(profilePromises);
+          
+          // Flatten the results and map backend types to frontend types
+          const allProfiles = profileResults.flat();
+          profiles = allProfiles.map((profile: any) => {
+            // Find which frontend type this backend type maps to
+            const backendTypeName = Array.isArray(profile.profileType) 
+              ? profile.profileType[0]?.name 
+              : profile.profileType?.name;
+            
+            for (const [frontendType, backendTypes] of Object.entries(profileTypeMapping)) {
+              if (backendTypes.includes(backendTypeName)) {
+                return {
+                  ...profile,
+                  profileType: {
+                    ...profile.profileType,
+                    name: frontendType
+                  }
+                };
+              }
+            }
+            return profile;
+          });
         } else {
-          // No specific criteria, fetch all profiles
-          profiles = await getProfiles();
+          // No specific criteria, fetch all profiles from allowed backend types
+          const allBackendTypes = Object.values(profileTypeMapping).flat();
+          const profilePromises = allBackendTypes.map((type: string) => getProfilesByType(type));
+          const profileResults = await Promise.all(profilePromises);
+          
+          // Flatten the results and map backend types to frontend types
+          const allProfiles = profileResults.flat();
+          profiles = allProfiles.map((profile: any) => {
+            // Find which frontend type this backend type maps to
+            const backendTypeName = Array.isArray(profile.profileType) 
+              ? profile.profileType[0]?.name 
+              : profile.profileType?.name;
+            
+            for (const [frontendType, backendTypes] of Object.entries(profileTypeMapping)) {
+              if (backendTypes.includes(backendTypeName)) {
+                return {
+                  ...profile,
+                  profileType: {
+                    ...profile.profileType,
+                    name: frontendType
+                  }
+                };
+              }
+            }
+            return profile;
+          });
         }
 
         return {
