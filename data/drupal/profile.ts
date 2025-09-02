@@ -95,95 +95,105 @@ export async function getProfileContent(id: string) {
 }
 
 export async function getProfiles() {
-  const { data } = await query({
-    query: gql(/* GraphQL */ `
-      query GetProfiles {
-        profiles {
-          results {
-            ... on NodeProfile {
-              id
-              title
-              path
-              profileJobTitle
-              profileFirstName
-              profileLastName
-              profileResearchAreas {
-                ...Research
-              }
-              profileType {
-                ...ProfileType
-              }
-              profileUnit {
+  try {
+    const { data } = await query({
+      query: gql(/* GraphQL */ `
+        query GetProfiles {
+          profiles {
+            results {
+              ... on NodeProfile {
                 id
-                name
-              }
-              profilePicture {
-                ...Image
-              }
-              tags {
-                ...Tag
-                ...Unit
+                title
+                path
+                profileJobTitle
+                profileFirstName
+                profileLastName
+                profileResearchAreas {
+                  ...Research
+                }
+                profileType {
+                  ...ProfileType
+                }
+                profileUnit {
+                  id
+                  name
+                }
+                profilePicture {
+                  ...Image
+                }
+                tags {
+                  ...Tag
+                  ...Unit
+                }
               }
             }
           }
         }
-      }
-    `),
-  });
+      `),
+    });
 
-  if (!data?.profiles?.results) {
+    if (!data?.profiles?.results) {
+      return [];
+    }
+
+    return data.profiles.results;
+  } catch (error) {
+    console.error("Error fetching profiles:", error);
     return [];
   }
-
-  return data.profiles.results;
 }
 
 export async function getProfilesByType(profileType: string) {
-  const { data } = await query({
-    query: gql(/* GraphQL */ `
-      query GetProfilesByType($type: String!) {
-        profiles(filter: { field_profile_type_target_id: $type }) {
-          results {
-            ... on NodeProfile {
-              id
-              title
-              path
-              profileJobTitle
-              profileFirstName
-              profileLastName
-              profileType {
+  try {
+    const { data } = await query({
+      query: gql(/* GraphQL */ `
+        query GetProfilesByType($type: String!) {
+          profiles(filter: { field_profile_type_target_id: $type }) {
+            results {
+              ... on NodeProfile {
                 id
-                name
-              }
-              profileUnit {
-                id
-                name
-              }
-              profileResearchAreas {
-                ...Research
-              }
-              profilePicture {
-                ...Image
-              }
-              tags {
-                ...Tag
-                ...Unit
+                title
+                path
+                profileJobTitle
+                profileFirstName
+                profileLastName
+                profileType {
+                  id
+                  name
+                }
+                profileUnit {
+                  id
+                  name
+                }
+                profileResearchAreas {
+                  ...Research
+                }
+                profilePicture {
+                  ...Image
+                }
+                tags {
+                  ...Tag
+                  ...Unit
+                }
               }
             }
           }
         }
-      }
-    `),
-    variables: {
-      type: profileType,
-    },
-  });
+      `),
+      variables: {
+        type: profileType,
+      },
+    });
 
-  if (!data?.profiles?.results) {
+    if (!data?.profiles?.results) {
+      return [];
+    }
+
+    return data.profiles.results;
+  } catch (error) {
+    console.error(`Error fetching profiles by type "${profileType}":`, error);
     return [];
   }
-
-  return data.profiles.results;
 }
 
 /* Enhance this with an additional function to check the initial unitName for a parent
@@ -282,28 +292,33 @@ export async function getProfileTypes() {
 }
 
 export async function getResearch() {
-  const { data } = await query({
-    query: gql(/* GraphQL */ `
-      query GetResearch {
-        taxonomyTerms(filter: {vid: "research"}) {
-          results {
-            ... on TermResearch {
-              id
-              name
+  try {
+    const { data } = await query({
+      query: gql(/* GraphQL */ `
+        query GetResearch {
+          taxonomyTerms(filter: {vid: "research"}) {
+            results {
+              ... on TermResearch {
+                id
+                name
+              }
             }
           }
         }
-      }
-    `),
-  });
+      `),
+    });
 
-  if (!data?.taxonomyTerms?.results) {
+    if (!data?.taxonomyTerms?.results) {
+      return [];
+    }
+
+    return data.taxonomyTerms.results
+      .filter((term: any): term is { id: string; name: string } => 'name' in term)
+      .sort((a: any, b: any) => a.name.localeCompare(b.name));
+  } catch (error) {
+    console.error("Error fetching research terms:", error);
     return [];
   }
-
-  return data.taxonomyTerms.results
-    .filter((term): term is { id: string; name: string } => 'name' in term)
-    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function getTags() {
@@ -332,31 +347,36 @@ export async function getTags() {
 }
 
 export async function getUnits() {
-  const { data } = await query({
-    query: gql(/* GraphQL */ `
-      query GetUnits {
-        taxonomyTerms(filter: {vid: "units"}) {
-          results {
-            ... on TermUnit {
-              id
-              name
-              parent {
-                ... on TermUnit {
-                  name
+  try {
+    const { data } = await query({
+      query: gql(/* GraphQL */ `
+        query GetUnits {
+          taxonomyTerms(filter: {vid: "units"}) {
+            results {
+              ... on TermUnit {
+                id
+                name
+                parent {
+                  ... on TermUnit {
+                    name
+                  }
                 }
               }
             }
           }
         }
-      }
-    `),
-  });
+      `),
+    });
 
-  if (!data?.taxonomyTerms?.results) {
+    if (!data?.taxonomyTerms?.results) {
+      return [];
+    }
+
+    return data.taxonomyTerms.results
+      .filter((term: any): term is { id: string; name: string } => 'name' in term)
+      .sort((a: any, b: any) => a.name.localeCompare(b.name));
+  } catch (error) {
+    console.error("Error fetching units:", error);
     return [];
   }
-
-  return data.taxonomyTerms.results
-    .filter((term): term is { id: string; name: string } => 'name' in term)
-    .sort((a, b) => a.name.localeCompare(b.name));
 }
