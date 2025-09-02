@@ -138,7 +138,7 @@ export async function getUndergraduateAdmissionLocationByPath(path: string) {
   return {
     ...route.entity,
     type: getAdmissionLocationType(route.entity as TermAdmissionLocation),
-  } as Omit<UndergraduateAdmissionLocation, "weight">;
+  } as UndergraduateAdmissionLocation;
 }
 
 export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SIDEBAR_BUTTON_FRAGMENT = gql(/* gql */ `
