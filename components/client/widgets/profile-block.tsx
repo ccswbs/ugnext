@@ -128,7 +128,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
       setSelectedResearchAreas(availableResearchAreas);
     }
     // Type filter uses "all" as default, no need to initialize
-  }, [availableUnits, availableResearchAreas, enableUnitFilter, enableResearchFilter]);
+  }, [availableUnits, availableResearchAreas, enableUnitFilter, enableResearchFilter, selectedUnits.length, selectedResearchAreas.length]);
 
   // Apply all filtering logic
   const filteredProfiles = useMemo(() => {
