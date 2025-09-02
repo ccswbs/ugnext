@@ -48,11 +48,11 @@ interface ProfileContent {
     __typename?: string;
   }>;
   profileFields?: Array<{
-    label: {
-      processed: string;
+    label?: {
+      processed?: string;
     };
-    value: {
-      processed: string;
+    value?: {
+      processed?: string;
     };
   }>;
   profilePicture?: {
