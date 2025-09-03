@@ -343,7 +343,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
           sectionsMap.set(type, []);
         }
 
-        sectionsMap.get(type)?.push(section);
+        sectionsMap.get(type)?.unshift(section);
       }
     }
   }

@@ -6,115 +6,133 @@ import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
 export type Route = NonNullable<RouteQuery["route"]>;
 
 export async function getRoute(url: string) {
+  const showUnpublished = await showUnpublishedContent();
   const query = getClient().query;
-  const { data } = await query({
-    query: gql(/* gql */ `
-      query Route($path: String!, $revision: ID = "current") {
-        route(path: $path, revision: $revision) {
-          __typename
-          ... on RouteInternal {
-            entity {
-              __typename
-              ... on NodeArticle {
-                uuid
-                id
-                title
-              }
-              ... on NodeCallToAction {
-                uuid
-                id
-                title
-              }
-              ... on NodeCareer {
-                uuid
-                id
-                title
-              }
-              ... on NodeCourse {
-                uuid
-                id
-                title
-              }
-              ... on NodeCustomFooter {
-                uuid
-                id
-                title
-              }
-              ... on NodeEmployer {
-                uuid
-                id
-                title
-              }
-              ... on NodeEvent {
-                uuid
-                id
-                title
-              }
-              ... on NodePage {
-                uuid
-                id
-                title
-              }
-              ... on NodeProgram {
-                uuid
-                id
-                title
-              }
-              ... on NodeSpotlight {
-                uuid
-                id
-                title
-              }
-              ... on NodeTestimonial {
-                uuid
-                id
-                title
-              }
-              ... on NodeUserDocumentation {
-                uuid
-                id
-                title
-              }
-              ... on NodeUndergraduateProgram {
-                uuid
-                id
-                title
-              }
-              ... on NodeUndergraduateDegree {
-                uuid
-                id
-                title
-              }
-              ... on TermUndergraduateStudentType {
-                uuid
-                id
-                name
-              }
-              ... on TermAdmissionLocation {
-                uuid
-                id
-                name
-                weight
-              }
-              ... on NodeUndergraduateRequirement {
-                uuid
-                id
-                title
-              }
+  const routeQuery = gql(/* gql */ `
+    query Route($path: String!, $revision: ID = "current") {
+      route(path: $path, revision: $revision) {
+        __typename
+        ... on RouteInternal {
+          entity {
+            __typename
+            ... on NodeArticle {
+              uuid
+              id
+              title
+            }
+            ... on NodeCallToAction {
+              uuid
+              id
+              title
+            }
+            ... on NodeCareer {
+              uuid
+              id
+              title
+            }
+            ... on NodeCourse {
+              uuid
+              id
+              title
+            }
+            ... on NodeCustomFooter {
+              uuid
+              id
+              title
+            }
+            ... on NodeEmployer {
+              uuid
+              id
+              title
+            }
+            ... on NodeEvent {
+              uuid
+              id
+              title
+            }
+            ... on NodePage {
+              uuid
+              id
+              title
+            }
+            ... on NodeProgram {
+              uuid
+              id
+              title
+            }
+            ... on NodeSpotlight {
+              uuid
+              id
+              title
+            }
+            ... on NodeTestimonial {
+              uuid
+              id
+              title
+            }
+            ... on NodeUserDocumentation {
+              uuid
+              id
+              title
+            }
+            ... on NodeUndergraduateProgram {
+              uuid
+              id
+              title
+            }
+            ... on NodeUndergraduateDegree {
+              uuid
+              id
+              title
+            }
+            ... on TermUndergraduateStudentType {
+              uuid
+              id
+              name
+            }
+            ... on TermAdmissionLocation {
+              uuid
+              id
+              name
+              weight
+            }
+            ... on NodeUndergraduateRequirement {
+              uuid
+              id
+              title
             }
           }
-          ... on RouteRedirect {
-            status
-            url
-          }
+        }
+        ... on RouteRedirect {
+          status
+          url
         }
       }
-    `),
+    }
+  `);
+
+  const { data } = await query({
+    query: routeQuery,
     variables: {
       path: url,
-      revision: (await showUnpublishedContent()) ? "latest" : "current",
+      revision: showUnpublished ? "latest" : "current",
     },
   });
+
+  if (showUnpublished && data?.route?.__typename === "RouteInternal" && data.route.entity === null) {
+    // For some reason, the route is found, but the entity is null.
+    // This only happens when we are looking for the latest revision and the entity has no revisions.
+    // We need to query again with the current revision.
+    const { data } = await query({
+      query: routeQuery,
+      variables: {
+        path: url,
+        revision: "current",
+      },
+    });
+
+    return data?.route;
+  }
 
   switch (data?.route?.__typename) {
     case "RouteInternal":
