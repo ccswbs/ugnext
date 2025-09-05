@@ -8,7 +8,7 @@
         "@drupal/linkset": "^1.0.3",
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "@fortawesome/react-fontawesome": "^0.2.3",
-        "@netlify/plugin-nextjs": "^5.12.0",
+        "@netlify/plugin-nextjs": "^5.12.1",
         "@next/third-parties": "^15.4.6",
         "@orama/orama": "^3.1.11",
         "@orama/plugin-qps": "^3.1.11",
@@ -403,7 +403,7 @@
 
     "@netlify/edge-functions-bootstrap": ["@netlify/edge-functions-bootstrap@2.16.0", "", {}, "sha512-v8QQihSbBHj3JxtJsHoepXALpNumD9M7egHoc8z62FYl5it34dWczkaJoFFopEyhiBVKi4K/n0ZYpdzwfujd6g=="],
 
-    "@netlify/plugin-nextjs": ["@netlify/plugin-nextjs@5.12.0", "", {}, "sha512-SXQY/nCiSOSAZWNls/DQxrICldUR7PHSMUw2J2/ZejH1dk12Vwd3+SzSihHrRW9PNcErZkC2g3seM7bWZlvBRg=="],
+    "@netlify/plugin-nextjs": ["@netlify/plugin-nextjs@5.12.1", "", {}, "sha512-b2Ic9NkNnnh0lKC/YWDZ2+HdLd/uYdBzLvLKYOkPyFt8KEszoC+Je3GRcwBeOLxaNtK8lji7YPIjtGz8K2sLVQ=="],
 
     "@netlify/runtime-utils": ["@netlify/runtime-utils@2.1.0", "", {}, "sha512-z1h+wjB7IVYUsFZsuIYyNxiw5WWuylseY+eXaUDHBxNeLTlqziy+lz03QkR67CUR4Y790xGIhaHV00aOR2KAtw=="],
 

@@ -5,6 +5,7 @@ import type {
   UndergraduateAdmissionRequirementFragment,
   UndergraduateAdmissionStudentTypeFragment,
   UndergraduateAdmissionRequirementSectionFragment,
+  TermAdmissionLocation,
 } from "@/lib/graphql/types";
 import { getRoute } from "@/data/drupal/route";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
@@ -51,40 +52,68 @@ export async function getUndergraduateAdmissionStudentTypeByPath(path: string) {
   return route.entity as UndergraduateAdmissionStudentType;
 }
 
-export type UndergraduateAdmissionLocation = AdmissionLocationFragment;
-
 export type UndergraduateAdmissionLocationType = "domestic" | "international" | "curriculum";
 
+export type UndergraduateAdmissionLocation = AdmissionLocationFragment & {
+  type: UndergraduateAdmissionLocationType;
+};
+
+function getAdmissionLocationType(location: TermAdmissionLocation): UndergraduateAdmissionLocationType {
+  switch (location.parent?.name) {
+    case "Countries":
+      return "international";
+    case "Curriculums":
+      return "curriculum";
+    case "Provinces and Territories":
+      return "domestic";
+    default:
+      return "international";
+  }
+}
+
 export async function getUndergraduateAdmissionLocations() {
-  const { data } = await query({
-    query: gql(/* gql */ `
-      query UndergraduateAdmissionLocations {
-        termAdmissionLocations(first: 100) {
-          nodes {
-            __typename
-            ...AdmissionLocation
-          }
+  const locationsQuery = gql(/* gql */ `
+    query UndergraduateAdmissionLocations($after: Cursor = "") {
+      termAdmissionLocations(first: 100, after: $after) {
+        nodes {
+          __typename
+          ...AdmissionLocation
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
         }
       }
-    `),
-  });
-
-  return data.termAdmissionLocations.nodes.toSorted((a, b) => {
-    const typeOrder = {
-      domestic: 0,
-      international: 1,
-      curriculum: 2,
-    };
-
-    const aOrder = a.type in typeOrder ? typeOrder[a.type as UndergraduateAdmissionLocationType] : 3;
-    const bOrder = b.type in typeOrder ? typeOrder[b.type as UndergraduateAdmissionLocationType] : 3;
-
-    if (aOrder !== bOrder) {
-      return aOrder - bOrder;
     }
+  `);
 
-    return a.name.localeCompare(b.name);
-  }) as UndergraduateAdmissionLocation[];
+  let cursor = "";
+  let hasNextPage = true;
+  const locations: UndergraduateAdmissionLocation[] = [];
+
+  while (hasNextPage) {
+    const { data } = await query({
+      query: locationsQuery,
+      variables: {
+        after: cursor,
+      },
+    });
+
+    const values = data.termAdmissionLocations.nodes
+      .filter((node) => !!node.parent)
+      .map((node) => {
+        return {
+          ...node,
+          type: getAdmissionLocationType(node as TermAdmissionLocation),
+        };
+      });
+
+    locations.push(...values);
+    hasNextPage = data.termAdmissionLocations.pageInfo.hasNextPage;
+    cursor = data.termAdmissionLocations.pageInfo.endCursor;
+  }
+
+  return locations.toSorted((a, b) => a.weight - b.weight);
 }
 
 export async function getUndergraduateAdmissionLocationByPath(path: string) {
@@ -106,7 +135,10 @@ export async function getUndergraduateAdmissionLocationByPath(path: string) {
     return null;
   }
 
-  return route.entity as UndergraduateAdmissionLocation;
+  return {
+    ...route.entity,
+    type: getAdmissionLocationType(route.entity as TermAdmissionLocation),
+  } as UndergraduateAdmissionLocation;
 }
 
 export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SIDEBAR_BUTTON_FRAGMENT = gql(/* gql */ `
@@ -261,13 +293,19 @@ export async function getUndergraduateAdmissionRequirements(
   return await getUndergraduateAdmissionRequirementsByID(ids);
 }
 
+export type UndergraduateAdmissionRequirementSidebar = NonNullable<UndergraduateAdmissionRequirement["sidebar"]>;
+export type UndergraduateAdmissionRequirementSection = {
+  title: string;
+  content: string;
+};
+
 async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]) {
   const showUnpublished = await showUnpublishedContent();
   const requirements = await getUndergraduateAdmissionRequirementsByID(ids);
 
   const paths: { title: string; url: string }[] = [];
   const sidebarTitles = new Set<string>();
-  const sidebar: NonNullable<UndergraduateAdmissionRequirement["sidebar"]> = [];
+  const sidebar: UndergraduateAdmissionRequirementSidebar = [];
   const sectionsMap = new Map<string, NonNullable<UndergraduateAdmissionRequirement["sections"]>>();
 
   for (const requirement of requirements) {
@@ -296,18 +334,21 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 
     if (requirement.sections && requirement.sections.length > 0) {
       for (const section of requirement.sections) {
-        const type = section.type.name;
+        const type =
+          section.type.name === "General Requirements" || section.type.name === "Program Requirements"
+            ? "Admission Requirements"
+            : section.type.name;
 
         if (!sectionsMap.has(type)) {
           sectionsMap.set(type, []);
         }
 
-        sectionsMap.get(type)?.push(section);
+        sectionsMap.get(type)?.unshift(section);
       }
     }
   }
 
-  const sections: { title: string; content: string }[] = [];
+  const sections: UndergraduateAdmissionRequirementSection[] = [];
 
   for (const entry of sectionsMap.entries()) {
     const overrideIndex = entry[1].findIndex((section) => section.overrides === true);
