@@ -48,16 +48,14 @@ export const ProfileGrid = ({ profiles, gridClasses = "grid-cols-1 sm:grid-cols-
           className="flex flex-col h-full"
           centered
         >
-          {profile.profilePicture && (
-            <CardImage
-              src={profile.profilePicture.image.url}
-              alt={profile.profilePicture.image.alt ?? ""}
-              width={profile.profilePicture.image.width.toString()}
-              height={profile.profilePicture.image.height.toString()}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-              className="aspect-square object-cover object-top w-full"
-            />
-          )}
+          <CardImage
+            src={profile.profilePicture?.image.url ?? "/university-of-guelph-logo.png"}
+            alt={profile.profilePicture?.image.alt ?? "University of Guelph Logo"}
+            width={profile.profilePicture?.image.width.toString() ?? "200"}
+            height={profile.profilePicture?.image.height.toString() ?? "200"}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+            className="aspect-square object-cover object-top w-full"
+          />
           <CardContent>
             <CardTitle>{profile.title}</CardTitle>
             <p className='text-center'>{profile.profileJobTitle}</p>
