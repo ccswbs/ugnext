@@ -69,7 +69,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
   // Search functionality using the same hook as faculty search
   const searchResults = useSearch(profiles, searchInput, nameAndTagSearch);
   
-  // Extract unique units and research areas from profiles for filtering
+  // Extract unique units from profiles for filtering (static - based on all loaded profiles)
   const availableUnits = useMemo(() => {
     const units = new Set<string>();
     profiles.forEach(profile => {
@@ -80,58 +80,8 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
     return Array.from(units).sort();
   }, [profiles]);
   
-  const availableResearchAreas = useMemo(() => {
-    const areas = new Set<string>();
-    profiles.forEach(profile => {
-      profile.profileResearchAreas?.forEach((area: any) => {
-        areas.add(area.name);
-      });
-    });
-    return Array.from(areas).sort();
-  }, [profiles]);
-
-  const availableTypes = useMemo(() => {
-    const types = new Set<string>();
-    profiles.forEach(profile => {
-      // Handle profileType as either array or single object
-      if (Array.isArray(profile.profileType)) {
-        profile.profileType.forEach((type: any) => {
-          if (type?.name) {
-            types.add(type.name);
-          }
-        });
-      } else if (profile.profileType?.name) {
-        types.add(profile.profileType.name);
-      }
-    });
-    return Array.from(types).sort();
-  }, [profiles]);
-
-  // Create tabs for type filtering
-  const typeTabs = useMemo(() => {
-    if (!enableTypeFilter || availableTypes.length === 0) return null;
-    
-    const tabs = [
-      { value: "all", label: "All" },
-      ...availableTypes.map(type => ({ value: type, label: type }))
-    ];
-    
-    return tabs;
-  }, [availableTypes, enableTypeFilter]);
-  
-  // Initialize filters with all available options
-  useEffect(() => {
-    if (enableUnitFilter && selectedUnits.length === 0 && availableUnits.length > 0) {
-      setSelectedUnits(availableUnits);
-    }
-    if (enableResearchFilter && selectedResearchAreas.length === 0 && availableResearchAreas.length > 0) {
-      setSelectedResearchAreas(availableResearchAreas);
-    }
-    // Type filter uses "all" as default, no need to initialize
-  }, [availableUnits, availableResearchAreas, enableUnitFilter, enableResearchFilter, selectedUnits.length, selectedResearchAreas.length]);
-
-  // Apply all filtering logic
-  const filteredProfiles = useMemo(() => {
+  // Apply initial filtering (search, backend config, type, unit) to get base filtered set
+  const baseFilteredProfiles = useMemo(() => {
     let filtered = searchResults;
 
     // Filter by backend configuration first (original logic)
@@ -196,6 +146,64 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
       });
     }
 
+    return filtered;
+  }, [searchResults, data, selectedUnits, selectedType, availableUnits.length, enableUnitFilter, enableTypeFilter]);
+
+  // Extract research areas only from the currently filtered profiles (excluding research area filter)
+  const availableResearchAreas = useMemo(() => {
+    const areas = new Set<string>();
+    baseFilteredProfiles.forEach((profile: any) => {
+      profile.profileResearchAreas?.forEach((area: any) => {
+        areas.add(area.name);
+      });
+    });
+    return Array.from(areas).sort();
+  }, [baseFilteredProfiles]);
+
+  const availableTypes = useMemo(() => {
+    const types = new Set<string>();
+    profiles.forEach(profile => {
+      // Handle profileType as either array or single object
+      if (Array.isArray(profile.profileType)) {
+        profile.profileType.forEach((type: any) => {
+          if (type?.name) {
+            types.add(type.name);
+          }
+        });
+      } else if (profile.profileType?.name) {
+        types.add(profile.profileType.name);
+      }
+    });
+    return Array.from(types).sort();
+  }, [profiles]);
+
+  // Create tabs for type filtering
+  const typeTabs = useMemo(() => {
+    if (!enableTypeFilter || availableTypes.length === 0) return null;
+    
+    const tabs = [
+      { value: "all", label: "All" },
+      ...availableTypes.map(type => ({ value: type, label: type }))
+    ];
+    
+    return tabs;
+  }, [availableTypes, enableTypeFilter]);
+  
+  // Initialize filters with all available options
+  useEffect(() => {
+    if (enableUnitFilter && selectedUnits.length === 0 && availableUnits.length > 0) {
+      setSelectedUnits(availableUnits);
+    }
+    if (enableResearchFilter && selectedResearchAreas.length === 0 && availableResearchAreas.length > 0) {
+      setSelectedResearchAreas(availableResearchAreas);
+    }
+    // Type filter uses "all" as default, no need to initialize
+  }, [availableUnits, availableResearchAreas, enableUnitFilter, enableResearchFilter, selectedUnits.length, selectedResearchAreas.length]);
+
+  // Apply final research area filtering to get the complete filtered result
+  const filteredProfiles = useMemo(() => {
+    let filtered = baseFilteredProfiles;
+
     // Apply client-side research area filtering if enabled
     if (enableResearchFilter && selectedResearchAreas.length > 0 && selectedResearchAreas.length < availableResearchAreas.length) {
       filtered = filtered.filter((profile: any) =>
@@ -204,7 +212,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
     }
 
     return filtered;
-  }, [searchResults, data, selectedUnits, selectedResearchAreas, selectedType, availableUnits.length, availableResearchAreas.length, enableUnitFilter, enableResearchFilter, enableTypeFilter]);
+  }, [baseFilteredProfiles, selectedResearchAreas, availableResearchAreas.length, enableResearchFilter]);
 
   return (
     <>
