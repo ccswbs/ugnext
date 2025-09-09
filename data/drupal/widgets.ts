@@ -247,6 +247,7 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
       ... on NodeProfile {
         id
         title
+        centralLoginId
         directoryEmail
         directoryOffice
         directoryPhone

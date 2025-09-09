@@ -1,9 +1,9 @@
 "use client";
 
+import React from "react";
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
-import { Container } from "@uoguelph/react-components/container";
-import { Typography } from "@uoguelph/react-components/typography";
 import Link from "next/link";
+import { LdapContactInfoClient } from "@/components/client/ldap-contact-info-client";
 
 interface ProfileCardData {
   __typename?: "ParagraphProfileCard";
@@ -12,11 +12,16 @@ interface ProfileCardData {
     __typename?: "NodeProfile";
     id: string;
     title: string;
+    centralLoginId: string;
     directoryEmail: boolean;
     directoryOffice: boolean;
     directoryPhone: boolean;
     profileJobTitle?: string;
     path?: string;
+    customLink?: Array<{
+      title: string;
+      url: string;
+    }>;
     profilePicture?: {
       __typename?: "MediaImage";
       image: {
@@ -27,27 +32,17 @@ interface ProfileCardData {
   };
 }
 
-interface ProfileCardProps {
+interface ProfileCardWithApiProps {
   data: ProfileCardData;
 }
 
-export const ProfileCard = ({ data }: ProfileCardProps) => {
-  // Add debugging to see what we get after codegen
-  console.log('ProfileCard after codegen - received data:', {
-    typename: data.__typename,
-    id: data.id,
-    hasProfileInfo: !!data.profileInfo,
-    profileInfo: data.profileInfo,
-    allKeys: Object.keys(data)
-  });
-  
-  // Use the profileInfo from the data object with defensive checks
+export const ProfileCardWithApi = ({ data }: ProfileCardWithApiProps) => {
   const { profileInfo } = data;
   
   // Add defensive check to prevent errors if profileInfo is undefined
   if (!profileInfo) {
-    console.error('ProfileCard: profileInfo is still undefined after codegen. Full data object:', data);
-    return <div>Profile data not available - missing profileInfo (post-codegen)</div>;
+    console.error('ProfileCard: profileInfo is undefined. Full data object:', data);
+    return <div>Profile data not available - missing profileInfo</div>;
   }
 
   return (
@@ -72,6 +67,14 @@ export const ProfileCard = ({ data }: ProfileCardProps) => {
       <CardContent>
         <CardTitle>{profileInfo.title}</CardTitle>
         <p className='text-center'>{profileInfo.profileJobTitle}</p>
+        
+        {/* Directory contact info from LDAP - using reusable component */}
+        <LdapContactInfoClient 
+          centralLoginId={profileInfo.centralLoginId}
+          directoryEmail={profileInfo.directoryEmail}
+          directoryOffice={profileInfo.directoryOffice}
+          directoryPhone={profileInfo.directoryPhone}
+        />
       </CardContent>
     </Card>
   );

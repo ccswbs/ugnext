@@ -3,6 +3,11 @@ import { Client } from 'ldapts';
 
 export const runtime = 'nodejs';
 
+const getFirst = (value: any): string | null => {
+  if (Array.isArray(value)) return value[0] || null;
+  return typeof value === 'string' ? value : null;
+};
+
 export async function GET(request: Request): Promise<Response> {
   const { searchParams } = new URL(request.url);
   const uid = searchParams.get('uid');
@@ -55,16 +60,18 @@ export async function GET(request: Request): Promise<Response> {
 
         if (searchEntries.length > 0) {
           const entry = searchEntries[0];
-          const mail = entry.mail || null;
-          const telephoneNumber = entry.telephonenumber || null;
-          const roomNumber = entry.roomnumber || null;
-          const ou = entry.ou || null;
+          const mail = getFirst(entry.mail);
+          const telephoneNumber = getFirst(entry.telephonenumber);
+          const telephoneNumber2 = getFirst(entry.telephonenumber2);
+          const roomNumber = getFirst(entry.roomnumber);
+          const ou = getFirst(entry.ou);
 
           await client.unbind();
 
           return NextResponse.json({
             mail,
             telephoneNumber,
+            telephoneNumber2,
             roomNumber,
             ou,
             diagnostics

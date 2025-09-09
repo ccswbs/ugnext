@@ -10,7 +10,7 @@ import { Breadcrumbs } from "@/components/server/breadcrumbs";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
-import { fetchLdapProfile } from "@/lib/ldap-utils";
+import { LdapContactInfo } from "@/components/server/ldap-contact-info";
 import { getIconForUrl } from "@/lib/ug-utils";
 import { 
   UniwebAffiliations,
@@ -101,46 +101,6 @@ export async function Profile({ id, pre, post }: ProfileProps) {
     notFound();
   }
 
-  // Use centralLoginId from GraphQL data
-  const uid = content.centralLoginId;
-  
-  // Fetch LDAP data if any directory fields are enabled and we have a uid
-  const shouldFetchLdap = uid && (content.directoryEmail || content.directoryOffice || content.directoryPhone);
-  const ldapData = shouldFetchLdap ? await fetchLdapProfile(uid) : null;
-
-  // Build contact info array to avoid complex conditional markup
-  const contactInfo = [];
-  if (content.directoryEmail && ldapData?.mail) {
-    contactInfo.push(
-      <>
-        <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
-        <span className="sr-only">Email:</span>{ldapData.mail}
-      </>
-    );
-  }
-  if (content.directoryOffice && ldapData?.roomNumber && typeof ldapData.roomNumber === 'string' && ldapData.roomNumber.trim()) {
-    contactInfo.push(
-      <>
-        <i className="fa-solid fa-building-columns me-2" aria-hidden="true"></i>
-        <span className="sr-only">Office:</span>{ldapData.roomNumber}
-      </>
-    );
-  }
-  if (content.directoryPhone && ldapData?.telephoneNumber && typeof ldapData.telephoneNumber === 'string' && ldapData.telephoneNumber.trim()) {
-    contactInfo.push(
-      <>
-        <i className="fa-solid fa-phone me-2" aria-hidden="true"></i>
-        <span className="sr-only">Phone:</span>{ldapData.telephoneNumber}
-        {ldapData.telephoneNumber2 && typeof ldapData.telephoneNumber2 === 'string' && ldapData.telephoneNumber2.trim() && (
-          <>
-            <br />
-            <span className="ms-6">{ldapData.telephoneNumber2}</span>
-          </>
-        )}
-      </>
-    );
-  }
-
   return (
     <Layout>
       <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
@@ -162,16 +122,12 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               )}
               
               {/* Directory contact info from LDAP */}
-              {contactInfo.length > 0 && (
-                <Typography type="body" className="mb-4">
-                  {contactInfo.map((info, index) => (
-                    <React.Fragment key={index}>
-                      {index > 0 && <br />}
-                      {info}
-                    </React.Fragment>
-                  ))}
-                </Typography>
-              )}
+              <LdapContactInfo 
+                centralLoginId={content.centralLoginId}
+                directoryEmail={content.directoryEmail}
+                directoryOffice={content.directoryOffice}
+                directoryPhone={content.directoryPhone}
+              />
 
               {/* Custom links if available */}
               {content.customLink && content.customLink.length > 0 && (
