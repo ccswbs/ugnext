@@ -248,6 +248,10 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         id
         title
         centralLoginId
+        customLink {
+          title
+          url
+        }
         directoryEmail
         directoryOffice
         directoryPhone
@@ -255,6 +259,14 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         path
         profilePicture {
           ...Image
+        }
+        profileFields {
+          label {
+            processed
+          }
+          value {
+            processed
+          }
         }
       }
     }
@@ -279,6 +291,7 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
       ...Statistics
       ...ImageOverlay
       ...ProfileBlock
+      ...ProfileCard
     }
   }
 `);
