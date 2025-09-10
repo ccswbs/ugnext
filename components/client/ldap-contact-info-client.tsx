@@ -17,7 +17,7 @@ export function LdapContactInfoClient({
   directoryEmail, 
   directoryOffice, 
   directoryPhone, 
-  className = "mb-4" 
+  className 
 }: LdapContactInfoClientProps) {
   // Determine if we should fetch LDAP data
   const shouldFetchLdap = !!(centralLoginId && (directoryEmail || directoryOffice || directoryPhone));
@@ -32,7 +32,10 @@ export function LdapContactInfoClient({
     contactInfo.push(
       <React.Fragment key="email">
         <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
-        <span className="sr-only">Email:</span>{ldapData.mail}
+        <span className="sr-only">Email:</span>
+        <a href={`mailto:${ldapData.mail}`} className="text-body-copy-link underline hover:decoration-transparent">
+          {ldapData.mail}
+        </a>
       </React.Fragment>
     );
   }
@@ -64,7 +67,7 @@ export function LdapContactInfoClient({
   // Handle loading state
   if (shouldFetchLdap && loading) {
     return (
-      <Typography type="body" className={`${className} text-center text-gray-500`}>
+      <Typography type="body" className={className ? `${className} text-center text-gray-500` : "text-center text-gray-500"}>
         Loading contact info...
       </Typography>
     );
@@ -73,7 +76,7 @@ export function LdapContactInfoClient({
   // Handle error state
   if (shouldFetchLdap && error) {
     return (
-      <Typography type="body" className={`${className} text-center text-red-500`}>
+      <Typography type="body" className={className ? `${className} text-center text-red-500` : "text-center text-red-500"}>
         Contact info unavailable: {error}
       </Typography>
     );
