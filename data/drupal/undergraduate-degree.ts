@@ -1,4 +1,4 @@
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type {
   UndergraduateDegreeFragment,
@@ -20,7 +20,7 @@ function parse(degree: UndergraduateDegreeFragment) {
 }
 
 export async function getUndergraduateDegreeTypes() {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query UndergraduateDegreeTypes {
         termUndergraduateDegreeTypes(first: 100) {
@@ -31,6 +31,10 @@ export async function getUndergraduateDegreeTypes() {
       }
     `),
   });
+
+  if (!data) {
+    handleGraphQLError(error);
+  }
 
   return data.termUndergraduateDegreeTypes.nodes;
 }
@@ -76,7 +80,7 @@ async function getDraftUndergraduateDegrees() {
   let total = 1;
 
   while (page < total) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: degreeQuery,
       variables: {
         pageSize,
@@ -84,13 +88,17 @@ async function getDraftUndergraduateDegrees() {
       },
     });
 
-    for (const degree of data?.latestContentRevisions?.results ?? []) {
+    if (!data) {
+      handleGraphQLError(error);
+    }
+
+    for (const degree of data.latestContentRevisions?.results ?? []) {
       if (degree.__typename === "NodeUndergraduateDegree") {
         degrees.push(degree);
       }
     }
 
-    total = Math.ceil((data?.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
+    total = Math.ceil((data.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
     page++;
   }
 
@@ -117,12 +125,16 @@ async function getPublishedUndergraduateDegrees() {
   const degrees: UndergraduateDegreesQuery["nodeUndergraduateDegrees"]["nodes"] = [];
 
   while (hasNextPage) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: degreesQuery,
       variables: {
         after: cursor,
       },
     });
+
+    if (!data) {
+      handleGraphQLError(error);
+    }
 
     degrees.push(...data.nodeUndergraduateDegrees.nodes);
     cursor = data.nodeUndergraduateDegrees.pageInfo.endCursor;
