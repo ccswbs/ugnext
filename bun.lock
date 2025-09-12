@@ -7,7 +7,7 @@
         "@awesome.me/kit-7993323d0c": "^1.0.10",
         "@drupal/linkset": "^1.0.3",
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
-        "@fortawesome/react-fontawesome": "^0.2.3",
+        "@fortawesome/react-fontawesome": "^3.0.2",
         "@netlify/plugin-nextjs": "^5.13.1",
         "@next/third-parties": "^15.5.3",
         "@orama/orama": "^3.1.13",
@@ -232,7 +232,7 @@
 
     "@fortawesome/fontawesome-svg-core": ["@fortawesome/fontawesome-svg-core@6.7.2", "https://npm.fontawesome.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.7.2.tgz", { "dependencies": { "@fortawesome/fontawesome-common-types": "6.7.2" } }, "sha512-yxtOBWDrdi5DD5o1pmVdq3WMCvnobT0LU6R8RyyVXPvFRd2o79/0NCuQoCjNTeZz9EzA9xS3JxNWfv54RIHFEA=="],
 
-    "@fortawesome/react-fontawesome": ["@fortawesome/react-fontawesome@0.2.3", "https://npm.fontawesome.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.2.3.tgz", { "dependencies": { "prop-types": "^15.8.1" }, "peerDependencies": { "@fortawesome/fontawesome-svg-core": "~1 || ~6 || ~7", "react": "^16.3 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-HlJco8RDY8NrzFVjy23b/7mNS4g9NegcrBG3n7jinwpc2x/AmSVk53IhWniLYM4szYLxRAFTAGwGn0EIlclDeQ=="],
+    "@fortawesome/react-fontawesome": ["@fortawesome/react-fontawesome@3.0.2", "https://npm.fontawesome.com/@fortawesome/react-fontawesome/-/react-fontawesome-3.0.2.tgz", { "peerDependencies": { "@fortawesome/fontawesome-svg-core": "~6 || ~7", "react": "^18.0.0 || ^19.0.0" } }, "sha512-CISnWF5eqGVjg/YQurE4gVHtBS9Swq+ovvz/oYNewcNc/V6LhfKyqdvJ56FrJ7PEtqQ+BUIVpP3KuJvTpd4e1g=="],
 
     "@graphql-codegen/add": ["@graphql-codegen/add@6.0.0", "", { "dependencies": { "@graphql-codegen/plugin-helpers": "^6.0.0", "tslib": "~2.6.0" }, "peerDependencies": { "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0" } }, "sha512-biFdaURX0KTwEJPQ1wkT6BRgNasqgQ5KbCI1a3zwtLtO7XTo7/vKITPylmiU27K5DSOWYnY/1jfSqUAEBuhZrQ=="],
 
