@@ -57,11 +57,13 @@ export function AdmissionRequirementsSidebar({
 }: AdmissionRequirementsSidebarProps) {
   return (
     <div className="flex flex-col gap-4 mt-7.5">
-      <AdmissionRequirementsSidebarButton
-        url="/programs/undergraduate/requirements"
-        title="View Other Requirements"
-        icon={faArrowLeftFromBracket}
-      />
+      {(program || studentType || location) && (
+        <AdmissionRequirementsSidebarButton
+          url="/programs/undergraduate/requirements"
+          title="View Other Requirements"
+          icon={faArrowLeftFromBracket}
+        />
+      )}
 
       {sidebar?.map((button) => (
         <AdmissionRequirementsSidebarButton

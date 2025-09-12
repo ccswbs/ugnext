@@ -322,7 +322,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
       url: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${requirement.path}`,
     });
 
-    // Only include the higher ranking sidebar buttons if there are multiple with the same title.
+    // Only include the higher ranking sidebar buttons if there is multiple with the same title.
     if (requirement.sidebar && requirement.sidebar.length > 0) {
       for (const button of requirement.sidebar) {
         if (button.link.title && !sidebarTitles.has(button.link.title)) {
@@ -343,7 +343,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
           sectionsMap.set(type, []);
         }
 
-        sectionsMap.get(type)?.unshift(section);
+        sectionsMap.get(type)?.push(section);
       }
     }
   }
@@ -355,7 +355,10 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 
     const reducedSections = overrideIndex === -1 ? entry[1] : entry[1].slice(0, overrideIndex + 1);
 
-    const content = reducedSections.map((section) => (section.content?.processed as string) ?? "").join("");
+    const content = reducedSections
+      .reverse()
+      .map((section) => (section.content?.processed as string) ?? "")
+      .join("");
 
     sections.push({
       title: entry[0],
