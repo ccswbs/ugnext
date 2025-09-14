@@ -16,7 +16,15 @@ export const SPOTLIGHT_HERO_FRAGMENT = gql(/* gql */ `
       title
     }
     image {
-      ...Image
+      image {
+        alt
+        url
+        width
+        height
+        variations(styles: SPOTLIGHT_CARD_BY_FOCAL_POINT) {
+          url
+        }
+      }
     }
   }
 `);
@@ -65,6 +73,11 @@ export type SpotlightHero = SpotlightCard & {
   caption?: string;
   captionAlignment?: string;
   button: string;
+  thumbnail: {
+    url: string;
+    width: number;
+    height: number;
+  };
 };
 
 export type Spotlights = {
@@ -87,6 +100,11 @@ function getTestSpotlights(): Spotlights {
         height: 1080,
         alt: "4 students on Johnston Green",
         width: 2400,
+        url: "https://api.liveugconthub.uoguelph.dev/sites/default/files/2025-04/accept-banner.jpg",
+      },
+      thumbnail: {
+        height: 600,
+        width: 400,
         url: "https://api.liveugconthub.uoguelph.dev/sites/default/files/2025-04/accept-banner.jpg",
       },
     },
@@ -241,6 +259,11 @@ async function getSpotlightHeroById(id: string): Promise<SpotlightHero | null> {
       url: data.nodeSpotlight.image.image.url,
       width: data.nodeSpotlight.image.image.width,
       height: data.nodeSpotlight.image.image.height,
+    },
+    thumbnail: {
+      url: data.nodeSpotlight.image.image.variations?.[0].url ?? "",
+      width: 600,
+      height: 400,
     },
   } as SpotlightHero;
 }
