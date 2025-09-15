@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@uoguelph/react-components/button";
 import { usePathname } from "next/navigation";
 
