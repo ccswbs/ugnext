@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prebuild": "bun --bun run codegen:compile",
+    "prestart": "bun --bun run codegen:compile",
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
