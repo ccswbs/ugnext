@@ -109,7 +109,7 @@ export async function getPageContent(id: string) {
         const profileTypeMapping = {
           "Faculty": ["Faculty", "Adjunct Faculty", "Sessional", "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", "Professors Emeriti/Retired Faculty", "University Professor Emerita", "University Professor Emeritus"],
           "Staff": ["Admin Staff", "Research and Technical Staff", "Staff"],
-          "Graduate Student": ["Grad Student"],
+          "Graduate Students": ["Grad Student", "Graduate Student", "Graduate Students"],
           "Postdoctoral Scholars": ["Post Doc", "Postdocs"]
         };
         
