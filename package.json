@@ -30,7 +30,6 @@
     "@orama/stopwords": "^3.1.13",
     "@uoguelph/react-components": "^1.5.3",
     "@uoguelph/web-components": "^2.0.5",
-    "@vis.gl/react-google-maps": "^1.5.5",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
     "html-react-parser": "^5.2.6",
