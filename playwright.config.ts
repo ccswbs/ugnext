@@ -53,6 +53,6 @@ export default defineConfig({
   webServer: {
     command: "USE_TESTING_DATA=true bun run start",
     url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 });
