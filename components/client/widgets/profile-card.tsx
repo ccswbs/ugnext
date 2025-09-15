@@ -7,39 +7,16 @@ import { LdapContactInfoClient } from "@/components/client/ldap-contact-info-cli
 import { getIconForUrl } from "@/lib/ug-utils";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Typography } from "@uoguelph/react-components/typography";
+import { BaseProfile, ProfileImage, ProfileCustomLink, ProfileField } from "@/lib/types/profile";
 
+// Component-specific interface that extends shared types
 interface ProfileCardData {
   __typename?: "ParagraphProfileCard";
   id?: string;
-  profileInfo?: {
-    __typename?: "NodeProfile";
-    id: string;
-    title: string;
-    centralLoginId: string;
-    directoryEmail: boolean;
-    directoryOffice: boolean;
-    directoryPhone: boolean;
-    profileJobTitle?: string;
-    path?: string;
-    customLink?: Array<{
-      title: string;
-      url: string;
-    }>;
-    profilePicture?: {
-      __typename?: "MediaImage";
-      image: {
-        alt?: string;
-        url: string;
-      };
-    };
-    profileFields?: Array<{
-      label?: {
-        processed?: string;
-      };
-      value?: {
-        processed?: string;
-      };
-    }>;
+  profileInfo?: BaseProfile & {
+    customLink?: ProfileCustomLink[];
+    profilePicture?: ProfileImage;
+    profileFields?: ProfileField[];
   };
 }
 

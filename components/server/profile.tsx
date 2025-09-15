@@ -20,63 +20,11 @@ import {
   UniwebResearchDesc,
   UniwebResearchInterests 
 } from "@/components/server/uniweb-components";
+import { FullProfile } from "@/lib/types/profile";
 
-interface ProfileContent {
-  status: boolean;
-  id: string;
-  title: string;
-  path?: string;
-  centralLoginId: string;
-  directoryEmail: boolean;
-  directoryOffice: boolean;
-  directoryPhone: boolean;
-  uniwebId?: string;
-  primaryNavigation?: {
-    menuName?: string;
-  };
-  body?: {
-    processed?: string;
-  };
-  customLink?: Array<{
-    title: string;
-    url: string;
-  }>;
-  profileJobTitle?: string;
-  profileUnit?: Array<{
-    id: string;
-    name: string;
-    __typename?: string;
-  }>;
-  profileFields?: Array<{
-    label?: {
-      processed?: string;
-    };
-    value?: {
-      processed?: string;
-    };
-  }>;
-  profilePicture?: {
-    image: {
-      alt?: string;
-      height: number;
-      width: number;
-      url: string;
-    };
-  };
-  profileResearchAreas?: Array<{
-    id: string;
-    name: string;
-  }>;
-  profileSections?: Array<{
-    id?: string;
-    profilePartLabel?: string;
-    profilePartText?: {
-      processed?: string;
-    };
-    uniwebSelect?: {
-      name: string;
-    };
-  }>;
+// Component-specific interface that extends the shared FullProfile type
+interface ProfileContent extends FullProfile {
+  // Additional fields specific to the server component can be added here
 }
 
 export type ProfileProps = {

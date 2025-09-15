@@ -9,20 +9,10 @@ import { twMerge } from "tailwind-merge";
 import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
 import { OramaClient } from '@oramacloud/client';
+import { ProfileSearchResult, ProfileUnit } from "@/lib/types/profile";
 
-type Profile = {
-  id: string;
-  name: string;
-  research?: { id: string; name: string }[];
-  units?: { id: string; name: string }[];
-  // Add other properties as needed
-};
-
-type Unit = {
-  id: string;
-  name: string;
-  // Add other properties as needed
-};
+type Unit = ProfileUnit;
+type Profile = ProfileSearchResult;
 
 type FacultySearchBarProps = {
   profiles: Profile[];

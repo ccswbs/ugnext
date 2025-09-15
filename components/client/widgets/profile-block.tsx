@@ -9,24 +9,18 @@ import { ProfileGrid } from "@/components/client/profiles/profile-grid";
 import { ProfileSearchNavigation } from "@/components/client/profiles/profile-search-navigation";
 import { useState, useMemo, useEffect } from "react";
 import { useSearch, nameAndTagSearch } from "@/lib/use-search";
-import { twMerge } from "tailwind-merge";
+import { ProfileType, ProfileResearchArea, ProfileUnit, FullProfile } from "@/lib/types/profile";
 
-// Type definition matching the GraphQL fragment
+// Component-specific interface that extends shared types
 interface ProfileBlockData {
   __typename: "ParagraphProfileBlock";
   id: string;
   headingLevel: "h2" | "h3" | "h4" | "h5" | "h6" | null;
   profileBlockTitle: string;
-  profileType?: {
-    name: string;
-  }[];
-  researchArea?: {
-    name: string;
-  }[];
-  unit?: {
-    name: string;
-  }[];
-  profiles?: any[];
+  profileType?: ProfileType[];
+  researchArea?: ProfileResearchArea[];
+  unit?: ProfileUnit[];
+  profiles?: FullProfile[];
   // New CMS-configurable search/filter options
   enableNameSearch?: boolean;
   enableResearchFilter?: boolean;
@@ -69,19 +63,8 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
   // Search functionality using the same hook as faculty search
   const searchResults = useSearch(profiles, searchInput, nameAndTagSearch);
   
-  // Extract unique units from profiles for filtering (static - based on all loaded profiles)
-  const availableUnits = useMemo(() => {
-    const units = new Set<string>();
-    profiles.forEach(profile => {
-      profile.profileUnit?.forEach((unit: any) => {
-        units.add(unit.name);
-      });
-    });
-    return Array.from(units).sort();
-  }, [profiles]);
-  
-  // Apply initial filtering (search, backend config, type, unit) to get base filtered set
-  const baseFilteredProfiles = useMemo(() => {
+  // First, create a base set of profiles filtered by everything except client-side unit filter
+  const profilesForUnitOptions = useMemo(() => {
     let filtered = searchResults;
 
     // Filter by backend configuration first (original logic)
@@ -127,13 +110,6 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
       return true;
     });
 
-    // Apply client-side unit filtering if enabled
-    if (enableUnitFilter && selectedUnits.length > 0 && selectedUnits.length < availableUnits.length) {
-      filtered = filtered.filter((profile: any) =>
-        profile.profileUnit?.some((unit: any) => selectedUnits.includes(unit.name))
-      );
-    }
-
     // Apply client-side type filtering if enabled
     if (enableTypeFilter && selectedType !== "all") {
       filtered = filtered.filter((profile: any) => {
@@ -147,7 +123,32 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
     }
 
     return filtered;
-  }, [searchResults, data, selectedUnits, selectedType, availableUnits.length, enableUnitFilter, enableTypeFilter]);
+  }, [searchResults, data, selectedType, enableTypeFilter]);
+
+  // Extract unique units from profiles that should be available for filtering
+  const availableUnits = useMemo(() => {
+    const units = new Set<string>();
+    profilesForUnitOptions.forEach((profile: any) => {
+      profile.profileUnit?.forEach((unit: any) => {
+        units.add(unit.name);
+      });
+    });
+    return Array.from(units).sort();
+  }, [profilesForUnitOptions]);
+
+  // Apply initial filtering (search, backend config, type, unit) to get base filtered set
+  const baseFilteredProfiles = useMemo(() => {
+    let filtered = profilesForUnitOptions;
+
+    // Apply client-side unit filtering if enabled
+    if (enableUnitFilter && selectedUnits.length > 0 && selectedUnits.length < availableUnits.length) {
+      filtered = filtered.filter((profile: any) =>
+        profile.profileUnit?.some((unit: any) => selectedUnits.includes(unit.name))
+      );
+    }
+
+    return filtered;
+  }, [profilesForUnitOptions, selectedUnits, availableUnits.length, enableUnitFilter]);
 
   // Extract research areas only from the currently filtered profiles (excluding research area filter)
   const availableResearchAreas = useMemo(() => {
