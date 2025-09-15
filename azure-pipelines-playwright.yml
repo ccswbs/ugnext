@@ -19,6 +19,10 @@ steps:
       bun install --frozen-lockfile
     displayName: "Install dependencies using bun"
 
+  - script: | 
+      npx playwright install --with-deps
+    displayName: 'Install Playwright browsers'
+
   - script: |
       bun run test
     displayName: "Run playwright tests"
