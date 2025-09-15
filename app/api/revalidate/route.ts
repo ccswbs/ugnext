@@ -8,10 +8,10 @@ async function handler(request: NextRequest) {
   const path = searchParams.get("path");
   const tags = searchParams.get("tags");
   const secret = searchParams.get("secret");
-  const { isEnabled: isDraftMode } = await draftMode();
+  const { isEnabled } = await draftMode();
 
   // User must provide a valid secret or be in draft mode to revalidate.
-  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET || !isDraftMode) {
+  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET && !isEnabled) {
     return new Response("Invalid secret or you are not in draft mode.", { status: 401 });
   }
 
