@@ -1,0 +1,26 @@
+pr:
+  - main
+
+variables:
+  - group: ugnext
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "install -g bun"
+      verbose: true
+    displayName: "Install bun using npm"
+
+  - script: |
+      bun install --frozen-lockfile
+    displayName: "Install dependencies using bun"
+
+  - script: |
+      bun run test
+    displayName: "Run playwright tests"
+    env:
+      CI: 'true'
