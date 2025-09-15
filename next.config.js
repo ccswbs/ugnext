@@ -49,6 +49,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).hostname,
+        port: "",
+        pathname: "/system/files/**",
+      },
+      {
+        protocol: "https",
         hostname: "api.liveugconthub.uoguelph.dev",
         port: "",
         pathname: "/sites/default/files/**",
