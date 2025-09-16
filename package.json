@@ -27,7 +27,7 @@
     "@orama/orama": "^3.1.11",
     "@orama/plugin-qps": "^3.1.11",
     "@orama/stopwords": "^3.1.11",
-    "@uoguelph/react-components": "^1.5.2",
+    "@uoguelph/react-components": "^1.5.3",
     "@uoguelph/web-components": "^2.0.5",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
