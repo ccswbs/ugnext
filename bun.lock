@@ -10,6 +10,7 @@
         "@fortawesome/react-fontawesome": "^0.2.3",
         "@netlify/plugin-nextjs": "^5.12.1",
         "@next/third-parties": "^15.4.6",
+        "@orama/core": "^1.2.10",
         "@orama/orama": "^3.1.11",
         "@orama/plugin-qps": "^3.1.11",
         "@orama/stopwords": "^3.1.11",
@@ -443,9 +444,13 @@
 
     "@nolyfill/is-core-module": ["@nolyfill/is-core-module@1.0.39", "", {}, "sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA=="],
 
+    "@orama/core": ["@orama/core@1.2.10", "", { "dependencies": { "@orama/cuid2": "2.2.3", "@orama/oramacore-events-parser": "0.0.5", "zod": "3.24.3", "zod-to-json-schema": "3.24.5" } }, "sha512-D9zkMt4wPdaSNBL/oeAANU87hpJgQPYdamA82DRzNhsC0ZLwAEn6twi4eYfY7SbkZKaR5CF7OE+CxRljNwDUeQ=="],
+
     "@orama/cuid2": ["@orama/cuid2@2.2.3", "", { "dependencies": { "@noble/hashes": "^1.1.5" } }, "sha512-Lcak3chblMejdlSHgYU2lS2cdOhDpU6vkfIJH4m+YKvqQyLqs1bB8+w6NT1MG5bO12NUK2GFc34Mn2xshMIQ1g=="],
 
     "@orama/orama": ["@orama/orama@3.1.11", "", {}, "sha512-Szki0cgFiXE5F9RLx2lUyEtJllnuCSQ4B8RLDwIjXkVit6qZjoDAxH+xhJs29MjKLDz0tbPLdKFa6QrQ/qoGGA=="],
+
+    "@orama/oramacore-events-parser": ["@orama/oramacore-events-parser@0.0.5", "", {}, "sha512-yAuSwog+HQBAXgZ60TNKEwu04y81/09mpbYBCmz1RCxnr4ObNY2JnPZI7HmALbjAhLJ8t5p+wc2JHRK93ubO4w=="],
 
     "@orama/plugin-qps": ["@orama/plugin-qps@3.1.11", "", { "dependencies": { "@orama/orama": "3.1.11" } }, "sha512-Bm1WCF7z37+kOUUta0IVVU2Xxj1MlCx3+VJgzP36UCXOaiZNd+YVC5E79dOZV7SrUFMdqSEDIu4xjjq2qnlOig=="],
 
@@ -2042,6 +2047,10 @@
     "zen-observable": ["zen-observable@0.8.15", "", {}, "sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ=="],
 
     "zen-observable-ts": ["zen-observable-ts@1.2.5", "", { "dependencies": { "zen-observable": "0.8.15" } }, "sha512-QZWQekv6iB72Naeake9hS1KxHlotfRpe+WGNbNx5/ta+R3DNjVO2bswf63gXlWDcs+EMd7XY8HfVQyP1X6T4Zg=="],
+
+    "zod": ["zod@3.24.3", "", {}, "sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg=="],
+
+    "zod-to-json-schema": ["zod-to-json-schema@3.24.5", "", { "peerDependencies": { "zod": "^3.24.1" } }, "sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g=="],
 
     "@babel/core/json5": ["json5@2.2.3", "", { "bin": { "json5": "lib/cli.js" } }, "sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg=="],
 
