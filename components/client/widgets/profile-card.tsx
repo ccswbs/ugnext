@@ -33,7 +33,7 @@ export const ProfileCard = ({ data }: ProfileCardProps) => {
     return <div>Profile data not available - missing profileInfo</div>;
   }
 
-  const sharedClassName = "group block bg-white border border-grey-light shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4";
+  const sharedClassName = "group block bg-grey-light-bg hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4";
 
   const content = (
     <div className="flex flex-col md:flex-row h-full">
