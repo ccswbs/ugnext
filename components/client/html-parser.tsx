@@ -351,9 +351,11 @@ const defaultInstructions: ParserInstruction[] = [
         ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${props.src}`
         : (props.src as string);
 
+      const ImageComponent = props.width && props.height ? Image : "img";
+
       return (
         <figure className="my-4" key={nanoid()}>
-          <Image {...props} src={src} loading="lazy" alt={(props.alt as string) ?? ""} className={classes} />
+          <ImageComponent {...props} src={src} loading="lazy" alt={(props.alt as string) ?? ""} className={classes} />
 
           {props["data-caption"] && (
             <figcaption className="text-sm text-body-copy-on-light mt-2">{props["data-caption"]}</figcaption>
