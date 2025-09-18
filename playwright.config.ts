@@ -17,7 +17,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
 
   // Reporter to use
-  reporter: "html",
+  reporter: [["junit", { outputFile: "test-results/e2e-junit-results.xml" }]],
 
   use: {
     // Base URL to use in actions like `await page.goto('/')`.
@@ -51,8 +51,9 @@ export default defineConfig({
   ],
   // Run your local dev server before starting the tests.
   webServer: {
+    timeout: 2 * 60 * 1000,
     command: "USE_TESTING_DATA=true bun run start",
     url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 });
