@@ -69,13 +69,14 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 </Typography>
               )}
               
-              {/* Directory contact info from LDAP */}
-              <LdapContactInfo 
-                centralLoginId={content.centralLoginId}
-                directoryEmail={content.directoryEmail}
-                directoryOffice={content.directoryOffice}
-                directoryPhone={content.directoryPhone}
-              />
+              {content.centralLoginId && (
+                <LdapContactInfo 
+                  centralLoginId={content.centralLoginId}
+                  directoryEmail={content.directoryEmail}
+                  directoryOffice={content.directoryOffice}
+                  directoryPhone={content.directoryPhone}
+                />
+              )}
 
               {/* Custom links if available */}
               {content.customLink && content.customLink.length > 0 && (

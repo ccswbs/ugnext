@@ -13,7 +13,7 @@ export interface BaseProfile {
   id: string;
   title: string;
   path?: string;
-  centralLoginId: string;
+  centralLoginId?: string;
   directoryEmail: boolean;
   directoryOffice: boolean;
   directoryPhone: boolean;
