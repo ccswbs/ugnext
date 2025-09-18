@@ -3,7 +3,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { fetchLdapProfile } from "@/lib/ldap-utils";
 
 interface LdapContactInfoProps {
-  centralLoginId: string;
+  centralLoginId?: string;
   directoryEmail: boolean;
   directoryOffice: boolean;
   directoryPhone: boolean;

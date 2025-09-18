@@ -5,7 +5,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { useLdapProfile } from "@/lib/use-ldap-profile";
 
 interface LdapContactInfoClientProps {
-  centralLoginId: string;
+  centralLoginId?: string;
   directoryEmail: boolean;
   directoryOffice: boolean;
   directoryPhone: boolean;
@@ -23,7 +23,7 @@ export function LdapContactInfoClient({
   const shouldFetchLdap = !!(centralLoginId && (directoryEmail || directoryOffice || directoryPhone));
 
   // Use the hook to fetch LDAP data
-  const { data: ldapData, loading, error } = useLdapProfile(centralLoginId, shouldFetchLdap);
+  const { data: ldapData, loading, error } = useLdapProfile(centralLoginId ?? null, shouldFetchLdap);
 
   // Build contact info array
   const contactInfo = [];
