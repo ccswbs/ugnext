@@ -69,7 +69,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 </Typography>
               )}
               
-              {content.centralLoginId && (
+              {content.centralLoginId && content.centralLoginId.trim() && (
                 <LdapContactInfo 
                   centralLoginId={content.centralLoginId}
                   directoryEmail={content.directoryEmail}

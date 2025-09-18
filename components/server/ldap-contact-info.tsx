@@ -17,17 +17,33 @@ export async function LdapContactInfo({
   directoryPhone, 
   className = "mb-4" 
 }: LdapContactInfoProps) {
-  // Use centralLoginId from props
-  const uid = centralLoginId;
-  
-  // Fetch LDAP data if any directory fields are enabled and we have a uid
-  const shouldFetchLdap = uid && (directoryEmail || directoryOffice || directoryPhone);
-  const ldapData = shouldFetchLdap ? await fetchLdapProfile(uid) : null;
+  try {
+    // Early return if no centralLoginId provided
+    if (!centralLoginId || !centralLoginId.trim()) {
+      return null;
+    }
+
+    // Use centralLoginId from props
+    const uid = centralLoginId;
+    
+    // Fetch LDAP data if any directory fields are enabled and we have a uid
+    const shouldFetchLdap = uid && (directoryEmail === true || directoryOffice === true || directoryPhone === true);
+    
+    let ldapData = null;
+    if (shouldFetchLdap) {
+      try {
+        ldapData = await fetchLdapProfile(uid);
+      } catch (error) {
+        console.error('Error fetching LDAP profile:', error);
+        // Return null instead of throwing to prevent the entire page from crashing
+        return null;
+      }
+    }
 
   // Build contact info array to avoid complex conditional markup
   const contactInfo = [];
   
-  if (directoryEmail && ldapData?.mail) {
+  if (directoryEmail === true && ldapData?.mail) {
     contactInfo.push(
       <React.Fragment key="email">
         <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
@@ -36,7 +52,7 @@ export async function LdapContactInfo({
     );
   }
   
-  if (directoryOffice && ldapData?.roomNumber && typeof ldapData.roomNumber === 'string' && ldapData.roomNumber.trim()) {
+  if (directoryOffice === true && ldapData?.roomNumber && typeof ldapData.roomNumber === 'string' && ldapData.roomNumber.trim()) {
     contactInfo.push(
       <React.Fragment key="office">
         <i className="fa-solid fa-building-columns me-2" aria-hidden="true"></i>
@@ -45,7 +61,7 @@ export async function LdapContactInfo({
     );
   }
   
-  if (directoryPhone && ldapData?.telephoneNumber && typeof ldapData.telephoneNumber === 'string' && ldapData.telephoneNumber.trim()) {
+  if (directoryPhone === true && ldapData?.telephoneNumber && typeof ldapData.telephoneNumber === 'string' && ldapData.telephoneNumber.trim()) {
     contactInfo.push(
       <React.Fragment key="phone">
         <i className="fa-solid fa-phone me-2" aria-hidden="true"></i>
@@ -75,4 +91,8 @@ export async function LdapContactInfo({
       ))}
     </Typography>
   );
+  } catch (error) {
+    console.error('Error in LdapContactInfo component:', error);
+    return null;
+  }
 }
