@@ -1,0 +1,41 @@
+pr:
+  - main
+
+variables:
+  - group: ugnext
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "install -g bun"
+      verbose: true
+    displayName: "Install bun using npm"
+
+  - script: |
+      bun install --frozen-lockfile
+    displayName: "Install dependencies using bun"
+
+  - script: | 
+      npx playwright install --with-deps
+    displayName: 'Install Playwright browsers'
+
+  - script: |
+      bun run test
+    displayName: "Run playwright tests"
+    env:
+      CI: 'true'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    inputs:
+      searchFolder: 'test-results'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'e2e-junit-results.xml'
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: 'Playwright Tests'
+    condition: succeededOrFailed()
