@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Select, SelectOptions, SelectOption, SelectButton } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
-import { OramaClient } from '@oramacloud/client';
+import { OramaCloud } from "@orama/core";
 import { ProfileSearchResult, ProfileUnit } from "@/lib/types/profile";
 
 type Unit = ProfileUnit;
@@ -29,7 +29,7 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
   const [selectedUnits, setSelectedUnits] = useState(units?.map(unit => unit.id) ?? []);
 
   // Orama Cloud semantic search states
-  const [oramaCloud, setOramaCloud] = useState<OramaClient | null>(null);
+  const [oramaCloud, setOramaCloud] = useState<OramaCloud | null>(null);
   const [semanticQuery, setSemanticQuery] = useState('');
   const [semanticResults, setSemanticResults] = useState<string[]>([]);
   const [isIndexLoading, setIsIndexLoading] = useState(false);
@@ -50,17 +50,17 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
         setSearchStatus('Connecting to Orama Cloud...');
         
         // Check for required environment variables
-        const apiKey = process.env.NEXT_PUBLIC_ORAMA_API_KEY;
-        const endpoint = process.env.NEXT_PUBLIC_ORAMA_ENDPOINT;
+        const oramaApiKey = process.env.NEXT_PUBLIC_ORAMA_API_KEY;
+        const oramaProjectId = process.env.NEXT_PUBLIC_ORAMA_PROJECT_ID;
         
-        if (!apiKey || !endpoint) {
+        if (!oramaApiKey || !oramaProjectId) {
           throw new Error('Missing Orama Cloud configuration. Please check your environment variables.');
         }
         
         // Initialize Orama Cloud client
-        const client = new OramaClient({
-          api_key: apiKey,
-          endpoint: endpoint
+        const client = new OramaCloud({
+          apiKey: oramaApiKey,
+          projectId: oramaProjectId
         });
         
         setOramaCloud(client);
@@ -95,7 +95,8 @@ export const FacultySearchBar = ({ profiles, units, researchTopics = [], onChang
       const searchResults = await oramaCloud.search({
         term: semanticQuery,
         mode: useVectorSearch ? 'vector' : 'fulltext',
-        limit: 20
+        limit: 20,
+        datasources: ['e634dcf3-1bee-48f9-b4ac-4a1586af7fb9']
       });
       
       // Extract unique topics from search results
