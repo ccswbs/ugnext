@@ -21,7 +21,7 @@ export async function CustomFooter({ tags, units }: CustomFooterProps) {
   const classes = tv({
     slots: {
       base: "w-full py-5 bg-grey-light-bg",
-      main: "grid items-center gap-4 sm:grid sm:grid-cols-2 md:grid-cols-[2fr_5fr]",
+      main: "grid gap-4 xs:grid xs:grid-cols-2 md:grid-cols-[2fr_5fr] content-start",
     },
   })();
 

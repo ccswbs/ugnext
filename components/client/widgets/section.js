@@ -58,7 +58,7 @@ export function SectionWidget({ data }) {
   return (
     <>
       {data.heading && (
-        <Typography type={data.headingLevel ?? "h1"} as={data.headingLevel ?? "h1"}>
+        <Typography type={data.headingLevel ?? "h2"} as={data.headingLevel ?? "h2"}>
           {data.heading}
         </Typography>
       )}

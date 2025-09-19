@@ -240,12 +240,20 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children, index) => {
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
+      const headingClass = className.match(/\bh[\d]\b/g);
+      let type = level;
+
+      // Allow headings to appear smaller if needed
+      if(headingClass){
+        type = headingClass[0] as "h3" | "h4" | "h5" | "h6";
+      }
+
 
       return (
         <Typography
           {...props}
           key={nanoid()}
-          type={level}
+          type={type}
           as={level}
           className={twMerge(index === 0 && "mt-0", className)}
         >
@@ -365,7 +373,14 @@ const defaultInstructions: ParserInstruction[] = [
       );
     },
   },
-  // Rows
+  // Containers
+  {
+    shouldProcessNode: (node, props) => (props.className as string)?.includes("container"),
+    processNode: (node, props, children) => {
+      return <>{children}</>;
+    },
+  },
+  // Rows and Columns
   {
     shouldProcessNode: (node, props) => (props.className as string)?.includes("row"),
     processNode: (node, props, children, index) => {
@@ -452,7 +467,9 @@ console.log(columnClass);
          for(let i=0;i<totalColumns;i++){
           convertedGrid.push('1fr');
          }
-         templateValues.md = convertedGrid;
+        //  templateValues.xs = convertedGrid;
+         templateValues.sm = convertedGrid;
+        //  templateValues.md = convertedGrid;
       }
 
       console.log(convertedGrid);
