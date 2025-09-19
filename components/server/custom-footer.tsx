@@ -21,6 +21,7 @@ export async function CustomFooter({ tags, units }: CustomFooterProps) {
   const classes = tv({
     slots: {
       base: "w-full py-5 bg-grey-light-bg",
+      content: "xs:col-start-2",
       main: "grid gap-4 xs:grid xs:grid-cols-2 md:grid-cols-[2fr_5fr] content-start",
     },
   })();
@@ -38,7 +39,9 @@ export async function CustomFooter({ tags, units }: CustomFooterProps) {
               height={image.image.height}
             />
           ))}
-          <HtmlParser html={content.body?.processed ?? ""} instructions={undefined} />
+          <div className={classes.content()}>
+            <HtmlParser html={content.body?.processed ?? ""} instructions={undefined} />
+          </div>
         </div>
         <div>
           {content?.widgets?.map((widget, index) => (
