@@ -11,6 +11,7 @@ import { Button, type ButtonProps } from "@uoguelph/react-components/button";
 import { Link } from "@uoguelph/react-components/link";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Divider } from "@uoguelph/react-components/divider";
+import { Grid } from "@uoguelph/react-components/grid";
 import Image from "next/image";
 import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 import NextLink from "next/link";
@@ -362,6 +363,115 @@ const defaultInstructions: ParserInstruction[] = [
           )}
         </figure>
       );
+    },
+  },
+  // Rows
+  {
+    shouldProcessNode: (node, props) => (props.className as string)?.includes("row"),
+    processNode: (node, props, children, index) => {
+      interface TemplateValues {
+        [key:string]: string[] | undefined;
+      }
+      let templateValues: TemplateValues = {
+        base: ['1fr'],
+        md: undefined,
+        sm: undefined,
+        xl: undefined,
+      };
+      let totalColumns = 0;
+      let convertedGrid: string[] = [];
+      let parseBootstrapClasses: Boolean = true;
+
+      {React.Children.map(children, (child) => {
+
+        // Parse divs with Boostrap column classes
+        if (typeof child !== "string" && child.type === "div") {
+          let bsClasses = child.props.className;
+
+          // Assumes Bootstrap format can be col, col-6, or col-md-6
+          if(bsClasses.includes('col')){
+            let bsColumnClasses: string[] = bsClasses.split(' ');
+
+            bsColumnClasses.forEach(columnClass => {
+console.log(columnClass);
+              if(columnClass === 'col'){
+                parseBootstrapClasses = false;
+              }else {
+                // Parse bootstrap columns and viewports
+                let bootstrapClassParts = columnClass.replace("col","");
+                let bootstrapNumColumns = bootstrapClassParts.match(/\d+/g);
+                let bootstrapViewport = bootstrapClassParts.match(/[A-Za-z]+/g);
+
+                if(bootstrapNumColumns){
+                  // Convert bootstrap columns
+                  switch (bootstrapNumColumns[0]) {
+                    case '3':
+                      convertedGrid = ['1fr','1fr','1fr'];
+                      break;
+                    case '4':
+                      convertedGrid = ['1fr','1fr','1fr','1fr'];
+                      break;
+                    case '6':
+                      convertedGrid = ['1fr','1fr'];
+                      break;
+                    default:
+                      convertedGrid = ['1fr'];
+                  }
+
+                  if(bootstrapViewport){
+                    // Convert bootstrap viewport
+                    switch (bootstrapViewport[0]) {
+                      case 'xs':
+                      case 'sm':
+                        templateValues.sm = convertedGrid;
+                        break;
+                      case 'md':
+                      case 'lg':
+                        templateValues.md = convertedGrid;
+                        break;
+                      case 'xl':
+                      case 'xxl':
+                        templateValues.xl = convertedGrid;
+                        break;
+                      default:
+                        templateValues.md = convertedGrid;
+                    }
+                  }
+                  
+                }
+              }
+            });
+
+            totalColumns++;
+          }
+        }
+      })}
+
+      // Handle Bootstrap "col" classes
+      if(parseBootstrapClasses === false){
+         for(let i=0;i<totalColumns;i++){
+          convertedGrid.push('1fr');
+         }
+         templateValues.md = convertedGrid;
+      }
+
+      console.log(convertedGrid);
+
+      // Remove undefined values
+      Object.keys(templateValues).forEach(key => {
+        if (templateValues[key] === undefined) {
+          delete templateValues[key];
+        }
+      });
+
+      console.log(templateValues);
+      console.log(parseBootstrapClasses);
+      console.log(totalColumns);
+
+      return <Grid
+                template={templateValues} >
+                  {children}
+              </Grid>
     },
   },
   // Scripts
