@@ -37,6 +37,7 @@ export async function CustomFooter({ tags, units }: CustomFooterProps) {
               alt={image.image.alt ?? ""}
               width={image.image.width}
               height={image.image.height}
+              className={"sm:pr-5"}
             />
           ))}
           <div className={classes.content()}>

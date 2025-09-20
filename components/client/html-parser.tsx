@@ -137,7 +137,16 @@ const defaultInstructions: ParserInstruction[] = [
       if (isButton) {
         const outlined = className.includes("btn-outline");
         let color: ButtonProps["color"];
-        const classes = twMerge("mr-2", className);
+
+        // Exclude certain classes
+        let excludedClasses = ["text-dark-social"];
+        let updatedClassname = className;
+        excludedClasses.forEach(element => {
+          updatedClassname = updatedClassname.replace(element, "");
+        });
+
+        // Exclude certain classes
+        const classes = twMerge("mr-3 mb-3", updatedClassname);
 
         switch (className.match(/btn-(?:outline-)?(\w*)/)?.[1]) {
           case "primary":
@@ -201,9 +210,14 @@ const defaultInstructions: ParserInstruction[] = [
       return /\b(fa[srlbdt]?|fa-[a-z0-9-]+)\b/g.test(className);
     },
     processNode: (node, props, children) => {
+      const className = (props.className as string) ?? "";
+      const classes = twMerge(
+        props.className as string,
+        className.includes("fs-1") && "sm:text-3xl p-0",
+      );
       // Font Awesome's library adds aria-hidden automatically on the client side, but this causes a hydration error because React doesn't see that aria-hidden on the server side rendered code. So adding it here should fix that error
       return (
-        <i {...props} key={nanoid()} aria-hidden="true">
+        <i {...props} key={nanoid()} aria-hidden="true" className={classes}>
           {children}
         </i>
       );
@@ -247,7 +261,6 @@ const defaultInstructions: ParserInstruction[] = [
       if(headingClass){
         type = headingClass[0] as "h3" | "h4" | "h5" | "h6";
       }
-
 
       return (
         <Typography
@@ -470,7 +483,7 @@ const defaultInstructions: ParserInstruction[] = [
       // console.log(templateValues);
 
       return <Grid
-                className="mb-5"
+                className="gap-4 pb-4"
                 template={templateValues} >
                   {children}
               </Grid>
