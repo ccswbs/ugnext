@@ -7,19 +7,19 @@ import { Grid } from "@uoguelph/react-components/grid";
 // default is two columns; if more, then 3 or 4 columns
 function renderMediaGrid(numElements, sectionClasses) {
   let mediaGridTemplate = {
-    base: ['1fr'], 
-    sm: ['1fr','1fr'],
+    base: ["1fr"],
+    sm: ["1fr", "1fr"],
   };
 
   // if section has col-md-6 in classes, use two columns
-  if(sectionClasses && sectionClasses.includes("col-md-6")){
+  if (sectionClasses && sectionClasses.includes("col-md-6")) {
     return mediaGridTemplate;
   }
 
-  if(numElements > 1){
-    let gridDivision = ['1fr','1fr'];
+  if (numElements > 1) {
+    let gridDivision = ["1fr", "1fr"];
     if (numElements > 2) {
-      gridDivision = numElements % 4 === 0 ? ['1fr','1fr','1fr','1fr'] : ['1fr','1fr','1fr'];
+      gridDivision = numElements % 4 === 0 ? ["1fr", "1fr", "1fr", "1fr"] : ["1fr", "1fr", "1fr"];
     }
     mediaGridTemplate.sm = gridDivision;
   }
@@ -100,17 +100,14 @@ export function SectionWidget({ data }) {
               }
 
               // Handle Media Grid Layout
-              if (widget[0].__typename === "ParagraphMediaText"){
+              if (widget[0].__typename === "ParagraphMediaText") {
                 return (
-                  <Grid key={index} 
-                    className="gap-4"
-                    template={renderMediaGrid(widget.length, sectionClasses)}
-                  >
+                  <Grid key={index} className="gap-4" template={renderMediaGrid(widget.length, sectionClasses)}>
                     {widget.map((w, i) => (
                       <WidgetSelector data={w} key={i} />
                     ))}
                   </Grid>
-                )
+                );
               }
 
               // Default Section Widget Layout
