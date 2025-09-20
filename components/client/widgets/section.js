@@ -6,9 +6,7 @@ import { Grid } from "@uoguelph/react-components/grid";
 // Create a grid if only media + text widgets in Primary section
 // default is two columns; if more, then 3 or 4 columns
 function renderMediaGrid(numElements, sectionClasses) {
-  let mediaGridTemplate = {
-    base: ['1fr'],
-  };
+  let mediaGridTemplate = { base: ['1fr'], sm: ['1fr','1fr'],};
 
   // if section has col-md-6 in classes, use two columns
   if(sectionClasses && sectionClasses.includes("col-md-6")){
@@ -17,15 +15,10 @@ function renderMediaGrid(numElements, sectionClasses) {
 
   if(numElements > 1){
     let gridDivision = ['1fr','1fr'];
-
     if (numElements > 2) {
       gridDivision = numElements % 4 === 0 ? ['1fr','1fr','1fr','1fr'] : ['1fr','1fr','1fr'];
     }
-
-    mediaGridTemplate = {
-      base: ['1fr'],
-      sm: gridDivision,
-    }
+    mediaGridTemplate.sm = gridDivision;
   }
 
   return mediaGridTemplate;
@@ -132,6 +125,7 @@ export function SectionWidget({ data }) {
             return <WidgetSelector key={index} data={widget} />;
           })}
           secondary={secondary}
+          equal={sectionClasses === "col-md-6"}
         />
       )}
     </>
