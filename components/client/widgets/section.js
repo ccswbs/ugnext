@@ -1,9 +1,35 @@
 import { Section } from "@/components/client/section";
 import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
+import { Grid } from "@uoguelph/react-components/grid";
+
+// Create a grid if only media + text widgets in Primary section
+// default is two columns; if more, then 3 or 4 columns
+function renderMediaGrid(numElements, sectionClasses) {
+  let mediaGridTemplate = {
+    base: ["1fr"],
+    sm: ["1fr", "1fr"],
+  };
+
+  // if section has col-md-6 in classes, use two columns
+  if (sectionClasses && sectionClasses.includes("col-md-6")) {
+    return mediaGridTemplate;
+  }
+
+  if (numElements > 1) {
+    let gridDivision = ["1fr", "1fr"];
+    if (numElements > 2) {
+      gridDivision = numElements % 4 === 0 ? ["1fr", "1fr", "1fr", "1fr"] : ["1fr", "1fr", "1fr"];
+    }
+    mediaGridTemplate.sm = gridDivision;
+  }
+
+  return mediaGridTemplate;
+}
 
 export function SectionWidget({ data }) {
   // Sort widgets into primary, secondary and others
+  const sectionClasses = data?.classes;
   const {
     primary: ungroupedPrimary,
     secondary,
@@ -58,7 +84,7 @@ export function SectionWidget({ data }) {
   return (
     <>
       {data.heading && (
-        <Typography type={data.headingLevel ?? "h1"} as={data.headingLevel ?? "h1"}>
+        <Typography type={data.headingLevel ?? "h2"} as={data.headingLevel ?? "h2"}>
           {data.heading}
         </Typography>
       )}
@@ -73,6 +99,18 @@ export function SectionWidget({ data }) {
                 return <WidgetSelector key={index} data={widget[0]} />;
               }
 
+              // Handle Media Grid Layout
+              if (widget[0].__typename === "ParagraphMediaText") {
+                return (
+                  <Grid key={index} className="gap-4" template={renderMediaGrid(widget.length, sectionClasses)}>
+                    {widget.map((w, i) => (
+                      <WidgetSelector data={w} key={i} />
+                    ))}
+                  </Grid>
+                );
+              }
+
+              // Default Section Widget Layout
               return (
                 <div key={index} className="sm:flex gap-4">
                   {widget.map((w, i) => (
@@ -87,6 +125,7 @@ export function SectionWidget({ data }) {
             return <WidgetSelector key={index} data={widget} />;
           })}
           secondary={secondary}
+          equal={sectionClasses === "col-md-6"}
         />
       )}
     </>

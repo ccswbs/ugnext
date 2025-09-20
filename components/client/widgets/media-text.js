@@ -5,6 +5,7 @@ import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { tv } from "tailwind-variants";
+import { twMerge } from "tailwind-merge";
 import Image from "next/image";
 import { EmbeddedVideo } from "@uoguelph/react-components/embedded-video";
 
@@ -65,9 +66,10 @@ export function MediaTextWidget({ data }) {
 
   const classes = tv({
     slots: {
-      base: "col-span-1 h-full",
+      base: "col-span-1 h-full w-full",
       heading: "mt-0!",
       body: "",
+      no_body: "grid-cols-1",
     },
     variants: {
       background: {
@@ -91,7 +93,7 @@ export function MediaTextWidget({ data }) {
       background={background}
       size={size}
       position={position}
-      className={classes.base()}
+      className={twMerge(classes.base(),(data?.description ?? classes.no_body()))}
       transcript={media?.transcript}
     >
       {data?.heading && (
@@ -100,9 +102,11 @@ export function MediaTextWidget({ data }) {
         </Typography>
       )}
 
-      <div className={classes.body()}>
-        <HtmlParser html={data?.description?.processed ?? ""} />
-      </div>
+      {data?.description?.processed && (
+        <div className={classes.body()}>
+          <HtmlParser html={data?.description?.processed ?? ""} />
+        </div>
+      )}
 
       {data?.buttonSection && <ButtonSectionWidget data={data.buttonSection} />}
     </MediaCaption>
