@@ -65,7 +65,7 @@ export function MediaTextWidget({ data }) {
 
   const classes = tv({
     slots: {
-      base: "col-span-1 h-full",
+      base: "col-span-1 h-full w-full",
       heading: "mt-0!",
       body: "",
     },
