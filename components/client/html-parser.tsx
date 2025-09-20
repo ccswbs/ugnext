@@ -288,6 +288,15 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "p",
     processNode: (node, props, children, index) => {
       const className = typeof props.className === "string" ? props.className : "";
+      // Replace certain classes
+      let replacedClasses = {
+        "lead": "text-2xl font-light leading-[1.5]"
+      };
+
+      let updatedClassname = className;
+      Object.entries(replacedClasses).forEach(([key, value]) => {
+        updatedClassname = updatedClassname.replace(key,value);
+      });
 
       const hasInvalidChildren = React.Children.toArray(children).some((child) => {
         if (!React.isValidElement(child)) {
@@ -307,7 +316,7 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       return (
-        <Typography {...props} key={nanoid()} type="body" as="p" className={twMerge(index === 0 && "mt-0", className)}>
+        <Typography {...props} key={nanoid()} type="body" as="p" className={twMerge(index === 0 && "mt-0", updatedClassname)}>
           {children}
         </Typography>
       );
