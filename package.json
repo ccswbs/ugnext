@@ -3,7 +3,8 @@
   "version": "0.5.0",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/codegen-with-fallback.js",
+    "prebuild": "graphql-codegen",
+    "prestart": "graphql-codegen",
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
@@ -29,7 +30,7 @@
     "@orama/plugin-qps": "^3.1.11",
     "@orama/stopwords": "^3.1.11",
     "@oramacloud/client": "^2.1.4",
-    "@uoguelph/react-components": "^1.5.2",
+    "@uoguelph/react-components": "^1.5.3",
     "@uoguelph/web-components": "^2.0.5",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",

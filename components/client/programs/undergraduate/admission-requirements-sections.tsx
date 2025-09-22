@@ -31,7 +31,7 @@ export function AdmissionRequirementsSections({
     <>
       {program.type.some((type) => type.name === "Co-op") && (
         <Typography type="body" as="span" className="block! italic">
-          This program is offered with and without{" "}
+          This subject is offered with and without{" "}
           <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
         </Typography>
       )}

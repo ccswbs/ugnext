@@ -26,7 +26,7 @@ function StoryImageCutoutBackground({ data }) {
   const buttons = data.storyContent?.filter((node) => node.__typename === "ParagraphStoryModalVideo") ?? [];
 
   return (
-    <Story>
+    <Story className={"mb-4"}>
       <StoryBody>
         <StoryBackground>
           <StoryBackgroundImage

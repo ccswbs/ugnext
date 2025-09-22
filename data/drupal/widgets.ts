@@ -279,6 +279,7 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
     id
     heading: title
     headingLevel
+    classes
     content {
       __typename
       ...Accordion
