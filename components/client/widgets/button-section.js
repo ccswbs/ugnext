@@ -41,7 +41,7 @@ export const ButtonWidget = ({ data, column }) => {
   const classes = tv({
     slots: {
       heading: "block text-black",
-      button: "w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1",
+      button: "w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
       icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
     variants: {
@@ -115,10 +115,10 @@ export const ButtonSectionWidget = ({ data }) => {
   const context = useContext(SectionContext);
 
   const classes = tv({
-    base: "flex gap-2",
+    base: "flex gap-2 pt-4",
     variants: {
       column: {
-        primary: "flex flex-wrap",
+        primary: "flex flex-wrap px-0 mx-0",
         secondary: "flex-col px-0 mx-0",
         "call-to-action": "flex-col items-center",
       },
