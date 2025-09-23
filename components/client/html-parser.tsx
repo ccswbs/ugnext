@@ -526,14 +526,16 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children) => {
       const className = typeof props.className === "string" ? props.className : "";
       const classes = twMerge(
-        "w-full border-collapse border border-gray-300 my-4",
+        "w-full border-collapse border border-grey-light my-4",
         className
       );
 
       return (
-        <table {...props} key={nanoid()} className={classes}>
-          {children}
-        </table>
+        <div className="overflow-x-auto my-4">
+          <table {...props} key={nanoid()} className={classes}>
+            {children}
+          </table>
+        </div>
       );
     },
   },
@@ -578,7 +580,7 @@ const defaultInstructions: ParserInstruction[] = [
       }
       
       const classes = twMerge(
-        "border border-gray-300",
+        "border border-grey-light",
         backgroundClass,
         className
       );
@@ -595,7 +597,7 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children) => {
       const className = typeof props.className === "string" ? props.className : "";
       const classes = twMerge(
-        "border border-gray-300 px-4 py-2 text-left font-semibold",
+        "border border-grey-light px-4 py-2 text-left font-semibold",
         className
       );
 
@@ -611,7 +613,7 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children) => {
       const className = typeof props.className === "string" ? props.className : "";
       const classes = twMerge(
-        "border border-gray-300 px-4 py-2",
+        "border border-grey-light px-4 py-2",
         className
       );
 
