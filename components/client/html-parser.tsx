@@ -520,6 +520,108 @@ const defaultInstructions: ParserInstruction[] = [
               </Grid>
     },
   },
+  // Tables
+  {
+    shouldProcessNode: (node) => node.tagName === "table",
+    processNode: (node, props, children) => {
+      const className = typeof props.className === "string" ? props.className : "";
+      const classes = twMerge(
+        "w-full border-collapse border border-gray-300 my-4",
+        className
+      );
+
+      return (
+        <table {...props} key={nanoid()} className={classes}>
+          {children}
+        </table>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "thead",
+    processNode: (node, props, children) => {
+      return (
+        <thead {...props} key={nanoid()}>
+          {children}
+        </thead>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "tbody",
+    processNode: (node, props, children) => {
+      return (
+        <tbody {...props} key={nanoid()}>
+          {children}
+        </tbody>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "tr",
+    processNode: (node, props, children, index) => {
+      const className = typeof props.className === "string" ? props.className : "";
+      
+      // Check if this row contains td elements (data row)
+      const hasTdElements = node.children && node.children.some((child: any) => 
+        child.type === 'tag' && child.name === 'td'
+      );
+      
+      let backgroundClass = "";
+      if (hasTdElements) {
+        // Data rows alternate: even rows (0, 2, 4...) get light grey, odd rows stay white
+        const isEvenRow = index % 2 === 0;
+        backgroundClass = isEvenRow ? "bg-grey-light-bg" : "bg-white";
+      } else {
+        // Header rows should have white background
+        backgroundClass = "bg-white";
+      }
+      
+      const classes = twMerge(
+        "border border-gray-300",
+        backgroundClass,
+        className
+      );
+
+      return (
+        <tr {...props} key={nanoid()} className={classes}>
+          {children}
+        </tr>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "th",
+    processNode: (node, props, children) => {
+      const className = typeof props.className === "string" ? props.className : "";
+      const classes = twMerge(
+        "border border-gray-300 px-4 py-2 text-left font-semibold",
+        className
+      );
+
+      return (
+        <th {...props} key={nanoid()} className={classes}>
+          {children}
+        </th>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "td",
+    processNode: (node, props, children) => {
+      const className = typeof props.className === "string" ? props.className : "";
+      const classes = twMerge(
+        "border border-gray-300 px-4 py-2",
+        className
+      );
+
+      return (
+        <td {...props} key={nanoid()} className={classes}>
+          {children}
+        </td>
+      );
+    },
+  },
   // Scripts
   {
     shouldProcessNode: (node) => node.tagName === "script",
