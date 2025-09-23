@@ -3,7 +3,10 @@ import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/clien
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 
-const DRUPAL_BASE_URL = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev";
+const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev").replace(
+  /\/+(?=\?|#|$)/g,
+  ""
+);
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({

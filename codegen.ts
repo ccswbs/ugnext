@@ -1,7 +1,12 @@
 import "dotenv/config";
 import { CodegenConfig } from "@graphql-codegen/cli";
 
-const DRUPAL_BASE_URL = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev";
+const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev").replace(
+  /\/+(?=\?|#|$)/g,
+  ""
+);
+
+console.log(`Fetching schema from ${DRUPAL_BASE_URL}/graphql`);
 
 const schema: {
   [key: string]: {
