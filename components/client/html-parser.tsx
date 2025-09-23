@@ -57,6 +57,9 @@ function isElement(domNode: DOMNode): domNode is Element {
   return isTag && hasAttributes;
 }
 
+// Counter for td elements with rowspan to handle alternating colors
+let rowspanTdCounter = 0;
+
 const defaultInstructions: ParserInstruction[] = [
   // vcard
   {
@@ -524,6 +527,9 @@ const defaultInstructions: ParserInstruction[] = [
   {
     shouldProcessNode: (node) => node.tagName === "table",
     processNode: (node, props, children) => {
+      // Reset the rowspan counter for each new table
+      rowspanTdCounter = 0;
+      
       // Strip all existing attributes and create clean props for table
       const cleanProps = {};
       const classes = twMerge(
@@ -609,24 +615,32 @@ const defaultInstructions: ParserInstruction[] = [
       if (node.attribs.rowspan) cleanProps.rowspan = node.attribs.rowspan;
       if (node.attribs.colspan) cleanProps.colspan = node.attribs.colspan;
       
-      // Find the parent tr element to get its index for alternating colors
-      let parentTr = node.parent;
-      while (parentTr && parentTr.type === 'tag' && parentTr.name !== 'tr') {
-        parentTr = parentTr.parent;
-      }
+      let backgroundClass = "";
       
-      // Get the index of the parent tr within its parent (tbody or table)
-      let rowIndex = 0;
-      if (parentTr && parentTr.parent) {
-        const siblings = parentTr.parent.children.filter((child: any) => 
-          child.type === 'tag' && child.name === 'tr'
-        );
-        rowIndex = siblings.indexOf(parentTr);
+      // Handle alternating colors for td elements with rowspan
+      if (node.attribs.rowspan) {
+        // Use independent counter for rowspan cells
+        const isEvenRowspanCell = rowspanTdCounter % 2 === 0;
+        backgroundClass = isEvenRowspanCell ? "bg-grey-light-bg" : "bg-white";
+        rowspanTdCounter++;
+      } else {
+        // For regular td elements, find the parent tr and use its index
+        let parentTr = node.parent;
+        while (parentTr && parentTr.type === 'tag' && parentTr.name !== 'tr') {
+          parentTr = parentTr.parent;
+        }
+        
+        let rowIndex = 0;
+        if (parentTr && parentTr.parent) {
+          const siblings = parentTr.parent.children.filter((child: any) => 
+            child.type === 'tag' && child.name === 'tr'
+          );
+          rowIndex = siblings.indexOf(parentTr);
+        }
+        
+        const isEvenRow = rowIndex % 2 === 0;
+        backgroundClass = isEvenRow ? "bg-grey-light-bg" : "bg-white";
       }
-      
-      // Apply alternating colors: even rows (0, 2, 4...) get light grey, odd rows stay white
-      const isEvenRow = rowIndex % 2 === 0;
-      const backgroundClass = isEvenRow ? "bg-grey-light-bg" : "bg-white";
       
       const classes = twMerge(
         "border border-grey-light px-4 py-2",
