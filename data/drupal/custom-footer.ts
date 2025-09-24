@@ -19,7 +19,6 @@ export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
       ...MediaText
       ...Section
       ...Block
-      ...CallToActionWidget
     }
   }
 `);
