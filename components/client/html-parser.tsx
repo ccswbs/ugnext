@@ -61,8 +61,10 @@ function isElement(domNode: DOMNode): domNode is Element {
 function hasAncestorWithClass(node: Element, className: string): boolean {
   let current = node.parent;
   while (current) {
-    if (isElement(current)) {
-      const currentClassName = (current.attribs?.class as string) ?? "";
+    // Check if current is a DOMNode before passing to isElement
+    if (current && typeof current === 'object' && 'type' in current && isElement(current as DOMNode)) {
+      const element = current as Element;
+      const currentClassName = (element.attribs?.class as string) ?? "";
       if (currentClassName.includes(className)) {
         return true;
       }
@@ -97,7 +99,7 @@ const defaultInstructions: ParserInstruction[] = [
           extension = "",
           email = "";
 
-        const processNode = (node: DOMNode) => {
+        const processNode = (node: any) => {
           if (isElement(node)) {
             const className = (node.attribs?.class as string) ?? "";
             
@@ -132,9 +134,9 @@ const defaultInstructions: ParserInstruction[] = [
             
             // Recursively process children
             if (node.children) {
-              node.children.forEach(processNode);
+              node.children.forEach((child: any) => processNode(child));
             }
-          } else if (node.type === "text" && node.data && node.data.trim().length > 2 && !title && !node.data.includes("@")) {
+          } else if (node?.type === "text" && node.data && node.data.trim().length > 2 && !title && !node.data.includes("@")) {
             // Extract title from direct text content (but not email addresses)
             const trimmedText = node.data.trim();
             if (trimmedText && !name.includes(trimmedText)) {
@@ -145,20 +147,20 @@ const defaultInstructions: ParserInstruction[] = [
 
         // Process all children of the vcard node
         if (domNode.children) {
-          domNode.children.forEach(processNode);
+          domNode.children.forEach((child: any) => processNode(child));
         }
 
         return { name, title, phone, extension, email };
       };
 
       // Helper function to extract text content from any DOM node, ignoring HTML structure
-      const extractTextFromDOMNode = (node: DOMNode): string => {
-        if (node.type === "text") {
+      const extractTextFromDOMNode = (node: any): string => {
+        if (node?.type === "text") {
           return node.data || "";
         }
         
         if (isElement(node) && node.children) {
-          return node.children.map(extractTextFromDOMNode).join("").trim();
+          return node.children.map((child: any) => extractTextFromDOMNode(child)).join("").trim();
         }
         
         return "";
