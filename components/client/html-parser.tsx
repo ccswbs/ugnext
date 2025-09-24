@@ -57,6 +57,21 @@ function isElement(domNode: DOMNode): domNode is Element {
   return isTag && hasAttributes;
 }
 
+// Helper function to check if a DOM node has an ancestor with a specific class
+function hasAncestorWithClass(node: Element, className: string): boolean {
+  let current = node.parent;
+  while (current) {
+    if (isElement(current)) {
+      const currentClassName = (current.attribs?.class as string) ?? "";
+      if (currentClassName.includes(className)) {
+        return true;
+      }
+    }
+    current = current.parent;
+  }
+  return false;
+}
+
 // Counter for td elements with rowspan to handle alternating colors
 let rowspanTdCounter = 0;
 
@@ -67,38 +82,89 @@ const defaultInstructions: ParserInstruction[] = [
       const className = (props.className as string) ?? "";
       return className.includes("vcard");
     },
-    processNode: (node, props, children) => {
-      const childArray = React.Children.toArray(children);
-      let name = "",
-        title = "",
-        phone = "",
-        extension = "",
-        email = "";
+    processNode: (node, props, children, index, childParser) => {
+      // Helper function to recursively extract information from DOM nodes
+      const extractVcardInfo = (domNode: Element): {
+        name: string;
+        title: string;
+        phone: string;
+        extension: string;
+        email: string;
+      } => {
+        let name = "",
+          title = "",
+          phone = "",
+          extension = "",
+          email = "";
 
-      for (const child of childArray) {
-        const isElement = React.isValidElement(child);
-
-        if (isElement && child.type === "strong") {
-          name = (child as React.JSX.Element)?.props.children;
-        }
-
-        if (typeof child === "string" && child.length > 2 && !title) {
-          title = child;
-        }
-
-        const href = (child as React.JSX.Element).props?.href;
-
-        if (isElement && typeof href === "string") {
-          if (href.startsWith("tel:")) {
-            const tokens = href.replace("tel:", "").split("p");
-
-            phone = (child as React.JSX.Element)?.props.children;
-            extension = tokens[1];
-          } else if (href.startsWith("mailto:")) {
-            email = href.replace("mailto:", "");
+        const processNode = (node: DOMNode) => {
+          if (isElement(node)) {
+            const className = (node.attribs?.class as string) ?? "";
+            
+            // Extract name from .fn class or strong tags
+            if (className.includes("fn") || node.tagName === "strong") {
+              const nameText = extractTextFromDOMNode(node);
+              if (nameText && !name) {
+                name = nameText;
+              }
+            }
+            
+            // Extract title from .org class
+            if (className.includes("org")) {
+              const titleText = extractTextFromDOMNode(node);
+              if (titleText && !title) {
+                title = titleText;
+              }
+            }
+            
+            // Extract links (phone and email)
+            if (node.tagName === "a" && typeof node.attribs?.href === "string") {
+              const href = node.attribs.href;
+              
+              if (href.startsWith("tel:")) {
+                const tokens = href.replace("tel:", "").split("p");
+                phone = extractTextFromDOMNode(node);
+                extension = tokens[1] || "";
+              } else if (href.startsWith("mailto:")) {
+                email = href.replace("mailto:", "");
+              }
+            }
+            
+            // Recursively process children
+            if (node.children) {
+              node.children.forEach(processNode);
+            }
+          } else if (node.type === "text" && node.data && node.data.trim().length > 2 && !title && !node.data.includes("@")) {
+            // Extract title from direct text content (but not email addresses)
+            const trimmedText = node.data.trim();
+            if (trimmedText && !name.includes(trimmedText)) {
+              title = trimmedText;
+            }
           }
+        };
+
+        // Process all children of the vcard node
+        if (domNode.children) {
+          domNode.children.forEach(processNode);
         }
-      }
+
+        return { name, title, phone, extension, email };
+      };
+
+      // Helper function to extract text content from any DOM node, ignoring HTML structure
+      const extractTextFromDOMNode = (node: DOMNode): string => {
+        if (node.type === "text") {
+          return node.data || "";
+        }
+        
+        if (isElement(node) && node.children) {
+          return node.children.map(extractTextFromDOMNode).join("").trim();
+        }
+        
+        return "";
+      };
+
+      const { name, title, phone, extension, email } = extractVcardInfo(node);
 
       return (
         <Contact {...props} key={nanoid()}>
@@ -126,7 +192,13 @@ const defaultInstructions: ParserInstruction[] = [
   },
   // Links
   {
-    shouldProcessNode: (node, props) => node.tagName === "a" && typeof props.href === "string",
+    shouldProcessNode: (node, props) => {
+      // Skip links that are inside vcard elements - let vcard processor handle them
+      if (hasAncestorWithClass(node, "vcard")) {
+        return false;
+      }
+      return node.tagName === "a" && typeof props.href === "string";
+    },
     processNode: (node, props, children) => {
       if (props.href === "") {
         return <></>;
