@@ -1,6 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 
 export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
   fragment CustomFooter on NodeCustomFooter {
@@ -19,6 +19,7 @@ export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
       ...MediaText
       ...Section
       ...Block
+      ...CallToActionWidget
     }
   }
 `);
@@ -26,11 +27,11 @@ export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
 async function getCustomFooterID(tags: string[], units: string[]) {
   const showUnpublished = await showUnpublishedContent();
 
-  if(tags.length === 0 && units.length === 0) {
+  if (tags.length === 0 && units.length === 0) {
     return null;
   }
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query GetCustomFooterID($tags: [String], $units: [String], $status: Boolean) {
         customFooterByUnitOrTag(filter: { tag: $tags, unit: $units, status: $status }) {
@@ -49,7 +50,11 @@ async function getCustomFooterID(tags: string[], units: string[]) {
     },
   });
 
-  if (!data?.customFooterByUnitOrTag?.results) {
+  if (!data) {
+    handleGraphQLError(error);
+  }
+
+  if (!data.customFooterByUnitOrTag?.results) {
     return null;
   }
 
@@ -67,7 +72,7 @@ async function getCustomFooterID(tags: string[], units: string[]) {
 export async function getCustomFooterByID(id: string) {
   const showUnpublished = await showUnpublishedContent();
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query CustomFooterContent($id: ID!, $revision: ID = "current") {
         nodeCustomFooter(id: $id, revision: $revision) {
@@ -81,7 +86,11 @@ export async function getCustomFooterByID(id: string) {
     },
   });
 
-  if (!data?.nodeCustomFooter) {
+  if (!data) {
+    handleGraphQLError(error);
+  }
+
+  if (!data.nodeCustomFooter) {
     return null;
   }
 

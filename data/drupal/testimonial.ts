@@ -1,6 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 
 export const TESTIMONIAL_TYPE_FRAGMENT = gql(/* gql */ `
   fragment TestimonialType on TermTestimonialType {
@@ -34,7 +34,7 @@ export const TESTIMONIAL_FRAGMENT = gql(/* gql */ `
 export async function getTestimonialByTag(tags: string[]) {
   const showUnpublished = await showUnpublishedContent();
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query TestimonialsByTag($tags: [String]) {
         testimonialsByTag(filter: { tags: $tags }) {
@@ -51,6 +51,10 @@ export async function getTestimonialByTag(tags: string[]) {
       tags: tags ?? [],
     },
   });
+
+  if (!data) {
+    handleGraphQLError(error);
+  }
 
   return (
     data.testimonialsByTag?.results.filter((testimonial: any) => {

@@ -1,4 +1,4 @@
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import type {
@@ -21,7 +21,7 @@ function parse(degree: UndergraduateProgramFragment) {
 }
 
 export async function getUndergraduateProgramTypes() {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query UndergraduateProgramTypes {
         termUndergraduateProgramTypes(first: 100) {
@@ -32,6 +32,10 @@ export async function getUndergraduateProgramTypes() {
       }
     `),
   });
+
+  if (!data) {
+    handleGraphQLError(error);
+  }
 
   return data.termUndergraduateProgramTypes.nodes;
 }
@@ -81,13 +85,17 @@ async function getDraftUndergraduatePrograms() {
   let total = 1;
 
   while (page < total) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: programsQuery,
       variables: {
         pageSize,
         page,
       },
     });
+
+    if (!data) {
+      handleGraphQLError(error);
+    }
 
     for (const program of data?.latestContentRevisions?.results ?? []) {
       if (program.__typename === "NodeUndergraduateProgram") {
@@ -122,12 +130,16 @@ async function getPublishedUndergraduatePrograms() {
   const programs: UndergraduateProgramsQuery["nodeUndergraduatePrograms"]["nodes"] = [];
 
   while (hasNextPage) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: programsQuery,
       variables: {
         after: cursor,
       },
     });
+
+    if (!data) {
+      handleGraphQLError(error);
+    }
 
     programs.push(...data.nodeUndergraduatePrograms.nodes);
     cursor = data.nodeUndergraduatePrograms.pageInfo.endCursor;
@@ -180,13 +192,17 @@ export async function getUndergraduateProgramByPath(path: string) {
     }
   `);
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: programQuery,
     variables: {
       id: route.entity.id,
       revision: showUnpublished ? "latest" : "current",
     },
   });
+
+  if (!data) {
+    handleGraphQLError(error);
+  }
 
   return data.nodeUndergraduateProgram as UndergraduateProgram | null;
 }

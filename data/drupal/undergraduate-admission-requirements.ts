@@ -1,4 +1,4 @@
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type {
   AdmissionLocationFragment,
@@ -14,7 +14,7 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
 export async function getUndergraduateAdmissionStudentTypes() {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query UndergraduateAdmissionStudentTypes {
         termUndergraduateStudentTypes(first: 100) {
@@ -26,6 +26,10 @@ export async function getUndergraduateAdmissionStudentTypes() {
       }
     `),
   });
+
+  if (!data) {
+    handleGraphQLError(error);
+  }
 
   return data.termUndergraduateStudentTypes.nodes as UndergraduateAdmissionStudentType[];
 }
@@ -92,12 +96,16 @@ export async function getUndergraduateAdmissionLocations() {
   const locations: UndergraduateAdmissionLocation[] = [];
 
   while (hasNextPage) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: locationsQuery,
       variables: {
         after: cursor,
       },
     });
+
+    if (!data) {
+      handleGraphQLError(error);
+    }
 
     const values = data.termAdmissionLocations.nodes
       .filter((node) => !!node.parent)
@@ -201,7 +209,7 @@ export async function getUndergraduateAdmissionRequirementIDs(
   location?: UndergraduateAdmissionLocation,
   program?: UndergraduateProgram
 ) {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query UndergraduateAdmissionRequirementsIDs($studentType: String, $location: String, $program: Float) {
         undergraduateAdmissionRequirements(
@@ -221,6 +229,10 @@ export async function getUndergraduateAdmissionRequirementIDs(
       program: program ? Number.parseFloat(program.id) : null,
     },
   });
+
+  if (!data) {
+    handleGraphQLError(error);
+  }
 
   return (
     data?.undergraduateAdmissionRequirements?.results
@@ -253,6 +265,10 @@ export async function getUndergraduateAdmissionRequirementsByID(ids: string[]) {
     (await Promise.all(requirementPromises))
       // Add the rank to each requirement
       .map((result) => {
+        if (!result.data) {
+          handleGraphQLError(result.error);
+        }
+
         let rank = 0;
         let requirement = result.data.nodeUndergraduateRequirement;
 
