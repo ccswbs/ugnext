@@ -1,4 +1,6 @@
 import { gql } from "@/lib/graphql";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import { getClient } from "@/lib/apollo";
 
 export const IMAGE_FRAGMENT = gql(/* gql */ `
   fragment Image on MediaImage {
@@ -52,3 +54,43 @@ export const REMOTE_VIDEO_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+export async function getMediaPathById(id: string) {
+  const showUnpublished = await showUnpublishedContent();
+  const query = getClient().query;
+  const mediaQuery = gql(/* gql */ `
+    query MediaPath($id: ID!, $revision: ID = "current") {
+      mediaFile(id: $id, revision: $revision) {
+        file {
+          url
+        }
+      }
+      mediaImage(id: $id, revision: $revision) {
+        image {
+          url
+        }
+      }
+      mediaRemoteVideo(id: $id, revision: $revision) {
+        url
+      }
+    }
+  `);
+
+  const { data } = await query({
+    query: mediaQuery,
+    variables: {
+      id: id,
+      revision: showUnpublished ? "latest" : "current",
+    },
+  });
+
+  if (data?.mediaFile) {
+    return data.mediaFile.file.url;
+  } else if (data?.mediaImage) {
+    return data.mediaImage.image.url;
+  } else if (data?.mediaRemoteVideo) {
+    return data.mediaRemoteVideo.url;
+  } else {
+    return null;
+  }
+}
