@@ -70,16 +70,6 @@ export async function getMediaPathById(id: string) {
           url
         }
       }
-      mediaVideo(id: $id, revision: $revision) {
-        video {
-          url
-        }
-      }
-      mediaAudio(id: $id, revision: $revision) {
-        audio {
-          url
-        }
-      }
       mediaRemoteVideo(id: $id, revision: $revision) {
         url
       }
