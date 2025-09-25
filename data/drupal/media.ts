@@ -88,10 +88,6 @@ export async function getMediaPathById(id: string) {
     return data.mediaFile.file.url;
   } else if (data?.mediaImage) {
     return data.mediaImage.image.url;
-  } else if (data?.mediaVideo) {
-    return data.mediaVideo.video.url;
-  } else if (data?.mediaAudio) {
-    return data.mediaAudio.audio.url;
   } else if (data?.mediaRemoteVideo) {
     return data.mediaRemoteVideo.url;
   } else {
