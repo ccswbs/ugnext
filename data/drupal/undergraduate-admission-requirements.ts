@@ -27,8 +27,12 @@ export async function getUndergraduateAdmissionStudentTypes() {
     `),
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   return data.termUndergraduateStudentTypes.nodes as UndergraduateAdmissionStudentType[];
@@ -103,8 +107,12 @@ export async function getUndergraduateAdmissionLocations() {
       },
     });
 
-    if (!data) {
+    if (error) {
       handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return null;
     }
 
     const values = data.termAdmissionLocations.nodes
@@ -230,12 +238,16 @@ export async function getUndergraduateAdmissionRequirementIDs(
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
   }
 
+  if (!data) {
+    return [];
+  }
+
   return (
-    data?.undergraduateAdmissionRequirements?.results
+    data.undergraduateAdmissionRequirements?.results
       .map((result) => (result.__typename === "NodeUndergraduateRequirement" ? result.id : null))
       .filter((id) => id !== null) ?? []
   );

@@ -58,8 +58,12 @@ export async function getNewsArticle(id: string) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   if (!data.nodeArticle) {
@@ -83,8 +87,12 @@ export async function getNewsArticleCount() {
     `),
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   if (!data.legacyNews) {
@@ -116,8 +124,12 @@ export async function getNewsArticles(page: number, size: number = 20) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   if (!data.legacyNews) {
@@ -140,8 +152,12 @@ export async function getFeaturedNewsArticles() {
     `),
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   if (!data.featuredLegacyNews) {

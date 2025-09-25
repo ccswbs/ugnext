@@ -49,8 +49,12 @@ async function getCustomFooterID(tags: string[], units: string[]) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   if (!data.customFooterByUnitOrTag?.results) {
@@ -85,8 +89,12 @@ export async function getCustomFooterByID(id: string) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   if (!data.nodeCustomFooter) {

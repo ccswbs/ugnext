@@ -33,8 +33,12 @@ export async function getUndergraduateProgramTypes() {
     `),
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   return data.termUndergraduateProgramTypes.nodes;
@@ -93,11 +97,15 @@ async function getDraftUndergraduatePrograms() {
       },
     });
 
-    if (!data) {
+    if (error) {
       handleGraphQLError(error);
     }
 
-    for (const program of data?.latestContentRevisions?.results ?? []) {
+    if (!data) {
+      return null;
+    }
+
+    for (const program of data.latestContentRevisions?.results ?? []) {
       if (program.__typename === "NodeUndergraduateProgram") {
         programs.push(program);
       }
@@ -137,8 +145,12 @@ async function getPublishedUndergraduatePrograms() {
       },
     });
 
-    if (!data) {
+    if (error) {
       handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return null;
     }
 
     programs.push(...data.nodeUndergraduatePrograms.nodes);
@@ -159,6 +171,11 @@ export async function getUndergraduatePrograms() {
 
 export async function getUndergraduateMajors() {
   const programs = await getUndergraduatePrograms();
+
+  if (!programs) {
+    return [];
+  }
+
   return programs
     .filter((program) => program.type.some((type) => type.name.toLowerCase() === "major"))
     .sort((a, b) => a.title.localeCompare(b.title));
@@ -200,8 +217,12 @@ export async function getUndergraduateProgramByPath(path: string) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   return data.nodeUndergraduateProgram as UndergraduateProgram | null;

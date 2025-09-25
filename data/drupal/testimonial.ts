@@ -52,8 +52,12 @@ export async function getTestimonialByTag(tags: string[]) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   return (

@@ -192,8 +192,12 @@ export async function getSpotlights() {
       },
     });
 
-    if (!data) {
+    if (error) {
       handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return null;
     }
 
     total = Math.ceil((data.spotlightRevisions?.pageInfo?.total ?? 0) / pageSize);

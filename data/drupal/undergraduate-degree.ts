@@ -32,8 +32,12 @@ export async function getUndergraduateDegreeTypes() {
     `),
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   return data.termUndergraduateDegreeTypes.nodes;
@@ -88,8 +92,12 @@ async function getDraftUndergraduateDegrees() {
       },
     });
 
-    if (!data) {
+    if (error) {
       handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return null;
     }
 
     for (const degree of data.latestContentRevisions?.results ?? []) {
@@ -132,8 +140,12 @@ async function getPublishedUndergraduateDegrees() {
       },
     });
 
-    if (!data) {
+    if (error) {
       handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return null;
     }
 
     degrees.push(...data.nodeUndergraduateDegrees.nodes);

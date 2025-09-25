@@ -119,8 +119,12 @@ export async function getRoute(url: string) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   if (showUnpublished && data.route?.__typename === "RouteInternal" && data.route.entity === null) {
@@ -135,8 +139,12 @@ export async function getRoute(url: string) {
       },
     });
 
-    if (!data) {
+    if (error) {
       handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return null;
     }
 
     return data.route;
@@ -211,8 +219,12 @@ export async function getRouteBreadcrumbs(url: string) {
     },
   });
 
-  if (!data) {
+  if (error) {
     handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
   }
 
   switch (data.route?.__typename) {
