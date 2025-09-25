@@ -1,4 +1,4 @@
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type {
   UndergraduateDegreeFragment,
@@ -20,7 +20,7 @@ function parse(degree: UndergraduateDegreeFragment) {
 }
 
 export async function getUndergraduateDegreeTypes() {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query UndergraduateDegreeTypes {
         termUndergraduateDegreeTypes(first: 100) {
@@ -31,6 +31,14 @@ export async function getUndergraduateDegreeTypes() {
       }
     `),
   });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
 
   return data.termUndergraduateDegreeTypes.nodes;
 }
@@ -76,13 +84,17 @@ async function getDraftUndergraduateDegrees() {
   let total = 1;
 
   while (page < total) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: degreeQuery,
       variables: {
         pageSize,
         page,
       },
     });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
 
     for (const degree of data?.latestContentRevisions?.results ?? []) {
       if (degree.__typename === "NodeUndergraduateDegree") {
@@ -117,16 +129,25 @@ async function getPublishedUndergraduateDegrees() {
   const degrees: UndergraduateDegreesQuery["nodeUndergraduateDegrees"]["nodes"] = [];
 
   while (hasNextPage) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: degreesQuery,
       variables: {
         after: cursor,
       },
     });
 
-    degrees.push(...data.nodeUndergraduateDegrees.nodes);
-    cursor = data.nodeUndergraduateDegrees.pageInfo.endCursor;
-    hasNextPage = data.nodeUndergraduateDegrees.pageInfo.hasNextPage;
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (data) {
+      degrees.push(...data.nodeUndergraduateDegrees.nodes);
+      cursor = data.nodeUndergraduateDegrees.pageInfo.endCursor;
+      hasNextPage = data.nodeUndergraduateDegrees.pageInfo.hasNextPage;
+    } else {
+      hasNextPage = false;
+      console.warn("Undergraduate Degrees: failed to retrieve all degrees, showing partial results");
+    }
   }
 
   return degrees.filter((degree) => degree.status).map(parse);

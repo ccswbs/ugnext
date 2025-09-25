@@ -1,5 +1,5 @@
 import { gql } from "@/lib/graphql";
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { parse, type LinksetInterface } from "@drupal/linkset";
 import type { MenuFragment } from "@/lib/graphql/types";
 
@@ -26,7 +26,7 @@ export async function getMenuByName(name: string) {
     return null;
   }
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query MenuByName($name: MenuAvailable!) {
         menu(name: $name) {
@@ -40,7 +40,15 @@ export async function getMenuByName(name: string) {
     },
   });
 
-  return data?.menu;
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  return data.menu;
 }
 
 export async function getMenuByNameLinkset(menuName: string) {
@@ -94,11 +102,7 @@ export async function getMenuByNameLinkset(menuName: string) {
     } else if (hierarchy.length === 2) {
       const index = Number.parseInt(hierarchy[0]);
       // Add parent item with URL as the first child if not already added
-      if (
-        menu.items[index] &&
-        menu.items[index].url &&
-        !parentUrlAdded[index]
-      ) {
+      if (menu.items[index] && menu.items[index].url && !parentUrlAdded[index]) {
         menu.items[index].children.unshift({
           __typename: "MenuItem",
           title: menu.items[index].title,

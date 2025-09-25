@@ -1,4 +1,4 @@
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import type {
   AdmissionLocationFragment,
@@ -14,7 +14,7 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
 export async function getUndergraduateAdmissionStudentTypes() {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query UndergraduateAdmissionStudentTypes {
         termUndergraduateStudentTypes(first: 100) {
@@ -26,6 +26,14 @@ export async function getUndergraduateAdmissionStudentTypes() {
       }
     `),
   });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
 
   return data.termUndergraduateStudentTypes.nodes as UndergraduateAdmissionStudentType[];
 }
@@ -92,25 +100,34 @@ export async function getUndergraduateAdmissionLocations() {
   const locations: UndergraduateAdmissionLocation[] = [];
 
   while (hasNextPage) {
-    const { data } = await query({
+    const { data, error } = await query({
       query: locationsQuery,
       variables: {
         after: cursor,
       },
     });
 
-    const values = data.termAdmissionLocations.nodes
-      .filter((node) => !!node.parent)
-      .map((node) => {
-        return {
-          ...node,
-          type: getAdmissionLocationType(node as TermAdmissionLocation),
-        };
-      });
+    if (error) {
+      handleGraphQLError(error);
+    }
 
-    locations.push(...values);
-    hasNextPage = data.termAdmissionLocations.pageInfo.hasNextPage;
-    cursor = data.termAdmissionLocations.pageInfo.endCursor;
+    if (data) {
+      const values = data.termAdmissionLocations.nodes
+        .filter((node) => !!node.parent)
+        .map((node) => {
+          return {
+            ...node,
+            type: getAdmissionLocationType(node as TermAdmissionLocation),
+          };
+        });
+
+      locations.push(...values);
+      hasNextPage = data.termAdmissionLocations.pageInfo.hasNextPage;
+      cursor = data.termAdmissionLocations.pageInfo.endCursor;
+    } else {
+      hasNextPage = false;
+      console.warn("Undergraduate Requirement Locations: failed to retrieve all locations, showing partial results.");
+    }
   }
 
   return locations.toSorted((a, b) => a.weight - b.weight);
@@ -201,7 +218,7 @@ export async function getUndergraduateAdmissionRequirementIDs(
   location?: UndergraduateAdmissionLocation,
   program?: UndergraduateProgram
 ) {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query UndergraduateAdmissionRequirementsIDs($studentType: String, $location: String, $program: Float) {
         undergraduateAdmissionRequirements(
@@ -222,8 +239,16 @@ export async function getUndergraduateAdmissionRequirementIDs(
     },
   });
 
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
   return (
-    data?.undergraduateAdmissionRequirements?.results
+    data.undergraduateAdmissionRequirements?.results
       .map((result) => (result.__typename === "NodeUndergraduateRequirement" ? result.id : null))
       .filter((id) => id !== null) ?? []
   );
@@ -252,9 +277,17 @@ export async function getUndergraduateAdmissionRequirementsByID(ids: string[]) {
   return (
     (await Promise.all(requirementPromises))
       // Add the rank to each requirement
-      .map((result) => {
+      .map(({ data, error }) => {
+        if (error) {
+          handleGraphQLError(error);
+        }
+
+        if (!data) {
+          return null;
+        }
+
         let rank = 0;
-        let requirement = result.data.nodeUndergraduateRequirement;
+        let requirement = data.nodeUndergraduateRequirement;
 
         if (!requirement) {
           return null;
