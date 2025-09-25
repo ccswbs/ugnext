@@ -157,7 +157,7 @@ export async function getFeaturedNewsArticles() {
   }
 
   if (!data) {
-    return null;
+    return [];
   }
 
   if (!data.featuredLegacyNews) {
