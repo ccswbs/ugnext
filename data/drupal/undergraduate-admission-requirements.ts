@@ -32,7 +32,7 @@ export async function getUndergraduateAdmissionStudentTypes() {
   }
 
   if (!data) {
-    return null;
+    return [];
   }
 
   return data.termUndergraduateStudentTypes.nodes as UndergraduateAdmissionStudentType[];
@@ -111,22 +111,23 @@ export async function getUndergraduateAdmissionLocations() {
       handleGraphQLError(error);
     }
 
-    if (!data) {
-      return null;
+    if (data) {
+      const values = data.termAdmissionLocations.nodes
+        .filter((node) => !!node.parent)
+        .map((node) => {
+          return {
+            ...node,
+            type: getAdmissionLocationType(node as TermAdmissionLocation),
+          };
+        });
+
+      locations.push(...values);
+      hasNextPage = data.termAdmissionLocations.pageInfo.hasNextPage;
+      cursor = data.termAdmissionLocations.pageInfo.endCursor;
+    } else {
+      hasNextPage = false;
+      console.warn("Undergraduate Requirement Locations: failed to retrieve all locations, showing partial results.");
     }
-
-    const values = data.termAdmissionLocations.nodes
-      .filter((node) => !!node.parent)
-      .map((node) => {
-        return {
-          ...node,
-          type: getAdmissionLocationType(node as TermAdmissionLocation),
-        };
-      });
-
-    locations.push(...values);
-    hasNextPage = data.termAdmissionLocations.pageInfo.hasNextPage;
-    cursor = data.termAdmissionLocations.pageInfo.endCursor;
   }
 
   return locations.toSorted((a, b) => a.weight - b.weight);
@@ -276,13 +277,17 @@ export async function getUndergraduateAdmissionRequirementsByID(ids: string[]) {
   return (
     (await Promise.all(requirementPromises))
       // Add the rank to each requirement
-      .map((result) => {
-        if (!result.data) {
-          handleGraphQLError(result.error);
+      .map(({ data, error }) => {
+        if (error) {
+          handleGraphQLError(error);
+        }
+
+        if (!data) {
+          return null;
         }
 
         let rank = 0;
-        let requirement = result.data.nodeUndergraduateRequirement;
+        let requirement = data.nodeUndergraduateRequirement;
 
         if (!requirement) {
           return null;

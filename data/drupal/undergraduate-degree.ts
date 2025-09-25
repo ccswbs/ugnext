@@ -37,7 +37,7 @@ export async function getUndergraduateDegreeTypes() {
   }
 
   if (!data) {
-    return null;
+    return [];
   }
 
   return data.termUndergraduateDegreeTypes.nodes;
@@ -96,17 +96,13 @@ async function getDraftUndergraduateDegrees() {
       handleGraphQLError(error);
     }
 
-    if (!data) {
-      return null;
-    }
-
-    for (const degree of data.latestContentRevisions?.results ?? []) {
+    for (const degree of data?.latestContentRevisions?.results ?? []) {
       if (degree.__typename === "NodeUndergraduateDegree") {
         degrees.push(degree);
       }
     }
 
-    total = Math.ceil((data.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
+    total = Math.ceil((data?.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
     page++;
   }
 
@@ -144,13 +140,14 @@ async function getPublishedUndergraduateDegrees() {
       handleGraphQLError(error);
     }
 
-    if (!data) {
-      return null;
+    if (data) {
+      degrees.push(...data.nodeUndergraduateDegrees.nodes);
+      cursor = data.nodeUndergraduateDegrees.pageInfo.endCursor;
+      hasNextPage = data.nodeUndergraduateDegrees.pageInfo.hasNextPage;
+    } else {
+      hasNextPage = false;
+      console.warn("Undergraduate Degrees: failed to retrieve all degrees, showing partial results");
     }
-
-    degrees.push(...data.nodeUndergraduateDegrees.nodes);
-    cursor = data.nodeUndergraduateDegrees.pageInfo.endCursor;
-    hasNextPage = data.nodeUndergraduateDegrees.pageInfo.hasNextPage;
   }
 
   return degrees.filter((degree) => degree.status).map(parse);

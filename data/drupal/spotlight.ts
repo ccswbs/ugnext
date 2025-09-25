@@ -197,7 +197,7 @@ export async function getSpotlights() {
     }
 
     if (!data) {
-      return null;
+      return { hero: null, cards: [] } as { hero: Spotlight | null; cards: Spotlight[] };
     }
 
     total = Math.ceil((data.spotlightRevisions?.pageInfo?.total ?? 0) / pageSize);

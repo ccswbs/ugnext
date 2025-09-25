@@ -57,7 +57,7 @@ export async function getTestimonialByTag(tags: string[]) {
   }
 
   if (!data) {
-    return null;
+    return [];
   }
 
   return (
