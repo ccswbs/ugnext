@@ -57,6 +57,9 @@ function isElement(domNode: DOMNode): domNode is Element {
   return isTag && hasAttributes;
 }
 
+// Counter for td elements with rowspan to handle alternating colors
+let rowspanTdCounter = 0;
+
 const defaultInstructions: ParserInstruction[] = [
   // vcard
   {
@@ -520,6 +523,137 @@ const defaultInstructions: ParserInstruction[] = [
               </Grid>
     },
   },
+  // Tables
+  {
+    shouldProcessNode: (node) => node.tagName === "table",
+    processNode: (node, props, children) => {
+      // Reset the rowspan counter for each new table
+      rowspanTdCounter = 0;
+      
+      // Strip all existing attributes and create clean props for table
+      const cleanProps = {};
+      const classes = twMerge(
+        "w-full border-collapse border border-grey-light my-4"
+      );
+
+      return (
+        <div className="overflow-x-auto my-4">
+          <table {...cleanProps} key={nanoid()} className={classes}>
+            {children}
+          </table>
+        </div>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "thead",
+    processNode: (node, props, children) => {
+      // Strip all existing attributes and create clean props for thead
+      const cleanProps = {};
+      
+      return (
+        <thead {...cleanProps} key={nanoid()}>
+          {children}
+        </thead>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "tbody",
+    processNode: (node, props, children) => {
+      // Strip all existing attributes and create clean props for tbody
+      const cleanProps = {};
+      
+      return (
+        <tbody {...cleanProps} key={nanoid()}>
+          {children}
+        </tbody>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "tr",
+    processNode: (node, props, children, index) => {
+      // Strip all existing attributes and create clean props for tr
+      const cleanProps = {};
+      
+      const classes = twMerge(
+        "border border-grey-light"
+      );
+
+      return (
+        <tr {...cleanProps} key={nanoid()} className={classes}>
+          {children}
+        </tr>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "th",
+    processNode: (node, props, children, index, childParser) => {
+      // Get preserved attributes from the original node
+      const cleanProps: { rowspan?: string | number; colspan?: string | number } = {};
+      if (node.attribs.rowspan) cleanProps.rowspan = node.attribs.rowspan;
+      if (node.attribs.colspan) cleanProps.colspan = node.attribs.colspan;
+      
+      const classes = twMerge(
+        "border border-grey-light px-4 py-2 text-left font-semibold"
+      );
+
+      return (
+        <th {...cleanProps} key={nanoid()} className={classes}>
+          {children}
+        </th>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "td",
+    processNode: (node, props, children, index, childParser) => {
+      // Get preserved attributes from the original node
+      const cleanProps: { rowspan?: string | number; colspan?: string | number } = {};
+      if (node.attribs.rowspan) cleanProps.rowspan = node.attribs.rowspan;
+      if (node.attribs.colspan) cleanProps.colspan = node.attribs.colspan;
+      
+      let backgroundClass = "";
+      
+      // Handle alternating colors for td elements with rowspan
+      if (node.attribs.rowspan) {
+        // Use independent counter for rowspan cells
+        const isEvenRowspanCell = rowspanTdCounter % 2 === 0;
+        backgroundClass = isEvenRowspanCell ? "bg-grey-light-bg" : "bg-white";
+        rowspanTdCounter++;
+      } else {
+        // For regular td elements, find the parent tr and use its index
+        let parentTr = node.parent;
+        while (parentTr && parentTr.type === 'tag' && parentTr.name !== 'tr') {
+          parentTr = parentTr.parent;
+        }
+        
+        let rowIndex = 0;
+        if (parentTr && parentTr.parent) {
+          const siblings = parentTr.parent.children.filter((child: any) => 
+            child.type === 'tag' && child.name === 'tr'
+          );
+          rowIndex = siblings.indexOf(parentTr);
+        }
+        
+        const isEvenRow = rowIndex % 2 === 0;
+        backgroundClass = isEvenRow ? "bg-grey-light-bg" : "bg-white";
+      }
+      
+      const classes = twMerge(
+        "border border-grey-light px-4 py-2",
+        backgroundClass
+      );
+
+      return (
+        <td {...cleanProps} key={nanoid()} className={classes}>
+          {children}
+        </td>
+      );
+    },
+  },
   // Scripts
   {
     shouldProcessNode: (node) => node.tagName === "script",
@@ -540,10 +674,21 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
         const props = attributesToProps(node.attribs);
 
         // Remove bad props
-        delete props.style;
+        // Only strip inline styles unless the node is a div or iframe
+        if (node.tagName !== 'div' && node.tagName !== 'iframe') {
+          delete props.style;
+        }
         delete props.key;
         delete props.dangerouslySetInnerHTML;
         delete props.children;
+        
+        // Preserve rowspan and colspan for table cells
+        const isTableCell = node.tagName === 'td' || node.tagName === 'th';
+        const preservedAttribs: { rowspan?: string | number; colspan?: string | number } = {};
+        if (isTableCell) {
+          if (node.attribs.rowspan) preservedAttribs.rowspan = node.attribs.rowspan;
+          if (node.attribs.colspan) preservedAttribs.colspan = node.attribs.colspan;
+        }
 
         const children = domToReact(node.children as DOMNode[], options);
 
