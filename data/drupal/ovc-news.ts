@@ -92,7 +92,7 @@ export async function getNewsArticleCount() {
   }
 
   if (!data) {
-    return null;
+    return 0;
   }
 
   if (!data.legacyNews) {
