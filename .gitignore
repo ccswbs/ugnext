@@ -49,4 +49,3 @@ yarn-error.log*
 public/@uoguelph
 lib/graphql
 /data/yaml/*.db
-/next-env.d.ts
