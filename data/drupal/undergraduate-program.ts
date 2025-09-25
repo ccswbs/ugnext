@@ -38,7 +38,7 @@ export async function getUndergraduateProgramTypes() {
   }
 
   if (!data) {
-    return null;
+    return [];
   }
 
   return data.termUndergraduateProgramTypes.nodes;
@@ -101,11 +101,7 @@ async function getDraftUndergraduatePrograms() {
       handleGraphQLError(error);
     }
 
-    if (!data) {
-      return null;
-    }
-
-    for (const program of data.latestContentRevisions?.results ?? []) {
+    for (const program of data?.latestContentRevisions?.results ?? []) {
       if (program.__typename === "NodeUndergraduateProgram") {
         programs.push(program);
       }
@@ -149,13 +145,14 @@ async function getPublishedUndergraduatePrograms() {
       handleGraphQLError(error);
     }
 
-    if (!data) {
-      return null;
+    if (data) {
+      programs.push(...data.nodeUndergraduatePrograms.nodes);
+      cursor = data.nodeUndergraduatePrograms.pageInfo.endCursor;
+      hasNextPage = data.nodeUndergraduatePrograms.pageInfo.hasNextPage;
+    } else {
+      hasNextPage = false;
+      console.warn("Undergraduate Programs: failed to retrieve all programs, showing partial results");
     }
-
-    programs.push(...data.nodeUndergraduatePrograms.nodes);
-    cursor = data.nodeUndergraduatePrograms.pageInfo.endCursor;
-    hasNextPage = data.nodeUndergraduatePrograms.pageInfo.hasNextPage;
   }
 
   return programs.filter((program) => program.status).map(parse);
