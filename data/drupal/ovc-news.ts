@@ -129,7 +129,7 @@ export async function getNewsArticles(page: number, size: number = 20) {
   }
 
   if (!data) {
-    return null;
+    return [];
   }
 
   if (!data.legacyNews) {
