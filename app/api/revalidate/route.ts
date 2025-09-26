@@ -1,16 +1,18 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
 import { getRoute } from "@/data/drupal/route";
+import { draftMode } from "next/headers";
 
 async function handler(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const path = searchParams.get("path");
   const tags = searchParams.get("tags");
   const secret = searchParams.get("secret");
+  const { isEnabled } = await draftMode();
 
-  // Validate secret.
-  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET) {
-    return new Response("Invalid secret.", { status: 401 });
+  // User must provide a valid secret or be in draft mode to revalidate.
+  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET && !isEnabled) {
+    return new Response("Invalid secret or you are not in draft mode.", { status: 401 });
   }
 
   // Either tags or path must be provided.
