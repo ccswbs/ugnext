@@ -9,7 +9,11 @@ export function AccordionWidget({ data }) {
 
   return (
     <>
-      {sectionTitle && <Typography type={`h${level}`}>{sectionTitle}</Typography>}
+      {sectionTitle && (
+        <Typography id={`${data.id}-accordions`} type={`h${level}`}>
+          {sectionTitle}
+        </Typography>
+      )}
 
       {data?.items.map((item, index) => (
         <Accordion key={index}>

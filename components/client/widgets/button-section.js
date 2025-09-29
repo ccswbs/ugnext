@@ -89,12 +89,13 @@ export const ButtonWidget = ({ data, column }) => {
   return (
     <>
       {heading && (
-        <Typography type="h3" as="h2" className={classes.heading()}>
+        <Typography id={`${data.id}-button-heading`} type="h3" as="h2" className={classes.heading()}>
           <HtmlParser html={heading} />
         </Typography>
       )}
 
       <Button
+        id={`${data.id}-button`}
         className={classes.button()}
         as={Link}
         href={url}
