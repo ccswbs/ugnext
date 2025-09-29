@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import ConditionalWrap from "conditional-wrap";
 import { Container } from "@uoguelph/react-components/container";
@@ -16,37 +16,56 @@ import { StoryWidget } from "@/components/client/widgets/story";
 import { BlockWidget } from "@/components/client/widgets/block";
 import { TabsWidget } from "@/components/client/widgets/tabs";
 import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial-slider";
+import { SocialMediaWidget } from "@/components/client/widgets/social-media";
+import type { Widgets } from "@/data/drupal/widgets";
 
-export function WidgetSelector({ data }) {
+export function WidgetSelector({ data }: { data: Widgets }) {
   // If this widget is within a section, we don't want to render a container around it
   const context = useContext(SectionContext);
 
   // Some widgets need to span the full width of the page
   const noWrapWidgets = ["ParagraphTestimonialSlider", "ParagraphImageOverlay", "ParagraphStoryWidget"];
 
-  const map = {
-    ParagraphAccordionSection: AccordionWidget,
-    ParagraphSectionButton: ButtonSectionWidget,
-    ParagraphGeneralText: GeneralTextWidget,
-    ParagraphLinksWidget: LinksWidget,
-    ParagraphMediaText: MediaTextWidget,
-    ParagraphTestimonialSlider: TestimonialSliderWidget,
-    ParagraphSection: SectionWidget,
-    ParagraphSectionTab: TabsWidget,
-    ParagraphStatisticWidget: StatisticsWidget,
-    ParagraphImageOverlay: ImageOverlayWidget,
-    ParagraphStoryWidget: StoryWidget,
-    ParagraphBlockWidget: BlockWidget,
+  const Widget = () => {
+    switch (data.__typename) {
+      case "ParagraphAccordionSection":
+        return <AccordionWidget data={data} />;
+      case "ParagraphSectionButton":
+        return <ButtonSectionWidget data={data} />;
+      case "ParagraphGeneralText":
+        return <GeneralTextWidget data={data} />;
+      case "ParagraphLinksWidget":
+        return <LinksWidget data={data} />;
+      case "ParagraphMediaText":
+        return <MediaTextWidget data={data} />;
+      case "ParagraphTestimonialSlider":
+        return <TestimonialSliderWidget data={data} />;
+      case "ParagraphSection":
+        return <SectionWidget data={data} />;
+      case "ParagraphSectionTab":
+        return <TabsWidget data={data} />;
+      case "ParagraphStatisticWidget":
+        return <StatisticsWidget data={data} />;
+      case "ParagraphImageOverlay":
+        return <ImageOverlayWidget data={data} />;
+      case "ParagraphStoryWidget":
+        return <StoryWidget data={data} />;
+      case "ParagraphBlockWidget":
+        return <BlockWidget data={data} />;
+      case "ParagraphSocialMediaWidget":
+        return <SocialMediaWidget data={data} />;
+      default:
+        console.error(`Widget Error ${data.__typename}: Widget type is not supported`, data);
+        return <></>;
+    }
   };
-
-  const Widget = map[data.__typename];
 
   return (
     <ConditionalWrap
       condition={!noWrapWidgets.includes(data.__typename) && !context}
       wrap={(children) => <Container>{children}</Container>}
     >
-      {Widget && <Widget data={data} />}
+      {<Widget />}
     </ConditionalWrap>
   );
 }

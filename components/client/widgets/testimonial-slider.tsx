@@ -14,9 +14,15 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
+import type { TestimonialFragment, TestimonialSliderFragment } from "@/lib/graphql/types";
 
-export function TestimonialSliderWidget({ data }) {
-  let testimonials = [];
+type TestimonialWidgetData = Omit<TestimonialSliderFragment, "byTitle" | "byTags"> & {
+  byTitle: TestimonialFragment[];
+  byTags: TestimonialFragment[];
+};
+
+export function TestimonialSliderWidget({ data }: { data: TestimonialWidgetData }) {
+  let testimonials: TestimonialFragment[] = [];
   const showMultiple = useMediaQuery("only screen and (min-width : 1024px)");
 
   if (Array.isArray(data?.byTitle)) {
@@ -30,9 +36,11 @@ export function TestimonialSliderWidget({ data }) {
   return (
     <div className="bg-grey-light-bg mb-4">
       <Container className="px-4 py-10 flex flex-col items-center">
-        {data?.title && <Typography type="h2" as="h3" className="mb-12 text-black">
-          {data.title}
-        </Typography>}
+        {data?.title && (
+          <Typography type="h2" as="h3" className="mb-12 text-black">
+            {data.title}
+          </Typography>
+        )}
 
         <Carousel loop="jump" display={showMultiple ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
@@ -47,7 +55,7 @@ export function TestimonialSliderWidget({ data }) {
                 src={image?.url}
                 width={image?.width}
                 height={image?.height}
-                alt={image?.alt}
+                alt={image?.alt ?? ""}
                 className="[&_.uofg-media-caption-media]:rounded-full [&_.uofg-media-caption-media]:aspect-square h-full"
                 as="img"
               >
@@ -63,7 +71,7 @@ export function TestimonialSliderWidget({ data }) {
                       <BlockquoteAuthorTitle>{testimonial.description}</BlockquoteAuthorTitle>
                     )}
 
-                    {testimonial?.profile && (
+                    {testimonial?.profile && testimonial.profile.url && (
                       <BlockquoteAuthorLink href={testimonial.profile.url} as={Link}>
                         {testimonial.profile.title}
                       </BlockquoteAuthorLink>

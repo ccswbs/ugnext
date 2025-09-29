@@ -1,18 +1,23 @@
 import { twJoin } from "tailwind-merge";
 import { Typography } from "@uoguelph/react-components/typography";
+import type { SocialMediaFragment } from "@/lib/graphql/types";
 
-export function SocialMediaWidget({ data }) {
+export function SocialMediaWidget({ data }: { data: SocialMediaFragment }) {
   const links = data.socialMediaLinks || [];
   const title = data?.socialMediaTitle;
   const altText = data?.iconAltText;
-  const level = data.headingLevel;
+  const level = data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
   // Sort links alphabetically by name
   const sortedLinks = links.sort((a, b) => a.name.localeCompare(b.name));
 
   return sortedLinks.length > 0 ? (
     <>
-      {title && <Typography type={level} as={level}>{title}</Typography>}
+      {title && (
+        <Typography type={level} as={level}>
+          {title}
+        </Typography>
+      )}
       <ul className="flex gap-2 list-none">
         {sortedLinks.map(({ name, url, value }, index) => (
           <li key={index}>
@@ -46,4 +51,4 @@ export function SocialMediaWidget({ data }) {
       </ul>
     </>
   ) : null;
-};
+}
