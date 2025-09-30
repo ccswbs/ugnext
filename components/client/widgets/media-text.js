@@ -53,7 +53,7 @@ const getPosition = (data, column) => {
     case "secondary":
       return "above";
     default:
-      return data?.mediaAlignment?.name ?? "left";
+      return data?.mediaAlignment ?? "left";
   }
 };
 
