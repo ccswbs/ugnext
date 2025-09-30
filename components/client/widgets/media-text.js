@@ -63,6 +63,7 @@ export function MediaTextWidget({ data }) {
   const size = data?.mediaImageSize ?? "large";
   const media = getMedia(data);
   const position = getPosition(data, context?.column);
+  const decorative = data?.mediaIsDecorative;
 
   const classes = tv({
     slots: {
@@ -88,7 +89,7 @@ export function MediaTextWidget({ data }) {
       src={media.src}
       height={media?.height}
       width={media?.width}
-      alt={media?.alt}
+      alt={decorative ? "" : media?.alt}
       as={media.__typename === "image" ? Image : EmbeddedVideo}
       background={background}
       size={size}
