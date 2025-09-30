@@ -108,9 +108,9 @@ export async function getPageContent(id: string) {
         // Define mapping from backend profile types to frontend categories
         const profileTypeMapping = {
           "Faculty": ["Academic Advisors", "Adjunct Faculty", "Associated Graduate Faculty", 
-            "Chemistry","Computer Science", "Faculty", "Faculty (all)","Faculty (Mathematics)","Faculty (Statistics)",
-            "Faculty/Sessional","Mathematics and Statistics","Physics",
-            "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", "Professors Emeriti/Retired Faculty", 
+            "Faculty", "Faculty (all)","Faculty (Mathematics)","Faculty (Statistics)",
+            "Faculty/Sessional", "Professor Emerita", "Professor Emeritus", "Retired Faculty",
+            "Professor Emeritus/Emerita", "Professors Emeriti/Retired Faculty", 
             "Sessional", "University Professor Emerita", "University Professor Emeritus","Teaching"],
           "Staff": ["Researcher", "Administration", "Admin Staff", "Department Staff", "Research and Technical Staff","Support Staff", "Research Staff","Staff"],
           "Graduate Students": ["Grad Student", "Graduate Student", "Graduate Students"],
