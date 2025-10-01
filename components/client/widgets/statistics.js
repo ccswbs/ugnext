@@ -21,6 +21,9 @@ export function StatisticsWidget({ data }) {
       {data?.content.map((statistic, index) => {
         return (
           <StatisticsItem key={index}>
+            {statistic?.fontAwesomeIcon && variant === "light-grey" && (
+              <i className={`${statistic.fontAwesomeIcon} fa-4x pt-6 -mb-6`}></i>
+            )}
             <StatisticsItemValue>{statistic?.value}</StatisticsItemValue>
             <StatisticsItemRepresents>
               <HtmlParser html={statistic?.represents?.processed} />

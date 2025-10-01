@@ -183,6 +183,7 @@ export const MEDIA_TEXT_FRAGMENT = gql(/* gql */ `
     }
     mediaAlignment
     mediaImageSize
+    mediaIsDecorative
     sectionColumn {
       ...SectionColumn
     }
