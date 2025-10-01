@@ -112,8 +112,9 @@ export async function getPageContent(id: string) {
             "Faculty", "Faculty (all)","Faculty (Mathematics)","Faculty (Statistics)", 
             "Faculty/Sessional", "Faculty: Adjunct", "Faculty: Emeritus (University or College)",
             "Faculty: Full, Assistant, & Associate Professors","Faculty: Retired",
-            "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", "Professors Emeriti/Retired Faculty", 
-            "Retired Faculty", "Sessional", "Sessional Lecturer","Teaching", "University Professor Emerita", "University Professor Emeritus"],
+            "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", 
+            "Professors Emeriti/Retired Faculty", "Retired Faculty", "Sessional", "Sessional Lecturer",
+            "Teaching", "University Professor Emerita", "University Professor Emeritus"],
           "Staff": [
             "Admin Staff", "Administration", "Affiliated Professional", "Department Staff", "Office Staff",
             "Research and Technical Staff","Research Scientist","Research Staff", "Researcher", 
