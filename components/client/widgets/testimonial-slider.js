@@ -57,7 +57,7 @@ export function TestimonialSliderWidget({ data }) {
                   </BlockquoteContent>
 
                   <BlockquoteAuthor>
-                    <BlockquoteAuthorName>{title}</BlockquoteAuthorName>
+                    <BlockquoteAuthorName className="text-black">{title}</BlockquoteAuthorName>
 
                     {testimonial?.description && (
                       <BlockquoteAuthorTitle>{testimonial.description}</BlockquoteAuthorTitle>
