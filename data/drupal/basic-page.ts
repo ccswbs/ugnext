@@ -107,10 +107,22 @@ export async function getPageContent(id: string) {
       try {
         // Define mapping from backend profile types to frontend categories
         const profileTypeMapping = {
-          "Faculty": ["Faculty", "Adjunct Faculty", "Sessional", "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", "Professors Emeriti/Retired Faculty", "University Professor Emerita", "University Professor Emeritus"],
-          "Staff": ["Admin Staff", "Research and Technical Staff", "Staff"],
-          "Graduate Students": ["Grad Student", "Graduate Student", "Graduate Students"],
-          "Postdoctoral Scholars": ["Post Doc", "Postdocs"]
+          "Faculty": [
+            "Academic Advisors", "Adjunct Faculty", "Associated Graduate Faculty", 
+            "Faculty", "Faculty (all)","Faculty (Mathematics)","Faculty (Statistics)", 
+            "Faculty/Sessional", "Faculty: Adjunct", "Faculty: Emeritus (University or College)",
+            "Faculty: Full, Assistant, & Associate Professors","Faculty: Retired",
+            "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", 
+            "Professors Emeriti/Retired Faculty", "Retired Faculty", "Sessional", "Sessional Lecturer",
+            "Teaching", "University Professor Emerita", "University Professor Emeritus"],
+          "Staff": [
+            "Admin Staff", "Administration", "Affiliated Professional", "Department Staff", "Office Staff",
+            "Research and Technical Staff","Research Scientist","Research Staff", "Researcher", 
+            "Staff","Support Staff","Undergraduate Student Researchers"],
+          "Graduate Students": [
+            "Grad Student", "Graduate Student", "Graduate Students"],
+          "Postdoctoral Scholars": [
+            "Post Doc", "Postdocs","Postdoctoral Fellow"]
         };
         
         // If specific profile types are specified, only fetch the allowed ones
