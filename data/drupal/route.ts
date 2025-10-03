@@ -95,6 +95,11 @@ export async function getRoute(url: string) {
               id
               name
               weight
+              parent {
+                ... on TermAdmissionLocation {
+                  name
+                }
+              }
             }
             ... on NodeUndergraduateRequirement {
               uuid
