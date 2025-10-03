@@ -15,6 +15,13 @@ import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
 
+function TestimonialType(types) {  
+  const typeList = types.map(testimonialType => testimonialType.name);
+  const allowedTypes = ['Faculty', 'Alumni', 'Graduate Student', 'Undergraduate Student'];
+  const type = allowedTypes.find(type => typeList.includes(type)) || null;
+  return type;
+}
+
 export function TestimonialSliderWidget({ data }) {
   let testimonials = [];
   const showMultiple = useMediaQuery("only screen and (min-width : 1024px)");
@@ -27,6 +34,8 @@ export function TestimonialSliderWidget({ data }) {
     testimonials = testimonials.concat(data.byTags);
   }
 
+  console.log(testimonials);
+
   return (
     <div className="bg-grey-light-bg mb-4">
       <Container className="px-4 py-10 flex flex-col items-center">
@@ -38,6 +47,7 @@ export function TestimonialSliderWidget({ data }) {
           {testimonials.map((testimonial, index) => {
             const image = testimonial?.image?.image;
             const title = testimonial?.name ?? "Anonymous";
+            const testimonialType = testimonial?.type && TestimonialType(testimonial?.type);
 
             return (
               <MediaCaption
@@ -57,7 +67,7 @@ export function TestimonialSliderWidget({ data }) {
                   </BlockquoteContent>
 
                   <BlockquoteAuthor>
-                    <BlockquoteAuthorName className="text-black">{title}</BlockquoteAuthorName>
+                    <BlockquoteAuthorName className="text-black">{title}{testimonialType ? ', ' + testimonialType : '' }</BlockquoteAuthorName>
 
                     {testimonial?.description && (
                       <BlockquoteAuthorTitle>{testimonial.description}</BlockquoteAuthorTitle>
