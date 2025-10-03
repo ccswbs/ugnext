@@ -18,8 +18,7 @@ import { MediaCaption } from "@uoguelph/react-components/media-caption";
 function TestimonialType(types) {  
   const typeList = types.map(testimonialType => testimonialType.name);
   const allowedTypes = ['Faculty', 'Alumni', 'Graduate Student', 'Undergraduate Student'];
-  const type = allowedTypes.find(type => typeList.includes(type)) || null;
-  return type;
+  return allowedTypes.find(type => typeList.includes(type)) || null;
 }
 
 export function TestimonialSliderWidget({ data }) {
