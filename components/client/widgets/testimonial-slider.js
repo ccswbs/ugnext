@@ -34,8 +34,6 @@ export function TestimonialSliderWidget({ data }) {
     testimonials = testimonials.concat(data.byTags);
   }
 
-  console.log(testimonials);
-
   return (
     <div className="bg-grey-light-bg mb-4">
       <Container className="px-4 py-10 flex flex-col items-center">
@@ -43,7 +41,7 @@ export function TestimonialSliderWidget({ data }) {
           {data.title}
         </Typography>}
 
-        <Carousel loop="jump" display={showMultiple ? 2 : 1}>
+        <Carousel loop="jump" display={showMultiple && testimonials.length > 1 ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
             const image = testimonial?.image?.image;
             const title = testimonial?.name ?? "Anonymous";
