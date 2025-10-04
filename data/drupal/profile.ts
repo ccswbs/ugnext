@@ -96,10 +96,304 @@ export async function getProfileContent(id: string) {
 
 export async function getProfiles() {
   try {
+    const profilesQuery = gql(/* GraphQL */ `
+      query GetProfiles($page: Int = 0, $pageSize: Int = 100) {
+        profiles(page: $page, pageSize: $pageSize) {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileJobTitle
+              profileFirstName
+              profileLastName
+              profileResearchAreas {
+                ...Research
+              }
+              profileType {
+                ...ProfileType
+              }
+              profileUnit {
+                id
+                name
+              }
+              profilePicture {
+                ...Image
+              }
+              tags {
+                ...Tag
+                ...Unit
+              }
+            }
+          }
+          pageInfo {
+            total
+            pageSize
+          }
+        }
+      }
+    `) as any;
+
+    let page = 0;
+    const pageSize = 100;
+    const profiles: any[] = [];
+    let total = 0;
+    let totalPages = 1;
+
+    do {
+      const { data } = await query({
+        query: profilesQuery,
+        variables: {
+          page,
+          pageSize,
+        },
+      });
+
+      if (!data?.profiles?.results) {
+        break;
+      }
+
+      profiles.push(...data.profiles.results);
+      total = data.profiles.pageInfo?.total || 0;
+      totalPages = Math.ceil(total / pageSize);
+      page++;
+    } while (page < totalPages);
+
+    return profiles;
+  } catch (error) {
+    console.error("Error fetching profiles:", error);
+    return [];
+  }
+}
+
+export async function getProfilesByType(profileType: string) {
+  try {
+    const profilesQuery = gql(/* GraphQL */ `
+      query GetProfilesByType($type: String!, $page: Int = 0, $pageSize: Int = 100) {
+        profiles(filter: { field_profile_type_target_id: $type }, page: $page, pageSize: $pageSize) {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileJobTitle
+              profileFirstName
+              profileLastName
+              profileType {
+                id
+                name
+              }
+              profileUnit {
+                id
+                name
+              }
+              profileResearchAreas {
+                ...Research
+              }
+              profilePicture {
+                ...Image
+              }
+              tags {
+                ...Tag
+                ...Unit
+              }
+            }
+          }
+          pageInfo {
+            total
+            pageSize
+          }
+        }
+      }
+    `) as any;
+
+    let page = 0;
+    const pageSize = 100;
+    const profiles: any[] = [];
+    let total = 0;
+    let totalPages = 1;
+
+    do {
+      const { data } = await query({
+        query: profilesQuery,
+        variables: {
+          type: profileType,
+          page,
+          pageSize,
+        },
+      });
+
+      if (!data?.profiles?.results) {
+        break;
+      }
+
+      profiles.push(...data.profiles.results);
+      total = data.profiles.pageInfo?.total || 0;
+      totalPages = Math.ceil(total / pageSize);
+      page++;
+    } while (page < totalPages);
+
+    return profiles;
+  } catch (error) {
+    console.error(`Error fetching profiles by type "${profileType}":`, error);
+    return [];
+  }
+}
+
+/* Enhance this with an additional function to check the initial unitName for a parent
+Add people into an array for the parent unit? */
+export async function getProfilesByUnit(unitName: string) {
+  try {
+    const profilesQuery = gql(/* GraphQL */ `
+      query GetProfilesByUnit($unit: String!, $page: Int = 0, $pageSize: Int = 100) {
+        profiles(filter: { field_profile_unit_target_id: $unit }, page: $page, pageSize: $pageSize) {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileFirstName
+              profileLastName        
+              profileType {
+                ...ProfileType
+              }
+              profilePicture {
+                ...Image
+              }
+            }
+          }
+          pageInfo {
+            total
+            pageSize
+          }
+        }
+      }
+    `) as any;
+
+    let page = 0;
+    const pageSize = 100;
+    const profiles: any[] = [];
+    let total = 0;
+    let totalPages = 1;
+
+    do {
+      const { data } = await query({
+        query: profilesQuery,
+        variables: {
+          unit: unitName,
+          page,
+          pageSize,
+        },
+      });
+
+      if (!data?.profiles?.results) {
+        break;
+      }
+
+      profiles.push(...data.profiles.results);
+      total = data.profiles.pageInfo?.total || 0;
+      totalPages = Math.ceil(total / pageSize);
+      page++;
+    } while (page < totalPages);
+
+    return { results: profiles };
+  } catch (error) {
+    console.error(`Error fetching profiles by unit "${unitName}":`, error);
+    return { results: [] };
+  }
+}
+
+export async function getProfilesByTag(tagName: string) {
+  try {
+    const profilesQuery = gql(/* GraphQL */ `
+      query GetProfilesByTag($tag: String!, $page: Int = 0, $pageSize: Int = 100) {
+        profiles(filter: { field_tags_target_id: $tag }, page: $page, pageSize: $pageSize) {
+          results {
+            ... on NodeProfile {
+              id
+              title
+              path
+              profileFirstName
+              profileLastName        
+              profileType {
+                ...ProfileType
+              }
+              profilePicture {
+                ...Image
+              }
+            }
+          }
+          pageInfo {
+            total
+            pageSize
+          }
+        }
+      }
+    `) as any;
+
+    let page = 0;
+    const pageSize = 100;
+    const profiles: any[] = [];
+    let total = 0;
+    let totalPages = 1;
+
+    do {
+      const { data } = await query({
+        query: profilesQuery,
+        variables: {
+          tag: tagName,
+          page,
+          pageSize,
+        },
+      });
+
+      if (!data?.profiles?.results) {
+        break;
+      }
+
+      profiles.push(...data.profiles.results);
+      total = data.profiles.pageInfo?.total || 0;
+      totalPages = Math.ceil(total / pageSize);
+      page++;
+    } while (page < totalPages);
+
+    return { results: profiles };
+  } catch (error) {
+    console.error(`Error fetching profiles by tag "${tagName}":`, error);
+    return { results: [] };
+  }
+}
+
+export async function getProfileCount() {
+  try {
     const { data } = await query({
       query: gql(/* GraphQL */ `
-        query GetProfiles {
-          profiles {
+        query GetProfileCount {
+          profiles(page: 0, pageSize: 1) {
+            pageInfo {
+              total
+              pageSize
+            }
+          }
+        }
+      `) as any,
+    });
+
+    return data?.profiles?.pageInfo?.total || 0;
+  } catch (error) {
+    console.error("Error fetching profile count:", error);
+    return 0;
+  }
+}
+
+
+
+export async function getProfilesPaginated(page: number = 0, pageSize: number = 20) {
+  try {
+    const { data } = await query({
+      query: gql(/* GraphQL */ `
+        query GetProfilesPaginated($page: Int = 0, $pageSize: Int = 20) {
+          profiles(page: $page, pageSize: $pageSize) {
             results {
               ... on NodeProfile {
                 id
@@ -127,145 +421,49 @@ export async function getProfiles() {
                 }
               }
             }
-          }
-        }
-      `),
-    });
-
-    if (!data?.profiles?.results) {
-      return [];
-    }
-
-    return data.profiles.results;
-  } catch (error) {
-    console.error("Error fetching profiles:", error);
-    return [];
-  }
-}
-
-export async function getProfilesByType(profileType: string) {
-  try {
-    const { data } = await query({
-      query: gql(/* GraphQL */ `
-        query GetProfilesByType($type: String!) {
-          profiles(filter: { field_profile_type_target_id: $type }) {
-            results {
-              ... on NodeProfile {
-                id
-                title
-                path
-                profileJobTitle
-                profileFirstName
-                profileLastName
-                profileType {
-                  id
-                  name
-                }
-                profileUnit {
-                  id
-                  name
-                }
-                profileResearchAreas {
-                  ...Research
-                }
-                profilePicture {
-                  ...Image
-                }
-                tags {
-                  ...Tag
-                  ...Unit
-                }
-              }
+            pageInfo {
+              total
+              pageSize
             }
           }
         }
-      `),
+      `) as any,
       variables: {
-        type: profileType,
+        page,
+        pageSize,
       },
     });
 
-    if (!data?.profiles?.results) {
-      return [];
+    if (!data?.profiles) {
+      return {
+        results: [],
+        total: 0,
+        page,
+        pageSize,
+        totalPages: 0,
+      };
     }
 
-    return data.profiles.results;
+    const total = data.profiles.pageInfo?.total || 0;
+    const totalPages = Math.ceil(total / pageSize);
+
+    return {
+      results: data.profiles.results,
+      total,
+      page,
+      pageSize,
+      totalPages,
+    };
   } catch (error) {
-    console.error(`Error fetching profiles by type "${profileType}":`, error);
-    return [];
+    console.error("Error fetching paginated profiles:", error);
+    return {
+      results: [],
+      total: 0,
+      page,
+      pageSize,
+      totalPages: 0,
+    };
   }
-}
-
-/* Enhance this with an additional function to check the initial unitName for a parent
-Add people into an array for the parent unit? */
-export async function getProfilesByUnit(unitName: string) {
-  const { data } = await query({
-    query: gql(/* GraphQL */ `
-      query GetProfilesByUnit($unit: String!) {
-        profiles(filter: { field_profile_unit_target_id: $unit }) {
-          results {
-            ... on NodeProfile {
-              id
-              title
-              path
-              profileFirstName
-              profileLastName        
-              profileType {
-                ...ProfileType
-              }
-              profilePicture {
-                ...Image
-              }
-            }
-          }
-        }
-      }
-    `),
-    variables: {
-      unit: unitName,
-    },
-  });
-
-  if (!data?.profiles) {
-    return { results: [] };
-  }
-
-  return data.profiles;
-}
-
-export async function getProfilesByTag(tagName: string) {
-  const { data } = await query({
-    query: gql(/* GraphQL */ `
-      query GetProfilesByTag($tag: String!) {
-        profiles(filter: { field_tags_target_id: $tag }) {
-          results {
-            ... on NodeProfile {
-              id
-              title
-              path
-              profileFirstName
-              profileLastName        
-              profileType {
-                ...ProfileType
-              }
-              profilePicture {
-                ...Image
-              }
-            }
-          }
-        }
-      }
-    `),
-    variables: {
-      tag: tagName,
-    },
-  });
-
-  if (!data?.profiles) {
-    return { results: [] };
-  }
-
-  return data.profiles;
 }
 
 export async function getProfileTypes() {
