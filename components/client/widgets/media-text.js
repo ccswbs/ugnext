@@ -100,7 +100,7 @@ export function MediaTextWidget({ data }) {
     >
       {data?.heading && (
         <Typography
-          id={`${data.id}-media-and-text`}
+          id={`media-and-text-heading-${data.uuid}`}
           className={classes.heading()}
           type={data?.headingLevel ?? "h3"}
           as={data?.headingLevel ?? "h3"}
