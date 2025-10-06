@@ -58,7 +58,7 @@ export function TestimonialSliderWidget({ data }) {
               <MediaCaption
                 key={testimonial.id}
                 position="left"
-                size={"medium"}
+                size="medium"
                 src={image?.url}
                 width={image?.width}
                 height={image?.height}
@@ -66,8 +66,8 @@ export function TestimonialSliderWidget({ data }) {
                 className="[&_.uofg-media-caption-media]:rounded-full [&_.uofg-media-caption-media]:aspect-square h-full"
                 as="img"
               >
-                <Blockquote hideQuotationMarks className="justify-center min-h-full">
-                  <BlockquoteContent className="text-left text-6xl">
+                <Blockquote hideQuotationMarks>
+                  <BlockquoteContent className="text-left text-xl">
                     <HtmlParser html={testimonial?.body?.processed} />
                   </BlockquoteContent>
 
