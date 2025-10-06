@@ -86,6 +86,7 @@ export function MediaTextWidget({ data }) {
 
   return (
     <MediaCaption
+      id={`media-and-text-${data.uuid}`}
       src={media.src}
       height={media?.height}
       width={media?.width}

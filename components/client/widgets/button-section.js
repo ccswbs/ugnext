@@ -97,13 +97,13 @@ export const ButtonWidget = ({ data, column }) => {
   return (
     <>
       {heading && (
-        <Typography id={`${data.id}-button-heading`} type="h3" as="h2" className={classes.heading()}>
+        <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={classes.heading()}>
           <HtmlParser html={heading} />
         </Typography>
       )}
 
       <Button
-        id={`${data.id}-button`}
+        id={`button-${data.uuid}`}
         className={classes.button()}
         as={Link}
         href={url}
@@ -135,7 +135,7 @@ export const ButtonSectionWidget = ({ data }) => {
   })({ column, section: context?.column ?? "primary" });
 
   return (
-    <Container className={classes}>
+    <Container id={`button-section-${data.uuid}`} className={classes}>
       {buttons?.length > 0 && buttons.map((button) => <ButtonWidget key={button.id} column={column} data={button} />)}
     </Container>
   );

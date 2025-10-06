@@ -28,10 +28,10 @@ export function TestimonialSliderWidget({ data }) {
   }
 
   return (
-    <div className="bg-grey-light-bg mb-4">
+    <div id={`testimonial-slider-${data.uuid}`} className="bg-grey-light-bg mb-4">
       <Container className="px-4 py-10 flex flex-col items-center">
         {data?.title && (
-          <Typography id={`${data.id}-testimonial-slider`} type="h2" as="h3" className="mb-12 text-black">
+          <Typography id={`testimonial-slider-heading-${data.uuid}`} type="h2" as="h3" className="mb-12 text-black">
             {data.title}
           </Typography>
         )}
