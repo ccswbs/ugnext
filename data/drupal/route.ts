@@ -1,4 +1,4 @@
-import { getClient, query } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
@@ -111,7 +111,7 @@ export async function getRoute(url: string) {
     }
   `);
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: routeQuery,
     variables: {
       path: url,
@@ -119,11 +119,19 @@ export async function getRoute(url: string) {
     },
   });
 
-  if (showUnpublished && data?.route?.__typename === "RouteInternal" && data.route.entity === null) {
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  if (showUnpublished && data.route?.__typename === "RouteInternal" && data.route.entity === null) {
     // For some reason, the route is found, but the entity is null.
     // This only happens when we are looking for the latest revision and the entity has no revisions.
     // We need to query again with the current revision.
-    const { data } = await query({
+    const { data, error } = await query({
       query: routeQuery,
       variables: {
         path: url,
@@ -131,10 +139,18 @@ export async function getRoute(url: string) {
       },
     });
 
-    return data?.route;
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return null;
+    }
+
+    return data.route;
   }
 
-  switch (data?.route?.__typename) {
+  switch (data.route?.__typename) {
     case "RouteInternal":
     case "RouteRedirect":
       return data?.route;
@@ -144,7 +160,7 @@ export async function getRoute(url: string) {
 }
 
 export async function getRouteBreadcrumbs(url: string) {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query RouteBreadcrumbs($path: String!, $revision: ID = "current") {
         route(path: $path, revision: $revision) {
@@ -206,7 +222,15 @@ export async function getRouteBreadcrumbs(url: string) {
     },
   });
 
-  switch (data?.route?.__typename) {
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  switch (data.route?.__typename) {
     case "RouteInternal":
       if (!data.route.entity || !("title" in data.route.entity)) {
         return null;
