@@ -14,9 +14,17 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
+import { twMerge } from "tailwind-merge";
+
+function TestimonialType(types) {
+  const typeList = types.map((testimonialType) => testimonialType.name);
+  const allowedTypes = ["Faculty", "Alumni", "Graduate Student", "Undergraduate Student"];
+  return allowedTypes.find((type) => typeList.includes(type)) || null;
+}
 
 export function TestimonialSliderWidget({ data }) {
   let testimonials = [];
+  let numTestimonials = 0;
   const showMultiple = useMediaQuery("only screen and (min-width : 1024px)");
 
   if (Array.isArray(data?.byTitle)) {
@@ -27,17 +35,24 @@ export function TestimonialSliderWidget({ data }) {
     testimonials = testimonials.concat(data.byTags);
   }
 
+  numTestimonials = testimonials.length;
+
   return (
     <div className="bg-grey-light-bg mb-4">
-      <Container className="px-4 py-10 flex flex-col items-center">
-        {data?.title && <Typography type="h2" as="h3" className="mb-12 text-black">
-          {data.title}
-        </Typography>}
+      <Container
+        className={twMerge("px-4 py-10 flex flex-col items-center", numTestimonials === 1 && "lg:w-3/4 xl:w-1/2")}
+      >
+        {data?.title && (
+          <Typography type="h2" as="h3" className="mb-12 text-black">
+            {data.title}
+          </Typography>
+        )}
 
-        <Carousel loop="jump" display={showMultiple ? 2 : 1}>
+        <Carousel loop="jump" display={showMultiple && numTestimonials > 1 ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
             const image = testimonial?.image?.image;
             const title = testimonial?.name ?? "Anonymous";
+            const testimonialType = testimonial?.type && TestimonialType(testimonial?.type);
 
             return (
               <MediaCaption
@@ -57,7 +72,10 @@ export function TestimonialSliderWidget({ data }) {
                   </BlockquoteContent>
 
                   <BlockquoteAuthor>
-                    <BlockquoteAuthorName>{title}</BlockquoteAuthorName>
+                    <BlockquoteAuthorName className="text-black">
+                      {title}
+                      {testimonialType ? ", " + testimonialType : ""}
+                    </BlockquoteAuthorName>
 
                     {testimonial?.description && (
                       <BlockquoteAuthorTitle>{testimonial.description}</BlockquoteAuthorTitle>
