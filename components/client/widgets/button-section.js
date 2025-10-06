@@ -8,6 +8,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import Link from "next/link";
+import { collapseSlashes } from "@/lib/string-utils";
 
 function getButtonData(data) {
   const colors = {
@@ -16,8 +17,15 @@ function getButtonData(data) {
     info: "blue",
   };
 
+  let url = data?.link?.url;
+
+  if (url.startsWith("/sites/default/files")) {
+    const base = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev";
+    url = collapseSlashes(`${base}/${url}`);
+  }
+
   return {
-    url: data?.link?.url,
+    url: url,
     title: data?.formattedTitle ? data.formattedTitle.processed : data.link?.title ? data.link.title : "",
     heading: data?.ctaHeading?.processed,
     color: colors[data?.style?.name?.toLowerCase()?.replace("(outline)", "").trim()] ?? "red",
