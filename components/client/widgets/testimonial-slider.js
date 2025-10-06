@@ -14,15 +14,17 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
+import { twMerge } from "tailwind-merge";
 
-function TestimonialType(types) {  
-  const typeList = types.map(testimonialType => testimonialType.name);
-  const allowedTypes = ['Faculty', 'Alumni', 'Graduate Student', 'Undergraduate Student'];
-  return allowedTypes.find(type => typeList.includes(type)) || null;
+function TestimonialType(types) {
+  const typeList = types.map((testimonialType) => testimonialType.name);
+  const allowedTypes = ["Faculty", "Alumni", "Graduate Student", "Undergraduate Student"];
+  return allowedTypes.find((type) => typeList.includes(type)) || null;
 }
 
 export function TestimonialSliderWidget({ data }) {
   let testimonials = [];
+  let numTestimonials = 0;
   const showMultiple = useMediaQuery("only screen and (min-width : 1024px)");
 
   if (Array.isArray(data?.byTitle)) {
@@ -33,14 +35,20 @@ export function TestimonialSliderWidget({ data }) {
     testimonials = testimonials.concat(data.byTags);
   }
 
+  numTestimonials = testimonials.length;
+
   return (
     <div className="bg-grey-light-bg mb-4">
-      <Container className="px-4 py-10 flex flex-col items-center">
-        {data?.title && <Typography type="h2" as="h3" className="mb-12 text-black">
-          {data.title}
-        </Typography>}
+      <Container
+        className={twMerge("px-4 py-10 flex flex-col items-center", numTestimonials === 1 && "lg:w-3/4 xl:w-1/2")}
+      >
+        {data?.title && (
+          <Typography type="h2" as="h3" className="mb-12 text-black">
+            {data.title}
+          </Typography>
+        )}
 
-        <Carousel loop="jump" display={showMultiple && testimonials.length > 1 ? 2 : 1}>
+        <Carousel loop="jump" display={showMultiple && numTestimonials > 1 ? 2 : 1}>
           {testimonials.map((testimonial, index) => {
             const image = testimonial?.image?.image;
             const title = testimonial?.name ?? "Anonymous";
@@ -50,7 +58,7 @@ export function TestimonialSliderWidget({ data }) {
               <MediaCaption
                 key={testimonial.id}
                 position="left"
-                size="medium"
+                size={"medium"}
                 src={image?.url}
                 width={image?.width}
                 height={image?.height}
@@ -58,13 +66,16 @@ export function TestimonialSliderWidget({ data }) {
                 className="[&_.uofg-media-caption-media]:rounded-full [&_.uofg-media-caption-media]:aspect-square h-full"
                 as="img"
               >
-                <Blockquote hideQuotationMarks>
-                  <BlockquoteContent className="text-left text-xl">
+                <Blockquote hideQuotationMarks className="justify-center min-h-full">
+                  <BlockquoteContent className="text-left text-6xl">
                     <HtmlParser html={testimonial?.body?.processed} />
                   </BlockquoteContent>
 
                   <BlockquoteAuthor>
-                    <BlockquoteAuthorName className="text-black">{title}{testimonialType ? ', ' + testimonialType : '' }</BlockquoteAuthorName>
+                    <BlockquoteAuthorName className="text-black">
+                      {title}
+                      {testimonialType ? ", " + testimonialType : ""}
+                    </BlockquoteAuthorName>
 
                     {testimonial?.description && (
                       <BlockquoteAuthorTitle>{testimonial.description}</BlockquoteAuthorTitle>
