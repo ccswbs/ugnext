@@ -7,7 +7,7 @@ import { draftMode } from "next/headers";
 import { Bitter, DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@uoguelph/web-components/style";
-import { DraftModeBanner } from "@/components/client/draft-mode-banner";
+import { Button } from "@uoguelph/react-components/button";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -59,7 +59,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <AppArmor />
 
-        {isDraftMode && <DraftModeBanner />}
+        {isDraftMode && (
+          <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
+            <span>You are currently in Draft Mode.</span>
+
+            <Button color="yellow" className="p-2" href="/api/disable-draft" as="a">
+              Disable Draft Mode
+            </Button>
+          </div>
+        )}
 
         {children}
       </body>
