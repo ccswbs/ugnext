@@ -9,6 +9,7 @@ export const ACCORDION_FRAGMENT = gql(/* gql */ `
     accordionSectionTitle: title
     items {
       ... on ParagraphAccordionBlock {
+        uuid
         headingLevel
         accordionTitle: title
         text {

@@ -10,13 +10,13 @@ export function AccordionWidget({ data }) {
   return (
     <>
       {sectionTitle && (
-        <Typography id={`${data.id}-accordions`} type={`h${level}`}>
+        <Typography id={`accordions-heading-${data.uuid}`} type={`h${level}`}>
           {sectionTitle}
         </Typography>
       )}
 
       {data?.items.map((item, index) => (
-        <Accordion key={index}>
+        <Accordion id={`accordion-${item.uuid}`} key={index}>
           <AccordionButton>{item.accordionTitle}</AccordionButton>
           <AccordionContent>
             <HtmlParser html={item.text.processed} />
