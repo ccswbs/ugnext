@@ -1,6 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { SpotlightFragment } from "@/lib/graphql/types";
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export const SPOTLIGHT_FRAGMENT = gql(/* gql */ `
@@ -171,7 +171,7 @@ export async function getSpotlights() {
   let total = 1;
 
   do {
-    const { data } = await query({
+    const { data, error } = await query({
       query: gql(/* gql */ `
         query Spotlights($pageSize: Int = 5, $page: Int = 0, $status: Boolean = null) {
           spotlightRevisions(filter: { status: $status }, pageSize: $pageSize, page: $page) {
@@ -192,9 +192,17 @@ export async function getSpotlights() {
       },
     });
 
-    total = Math.ceil((data?.spotlightRevisions?.pageInfo?.total ?? 0) / pageSize);
+    if (error) {
+      handleGraphQLError(error);
+    }
 
-    for (const spotlight of data?.spotlightRevisions?.results ?? []) {
+    if (!data) {
+      return { hero: null, cards: [] } as { hero: Spotlight | null; cards: Spotlight[] };
+    }
+
+    total = Math.ceil((data.spotlightRevisions?.pageInfo?.total ?? 0) / pageSize);
+
+    for (const spotlight of data.spotlightRevisions?.results ?? []) {
       if (spotlight.__typename !== "NodeSpotlight") {
         continue;
       }
