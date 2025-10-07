@@ -1,5 +1,5 @@
 import { gql } from "@/lib/graphql";
-import { getClient, query } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { NewsWithoutBodyFragment } from "@/lib/graphql/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
@@ -44,7 +44,7 @@ export const NEWS_WITHOUT_BODY_FRAGMENT = gql(/* gql */ `
 export async function getNewsArticle(id: string) {
   const showUnpublished = await showUnpublishedContent();
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query GetNewsArticle($id: ID = "", $revision: ID = "current") {
         nodeArticle(id: $id, revision: $revision) {
@@ -58,7 +58,15 @@ export async function getNewsArticle(id: string) {
     },
   });
 
-  if (!data?.nodeArticle) {
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  if (!data.nodeArticle) {
     return null;
   }
 
@@ -66,7 +74,7 @@ export async function getNewsArticle(id: string) {
 }
 
 export async function getNewsArticleCount() {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query GetNewsArticlePageCount {
         legacyNews(page: 0) {
@@ -79,7 +87,15 @@ export async function getNewsArticleCount() {
     `),
   });
 
-  if (!data?.legacyNews) {
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return 0;
+  }
+
+  if (!data.legacyNews) {
     return 0;
   }
 
@@ -92,7 +108,7 @@ export async function getNewsArticles(page: number, size: number = 20) {
   // This function is used in a Server Active, so we need to use getClient to get the query function, otherwise it will create multiple ApolloClient instances.
   const query = getClient().query;
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query GetNewsArticles($page: Int = 0, $size: Int = 20) {
         legacyNews(page: $page, pageSize: $size) {
@@ -108,7 +124,15 @@ export async function getNewsArticles(page: number, size: number = 20) {
     },
   });
 
-  if (!data?.legacyNews) {
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  if (!data.legacyNews) {
     return [];
   }
 
@@ -116,7 +140,7 @@ export async function getNewsArticles(page: number, size: number = 20) {
 }
 
 export async function getFeaturedNewsArticles() {
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query GetFeaturedNewsArticles {
         featuredLegacyNews {
@@ -128,7 +152,15 @@ export async function getFeaturedNewsArticles() {
     `),
   });
 
-  if (!data?.featuredLegacyNews) {
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  if (!data.featuredLegacyNews) {
     return [];
   }
 

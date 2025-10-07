@@ -8,11 +8,6 @@ import { Footer } from "@uoguelph/react-components/footer";
 import { Button } from "@uoguelph/react-components/button";
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
-
   return (
     <Layout>
       <Header></Header>

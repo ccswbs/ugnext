@@ -183,6 +183,7 @@ export const MEDIA_TEXT_FRAGMENT = gql(/* gql */ `
     }
     mediaAlignment
     mediaImageSize
+    mediaIsDecorative
     sectionColumn {
       ...SectionColumn
     }
@@ -347,9 +348,11 @@ export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
     id
     title
     byTitle {
+      __typename
       ...Testimonial
     }
     byTags {
+      __typename
       ...Tag
     }
   }
