@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
 import Script from "next/script";
-import { Input } from '@headlessui/react';
+import { Input } from "@headlessui/react";
 import { Info } from "@uoguelph/react-components/info";
 import { Button, type ButtonProps } from "@uoguelph/react-components/button";
 import { Link } from "@uoguelph/react-components/link";
@@ -16,6 +16,7 @@ import { Grid } from "@uoguelph/react-components/grid";
 import Image from "next/image";
 import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 import NextLink from "next/link";
+import { collapseSlashes } from "@/lib/string-utils";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -57,6 +58,26 @@ function isElement(domNode: DOMNode): domNode is Element {
   return isTag && hasAttributes;
 }
 
+// Helper function to check if a DOM node has an ancestor with a specific class
+function hasAncestorWithClass(node: Element, className: string): boolean {
+  let current = node.parent;
+  while (current) {
+    // Check if current is a DOMNode before passing to isElement
+    if (current && typeof current === 'object' && 'type' in current && isElement(current as DOMNode)) {
+      const element = current as Element;
+      const currentClassName = (element.attribs?.class as string) ?? "";
+      if (currentClassName.includes(className)) {
+        return true;
+      }
+    }
+    current = current.parent;
+  }
+  return false;
+}
+
+// Counter for td elements with rowspan to handle alternating colors
+let rowspanTdCounter = 0;
+
 const defaultInstructions: ParserInstruction[] = [
   // vcard
   {
@@ -64,38 +85,89 @@ const defaultInstructions: ParserInstruction[] = [
       const className = (props.className as string) ?? "";
       return className.includes("vcard");
     },
-    processNode: (node, props, children) => {
-      const childArray = React.Children.toArray(children);
-      let name = "",
-        title = "",
-        phone = "",
-        extension = "",
-        email = "";
+    processNode: (node, props, children, index, childParser) => {
+      // Helper function to recursively extract information from DOM nodes
+      const extractVcardInfo = (domNode: Element): {
+        name: string;
+        title: string;
+        phone: string;
+        extension: string;
+        email: string;
+      } => {
+        let name = "",
+          title = "",
+          phone = "",
+          extension = "",
+          email = "";
 
-      for (const child of childArray) {
-        const isElement = React.isValidElement(child);
-
-        if (isElement && child.type === "strong") {
-          name = (child as React.JSX.Element)?.props.children;
-        }
-
-        if (typeof child === "string" && child.length > 2 && !title) {
-          title = child;
-        }
-
-        const href = (child as React.JSX.Element).props?.href;
-
-        if (isElement && typeof href === "string") {
-          if (href.startsWith("tel:")) {
-            const tokens = href.replace("tel:", "").split("p");
-
-            phone = (child as React.JSX.Element)?.props.children;
-            extension = tokens[1];
-          } else if (href.startsWith("mailto:")) {
-            email = href.replace("mailto:", "");
+        const processNode = (node: any) => {
+          if (isElement(node)) {
+            const className = (node.attribs?.class as string) ?? "";
+            
+            // Extract name from .fn class or strong tags
+            if (className.includes("fn") || node.tagName === "strong") {
+              const nameText = extractTextFromDOMNode(node);
+              if (nameText && !name) {
+                name = nameText;
+              }
+            }
+            
+            // Extract title from .org class
+            if (className.includes("org")) {
+              const titleText = extractTextFromDOMNode(node);
+              if (titleText && !title) {
+                title = titleText;
+              }
+            }
+            
+            // Extract links (phone and email)
+            if (node.tagName === "a" && typeof node.attribs?.href === "string") {
+              const href = node.attribs.href;
+              
+              if (href.startsWith("tel:")) {
+                const tokens = href.replace("tel:", "").split("p");
+                phone = extractTextFromDOMNode(node);
+                extension = tokens[1] || "";
+              } else if (href.startsWith("mailto:")) {
+                email = href.replace("mailto:", "");
+              }
+            }
+            
+            // Recursively process children
+            if (node.children) {
+              node.children.forEach((child: any) => processNode(child));
+            }
+          } else if (node?.type === "text" && node.data && node.data.trim().length > 2 && !title && !node.data.includes("@")) {
+            // Extract title from direct text content (but not email addresses)
+            const trimmedText = node.data.trim();
+            if (trimmedText && !name.includes(trimmedText)) {
+              title = trimmedText;
+            }
           }
+        };
+
+        // Process all children of the vcard node
+        if (domNode.children) {
+          domNode.children.forEach((child: any) => processNode(child));
         }
-      }
+
+        return { name, title, phone, extension, email };
+      };
+
+      // Helper function to extract text content from any DOM node, ignoring HTML structure
+      const extractTextFromDOMNode = (node: any): string => {
+        if (node?.type === "text") {
+          return node.data || "";
+        }
+        
+        if (isElement(node) && node.children) {
+          return node.children.map((child: any) => extractTextFromDOMNode(child)).join("").trim();
+        }
+        
+        return "";
+      };
+
+      const { name, title, phone, extension, email } = extractVcardInfo(node);
 
       return (
         <Contact {...props} key={nanoid()}>
@@ -123,13 +195,24 @@ const defaultInstructions: ParserInstruction[] = [
   },
   // Links
   {
-    shouldProcessNode: (node, props) => node.tagName === "a" && typeof props.href === "string",
+    shouldProcessNode: (node, props) => {
+      // Skip links that are inside vcard elements - let vcard processor handle them
+      if (hasAncestorWithClass(node, "vcard")) {
+        return false;
+      }
+      return node.tagName === "a" && typeof props.href === "string";
+    },
     processNode: (node, props, children) => {
       if (props.href === "") {
         return <></>;
       }
 
-      const href = props.href as string;
+      let href = props.href as string;
+
+      if (href.startsWith("/sites/default/files")) {
+        const base = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev";
+        href = collapseSlashes(`${base}/${href}`);
+      }
 
       // Check if the link is a button by looking for the "btn" class or "btn-*" class
       const className = (props.className as string) ?? "";
@@ -142,7 +225,7 @@ const defaultInstructions: ParserInstruction[] = [
         // Exclude certain classes
         let excludedClasses = ["text-dark-social"];
         let updatedClassname = className;
-        excludedClasses.forEach(element => {
+        excludedClasses.forEach((element) => {
           updatedClassname = updatedClassname.replace(element, "");
         });
 
@@ -212,10 +295,7 @@ const defaultInstructions: ParserInstruction[] = [
     },
     processNode: (node, props, children) => {
       const className = (props.className as string) ?? "";
-      const classes = twMerge(
-        props.className as string,
-        className.includes("fs-1") && "sm:text-3xl p-0",
-      );
+      const classes = twMerge(props.className as string, className.includes("fs-1") && "sm:text-3xl p-0");
       // Font Awesome's library adds aria-hidden automatically on the client side, but this causes a hydration error because React doesn't see that aria-hidden on the server side rendered code. So adding it here should fix that error
       return (
         <i {...props} key={nanoid()} aria-hidden="true" className={classes}>
@@ -259,7 +339,7 @@ const defaultInstructions: ParserInstruction[] = [
       let type = level;
 
       // Allow headings to appear smaller if needed
-      if(headingClass){
+      if (headingClass) {
         type = headingClass[0] as "h3" | "h4" | "h5" | "h6";
       }
 
@@ -290,12 +370,12 @@ const defaultInstructions: ParserInstruction[] = [
       const className = typeof props.className === "string" ? props.className : "";
       // Replace certain classes
       let replacedClasses = {
-        "lead": "text-2xl font-light leading-[1.5]"
+        lead: "text-2xl font-light leading-[1.5]",
       };
 
       let updatedClassname = className;
       Object.entries(replacedClasses).forEach(([key, value]) => {
-        updatedClassname = updatedClassname.replace(key,value);
+        updatedClassname = updatedClassname.replace(key, value);
       });
 
       const hasInvalidChildren = React.Children.toArray(children).some((child) => {
@@ -316,7 +396,13 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       return (
-        <Typography {...props} key={nanoid()} type="body" as="p" className={twMerge(index === 0 && "mt-0", updatedClassname)}>
+        <Typography
+          {...props}
+          key={nanoid()}
+          type="body"
+          as="p"
+          className={twMerge(index === 0 && "mt-0", updatedClassname)}
+        >
           {children}
         </Typography>
       );
@@ -327,7 +413,7 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, props, children, index) => {
       return (
-        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={'mt-3.75 text-lg'}>
+        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={"mt-3.75 text-lg"}>
           {children}
         </List>
       );
@@ -400,22 +486,19 @@ const defaultInstructions: ParserInstruction[] = [
   {
     shouldProcessNode: (node, props) => node.tagName === "input",
     processNode: (node, props) => {
-      let inputWrapperClasses = "uofg-text-input-wrapper text-input flex rounded-md border border-grey-light bg-white px-4 py-2 transition-colors focus-within:border-blue focus:outline-none";
-      if(props.type === "submit"){
-        return <Button
-            {...props}
-            key={nanoid()}
-            color={"red"}
-            as={Input} />
+      let inputWrapperClasses =
+        "uofg-text-input-wrapper text-input flex rounded-md border border-grey-light bg-white px-4 py-2 transition-colors focus-within:border-blue focus:outline-none";
+      if (props.type === "submit") {
+        return <Button {...props} key={nanoid()} color={"red"} as={Input} />;
       }
 
-        // @todo - consider using TextInput in future(currently gives warning due to div being in a paragraph)
-        return (
-          <span className={twMerge(inputWrapperClasses, "mb-4")}>
-            <Input key={nanoid()} className={"uofg-text-input flex-1 bg-white focus:outline-none"} {...props} />
-          </span>
-        )
-    }
+      // @todo - consider using TextInput in future(currently gives warning due to div being in a paragraph)
+      return (
+        <span className={twMerge(inputWrapperClasses, "mb-4")}>
+          <Input key={nanoid()} className={"uofg-text-input flex-1 bg-white focus:outline-none"} {...props} />
+        </span>
+      );
+    },
   },
   // Containers
   {
@@ -429,10 +512,10 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node, props) => (props.className as string)?.includes("row"),
     processNode: (node, props, children, index) => {
       interface TemplateValues {
-        [key:string]: string[] | undefined;
+        [key: string]: string[] | undefined;
       }
       let templateValues: TemplateValues = {
-        base: ['1fr'],
+        base: ["1fr"],
         md: undefined,
         sm: undefined,
         xl: undefined,
@@ -440,72 +523,73 @@ const defaultInstructions: ParserInstruction[] = [
 
       let convertedGrid: string[] = [];
 
-      {React.Children.map(children, (child) => {
-        // Parse divs with Boostrap column classes
-        if (typeof child !== "string" && child.type === "div") {
-          let bsClasses = child.props.className;
+      {
+        React.Children.map(children, (child) => {
+          // Parse divs with Boostrap column classes
+          if (typeof child !== "string" && child.type === "div") {
+            let bsClasses = child.props.className;
 
-          // console.log("Converting:" + bsClasses);
+            // console.log("Converting:" + bsClasses);
 
-          // Assumes Bootstrap format can be col, col-6, col-md, or col-md-6
-          if(bsClasses.includes('col')){
-            let bsColumnClasses: string[] = bsClasses.split(' ');
+            // Assumes Bootstrap format can be col, col-6, col-md, or col-md-6
+            if (bsClasses.includes("col")) {
+              let bsColumnClasses: string[] = bsClasses.split(" ");
 
-            bsColumnClasses.forEach(columnClass => {
+              bsColumnClasses.forEach((columnClass) => {
                 // Parse bootstrap columns and viewports
-              let bootstrapClassParts = columnClass.replace("col","");
-              let bootstrapNumColumns = bootstrapClassParts.match(/\d+/g);
-              let bootstrapViewport = bootstrapClassParts.match(/[A-Za-z]+/g);
+                let bootstrapClassParts = columnClass.replace("col", "");
+                let bootstrapNumColumns = bootstrapClassParts.match(/\d+/g);
+                let bootstrapViewport = bootstrapClassParts.match(/[A-Za-z]+/g);
 
-              if((columnClass === 'col') || (bootstrapNumColumns === null)){
-                convertedGrid.push('1fr');
-              }else {
-                // Convert bootstrap columns
-                switch (bootstrapNumColumns[0]) {
-                  case '3':
-                    convertedGrid = ['1fr','1fr','1fr'];
-                    break;
-                  case '4':
-                    convertedGrid = ['1fr','1fr','1fr','1fr'];
-                    break;
-                  case '6':
-                    convertedGrid = ['1fr','1fr'];
-                    break;
-                  default:
-                    convertedGrid = ['1fr'];          
+                if (columnClass === "col" || bootstrapNumColumns === null) {
+                  convertedGrid.push("1fr");
+                } else {
+                  // Convert bootstrap columns
+                  switch (bootstrapNumColumns[0]) {
+                    case "3":
+                      convertedGrid = ["1fr", "1fr", "1fr"];
+                      break;
+                    case "4":
+                      convertedGrid = ["1fr", "1fr", "1fr", "1fr"];
+                      break;
+                    case "6":
+                      convertedGrid = ["1fr", "1fr"];
+                      break;
+                    default:
+                      convertedGrid = ["1fr"];
+                  }
                 }
-              }
 
-              if(bootstrapViewport){
-                // Convert bootstrap viewports
-                switch (bootstrapViewport[0]) {
-                  case 'xs':
-                  case 'sm':
-                    templateValues.sm = convertedGrid;
-                    break;
-                  case 'md':
-                  case 'lg':
-                    templateValues.md = convertedGrid;
-                    break;
-                  case 'xl':
-                  case 'xxl':
-                    templateValues.xl = convertedGrid;
-                    break;
-                  default:
-                    templateValues.md = convertedGrid;
+                if (bootstrapViewport) {
+                  // Convert bootstrap viewports
+                  switch (bootstrapViewport[0]) {
+                    case "xs":
+                    case "sm":
+                      templateValues.sm = convertedGrid;
+                      break;
+                    case "md":
+                    case "lg":
+                      templateValues.md = convertedGrid;
+                      break;
+                    case "xl":
+                    case "xxl":
+                      templateValues.xl = convertedGrid;
+                      break;
+                    default:
+                      templateValues.md = convertedGrid;
+                  }
+                } else {
+                  // default viewport for col classes
+                  templateValues.sm = convertedGrid;
                 }
-              }else{
-                // default viewport for col classes
-                templateValues.sm = convertedGrid;
-              }
-
-            });
+              });
+            }
           }
-        }
-      })}
+        });
+      }
 
       // Remove undefined values
-      Object.keys(templateValues).forEach(key => {
+      Object.keys(templateValues).forEach((key) => {
         if (templateValues[key] === undefined) {
           delete templateValues[key];
         }
@@ -513,11 +597,142 @@ const defaultInstructions: ParserInstruction[] = [
 
       // console.log(templateValues);
 
-      return <Grid
-                className="gap-4 pb-4"
-                template={templateValues} >
-                  {children}
-              </Grid>
+      return (
+        <Grid className="gap-4 pb-4" template={templateValues}>
+          {children}
+        </Grid>
+      );
+    },
+  },
+  // Tables
+  {
+    shouldProcessNode: (node) => node.tagName === "table",
+    processNode: (node, props, children) => {
+      // Reset the rowspan counter for each new table
+      rowspanTdCounter = 0;
+      
+      // Strip all existing attributes and create clean props for table
+      const cleanProps = {};
+      const classes = twMerge(
+        "w-full border-collapse border border-grey-light my-4"
+      );
+
+      return (
+        <div className="overflow-x-auto my-4">
+          <table {...cleanProps} key={nanoid()} className={classes}>
+            {children}
+          </table>
+        </div>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "thead",
+    processNode: (node, props, children) => {
+      // Strip all existing attributes and create clean props for thead
+      const cleanProps = {};
+      
+      return (
+        <thead {...cleanProps} key={nanoid()}>
+          {children}
+        </thead>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "tbody",
+    processNode: (node, props, children) => {
+      // Strip all existing attributes and create clean props for tbody
+      const cleanProps = {};
+      
+      return (
+        <tbody {...cleanProps} key={nanoid()}>
+          {children}
+        </tbody>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "tr",
+    processNode: (node, props, children, index) => {
+      // Strip all existing attributes and create clean props for tr
+      const cleanProps = {};
+      
+      const classes = twMerge(
+        "border border-grey-light"
+      );
+
+      return (
+        <tr {...cleanProps} key={nanoid()} className={classes}>
+          {children}
+        </tr>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "th",
+    processNode: (node, props, children, index, childParser) => {
+      // Get preserved attributes from the original node
+      const cleanProps: { rowspan?: string | number; colspan?: string | number } = {};
+      if (node.attribs.rowspan) cleanProps.rowspan = node.attribs.rowspan;
+      if (node.attribs.colspan) cleanProps.colspan = node.attribs.colspan;
+      
+      const classes = twMerge(
+        "border border-grey-light px-4 py-2 text-left font-semibold"
+      );
+
+      return (
+        <th {...cleanProps} key={nanoid()} className={classes}>
+          {children}
+        </th>
+      );
+    },
+  },
+  {
+    shouldProcessNode: (node) => node.tagName === "td",
+    processNode: (node, props, children, index, childParser) => {
+      // Get preserved attributes from the original node
+      const cleanProps: { rowspan?: string | number; colspan?: string | number } = {};
+      if (node.attribs.rowspan) cleanProps.rowspan = node.attribs.rowspan;
+      if (node.attribs.colspan) cleanProps.colspan = node.attribs.colspan;
+      
+      let backgroundClass = "";
+      
+      // Handle alternating colors for td elements with rowspan
+      if (node.attribs.rowspan) {
+        // Use independent counter for rowspan cells
+        const isEvenRowspanCell = rowspanTdCounter % 2 === 0;
+        backgroundClass = isEvenRowspanCell ? "bg-grey-light-bg" : "bg-white";
+        rowspanTdCounter++;
+      } else {
+        // For regular td elements, find the parent tr and use its index
+        let parentTr = node.parent;
+        while (parentTr && parentTr.type === 'tag' && parentTr.name !== 'tr') {
+          parentTr = parentTr.parent;
+        }
+        
+        let rowIndex = 0;
+        if (parentTr && parentTr.parent) {
+          const siblings = parentTr.parent.children.filter((child: any) => 
+            child.type === 'tag' && child.name === 'tr'
+          );
+          rowIndex = siblings.indexOf(parentTr);
+        }
+        
+        const isEvenRow = rowIndex % 2 === 0;
+        backgroundClass = isEvenRow ? "bg-grey-light-bg" : "bg-white";
+      }
+      
+      const classes = twMerge(
+        "border border-grey-light px-4 py-2",
+        backgroundClass
+      );
+
+      return (
+        <td {...cleanProps} key={nanoid()} className={classes}>
+          {children}
+        </td>
+      );
     },
   },
   // Scripts
@@ -540,10 +755,21 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
         const props = attributesToProps(node.attribs);
 
         // Remove bad props
-        delete props.style;
+        // Only strip inline styles unless the node is a div or iframe
+        if (node.tagName !== 'div' && node.tagName !== 'iframe') {
+          delete props.style;
+        }
         delete props.key;
         delete props.dangerouslySetInnerHTML;
         delete props.children;
+        
+        // Preserve rowspan and colspan for table cells
+        const isTableCell = node.tagName === 'td' || node.tagName === 'th';
+        const preservedAttribs: { rowspan?: string | number; colspan?: string | number } = {};
+        if (isTableCell) {
+          if (node.attribs.rowspan) preservedAttribs.rowspan = node.attribs.rowspan;
+          if (node.attribs.colspan) preservedAttribs.colspan = node.attribs.colspan;
+        }
 
         const children = domToReact(node.children as DOMNode[], options);
 

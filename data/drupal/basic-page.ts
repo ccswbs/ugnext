@@ -1,6 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { query } from "@/lib/apollo";
+import { handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
@@ -19,6 +19,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...ModalVideo
     }
     widgets {
+      __typename
       ...Accordion
       ...Block
       ...GeneralText
@@ -41,7 +42,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
 export async function getPageContent(id: string) {
   const showUnpublished = await showUnpublishedContent();
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query BasicPageContent($id: ID!, $revision: ID = "current") {
         nodePage(id: $id, revision: $revision) {
@@ -54,6 +55,10 @@ export async function getPageContent(id: string) {
       revision: showUnpublished ? "latest" : "current",
     },
   });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
 
   if (!data?.nodePage) {
     return null;
@@ -83,7 +88,7 @@ export async function getPageContent(id: string) {
               })
               .filter((tag) => typeof tag === "string") ?? [];
 
-          if(tags.length === 0) {
+          if (tags.length === 0) {
             return widget;
           }
 
