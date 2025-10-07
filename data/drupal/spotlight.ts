@@ -200,7 +200,7 @@ async function getSpotlightIds() {
     }
 
     if (!data) {
-      return { hero: null, cards: [] } as { hero: Spotlight | null; cards: Spotlight[] };
+      return { hero: null, cards: [] } as Spotlights;
     }
 
     total = Math.ceil((data.spotlightRevisions?.pageInfo?.total ?? 0) / pageSize);
@@ -236,7 +236,7 @@ async function getSpotlightIds() {
 async function getSpotlightHeroById(id: string): Promise<SpotlightHero | null> {
   const showUnpublished = await showUnpublishedContent();
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query SpotlightHero($id: ID!, $revision: ID = "current") {
         nodeSpotlight(id: $id, revision: $revision) {
@@ -249,6 +249,14 @@ async function getSpotlightHeroById(id: string): Promise<SpotlightHero | null> {
       revision: showUnpublished ? "latest" : "current",
     },
   });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
 
   if (!data.nodeSpotlight) {
     return null;
@@ -279,7 +287,7 @@ async function getSpotlightHeroById(id: string): Promise<SpotlightHero | null> {
 async function getSpotlightCardById(id: string): Promise<SpotlightCard | null> {
   const showUnpublished = await showUnpublishedContent();
 
-  const { data } = await query({
+  const { data, error } = await query({
     query: gql(/* gql */ `
       query SpotlightCard($id: ID!, $revision: ID = "current") {
         nodeSpotlight(id: $id, revision: $revision) {
@@ -292,6 +300,14 @@ async function getSpotlightCardById(id: string): Promise<SpotlightCard | null> {
       revision: showUnpublished ? "latest" : "current",
     },
   });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
 
   if (!data.nodeSpotlight) {
     return null;
