@@ -23,7 +23,14 @@ export function DraftModeBanner() {
       </Button>
 
       {shareableLink && (
-        <Button color="yellow" className="p-2" href={shareableLink} as="a">
+        <Button
+          color="yellow"
+          className="p-2"
+          onClick={async () => {
+            await navigator.clipboard.writeText(shareableLink);
+          }}
+          as="button"
+        >
           Share Page
         </Button>
       )}
