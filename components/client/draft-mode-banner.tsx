@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = new URLSearchParams(window.location.search);
-  const shareableLink = `${window.location.origin}${pathname}?${searchParams.toString()}`;
+  const shareableLink = searchParams.get("secret")
+    ? `${window.location.origin}${pathname}?${searchParams.toString()}`
+    : null;
 
   return (
     <div className="sticky left-0 top-0 z-1000 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
@@ -20,9 +22,11 @@ export function DraftModeBanner() {
         Revalidate Page
       </Button>
 
-      <Button color="yellow" className="p-2" href={shareableLink} as="a">
-        Share Page
-      </Button>
+      {shareableLink && (
+        <Button color="yellow" className="p-2" href={shareableLink} as="a">
+          Share Page
+        </Button>
+      )}
     </div>
   );
 }
