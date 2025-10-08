@@ -26,8 +26,10 @@ export function DraftModeBanner() {
         <Button
           color="yellow"
           className="p-2"
-          onClick={async () => {
-            await navigator.clipboard.writeText(shareableLink);
+          onClick={() => {
+            navigator.clipboard.writeText(shareableLink).catch((err) => {
+              console.error("Failed to copy text: ", err);
+            });
           }}
           as="button"
         >
