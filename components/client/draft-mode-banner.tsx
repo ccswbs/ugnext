@@ -7,7 +7,7 @@ export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = new URLSearchParams(window.location.search);
   const shareableLink = searchParams.get("secret")
-    ? `${window.location.origin}${pathname}?${searchParams.toString()}`
+    ? `${window.location.origin}/api/draft/?${searchParams.toString()}`
     : null;
 
   return (
