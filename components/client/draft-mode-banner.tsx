@@ -31,7 +31,7 @@ export function DraftModeBanner() {
           }}
           as="button"
         >
-          Share Page
+          Copy Shareable Link
         </Button>
       )}
     </div>
