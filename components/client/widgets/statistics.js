@@ -17,7 +17,7 @@ export function StatisticsWidget({ data }) {
     .replace("light-blue", "light-grey");
 
   return (
-    <StatisticsComponent variant={variant}>
+    <StatisticsComponent id={`statistics-${data.uuid}`} variant={variant}>
       {data?.content.map((statistic, index) => {
         return (
           <StatisticsItem key={index}>

@@ -86,6 +86,7 @@ export function MediaTextWidget({ data }) {
 
   return (
     <MediaCaption
+      id={`media-and-text-${data.uuid}`}
       src={media.src}
       height={media?.height}
       width={media?.width}
@@ -94,11 +95,16 @@ export function MediaTextWidget({ data }) {
       background={background}
       size={size}
       position={position}
-      className={twMerge(classes.base(),(data?.description ?? classes.no_body()))}
+      className={twMerge(classes.base(), data?.description ?? classes.no_body())}
       transcript={media?.transcript}
     >
       {data?.heading && (
-        <Typography className={classes.heading()} type={data?.headingLevel ?? "h3"} as={data?.headingLevel ?? "h3"}>
+        <Typography
+          id={`media-and-text-heading-${data.uuid}`}
+          className={classes.heading()}
+          type={data?.headingLevel ?? "h3"}
+          as={data?.headingLevel ?? "h3"}
+        >
           {data?.heading}
         </Typography>
       )}
