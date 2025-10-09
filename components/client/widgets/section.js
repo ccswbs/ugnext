@@ -84,7 +84,7 @@ export function SectionWidget({ data }) {
   return (
     <>
       {data.heading && (
-        <Typography type={data.headingLevel ?? "h2"} as={data.headingLevel ?? "h2"}>
+        <Typography id={`section-heading-${data.uuid}`} type={data.headingLevel ?? "h2"} as={data.headingLevel ?? "h2"}>
           {data.heading}
         </Typography>
       )}

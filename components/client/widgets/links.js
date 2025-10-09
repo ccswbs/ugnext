@@ -17,9 +17,16 @@ export function LinksWidget({ data }) {
 
   if (useCards) {
     return (
-      <div className={classes.container()}>
+      <div id={`links-${data.uuid}`} className={classes.container()}>
         {data?.links?.map((link, index) => (
-          <Card as={NextLink} href={link.url.url} className={classes.card()} centered key={link.url.title + index}>
+          <Card
+            as={NextLink}
+            id={`link-${data.uuid}`}
+            href={link.url.url}
+            className={classes.card()}
+            centered
+            key={link.url.title + index}
+          >
             <CardImage
               as={Image}
               src={link.image.image.url}
