@@ -27,13 +27,6 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
   const profiles = useMemo(() => {
     const rawProfiles = data.profiles || [];
     
-    console.log('ProfileBlock component received profiles:', rawProfiles.length);
-    console.log('ProfileBlock widget config:', {
-      profileType: data.profileType,
-      unit: data.unit,
-      researchArea: data.researchArea
-    });
-    
     const uniqueProfiles = new Map();
     
     // Deduplicate profiles by ID (in case backend returns same profile from multiple type queries)
