@@ -230,6 +230,7 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
     }
     unit {
       ... on TermUnit {
+        id
         name
       }
     }

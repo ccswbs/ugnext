@@ -2,7 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
-import { getProfiles, getProfilesByType } from "@/data/drupal/profile";
+import { getProfiles, getProfilesByType, getProfilesByUnit } from "@/data/drupal/profile";
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
@@ -78,6 +78,7 @@ export async function getPageContent(id: string) {
   // We need to resolve testimonials by tag and profiles for profile blocks.
   // This function recursively processes widgets, including nested ones in sections
   async function processWidget(widget: any): Promise<any> {
+    console.log('processWidget called with:', widget.__typename);
     if (widget.__typename === "ParagraphTestimonialSlider") {
       const tags =
         widget.byTags
@@ -106,6 +107,13 @@ export async function getPageContent(id: string) {
     }
 
     if (widget.__typename === "ParagraphProfileBlock") {
+      console.log('=== ProfileBlock processing started ===');
+      console.log('ProfileBlock widget configuration:', {
+        profileType: widget.profileType,
+        unit: widget.unit,
+        researchArea: widget.researchArea
+      });
+      
       // Fetch profiles based on the criteria specified in the widget
       let profiles = [];
 
@@ -130,9 +138,96 @@ export async function getPageContent(id: string) {
             "Post Doc", "Postdocs","Postdoctoral Fellow"]
         };
         
-        // If specific profile types are specified, only fetch the allowed ones
-        if (widget.profileType && widget.profileType.length > 0) {
-          // Filter the requested types to only include allowed frontend types
+        console.log('ProfileBlock processing - checking conditions:', {
+          hasUnit: !!widget.unit,
+          unitLength: widget.unit?.length || 0,
+          unitConditionMet: widget.unit && widget.unit.length > 0
+        });
+        
+        // Check if unit filtering is specified
+        if (widget.unit && widget.unit.length > 0) {
+          console.log('ProfileBlock: Unit filtering condition met, processing units...');
+          // If units are specified, fetch profiles from all specified units
+          const unitIds = widget.unit.map((unit: any) => unit.id).filter(Boolean);
+          console.log('ProfileBlock fetching profiles for unit IDs:', unitIds);
+          
+          if (unitIds.length === 0) {
+            console.warn('ProfileBlock: No valid unit IDs found, falling back to all profiles');
+            profiles = [];
+          } else {
+            const unitProfilePromises = unitIds.map((unitId: string) => 
+              getProfilesByUnit(unitId).then(result => {
+                console.log(`getProfilesByUnit(${unitId}) returned:`, result.results?.length || 0, 'profiles');
+                return result.results || [];
+              })
+            );
+            const unitProfileResults = await Promise.all(unitProfilePromises);
+            let allUnitProfiles = unitProfileResults.flat();
+            console.log('Total profiles from all units:', allUnitProfiles.length);
+            
+
+            
+            // If profile types are also specified, filter by types
+            if (widget.profileType && widget.profileType.length > 0) {
+              const requestedTypes = widget.profileType.map((type: any) => type.name);
+              const allowedFrontendTypes = Object.keys(profileTypeMapping);
+              const typesToProcess = requestedTypes.filter((type: string) => allowedFrontendTypes.includes(type));
+              
+              // Get all backend types that map to the requested frontend types
+              const backendTypesToFetch = typesToProcess.flatMap((frontendType: string) => 
+                profileTypeMapping[frontendType as keyof typeof profileTypeMapping]
+              );
+              
+              // Filter unit profiles by the specified types
+              profiles = allUnitProfiles.filter((profile: any) => {
+                const backendTypeName = Array.isArray(profile.profileType) 
+                  ? profile.profileType[0]?.name 
+                  : profile.profileType?.name;
+                return backendTypesToFetch.includes(backendTypeName);
+              }).map((profile: any) => {
+                // Map backend types to frontend types
+                const backendTypeName = Array.isArray(profile.profileType) 
+                  ? profile.profileType[0]?.name 
+                  : profile.profileType?.name;
+                
+                for (const [frontendType, backendTypes] of Object.entries(profileTypeMapping)) {
+                  if (backendTypes.includes(backendTypeName)) {
+                    return {
+                      ...profile,
+                      profileType: {
+                        ...profile.profileType,
+                        name: frontendType
+                      }
+                    };
+                  }
+                }
+                return profile;
+              });
+            } else {
+              // No type filtering, use all profiles from the units but map types
+              profiles = allUnitProfiles.map((profile: any) => {
+                const backendTypeName = Array.isArray(profile.profileType) 
+                  ? profile.profileType[0]?.name 
+                  : profile.profileType?.name;
+                
+                for (const [frontendType, backendTypes] of Object.entries(profileTypeMapping)) {
+                  if (backendTypes.includes(backendTypeName)) {
+                    return {
+                      ...profile,
+                      profileType: {
+                        ...profile.profileType,
+                        name: frontendType
+                      }
+                    };
+                  }
+                }
+                return profile;
+              });
+            }
+          }
+        } else if (widget.profileType && widget.profileType.length > 0) {
+          console.log('ProfileBlock: No units specified, but profile types found, processing types...');
+          // No unit specified, but profile types are specified
           const requestedTypes = widget.profileType.map((type: any) => type.name);
           const allowedFrontendTypes = Object.keys(profileTypeMapping);
           const typesToProcess = requestedTypes.filter((type: string) => allowedFrontendTypes.includes(type));
@@ -168,6 +263,7 @@ export async function getPageContent(id: string) {
             return profile;
           });
         } else {
+          console.log('ProfileBlock: No units or types specified, fetching all profiles...');
           // No specific criteria, fetch all profiles from allowed backend types
           const allBackendTypes = Object.values(profileTypeMapping).flat();
           const profilePromises = allBackendTypes.map((type: string) => getProfilesByType(type));
@@ -196,6 +292,8 @@ export async function getPageContent(id: string) {
           });
         }
 
+        console.log('ProfileBlock fetched profiles count:', profiles.length);
+        
         return {
           ...widget,
           profiles: profiles ?? [],
@@ -225,29 +323,7 @@ export async function getPageContent(id: string) {
   return {
     ...data.nodePage,
     widgets: await Promise.all(
-      data.nodePage.widgets.map(async (widget) => {
-        if (widget.__typename === "ParagraphTestimonialSlider") {
-          const tags =
-            widget.byTags
-              ?.map((tag) => {
-                if (tag.__typename === "TermTag") {
-                  return tag.id;
-                }
-                return null;
-              })
-              .filter((tag) => typeof tag === "string") ?? [];
-
-          if (tags.length === 0) {
-            return widget;
-          }
-
-          return {
-            ...widget,
-            byTags: (await getTestimonialByTag(tags)) ?? [],
-          };
-        }
-        return widget;
-      })
+      data.nodePage.widgets.map((widget) => processWidget(widget))
     ),
   };
 }

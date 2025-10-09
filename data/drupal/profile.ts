@@ -1,6 +1,24 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { query } from "@/lib/apollo";
+import type { FullProfile } from "@/lib/types";
+
+// GraphQL Response Types
+interface PageInfo {
+  total: number;
+  pageSize: number;
+}
+
+interface ProfilesResponse {
+  profiles: {
+    results: FullProfile[];
+    pageInfo: PageInfo;
+  };
+}
+
+// Configuration constants
+const DEFAULT_PAGE_SIZE = 20; // Match your Drupal backend configuration
+const MAX_PAGE_SIZE = 100; // Reasonable maximum to prevent overwhelming requests
 
 export const PROFILE_FRAGMENT = gql(/* gql */ `
   fragment Profile on NodeProfile {
@@ -97,7 +115,7 @@ export async function getProfileContent(id: string) {
 export async function getProfiles() {
   try {
     const profilesQuery = gql(/* GraphQL */ `
-      query GetProfiles($page: Int = 0, $pageSize: Int = 100) {
+      query GetProfiles($page: Int = 0, $pageSize: Int = 20) {
         profiles(page: $page, pageSize: $pageSize) {
           results {
             ... on NodeProfile {
@@ -135,7 +153,7 @@ export async function getProfiles() {
     `) as any;
 
     let page = 0;
-    const pageSize = 100;
+    const pageSize = DEFAULT_PAGE_SIZE;
     const profiles: any[] = [];
     let total = 0;
     let totalPages = 1;
@@ -147,7 +165,7 @@ export async function getProfiles() {
           page,
           pageSize,
         },
-      });
+      }) as { data: ProfilesResponse };
 
       if (!data?.profiles?.results) {
         break;
@@ -169,8 +187,8 @@ export async function getProfiles() {
 export async function getProfilesByType(profileType: string) {
   try {
     const profilesQuery = gql(/* GraphQL */ `
-      query GetProfilesByType($type: String!, $page: Int = 0, $pageSize: Int = 100) {
-        profiles(filter: { field_profile_type_target_id: $type }, page: $page, pageSize: $pageSize) {
+      query GetProfilesByType($type: String!, $page: Int = 0, $pageSize: Int = 20) {
+        profiles(contextualFilter: { field_profile_type_target_id: $type }, page: $page, pageSize: $pageSize) {
           results {
             ... on NodeProfile {
               id
@@ -179,16 +197,15 @@ export async function getProfilesByType(profileType: string) {
               profileJobTitle
               profileFirstName
               profileLastName
+              profileResearchAreas {
+                ...Research
+              }
               profileType {
-                id
-                name
+                ...ProfileType
               }
               profileUnit {
                 id
                 name
-              }
-              profileResearchAreas {
-                ...Research
               }
               profilePicture {
                 ...Image
@@ -208,7 +225,7 @@ export async function getProfilesByType(profileType: string) {
     `) as any;
 
     let page = 0;
-    const pageSize = 100;
+    const pageSize = DEFAULT_PAGE_SIZE;
     const profiles: any[] = [];
     let total = 0;
     let totalPages = 1;
@@ -221,7 +238,7 @@ export async function getProfilesByType(profileType: string) {
           page,
           pageSize,
         },
-      });
+      }) as { data: ProfilesResponse };
 
       if (!data?.profiles?.results) {
         break;
@@ -240,25 +257,35 @@ export async function getProfilesByType(profileType: string) {
   }
 }
 
-/* Enhance this with an additional function to check the initial unitName for a parent
-Add people into an array for the parent unit? */
-export async function getProfilesByUnit(unitName: string) {
+export async function getProfilesByUnit(unitId: string) {
   try {
     const profilesQuery = gql(/* GraphQL */ `
-      query GetProfilesByUnit($unit: String!, $page: Int = 0, $pageSize: Int = 100) {
-        profiles(filter: { field_profile_unit_target_id: $unit }, page: $page, pageSize: $pageSize) {
+      query GetProfilesByUnit($unit: String!, $page: Int = 0, $pageSize: Int = 20) {
+        profiles(contextualFilter: { field_profile_unit_target_id: $unit }, page: $page, pageSize: $pageSize) {
           results {
             ... on NodeProfile {
               id
               title
               path
+              profileJobTitle
               profileFirstName
-              profileLastName        
+              profileLastName
+              profileResearchAreas {
+                ...Research
+              }
               profileType {
                 ...ProfileType
               }
+              profileUnit {
+                id
+                name
+              }
               profilePicture {
                 ...Image
+              }
+              tags {
+                ...Tag
+                ...Unit
               }
             }
           }
@@ -271,7 +298,7 @@ export async function getProfilesByUnit(unitName: string) {
     `) as any;
 
     let page = 0;
-    const pageSize = 100;
+    const pageSize = 20;
     const profiles: any[] = [];
     let total = 0;
     let totalPages = 1;
@@ -280,11 +307,11 @@ export async function getProfilesByUnit(unitName: string) {
       const { data } = await query({
         query: profilesQuery,
         variables: {
-          unit: unitName,
+          unit: unitId,
           page,
           pageSize,
         },
-      });
+      }) as { data: ProfilesResponse };
 
       if (!data?.profiles?.results) {
         break;
@@ -295,10 +322,9 @@ export async function getProfilesByUnit(unitName: string) {
       totalPages = Math.ceil(total / pageSize);
       page++;
     } while (page < totalPages);
-
     return { results: profiles };
   } catch (error) {
-    console.error(`Error fetching profiles by unit "${unitName}":`, error);
+    console.error(`Error fetching profiles by unit "${unitId}":`, error);
     return { results: [] };
   }
 }
@@ -306,8 +332,8 @@ export async function getProfilesByUnit(unitName: string) {
 export async function getProfilesByTag(tagName: string) {
   try {
     const profilesQuery = gql(/* GraphQL */ `
-      query GetProfilesByTag($tag: String!, $page: Int = 0, $pageSize: Int = 100) {
-        profiles(filter: { field_tags_target_id: $tag }, page: $page, pageSize: $pageSize) {
+      query GetProfilesByTag($tag: String!, $page: Int = 0, $pageSize: Int = 20) {
+        profiles(contextualFilter: { field_tags_target_id: $tag }, page: $page, pageSize: $pageSize) {
           results {
             ... on NodeProfile {
               id
@@ -332,7 +358,7 @@ export async function getProfilesByTag(tagName: string) {
     `) as any;
 
     let page = 0;
-    const pageSize = 100;
+    const pageSize = 20;
     const profiles: any[] = [];
     let total = 0;
     let totalPages = 1;
@@ -345,7 +371,7 @@ export async function getProfilesByTag(tagName: string) {
           page,
           pageSize,
         },
-      });
+      }) as { data: ProfilesResponse };
 
       if (!data?.profiles?.results) {
         break;
@@ -377,7 +403,7 @@ export async function getProfileCount() {
           }
         }
       `) as any,
-    });
+    }) as { data: ProfilesResponse };
 
     return data?.profiles?.pageInfo?.total || 0;
   } catch (error) {
@@ -432,7 +458,7 @@ export async function getProfilesPaginated(page: number = 0, pageSize: number = 
         page,
         pageSize,
       },
-    });
+    }) as { data: ProfilesResponse };
 
     if (!data?.profiles) {
       return {
