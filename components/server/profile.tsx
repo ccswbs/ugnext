@@ -139,6 +139,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             )}
           </div>
           {/* Parse and render the Body field */}
+          <HtmlParser key="profile-summary" html={content.body?.summary ?? ""} instructions={undefined} />
           <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
           
           {/* Render all Profile Sections in order (both regular parts and UniWeb parts) */}
