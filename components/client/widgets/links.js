@@ -6,7 +6,7 @@ import NextLink from "next/link";
 import { tv } from "tailwind-variants";
 
 export function LinksWidget({ data }) {
-  const useCards = data?.links?.every((link) => Boolean(link.image));
+  const useCards = data?.links?.some((link) => Boolean(link.image));
   const classes = tv({
     slots: {
       container: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
@@ -27,15 +27,18 @@ export function LinksWidget({ data }) {
             centered
             key={link.url.title + index}
           >
-            <CardImage
-              as={Image}
-              src={link.image.image.url}
-              width={link.image.image.width}
-              height={link.image.image.height}
-              alt={link.image.image.alt}
-              className={classes.cardImage()}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            />
+            {link.image?.image?.url && (
+              <CardImage
+                as={Image}
+                src={link.image.image.url}
+                width={link.image.image.width}
+                height={link.image.image.height}
+                alt={link.image.image.alt}
+                className={classes.cardImage()}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              />
+            )}
+
             <CardContent>
               <CardTitle className="my-auto text-center">{link.url.title}</CardTitle>
             </CardContent>
