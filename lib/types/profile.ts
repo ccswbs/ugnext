@@ -146,9 +146,18 @@ export interface ProfileSearchFilters {
  */
 export interface ProfileSearchResult {
   id: string;
-  name: string;
+  name?: string;
   title: string;
+  path?: string;
+  profileFirstName?: string;
+  profileLastName?: string;
+  profileJobTitle?: string;
   research?: ProfileResearchArea[];
   units?: ProfileUnit[];
   profileType?: ProfileType | ProfileType[];
+  profilePicture?: ProfileImage;
+  tags?: Array<{
+    id: string;
+    name: string;
+  }>;
 }
