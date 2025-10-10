@@ -32,10 +32,13 @@ export const FacultySearchBar = ({ units, onChange, onSearchChange, className }:
     }
   }, [input, selectedUnits, onSearchChange]);
 
-  // Fallback to old search hook if using the old callback pattern
+  // Always call the hook to avoid conditional hook calls
+  const hookResults = useFacultySearch(input, selectedUnits.length > 0 ? selectedUnits : []);
+  
+  // Use hook results only if not using the new callback pattern
   const { results, isLoading, error } = onSearchChange ? 
     { results: [], isLoading: false, error: undefined } : 
-    useFacultySearch(input, selectedUnits.length > 0 ? selectedUnits : []);
+    hookResults;
 
   useEffect(() => {
     if (onChange && !onSearchChange) {
