@@ -55,7 +55,7 @@ export async function getRoute(url: string) {
               id
               title
             }
-            ... on NodeProgram {
+            ... on NodeProfile {
               uuid
               id
               title
@@ -194,6 +194,9 @@ export async function getRouteBreadcrumbs(url: string) {
                 title
               }
               ... on NodePage {
+                title
+              }
+              ... on NodeProfile {
                 title
               }
               ... on NodeProgram {
