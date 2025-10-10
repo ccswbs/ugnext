@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfilesByUnitPaginated } from "@/data/drupal/profile";
 
-interface Params {
-  params: {
-    unitId: string;
-  };
-}
-
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(
+  request: NextRequest, 
+  { params }: { params: Promise<{ unitId: string }> }
+) {
   try {
     const { unitId } = await params;
     
