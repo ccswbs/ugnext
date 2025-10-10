@@ -724,3 +724,35 @@ export async function getUnits() {
     return [];
   }
 }
+
+/**
+ * Get profile type ID by name
+ * This is needed because getProfilesByType expects an ID, not a name
+ */
+export async function getProfileTypeIdByName(profileTypeName: string): Promise<string | null> {
+  try {
+    const profileTypes = await getProfileTypes();
+    const profileType = profileTypes.find((type: any) => type.name === profileTypeName);
+    return profileType?.id || null;
+  } catch (error) {
+    console.error(`Error finding profile type ID for "${profileTypeName}":`, error);
+    return null;
+  }
+}
+
+/**
+ * Get profiles by type name (converts name to ID internally)
+ */
+export async function getProfilesByTypeName(profileTypeName: string, page: number = 0, pageSize: number = 100) {
+  try {
+    const profileTypeId = await getProfileTypeIdByName(profileTypeName);
+    if (!profileTypeId) {
+      console.warn(`Profile type "${profileTypeName}" not found. Available types can be checked with getProfileTypes()`);
+      return [];
+    }
+    return await getProfilesByType(profileTypeId, page, pageSize);
+  } catch (error) {
+    console.error(`Error fetching profiles by type name "${profileTypeName}":`, error);
+    return [];
+  }
+}

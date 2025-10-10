@@ -2,7 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
-import { getProfiles, getProfilesByType, getProfilesByUnit } from "@/data/drupal/profile";
+import { getProfiles, getProfilesByType, getProfilesByUnit, getProfileTypes, getProfilesByTypeName } from "@/data/drupal/profile";
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
@@ -119,23 +119,37 @@ export async function getPageContent(id: string) {
 
       try {
         // Define mapping from backend profile types to frontend categories
+        // Note: This mapping may need updates if new profile types are added to the backend
         const profileTypeMapping = {
           "Faculty": [
             "Academic Advisors", "Adjunct Faculty", "Associated Graduate Faculty", 
-            "Faculty", "Faculty (all)","Faculty (Mathematics)","Faculty (Statistics)", 
+            "Faculty", "Faculty (all)", "Faculty (Mathematics)", "Faculty (Statistics)", 
             "Faculty/Sessional", "Faculty: Adjunct", "Faculty: Emeritus (University or College)",
-            "Faculty: Full, Assistant, & Associate Professors","Faculty: Retired",
+            "Faculty: Full, Assistant, & Associate Professors", "Faculty: Retired",
             "Professor Emerita", "Professor Emeritus", "Professor Emeritus/Emerita", 
             "Professors Emeriti/Retired Faculty", "Retired Faculty", "Sessional", "Sessional Lecturer",
-            "Teaching", "University Professor Emerita", "University Professor Emeritus"],
+            "Teaching", "University Professor Emerita", "University Professor Emeritus",
+            // Additional common faculty types that might be missing
+            "Professor", "Associate Professor", "Assistant Professor", "Lecturer", 
+            "Clinical Faculty", "Visiting Faculty", "Research Faculty"
+          ],
           "Staff": [
             "Admin Staff", "Administration", "Affiliated Professional", "Department Staff", "Office Staff",
-            "Research and Technical Staff","Research Scientist","Research Staff", "Researcher", 
-            "Staff","Support Staff","Undergraduate Student Researchers"],
+            "Research and Technical Staff", "Research Scientist", "Research Staff", "Researcher", 
+            "Staff", "Support Staff", "Undergraduate Student Researchers",
+            // Additional staff types
+            "Administrative Staff", "Technical Staff", "Laboratory Staff", "Research Associate"
+          ],
           "Graduate Students": [
-            "Grad Student", "Graduate Student", "Graduate Students"],
+            "Grad Student", "Graduate Student", "Graduate Students",
+            // Additional graduate student types
+            "PhD Student", "Masters Student", "PhD Candidate", "Graduate Research Assistant"
+          ],
           "Postdoctoral Scholars": [
-            "Post Doc", "Postdocs","Postdoctoral Fellow"]
+            "Post Doc", "Postdocs", "Postdoctoral Fellow",
+            // Additional postdoc types
+            "Postdoc", "Postdoctoral Researcher", "Postdoctoral Associate"
+          ]
         };
         
         console.log('ProfileBlock processing - checking conditions:', {
@@ -157,8 +171,8 @@ export async function getPageContent(id: string) {
           } else {
             const unitProfilePromises = unitIds.map((unitId: string) => 
               getProfilesByUnit(unitId).then(result => {
-                console.log(`getProfilesByUnit(${unitId}) returned:`, result.results?.length || 0, 'profiles');
-                return result.results || [];
+                console.log(`getProfilesByUnit(${unitId}) returned:`, result?.length || 0, 'profiles');
+                return result || [];
               })
             );
             const unitProfileResults = await Promise.all(unitProfilePromises);
@@ -183,7 +197,14 @@ export async function getPageContent(id: string) {
                 const backendTypeName = Array.isArray(profile.profileType) 
                   ? profile.profileType[0]?.name 
                   : profile.profileType?.name;
-                return backendTypesToFetch.includes(backendTypeName);
+                const matches = backendTypesToFetch.includes(backendTypeName);
+                
+                // Debug logging for type matching
+                if (!matches && process.env.NODE_ENV === 'development') {
+                  console.log(`ProfileBlock - Profile type "${backendTypeName}" not found in mapping for:`, profile.title);
+                }
+                
+                return matches;
               }).map((profile: any) => {
                 // Map backend types to frontend types
                 const backendTypeName = Array.isArray(profile.profileType) 
@@ -238,11 +259,14 @@ export async function getPageContent(id: string) {
           );
           
           // Fetch profiles for each backend type and merge results
-          const profilePromises = backendTypesToFetch.map((type: string) => getProfilesByType(type));
+          console.log('ProfileBlock: Fetching profiles for backend types:', backendTypesToFetch);
+          const profilePromises = backendTypesToFetch.map((type: string) => getProfilesByTypeName(type));
           const profileResults = await Promise.all(profilePromises);
           
           // Flatten the results and map backend types to frontend types
           const allProfiles = profileResults.flat();
+          console.log(`ProfileBlock: Fetched ${allProfiles.length} profiles by type from ${backendTypesToFetch.length} backend types:`, backendTypesToFetch);
+          
           profiles = allProfiles.map((profile: any) => {
             // Find which frontend type this backend type maps to
             const backendTypeName = Array.isArray(profile.profileType) 
@@ -266,7 +290,8 @@ export async function getPageContent(id: string) {
           console.log('ProfileBlock: No units or types specified, fetching all profiles...');
           // No specific criteria, fetch all profiles from allowed backend types
           const allBackendTypes = Object.values(profileTypeMapping).flat();
-          const profilePromises = allBackendTypes.map((type: string) => getProfilesByType(type));
+          console.log('ProfileBlock: Fetching profiles for all backend types:', allBackendTypes.length, 'types');
+          const profilePromises = allBackendTypes.map((type: string) => getProfilesByTypeName(type));
           const profileResults = await Promise.all(profilePromises);
           
           // Flatten the results and map backend types to frontend types
@@ -293,6 +318,32 @@ export async function getPageContent(id: string) {
         }
 
         console.log('ProfileBlock fetched profiles count:', profiles.length);
+        
+        // Debug: Log profile types that were actually found
+        if (process.env.NODE_ENV === 'development') {
+          if (profiles.length > 0) {
+            const foundTypes = [...new Set(profiles.map((p: any) => 
+              Array.isArray(p.profileType) ? p.profileType[0]?.name : p.profileType?.name
+            ))];
+            console.log('ProfileBlock found profile types:', foundTypes);
+          } else {
+            // No profiles found - fetch all available profile types for debugging
+            console.warn('ProfileBlock: No profiles found. Checking available profile types...');
+            try {
+              const availableTypes = await getProfileTypes();
+              const availableTypeNames = availableTypes.map((t: any) => t.name);
+              console.log('Available profile types in system:', availableTypeNames);
+              
+              const mappedTypes = Object.values(profileTypeMapping).flat();
+              const unmappedTypes = availableTypeNames.filter((type: string) => !mappedTypes.includes(type));
+              if (unmappedTypes.length > 0) {
+                console.warn('Profile types not in mapping (may need to be added):', unmappedTypes);
+              }
+            } catch (error) {
+              console.error('Error fetching available profile types:', error);
+            }
+          }
+        }
         
         return {
           ...widget,
