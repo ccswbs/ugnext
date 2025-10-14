@@ -58,7 +58,7 @@ export const ButtonWidget = ({ data, column }) => {
         secondary: {
           button: "w-full mx-0",
         },
-        "call-to-action": {},
+        "call-to-action": { button: "text-2xl! py-4 px-10 min-w-[200px]" },
       },
       hasHeading: {
         true: {
