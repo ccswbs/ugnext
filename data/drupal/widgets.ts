@@ -220,6 +220,72 @@ export const MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
+  fragment ProfileBlock on ParagraphProfileBlock {
+    __typename
+    id
+    sectionColumn {
+      ...SectionColumn
+    }
+    headingLevel
+    profileBlockTitle
+    profileType {
+      ... on TermProfileType {
+        name
+      }
+    }
+    researchArea {
+      ... on TermResearch {
+        name
+      }
+    }
+    unit {
+      ... on TermUnit {
+        id
+        name
+      }
+    }
+    enableNameSearch
+    enableResearchFilter
+    enableTypeFilter
+    enableUnitFilter    
+  }
+`);
+
+export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
+  fragment ProfileCard on ParagraphProfileCard {
+    __typename
+    id
+    profileInfo {
+      ... on NodeProfile {
+        id
+        title
+        centralLoginId
+        customLink {
+          title
+          url
+        }
+        directoryEmail
+        directoryOffice
+        directoryPhone
+        profileJobTitle
+        path
+        profilePicture {
+          ...Image
+        }
+        profileFields {
+          label {
+            processed
+          }
+          value {
+            processed
+          }
+        }
+      }
+    }
+  }
+`);
+
 export const SECTION_FRAGMENT = gql(/* gql */ `
   fragment Section on ParagraphSection {
     __typename
@@ -239,6 +305,8 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
       ...Tabs
       ...Statistics
       ...ImageOverlay
+      ...ProfileBlock
+      ...ProfileCard
     }
   }
 `);

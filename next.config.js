@@ -49,6 +49,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).hostname,
+        port: "",
+        pathname: "/system/files/**",
+      },
+      {
+        protocol: "https",
         hostname: "api.liveugconthub.uoguelph.dev",
         port: "",
         pathname: "/sites/default/files/**",
@@ -71,6 +77,22 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/token',
+        destination: process.env.NEXT_PUBLIC_UNIWEB_URL + '/api/token.php'
+      },
+      {
+        source: '/api/resource',
+        destination: process.env.NEXT_PUBLIC_UNIWEB_URL + '/api/resource'
+      },
+      {
+        source: '/api/profiles/:id',
+        destination: `${process.env.NEXT_PUBLIC_UNIWEB_URL}/profiles.php/get/members/profile/:id`
+      }
+    ];
+  }
 };
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
