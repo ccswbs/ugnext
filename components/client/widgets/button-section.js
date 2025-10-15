@@ -58,7 +58,7 @@ export const ButtonWidget = ({ data, column }) => {
         secondary: {
           button: "w-full mx-0",
         },
-        "call-to-action": { button: "text-2xl! py-4 px-10 min-w-[200px]" },
+        "call-to-action": {},
       },
       hasHeading: {
         true: {
@@ -129,13 +129,14 @@ export const ButtonSectionWidget = ({ data }) => {
       column: {
         primary: "flex flex-wrap px-0 mx-0",
         secondary: "flex-col px-0 mx-0",
-        "call-to-action": "flex-col items-center",
+        "call-to-action": "flex-wrap flex-row items-center",
       },
     },
   })({ column, section: context?.column ?? "primary" });
 
   return (
     <Container id={`button-section-${data.uuid}`} className={classes}>
+      <div className="basis-full h-0"></div>
       {buttons?.length > 0 && buttons.map((button) => <ButtonWidget key={button.id} column={column} data={button} />)}
     </Container>
   );
