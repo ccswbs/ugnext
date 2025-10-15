@@ -100,6 +100,7 @@ export const ButtonWidget = ({ data, column }) => {
         <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={classes.heading()}>
           <HtmlParser html={heading} />
         </Typography>
+        <div className="basis-full h-0"></div>
       )}
 
       <Button
@@ -136,7 +137,6 @@ export const ButtonSectionWidget = ({ data }) => {
 
   return (
     <Container id={`button-section-${data.uuid}`} className={classes}>
-      <div className="basis-full h-0"></div>
       {buttons?.length > 0 && buttons.map((button) => <ButtonWidget key={button.id} column={column} data={button} />)}
     </Container>
   );
