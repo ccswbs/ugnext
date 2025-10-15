@@ -97,10 +97,12 @@ export const ButtonWidget = ({ data, column }) => {
   return (
     <>
       {heading && (
+        <>
         <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={classes.heading()}>
           <HtmlParser html={heading} />
         </Typography>
         <div className="basis-full h-0"></div>
+        </>
       )}
 
       <Button
