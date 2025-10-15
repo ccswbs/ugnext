@@ -132,7 +132,7 @@ export const ButtonSectionWidget = ({ data }) => {
       column: {
         primary: "flex flex-wrap px-0 mx-0",
         secondary: "flex-col px-0 mx-0",
-        "call-to-action": "flex-wrap flex-row items-center",
+        "call-to-action": "flex-wrap flex-row items-center justify-center",
       },
     },
   })({ column, section: context?.column ?? "primary" });
