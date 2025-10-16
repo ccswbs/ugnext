@@ -75,7 +75,7 @@ function hasAncestorWithClass(node: Element, className: string): boolean {
   return false;
 }
 
-function unwrapTags(children) {
+function unwrapTags(children: React.ReactNode): React.ReactNode {
   return React.Children.map(children, (child) => {
     if (typeof child !== "string" && (child.type === "span" || child.type === "strong")) {
       return unwrapTags(child.props.children);
