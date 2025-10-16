@@ -1,9 +1,8 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { handleGraphQLError, query, getClient } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import type { FullProfile } from "@/lib/types";
-import { ProfilesResult, NodeProfile } from "@/lib/graphql/graphql";
-import { PartialProfileFragment, ProfileFragment } from "@/lib/graphql/types";
+import { PartialProfileFragment } from "@/lib/graphql/types";
 
 // GraphQL Response Types
 interface PageInfo {
@@ -802,8 +801,43 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
     return { results: [], totalPages: 0 };
   }
 
+  let results: PartialProfileData[] = data.profileSearch.results;
+
+  if (showUnpublished) {
+    // The search database only indexes the current revision of a node, so we need to fetch the latest revision.
+    // Map each result to its latest revision.
+    // Unfortunately, this means making a request for each result individually.
+    // This is not ideal as it is bad for performance,
+    // but it is the best we can do for now,
+    // and since this will only be used in draft mode or the dev server, it should be fine.
+
+    const latestRevisionQuery = gql(/* gql */ `
+      query LatestRevisionProfile($id: ID!) {
+        nodeProfile(id: $id, revision: "latest") {
+          ...PartialProfile
+        }
+      }
+    `);
+
+    results = await Promise.all(
+      results.map(async (result) => {
+        const { data } = await query({
+          query: latestRevisionQuery,
+          variables: { id: result.id },
+        });
+
+        if (!data || !data.nodeProfile) {
+          console.warn(`Failed to fetch latest revision for profile ${result.id}, falling back to original result`);
+          return result;
+        }
+
+        return data.nodeProfile;
+      })
+    );
+  }
+
   return {
-    results: data.profileSearch.results as PartialProfileData[],
+    results: results,
     totalPages: Math.ceil(data.profileSearch.pageInfo.total / options.pageSize),
   };
 }
