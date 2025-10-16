@@ -2,10 +2,8 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query, getClient } from "@/lib/apollo";
 import type { FullProfile } from "@/lib/types";
-import type { 
-  ProfilesResult,
-  NodeProfile 
-} from "@/lib/graphql/graphql";
+import { ProfilesResult, NodeProfile } from "@/lib/graphql/graphql";
+import { PartialProfileFragment, ProfileFragment } from "@/lib/graphql/types";
 
 // GraphQL Response Types
 interface PageInfo {
@@ -122,9 +120,9 @@ export async function getProfileContent(id: string) {
 }
 
 export async function getProfiles(page: number = 0, pageSize: number = DEFAULT_PAGE_SIZE) {
-  try {
+  /*try {
     const client = getClient();
-    const profilesQuery = gql(/* GraphQL */ `
+    const profilesQuery = gql(/* GraphQL / `
       query GetProfiles($page: Int = 0, $pageSize: Int = 20) {
         profiles(page: $page, pageSize: $pageSize) {
           results {
@@ -178,13 +176,15 @@ export async function getProfiles(page: number = 0, pageSize: number = DEFAULT_P
   } catch (error) {
     console.error("Error fetching profiles:", error);
     return [];
-  }
+  }*/
+
+  return [];
 }
 
 export async function getProfilesByType(profileType: string, page: number = 0, pageSize: number = 100) {
-  try {
+  /*try {
     const client = getClient();
-    const profilesQuery = gql(/* GraphQL */ `
+    const profilesQuery = gql(/* GraphQL  `
       query GetProfilesByType($type: String!, $page: Int = 0, $pageSize: Int = 100) {
         profiles(contextualFilter: { field_profile_type_target_id: $type }, page: $page, pageSize: $pageSize) {
           results {
@@ -239,13 +239,15 @@ export async function getProfilesByType(profileType: string, page: number = 0, p
   } catch (error) {
     console.error(`Error fetching profiles by type "${profileType}":`, error);
     return [];
-  }
+  }*/
+
+  return [];
 }
 
 export async function getProfilesByUnit(unitId: string, page: number = 0, pageSize: number = 100) {
-  try {
+  /*try {
     const client = getClient();
-    const profilesQuery = gql(/* GraphQL */ `
+    const profilesQuery = gql(/* GraphQL * `
       query GetProfilesByUnit($unit: String!, $page: Int = 0, $pageSize: Int = 100) {
         profiles(contextualFilter: { field_profile_unit_target_id: $unit }, page: $page, pageSize: $pageSize) {
           results {
@@ -301,18 +303,25 @@ export async function getProfilesByUnit(unitId: string, page: number = 0, pageSi
     console.error(`Error fetching profiles by unit "${unitId}":`, error);
     return [];
   }
+  */
+  return [];
 }
 
-export async function getProfilesByUnitPaginated(unitId: string, page: number = 0, pageSize: number = 20, searchTerm?: string) {
-  try {
+export async function getProfilesByUnitPaginated(
+  unitId: string,
+  page: number = 0,
+  pageSize: number = 20,
+  searchTerm?: string
+) {
+  /*try {
     const client = getClient();
-    
+
     // If we have a search term, fetch ALL profiles from this unit to search through
     const actualPageSize = searchTerm ? 1000 : pageSize; // Fetch many more profiles when searching
     const actualPage = searchTerm ? 0 : page; // Always start from page 0 when searching
-    
-    const { data } = await client.query({
-      query: gql(/* GraphQL */ `
+
+    const { data } = (await client.query({
+      query: gql(/* GraphQL / `
         query GetProfilesByUnitPaginated($unit: String!, $page: Int = 0, $pageSize: Int = 20) {
           profiles(contextualFilter: { field_profile_unit_target_id: $unit }, page: $page, pageSize: $pageSize) {
             results {
@@ -354,7 +363,7 @@ export async function getProfilesByUnitPaginated(unitId: string, page: number = 
         page: actualPage,
         pageSize: actualPageSize,
       },
-    }) as { data: ProfilesResponse };
+    })) as { data: ProfilesResponse };
 
     if (!data?.profiles) {
       return {
@@ -372,21 +381,23 @@ export async function getProfilesByUnitPaginated(unitId: string, page: number = 
     // If we have a search term, filter the results client-side
     if (searchTerm && searchTerm.trim()) {
       const searchTermLower = searchTerm.toLowerCase().trim();
-      
-      results = results.filter(profile => {
-        const firstName = (profile.profileFirstName || '').toLowerCase();
-        const lastName = (profile.profileLastName || '').toLowerCase();
+
+      results = results.filter((profile) => {
+        const firstName = (profile.profileFirstName || "").toLowerCase();
+        const lastName = (profile.profileLastName || "").toLowerCase();
         const fullName = `${firstName} ${lastName}`.trim();
-        const title = (profile.title || '').toLowerCase();
-        const jobTitle = (profile.profileJobTitle || '').toLowerCase();
-        
-        return fullName.includes(searchTermLower) || 
-               firstName.includes(searchTermLower) ||
-               lastName.includes(searchTermLower) ||
-               title.includes(searchTermLower) || 
-               jobTitle.includes(searchTermLower);
+        const title = (profile.title || "").toLowerCase();
+        const jobTitle = (profile.profileJobTitle || "").toLowerCase();
+
+        return (
+          fullName.includes(searchTermLower) ||
+          firstName.includes(searchTermLower) ||
+          lastName.includes(searchTermLower) ||
+          title.includes(searchTermLower) ||
+          jobTitle.includes(searchTermLower)
+        );
       });
-      
+
       // Update total to reflect filtered results
       total = results.length;
     }
@@ -409,13 +420,15 @@ export async function getProfilesByUnitPaginated(unitId: string, page: number = 
       pageSize,
       totalPages: 0,
     };
-  }
+  }*/
+
+  return [];
 }
 
 export async function getProfilesByTag(tagName: string) {
-  try {
+  /*try {
     const client = getClient();
-    const profilesQuery = gql(/* GraphQL */ `
+    const profilesQuery = gql(/* GraphQL * `
       query GetProfilesByTag($tag: String!, $page: Int = 0, $pageSize: Int = 20) {
         profiles(contextualFilter: { field_tags_target_id: $tag }, page: $page, pageSize: $pageSize) {
           results {
@@ -471,14 +484,16 @@ export async function getProfilesByTag(tagName: string) {
   } catch (error) {
     console.error(`Error fetching profiles by tag "${tagName}":`, error);
     return { results: [] };
-  }
+  }*/
+
+  return [];
 }
 
 export async function getProfileCount() {
-  try {
+  /*try {
     const client = getClient();
     const { data } = await client.query({
-      query: gql(/* GraphQL */ `
+      query: gql(/* GraphQL * `
         query GetProfileCount {
           profiles(page: 0, pageSize: 1) {
             pageInfo {
@@ -494,13 +509,12 @@ export async function getProfileCount() {
   } catch (error) {
     console.error("Error fetching profile count:", error);
     return 0;
-  }
+  }*/
+  return 0;
 }
 
-
-
 export async function getProfilesPaginated(page: number = 0, pageSize: number = 20, searchTerm?: string) {
-  try {
+  /*try {
     const client = getClient();
     
     // If we have a search term, fetch ALL profiles to search through
@@ -508,7 +522,7 @@ export async function getProfilesPaginated(page: number = 0, pageSize: number = 
     const actualPage = searchTerm ? 0 : page; // Always start from page 0 when searching
     
     const { data } = await client.query({
-      query: gql(/* GraphQL */ `
+      query: gql(/* GraphQL / `
         query GetProfilesPaginated($page: Int = 0, $pageSize: Int = 20, $filter: ProfilesFilterInput) {
           profiles(page: $page, pageSize: $pageSize, filter: $filter) {
             results {
@@ -605,7 +619,7 @@ export async function getProfilesPaginated(page: number = 0, pageSize: number = 
       pageSize,
       totalPages: 0,
     };
-  }
+  }*/
 }
 
 export async function getProfileTypes() {
@@ -613,7 +627,7 @@ export async function getProfileTypes() {
   const { data } = await client.query({
     query: gql(/* GraphQL */ `
       query GetProfileTypes {
-        taxonomyTerms(filter: {vid: "profile_type"}) {
+        taxonomyTerms(filter: { vid: "profile_type" }) {
           results {
             ... on TermProfileType {
               id
@@ -624,7 +638,7 @@ export async function getProfileTypes() {
       }
     `),
   });
-  
+
   if (!(data as any)?.taxonomyTerms?.results) {
     return [];
   }
@@ -638,7 +652,7 @@ export async function getResearch() {
     const { data } = await client.query({
       query: gql(/* GraphQL */ `
         query GetResearch {
-          taxonomyTerms(filter: {vid: "research"}) {
+          taxonomyTerms(filter: { vid: "research" }) {
             results {
               ... on TermResearch {
                 id
@@ -655,7 +669,7 @@ export async function getResearch() {
     }
 
     return (data as any).taxonomyTerms.results
-      .filter((term: any): term is { id: string; name: string } => 'name' in term)
+      .filter((term: any): term is { id: string; name: string } => "name" in term)
       .sort((a: any, b: any) => a.name.localeCompare(b.name));
   } catch (error) {
     console.error("Error fetching research terms:", error);
@@ -668,7 +682,7 @@ export async function getTags() {
   const { data } = await client.query({
     query: gql(/* GraphQL */ `
       query GetTags {
-        taxonomyTerms(filter: {vid: "tags"}) {
+        taxonomyTerms(filter: { vid: "tags" }) {
           results {
             ... on TermTag {
               id
@@ -685,7 +699,7 @@ export async function getTags() {
   }
 
   return (data as any).taxonomyTerms.results
-    .filter((term: any): term is { id: string; name: string } => 'name' in term)
+    .filter((term: any): term is { id: string; name: string } => "name" in term)
     .sort((a: any, b: any) => a.name.localeCompare(b.name));
 }
 
@@ -695,7 +709,7 @@ export async function getUnits() {
     const { data } = await client.query({
       query: gql(/* GraphQL */ `
         query GetUnits {
-          taxonomyTerms(filter: {vid: "units"}) {
+          taxonomyTerms(filter: { vid: "units" }) {
             results {
               ... on TermUnit {
                 id
@@ -717,7 +731,7 @@ export async function getUnits() {
     }
 
     return (data as any).taxonomyTerms.results
-      .filter((term: any): term is { id: string; name: string } => 'name' in term)
+      .filter((term: any): term is { id: string; name: string } => "name" in term)
       .sort((a: any, b: any) => a.name.localeCompare(b.name));
   } catch (error) {
     console.error("Error fetching units:", error);
@@ -747,7 +761,9 @@ export async function getProfilesByTypeName(profileTypeName: string, page: numbe
   try {
     const profileTypeId = await getProfileTypeIdByName(profileTypeName);
     if (!profileTypeId) {
-      console.warn(`Profile type "${profileTypeName}" not found. Available types can be checked with getProfileTypes()`);
+      console.warn(
+        `Profile type "${profileTypeName}" not found. Available types can be checked with getProfileTypes()`
+      );
       return [];
     }
     return await getProfilesByType(profileTypeId, page, pageSize);
@@ -755,4 +771,104 @@ export async function getProfilesByTypeName(profileTypeName: string, page: numbe
     console.error(`Error fetching profiles by type name "${profileTypeName}":`, error);
     return [];
   }
+}
+
+// NEW STUFF
+export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
+
+export type ProfileSearchOptions = {
+  /* The results of the search are paginated, so we specify which page to fetch. */
+  page: number;
+  /* The number of results to fetch per page. */
+  pageSize: number;
+  /* This string will be used in a full text search on the first name, last name, and research areas of the profile. */
+  searchQuery: string;
+  /* The IDs of each unit to filter by. If not provided, all units will be included. */
+  units: string[];
+  /* The IDs of each profile type to filter by. If not provided, all types will be included. */
+  types: string[];
+};
+
+export const PARTIAL_PROFILE_FRAGMENT = gql(/* gql */ `
+  fragment PartialProfile on NodeProfile {
+    id
+    title
+    profileJobTitle
+    path
+    profilePicture {
+      ... on MediaImage {
+        image {
+          alt
+          variations(styles: PROFILES) {
+            width
+            url
+            height
+          }
+        }
+      }
+    }
+  }
+`);
+
+export type PartialProfileData = NonNullable<PartialProfileFragment>;
+
+export async function getFilteredProfiles(options: ProfileSearchOptions) {
+  const showUnpublished = await showUnpublishedContent();
+  const query = getClient().query;
+  const { page, pageSize, searchQuery, units, types } = options;
+
+  if (pageSize && !VALID_PAGE_SIZES.includes(pageSize)) {
+    throw new Error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
+  }
+
+  const { data, error } = await query({
+    query: gql(/* gql */ `
+      query ProfileSearch(
+        $query: String = ""
+        $page: Int = 0
+        $size: Int = 20
+        $units: [String] = []
+        $types: [String] = ""
+        $status: Boolean = null
+      ) {
+        profileSearch(
+          filter: { query: $query, units: $units, types: $types, status: $status }
+          page: $page
+          pageSize: $size
+        ) {
+          results {
+            ...PartialProfile
+          }
+          pageInfo {
+            total
+          }
+        }
+      }
+    `),
+    variables: {
+      page: page,
+      size: pageSize,
+      units: units,
+      types: types,
+      query: searchQuery,
+      status: showUnpublished ? null : true,
+    },
+  });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return { results: [], totalPages: 0 };
+  }
+
+  if (!data.profileSearch) {
+    return { results: [], totalPages: 0 };
+  }
+
+  return {
+    results: data.profileSearch.results as PartialProfileData[],
+    totalPages: Math.ceil(data.profileSearch.pageInfo.total / options.pageSize),
+  };
 }
