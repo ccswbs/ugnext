@@ -1,7 +1,7 @@
 "use client";
 
 import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, ReactNode, isValidElement } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
@@ -77,7 +77,7 @@ function hasAncestorWithClass(node: Element, className: string): boolean {
 
 function unwrapTags(children: React.ReactNode): React.ReactNode {
   return React.Children.map(children, (child) => {
-    if (child && typeof child !== "string" && (child.type === "span" || child.type === "strong")) {
+    if (child && isValidElement(child) && (child.type === "span" || child.type === "strong")) {
       return unwrapTags(child.props.children);
     }
     return child;
