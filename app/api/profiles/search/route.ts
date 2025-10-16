@@ -1,26 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getFilteredProfiles, VALID_PAGE_SIZES } from "@/data/drupal/profile";
+import { getFilteredProfiles } from "@/data/drupal/profile";
 
-export function getFilterOptions(url: string, ignorePage = false) {
-  const params = new URL(url).searchParams;
-
+export async function GET(request: NextRequest) {
+  const params = new URL(request.url).searchParams;
   const page: number = Math.ceil(parseInt(params.get("page") ?? "0", 10));
-
-  if (!ignorePage && (isNaN(page) || page < 0)) {
-    throw new Error("Page must be a positive integer.");
-  }
-
   const pageSize: number = Math.ceil(parseInt(params.get("size") ?? "20", 10));
-
-  if (!VALID_PAGE_SIZES.includes(pageSize)) {
-    throw new Error(`Page size must be one of the following: ${VALID_PAGE_SIZES.join(",")}`);
-  }
-
-  const query: string = params.get("query") ?? "";
-
-  if (query.length > 128) {
-    throw new Error("Query must not be longer than 128 characters.");
-  }
+  const queryByName: string = params.get("queryByName") ?? "";
+  const queryByResearchArea: string = params.get("queryByResearchArea") ?? "";
+  const isAcceptingGraduateStudentsParam = params.get("isAcceptingGraduateStudents");
+  const isAcceptingGraduateStudents =
+    isAcceptingGraduateStudentsParam === "true" ? true : isAcceptingGraduateStudentsParam === "false" ? false : null;
 
   const units: string[] =
     (params.get("units") ?? "")
@@ -34,27 +23,19 @@ export function getFilterOptions(url: string, ignorePage = false) {
       ?.map((type) => type.trim())
       ?.filter(Boolean) ?? null;
 
-  return { page, pageSize, query, units, types };
-}
-
-export async function GET(request: NextRequest) {
-  let options;
-
   try {
-    options = getFilterOptions(request.url);
+    const data = await getFilteredProfiles({
+      page,
+      pageSize,
+      queryByName,
+      queryByResearchArea,
+      units,
+      types,
+      isAcceptingGraduateStudents,
+    });
+
+    return NextResponse.json(data);
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 400 });
   }
-
-  const { page, pageSize, query, units, types } = options;
-
-  const data = await getFilteredProfiles({
-    page,
-    pageSize,
-    searchQuery: query,
-    units,
-    types,
-  });
-
-  return NextResponse.json(data);
 }

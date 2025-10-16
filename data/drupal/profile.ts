@@ -646,99 +646,6 @@ export async function getProfileTypes() {
   return (data as any).taxonomyTerms.results;
 }
 
-export async function getResearch() {
-  try {
-    const client = getClient();
-    const { data } = await client.query({
-      query: gql(/* GraphQL */ `
-        query GetResearch {
-          taxonomyTerms(filter: { vid: "research" }) {
-            results {
-              ... on TermResearch {
-                id
-                name
-              }
-            }
-          }
-        }
-      `),
-    });
-
-    if (!(data as any)?.taxonomyTerms?.results) {
-      return [];
-    }
-
-    return (data as any).taxonomyTerms.results
-      .filter((term: any): term is { id: string; name: string } => "name" in term)
-      .sort((a: any, b: any) => a.name.localeCompare(b.name));
-  } catch (error) {
-    console.error("Error fetching research terms:", error);
-    return [];
-  }
-}
-
-export async function getTags() {
-  const client = getClient();
-  const { data } = await client.query({
-    query: gql(/* GraphQL */ `
-      query GetTags {
-        taxonomyTerms(filter: { vid: "tags" }) {
-          results {
-            ... on TermTag {
-              id
-              name
-            }
-          }
-        }
-      }
-    `),
-  });
-
-  if (!(data as any)?.taxonomyTerms?.results) {
-    return [];
-  }
-
-  return (data as any).taxonomyTerms.results
-    .filter((term: any): term is { id: string; name: string } => "name" in term)
-    .sort((a: any, b: any) => a.name.localeCompare(b.name));
-}
-
-export async function getUnits() {
-  try {
-    const client = getClient();
-    const { data } = await client.query({
-      query: gql(/* GraphQL */ `
-        query GetUnits {
-          taxonomyTerms(filter: { vid: "units" }) {
-            results {
-              ... on TermUnit {
-                id
-                name
-                parent {
-                  ... on TermUnit {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
-      `),
-    });
-
-    if (!(data as any)?.taxonomyTerms?.results) {
-      return [];
-    }
-
-    return (data as any).taxonomyTerms.results
-      .filter((term: any): term is { id: string; name: string } => "name" in term)
-      .sort((a: any, b: any) => a.name.localeCompare(b.name));
-  } catch (error) {
-    console.error("Error fetching units:", error);
-    return [];
-  }
-}
-
 /**
  * Get profile type ID by name
  * This is needed because getProfilesByType expects an ID, not a name
@@ -781,12 +688,16 @@ export type ProfileSearchOptions = {
   page: number;
   /* The number of results to fetch per page. */
   pageSize: number;
-  /* This string will be used in a full text search on the first name, last name, and research areas of the profile. */
-  searchQuery: string;
+  /* This string will be used in a full-text search on the first name and last name of the profile. */
+  queryByName: string;
+  /* This string will be used in a full-text search on the research areas of the profile. */
+  queryByResearchArea: string;
   /* The IDs of each unit to filter by. If not provided, all units will be included. */
   units: string[];
   /* The IDs of each profile type to filter by. If not provided, all types will be included. */
   types: string[];
+  /* Filter by whether the profile is accepting graduate students. Leave as null to include both */
+  isAcceptingGraduateStudents: boolean | null;
 };
 
 export const PARTIAL_PROFILE_FRAGMENT = gql(/* gql */ `
@@ -815,24 +726,46 @@ export type PartialProfileData = NonNullable<PartialProfileFragment>;
 export async function getFilteredProfiles(options: ProfileSearchOptions) {
   const showUnpublished = await showUnpublishedContent();
   const query = getClient().query;
-  const { page, pageSize, searchQuery, units, types } = options;
+  const { page, pageSize, queryByName, queryByResearchArea, units, types, isAcceptingGraduateStudents } = options;
 
-  if (pageSize && !VALID_PAGE_SIZES.includes(pageSize)) {
+  // Validate filter options
+  if (isNaN(page) || page < 0) {
+    throw new Error("Page must be a positive integer.");
+  }
+
+  if (!VALID_PAGE_SIZES.includes(pageSize)) {
     throw new Error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
+  }
+
+  if (queryByName.length > 128) {
+    throw new Error("queryByName must not be longer than 128 characters.");
+  }
+
+  if (queryByResearchArea.length > 128) {
+    throw new Error("queryByResearchArea must not be longer than 128 characters.");
   }
 
   const { data, error } = await query({
     query: gql(/* gql */ `
       query ProfileSearch(
-        $query: String = ""
+        $queryByName: String = ""
+        $queryByResearchArea: String = ""
         $page: Int = 0
         $size: Int = 20
         $units: [String] = []
         $types: [String] = ""
         $status: Boolean = null
+        $acceptingNewGrads: Boolean = null
       ) {
         profileSearch(
-          filter: { query: $query, units: $units, types: $types, status: $status }
+          filter: {
+            queryByName: $queryByName
+            queryByResearchArea: $queryByResearchArea
+            units: $units
+            types: $types
+            status: $status
+            accepting_new_grads: $acceptingNewGrads
+          }
           page: $page
           pageSize: $size
         ) {
@@ -850,8 +783,10 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
       size: pageSize,
       units: units,
       types: types,
-      query: searchQuery,
+      queryByName: queryByName,
+      queryByResearchArea: queryByResearchArea,
       status: showUnpublished ? null : true,
+      acceptingNewGrads: isAcceptingGraduateStudents,
     },
   });
 
