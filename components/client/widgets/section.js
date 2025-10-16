@@ -131,8 +131,6 @@ export function SectionWidget({ data }) {
           equal={sectionClasses === "col-md-6"}
         />
       )}
-
-      
     </>
   );
 }
