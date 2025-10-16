@@ -364,7 +364,7 @@ const defaultInstructions: ParserInstruction[] = [
           as={level}
           className={twMerge(index === 0 && "mt-0", className)}
         >
-          {cleanedChildren};
+          {cleanedChildren}
         </Typography>
       );
     },
