@@ -10,8 +10,16 @@ import {
 import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
+import { PersistedQueryLink } from "@apollo/client/link/persisted-queries";
 import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
+import crypto from "node:crypto";
+
+function sha256(data: string) {
+  const hash = crypto.createHash("sha256");
+  hash.update(data);
+  return hash.digest("hex");
+}
 
 const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev").replace(
   /\/+(?=\?|#|$)/g,
@@ -65,18 +73,24 @@ CombinedGraphQLErrors.formatMessage = (errors, options) => {
   return `${formatted || options.defaultFormatMessage(errors)}`;
 };
 
+const persistedQuerylink = new PersistedQueryLink({
+  sha256,
+});
+
+const batchHttpLink = new BatchHttpLink({
+  // this needs to be an absolute url, as relative urls cannot be used in SSR
+  uri: `${DRUPAL_BASE_URL}/graphql`,
+  headers: {
+    "api-key": process.env.DRUPAL_API_KEY ?? "",
+  },
+  batchMax: 20,
+  batchInterval: 50,
+});
+
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: new BatchHttpLink({
-      // this needs to be an absolute url, as relative urls cannot be used in SSR
-      uri: `${DRUPAL_BASE_URL}/graphql`,
-      headers: {
-        "api-key": process.env.DRUPAL_API_KEY ?? "",
-      },
-      batchMax: 20,
-      batchInterval: 50,
-    }),
+    link: persistedQuerylink.concat(batchHttpLink),
     defaultOptions: {
       query: {
         errorPolicy: "all",
