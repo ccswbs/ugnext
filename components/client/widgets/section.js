@@ -40,6 +40,9 @@ export function SectionWidget({ data }) {
       const column = columnName ? columnName.toLowerCase() : "";
 
       switch (column) {
+        case "call to action":
+          acc.primary.push(widget);
+          break;
         case "primary":
           acc.primary.push(widget);
           break;
@@ -128,6 +131,8 @@ export function SectionWidget({ data }) {
           equal={sectionClasses === "col-md-6"}
         />
       )}
+
+      
     </>
   );
 }
