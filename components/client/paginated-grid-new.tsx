@@ -10,6 +10,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 type PaginatedGridData<T> = {
   results: T[];
   totalPages: number;
+  total: number;
 };
 
 type PaginatedGridSharedProps<T> = {
@@ -80,15 +81,32 @@ function PaginatedGridPage<T>({ page, endpoint, render }: PaginatedGridPageProps
   if (
     !("results" in data) ||
     !("totalPages" in data) ||
+    !("total" in data) ||
     !Array.isArray(data.results) ||
-    typeof data.totalPages !== "number"
+    typeof data.totalPages !== "number" ||
+    typeof data.total !== "number"
   ) {
     throw new Error(
       "Invalid data structure: expected 'results' array and 'totalPages' numeric properties from API response."
     );
   }
 
-  return <div className={classes}>{data.results.map(render)}</div>;
+  return (
+    <div>
+      <div className="mb-4 text-center text-sm opacity-70">
+        Showing {data.results.length} of {data.total} results
+      </div>
+      <div className={classes}>{data.results.map(render)}</div>
+
+      {data.results.length === 0 && (
+        <div className="flex w-full items-center justify-center flex-1 py-5">
+          <Typography type="body" className="text-body-copy-bold font-bold text-center w-full">
+            No results found.
+          </Typography>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function PaginatedGrid<T>({ endpoint, render, hidePaginationInput = false }: PaginatedGridProps<T>) {
