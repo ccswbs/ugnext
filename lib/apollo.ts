@@ -77,20 +77,18 @@ const persistedQuerylink = new PersistedQueryLink({
   sha256,
 });
 
-const batchHttpLink = new BatchHttpLink({
+const httpLink = new HttpLink({
   // this needs to be an absolute url, as relative urls cannot be used in SSR
   uri: `${DRUPAL_BASE_URL}/graphql`,
   headers: {
     "api-key": process.env.DRUPAL_API_KEY ?? "",
   },
-  batchMax: 20,
-  batchInterval: 50,
 });
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: persistedQuerylink.concat(batchHttpLink),
+    link: persistedQuerylink.concat(httpLink),
     defaultOptions: {
       query: {
         errorPolicy: "all",
