@@ -74,6 +74,8 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
       headers: {
         "api-key": process.env.DRUPAL_API_KEY ?? "",
       },
+      batchMax: 20,
+      batchInterval: 50,
     }),
     defaultOptions: {
       query: {
