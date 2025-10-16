@@ -1,15 +1,6 @@
-import {
-  CombinedGraphQLErrors,
-  CombinedProtocolErrors,
-  HttpLink,
-  LocalStateError,
-  ServerError,
-  ServerParseError,
-  UnconventionalError,
-} from "@apollo/client";
+import { CombinedGraphQLErrors, HttpLink } from "@apollo/client";
 import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { PersistedQueryLink } from "@apollo/client/link/persisted-queries";
 import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
