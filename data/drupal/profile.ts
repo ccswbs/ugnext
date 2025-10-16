@@ -883,6 +883,7 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
   return {
     results: results,
     totalPages: Math.ceil(data.profileSearch.pageInfo.total / options.pageSize),
+    total: data.profileSearch.pageInfo.total,
   };
 }
 
