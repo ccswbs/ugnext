@@ -11,17 +11,20 @@ export async function GET(request: NextRequest) {
   const isAcceptingGraduateStudents =
     isAcceptingGraduateStudentsParam === "true" ? true : isAcceptingGraduateStudentsParam === "false" ? false : null;
 
-  const units: string[] =
-    (params.get("units") ?? "")
-      ?.split(",")
-      ?.map((unit) => unit.trim())
-      ?.filter(Boolean) ?? null;
+  const units: string[] = (params.get("units") ?? "")
+    .split(",")
+    .map((unit) => unit.trim())
+    .filter(Boolean);
 
-  const types: string[] =
-    (params.get("types") ?? "")
-      ?.split(",")
-      ?.map((type) => type.trim())
-      ?.filter(Boolean) ?? null;
+  const types: string[] = (params.get("types") ?? "")
+    .split(",")
+    .map((type) => type.trim())
+    .filter(Boolean);
+
+  const categories: string[] = (params.get("categories") ?? "")
+    .split(",")
+    .map((type) => type.trim())
+    .filter(Boolean);
 
   try {
     const data = await getFilteredProfiles({
@@ -31,6 +34,7 @@ export async function GET(request: NextRequest) {
       queryByResearchArea,
       units,
       types,
+      categories,
       isAcceptingGraduateStudents,
     });
 
