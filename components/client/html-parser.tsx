@@ -75,6 +75,15 @@ function hasAncestorWithClass(node: Element, className: string): boolean {
   return false;
 }
 
+function unwrapTags(children) {
+  return React.Children.map(children, (child) => {
+    if (typeof child !== "string" && (child.type === "span" || child.type === "strong")) {
+      return unwrapTags(child.props.children);
+    }
+    return child;
+  });
+}
+
 // Counter for td elements with rowspan to handle alternating colors
 let rowspanTdCounter = 0;
 
@@ -336,6 +345,7 @@ const defaultInstructions: ParserInstruction[] = [
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
       const headingClass = className.match(/\bh[\d]\b/g);
+      const cleanedChildren = unwrapTags(children);
       let type = level;
 
       // Allow headings to appear smaller if needed
@@ -351,16 +361,7 @@ const defaultInstructions: ParserInstruction[] = [
           as={level}
           className={twMerge(index === 0 && "mt-0", className)}
         >
-          {React.Children.map(children, (child) => {
-            // Remove strong tags from headings
-            if (typeof child !== "string" && child.type === "span") {
-              if (typeof child !== "string" && child.type === "strong") {
-                 return child.props.children;
-              }
-            }
-            
-            return child;
-          })}
+          {cleanedChildren};
         </Typography>
       );
     },
