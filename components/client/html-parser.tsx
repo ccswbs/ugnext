@@ -353,10 +353,12 @@ const defaultInstructions: ParserInstruction[] = [
         >
           {React.Children.map(children, (child) => {
             // Remove strong tags from headings
-            if (typeof child !== "string" && (child.type === "strong" || child.type === "span")) {
-              return child.props.children;
+            if (typeof child !== "string" && child.type === "span") {
+              if (typeof child !== "string" && child.type === "strong") {
+                 return child.props.children;
+              }
             }
-
+            
             return child;
           })}
         </Typography>
