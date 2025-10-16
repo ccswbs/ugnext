@@ -5,6 +5,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProfileSearchGrid } from "@/components/client/profiles/profile-search-grid";
+import { getAllCategories } from "@/data/drupal/profile";
 
 export const metadata: Metadata = {
   title: "Faculty | University of Guelph",
@@ -12,6 +13,9 @@ export const metadata: Metadata = {
 
 export default async function Faculty() {
   //const tags = await getTags();
+  const categories = await getAllCategories();
+
+  console.log(categories);
 
   return (
     <Layout>
