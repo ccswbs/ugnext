@@ -27,7 +27,14 @@ export type ProfileSearchParams = {
 export function ProfileSearch() {
   return (
     <>
-      <ProfileSearchBar />
+      <ProfileSearchBar
+        searchByName={true}
+        searchByResearchArea={true}
+        filterByUnits={false}
+        filterByTypes={false}
+        filterByAcceptingGraduateStudents={false}
+        filterByCategories={false}
+      />
 
       <Container>
         <PaginatedGrid
