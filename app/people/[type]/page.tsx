@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   }
 
   return {
-    title: `Our ${type.name}`,
+    title: `${type.name}`,
   };
 }
 
@@ -61,7 +61,7 @@ export default async function PeopleByCategory({ params }: Props) {
       <LayoutContent container={false}>
         <Container>
           <Typography type="h1" as="h1" className="block!">
-            Our {type.name}
+            {type.name} at the University of Guelph
           </Typography>
         </Container>
 
