@@ -70,7 +70,7 @@ export function MediaTextWidget({ data }) {
       base: "col-span-1 h-full w-full",
       heading: "mt-0!",
       body: "",
-      no_body: "grid-cols-1",
+      no_body: "grid-cols-1 h-auto",
     },
     variants: {
       background: {
