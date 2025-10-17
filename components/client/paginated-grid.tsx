@@ -27,6 +27,17 @@ async function fetcher(...args: Parameters<typeof fetch>) {
   return response.json();
 }
 
+/*
+ * This component is used to fetch paginated data from an api endpoint and render it in a grid.
+ * For it to function correctly, the api endpoint must return a JSON object with the following structure:
+ * {
+ *   results: [], // The actual data to be rendered
+ *   totalPages: number, // Denoting the total number of pages available
+ *   total: number // Denoting the total number of items available
+ * }
+ * The endpoint also must support pagination using the 'page' query parameter.
+ * For example /api/endpoint?page=1
+ * */
 export function PaginatedGrid<T>({ url, render }: PaginatedGridProps<T>) {
   const [page, setPage] = useState(0);
 
