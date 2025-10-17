@@ -4,6 +4,7 @@ import { PaginatedGrid } from "@/components/client/paginated-grid";
 import type { PartialProfileData } from "@/data/drupal/profile";
 import { Container } from "@uoguelph/react-components/container";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
+import { ProfileSearchBar } from "@/components/client/profiles/profile-search-bar";
 
 export type ProfileSearchParams = {
   userFilters: {
@@ -25,11 +26,15 @@ export type ProfileSearchParams = {
 
 export function ProfileSearch() {
   return (
-    <Container>
-      <PaginatedGrid
-        url="/api/profiles/get-profiles"
-        render={(item: PartialProfileData) => <ProfileCard key={item.id} data={item} />}
-      />
-    </Container>
+    <>
+      <ProfileSearchBar />
+
+      <Container>
+        <PaginatedGrid
+          url="/api/profiles/get-profiles"
+          render={(item: PartialProfileData) => <ProfileCard key={item.id} data={item} />}
+        />
+      </Container>
+    </>
   );
 }
