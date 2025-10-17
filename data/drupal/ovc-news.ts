@@ -104,23 +104,38 @@ export async function getNewsArticleCount() {
 
 export type OVCNewsWithoutBody = NewsWithoutBodyFragment;
 
-export async function getNewsArticles(page: number, size: number = 20) {
+export async function getNewsArticles(page: number, pageSize: number = 20) {
+  const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
+
   // This function is used in a Server Active, so we need to use getClient to get the query function, otherwise it will create multiple ApolloClient instances.
   const query = getClient().query;
 
+  if (page < 0) {
+    throw new Error(`Page number must be greater than or equal to 0.`);
+  }
+
+  if (!VALID_PAGE_SIZES.includes(pageSize)) {
+    throw new Error(`Page size must be one of the following values: ${VALID_PAGE_SIZES}.`);
+  }
+
+  if (page > Math.ceil((await getNewsArticleCount()) / pageSize)) {
+  }
+
   const { data, error } = await query({
     query: gql(/* gql */ `
-      query GetNewsArticles($page: Int = 0, $size: Int = 20) {
-        legacyNews(page: $page, pageSize: $size) {
+      query GetNewsArticles($page: Int = 0, $pageSize: Int = 20) {
+        legacyNews(page: $page, pageSize: $pageSize) {
           results {
             ...NewsWithoutBody
+          }
+          pageInfo {
+            total
           }
         }
       }
     `),
     variables: {
       page: page,
-      size: size,
     },
   });
 
@@ -129,14 +144,26 @@ export async function getNewsArticles(page: number, size: number = 20) {
   }
 
   if (!data) {
-    return [];
+    return {
+      results: [],
+      total: 0,
+      totalPages: 0,
+    };
   }
 
   if (!data.legacyNews) {
-    return [];
+    return {
+      results: [],
+      total: 0,
+      totalPages: 0,
+    };
   }
 
-  return data.legacyNews.results as OVCNewsWithoutBody[];
+  return {
+    results: data.legacyNews.results as OVCNewsWithoutBody[],
+    total: data.legacyNews.pageInfo.total,
+    totalPages: Math.ceil(data.legacyNews.pageInfo.total / pageSize),
+  };
 }
 
 export async function getFeaturedNewsArticles() {
