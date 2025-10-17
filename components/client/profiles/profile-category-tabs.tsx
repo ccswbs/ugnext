@@ -8,13 +8,10 @@ import { usePathname } from "next/navigation";
 
 export function ProfileCategoryTabs({ categories }: { categories: ProfileCategory[] }) {
   const pathname = usePathname();
-
   const activeCategory = pathname.split("/").pop();
 
-  console.log(activeCategory);
-
   return (
-    <Container>
+    <Container className="mb-0">
       <Navigation>
         <NavigationLink href="/people" as={Link} active={activeCategory === "people" || !activeCategory}>
           All
