@@ -5,9 +5,9 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProfileSearch } from "@/components/client/profiles/profile-search";
-import { getAllCategories } from "@/data/drupal/profile";
 import { getRoute } from "@/data/drupal/route";
 import { notFound } from "next/navigation";
+import { ProfileCategoryTabs } from "@/components/server/profiles/profile-category-tabs";
 
 type Props = {
   params: Promise<{ category: string }>;
@@ -64,6 +64,8 @@ export default async function PeopleByCategory({ params }: Props) {
             Our {category.name}
           </Typography>
         </Container>
+
+        <ProfileCategoryTabs />
 
         <ProfileSearch />
       </LayoutContent>
