@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import { ProfileTabs } from "@/components/server/profiles/profile-tabs";
 
 type Props = {
-  params: Promise<{ category: string }>;
+  params: Promise<{ type: string }>;
 };
 
 async function getType(type: string) {
@@ -36,7 +36,7 @@ async function getType(type: string) {
 }
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  const type = await getType((await params).category);
+  const type = await getType((await params).type);
 
   if (!type) {
     notFound();
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 }
 
 export default async function PeopleByCategory({ params }: Props) {
-  const type = await getType((await params).category);
+  const type = await getType((await params).type);
 
   if (!type) {
     notFound();
