@@ -4,6 +4,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Button } from "@uoguelph/react-components/button";
 import { HtmlParser } from "@/components/client/html-parser";
 import { tv } from "tailwind-variants";
+import { twMerge } from "tailwind-merge";
 import { Container } from "@uoguelph/react-components/container";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
@@ -62,7 +63,7 @@ export const ButtonWidget = ({ data, column }) => {
       },
       hasHeading: {
         true: {
-          button: "text-2xl! py-4 px-10",
+          button: "py-4 px-10",
         },
         false: {
           button: "p-4",
@@ -97,14 +98,16 @@ export const ButtonWidget = ({ data, column }) => {
   return (
     <>
       {heading && (
-        <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={classes.heading()}>
-          <HtmlParser html={heading} />
-        </Typography>
+        <div className="basis-full">
+          <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={classes.heading()}>
+            <HtmlParser html={heading} />
+          </Typography>
+        </div>
       )}
 
       <Button
         id={`button-${data.uuid}`}
-        className={classes.button()}
+        className={twMerge(classes.button(), column === "call-to-action" && "text-2xl")}
         as={Link}
         href={url}
         color={color}
@@ -129,7 +132,7 @@ export const ButtonSectionWidget = ({ data }) => {
       column: {
         primary: "flex flex-wrap px-0 mx-0",
         secondary: "flex-col px-0 mx-0",
-        "call-to-action": "flex-col items-center",
+        "call-to-action": "flex-wrap flex-row items-center justify-center",
       },
     },
   })({ column, section: context?.column ?? "primary" });

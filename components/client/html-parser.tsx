@@ -1,7 +1,7 @@
 "use client";
 
 import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, ReactNode, isValidElement, ReactElement } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
@@ -73,6 +73,18 @@ function hasAncestorWithClass(node: Element, className: string): boolean {
     current = current.parent;
   }
   return false;
+}
+
+function unwrapTags(children: ReactNode): ReactNode {
+  return React.Children.map(children, (child) => {
+    if (child && isValidElement(child)) {
+      const element = child as ReactElement<any>; 
+      if (element.type === "span" || element.type === "strong") {
+        return unwrapTags(element.props.children);
+      }
+    }
+    return child;
+  });
 }
 
 // Counter for td elements with rowspan to handle alternating colors
@@ -336,6 +348,7 @@ const defaultInstructions: ParserInstruction[] = [
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
       const headingClass = className.match(/\bh[\d]\b/g);
+      const cleanedChildren = unwrapTags(children);
       let type = level;
 
       // Allow headings to appear smaller if needed
@@ -351,14 +364,7 @@ const defaultInstructions: ParserInstruction[] = [
           as={level}
           className={twMerge(index === 0 && "mt-0", className)}
         >
-          {React.Children.map(children, (child) => {
-            // Remove strong tags from headings
-            if (typeof child !== "string" && child.type === "strong") {
-              return child.props.children;
-            }
-
-            return child;
-          })}
+          {cleanedChildren}
         </Typography>
       );
     },
