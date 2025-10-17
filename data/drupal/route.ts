@@ -101,7 +101,7 @@ export async function getRoute(url: string) {
               id
               title
             }
-            ... on TermProfileCategory {
+            ... on TermProfileType {
               uuid
               id
               name

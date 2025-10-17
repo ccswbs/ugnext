@@ -2,7 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import type { FullProfile } from "@/lib/types";
-import type { PartialProfileFragment, ProfileCategoryFragment } from "@/lib/graphql/types";
+import type { PartialProfileFragment, ProfileTypeFragment } from "@/lib/graphql/types";
 
 // GraphQL Response Types
 interface PageInfo {
@@ -697,8 +697,6 @@ export type ProfileSearchOptions = {
   types: string[];
   /* Filter by whether the profile is accepting graduate students. Leave as null to include both */
   isAcceptingGraduateStudents: boolean | null;
-  /* The IDs of each category to filter by. Internally, categories are just groupings of types. */
-  categories: string[];
 };
 
 export const PARTIAL_PROFILE_FRAGMENT = gql(/* gql */ `
@@ -727,8 +725,7 @@ export type PartialProfileData = NonNullable<PartialProfileFragment>;
 export async function getFilteredProfiles(options: ProfileSearchOptions) {
   const showUnpublished = await showUnpublishedContent();
   const query = getClient().query;
-  const { page, pageSize, queryByName, queryByResearchArea, units, types, isAcceptingGraduateStudents, categories } =
-    options;
+  const { page, pageSize, queryByName, queryByResearchArea, units, types, isAcceptingGraduateStudents } = options;
 
   // Validate filter options
   if (isNaN(page) || page < 0) {
@@ -745,47 +742,6 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
 
   if (queryByResearchArea.length > 128) {
     throw new Error("queryByResearchArea must not be longer than 128 characters.");
-  }
-
-  const typesSet = new Set(types);
-
-  // If filtering by categories, we need to fetch the types that are in those categories.
-  const categoryPromises = categories.map(async (category) => {
-    const { data, error } = await query({
-      query: gql(/* gql */ `
-        query CategoryTypes($id: ID = "") {
-          termProfileCategory(id: $id) {
-            name
-            types {
-              id
-            }
-          }
-        }
-      `),
-      variables: {
-        id: category,
-      },
-    });
-
-    if (error) {
-      handleGraphQLError(error);
-    }
-
-    if (!data) {
-      return [];
-    }
-
-    if (!data.termProfileCategory) {
-      return [];
-    }
-
-    return data.termProfileCategory.types.map((type) => type.id);
-  });
-
-  for await (const categoryTypes of categoryPromises) {
-    for (const type of categoryTypes) {
-      typesSet.add(type);
-    }
   }
 
   const { data, error } = await query({
@@ -825,7 +781,7 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
       page: page,
       size: pageSize,
       units: units,
-      types: Array.from(typesSet),
+      types: types,
       queryByName: queryByName,
       queryByResearchArea: queryByResearchArea,
       status: showUnpublished ? null : true,
@@ -887,15 +843,15 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
   };
 }
 
-export type ProfileCategory = NonNullable<ProfileCategoryFragment>;
+export type ProfileType = NonNullable<ProfileTypeFragment>;
 
-export async function getAllCategories() {
+export async function getAllTypes() {
   const { data, error } = await query({
     query: gql(/* gql */ `
-      query AllProfileCategories {
-        termProfileCategories(first: 100) {
+      query AllProfileTypes {
+        termProfileTypes(first: 100) {
           nodes {
-            ...ProfileCategory
+            ...ProfileType
           }
         }
       }
@@ -910,9 +866,9 @@ export async function getAllCategories() {
     return [];
   }
 
-  if (!data.termProfileCategories) {
+  if (!data.termProfileTypes) {
     return [];
   }
 
-  return data.termProfileCategories.nodes as ProfileCategoryFragment[];
+  return data.termProfileTypes.nodes as ProfileType[];
 }

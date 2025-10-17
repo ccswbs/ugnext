@@ -7,14 +7,14 @@ import { Footer } from "@uoguelph/react-components/footer";
 import { ProfileSearch } from "@/components/client/profiles/profile-search";
 import { getRoute } from "@/data/drupal/route";
 import { notFound } from "next/navigation";
-import { ProfileCategoryTabs } from "@/components/server/profiles/profile-category-tabs";
+import { ProfileTabs } from "@/components/server/profiles/profile-tabs";
 
 type Props = {
   params: Promise<{ category: string }>;
 };
 
-async function getCategory(category: string) {
-  const route = await getRoute(`/term/profiles/categories/${category}`);
+async function getType(type: string) {
+  const route = await getRoute(`/term/profiles/types/${type}`);
 
   if (!route) {
     return null;
@@ -28,7 +28,7 @@ async function getCategory(category: string) {
     return null;
   }
 
-  if (route.entity.__typename !== "TermProfileCategory") {
+  if (route.entity.__typename !== "TermProfileType") {
     return null;
   }
 
@@ -36,21 +36,21 @@ async function getCategory(category: string) {
 }
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  const category = await getCategory((await params).category);
+  const type = await getType((await params).category);
 
-  if (!category) {
+  if (!type) {
     notFound();
   }
 
   return {
-    title: `Our ${category.name}`,
+    title: `Our ${type.name}`,
   };
 }
 
 export default async function PeopleByCategory({ params }: Props) {
-  const category = await getCategory((await params).category);
+  const type = await getType((await params).category);
 
-  if (!category) {
+  if (!type) {
     notFound();
   }
 
@@ -61,11 +61,11 @@ export default async function PeopleByCategory({ params }: Props) {
       <LayoutContent container={false}>
         <Container>
           <Typography type="h1" as="h1" className="block!">
-            Our {category.name}
+            Our {type.name}
           </Typography>
         </Container>
 
-        <ProfileCategoryTabs />
+        <ProfileTabs />
 
         <ProfileSearch />
       </LayoutContent>

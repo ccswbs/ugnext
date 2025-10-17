@@ -5,8 +5,8 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProfileSearch } from "@/components/client/profiles/profile-search";
-import { getAllCategories } from "@/data/drupal/profile";
-import { ProfileCategoryTabs } from "@/components/server/profiles/profile-category-tabs";
+import { getAllTypes } from "@/data/drupal/profile";
+import { ProfileTabs } from "@/components/server/profiles/profile-tabs";
 
 export const metadata: Metadata = {
   title: "Our People | University of Guelph",
@@ -25,7 +25,7 @@ export default async function Faculty() {
           </Typography>
         </Container>
 
-        <ProfileCategoryTabs />
+        <ProfileTabs />
 
         <ProfileSearch />
       </LayoutContent>
