@@ -101,6 +101,11 @@ export async function getRoute(url: string) {
               id
               title
             }
+            ... on TermProfileCategory {
+              uuid
+              id
+              name
+            }
           }
         }
         ... on RouteRedirect {
