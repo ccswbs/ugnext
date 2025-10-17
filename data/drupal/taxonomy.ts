@@ -22,11 +22,19 @@ export const NEWS_CATEGORY_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const PROFILE_CATEGORY_FRAGMENT = gql(/* gql */ `
+  fragment ProfileCategory on TermProfileCategory {
+    id
+    name
+    path
+  }
+`);
+
 export const PROFILE_TYPE_FRAGMENT = gql(/* gql */ `
   fragment ProfileType on TermProfileType {
     id
     name
-  } 
+  }
 `);
 
 export const RESEARCH_FRAGMENT = gql(/* gql */ `

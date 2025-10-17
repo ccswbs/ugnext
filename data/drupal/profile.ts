@@ -2,7 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import type { FullProfile } from "@/lib/types";
-import { PartialProfileFragment } from "@/lib/graphql/types";
+import type { PartialProfileFragment, ProfileCategoryFragment } from "@/lib/graphql/types";
 
 // GraphQL Response Types
 interface PageInfo {
@@ -887,14 +887,15 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
   };
 }
 
+export type ProfileCategory = NonNullable<ProfileCategoryFragment>;
+
 export async function getAllCategories() {
   const { data, error } = await query({
     query: gql(/* gql */ `
       query AllProfileCategories {
         termProfileCategories(first: 100) {
           nodes {
-            id
-            name
+            ...ProfileCategory
           }
         }
       }
@@ -913,5 +914,5 @@ export async function getAllCategories() {
     return [];
   }
 
-  return data.termProfileCategories.nodes;
+  return data.termProfileCategories.nodes as ProfileCategoryFragment[];
 }
