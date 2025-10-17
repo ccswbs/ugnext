@@ -11,7 +11,7 @@ export function ProfileCategoryTabs({ categories }: { categories: ProfileCategor
   const activeCategory = pathname.split("/").pop();
 
   return (
-    <Container className="mb-0">
+    <Container className="pb-0 mb-0">
       <Navigation>
         <NavigationLink href="/people" as={Link} active={activeCategory === "people" || !activeCategory}>
           All
