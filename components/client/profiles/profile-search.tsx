@@ -11,8 +11,8 @@ export type ProfileSearchParams = {
     queryByName: boolean;
     queryByResearchArea: boolean;
     units: boolean;
+    types: boolean;
     isAcceptingGraduateStudents: boolean;
-    categories: boolean;
   };
   defaultFilters: {
     queryByName: string;
@@ -20,7 +20,6 @@ export type ProfileSearchParams = {
     units: string[];
     types: string[];
     isAcceptingGraduateStudents: boolean | null;
-    categories: string[];
   };
 };
 
