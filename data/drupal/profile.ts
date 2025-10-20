@@ -849,7 +849,7 @@ export async function getAllTypes() {
   const { data, error } = await query({
     query: gql(/* gql */ `
       query AllProfileTypes {
-        termProfileTypes(first: 100) {
+        termProfileTypes(first: 4) {
           nodes {
             ...ProfileType
           }
