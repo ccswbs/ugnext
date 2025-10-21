@@ -50,6 +50,8 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 export default async function PeopleByCategory({ params }: Props) {
   const type = await getType((await params).type);
 
+  console.log(type);
+
   if (!type) {
     notFound();
   }
@@ -79,6 +81,7 @@ export default async function PeopleByCategory({ params }: Props) {
           }}
           types={{
             enabled: false,
+            defaultValue: [type.id],
           }}
           isAcceptingGraduateStudents={{
             enabled: false,
