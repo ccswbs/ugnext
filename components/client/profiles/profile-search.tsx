@@ -82,7 +82,12 @@ export function ProfileSearch(props: ProfileSearchProps) {
             <div className="flex-1">
               <TextInput
                 onInput={(e) => {
-                  console.log(e);
+                  setOptions((prevState) => {
+                    return {
+                      ...prevState,
+                      queryByResearchArea: (e.target as HTMLInputElement).value,
+                    };
+                  });
                 }}
               >
                 <span className="text-yellow-contrast text-l font-bold mb-1">Search by research area</span>

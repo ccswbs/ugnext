@@ -74,7 +74,7 @@ export default async function PeopleByCategory({ params }: Props) {
             enabled: true,
           }}
           queryByResearchArea={{
-            enabled: false,
+            enabled: true,
           }}
           units={{
             enabled: false,
