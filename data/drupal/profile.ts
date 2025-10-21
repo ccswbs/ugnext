@@ -727,8 +727,6 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
   const query = getClient().query;
   const { page, pageSize, queryByName, queryByResearchArea, units, types, isAcceptingGraduateStudents } = options;
 
-  console.log("getFilteredProfiles", options);
-
   // Validate filter options
   if (isNaN(page) || page < 0) {
     throw new Error("Page must be a positive integer.");

@@ -93,7 +93,11 @@ export function ProfileSearch(props: ProfileSearchProps) {
       </div>
 
       <Container>
-        <PaginatedGrid url={url} render={(item: PartialProfileData) => <ProfileCard key={item.id} data={item} />} />
+        <PaginatedGrid
+          debounce={500}
+          url={url}
+          render={(item: PartialProfileData) => <ProfileCard key={item.id} data={item} />}
+        />
       </Container>
     </>
   );

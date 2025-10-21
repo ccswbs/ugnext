@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import { Pagination } from "@uoguelph/react-components/pagination";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -15,6 +15,7 @@ type PaginatedGridData<T> = {
 type PaginatedGridProps<T> = {
   url: string;
   render: (item: T, index: number) => ReactNode;
+  debounce?: number;
 };
 
 async function fetcher(...args: Parameters<typeof fetch>) {
@@ -38,22 +39,43 @@ async function fetcher(...args: Parameters<typeof fetch>) {
  * The endpoint also must support pagination using the 'page' query parameter.
  * For example /api/endpoint?page=1
  * */
-export function PaginatedGrid<T>({ url, render }: PaginatedGridProps<T>) {
+export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridProps<T>) {
   const [page, setPage] = useState(0);
+  const [debouncedUrl, setDebouncedUrl] = useState(url);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reset page when the URL changes
   useEffect(() => {
     setPage(0);
   }, [url]);
 
-  // Construct the search URL with the current page
-  const searchUrl = useMemo(() => {
-    if (url.includes("?")) {
-      return `${url}&page=${page}`;
+  // Debounce the URL changes
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    } else {
+      timeoutRef.current = setTimeout(() => {
+        setDebouncedUrl(url);
+      }, debounce);
     }
 
-    return `${url}?page=${page}`;
-  }, [page, url]);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [url, debounce]);
+
+  // Construct the search URL with the current page
+  const searchUrl = useMemo(() => {
+    if (debouncedUrl.includes("?")) {
+      return `${debouncedUrl}&page=${page}`;
+    }
+
+    return `${debouncedUrl}?page=${page}`;
+  }, [page, debouncedUrl]);
 
   // Fetch data using SWR
   const { data, error, isLoading } = useSWR<PaginatedGridData<T>>(searchUrl, fetcher);
