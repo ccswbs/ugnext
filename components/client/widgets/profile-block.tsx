@@ -23,7 +23,7 @@ interface ProfileBlockProps {
 }
 
 export const ProfileBlock = ({ data }: ProfileBlockProps) => {
-  const [profiles, setProfiles] = useState<FullProfile[]>([]);
+  /*const [profiles, setProfiles] = useState<FullProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -170,7 +170,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
       )}
       
       <Container>
-        {/* Loading message overlay */}
+        {/* Loading message overlay /}
         {isLoading && (
           <div className="flex w-full items-center justify-center py-4">
             <div className="flex items-center space-x-2 text-gray-600">
@@ -192,7 +192,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
           isLoadingMore={isLoadingMore}
         />
         
-        {/* No results were found - only show when not loading */}
+        {/* No results were found - only show when not loading /}
         {!isLoading && profiles.length === 0 && !error && (
           <div className="flex w-full items-center justify-center py-8">
             <Typography type="body" className="text-black/50">
@@ -201,7 +201,7 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
           </div>
         )}
 
-        {/* Error message */}
+        {/* Error message /}
         {error && (
           <div className="flex w-full items-center justify-center py-8">
             <Typography type="body" className="text-red-600">
@@ -212,4 +212,6 @@ export const ProfileBlock = ({ data }: ProfileBlockProps) => {
       </Container>
     </>
   );
+   */
+  return <></>;
 };
