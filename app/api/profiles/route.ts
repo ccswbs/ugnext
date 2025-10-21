@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getProfilesPaginated, getProfilesByTypeName, getProfilesByUnit } from "@/data/drupal/profile";
 
 export async function GET(request: NextRequest) {
-  try {
+  /*try {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '0', 10);
     const pageSize = parseInt(searchParams.get('pageSize') || '20', 10);
@@ -159,5 +159,7 @@ export async function GET(request: NextRequest) {
       { error: 'Failed to fetch profiles' }, 
       { status: 500 }
     );
-  }
+  }*/
+
+  return NextResponse.json({ message: "Not implemented" });
 }
