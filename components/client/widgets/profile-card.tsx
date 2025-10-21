@@ -7,33 +7,19 @@ import { LdapContactInfoClient } from "@/components/client/ldap-contact-info-cli
 import { getIconForUrl } from "@/lib/ug-utils";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Typography } from "@uoguelph/react-components/typography";
-import { BaseProfile, ProfileImage, ProfileCustomLink, ProfileField } from "@/lib/types/profile";
+import type { ProfileCardFragment } from "@/lib/graphql/types";
 
-// Component-specific interface that extends shared types
-interface ProfileCardData {
-  __typename?: "ParagraphProfileCard";
-  id?: string;
-  profileInfo?: BaseProfile & {
-    customLink?: ProfileCustomLink[];
-    profilePicture?: ProfileImage;
-    profileFields?: ProfileField[];
-  };
-}
-
-interface ProfileCardProps {
-  data: ProfileCardData;
-}
-
-export const ProfileCard = ({ data }: ProfileCardProps) => {
+export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
   const { profileInfo } = data;
-  
+
   // Add defensive check to prevent errors if profileInfo is undefined
   if (!profileInfo) {
-    console.error('ProfileCard: profileInfo is undefined. Full data object:', data);
+    console.error("ProfileCard: profileInfo is undefined. Full data object:", data);
     return <div>Profile data not available - missing profileInfo</div>;
   }
 
-  const sharedClassName = "group block bg-grey-light-bg hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4";
+  const sharedClassName =
+    "group block bg-grey-light-bg hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4";
 
   const content = (
     <div className="flex flex-col md:flex-row h-full">
@@ -50,7 +36,7 @@ export const ProfileCard = ({ data }: ProfileCardProps) => {
           />
         </div>
       )}
-      
+
       {/* Content Section */}
       <div className="flex-1 p-6 flex flex-col justify-center">
         <Typography type="h3" as="p" className="m-0">
@@ -61,16 +47,18 @@ export const ProfileCard = ({ data }: ProfileCardProps) => {
             {profileInfo.profileJobTitle}
           </Typography>
         )}
-        
+
         {/* Directory contact info from LDAP - using reusable component */}
-        <LdapContactInfoClient 
-          centralLoginId={profileInfo.centralLoginId}
-          directoryEmail={profileInfo.directoryEmail}
-          directoryOffice={false}
-          directoryPhone={profileInfo.directoryPhone}
-          className="mt-2"
-        />
-        
+        {profileInfo.centralLoginId && (
+          <LdapContactInfoClient
+            centralLoginId={profileInfo.centralLoginId}
+            directoryEmail={!!profileInfo.directoryEmail}
+            directoryOffice={false}
+            directoryPhone={!!profileInfo.directoryPhone}
+            className="mt-2"
+          />
+        )}
+
         {/* Profile Fields */}
         {profileInfo.profileFields && profileInfo.profileFields.length > 0 && (
           <div className="mt-2">
@@ -86,17 +74,19 @@ export const ProfileCard = ({ data }: ProfileCardProps) => {
         {/* Custom links if available */}
         {profileInfo.customLink && profileInfo.customLink.length > 0 && (
           <div className="mb-4">
-            {profileInfo.customLink.map((link, idx) => (
-              <div key={idx}>
-                <Link href={link.url} className="flex items-center gap-2">
-                  <i className={`${getIconForUrl(link.url)} w-4`} aria-hidden="true"></i>
-                  <span className="text-body-copy-link underline hover:decoration-transparent">{link.title}</span>
-                </Link>
-              </div>
-              ))}
+            {profileInfo.customLink.map(
+              (link, idx) =>
+                link.url && (
+                  <div key={idx}>
+                    <Link href={link.url} className="flex items-center gap-2">
+                      <i className={`${getIconForUrl(link.url)} w-4`} aria-hidden="true"></i>
+                      <span className="text-body-copy-link underline hover:decoration-transparent">{link.title}</span>
+                    </Link>
+                  </div>
+                )
+            )}
           </div>
         )}
-
       </div>
     </div>
   );
@@ -111,9 +101,7 @@ export const ProfileCard = ({ data }: ProfileCardProps) => {
 
   return (
     <div className="xl:after:content-[''] xl:after:display-table xl:after:clear-both">
-      <div className={sharedClassName}>
-        {content}
-      </div>
+      <div className={sharedClassName}>{content}</div>
     </div>
   );
-}
+};
