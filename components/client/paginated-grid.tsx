@@ -47,7 +47,13 @@ export function PaginatedGrid<T>({ url, render }: PaginatedGridProps<T>) {
   }, [url]);
 
   // Construct the search URL with the current page
-  const searchUrl = useMemo(() => `${url}?page=${page}`, [page, url]);
+  const searchUrl = useMemo(() => {
+    if (url.includes("?")) {
+      return `${url}&page=${page}`;
+    }
+
+    return `${url}?page=${page}`;
+  }, [page, url]);
 
   // Fetch data using SWR
   const { data, error, isLoading } = useSWR<PaginatedGridData<T>>(searchUrl, fetcher);

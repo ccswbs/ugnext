@@ -21,11 +21,6 @@ export async function GET(request: NextRequest) {
     .map((type) => type.trim())
     .filter(Boolean);
 
-  const categories: string[] = (params.get("categories") ?? "")
-    .split(",")
-    .map((type) => type.trim())
-    .filter(Boolean);
-
   try {
     const data = await getFilteredProfiles({
       page,
@@ -34,7 +29,6 @@ export async function GET(request: NextRequest) {
       queryByResearchArea,
       units,
       types,
-      categories,
       isAcceptingGraduateStudents,
     });
 

@@ -67,7 +67,23 @@ export default async function PeopleByCategory({ params }: Props) {
 
         <ProfileTabs />
 
-        <ProfileSearch />
+        <ProfileSearch
+          queryByName={{
+            enabled: true,
+          }}
+          queryByResearchArea={{
+            enabled: false,
+          }}
+          units={{
+            enabled: false,
+          }}
+          types={{
+            enabled: false,
+          }}
+          isAcceptingGraduateStudents={{
+            enabled: false,
+          }}
+        />
       </LayoutContent>
 
       <Footer></Footer>
