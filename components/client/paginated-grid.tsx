@@ -42,6 +42,7 @@ async function fetcher(...args: Parameters<typeof fetch>) {
 export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridProps<T>) {
   const [page, setPage] = useState(0);
   const [debouncedUrl, setDebouncedUrl] = useState(url);
+  const [isDebouncing, setIsDebouncing] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reset page when the URL changes
@@ -55,8 +56,10 @@ export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridP
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     } else {
+      setIsDebouncing(true);
       timeoutRef.current = setTimeout(() => {
         setDebouncedUrl(url);
+        setIsDebouncing(false);
       }, debounce);
     }
 
@@ -90,7 +93,7 @@ export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridP
     });
   };
 
-  if (isLoading) {
+  if (isLoading || isDebouncing) {
     return (
       <div className="flex w-full items-center justify-center flex-1 py-5">
         <LoadingIndicator />
