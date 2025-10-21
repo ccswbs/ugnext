@@ -60,7 +60,7 @@ export function ProfileSearch(props: ProfileSearchProps) {
   return (
     <>
       <div className="w-full bg-yellow -mt-1">
-        <Container className="w-full bg-yellow flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end">
+        <Container className="w-full bg-yellow flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end empty:hidden">
           {props.queryByName.enabled && (
             <div className="flex-1">
               <TextInput
