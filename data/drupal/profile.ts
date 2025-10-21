@@ -872,3 +872,46 @@ export async function getAllTypes() {
 
   return data.termProfileTypes.nodes as ProfileType[];
 }
+
+export type Unit = {
+  __typename: "TermUnit";
+  id: string;
+  name: string;
+  parent?: { name: string } | null;
+};
+
+export async function getAllUnits(): Promise<Unit[]> {
+  try {
+    const client = getClient();
+    
+    console.log("Fetching units using termUnits query");
+    const { data } = await client.query({
+      query: gql(/* GraphQL */ `
+        query GetAllUnits {
+          termUnits(first: 100) {
+            edges {
+              node {
+                ...Unit
+              }
+            }
+          }
+        }
+      `) as any,
+    });
+
+    if ((data as any)?.termUnits?.edges) {
+      const units = (data as any).termUnits.edges.map((edge: any) => edge.node) as Unit[];
+      console.log(`Found ${units.length} units`);
+      console.log("Sample units:", units.slice(0, 3));
+      
+      // Sort units alphabetically by name
+      return units.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    console.warn("No units found in termUnits query");
+    return [];
+  } catch (error) {
+    console.error("Error fetching units:", error);
+    return [];
+  }
+}

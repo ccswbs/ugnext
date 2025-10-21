@@ -4,8 +4,9 @@ import { Header } from "@uoguelph/react-components/header";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
-import { ProfileSearch } from "@/components/client/profiles/profile-search";
+import { FacultySearch } from "@/components/client/profiles/faculty-search";
 import { getRoute } from "@/data/drupal/route";
+import { getAllUnits } from "@/data/drupal/profile";
 import { notFound } from "next/navigation";
 
 async function getFacultyType() {
@@ -42,10 +43,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function FacultySearch() {
+export default async function FacultySearchPage() {
   const type = await getFacultyType();
+  const units = await getAllUnits();
 
-  console.log(type);
+  console.log("Faculty type:", type);
+  console.log("Available units:", units);
 
   if (!type) {
     notFound();
@@ -62,20 +65,21 @@ export default async function FacultySearch() {
           </Typography>
         </Container>
 
-        <ProfileSearch
+        <FacultySearch
           queryByName={{
             enabled: true,
           }}
           queryByResearchArea={{
             enabled: true,
           }}
+          queryByUnit={{
+            enabled: true,
+          }}
           units={{
             enabled: false,
           }}
-          types={{
-            enabled: false,
-            defaultValue: [type.id],
-          }}
+          availableUnits={units}
+          facultyTypeId={type.id}
           isAcceptingGraduateStudents={{
             enabled: false,
           }}
