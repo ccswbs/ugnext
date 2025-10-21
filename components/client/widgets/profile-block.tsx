@@ -2,7 +2,6 @@
 
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
-import { ProfileGrid } from "@/components/client/profiles/profile-grid";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { ProfileType, ProfileResearchArea, ProfileUnit, FullProfile } from "@/lib/types/profile";
 
