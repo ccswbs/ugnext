@@ -6,6 +6,14 @@ import type { ProfileBlockFragment } from "@/lib/graphql/types";
 import { ProfileSearch } from "@/components/client/profiles/profile-search";
 
 export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
+  // Map the GraphQL units to the expected Unit type
+  const availableUnits = data.unit?.map((unit) => ({
+    __typename: "TermUnit" as const,
+    id: unit.id,
+    name: unit.name,
+    parent: null // GraphQL fragment doesn't include parent, so set to null
+  }));
+
   return (
     <ProfileSearch
       queryByName={{
@@ -24,6 +32,7 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
       isAcceptingGraduateStudents={{
         enabled: false,
       }}
+      availableUnits={availableUnits}
     />
   );
 };
