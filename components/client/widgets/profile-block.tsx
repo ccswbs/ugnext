@@ -9,17 +9,17 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
   return (
     <ProfileSearch
       queryByName={{
-        enabled: false,
+        enabled: data.enableNameSearch ?? false,
       }}
       queryByResearchArea={{
-        enabled: false,
+        enabled: data.enableResearchFilter ?? false,
       }}
       units={{
-        enabled: false,
+        enabled: data.enableUnitFilter ?? false,
         defaultValue: data.unit?.map((unit) => unit.id) ?? undefined,
       }}
       types={{
-        enabled: false,
+        enabled: data.enableTypeFilter ?? false,
       }}
       isAcceptingGraduateStudents={{
         enabled: false,
