@@ -47,14 +47,11 @@ export function ProfileSearch(props: ProfileSearchProps) {
       params.set("queryByResearchArea", options.queryByResearchArea);
     }
 
-    // Combine units from props with selected unit from dropdown
-    const allUnits = [...(options.units || [])];
-    if (selectedUnit) {
-      allUnits.push(selectedUnit.id);
-    }
+    // If a unit is selected from dropdown, use only that unit; otherwise use default units
+    const unitsToFilter = selectedUnit ? [selectedUnit.id] : (options.units || []);
 
-    if (allUnits.length > 0) {
-      params.set("units", allUnits.join(","));
+    if (unitsToFilter.length > 0) {
+      params.set("units", unitsToFilter.join(","));
     }
 
     if (options.types && options.types.length > 0) {
@@ -65,7 +62,12 @@ export function ProfileSearch(props: ProfileSearchProps) {
       params.set("isAcceptingGraduateStudents", options.isAcceptingGraduateStudents.toString());
     }
 
-    return `/api/profiles/get-profiles?${params.toString()}`;
+    const finalUrl = `/api/profiles/get-profiles?${params.toString()}`;
+    console.log("ProfileSearch URL:", finalUrl);
+    console.log("ProfileSearch options:", options);
+    console.log("ProfileSearch selectedUnit:", selectedUnit);
+    
+    return finalUrl;
   }, [options, selectedUnit]);
 
   return (
