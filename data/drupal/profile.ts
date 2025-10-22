@@ -40,6 +40,7 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     uniwebId
     body {
       processed
+      summary
     }
     customLink {
       title

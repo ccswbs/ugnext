@@ -97,6 +97,7 @@ export interface FullProfile extends ProfileWithImage {
   };
   body?: {
     processed?: string;
+    summary?: string;
   };
   customLink?: ProfileCustomLink[];
   profileUnit?: ProfileUnit[];
