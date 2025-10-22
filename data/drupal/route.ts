@@ -159,7 +159,7 @@ export async function getRoute(url: string) {
   }
 }
 
-export async function getRouteBreadcrumbs(url: string) {
+export async function getRouteBreadcrumbs(url: string, primary_navigation: string | undefined) {
   const { data, error } = await query({
     query: gql(/* gql */ `
       query RouteBreadcrumbs($path: String!, $revision: ID = "current") {
@@ -195,6 +195,9 @@ export async function getRouteBreadcrumbs(url: string) {
               }
               ... on NodePage {
                 title
+                primaryNavigation {
+                  menuName
+                }
               }
               ... on NodeProgram {
                 title
@@ -231,6 +234,15 @@ export async function getRouteBreadcrumbs(url: string) {
     case "RouteInternal":
       if (!data.route.entity || !("title" in data.route.entity)) {
         return null;
+      }
+
+      // If breadcrumb does not belong to primary_navigation, only show title
+      if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.menuName !== primary_navigation){
+        return [
+          {
+            title: data.route.entity.title,
+          },
+        ];
       }
 
       if (!Array.isArray(data.route.breadcrumbs)) {
