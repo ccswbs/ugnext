@@ -1,4 +1,4 @@
-import { getClient, handleGraphQLError, query } from "@/lib/apollo";
+import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
@@ -7,7 +7,7 @@ export type Route = NonNullable<RouteQuery["route"]>;
 
 export async function getRoute(url: string) {
   const showUnpublished = await showUnpublishedContent();
-  const query = getClient().query;
+  const client = getClient();
   const routeQuery = gql(/* gql */ `
     query Route($path: String!, $revision: ID = "current") {
       route(path: $path, revision: $revision) {
@@ -116,7 +116,7 @@ export async function getRoute(url: string) {
     }
   `);
 
-  const { data, error } = await query({
+  const { data, error } = await client.query({
     query: routeQuery,
     variables: {
       path: url,
@@ -136,7 +136,7 @@ export async function getRoute(url: string) {
     // For some reason, the route is found, but the entity is null.
     // This only happens when we are looking for the latest revision and the entity has no revisions.
     // We need to query again with the current revision.
-    const { data, error } = await query({
+    const { data, error } = await client.query({
       query: routeQuery,
       variables: {
         path: url,
@@ -165,7 +165,8 @@ export async function getRoute(url: string) {
 }
 
 export async function getRouteBreadcrumbs(url: string) {
-  const { data, error } = await query({
+  const client = getClient();
+  const { data, error } = await client.query({
     query: gql(/* gql */ `
       query RouteBreadcrumbs($path: String!, $revision: ID = "current") {
         route(path: $path, revision: $revision) {
