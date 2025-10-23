@@ -2,13 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
-import {
-  getProfiles,
-  getProfilesByType,
-  getProfilesByUnit,
-  getProfileTypes,
-  getProfilesByTypeName,
-} from "@/data/drupal/profile";
+import { getProfileTypes } from "@/data/drupal/profile";
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
