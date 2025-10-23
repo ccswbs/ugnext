@@ -42,14 +42,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className="h-full">
       <body className="flex flex-col min-h-full">
         <Script
-          src="/@uoguelph/web-components/uofg-header.esm.js"
+          src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@2.x.x/dist/uofg-web-components/uofg-header.esm.js"
           type="module"
           strategy="beforeInteractive"
           crossOrigin="anonymous"
         />
 
         <Script
-          src="/@uoguelph/web-components/uofg-footer.esm.js"
+          src="https://cdn.jsdelivr.net/npm/@uoguelph/web-components@2.x.x/dist/uofg-web-components/uofg-footer.esm.js"
           type="module"
           strategy="beforeInteractive"
           crossOrigin="anonymous"
