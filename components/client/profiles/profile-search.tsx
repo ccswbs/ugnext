@@ -5,11 +5,10 @@ import type { PartialProfileData, Unit } from "@/data/drupal/profile";
 import { Container } from "@uoguelph/react-components/container";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
 import type { ProfileSearchOptions } from "@/data/drupal/profile";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
-import { types } from "node:util";
 
 type ProfileSearchField<T> = {
   enabled: boolean;
@@ -63,9 +62,6 @@ export function ProfileSearch(props: ProfileSearchProps) {
     }
 
     const finalUrl = `/api/profiles/get-profiles?${params.toString()}`;
-    console.log("ProfileSearch URL:", finalUrl);
-    console.log("ProfileSearch options:", options);
-    console.log("ProfileSearch selectedUnit:", selectedUnit);
     
     return finalUrl;
   }, [options, selectedUnit]);
@@ -129,7 +125,7 @@ export function ProfileSearch(props: ProfileSearchProps) {
                   </SelectOption>
                   {props.availableUnits.map((unit, index) => (
                     <SelectOption value={unit} key={`unit-${unit.id}-${index}`}>
-                      {unit.parent ? `${unit.parent.name} - ${unit.name}` : unit.name}
+                      {unit.parent ? `${unit.parent.acronym || unit.parent.name} - ${unit.name}` : unit.name}
                     </SelectOption>
                   ))}
                 </SelectOptions>

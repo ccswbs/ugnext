@@ -355,15 +355,15 @@ export async function getAllTypes() {
 export type Unit = {
   __typename: "TermUnit";
   id: string;
+  acronym: string;
   name: string;
-  parent?: { name: string } | null;
+  parent?: { name: string; acronym?: string } | null;
 };
 
 export async function getAllUnits(): Promise<Unit[]> {
   try {
     const client = getClient();
     
-    console.log("Fetching units using termUnits query");
     const { data } = await client.query({
       query: gql(/* GraphQL */ `
         query GetAllUnits {
@@ -380,8 +380,6 @@ export async function getAllUnits(): Promise<Unit[]> {
 
     if ((data as any)?.termUnits?.edges) {
       const units = (data as any).termUnits.edges.map((edge: any) => edge.node) as Unit[];
-      console.log(`Found ${units.length} units`);
-      console.log("Sample units:", units.slice(0, 3));
       
       // Sort units alphabetically by name
       return units.sort((a, b) => a.name.localeCompare(b.name));

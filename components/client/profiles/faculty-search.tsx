@@ -5,7 +5,7 @@ import type { PartialProfileData, Unit } from "@/data/drupal/profile";
 import { Container } from "@uoguelph/react-components/container";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
 import type { ProfileSearchOptions } from "@/data/drupal/profile";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
@@ -26,12 +26,6 @@ export type FacultySearchProps = {
 };
 
 export function FacultySearch(props: FacultySearchProps) {
-  console.log("FacultySearch props:", {
-    queryByUnit: props.queryByUnit,
-    availableUnits: props.availableUnits,
-    availableUnitsLength: props.availableUnits?.length
-  });
-
   const [options, setOptions] = useState<Omit<ProfileSearchOptions, "page" | "pageSize">>({
     queryByName: props.queryByName.defaultValue ?? "",
     queryByResearchArea: props.queryByResearchArea.defaultValue ?? "",
@@ -77,8 +71,6 @@ export function FacultySearch(props: FacultySearchProps) {
     }
 
     const finalUrl = `/api/profiles/get-profiles?${params.toString()}`;
-    console.log("Faculty search URL:", finalUrl);
-    console.log("Faculty search options:", options);
     
     return finalUrl;
   }, [options, selectedUnit]);
@@ -170,7 +162,7 @@ export function FacultySearch(props: FacultySearchProps) {
                     
                     return sortedUnits.map((unit, index) => (
                       <SelectOption value={unit} key={`unit-${unit.id}-${index}`}>
-                        {unit.parent ? `${unit.parent.name} - ${unit.name}` : unit.name}
+                        {unit.parent ? `${unit.parent.acronym || unit.parent.name} - ${unit.name}` : unit.name}
                       </SelectOption>
                     ));
                   })()}

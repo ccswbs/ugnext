@@ -68,10 +68,12 @@ export const UNIT_FRAGMENT = gql(/* gql */ `
   fragment Unit on TermUnit {
     __typename
     id
+    acronym
     name
     parent {
       __typename
       ... on TermUnit {
+        acronym
         name
       }
     }
