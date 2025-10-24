@@ -243,6 +243,7 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
       ... on TermUnit {
         id
         name
+        acronym
       }
     }
     enableNameSearch

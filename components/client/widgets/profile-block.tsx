@@ -27,6 +27,7 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
     __typename: "TermUnit" as const,
     id: unit.id,
     name: unit.name,
+    acronym: unit.acronym || "",
     parent: null // GraphQL fragment doesn't include parent, so set to null
   }));
 
