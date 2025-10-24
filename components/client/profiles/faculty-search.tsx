@@ -140,11 +140,40 @@ export function FacultySearch(props: FacultySearchProps) {
                   <SelectOption value={null} key="all-units">
                     All units
                   </SelectOption>
-                  {props.availableUnits.map((unit, index) => (
-                    <SelectOption value={unit} key={`unit-${unit.id}-${index}`}>
-                      {unit.parent ? `${unit.parent.name} - ${unit.name}` : unit.name}
-                    </SelectOption>
-                  ))}
+                  {(() => {
+                    // Sort units so parent units are grouped with their children
+                    const sortedUnits = [...props.availableUnits].sort((a, b) => {
+                      // If both are parent units (no parent), sort alphabetically
+                      if (!a.parent && !b.parent) {
+                        return a.name.localeCompare(b.name);
+                      }
+                      
+                      // If one is parent and one is child, parent comes first
+                      if (!a.parent && b.parent) {
+                        return a.name.localeCompare(b.parent.name) || -1;
+                      }
+                      if (a.parent && !b.parent) {
+                        return a.parent.name.localeCompare(b.name) || 1;
+                      }
+                      
+                      // If both are children, first sort by parent name, then by child name
+                      if (a.parent && b.parent) {
+                        const parentComparison = a.parent.name.localeCompare(b.parent.name);
+                        if (parentComparison !== 0) {
+                          return parentComparison;
+                        }
+                        return a.name.localeCompare(b.name);
+                      }
+                      
+                      return 0;
+                    });
+                    
+                    return sortedUnits.map((unit, index) => (
+                      <SelectOption value={unit} key={`unit-${unit.id}-${index}`}>
+                        {unit.parent ? `${unit.parent.name} - ${unit.name}` : unit.name}
+                      </SelectOption>
+                    ));
+                  })()}
                 </SelectOptions>
               </Select>
             </Field>
