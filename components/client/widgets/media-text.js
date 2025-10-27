@@ -67,7 +67,7 @@ export function MediaTextWidget({ data }) {
 
   const classes = tv({
     slots: {
-      base: "col-span-1 h-full w-full",
+      base: "col-span-1 h-full",
       heading: "mt-0!",
       body: "",
       no_body: "grid-cols-1 h-auto",
@@ -81,8 +81,13 @@ export function MediaTextWidget({ data }) {
           body: "[&_*]:text-body-copy-on-dark!",
         },
       },
+      size: {
+        small: "max-w-sm mx-auto", // restrict small images
+        medium: "max-w-md mx-auto",
+        large: "w-full",
+      },
     },
-  })({ background: background });
+  })({ background: background, size: size });
 
   return (
     <MediaCaption
@@ -95,7 +100,7 @@ export function MediaTextWidget({ data }) {
       background={background}
       size={size}
       position={position}
-      className={twMerge(classes.base(), data?.description ?? classes.no_body())}
+      className={twMerge(classes.base(), classes.size(), data?.description ?? classes.no_body())}
       transcript={media?.transcript}
     >
       {data?.heading && (
