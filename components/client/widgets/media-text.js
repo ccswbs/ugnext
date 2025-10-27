@@ -87,7 +87,7 @@ export function MediaTextWidget({ data }) {
         large: "w-full",
       },
     },
-  })({ background: background, size: size });
+  })({ background, size });
 
   return (
     <MediaCaption
