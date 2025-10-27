@@ -81,13 +81,10 @@ export function MediaTextWidget({ data }) {
           body: "[&_*]:text-body-copy-on-dark!",
         },
       },
-      size: {
-        small: "max-w-sm mx-auto", // restrict small images
-        medium: "max-w-md mx-auto",
-        large: "w-full",
-      },
     },
-  })({ background, size });
+  })({ background: background });
+
+  const widthClass = size === 'small' ? 'w-auto' : 'w-full';
 
   return (
     <MediaCaption
@@ -100,7 +97,7 @@ export function MediaTextWidget({ data }) {
       background={background}
       size={size}
       position={position}
-      className={twMerge(classes.base(), classes.size(), data?.description ?? classes.no_body())}
+      className={twMerge(classes.base(), data?.description ?? classes.no_body(), widthClass )}
       transcript={media?.transcript}
     >
       {data?.heading && (
