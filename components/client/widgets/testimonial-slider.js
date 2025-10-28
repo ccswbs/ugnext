@@ -38,12 +38,12 @@ export function TestimonialSliderWidget({ data }) {
   numTestimonials = testimonials.length;
 
   return (
-    <div className="bg-grey-light-bg mb-4">
+    <div id={`testimonial-slider-${data.uuid}`} className="bg-grey-light-bg mb-4">
       <Container
         className={twMerge("px-4 py-10 flex flex-col items-center", numTestimonials === 1 && "lg:w-3/4 xl:w-1/2")}
       >
         {data?.title && (
-          <Typography type="h2" as="h3" className="mb-12 text-black">
+          <Typography id={`testimonial-slider-heading-${data.uuid}`} type="h2" as="h3" className="mb-12 text-black">
             {data.title}
           </Typography>
         )}

@@ -109,6 +109,7 @@ export function ImageOverlayWidget({ data }) {
 
   return (
     <ImageOverlay
+      id={`image-overlay-${data.uuid}`}
       alt={image.alt ?? ""}
       src={image.url ?? image.src}
       width={image.width}

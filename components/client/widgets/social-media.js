@@ -12,7 +12,11 @@ export function SocialMediaWidget({ data }) {
 
   return sortedLinks.length > 0 ? (
     <>
-      {title && <Typography type={level} as={level}>{title}</Typography>}
+      {title && (
+        <Typography id={data.id} type={level} as={level}>
+          {title}
+        </Typography>
+      )}
       <ul className="flex gap-2 list-none">
         {sortedLinks.map(({ name, url, value }, index) => (
           <li key={index}>
@@ -46,4 +50,4 @@ export function SocialMediaWidget({ data }) {
       </ul>
     </>
   ) : null;
-};
+}

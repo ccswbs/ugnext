@@ -3,7 +3,7 @@ import { HtmlParser } from "@/components/client/html-parser";
 
 export function TabsWidget({ data }) {
   return (
-    <TabsComponent>
+    <TabsComponent id={`tabs-${data.uuid}`}>
       <TabList>
         {data?.tabs?.map((tab) => (
           <Tab key={tab.title}>{tab.title}</Tab>
