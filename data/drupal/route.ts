@@ -197,6 +197,10 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
                 title
                 primaryNavigation {
                   menuName
+                  primaryNavigationUrl {
+                    title
+                    url
+                  }
                 }
               }
               ... on NodeProgram {
@@ -236,34 +240,52 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
         return null;
       }
 
-      // If breadcrumb does not belong to primary_navigation, only show title
-      if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.menuName !== primary_navigation){
-        return [
-          {
-            title: data.route.entity.title,
-          },
-        ];
-      }
+      let currentPage = {
+        title: data.route.entity.title,
+      };
 
+      // If only one item, return current page
       if (!Array.isArray(data.route.breadcrumbs)) {
-        return [
-          {
-            title: data.route.entity.title,
-          },
-        ];
+        return [ currentPage ];
       }
 
-      return [
-        ...data.route.breadcrumbs.filter((breadcrumb) => {
-          if (!breadcrumb.title) {
-            return false;
+      // Filter out elements without titles and the root from Breadcrumb Path
+      const breadcrumbPath = data.route.breadcrumbs.filter((breadcrumb) => {
+        if (!breadcrumb.title) {
+          return false;
+        }
+        return breadcrumb.url !== "/";
+      });
+      
+      // Handle Basic Pages with Primary Navigation
+      if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
+        const primaryNavigationHome = {
+          title: data.route.entity.primaryNavigation?.primaryNavigationUrl?.title,
+          url: data.route.entity.primaryNavigation?.primaryNavigationUrl?.url,
+        };
+
+        if (primaryNavigationHome){
+          // Pages in multiple menus could have a breadcrumb path that does not belong to Primary Navigation
+          // In this case, return only the breadcrumbHome and the currentPage
+          if(data.route.entity.primaryNavigation?.menuName !== primary_navigation){  
+            return [
+              primaryNavigationHome,
+              currentPage,
+            ];
           }
 
-          return breadcrumb.url !== "/";
-        }),
-        {
-          title: data.route.entity.title,
-        },
+          return [
+            primaryNavigationHome,
+            ...breadcrumbPath,
+            currentPage,
+          ];
+        }
+      }
+
+      // Handle content without Primary Navigation
+      return [
+        ...breadcrumbPath,
+        currentPage,
       ];
     default:
       return null;
