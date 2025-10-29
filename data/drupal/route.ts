@@ -244,7 +244,7 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
         title: data.route.entity.title,
       };
 
-      if (!Array.isArray(data.route.breadcrumbs) || data.route.breadcrumbs.length === 0) {
+      if (!Array.isArray(data.route.breadcrumbs)) {
         return [ currentPage ];
       }
 
@@ -256,16 +256,18 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
         return breadcrumb.url !== "/";
       });
 
-      // Remove last breadcrumb item if same as current page without URL
-      const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
-      if((currentPage.title === lastBreadcrumbItem?.title) && (lastBreadcrumbItem?.url === '')){
-        if(breadcrumbPath.length > 1){
-          // pop returns undefined if only one item
-          breadcrumbPath.pop(); 
-        }else{
-          breadcrumbPath = [];
-        }
-      }      
+      // Remove last breadcrumb item if same as current page
+      if(breadcrumbPath.length > 0){
+        const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
+        if((currentPage.title === lastBreadcrumbItem?.title) && (lastBreadcrumbItem?.url === '')){
+          if(breadcrumbPath.length > 1){
+            // pop returns undefined if only one item
+            breadcrumbPath.pop(); 
+          }else{
+            breadcrumbPath = [];
+          }
+        } 
+      }
       
       // Handle Basic Pages with Primary Navigation Homepage URL
       if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
@@ -274,8 +276,14 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
           url: data.route.entity.primaryNavigation?.primaryNavigationUrl?.url,
         };
 
-        // Only add Primary Nav Homepage URL if not already in breadcrumbPath
+        // Only add Primary Nav Homepage URL if not already at start of breadcrumbPath
         if (primaryNavigationHome && (breadcrumbPath[0]?.url !== primaryNavigationHome.url)){
+          
+          // Avoid duplicates if currentPage and primaryNavigation are the same
+          if(primaryNavigationHome.title === currentPage.title && breadcrumbPath.length === 0){
+            return [ primaryNavigationHome ];
+          }
+
           // Pages in multiple menus could have a breadcrumb path that does not belong to Primary Navigation
           // In this case, return only the breadcrumbHome and the currentPage
           if(data.route.entity.primaryNavigation?.menuName !== primary_navigation){  
