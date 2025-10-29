@@ -244,27 +244,38 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
         title: data.route.entity.title,
       };
 
-      // If only one item, return current page
-      if (!Array.isArray(data.route.breadcrumbs)) {
+      if (!Array.isArray(data.route.breadcrumbs) || data.route.breadcrumbs.length === 0) {
         return [ currentPage ];
       }
 
       // Filter out elements without titles and the root from Breadcrumb Path
-      const breadcrumbPath = data.route.breadcrumbs.filter((breadcrumb) => {
+      let breadcrumbPath = data.route.breadcrumbs.filter((breadcrumb) => {
         if (!breadcrumb.title) {
           return false;
         }
         return breadcrumb.url !== "/";
       });
+
+      // Remove last breadcrumb item if same as current page without URL
+      const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
+      if((currentPage.title === lastBreadcrumbItem.title) && (lastBreadcrumbItem.url === '')){
+        if(breadcrumbPath.length > 1){
+          // pop returns undefined if only one item
+          breadcrumbPath.pop(); 
+        }else{
+          breadcrumbPath = [];
+        }
+      }      
       
-      // Handle Basic Pages with Primary Navigation
+      // Handle Basic Pages with Primary Navigation Homepage URL
       if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
         const primaryNavigationHome = {
           title: data.route.entity.primaryNavigation?.primaryNavigationUrl?.title,
           url: data.route.entity.primaryNavigation?.primaryNavigationUrl?.url,
         };
 
-        if (primaryNavigationHome){
+        // Only add Primary Nav Homepage URL if not already in breadcrumbPath
+        if (primaryNavigationHome && (breadcrumbPath[0]?.url !== primaryNavigationHome.url)){
           // Pages in multiple menus could have a breadcrumb path that does not belong to Primary Navigation
           // In this case, return only the breadcrumbHome and the currentPage
           if(data.route.entity.primaryNavigation?.menuName !== primary_navigation){  
