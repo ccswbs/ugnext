@@ -8,7 +8,7 @@ import { Bitter, DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@uoguelph/web-components/style";
 import { Button } from "@uoguelph/react-components/button";
-import { WebComponentsLoader } from "@/components/client/web-components-loader";
+import { WebComponentsLoader, WebComponentsLoaderProps } from "@/components/client/web-components-loader";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -42,7 +42,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className="h-full">
       <body className="flex flex-col min-h-full">
-        <WebComponentsLoader cdn="jsdelivr" native={process.env.NEXT_STATIC_OUTPUT === "true"} />
+        {process.env.WEB_COMPONENTS_CDN_PROVIDER === "jsdelivr" ||
+        process.env.WEB_COMPONENTS_CDN_PROVIDER === "unpkg" ? (
+          <WebComponentsLoader
+            cdn={{
+              provider: process.env.WEB_COMPONENTS_CDN_PROVIDER,
+              version: process.env.WEB_COMPONENTS_CDN_VERSION ?? "2.x.x",
+            }}
+            native={process.env.NEXT_STATIC_OUTPUT === "true"}
+          />
+        ) : (
+          <WebComponentsLoader native={process.env.NEXT_STATIC_OUTPUT === "true"} />
+        )}
 
         <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
 

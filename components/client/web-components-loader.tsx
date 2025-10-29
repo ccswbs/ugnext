@@ -4,21 +4,24 @@ import Script from "next/script";
 import React from "react";
 
 export type WebComponentsLoaderProps = {
-  cdn: "jsdelivr" | "unpkg" | "local";
+  cdn?: {
+    provider: "jsdelivr" | "unpkg";
+    version: string;
+  };
   native: boolean;
 };
 
 export function WebComponentsLoader({ cdn, native }: WebComponentsLoaderProps) {
   let base = "";
 
-  switch (cdn) {
+  switch (cdn?.provider) {
     case "jsdelivr":
-      base = "https://cdn.jsdelivr.net/npm/@uoguelph/web-components@2.x.x/dist/uofg-web-components";
+      base = `https://cdn.jsdelivr.net/npm/@uoguelph/web-components@${cdn.version}/dist/uofg-web-components`;
       break;
     case "unpkg":
-      base = "https://unpkg.com/@uoguelph/web-components@2.x.x/dist/uofg-web-components";
+      base = `https://unpkg.com/@uoguelph/web-components@${cdn.version}/dist/uofg-web-components`;
       break;
-    case "local":
+    default:
       base = "/@uoguelph/web-components";
       break;
   }
