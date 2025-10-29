@@ -4,7 +4,7 @@ import Script from "next/script";
 import React from "react";
 
 export type WebComponentsLoaderProps = {
-  cdn: "jsdelivr" | "unpkg" | "local";
+  cdn: "jsdelivr" | "unpkg";
   native: boolean;
 };
 
@@ -17,9 +17,6 @@ export function WebComponentsLoader({ cdn, native }: WebComponentsLoaderProps) {
       break;
     case "unpkg":
       base = "https://unpkg.com/@uoguelph/web-components@2.x.x/dist/uofg-web-components";
-      break;
-    case "local":
-      base = "/@uoguelph/web-components";
       break;
   }
 
