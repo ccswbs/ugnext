@@ -40,7 +40,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   let color: string;
   switch (data.style?.name?.toLowerCase()?.replace("(outline)", "").trim()) {
     case "primary":
-      color = "red";
+      color = "primary";
       break;
     default:
       color = "secondary";
