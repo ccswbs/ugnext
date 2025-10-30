@@ -76,7 +76,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
       },
       hasHeading: {
         true: {
-          button: "text-2xl! py-4 px-10",
+          button: "py-4 px-10",
         },
         false: {
           button: "p-4",
