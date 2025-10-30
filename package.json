@@ -29,7 +29,7 @@
     "@orama/plugin-qps": "^3.1.14",
     "@orama/stopwords": "^3.1.14",
     "@oramacloud/client": "^2.1.4",
-    "@uoguelph/react-components": "^1.5.6-rc.1",
+    "@uoguelph/react-components": "^1.5.6",
     "@uoguelph/web-components": "^2.0.5",
     "conditional-wrap": "^1.0.3",
     "glob": "^11.0.3",
