@@ -47,9 +47,6 @@ export default async function FacultySearchPage() {
   const type = await getFacultyType();
   const units = await getAllUnits();
 
-  console.log("Faculty type:", type);
-  console.log("Available units:", units);
-
   if (!type) {
     notFound();
   }
