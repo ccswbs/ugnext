@@ -8,6 +8,7 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import Link from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
+import { twMerge } from "tailwind-merge";
 
 export type ButtonColumn = "primary" | "secondary" | "call-to-action";
 
@@ -111,13 +112,16 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   return (
     <>
       {heading && (
-        <Typography type="h3" as="h2" className={classes.heading()}>
-          <HtmlParser html={heading} />
-        </Typography>
+        <div className="basis-full">
+          <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={classes.heading()}>
+            <HtmlParser html={heading} />
+          </Typography>
+        </div>
       )}
 
       <Button
-        className={classes.button()}
+        id={`button-${data.uuid}`}
+        className={twMerge(classes.button(), column === "call-to-action" && "text-2xl")}
         as={Link}
         href={url}
         color={color as ButtonProps["color"]}
