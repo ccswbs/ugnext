@@ -69,6 +69,15 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
 
   return (
     <>
+      {data.profileBlockTitle && (
+        <Typography 
+          id={`profile-block-heading-${data.id}`} 
+          type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
+          as={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
+        >
+          {data.profileBlockTitle}
+        </Typography>
+      )}
       {data.enableTypeFilter && profileTypes && (
         <ProfileTypeFilter 
           types={profileTypes} 
