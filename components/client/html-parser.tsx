@@ -275,7 +275,7 @@ const defaultInstructions: ParserInstruction[] = [
             color = "red";
             break;
           case "light":
-            color = "yellow";
+            color = "white";
             break;
           case "dark":
             color = "black";
