@@ -1,4 +1,23 @@
 import { gql } from "@/lib/graphql";
+import {
+  AccordionFragment,
+  BlockFragment,
+  ButtonSectionFragment,
+  CallToActionFragment,
+  GeneralTextFragment,
+  ImageOverlayFragment,
+  LinksFragment,
+  MediaTextFragment,
+  ModalVideoFragment,
+  SectionFragment,
+  SocialMediaFragment,
+  StatisticsFragment,
+  StoryFragment,
+  StoryModalVideoFragment,
+  StoryQuoteFragment,
+  TabsFragment,
+  TestimonialSliderFragment,
+} from "@/lib/graphql/types";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -376,3 +395,22 @@ export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+export type Widgets =
+  | AccordionFragment
+  | BlockFragment
+  | ButtonSectionFragment
+  | CallToActionFragment
+  | GeneralTextFragment
+  | ImageOverlayFragment
+  | LinksFragment
+  | MediaTextFragment
+  | ModalVideoFragment
+  | SectionFragment
+  | SocialMediaFragment
+  | StatisticsFragment
+  | StoryFragment
+  | StoryModalVideoFragment
+  | StoryQuoteFragment
+  | TabsFragment
+  | TestimonialSliderFragment;

@@ -78,8 +78,8 @@ const SectionButtonContent = ({ data, style, overlay }) => (
 const GeneralTextContent = ({ data, style, overlay }) => (
   <Container
     className={twJoin(
-      (overlay === "dark" || style === "Red background") && "[&_h2]:text-white",
-      (overlay === "light" || style === "Yellow background") && "[&_h2]:text-black"
+      (overlay === "dark" || style === "Red background") && "dark",
+      (overlay === "light" || style === "Yellow background") && "light"
     )}
   >
     <GeneralTextWidget key={data?.id ?? index} data={data} />
