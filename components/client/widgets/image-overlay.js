@@ -32,7 +32,8 @@ const StoryQuoteContent = ({ data, style, overlay }) => {
       color={style === "Red background" ? "yellow" : "blue"}
       className={twJoin(
         "text-inherit text-left mt-4 md:mt-0",
-        (overlay === "dark" || style === "Red background") && "text-white"
+        (overlay === "dark" || style === "Red background") && "text-white",
+        (overlay === "light" || style === "Yellow background") && "text-black"
       )}
     >
       <BlockquoteContent className="text-4xl!">{data?.quoteContent}</BlockquoteContent>
@@ -68,10 +69,15 @@ const StoryQuoteContent = ({ data, style, overlay }) => {
   );
 };
 
-const SectionButtonContent = ({ data }) => <ButtonSectionWidget key={data?.id ?? index} data={data} />;
+const SectionButtonContent = ({ data, style, overlay }) => <ButtonSectionWidget key={data?.id ?? index} data={data} />;
 
-const GeneralTextContent = ({ data }) => (
-  <Container>
+const GeneralTextContent = ({ data, style, overlay }) => (
+  <Container
+    className={twJoin(
+      (overlay === "dark" || style === "Red background") && "[&_h2]:text-white",
+      (overlay === "light" || style === "Yellow background") && "[&_h2]:text-black"
+    )}
+  >
     <GeneralTextWidget key={data?.id ?? index} data={data} />
   </Container>
 );
@@ -124,11 +130,11 @@ export function ImageOverlayWidget({ data }) {
         ?.map((data, index) => {
           switch (data?.__typename) {
             case "ParagraphGeneralText":
-              return <GeneralTextContent key={data?.id ?? index} data={data} />;
+              return <GeneralTextContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
             case "ParagraphStoryQuote":
               return <StoryQuoteContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
             case "ParagraphSectionButton":
-              return <SectionButtonContent key={data?.id ?? index} data={data} />;
+              return <SectionButtonContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
             default:
               return null;
           }
