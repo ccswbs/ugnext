@@ -486,4 +486,7 @@ export type Widgets =
   | StoryModalVideoFragment
   | StoryQuoteFragment
   | TabsFragment
-  | TestimonialSliderFragment;
+  | TestimonialSliderFragment
+  | {
+      __typename: string;
+    };
