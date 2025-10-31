@@ -77,8 +77,8 @@ export function MediaTextWidget({ data }) {
         none: "",
         "grey-light": "",
         "grey-dark": {
-          heading: "text-body-copy-bold-on-dark!",
-          body: "[&_*]:text-body-copy-on-dark!",
+          heading: "text-body-copy-bold-on-dark",
+          body: "",
         },
       },
     },
