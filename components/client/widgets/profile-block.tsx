@@ -9,14 +9,17 @@ import { ProfileCard } from "@/components/client/profiles/profile-card";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import useSWR from "swr";
 import type { ProfileType, PartialProfileData } from "@/data/drupal/profile";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { SectionContext } from "@/components/client/section";
+import type { SectionContextType } from "@/lib/types/section-context";
 
 // Fetcher function for SWR
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
-  // Check if this is a secondary column - if so, skip search/pagination and show first 20 results
-  const isSecondaryColumn = data.sectionColumn?.name === "Secondary";
+  // Check if this is a secondary column using SectionContext - if so, skip search/pagination and show first 20 results
+  const sectionContext = useContext(SectionContext) as SectionContextType | null;
+  const isSecondaryColumn = sectionContext?.column === "secondary";
   
   // Fetch profile types from API if type filtering is enabled OR if backend has selected types
   const backendHasSelectedTypes = data.profileType && data.profileType.length > 0;
@@ -154,7 +157,7 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
   // Default behavior for non-secondary columns
   return (
     <>
-      {data.profileBlockTitle && (
+      {sectionContext ? (
         <Typography 
           id={`profile-block-heading-${data.id}`} 
           type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
@@ -162,6 +165,16 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
         >
           {data.profileBlockTitle}
         </Typography>
+      ) : (
+        <Container>
+          <Typography 
+            id={`profile-block-heading-${data.id}`} 
+            type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
+            as={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
+          >
+            {data.profileBlockTitle}
+          </Typography>
+        </Container>
       )}
       {data.enableTypeFilter && profileTypes && (
         <ProfileTypeFilter 
