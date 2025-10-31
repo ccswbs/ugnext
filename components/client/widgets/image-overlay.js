@@ -70,7 +70,12 @@ const StoryQuoteContent = ({ data, style, overlay }) => {
 };
 
 const SectionButtonContent = ({ data, style, overlay }) => (
-  <div className={twJoin((overlay === "dark" || style === "Red background") && "dark")}>
+  <div
+    className={twJoin(
+      (overlay === "dark" || style === "Red background") && "dark",
+      (overlay === "light" || style === "Yellow background") && "light"
+    )}
+  >
     <ButtonSectionWidget key={data?.id ?? index} data={data} />
   </div>
 );
