@@ -5,14 +5,19 @@ import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileBlockFragment } from "@/lib/graphql/types";
 import { ProfileSearch } from "@/components/client/profiles/profile-search";
 import { ProfileTypeFilter } from "@/components/client/profiles/profile-type-filter";
+import { ProfileCard } from "@/components/client/profiles/profile-card";
+import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import useSWR from "swr";
-import type { ProfileType } from "@/data/drupal/profile";
+import type { ProfileType, PartialProfileData } from "@/data/drupal/profile";
 import { useState } from "react";
 
 // Fetcher function for SWR
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
+  // Check if this is a secondary column - if so, skip search/pagination and show first 20 results
+  const isSecondaryColumn = data.sectionColumn?.name === "Secondary";
+  
   // Fetch profile types from API if type filtering is enabled OR if backend has selected types
   const backendHasSelectedTypes = data.profileType && data.profileType.length > 0;
   const shouldFetchTypes = data.enableTypeFilter || backendHasSelectedTypes;
@@ -67,6 +72,86 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
     typesForSearch = [];
   }
 
+  // For secondary columns, fetch profiles directly without pagination/search
+  const secondaryColumnUrl = isSecondaryColumn ? (() => {
+    const params = new URLSearchParams();
+    
+    // Add unit filters if specified
+    if (data.unit && data.unit.length > 0) {
+      params.set("units", data.unit.map(unit => unit.id).join(","));
+    }
+    
+    // Add type filters if specified and profileTypes are loaded
+    if (typesForSearch.length > 0) {
+      params.set("types", typesForSearch.join(","));
+    }
+    
+    // Set page size to 20 and page to 0 for first 20 results
+    params.set("size", "20");
+    params.set("page", "0");
+    
+    return `/api/profiles/get-profiles?${params.toString()}`;
+  })() : null;
+
+  const { data: secondaryProfiles, error: secondaryError, isLoading: secondaryLoading } = useSWR<{
+    results: PartialProfileData[];
+    totalPages: number;
+    total: number;
+  }>(
+    secondaryColumnUrl,
+    fetcher
+  );
+
+  // If this is a secondary column, render profiles directly without search/pagination
+  if (isSecondaryColumn) {
+    return (
+      <>
+        {data.profileBlockTitle && (
+          <Typography 
+            id={`profile-block-heading-${data.id}`} 
+            type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
+            as={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
+          >
+            {data.profileBlockTitle}
+          </Typography>
+        )}
+        
+        {secondaryLoading && (
+          <div className="flex w-full items-center justify-center flex-1 py-5">
+            <LoadingIndicator />
+            <span className="sr-only">Loading...</span>
+          </div>
+        )}
+        
+        {secondaryError && (
+          <div className="flex w-full items-center justify-center flex-1 py-5">
+            <Typography type="body" className="text-body-copy-bold font-bold text-center w-full">
+              An error occurred while loading the profiles. Please try again later.
+            </Typography>
+          </div>
+        )}
+        
+        {secondaryProfiles && (
+          <Container>
+            <div className="grid grid-cols-1 gap-5 py-8">
+              {secondaryProfiles.results.map((profile) => (
+                <ProfileCard key={profile.id} data={profile} />
+              ))}
+              {secondaryProfiles.results.length === 0 && (
+                <div className="flex w-full items-center justify-center flex-1 py-5">
+                  <Typography type="body" className="text-body-copy-bold font-bold text-center w-full">
+                    No profiles found.
+                  </Typography>
+                </div>
+              )}
+            </div>
+          </Container>
+        )}
+      </>
+    );
+  }
+
+  // Default behavior for non-secondary columns
   return (
     <>
       {data.profileBlockTitle && (
