@@ -230,7 +230,7 @@ export async function getFilteredProfiles(options: ProfileSearchOptions) {
         $page: Int = 0
         $size: Int = 20
         $units: [String] = []
-        $types: [String] = ""
+        $types: [String] = []
         $status: Boolean = null
         $acceptingNewGrads: Boolean = null
       ) {

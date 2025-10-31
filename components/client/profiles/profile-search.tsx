@@ -5,7 +5,7 @@ import type { PartialProfileData, Unit } from "@/data/drupal/profile";
 import { Container } from "@uoguelph/react-components/container";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
 import type { ProfileSearchOptions } from "@/data/drupal/profile";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
@@ -34,6 +34,24 @@ export function ProfileSearch(props: ProfileSearchProps) {
   });
 
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
+
+  // Update options when props change (especially types.defaultValue)
+  useEffect(() => {
+    setOptions(prevOptions => ({
+      ...prevOptions,
+      queryByName: props.queryByName.defaultValue ?? prevOptions.queryByName,
+      queryByResearchArea: props.queryByResearchArea.defaultValue ?? prevOptions.queryByResearchArea,
+      units: props.units.defaultValue ?? prevOptions.units,
+      types: props.types.defaultValue ?? prevOptions.types,
+      isAcceptingGraduateStudents: props.isAcceptingGraduateStudents.defaultValue ?? prevOptions.isAcceptingGraduateStudents,
+    }));
+  }, [
+    props.queryByName.defaultValue,
+    props.queryByResearchArea.defaultValue,
+    props.units.defaultValue,
+    props.types.defaultValue,
+    props.isAcceptingGraduateStudents.defaultValue
+  ]);
 
   const url = useMemo(() => {
     const params = new URLSearchParams();
