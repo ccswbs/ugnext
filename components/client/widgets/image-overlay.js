@@ -69,7 +69,11 @@ const StoryQuoteContent = ({ data, style, overlay }) => {
   );
 };
 
-const SectionButtonContent = ({ data, style, overlay }) => <ButtonSectionWidget key={data?.id ?? index} data={data} />;
+const SectionButtonContent = ({ data, style, overlay }) => (
+  <div className={twJoin((overlay === "dark" || style === "Red background") && "dark")}>
+    <ButtonSectionWidget key={data?.id ?? index} data={data} />
+  </div>
+);
 
 const GeneralTextContent = ({ data, style, overlay }) => (
   <Container
