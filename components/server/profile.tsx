@@ -62,7 +62,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
           <div className="md:flex md:flex-row-reverse md:gap-6">
             <div className="md:flex-1">              
               {pre && pre}
-              {content.profileJobTitle && <Typography type="h3" as="p">{content.profileJobTitle}</Typography>}
+              {content.profileJobTitle && <Typography type="h3" as="p" className="mt-0">{content.profileJobTitle}</Typography>}
               {content.profileUnit && content.profileUnit.length > 0 && (
                 <Typography type="body" as="p" className="mb-2">
                   {content.profileUnit.map(unit => unit.name).join(', ')}
