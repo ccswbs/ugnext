@@ -328,7 +328,7 @@ export async function getAllTypes() {
   const { data, error } = await client.query({
     query: gql(/* gql */ `
       query AllProfileTypes {
-        termProfileTypes(first: 4) {
+        termProfileTypes(first: 4, sortKey: WEIGHT) {
           nodes {
             ...ProfileType
           }
