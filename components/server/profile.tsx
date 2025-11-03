@@ -134,7 +134,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 height={content.profilePicture.image.height}
                 width={content.profilePicture.image.width}
                 src={content.profilePicture.image.url}
-                className="w-full max-w-full md:w-1/3 md:max-w-1/3 object-cover mb-4 md:mb-0"
+                className="w-full max-w-full md:w-1/3 md:max-w-1/3 object-cover mb-4"
               />
             )}
           </div>
