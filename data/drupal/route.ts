@@ -258,7 +258,7 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
 
       // Remove last breadcrumb item if same as current page without URL
       const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
-      if((currentPage.title === lastBreadcrumbItem.title) && (lastBreadcrumbItem.url === '')){
+      if((currentPage?.title === lastBreadcrumbItem?.title) && (lastBreadcrumbItem?.url === '')){
         if(breadcrumbPath.length > 1){
           // pop returns undefined if only one item
           breadcrumbPath.pop(); 
