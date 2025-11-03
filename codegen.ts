@@ -24,8 +24,6 @@ schema[`${DRUPAL_BASE_URL}/graphql`] = {
 
 const config: CodegenConfig = {
   schema: schema,
-
-  // this assumes that all your source files are in a top-level `src/` directory - you might need to adjust this to your file structure
   documents: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "data/**/*.{ts,tsx}"],
   generates: {
     "./lib/graphql/": {

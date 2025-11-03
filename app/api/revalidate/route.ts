@@ -33,7 +33,7 @@ async function handler(request: NextRequest) {
 
   try {
     path && revalidatePath(path);
-    tags?.split(",").forEach((tag) => revalidateTag(tag));
+    tags?.split(",").forEach((tag) => revalidateTag(tag, "max"));
 
     return new Response("Revalidated.");
   } catch (error) {

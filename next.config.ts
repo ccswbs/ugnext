@@ -1,49 +1,14 @@
-const CopyPlugin = require("copy-webpack-plugin");
-const path = require("path");
+import type { NextConfig } from "next";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
   reactStrictMode: true,
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    config.module.rules.push(
-      {
-        test: /\.gql|.graphql$/,
-        use: {
-          loader: "webpack-graphql-loader",
-          options: {
-            removeUnusedFragments: true,
-            output: "string",
-            validate: false,
-            minify: true,
-          },
-        },
-      },
-      {
-        test: /\.ya?ml$/,
-        use: "yaml-loader",
-      }
-    );
-
-    config.plugins.push(
-      new CopyPlugin({
-        patterns: [
-          {
-            from: "node_modules/@uoguelph/web-components/dist/uofg-web-components",
-            to: path.resolve(__dirname, "public", "@uoguelph", "web-components"),
-          },
-        ],
-      })
-    );
-
-    return config;
-  },
   images: {
     unoptimized: process.env.NEXT_STATIC_OUTPUT === "true",
     remotePatterns: [
       {
         protocol: "https",
-        hostname: new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).hostname,
+        hostname: new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL as string).hostname,
         port: "",
         pathname: "/sites/default/files/**",
       },
@@ -94,6 +59,7 @@ const nextConfig = {
     ];
   }
 };
+
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
