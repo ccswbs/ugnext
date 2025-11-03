@@ -49,10 +49,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               provider: process.env.WEB_COMPONENTS_CDN_PROVIDER,
               version: process.env.WEB_COMPONENTS_CDN_VERSION ?? "2.x.x",
             }}
-            native={process.env.NEXT_STATIC_OUTPUT === "true"}
           />
         ) : (
-          <WebComponentsLoader native={process.env.NEXT_STATIC_OUTPUT === "true"} />
+          <WebComponentsLoader />
         )}
 
         <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
