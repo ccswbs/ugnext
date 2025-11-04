@@ -15,8 +15,9 @@ import { GeneralTextWidget } from "@/components/client/widgets/general-text";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { twJoin } from "tailwind-merge";
+import { tv } from "tailwind-variants";
 
-const StoryQuoteContent = ({ data, style, overlay }) => {
+const StoryQuoteContent = ({ data, style, overlay, alignment }) => {
   const image = data.image?.image
     ? {
         src: data.image?.image.url,
@@ -69,18 +70,19 @@ const StoryQuoteContent = ({ data, style, overlay }) => {
   );
 };
 
-const SectionButtonContent = ({ data, style, overlay }) => (
+const SectionButtonContent = ({ data, style, overlay, alignment }) => (
   <div
     className={twJoin(
       (overlay === "dark" || style === "Red background") && "dark",
-      (overlay === "light" || style === "Yellow background") && "light"
+      (overlay === "light" || style === "Yellow background") && "light",
+      alignment.vertical === "center" && "[&>.uofg-container]:justify-center"
     )}
   >
     <ButtonSectionWidget key={data?.id ?? index} data={data} />
   </div>
 );
 
-const GeneralTextContent = ({ data, style, overlay }) => (
+const GeneralTextContent = ({ data, style, overlay, alignment }) => (
   <Container
     className={twJoin(
       (overlay === "dark" || style === "Red background") && "dark",
@@ -117,10 +119,30 @@ export function ImageOverlayWidget({ data }) {
     },
   };
 
+  console.log(data);
+
   const style = data.imageOverlayStyle?.name;
   const image = images[style] ?? data?.backgroundImage?.image;
   const overlay = overlays[style] ?? "none";
-  const alignment = alignments[data?.contentAlignment?.name] ?? "center";
+  const alignment = alignments[data?.contentAlignment?.name ?? "Centre middle"];
+
+  const classes = tv({
+    base: "lg:max-w-1/2 p-4",
+    variants: {
+      horizontal: {
+        left: "",
+        center: "",
+        right: "",
+      },
+      vertical: {
+        left: "",
+        center: "text-center",
+        right: "",
+      },
+    },
+  })({ horizontal: alignment.horizontal, vertical: alignment.vertical });
+
+  console.log(alignment);
 
   return (
     <ImageOverlay
@@ -135,20 +157,46 @@ export function ImageOverlayWidget({ data }) {
       blurred={false}
       as={Image}
     >
-      {data.imageOverlayContent
-        ?.map((data, index) => {
-          switch (data?.__typename) {
-            case "ParagraphGeneralText":
-              return <GeneralTextContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
-            case "ParagraphStoryQuote":
-              return <StoryQuoteContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
-            case "ParagraphSectionButton":
-              return <SectionButtonContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
-            default:
-              return null;
-          }
-        })
-        .filter(Boolean)}
+      <div className={classes}>
+        {data.imageOverlayContent
+          ?.map((data, index) => {
+            switch (data?.__typename) {
+              case "ParagraphGeneralText":
+                return (
+                  <GeneralTextContent
+                    key={data?.id ?? index}
+                    data={data}
+                    style={style}
+                    overlay={overlay}
+                    alignment={alignment}
+                  />
+                );
+              case "ParagraphStoryQuote":
+                return (
+                  <StoryQuoteContent
+                    key={data?.id ?? index}
+                    data={data}
+                    style={style}
+                    overlay={overlay}
+                    alignment={alignment}
+                  />
+                );
+              case "ParagraphSectionButton":
+                return (
+                  <SectionButtonContent
+                    key={data?.id ?? index}
+                    data={data}
+                    style={style}
+                    overlay={overlay}
+                    alignment={alignment}
+                  />
+                );
+              default:
+                return null;
+            }
+          })
+          .filter(Boolean)}
+      </div>
     </ImageOverlay>
   );
 }
