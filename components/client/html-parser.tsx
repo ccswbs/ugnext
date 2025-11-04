@@ -430,7 +430,7 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, props, children, index) => {
       return (
-        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={"list-outside p-4 mt-3.75 text-lg"}>
+        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={"list-outside mt-3 text-lg"}>
           {children}
         </List>
       );
