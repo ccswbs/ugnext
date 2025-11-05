@@ -75,7 +75,7 @@ const SectionButtonContent = ({ data, style, overlay, alignment }) => (
     className={twJoin(
       (overlay === "dark" || style === "Red background") && "dark",
       (overlay === "light" || style === "Yellow background") && "light",
-      alignment.vertical === "center" && "[&>.uofg-container]:justify-center"
+      alignment.horizontal === "center" && "[&>.uofg-container]:justify-center"
     )}
   >
     <ButtonSectionWidget key={data?.id ?? index} data={data} />
@@ -131,18 +131,16 @@ export function ImageOverlayWidget({ data }) {
     variants: {
       horizontal: {
         left: "",
-        center: "",
+        center: "text-center",
         right: "",
       },
       vertical: {
         left: "",
-        center: "text-center",
+        center: "",
         right: "",
       },
     },
   })({ horizontal: alignment.horizontal, vertical: alignment.vertical });
-
-  console.log(alignment);
 
   return (
     <ImageOverlay
