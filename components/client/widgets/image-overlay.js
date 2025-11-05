@@ -158,14 +158,8 @@ export function ImageOverlayWidget({ data }) {
           switch (data?.__typename) {
             case "ParagraphGeneralText":
               return (
-                <div className={classes}>
-                  <GeneralTextContent
-                    key={data?.id ?? index}
-                    data={data}
-                    style={style}
-                    overlay={overlay}
-                    alignment={alignment}
-                  />
+                <div className={classes} key={data?.id ?? index}>
+                  <GeneralTextContent data={data} style={style} overlay={overlay} alignment={alignment} />
                 </div>
               );
             case "ParagraphStoryQuote":
@@ -180,14 +174,8 @@ export function ImageOverlayWidget({ data }) {
               );
             case "ParagraphSectionButton":
               return (
-                <div className={classes}>
-                  <SectionButtonContent
-                    key={data?.id ?? index}
-                    data={data}
-                    style={style}
-                    overlay={overlay}
-                    alignment={alignment}
-                  />
+                <div className={classes} key={data?.id ?? index}>
+                  <SectionButtonContent data={data} style={style} overlay={overlay} alignment={alignment} />
                 </div>
               );
             default:
