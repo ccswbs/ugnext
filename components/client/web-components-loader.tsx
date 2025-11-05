@@ -8,7 +8,7 @@ export type WebComponentsLoaderProps = {
     provider: "jsdelivr" | "unpkg";
     version: string;
   };
-  native: boolean;
+  native?: boolean;
 };
 
 export function WebComponentsLoader({ cdn, native }: WebComponentsLoaderProps) {
