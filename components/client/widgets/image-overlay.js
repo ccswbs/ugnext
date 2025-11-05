@@ -119,8 +119,6 @@ export function ImageOverlayWidget({ data }) {
     },
   };
 
-  console.log(data);
-
   const style = data.imageOverlayStyle?.name;
   const image = images[style] ?? data?.backgroundImage?.image;
   const overlay = overlays[style] ?? "none";
