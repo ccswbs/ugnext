@@ -153,12 +153,12 @@ export function ImageOverlayWidget({ data }) {
       blurred={false}
       as={Image}
     >
-      <div className={classes}>
-        {data.imageOverlayContent
-          ?.map((data, index) => {
-            switch (data?.__typename) {
-              case "ParagraphGeneralText":
-                return (
+      {data.imageOverlayContent
+        ?.map((data, index) => {
+          switch (data?.__typename) {
+            case "ParagraphGeneralText":
+              return (
+                <div className={classes}>
                   <GeneralTextContent
                     key={data?.id ?? index}
                     data={data}
@@ -166,19 +166,21 @@ export function ImageOverlayWidget({ data }) {
                     overlay={overlay}
                     alignment={alignment}
                   />
-                );
-              case "ParagraphStoryQuote":
-                return (
-                  <StoryQuoteContent
-                    key={data?.id ?? index}
-                    data={data}
-                    style={style}
-                    overlay={overlay}
-                    alignment={alignment}
-                  />
-                );
-              case "ParagraphSectionButton":
-                return (
+                </div>
+              );
+            case "ParagraphStoryQuote":
+              return (
+                <StoryQuoteContent
+                  key={data?.id ?? index}
+                  data={data}
+                  style={style}
+                  overlay={overlay}
+                  alignment={alignment}
+                />
+              );
+            case "ParagraphSectionButton":
+              return (
+                <div className={classes}>
                   <SectionButtonContent
                     key={data?.id ?? index}
                     data={data}
@@ -186,13 +188,13 @@ export function ImageOverlayWidget({ data }) {
                     overlay={overlay}
                     alignment={alignment}
                   />
-                );
-              default:
-                return null;
-            }
-          })
-          .filter(Boolean)}
-      </div>
+                </div>
+              );
+            default:
+              return null;
+          }
+        })
+        .filter(Boolean)}
     </ImageOverlay>
   );
 }
