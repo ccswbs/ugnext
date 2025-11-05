@@ -83,14 +83,14 @@ const SectionButtonContent = ({ data, style, overlay, alignment }) => (
 );
 
 const GeneralTextContent = ({ data, style, overlay, alignment }) => (
-  <Container
+  <div
     className={twJoin(
       (overlay === "dark" || style === "Red background") && "dark",
       (overlay === "light" || style === "Yellow background") && "light"
     )}
   >
     <GeneralTextWidget key={data?.id ?? index} data={data} />
-  </Container>
+  </div>
 );
 
 export function ImageOverlayWidget({ data }) {
@@ -158,9 +158,9 @@ export function ImageOverlayWidget({ data }) {
           switch (data?.__typename) {
             case "ParagraphGeneralText":
               return (
-                <div className={classes} key={data?.id ?? index}>
+                <Container className={classes} key={data?.id ?? index}>
                   <GeneralTextContent data={data} style={style} overlay={overlay} alignment={alignment} />
-                </div>
+                </Container>
               );
             case "ParagraphStoryQuote":
               return (
@@ -174,9 +174,9 @@ export function ImageOverlayWidget({ data }) {
               );
             case "ParagraphSectionButton":
               return (
-                <div className={classes} key={data?.id ?? index}>
+                <Container className={classes} key={data?.id ?? index}>
                   <SectionButtonContent data={data} style={style} overlay={overlay} alignment={alignment} />
-                </div>
+                </Container>
               );
             default:
               return null;
