@@ -67,7 +67,7 @@ export function MediaTextWidget({ data }) {
 
   const classes = tv({
     slots: {
-      base: "col-span-1 h-full w-full",
+      base: "col-span-1 h-full",
       heading: "mt-0!",
       body: "",
       no_body: "grid-cols-1 h-auto",
@@ -84,6 +84,8 @@ export function MediaTextWidget({ data }) {
     },
   })({ background: background });
 
+  const widthClass = size === 'small' ? 'w-auto' : 'w-full';
+
   return (
     <MediaCaption
       id={`media-and-text-${data.uuid}`}
@@ -95,7 +97,7 @@ export function MediaTextWidget({ data }) {
       background={background}
       size={size}
       position={position}
-      className={twMerge(classes.base(), data?.description ?? classes.no_body())}
+      className={twMerge(classes.base(), data?.description ?? classes.no_body(), widthClass )}
       transcript={media?.transcript}
     >
       {data?.heading && (
