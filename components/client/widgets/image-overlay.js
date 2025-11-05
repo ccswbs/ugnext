@@ -125,7 +125,7 @@ export function ImageOverlayWidget({ data }) {
   const alignment = alignments[data?.contentAlignment?.name ?? "Centre middle"];
 
   const classes = tv({
-    base: "lg:max-w-1/2 p-4",
+    base: "lg:max-w-[min(137rem,100%)] p-4",
     variants: {
       horizontal: {
         left: "",
