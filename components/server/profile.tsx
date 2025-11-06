@@ -64,7 +64,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {pre && pre}
               {content.profileJobTitle && <Typography type="h3" as="p" className="mt-0">{content.profileJobTitle}</Typography>}
               {content.profileUnit && content.profileUnit.length > 0 && (
-                <Typography type="body" as="p" className="mb-2">
+                <Typography type="body" as="p" className="mt-0 mb-2">
                   {content.profileUnit.map(unit => unit.name).join(', ')}
                 </Typography>
               )}
@@ -118,7 +118,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {/* Research Areas */}
               {content.profileResearchAreas?.length && (
                 <div className="mb-4">
-                  <Typography type="h3" as="h2" className="mb-2">
+                  <Typography type="h3" as="h2" className="mt-0 mb-2">
                     Research Areas
                   </Typography>
                   <ul className="list-disc list-inside">
@@ -145,6 +145,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               />
             )}
           </div>
+
           {/* Parse and render the Body and Summary fields */}
           <HtmlParser key="profile-summary" html={content.body?.summary ?? ""} instructions={undefined} />
           <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
