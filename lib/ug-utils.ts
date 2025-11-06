@@ -2,7 +2,7 @@ import React from "react";
 
 // Source: https://www.labnol.org/code/19797-regex-youtube-id
 
-export function extractVideoID(url) {
+export function extractVideoID(url: string) {
   let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#]*).*/;
   let match = url.match(regExp);
 
@@ -13,7 +13,7 @@ export function extractVideoID(url) {
   }
 }
 
-export function computeLayoutMediaText(data) {
+export function computeLayoutMediaText(data: any) {
   const region = data.region;
   const mediaDescription = data?.mediaDescription;
   const mediaBgColor = data?.mediaBgColor;
@@ -39,7 +39,7 @@ export function computeLayoutMediaText(data) {
     "Dark Gray": { textColBg: "bg-gray-950", headingColor: "text-white" },
   };
 
-  let { textColBg = "", headingColor = "text-black" } = colorClasses[mediaBgColor] || {};
+  let { textColBg = "", headingColor = "text-black" } = (colorClasses as any)[mediaBgColor] || {};
 
   // Set the order classes based on the media alignment
   // If mediaAlignment is "left", align left content to the start and right content to the end
@@ -47,7 +47,7 @@ export function computeLayoutMediaText(data) {
   leftDivClasses = mediaAlignment == "left" ? "order-1" : "order-2";
   rightDivClasses = mediaAlignment == "right" ? "order-1" : "order-2";
 
-  function getMediaClasses(region, mediaSize, textColBg, mediaDescription, mediaButtons) {
+  function getMediaClasses(region: any, mediaSize: any, textColBg: any, mediaDescription: any, mediaButtons: any) {
     const commonClasses = {
       headingClass: "mt-md-0",
       textColPadding: textColBg ? "p-4" : "",
@@ -105,20 +105,20 @@ export function computeLayoutMediaText(data) {
 
     if (region === "Primary") {
       if (mediaDescription || mediaButtons) {
-        return classes.Primary.withDescription[mediaSize] || classes.Primary.withDescription.default;
+        return (classes.Primary.withDescription as any)[mediaSize] || classes.Primary.withDescription.default;
       }
-      return classes.Primary.withoutDescription[mediaSize] || classes.Primary.withoutDescription.default;
+      return (classes.Primary.withoutDescription as any)[mediaSize] || classes.Primary.withoutDescription.default;
     } else if (region === "Secondary") {
       return { wrapperCol: "w-full border-0 card mb-4" };
     } else {
       if (mediaDescription || mediaButtons) {
-        return classes.NullRegion.withDescription[mediaSize] || classes.NullRegion.withDescription.default;
+        return (classes.NullRegion.withDescription as any)[mediaSize] || classes.NullRegion.withDescription.default;
       }
       return classes.NullRegion.withoutDescription.default;
     }
   }
 
-  function getVideoClasses(region, mediaSize) {
+  function getVideoClasses(region: any, mediaSize: any) {
     const classes = {
       Primary: {
         small: { wrapperCol: "md:w-1/3 border-0 card mb-4" },
@@ -135,9 +135,9 @@ export function computeLayoutMediaText(data) {
     };
 
     if (region === "Primary") {
-      return classes.Primary[mediaSize] || classes.Primary.default;
+      return (classes.Primary as any)[mediaSize] || classes.Primary.default;
     }
-    return classes.NullRegion[mediaSize] || classes.NullRegion.default;
+    return (classes.NullRegion as any)[mediaSize] || classes.NullRegion.default;
   }
 
   let computedClasses = {};
@@ -174,8 +174,8 @@ export function computeLayoutMediaText(data) {
   };
 }
 
-export function buttonStyle(styleOfButton) {
-  const styles = {
+export function buttonStyle(styleOfButton: string) {
+  const styles: Record<string, string> = {
     Primary: "red",
     "Primary (Outline)": "red-outline",
     Secondary: "white",
@@ -197,7 +197,7 @@ export function buttonStyle(styleOfButton) {
   return styles[styleOfButton] || "red";
 }
 
-export function getIconForUrl(url) {
+export function getIconForUrl(url: string) {
   try {
     const urlObj = new URL(url);
     const hostname = urlObj.hostname.toLowerCase().replace('www.', '');
@@ -255,14 +255,15 @@ export function getIconForUrl(url) {
  * If the processed field only contains a simple <p> tag wrapper, use the raw value instead.
  * Otherwise, use the processed HTML as-is.
  * 
- * @param field - The field object containing processed and value properties
+ * @param field - The field object containing processed and value properties, or undefined/null
  * @returns The text to display
  */
-export function getDisplayText(field?: { processed?: string; value?: string }): string {
+export function getDisplayText(field?: any): string {
   if (!field) return "";
   
-  const processed = field.processed;
-  const value = field.value;
+  // Convert processed to string if it exists
+  const processed = typeof field.processed === 'string' ? field.processed : undefined;
+  const value = field.value || undefined;
   
   // If no processed field, fall back to value
   if (!processed) return value ?? "";

@@ -25,7 +25,7 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
     <div className="flex flex-col md:flex-row h-full">
       {/* Image Section */}
       {profileInfo.profilePicture && (
-        <div className="flex-shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3">
+        <div className="shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3">
           <Image
             src={profileInfo.profilePicture.image.url}
             alt={profileInfo.profilePicture.image.alt ?? ""}
