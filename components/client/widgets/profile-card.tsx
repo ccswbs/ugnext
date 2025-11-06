@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { LdapContactInfoClient } from "@/components/client/ldap-contact-info-client";
-import { getIconForUrl } from "@/lib/ug-utils";
+import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileCardFragment } from "@/lib/graphql/types";
@@ -64,8 +64,8 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
           <div className="mt-2">
             {profileInfo.profileFields.map((field, index) => (
               <div key={index}>
-                <HtmlParser html={field.label?.processed ?? ""} instructions={undefined} />
-                <HtmlParser html={field.value?.processed ?? ""} instructions={undefined} />
+                <HtmlParser html={getDisplayText(field.label)} instructions={undefined} />
+                <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
               </div>
             ))}
           </div>

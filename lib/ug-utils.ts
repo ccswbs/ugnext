@@ -255,12 +255,10 @@ export function getIconForUrl(url) {
  * If the processed field only contains a simple <p> tag wrapper, use the raw value instead.
  * Otherwise, use the processed HTML as-is.
  * 
- * @param {Object} field - The field object containing processed and value properties
- * @param {string} [field.processed] - The processed HTML content
- * @param {string} [field.value] - The raw text value
- * @returns {string} The text to display
+ * @param field - The field object containing processed and value properties
+ * @returns The text to display
  */
-export function getDisplayText(field) {
+export function getDisplayText(field?: { processed?: string; value?: string }): string {
   if (!field) return "";
   
   const processed = field.processed;

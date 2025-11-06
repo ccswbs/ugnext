@@ -11,7 +11,7 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { LdapContactInfo } from "@/components/server/ldap-contact-info";
-import { getIconForUrl } from "@/lib/ug-utils";
+import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { 
   UniwebAffiliations,
   UniwebCurrentTeaching,
@@ -68,14 +68,17 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   {content.profileUnit.map(unit => unit.name).join(', ')}
                 </Typography>
               )}
-              
+
+              {/* Directory contact info from LDAP */}
               {content.centralLoginId && content.centralLoginId.trim() && (
-                <LdapContactInfo 
-                  centralLoginId={content.centralLoginId}
-                  directoryEmail={content.directoryEmail}
-                  directoryOffice={content.directoryOffice}
-                  directoryPhone={content.directoryPhone}
-                />
+                <div id="contact-info" className="mb-4">
+                  <LdapContactInfo 
+                    centralLoginId={content.centralLoginId}
+                    directoryEmail={content.directoryEmail}
+                    directoryOffice={content.directoryOffice}
+                    directoryPhone={content.directoryPhone}
+                  />
+                </div>
               )}
 
               {/* Custom links if available */}
@@ -97,12 +100,16 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 <div className="mb-4">
                   {content.profileFields.map((field, index) => (
                     <div key={index} className="mb-3">
-                      <div className="font-bold mb-1">
-                        <HtmlParser html={field.label?.processed ?? ""} instructions={undefined} />
-                      </div>
-                      <div>
-                        <HtmlParser html={field.value?.processed ?? ""} instructions={undefined} />
-                      </div>
+                      {field.label && (
+                        <div className="font-bold mb-1">
+                          <HtmlParser html={getDisplayText(field.label)} instructions={undefined} />
+                        </div>
+                      )}
+                      {field.value && (
+                        <div>
+                          <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
