@@ -110,8 +110,8 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
         <Typography
           id={`media-and-text-heading-${data.uuid}`}
           className={classes.heading()}
-          type={(data?.headingLevel as TypographyProps["type"]) ?? "h3"}
-          as={(data?.headingLevel as TypographyProps["as"]) ?? "h3"}
+          type={(data?.headingLevel as TypographyProps<"span">["type"]) ?? "h3"}
+          as={(data?.headingLevel as TypographyProps<"span">["as"]) ?? "h3"}
         >
           {data.heading}
         </Typography>
