@@ -17,6 +17,7 @@ import Image from "next/image";
 import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 import NextLink from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
+import { clamp } from "@uoguelph/react-components";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -358,13 +359,24 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children, index) => {
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
-      const headingClass = className.match(/\bh[\d]\b/g);
+      const headingClass = className.match(/\bh\d\b/g);
+      const displayClass = /\bdisplay-(\d)\b/g.exec(className);
       const cleanedChildren = unwrapTags(children);
       let type = level;
+      let emphasize = false;
 
       // Allow headings to appear smaller if needed
       if (headingClass) {
         type = headingClass[0] as "h3" | "h4" | "h5" | "h6";
+      }
+
+      if (displayClass) {
+        const size = clamp(Number.parseInt(displayClass[1]), 1, 6);
+
+        if (size) {
+          type = `h${size}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+          emphasize = true;
+        }
       }
 
       return (
@@ -373,6 +385,7 @@ const defaultInstructions: ParserInstruction[] = [
           key={nanoid()}
           type={type}
           as={level}
+          emphasize={emphasize}
           className={twMerge(index === 0 && "mt-0", className)}
         >
           {cleanedChildren}
