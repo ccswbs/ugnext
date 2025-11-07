@@ -25,7 +25,7 @@ export function WidgetSelector({ data }: { data: Widgets }) {
   const context = useContext(SectionContext);
 
   // Some widgets need to span the full width of the page
-  const noWrapWidgets = ["ParagraphTestimonialSlider", "ParagraphImageOverlay", "ParagraphStoryWidget"];
+  const noWrapWidgets = ["ParagraphTestimonialSlider", "ParagraphImageOverlay", "ParagraphStoryWidget", "ParagraphProfileBlock"];
 
   if (!data.__typename) {
     console.error("Widget Error: Widget type is not defined", data);
