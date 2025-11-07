@@ -1,30 +1,99 @@
+"use client";
+
 import useSWR from "swr";
-import { useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import { Pagination } from "@uoguelph/react-components/pagination";
-import { twJoin } from "tailwind-merge";
 import { Typography } from "@uoguelph/react-components/typography";
 
-type PaginatedGridSharedProps<T> = {
-  endpoint: (page: number) => string;
-  render: (item: T, index: number) => React.ReactNode;
-  fallback?: (page: number) => T[];
+type PaginatedGridData<T> = {
+  results: T[];
+  totalPages: number;
+  total: number;
 };
 
-type PaginatedGridPageProps<T> = {
-  page: number;
-} & PaginatedGridSharedProps<T>;
+type PaginatedGridProps<T> = {
+  url: string;
+  render: (item: T, index: number) => ReactNode;
+  debounce?: number;
+};
 
 async function fetcher(...args: Parameters<typeof fetch>) {
-  return (await fetch(...args)).json();
+  const response = await fetch(...args);
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return response.json();
 }
 
-function PaginatedGridPage<T>({ page, endpoint, render, fallback }: PaginatedGridPageProps<T>) {
-  const url = endpoint(page);
-  const { data, error, isLoading } = useSWR<T[]>(url, fetcher);
-  const classes = twJoin("grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5");
+/*
+ * This component is used to fetch paginated data from an api endpoint and render it in a grid.
+ * For it to function correctly, the api endpoint must return a JSON object with the following structure:
+ * {
+ *   results: [], // The actual data to be rendered
+ *   totalPages: number, // Denoting the total number of pages available
+ *   total: number // Denoting the total number of items available
+ * }
+ * The endpoint also must support pagination using the 'page' query parameter.
+ * For example /api/endpoint?page=1
+ * */
+export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridProps<T>) {
+  const [page, setPage] = useState(0);
+  const [debouncedUrl, setDebouncedUrl] = useState(url);
+  const [isDebouncing, setIsDebouncing] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  if (isLoading) {
+  // Reset page when the URL changes
+  useEffect(() => {
+    setPage(0);
+  }, [url]);
+
+  // Debounce the URL changes
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    } else {
+      setIsDebouncing(true);
+      timeoutRef.current = setTimeout(() => {
+        setDebouncedUrl(url);
+        setIsDebouncing(false);
+      }, debounce);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [url, debounce]);
+
+  // Construct the search URL with the current page
+  const searchUrl = useMemo(() => {
+    if (debouncedUrl.includes("?")) {
+      return `${debouncedUrl}&page=${page}`;
+    }
+
+    return `${debouncedUrl}?page=${page}`;
+  }, [page, debouncedUrl]);
+
+  // Fetch data using SWR
+  const { data, error, isLoading } = useSWR<PaginatedGridData<T>>(searchUrl, fetcher);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+
+    // Scroll to the top smoothly
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  if (isLoading || isDebouncing) {
     return (
       <div className="flex w-full items-center justify-center flex-1 py-5">
         <LoadingIndicator />
@@ -34,17 +103,8 @@ function PaginatedGridPage<T>({ page, endpoint, render, fallback }: PaginatedGri
   }
 
   if (error || !data) {
-    if (fallback) {
-      const fallbackData = fallback(page);
-      return (
-        <>
-          <Typography type="body" className="text-body-copy-bold font-bold text-center w-full mb-10">
-            An error occurred while loading data. Please try again later.
-          </Typography>
-
-          <div className={classes}>{fallbackData.map(render)}</div>
-        </>
-      );
+    if (error) {
+      console.error("Error fetching data: ", error);
     }
 
     return (
@@ -56,61 +116,45 @@ function PaginatedGridPage<T>({ page, endpoint, render, fallback }: PaginatedGri
     );
   }
 
-  return <div className={classes}>{data.map(render)}</div>;
-}
-
-type PaginatedGridProps<T> = {
-  totalPages: number;
-  hidePaginationInput?: boolean;
-} & PaginatedGridSharedProps<T>;
-
-export function PaginatedGrid<T>({
-  totalPages = 2,
-  endpoint,
-  render,
-  fallback,
-  hidePaginationInput = false,
-}: PaginatedGridProps<T>) {
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-
-    // Scroll to the top smoothly
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <div className="flex flex-col py-8">
-      <Pagination
-        color="yellow"
-        count={totalPages}
-        visible={5}
-        page={currentPage}
-        hideInput={hidePaginationInput}
-        onChange={handlePageChange}
-        className="pb-8 pt-0"
-      />
+      {data.totalPages > 1 && (
+        <Pagination
+          color="yellow"
+          count={data.totalPages}
+          visible={5}
+          page={page}
+          onChange={handlePageChange}
+          className="pb-8 pt-0"
+        />
+      )}
 
-      <PaginatedGridPage page={currentPage} endpoint={endpoint} render={render} fallback={fallback} />
-
-      {/* Prefetch the next page. */}
-      <div className="hidden">
-        <PaginatedGridPage page={currentPage + 1} endpoint={endpoint} render={render} fallback={fallback} />
+      <div className="mb-4 text-center text-sm opacity-70">
+        Showing {data.results.length} of {data.total} results
       </div>
 
-      <Pagination
-        color="yellow"
-        count={totalPages}
-        visible={5}
-        page={currentPage}
-        hideInput={hidePaginationInput}
-        onChange={handlePageChange}
-        className="pt-8 pb-0"
-      />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        {data.results.map(render)}
+      </div>
+
+      {data.results.length === 0 && (
+        <div className="flex w-full items-center justify-center flex-1 py-5">
+          <Typography type="body" className="text-body-copy-bold font-bold text-center w-full">
+            No results found.
+          </Typography>
+        </div>
+      )}
+
+      {data.totalPages > 1 && (
+        <Pagination
+          color="yellow"
+          count={data.totalPages}
+          visible={5}
+          page={page}
+          onChange={handlePageChange}
+          className="pt-8 pb-0"
+        />
+      )}
     </div>
   );
 }

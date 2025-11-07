@@ -2,6 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
+import { getProfileTypes } from "@/data/drupal/profile";
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
@@ -31,6 +32,8 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...Story
       ...ImageOverlay
       ...Section
+      ...ProfileBlock
+      ...ProfileCard
     }
     tags {
       ...Tag
@@ -73,32 +76,43 @@ export async function getPageContent(id: string) {
   }
 
   // We need to resolve testimonials by tag.
+  // This function recursively processes widgets, including nested ones in sections
+  async function processWidget(widget: any): Promise<any> {
+    //console.log('processWidget called with:', widget.__typename);
+    if (widget.__typename === "ParagraphTestimonialSlider") {
+      const tags =
+        widget.byTags
+          ?.map((tag: any) => {
+            if (tag.__typename === "TermTag") {
+              return tag.id;
+            }
+            return null;
+          })
+          .filter((tag: any) => typeof tag === "string") ?? [];
+
+      if (tags.length === 0) {
+        return widget;
+      }
+
+      return {
+        ...widget,
+        byTags: (await getTestimonialByTag(tags)) ?? [],
+      };
+    }
+
+    // Handle section widgets by recursively processing their content
+    if (widget.__typename === "ParagraphSection" && widget.content) {
+      return {
+        ...widget,
+        content: await Promise.all(widget.content.map((nestedWidget: any) => processWidget(nestedWidget))),
+      };
+    }
+
+    return widget;
+  }
+
   return {
     ...data.nodePage,
-    widgets: await Promise.all(
-      data.nodePage.widgets.map(async (widget) => {
-        if (widget.__typename === "ParagraphTestimonialSlider") {
-          const tags =
-            widget.byTags
-              ?.map((tag) => {
-                if (tag.__typename === "TermTag") {
-                  return tag.id;
-                }
-                return null;
-              })
-              .filter((tag) => typeof tag === "string") ?? [];
-
-          if (tags.length === 0) {
-            return widget;
-          }
-
-          return {
-            ...widget,
-            byTags: (await getTestimonialByTag(tags)) ?? [],
-          };
-        }
-        return widget;
-      })
-    ),
+    widgets: await Promise.all(data.nodePage.widgets.map((widget) => processWidget(widget))),
   };
 }
