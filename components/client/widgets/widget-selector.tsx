@@ -16,6 +16,8 @@ import { BlockWidget } from "@/components/client/widgets/block";
 import { TabsWidget } from "@/components/client/widgets/tabs";
 import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial-slider";
 import { SocialMediaWidget } from "@/components/client/widgets/social-media";
+import { ProfileBlock } from "@/components/client/widgets/profile-block";
+import { ProfileCard } from "@/components/client/widgets/profile-card";
 import type { Widgets } from "@/data/drupal/widgets";
 
 export function WidgetSelector({ data }: { data: Widgets }) {
@@ -58,6 +60,10 @@ export function WidgetSelector({ data }: { data: Widgets }) {
         return <BlockWidget data={data} />;
       case "ParagraphSocialMediaWidget":
         return <SocialMediaWidget data={data} />;
+      case "ParagraphProfileBlock":
+        return <ProfileBlock data={data} />;
+      case "ParagraphProfileCard":
+        return <ProfileCard data={data} />;
       default:
         console.error(`Widget Error ${data.__typename}: Widget type is not supported`, data);
         return <></>;
