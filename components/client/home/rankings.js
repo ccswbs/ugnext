@@ -38,7 +38,7 @@ export const Rankings = () => {
             className={linkClasses}
             href="https://education.macleans.ca/feature/canadas-best-comprehensive-universities-rankings-2024/"
           >
-            Macleans, 2024
+            Macleans, 2025
           </a>
         </StatisticsItemRepresents>
       </StatisticsItem>
