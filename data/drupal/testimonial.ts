@@ -1,6 +1,7 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query } from "@/lib/apollo";
+import { TestimonialFragment } from "@/lib/graphql/types";
 
 export const TESTIMONIAL_TYPE_FRAGMENT = gql(/* gql */ `
   fragment TestimonialType on TermTestimonialType {
@@ -12,6 +13,7 @@ export const TESTIMONIAL_FRAGMENT = gql(/* gql */ `
   fragment Testimonial on NodeTestimonial {
     __typename
     id
+    status
     body {
       processed
     }
@@ -40,9 +42,6 @@ export async function getTestimonialByTag(tags: string[]) {
         testimonialsByTag(filter: { tags: $tags }) {
           results {
             ...Testimonial
-            ... on NodeTestimonial {
-              status
-            }
           }
         }
       }
@@ -60,17 +59,17 @@ export async function getTestimonialByTag(tags: string[]) {
     return [];
   }
 
-  return (
-    data.testimonialsByTag?.results.filter((testimonial: any) => {
-      if (testimonial.__typename === "NodeTestimonial") {
-        if (testimonial.status === false && !showUnpublished) {
-          return false;
-        }
-      } else {
+  const testimonials = data.testimonialsByTag?.results.filter((testimonial: any) => {
+    if (testimonial.__typename === "NodeTestimonial") {
+      if (testimonial.status === false && !showUnpublished) {
         return false;
       }
+    } else {
+      return false;
+    }
 
-      return true;
-    }) ?? []
-  );
+    return true;
+  });
+
+  return (testimonials ?? []) as TestimonialFragment[];
 }

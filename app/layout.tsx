@@ -7,6 +7,8 @@ import { draftMode } from "next/headers";
 import { Bitter, DM_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import "@uoguelph/web-components/style";
+import { Button } from "@uoguelph/react-components/button";
+import { WebComponentsLoader, WebComponentsLoaderProps } from "@/components/client/web-components-loader";
 import { DraftModeBanner } from "@/components/client/draft-mode-banner";
 
 const dmSans = DM_Sans({
@@ -41,19 +43,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className="h-full">
       <body className="flex flex-col min-h-full">
-        <Script
-          src="/@uoguelph/web-components/uofg-header.esm.js"
-          type="module"
-          strategy="beforeInteractive"
-          crossOrigin="anonymous"
-        />
-
-        <Script
-          src="/@uoguelph/web-components/uofg-footer.esm.js"
-          type="module"
-          strategy="beforeInteractive"
-          crossOrigin="anonymous"
-        />
+        {process.env.WEB_COMPONENTS_CDN_PROVIDER === "jsdelivr" ||
+        process.env.WEB_COMPONENTS_CDN_PROVIDER === "unpkg" ? (
+          <WebComponentsLoader
+            cdn={{
+              provider: process.env.WEB_COMPONENTS_CDN_PROVIDER,
+              version: process.env.WEB_COMPONENTS_CDN_VERSION ?? "2.x.x",
+            }}
+          />
+        ) : (
+          <WebComponentsLoader />
+        )}
 
         <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
 

@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getNewsArticles } from "@/data/drupal/ovc-news";
 
 export async function GET(request: NextRequest) {
@@ -12,10 +12,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const articles = await getNewsArticles(page, size);
+  const data = await getNewsArticles(page, size);
 
-  return new Response(JSON.stringify(articles), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  return NextResponse.json(data);
 }

@@ -43,14 +43,14 @@ function PageHero({ content }: { content: NonNullable<PageContent> }) {
           )}
         </Hero>
 
-        <Breadcrumbs url={content.path ?? undefined} />
+        <Breadcrumbs url={content.path ?? undefined} primary_navigation={content.primaryNavigation?.menuName ?? undefined} />
       </>
     );
   }
 
   return (
     <>
-      <Breadcrumbs url={content.path ?? undefined} />
+      <Breadcrumbs url={content.path ?? undefined} primary_navigation={content.primaryNavigation?.menuName ?? undefined} />
 
       <Container>
         <Typography type="h1" as="h1">

@@ -1,7 +1,7 @@
 "use client";
 
 import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, ReactNode, isValidElement, ReactElement } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
@@ -17,6 +17,7 @@ import Image from "next/image";
 import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 import NextLink from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
+import { clamp } from "@uoguelph/react-components";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -63,7 +64,7 @@ function hasAncestorWithClass(node: Element, className: string): boolean {
   let current = node.parent;
   while (current) {
     // Check if current is a DOMNode before passing to isElement
-    if (current && typeof current === 'object' && 'type' in current && isElement(current as DOMNode)) {
+    if (current && typeof current === "object" && "type" in current && isElement(current as DOMNode)) {
       const element = current as Element;
       const currentClassName = (element.attribs?.class as string) ?? "";
       if (currentClassName.includes(className)) {
@@ -73,6 +74,18 @@ function hasAncestorWithClass(node: Element, className: string): boolean {
     current = current.parent;
   }
   return false;
+}
+
+function unwrapTags(children: ReactNode): ReactNode {
+  return React.Children.map(children, (child) => {
+    if (child && isValidElement(child)) {
+      const element = child as ReactElement<any>;
+      if (element.type === "span" || element.type === "strong") {
+        return unwrapTags(element.props.children);
+      }
+    }
+    return child;
+  });
 }
 
 // Counter for td elements with rowspan to handle alternating colors
@@ -87,7 +100,9 @@ const defaultInstructions: ParserInstruction[] = [
     },
     processNode: (node, props, children, index, childParser) => {
       // Helper function to recursively extract information from DOM nodes
-      const extractVcardInfo = (domNode: Element): {
+      const extractVcardInfo = (
+        domNode: Element
+      ): {
         name: string;
         title: string;
         phone: string;
@@ -103,7 +118,7 @@ const defaultInstructions: ParserInstruction[] = [
         const processNode = (node: any) => {
           if (isElement(node)) {
             const className = (node.attribs?.class as string) ?? "";
-            
+
             // Extract name from .fn class or strong tags
             if (className.includes("fn") || node.tagName === "strong") {
               const nameText = extractTextFromDOMNode(node);
@@ -111,7 +126,7 @@ const defaultInstructions: ParserInstruction[] = [
                 name = nameText;
               }
             }
-            
+
             // Extract title from .org class
             if (className.includes("org")) {
               const titleText = extractTextFromDOMNode(node);
@@ -119,11 +134,11 @@ const defaultInstructions: ParserInstruction[] = [
                 title = titleText;
               }
             }
-            
+
             // Extract links (phone and email)
             if (node.tagName === "a" && typeof node.attribs?.href === "string") {
               const href = node.attribs.href;
-              
+
               if (href.startsWith("tel:")) {
                 const tokens = href.replace("tel:", "").split("p");
                 phone = extractTextFromDOMNode(node);
@@ -132,12 +147,18 @@ const defaultInstructions: ParserInstruction[] = [
                 email = href.replace("mailto:", "");
               }
             }
-            
+
             // Recursively process children
             if (node.children) {
               node.children.forEach((child: any) => processNode(child));
             }
-          } else if (node?.type === "text" && node.data && node.data.trim().length > 2 && !title && !node.data.includes("@")) {
+          } else if (
+            node?.type === "text" &&
+            node.data &&
+            node.data.trim().length > 2 &&
+            !title &&
+            !node.data.includes("@")
+          ) {
             // Extract title from direct text content (but not email addresses)
             const trimmedText = node.data.trim();
             if (trimmedText && !name.includes(trimmedText)) {
@@ -159,11 +180,14 @@ const defaultInstructions: ParserInstruction[] = [
         if (node?.type === "text") {
           return node.data || "";
         }
-        
+
         if (isElement(node) && node.children) {
-          return node.children.map((child: any) => extractTextFromDOMNode(child)).join("").trim();
+          return node.children
+            .map((child: any) => extractTextFromDOMNode(child))
+            .join("")
+            .trim();
         }
-        
+
         return "";
       };
 
@@ -234,13 +258,13 @@ const defaultInstructions: ParserInstruction[] = [
 
         switch (className.match(/btn-(?:outline-)?(\w*)/)?.[1]) {
           case "primary":
-            color = "red";
+            color = "primary";
             break;
           case "secondary":
-            color = "black";
+            color = "secondary";
             break;
           case "info":
-            color = "blue";
+            color = "secondary";
             break;
           case "success":
             color = "green";
@@ -252,7 +276,7 @@ const defaultInstructions: ParserInstruction[] = [
             color = "red";
             break;
           case "light":
-            color = "yellow";
+            color = "white";
             break;
           case "dark":
             color = "black";
@@ -335,12 +359,24 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children, index) => {
       const level = node.tagName as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
       const className = typeof props.className === "string" ? props.className : "";
-      const headingClass = className.match(/\bh[\d]\b/g);
+      const headingClass = className.match(/\bh\d\b/g);
+      const displayClass = /\bdisplay-(\d)\b/g.exec(className);
+      const cleanedChildren = unwrapTags(children);
       let type = level;
+      let emphasize = false;
 
       // Allow headings to appear smaller if needed
       if (headingClass) {
         type = headingClass[0] as "h3" | "h4" | "h5" | "h6";
+      }
+
+      if (displayClass) {
+        const size = clamp(Number.parseInt(displayClass[1]), 1, 6);
+
+        if (size) {
+          type = `h${size}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+          emphasize = true;
+        }
       }
 
       return (
@@ -349,16 +385,10 @@ const defaultInstructions: ParserInstruction[] = [
           key={nanoid()}
           type={type}
           as={level}
+          emphasize={emphasize}
           className={twMerge(index === 0 && "mt-0", className)}
         >
-          {React.Children.map(children, (child) => {
-            // Remove strong tags from headings
-            if (typeof child !== "string" && child.type === "strong") {
-              return child.props.children;
-            }
-
-            return child;
-          })}
+          {cleanedChildren}
         </Typography>
       );
     },
@@ -413,7 +443,7 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, props, children, index) => {
       return (
-        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={"mt-3.75 text-lg"}>
+        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={"list-outside pl-4 pt-3 text-lg"}>
           {children}
         </List>
       );
@@ -610,12 +640,10 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children) => {
       // Reset the rowspan counter for each new table
       rowspanTdCounter = 0;
-      
+
       // Strip all existing attributes and create clean props for table
       const cleanProps = {};
-      const classes = twMerge(
-        "w-full border-collapse border border-grey-light my-4"
-      );
+      const classes = twMerge("w-full border-collapse border border-grey-light my-4");
 
       return (
         <div className="overflow-x-auto my-4">
@@ -631,7 +659,7 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children) => {
       // Strip all existing attributes and create clean props for thead
       const cleanProps = {};
-      
+
       return (
         <thead {...cleanProps} key={nanoid()}>
           {children}
@@ -644,7 +672,7 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children) => {
       // Strip all existing attributes and create clean props for tbody
       const cleanProps = {};
-      
+
       return (
         <tbody {...cleanProps} key={nanoid()}>
           {children}
@@ -657,10 +685,8 @@ const defaultInstructions: ParserInstruction[] = [
     processNode: (node, props, children, index) => {
       // Strip all existing attributes and create clean props for tr
       const cleanProps = {};
-      
-      const classes = twMerge(
-        "border border-grey-light"
-      );
+
+      const classes = twMerge("border border-grey-light");
 
       return (
         <tr {...cleanProps} key={nanoid()} className={classes}>
@@ -676,10 +702,8 @@ const defaultInstructions: ParserInstruction[] = [
       const cleanProps: { rowspan?: string | number; colspan?: string | number } = {};
       if (node.attribs.rowspan) cleanProps.rowspan = node.attribs.rowspan;
       if (node.attribs.colspan) cleanProps.colspan = node.attribs.colspan;
-      
-      const classes = twMerge(
-        "border border-grey-light px-4 py-2 text-left font-semibold"
-      );
+
+      const classes = twMerge("border border-grey-light px-4 py-2 text-left font-semibold");
 
       return (
         <th {...cleanProps} key={nanoid()} className={classes}>
@@ -695,9 +719,9 @@ const defaultInstructions: ParserInstruction[] = [
       const cleanProps: { rowspan?: string | number; colspan?: string | number } = {};
       if (node.attribs.rowspan) cleanProps.rowspan = node.attribs.rowspan;
       if (node.attribs.colspan) cleanProps.colspan = node.attribs.colspan;
-      
+
       let backgroundClass = "";
-      
+
       // Handle alternating colors for td elements with rowspan
       if (node.attribs.rowspan) {
         // Use independent counter for rowspan cells
@@ -707,26 +731,21 @@ const defaultInstructions: ParserInstruction[] = [
       } else {
         // For regular td elements, find the parent tr and use its index
         let parentTr = node.parent;
-        while (parentTr && parentTr.type === 'tag' && parentTr.name !== 'tr') {
+        while (parentTr && parentTr.type === "tag" && parentTr.name !== "tr") {
           parentTr = parentTr.parent;
         }
-        
+
         let rowIndex = 0;
         if (parentTr && parentTr.parent) {
-          const siblings = parentTr.parent.children.filter((child: any) => 
-            child.type === 'tag' && child.name === 'tr'
-          );
+          const siblings = parentTr.parent.children.filter((child: any) => child.type === "tag" && child.name === "tr");
           rowIndex = siblings.indexOf(parentTr);
         }
-        
+
         const isEvenRow = rowIndex % 2 === 0;
         backgroundClass = isEvenRow ? "bg-grey-light-bg" : "bg-white";
       }
-      
-      const classes = twMerge(
-        "border border-grey-light px-4 py-2",
-        backgroundClass
-      );
+
+      const classes = twMerge("border border-grey-light px-4 py-2", backgroundClass);
 
       return (
         <td {...cleanProps} key={nanoid()} className={classes}>
@@ -756,15 +775,15 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
 
         // Remove bad props
         // Only strip inline styles unless the node is a div or iframe
-        if (node.tagName !== 'div' && node.tagName !== 'iframe') {
+        if (node.tagName !== "div" && node.tagName !== "iframe") {
           delete props.style;
         }
         delete props.key;
         delete props.dangerouslySetInnerHTML;
         delete props.children;
-        
+
         // Preserve rowspan and colspan for table cells
-        const isTableCell = node.tagName === 'td' || node.tagName === 'th';
+        const isTableCell = node.tagName === "td" || node.tagName === "th";
         const preservedAttribs: { rowspan?: string | number; colspan?: string | number } = {};
         if (isTableCell) {
           if (node.attribs.rowspan) preservedAttribs.rowspan = node.attribs.rowspan;
