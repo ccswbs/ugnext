@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { LdapContactInfoClient } from "@/components/client/ldap-contact-info-client";
-import { getIconForUrl } from "@/lib/ug-utils";
+import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileCardFragment } from "@/lib/graphql/types";
@@ -25,7 +25,7 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
     <div className="flex flex-col md:flex-row h-full">
       {/* Image Section */}
       {profileInfo.profilePicture && (
-        <div className="flex-shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3">
+        <div className="shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3">
           <Image
             src={profileInfo.profilePicture.image.url}
             alt={profileInfo.profilePicture.image.alt ?? ""}
@@ -64,8 +64,8 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
           <div className="mt-2">
             {profileInfo.profileFields.map((field, index) => (
               <div key={index}>
-                <HtmlParser html={field.label?.processed ?? ""} instructions={undefined} />
-                <HtmlParser html={field.value?.processed ?? ""} instructions={undefined} />
+                <HtmlParser html={getDisplayText(field.label)} instructions={undefined} />
+                <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
               </div>
             ))}
           </div>

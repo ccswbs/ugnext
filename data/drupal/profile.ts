@@ -53,9 +53,11 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     profileFields {
       label {
         processed
+        value
       }
       value {
         processed
+        value
       }
     }
     profileResearchAreas {

@@ -11,7 +11,7 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { LdapContactInfo } from "@/components/server/ldap-contact-info";
-import { getIconForUrl } from "@/lib/ug-utils";
+import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { 
   UniwebAffiliations,
   UniwebCurrentTeaching,
@@ -64,18 +64,21 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {pre && pre}
               {content.profileJobTitle && <Typography type="h3" as="p" className="mt-0">{content.profileJobTitle}</Typography>}
               {content.profileUnit && content.profileUnit.length > 0 && (
-                <Typography type="body" as="p" className="mb-2">
+                <Typography type="body" as="p" className="mt-0 mb-2">
                   {content.profileUnit.map(unit => unit.name).join(', ')}
                 </Typography>
               )}
-              
+
+              {/* Directory contact info from LDAP */}
               {content.centralLoginId && content.centralLoginId.trim() && (
-                <LdapContactInfo 
-                  centralLoginId={content.centralLoginId}
-                  directoryEmail={content.directoryEmail}
-                  directoryOffice={content.directoryOffice}
-                  directoryPhone={content.directoryPhone}
-                />
+                <div id="contact-info" className="mb-4">
+                  <LdapContactInfo 
+                    centralLoginId={content.centralLoginId}
+                    directoryEmail={content.directoryEmail}
+                    directoryOffice={content.directoryOffice}
+                    directoryPhone={content.directoryPhone}
+                  />
+                </div>
               )}
 
               {/* Custom links if available */}
@@ -97,12 +100,16 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 <div className="mb-4">
                   {content.profileFields.map((field, index) => (
                     <div key={index} className="mb-3">
-                      <div className="font-bold mb-1">
-                        <HtmlParser html={field.label?.processed ?? ""} instructions={undefined} />
-                      </div>
-                      <div>
-                        <HtmlParser html={field.value?.processed ?? ""} instructions={undefined} />
-                      </div>
+                      {field.label && (
+                        <div className="font-bold mb-1">
+                          <HtmlParser html={getDisplayText(field.label)} instructions={undefined} />
+                        </div>
+                      )}
+                      {field.value && (
+                        <div>
+                          <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -111,7 +118,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {/* Research Areas */}
               {content.profileResearchAreas?.length && (
                 <div className="mb-4">
-                  <Typography type="h3" as="h2" className="mb-2">
+                  <Typography type="h3" as="h2" className="mt-0 mb-2">
                     Research Areas
                   </Typography>
                   <ul className="list-disc list-inside">
@@ -138,8 +145,13 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               />
             )}
           </div>
+
           {/* Parse and render the Body and Summary fields */}
-          <HtmlParser key="profile-summary" html={content.body?.summary ?? ""} instructions={undefined} />
+          {content.body?.summary && (
+            <div className="mb-4">
+              <HtmlParser key="profile-summary" html={content.body.summary} instructions={undefined} />
+            </div>
+          )}
           <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
           
           {/* Render all Profile Sections in order (both regular parts and UniWeb parts) */}
