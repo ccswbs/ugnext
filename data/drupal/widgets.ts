@@ -300,9 +300,11 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         profileFields {
           label {
             processed
+            value
           }
           value {
             processed
+            value
           }
         }
       }

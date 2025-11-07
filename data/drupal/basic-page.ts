@@ -2,6 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
+import { getProfileTypes } from "@/data/drupal/profile";
 import { getFullTestimonialSlider } from "@/data/drupal/widgets";
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
