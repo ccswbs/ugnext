@@ -1,51 +1,65 @@
 "use client";
 
-import { Typography } from "@uoguelph/react-components/typography";
-import { Button } from "@uoguelph/react-components/button";
-import { HtmlParser } from "@/components/client/html-parser";
+import type { ButtonsFragment } from "@/lib/graphql/types";
 import { tv } from "tailwind-variants";
-import { twMerge } from "tailwind-merge";
-import { Container } from "@uoguelph/react-components/container";
-import { useContext } from "react";
-import { SectionContext } from "@/components/client/section";
+import { MouseEventHandler } from "react";
+import { Typography } from "@uoguelph/react-components/typography";
+import { HtmlParser } from "@/components/client/html-parser";
+import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import Link from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
+import { twMerge } from "tailwind-merge";
 
-function getButtonData(data) {
-  const colors = {
-    primary: "red",
-    secondary: "black",
-    info: "blue",
-  };
+export type ButtonColumn = "primary" | "secondary" | "call-to-action";
 
-  let url = data?.link?.url;
+export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: ButtonColumn }) => {
+  let url = data.link?.url;
+
+  if (!url) {
+    console.error(`Widget Error ${data.__typename}: A URL must be defined for the button`, data);
+    return <></>;
+  }
 
   if (url.startsWith("/sites/default/files")) {
     const base = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev";
     url = collapseSlashes(`${base}/${url}`);
   }
 
-  return {
-    url: url,
-    title: data?.formattedTitle ? data.formattedTitle.processed : data.link?.title ? data.link.title : "",
-    heading: data?.ctaHeading?.processed,
-    color: colors[data?.style?.name?.toLowerCase()?.replace("(outline)", "").trim()] ?? "red",
-    icon: {
-      data: data?.fontAwesomeIcon,
-      color: data?.fontAwesomeIconColour?.name?.toLowerCase()?.replace("darker", "")?.trim(),
-    },
-    outlined: Boolean(data?.style?.name?.includes("Outline")),
-    analytics: data?.ctaAnalyticsGoal
-      ? {
-          goal: data?.ctaAnalyticsGoal?.name,
-          action: data?.ctaAnalyticsGoal?.action,
-        }
-      : null,
-  };
-}
+  const title = data.formattedTitle ? (data.formattedTitle.processed as string) : data.link?.title;
 
-export const ButtonWidget = ({ data, column }) => {
-  const { url, title, heading, color, icon, outlined, analytics } = getButtonData(data);
+  if (!title) {
+    console.error(
+      `Widget Error ${data.__typename}: A title must be defined for the button either in its formatted title field or link title field`,
+      data
+    );
+    return <></>;
+  }
+
+  const heading = data.ctaHeading?.processed as string | undefined | null;
+
+  let color: string;
+  switch (data.style?.name?.toLowerCase()?.replace("(outline)", "").trim()) {
+    case "primary":
+      color = "primary";
+      break;
+    default:
+      color = "secondary";
+  }
+
+  const icon = {
+    data: data.fontAwesomeIcon,
+    color: data.fontAwesomeIconColour?.name?.toLowerCase()?.replace("darker", "")?.trim() as
+      | "red"
+      | "yellow"
+      | undefined,
+  };
+  const outlined = Boolean(data.style?.name?.includes("Outline"));
+  const analytics = data.ctaAnalyticsGoal
+    ? {
+        goal: data.ctaAnalyticsGoal.name,
+        action: data.ctaAnalyticsGoal.action,
+      }
+    : null;
 
   const classes = tv({
     slots: {
@@ -84,7 +98,7 @@ export const ButtonWidget = ({ data, column }) => {
     iconColor: icon.color,
   });
 
-  const analyticsHandler = (e) => {
+  const analyticsHandler: MouseEventHandler<HTMLAnchorElement> = (e) => {
     if (analytics) {
       window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
       window.dataLayer.push({
@@ -110,7 +124,7 @@ export const ButtonWidget = ({ data, column }) => {
         className={twMerge(classes.button(), column === "call-to-action" && "text-2xl")}
         as={Link}
         href={url}
-        color={color}
+        color={color as ButtonProps["color"]}
         outlined={outlined}
         onClick={analyticsHandler}
       >
@@ -118,28 +132,5 @@ export const ButtonWidget = ({ data, column }) => {
         <HtmlParser html={title} />
       </Button>
     </>
-  );
-};
-
-export const ButtonSectionWidget = ({ data }) => {
-  const buttons = data?.buttons;
-  const column = data?.buttonSectionColumn?.name?.toLowerCase()?.replaceAll(" ", "-") ?? "primary";
-  const context = useContext(SectionContext);
-
-  const classes = tv({
-    base: "flex gap-2 pt-4",
-    variants: {
-      column: {
-        primary: "flex flex-wrap px-0 mx-0",
-        secondary: "flex-col px-0 mx-0",
-        "call-to-action": "flex-wrap flex-row items-center justify-center",
-      },
-    },
-  })({ column, section: context?.column ?? "primary" });
-
-  return (
-    <Container id={`button-section-${data.uuid}`} className={classes}>
-      {buttons?.length > 0 && buttons.map((button) => <ButtonWidget key={button.id} column={column} data={button} />)}
-    </Container>
   );
 };

@@ -15,8 +15,9 @@ import { GeneralTextWidget } from "@/components/client/widgets/general-text";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { twJoin } from "tailwind-merge";
+import { tv } from "tailwind-variants";
 
-const StoryQuoteContent = ({ data, style, overlay }) => {
+const StoryQuoteContent = ({ data, style, overlay, alignment }) => {
   const image = data.image?.image
     ? {
         src: data.image?.image.url,
@@ -32,7 +33,8 @@ const StoryQuoteContent = ({ data, style, overlay }) => {
       color={style === "Red background" ? "yellow" : "blue"}
       className={twJoin(
         "text-inherit text-left mt-4 md:mt-0",
-        (overlay === "dark" || style === "Red background") && "text-white"
+        (overlay === "dark" || style === "Red background") && "text-white",
+        (overlay === "light" || style === "Yellow background") && "text-black"
       )}
     >
       <BlockquoteContent className="text-4xl!">{data?.quoteContent}</BlockquoteContent>
@@ -68,12 +70,27 @@ const StoryQuoteContent = ({ data, style, overlay }) => {
   );
 };
 
-const SectionButtonContent = ({ data }) => <ButtonSectionWidget key={data?.id ?? index} data={data} />;
+const SectionButtonContent = ({ data, style, overlay, alignment }) => (
+  <div
+    className={twJoin(
+      (overlay === "dark" || style === "Red background") && "dark",
+      (overlay === "light" || style === "Yellow background") && "light",
+      alignment.horizontal === "center" && "[&>.uofg-container]:justify-center"
+    )}
+  >
+    <ButtonSectionWidget key={data?.id ?? index} data={data} />
+  </div>
+);
 
-const GeneralTextContent = ({ data }) => (
-  <Container>
+const GeneralTextContent = ({ data, style, overlay, alignment }) => (
+  <div
+    className={twJoin(
+      (overlay === "dark" || style === "Red background") && "dark",
+      (overlay === "light" || style === "Yellow background") && "light"
+    )}
+  >
     <GeneralTextWidget key={data?.id ?? index} data={data} />
-  </Container>
+  </div>
 );
 
 export function ImageOverlayWidget({ data }) {
@@ -105,7 +122,23 @@ export function ImageOverlayWidget({ data }) {
   const style = data.imageOverlayStyle?.name;
   const image = images[style] ?? data?.backgroundImage?.image;
   const overlay = overlays[style] ?? "none";
-  const alignment = alignments[data?.contentAlignment?.name] ?? "center";
+  const alignment = alignments[data?.contentAlignment?.name ?? "Centre middle"];
+
+  const classes = tv({
+    base: "p-4",
+    variants: {
+      horizontal: {
+        left: "",
+        center: "text-center lg:max-w-[min(137rem,50%)]",
+        right: "",
+      },
+      vertical: {
+        left: "",
+        center: "",
+        right: "",
+      },
+    },
+  })({ horizontal: alignment.horizontal, vertical: alignment.vertical });
 
   return (
     <ImageOverlay
@@ -124,11 +157,27 @@ export function ImageOverlayWidget({ data }) {
         ?.map((data, index) => {
           switch (data?.__typename) {
             case "ParagraphGeneralText":
-              return <GeneralTextContent key={data?.id ?? index} data={data} />;
+              return (
+                <Container className={classes} key={data?.id ?? index}>
+                  <GeneralTextContent data={data} style={style} overlay={overlay} alignment={alignment} />
+                </Container>
+              );
             case "ParagraphStoryQuote":
-              return <StoryQuoteContent key={data?.id ?? index} data={data} style={style} overlay={overlay} />;
+              return (
+                <StoryQuoteContent
+                  key={data?.id ?? index}
+                  data={data}
+                  style={style}
+                  overlay={overlay}
+                  alignment={alignment}
+                />
+              );
             case "ParagraphSectionButton":
-              return <SectionButtonContent key={data?.id ?? index} data={data} />;
+              return (
+                <Container className={classes} key={data?.id ?? index}>
+                  <SectionButtonContent data={data} style={style} overlay={overlay} alignment={alignment} />
+                </Container>
+              );
             default:
               return null;
           }

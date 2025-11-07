@@ -1,4 +1,27 @@
 import { gql } from "@/lib/graphql";
+import {
+  AccordionFragment,
+  BlockFragment,
+  ButtonSectionFragment,
+  CallToActionFragment,
+  GeneralTextFragment,
+  ImageOverlayFragment,
+  LinksFragment,
+  MediaTextFragment,
+  ModalVideoFragment,
+  ProfileBlockFragment,
+  ProfileCardFragment,
+  SectionFragment,
+  SocialMediaFragment,
+  StatisticsFragment,
+  StoryFragment,
+  StoryModalVideoFragment,
+  StoryQuoteFragment,
+  TabsFragment,
+  TestimonialFragment,
+  TestimonialSliderFragment,
+} from "@/lib/graphql/types";
+import { getTestimonialByTag } from "@/data/drupal/testimonial";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -249,7 +272,7 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
     enableNameSearch
     enableResearchFilter
     enableTypeFilter
-    enableUnitFilter    
+    enableUnitFilter
   }
 `);
 
@@ -447,3 +470,51 @@ export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+export async function getFullTestimonialSlider(data: TestimonialSliderFragment) {
+  const tags =
+    data.byTags
+      ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
+      .filter((tag) => typeof tag === "string") ?? [];
+
+  if (tags.length === 0) {
+    return data;
+  }
+
+  return {
+    ...data,
+    byTags: await getTestimonialByTag(tags),
+  } as FullTestimonialSlider;
+}
+
+export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
+  byTags: TestimonialFragment[];
+};
+
+export type Widgets =
+  | AccordionFragment
+  | BlockFragment
+  | ButtonSectionFragment
+  | CallToActionFragment
+  | GeneralTextFragment
+  | ImageOverlayFragment
+  | LinksFragment
+  | MediaTextFragment
+  | ModalVideoFragment
+  | ProfileBlockFragment
+  | ProfileCardFragment
+  | SectionFragment
+  | SocialMediaFragment
+  | StatisticsFragment
+  | StoryFragment
+  | StoryModalVideoFragment
+  | StoryQuoteFragment
+  | TabsFragment
+  | TestimonialSliderFragment
+  | FullTestimonialSlider
+  | {
+      __typename: "ParagraphYamlWidget";
+    }
+  | {
+      __typename?: "ParagraphCallToAction";
+    };
