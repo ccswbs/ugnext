@@ -1,4 +1,4 @@
-export const toTitleCase = (str) => {
+export const toTitleCase = (str: string) => {
   const lowercaseWords = [
     "a",
     "an",
@@ -24,7 +24,7 @@ export const toTitleCase = (str) => {
   };
 
   if (str in specialCases) {
-    return specialCases[str];
+    return specialCases[str as keyof typeof specialCases];
   }
 
   return (
@@ -36,7 +36,7 @@ export const toTitleCase = (str) => {
   );
 };
 
-export const getHeadingLevel = (heading) => {
+export const getHeadingLevel = (heading: string) => {
   if (typeof heading !== "string") {
     return null;
   }
@@ -50,10 +50,10 @@ export const getHeadingLevel = (heading) => {
 };
 
 // A function to compute the Levenshtein distance of two strings (useful for fuzzy string matching)
-export const editDistance = (a, b) => {
+export const editDistance = (a: string, b: string) => {
   if (typeof a != "string" || typeof b != "string") return Infinity;
 
-  let distances = [];
+  let distances: number[][] = [];
 
   for (let i = 0; i <= a.length; i++) {
     distances[i] = [];
@@ -74,7 +74,7 @@ export const editDistance = (a, b) => {
   return distances[a.length][b.length];
 };
 
-export const strncmp = (a, b, upto = 0) => {
+export const strncmp = (a: string, b: string, upto = 0) => {
   if (typeof a != "string" || typeof b != "string") return false;
 
   for (let i = 0; i < upto; i++) {
@@ -84,7 +84,7 @@ export const strncmp = (a, b, upto = 0) => {
   return true;
 };
 
-export function collapseSlashes(str) {
+export function collapseSlashes(str: string) {
   if (typeof str !== "string") return str;
 
   // Preserve protocol (e.g., http://, https://, ftp://), then collapse remaining runs of slashes
