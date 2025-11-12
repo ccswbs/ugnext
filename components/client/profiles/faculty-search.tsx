@@ -5,10 +5,11 @@ import type { PartialProfileData, Unit } from "@/data/drupal/profile";
 import { Container } from "@uoguelph/react-components/container";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
 import type { ProfileSearchOptions } from "@/data/drupal/profile";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 type ProfileSearchField<T> = {
   enabled: boolean;
@@ -26,19 +27,58 @@ export type FacultySearchProps = {
 };
 
 export function FacultySearch(props: FacultySearchProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Initialize state from URL parameters or default values
+  const getInitialSelectedUnit = useCallback(() => {
+    const unitId = searchParams.get('unit');
+    if (unitId && props.availableUnits) {
+      return props.availableUnits.find(unit => unit.id === unitId) || null;
+    }
+    return props.queryByUnit.defaultValue && props.availableUnits 
+      ? props.availableUnits.find(unit => unit.id === props.queryByUnit.defaultValue) || null
+      : null;
+  }, [searchParams, props.availableUnits, props.queryByUnit.defaultValue]);
+
   const [options, setOptions] = useState<Omit<ProfileSearchOptions, "page" | "pageSize">>({
-    queryByName: props.queryByName.defaultValue ?? "",
-    queryByResearchArea: props.queryByResearchArea.defaultValue ?? "",
+    queryByName: searchParams.get('name') || props.queryByName.defaultValue || "",
+    queryByResearchArea: searchParams.get('research') || props.queryByResearchArea.defaultValue || "",
     units: props.units.defaultValue ?? [],
     types: [props.facultyTypeId], // Faculty search is restricted to faculty profiles
     isAcceptingGraduateStudents: props.isAcceptingGraduateStudents.defaultValue ?? null,
   });
 
-  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(
-    props.queryByUnit.defaultValue && props.availableUnits 
-      ? props.availableUnits.find(unit => unit.id === props.queryByUnit.defaultValue) || null
-      : null
-  );
+  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(getInitialSelectedUnit);
+
+  // Effect to update URL parameters when search options change
+  useEffect(() => {
+    const params = new URLSearchParams();
+    
+    if (options.queryByName && options.queryByName.trim()) {
+      params.set('name', options.queryByName);
+    }
+    
+    if (options.queryByResearchArea && options.queryByResearchArea.trim()) {
+      params.set('research', options.queryByResearchArea);
+    }
+    
+    if (selectedUnit && selectedUnit.id) {
+      params.set('unit', selectedUnit.id);
+    }
+    
+    const url = params.toString() ? `?${params.toString()}` : '';
+    router.replace(url, { scroll: false });
+  }, [options.queryByName, options.queryByResearchArea, selectedUnit, router]);
+
+  // Update state when search criteria change
+  const updateOptions = useCallback((updater: (prev: typeof options) => typeof options) => {
+    setOptions(updater);
+  }, []);
+
+  const updateSelectedUnit = useCallback((unit: Unit | null) => {
+    setSelectedUnit(unit);
+  }, []);
 
   const url = useMemo(() => {
     const params = new URLSearchParams();
@@ -82,8 +122,9 @@ export function FacultySearch(props: FacultySearchProps) {
           {props.queryByName.enabled && (
             <div className="flex-1">
               <TextInput
-                onInput={(e) => {
-                  setOptions((prevState) => {
+                value={options.queryByName}
+                onChange={(e) => {
+                  updateOptions((prevState) => {
                     return {
                       ...prevState,
                       queryByName: (e.target as HTMLInputElement).value,
@@ -99,8 +140,9 @@ export function FacultySearch(props: FacultySearchProps) {
           {props.queryByResearchArea.enabled && (
             <div className="flex-1">
               <TextInput
-                onInput={(e) => {
-                  setOptions((prevState) => {
+                value={options.queryByResearchArea}
+                onChange={(e) => {
+                  updateOptions((prevState) => {
                     return {
                       ...prevState,
                       queryByResearchArea: (e.target as HTMLInputElement).value,
@@ -119,7 +161,7 @@ export function FacultySearch(props: FacultySearchProps) {
               <Select
                 value={selectedUnit}
                 onChange={(value) => {
-                  setSelectedUnit(value);
+                  updateSelectedUnit(value);
                 }}
                 as="div"
               >

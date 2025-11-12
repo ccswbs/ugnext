@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import { Pagination } from "@uoguelph/react-components/pagination";
 import { Typography } from "@uoguelph/react-components/typography";
+import { useSearchParams, useRouter } from "next/navigation";
 
 type PaginatedGridData<T> = {
   results: T[];
@@ -40,15 +41,32 @@ async function fetcher(...args: Parameters<typeof fetch>) {
  * For example /api/endpoint?page=1
  * */
 export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridProps<T>) {
-  const [page, setPage] = useState(0);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  // Initialize page from URL parameter, defaulting to 0
+  const [page, setPage] = useState(() => {
+    const pageParam = searchParams.get('p');
+    return pageParam ? Math.max(0, parseInt(pageParam, 10) - 1) : 0; // Convert from 1-based to 0-based
+  });
+  
   const [debouncedUrl, setDebouncedUrl] = useState(url);
   const [isDebouncing, setIsDebouncing] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Reset page when the URL changes
+  // Reset page when the base URL changes (but not when only search params change)
   useEffect(() => {
-    setPage(0);
-  }, [url]);
+    const baseUrl = url.split('?')[0];
+    const currentBaseUrl = debouncedUrl.split('?')[0];
+    if (baseUrl !== currentBaseUrl) {
+      setPage(0);
+      // Update URL to remove page parameter when resetting
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete('p');
+      const newUrl = newParams.toString() ? `?${newParams.toString()}` : '';
+      router.replace(newUrl, { scroll: false });
+    }
+  }, [url, debouncedUrl, searchParams, router]);
 
   // Debounce the URL changes
   useEffect(() => {
@@ -85,6 +103,16 @@ export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridP
 
   const handlePageChange = (page: number) => {
     setPage(page);
+
+    // Update URL with new page number (convert from 0-based to 1-based for display)
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (page === 0) {
+      newParams.delete('p'); // Remove page parameter for first page
+    } else {
+      newParams.set('p', (page + 1).toString()); // Convert to 1-based for URL
+    }
+    const newUrl = newParams.toString() ? `?${newParams.toString()}` : '';
+    router.replace(newUrl, { scroll: false });
 
     // Scroll to the top smoothly
     window.scrollTo({
