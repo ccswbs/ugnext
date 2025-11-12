@@ -9,6 +9,10 @@ import {
 import { HtmlParser } from "@/components/client/html-parser";
 import Image from "next/image";
 import type { StatisticsFragment } from "@/lib/graphql/types";
+import { nanoid } from "nanoid";
+import NextLink from "next/link";
+import { Link } from "@uoguelph/react-components/link";
+import React from "react";
 
 export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
   const variant = data?.style?.name
@@ -28,7 +32,27 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
             )}
             <StatisticsItemValue>{statistic?.value}</StatisticsItemValue>
             <StatisticsItemRepresents>
-              <HtmlParser html={statistic?.represents?.processed} />
+              <HtmlParser
+                html={statistic?.represents?.processed}
+                instructions={[
+                  {
+                    shouldProcessNode: (node) => node.tagName === "a",
+                    processNode: (node, props, children) => {
+                      return (
+                        <Link
+                          className="text-inherit! outline-inherit!"
+                          {...props}
+                          key={nanoid()}
+                          href={props.href as string}
+                          as={NextLink}
+                        >
+                          {children}
+                        </Link>
+                      );
+                    },
+                  },
+                ]}
+              />
             </StatisticsItemRepresents>
             {statistic?.image && (
               <StatisticsItemImage
