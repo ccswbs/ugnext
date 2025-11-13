@@ -14,11 +14,16 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
   const count = data.links.length ?? 0;
   const classes = tv({
     slots: {
-      container: "mx-auto my-0 flex flex-col flex-wrap sm:flex-row gap-4",
-      card: "h-full",
+      container: "mx-0 my-0 flex flex-col flex-wrap sm:flex-row gap-4 w-fit",
+      card: "h-full max-w-[30rem]",
       cardImage: "aspect-[4/3] w-full object-cover",
     },
     variants: {
+      centered: {
+        true: {
+          container: "mx-auto justify-center",
+        },
+      },
       divisibleByTwo: {
         true: {
           container: "",
@@ -53,6 +58,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
       },
     ],
   })({
+    centered: false,
     divisibleByTwo: count % 2 === 0,
     divisibleByThree: count % 3 === 0,
     divisibleByFour: count % 4 === 0,
