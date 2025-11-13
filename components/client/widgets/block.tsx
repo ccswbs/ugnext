@@ -12,7 +12,7 @@ const WidgetBlock = ({ data }: { data: WidgetBlockFragment }) => {
   return (
     <>
       {data.content.map((item) => (
-        <WidgetSelector data={item} neverWrap={true} />
+        <WidgetSelector key={item.id} data={item} neverWrap={true} />
       ))}
     </>
   );
