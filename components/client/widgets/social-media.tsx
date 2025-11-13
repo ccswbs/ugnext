@@ -1,11 +1,12 @@
 import { twJoin } from "tailwind-merge";
-import { Typography } from "@uoguelph/react-components/typography";
+import { Typography, TypographyProps } from "@uoguelph/react-components/typography";
+import type { SocialMediaFragment } from "@/lib/graphql/types";
 
-export function SocialMediaWidget({ data }) {
-  const links = data.socialMediaLinks || [];
-  const title = data?.socialMediaTitle;
-  const altText = data?.iconAltText;
-  const level = data.headingLevel;
+export function SocialMediaWidget({ data }: { data: SocialMediaFragment }) {
+  const links = data.socialMediaLinks ?? [];
+  const title = data.socialMediaTitle;
+  const altText = data.iconAltText;
+  const level = (data.headingLevel as TypographyProps<any>["type"]) ?? "h2";
 
   // Sort links alphabetically by name
   const sortedLinks = links.sort((a, b) => a.name.localeCompare(b.name));

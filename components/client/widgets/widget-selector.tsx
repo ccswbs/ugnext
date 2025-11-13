@@ -20,12 +20,17 @@ import { ProfileBlock } from "@/components/client/widgets/profile-block";
 import { ProfileCard } from "@/components/client/widgets/profile-card";
 import type { Widgets } from "@/data/drupal/widgets";
 
-export function WidgetSelector({ data }: { data: Widgets }) {
+export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; neverWrap?: boolean }) {
   // If this widget is within a section, we don't want to render a container around it
   const context = useContext(SectionContext);
 
   // Some widgets need to span the full width of the page
-  const noWrapWidgets = ["ParagraphTestimonialSlider", "ParagraphImageOverlay", "ParagraphStoryWidget", "ParagraphProfileBlock"];
+  const noWrapWidgets = [
+    "ParagraphTestimonialSlider",
+    "ParagraphImageOverlay",
+    "ParagraphStoryWidget",
+    "ParagraphProfileBlock",
+  ];
 
   if (!data.__typename) {
     console.error("Widget Error: Widget type is not defined", data);
@@ -70,7 +75,7 @@ export function WidgetSelector({ data }: { data: Widgets }) {
     }
   };
 
-  if (!noWrapWidgets.includes(data.__typename) && !context) {
+  if (!noWrapWidgets.includes(data.__typename) && !context && !neverWrap) {
     return (
       <Container>
         <Widget />
