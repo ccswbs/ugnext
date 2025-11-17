@@ -35,9 +35,9 @@ export const Rankings = () => {
         <StatisticsItemRepresents>
           <Link
             className={linkClasses}
-            href="https://education.macleans.ca/feature/canadas-best-comprehensive-universities-rankings-2024/"
+            href="https://news.uoguelph.ca/2025/11/u-of-g-among-canadas-top-comprehensive-universities-macleans-rankings/"
           >
-            Macleans, 2024
+            Macleans, 2026
           </Link>
         </StatisticsItemRepresents>
       </StatisticsItem>
