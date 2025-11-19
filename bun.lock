@@ -31,6 +31,7 @@
         "sharp": "^0.34.5",
         "swr": "^2.3.6",
         "tailwind-variants": "^3.1.1",
+        "unraw": "^3.0.0",
         "uuid": "^13.0.0",
       },
       "devDependencies": {
@@ -1599,6 +1600,8 @@
     "undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "unixify": ["unixify@1.0.0", "", { "dependencies": { "normalize-path": "^2.1.1" } }, "sha512-6bc58dPYhCMHHuwxldQxO3RRNZ4eCogZ/st++0+fcC1nr0jiGUtAdBJ2qzmLQWSxbtz42pWt4QQMiZ9HvZf5cg=="],
+
+    "unraw": ["unraw@3.0.0", "", {}, "sha512-08/DA66UF65OlpUDIQtbJyrqTR0jTAlJ+jsnkQ4jxR7+K5g5YG1APZKQSMCE1vqqmD+2pv6+IdEjmopFatacvg=="],
 
     "unrs-resolver": ["unrs-resolver@1.11.0", "", { "dependencies": { "napi-postinstall": "^0.3.0" }, "optionalDependencies": { "@unrs/resolver-binding-android-arm-eabi": "1.11.0", "@unrs/resolver-binding-android-arm64": "1.11.0", "@unrs/resolver-binding-darwin-arm64": "1.11.0", "@unrs/resolver-binding-darwin-x64": "1.11.0", "@unrs/resolver-binding-freebsd-x64": "1.11.0", "@unrs/resolver-binding-linux-arm-gnueabihf": "1.11.0", "@unrs/resolver-binding-linux-arm-musleabihf": "1.11.0", "@unrs/resolver-binding-linux-arm64-gnu": "1.11.0", "@unrs/resolver-binding-linux-arm64-musl": "1.11.0", "@unrs/resolver-binding-linux-ppc64-gnu": "1.11.0", "@unrs/resolver-binding-linux-riscv64-gnu": "1.11.0", "@unrs/resolver-binding-linux-riscv64-musl": "1.11.0", "@unrs/resolver-binding-linux-s390x-gnu": "1.11.0", "@unrs/resolver-binding-linux-x64-gnu": "1.11.0", "@unrs/resolver-binding-linux-x64-musl": "1.11.0", "@unrs/resolver-binding-wasm32-wasi": "1.11.0", "@unrs/resolver-binding-win32-arm64-msvc": "1.11.0", "@unrs/resolver-binding-win32-ia32-msvc": "1.11.0", "@unrs/resolver-binding-win32-x64-msvc": "1.11.0" } }, "sha512-uw3hCGO/RdAEAb4zgJ3C/v6KIAFFOtBoxR86b2Ejc5TnH7HrhTWJR2o0A9ullC3eWMegKQCw/arQ/JivywQzkg=="],
 
