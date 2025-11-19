@@ -16,6 +16,7 @@ export function ProfileTypeFilter({ types, onTypeChange, defaultTypeId = null }:
 
   const handleTypeClick = (e: React.MouseEvent, typeId: string | null) => {
     e.preventDefault(); // Prevent navigation
+    (e.currentTarget as HTMLElement).blur(); // Remove focus to clear hover state
     setSelectedTypeId(typeId);
     onTypeChange(typeId);
   };

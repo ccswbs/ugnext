@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DismissibleAlert } from "@uoguelph/react-components/dismissible-alert";
+import unraw from "unraw";
 
 export type Alert = {
   title: string;
@@ -10,7 +11,7 @@ export type Alert = {
 };
 
 export async function getAlert(test = false) {
-  const id = test ? "168" : "173";
+  const id = test ? "162" : "163";
   const res = await fetch(`https://uoguelph.apparmor.com/Notifications/Feeds/Javascript/?AlertID=${id}`);
 
   if (!res.ok) {
@@ -18,21 +19,36 @@ export async function getAlert(test = false) {
     return null;
   }
 
-  const text = await res.text();
-  const data = text
-    ?.replace(`document.getElementById('AppArmorAlertID_${id}').innerHTML = '';`, "")
-    ?.replace(`document.getElementById('AppArmorAlertID_${id}').innerHTML = '\\u003c!--`, "")
-    ?.replace(` --\\u003e';`, "")
-    ?.replaceAll("\\", "")
-    ?.trim();
+  const text = unraw(
+    (await res.text())
+      ?.replace(`document.getElementById('AppArmorAlertID_${id}').innerHTML = '`, "")
+      ?.slice(0, -2)
+      ?.trim()
+  );
 
   // If after trimming the string is empty, return null because there is no active alert
-  if (!data) {
+  if (!text) {
     return null;
   }
 
   try {
-    return JSON.parse(data);
+    const parser = new DOMParser();
+    const html = parser.parseFromString(text, "text/html");
+
+    const title = html.querySelector('[slot="subtitle"]')?.textContent;
+    const description = html.querySelector('[slot="message"]')?.textContent;
+    const timestamp = html
+      .querySelector('[slot="footer"]')
+      ?.textContent?.replace("Last updated", "")
+      ?.slice(0, -1)
+      ?.trim();
+
+    if (!title || !description || !timestamp) {
+      console.error(`Failed to parse AppArmor alert JSON`);
+      return null;
+    }
+
+    return { title, description, timestamp };
   } catch (e) {
     console.error(`Failed to parse AppArmor alert JSON`);
     return null;
@@ -52,7 +68,7 @@ export function AppArmor() {
       setAlert({
         title: alert.title,
         description: alert.description,
-        timestamp: alert.time,
+        timestamp: alert.timestamp,
       });
     });
   }, []);

@@ -59,8 +59,17 @@ export async function Profile({ id, pre, post }: ProfileProps) {
           <Typography type="h1" as="h1" className="mb-4">
             {content?.title}       
           </Typography>
-          <div className="md:flex md:flex-row-reverse md:gap-6">
-            <div className="md:flex-1">              
+          <div className="md:flex md:gap-6 md:items-start">
+            {content.profilePicture && (
+              <Image
+                alt={content.profilePicture.image.alt ?? ""}
+                height={content.profilePicture.image.height}
+                width={content.profilePicture.image.width}
+                src={content.profilePicture.image.url}
+                className="w-full max-w-full md:w-1/3 md:max-w-1/3 object-contain mb-4"
+              />
+            )}            
+            <div className="md:flex-1">
               {pre && pre}
               {content.profileJobTitle && <Typography type="h3" as="p" className="mt-0">{content.profileJobTitle}</Typography>}
               {content.profileUnit && content.profileUnit.length > 0 && (
@@ -132,18 +141,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   </ul>
                 </div>
               )}
-
             </div>
-                      
-            {content.profilePicture && (
-              <Image
-                alt={content.profilePicture.image.alt ?? ""}
-                height={content.profilePicture.image.height}
-                width={content.profilePicture.image.width}
-                src={content.profilePicture.image.url}
-                className="w-full max-w-full md:w-1/3 md:max-w-1/3 object-cover mb-4"
-              />
-            )}
           </div>
 
           {/* Parse and render the Body and Summary fields */}
