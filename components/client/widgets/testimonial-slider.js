@@ -38,7 +38,7 @@ export function TestimonialSliderWidget({ data }) {
   numTestimonials = testimonials.length;
 
   return (
-    <div id={`testimonial-slider-${data.uuid}`} className="bg-grey-light-bg mb-4">
+    <div id={`testimonial-slider-${data.uuid}`} className="bg-grey-light-bg mb-4 light">
       <Container
         className={twMerge("px-4 py-10 flex flex-col items-center", numTestimonials === 1 && "lg:w-3/4 xl:w-1/2")}
       >

@@ -184,6 +184,8 @@ export const LINKS_FRAGMENT = gql(/* gql */ `
     __typename
     uuid
     id
+    title
+    linksDescription: description
     links {
       ... on ParagraphLinkItem {
         url {
