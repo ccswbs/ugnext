@@ -34,6 +34,11 @@ const nextConfig: NextConfig = {
         destination: "/?ens-test=true",
         permanent: true,
       },
+      {
+        source: "/sites/default/files/:path*",
+        destination: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL as string}/sites/default/files/:path*`,
+        permanent: false,
+      },
     ];
   },
 };
