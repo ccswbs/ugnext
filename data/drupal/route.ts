@@ -1,4 +1,4 @@
-import { getClient, handleGraphQLError, query } from "@/lib/apollo";
+import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
@@ -7,7 +7,7 @@ export type Route = NonNullable<RouteQuery["route"]>;
 
 export async function getRoute(url: string) {
   const showUnpublished = await showUnpublishedContent();
-  const query = getClient().query;
+  const client = getClient();
   const routeQuery = gql(/* gql */ `
     query Route($path: String!, $revision: ID = "current") {
       route(path: $path, revision: $revision) {
@@ -55,7 +55,7 @@ export async function getRoute(url: string) {
               id
               title
             }
-            ... on NodeProgram {
+            ... on NodeProfile {
               uuid
               id
               title
@@ -101,6 +101,11 @@ export async function getRoute(url: string) {
               id
               title
             }
+            ... on TermProfileType {
+              uuid
+              id
+              name
+            }
           }
         }
         ... on RouteRedirect {
@@ -111,7 +116,7 @@ export async function getRoute(url: string) {
     }
   `);
 
-  const { data, error } = await query({
+  const { data, error } = await client.query({
     query: routeQuery,
     variables: {
       path: url,
@@ -131,7 +136,7 @@ export async function getRoute(url: string) {
     // For some reason, the route is found, but the entity is null.
     // This only happens when we are looking for the latest revision and the entity has no revisions.
     // We need to query again with the current revision.
-    const { data, error } = await query({
+    const { data, error } = await client.query({
       query: routeQuery,
       variables: {
         path: url,
@@ -159,60 +164,73 @@ export async function getRoute(url: string) {
   }
 }
 
-export async function getRouteBreadcrumbs(url: string) {
-  const { data, error } = await query({
-    query: gql(/* gql */ `
-      query RouteBreadcrumbs($path: String!, $revision: ID = "current") {
-        route(path: $path, revision: $revision) {
-          __typename
-          ... on RouteInternal {
-            breadcrumbs {
-              __typename
+export async function getRouteBreadcrumbs(url: string, primary_navigation: string | undefined) {
+  const client = getClient();
+  const breadcrumbsQuery = gql(/* gql */ `
+    query RouteBreadcrumbs($path: String!, $revision: ID = "current") {
+      route(path: $path, revision: $revision) {
+        __typename
+        ... on RouteInternal {
+          breadcrumbs {
+            __typename
+            title
+            url
+          }
+          entity {
+            ... on NodeArticle {
               title
-              url
             }
-            entity {
-              ... on NodeArticle {
-                title
+            ... on NodeCallToAction {
+              title
+            }
+            ... on NodeCareer {
+              title
+            }
+            ... on NodeCourse {
+              title
+            }
+            ... on NodeCustomFooter {
+              title
+            }
+            ... on NodeEmployer {
+              title
+            }
+            ... on NodeEvent {
+              title
+            }
+            ... on NodePage {
+              title
+              primaryNavigation {
+                menuName
+                primaryNavigationUrl {
+                  title
+                  url
+                }
               }
-              ... on NodeCallToAction {
-                title
-              }
-              ... on NodeCareer {
-                title
-              }
-              ... on NodeCourse {
-                title
-              }
-              ... on NodeCustomFooter {
-                title
-              }
-              ... on NodeEmployer {
-                title
-              }
-              ... on NodeEvent {
-                title
-              }
-              ... on NodePage {
-                title
-              }
-              ... on NodeProgram {
-                title
-              }
-              ... on NodeSpotlight {
-                title
-              }
-              ... on NodeTestimonial {
-                title
-              }
-              ... on NodeUserDocumentation {
-                title
-              }
+            }
+            ... on NodeProfile {
+              title
+            }
+            ... on NodeProgram {
+              title
+            }
+            ... on NodeSpotlight {
+              title
+            }
+            ... on NodeTestimonial {
+              title
+            }
+            ... on NodeUserDocumentation {
+              title
             }
           }
         }
       }
-    `),
+    }
+  `);
+
+  const { data, error } = await client.query<RouteBreadcrumbsQuery>({
+    query: breadcrumbsQuery as any,
     variables: {
       path: url,
       revision: (await showUnpublishedContent()) ? "latest" : "current",
@@ -233,25 +251,71 @@ export async function getRouteBreadcrumbs(url: string) {
         return null;
       }
 
+      let currentPage = {
+        title: data.route.entity.title,
+      };
+
       if (!Array.isArray(data.route.breadcrumbs)) {
-        return [
-          {
-            title: data.route.entity.title,
-          },
-        ];
+        return [ currentPage ];
       }
 
-      return [
-        ...data.route.breadcrumbs.filter((breadcrumb) => {
-          if (!breadcrumb.title) {
-            return false;
+      // Filter out elements without titles and the root from Breadcrumb Path
+      let breadcrumbPath = data.route.breadcrumbs.filter((breadcrumb) => {
+        if (!breadcrumb.title) {
+          return false;
+        }
+        return breadcrumb.url !== "/";
+      });
+
+      // Remove last breadcrumb item if same as current page
+      if(breadcrumbPath.length > 0){
+        const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
+        if((currentPage.title === lastBreadcrumbItem?.title) && (lastBreadcrumbItem?.url === '')){
+          if(breadcrumbPath.length > 1){
+            // pop returns undefined if only one item
+            breadcrumbPath.pop(); 
+          }else{
+            breadcrumbPath = [];
+          }
+        } 
+      }
+      
+      // Handle Basic Pages with Primary Navigation Homepage URL
+      if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
+        const primaryNavigationHome = {
+          title: data.route.entity.primaryNavigation?.primaryNavigationUrl?.title,
+          url: data.route.entity.primaryNavigation?.primaryNavigationUrl?.url,
+        };
+
+        // Only add Primary Nav Homepage URL if not already at start of breadcrumbPath
+        if (primaryNavigationHome && (breadcrumbPath[0]?.url !== primaryNavigationHome.url)){
+          
+          // Avoid duplicates if currentPage and primaryNavigation are the same
+          if(primaryNavigationHome.title === currentPage.title && breadcrumbPath.length === 0){
+            return [ primaryNavigationHome ];
           }
 
-          return breadcrumb.url !== "/";
-        }),
-        {
-          title: data.route.entity.title,
-        },
+          // Pages in multiple menus could have a breadcrumb path that does not belong to Primary Navigation
+          // In this case, return only the breadcrumbHome and the currentPage
+          if(data.route.entity.primaryNavigation?.menuName !== primary_navigation){  
+            return [
+              primaryNavigationHome,
+              currentPage,
+            ];
+          }
+
+          return [
+            primaryNavigationHome,
+            ...breadcrumbPath,
+            currentPage,
+          ];
+        }
+      }
+
+      // Handle content without Primary Navigation
+      return [
+        ...breadcrumbPath,
+        currentPage,
       ];
     default:
       return null;

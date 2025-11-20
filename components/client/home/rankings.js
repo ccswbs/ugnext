@@ -7,11 +7,10 @@ import {
   StatisticsItemValue,
 } from "@uoguelph/react-components/statistics";
 import { twJoin } from "tailwind-merge";
+import { Link } from "@uoguelph/react-components/link";
 
 export const Rankings = () => {
-  const linkClasses = twJoin(
-    "underline underline-offset-2 decoration-transparent hover:decoration-current focus:decoration-current transition-colors"
-  );
+  const linkClasses = twJoin("text-inherit! outline-inherit!");
 
   return (
     <Statistics variant="solid-colors-no-gap">
@@ -20,12 +19,12 @@ export const Rankings = () => {
           Among <strong>World's Best</strong> in 12 Subject Areas
         </StatisticsItemValue>
         <StatisticsItemRepresents>
-          <a
+          <Link
             className={linkClasses}
             href="https://news.uoguelph.ca/2025/03/u-of-gs-ovc-ranks-6th-in-world-oac-in-top-tier-in-new-global-ranking/"
           >
             QS World University Rankings by Subject, 2025
-          </a>
+          </Link>
         </StatisticsItemRepresents>
       </StatisticsItem>
 
@@ -34,12 +33,12 @@ export const Rankings = () => {
           A <strong>Top Comprehensive University</strong> in Canada
         </StatisticsItemValue>
         <StatisticsItemRepresents>
-          <a
+          <Link
             className={linkClasses}
-            href="https://education.macleans.ca/feature/canadas-best-comprehensive-universities-rankings-2024/"
+            href="https://news.uoguelph.ca/2025/11/u-of-g-among-canadas-top-comprehensive-universities-macleans-rankings/"
           >
-            Macleans, 2024
-          </a>
+            Macleans, 2026
+          </Link>
         </StatisticsItemRepresents>
       </StatisticsItem>
 
@@ -48,9 +47,12 @@ export const Rankings = () => {
           <strong>Top 150</strong> in the world for <strong>Life Sciences</strong>
         </StatisticsItemValue>
         <StatisticsItemRepresents>
-          <a className={linkClasses} href="https://www.timeshighereducation.com/world-university-rankings/by-subject">
+          <Link
+            className={linkClasses}
+            href="https://www.timeshighereducation.com/world-university-rankings/by-subject"
+          >
             Times Higher Education, 2025
-          </a>
+          </Link>
         </StatisticsItemRepresents>
       </StatisticsItem>
 
@@ -59,12 +61,12 @@ export const Rankings = () => {
           <strong>Top 10</strong> in Canada for Reputation
         </StatisticsItemValue>
         <StatisticsItemRepresents>
-          <a
+          <Link
             className={linkClasses}
             href="https://news.uoguelph.ca/2025/02/u-of-g-ranked-among-top-universities-in-world-for-reputation/"
           >
             Times Higher Education, 2025
-          </a>
+          </Link>
         </StatisticsItemRepresents>
       </StatisticsItem>
     </Statistics>

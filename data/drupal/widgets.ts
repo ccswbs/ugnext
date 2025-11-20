@@ -1,13 +1,38 @@
 import { gql } from "@/lib/graphql";
+import {
+  AccordionFragment,
+  BlockFragment,
+  ButtonSectionFragment,
+  CallToActionFragment,
+  GeneralTextFragment,
+  ImageOverlayFragment,
+  LinksFragment,
+  MediaTextFragment,
+  ModalVideoFragment,
+  ProfileBlockFragment,
+  ProfileCardFragment,
+  SectionFragment,
+  SocialMediaFragment,
+  StatisticsFragment,
+  StoryFragment,
+  StoryModalVideoFragment,
+  StoryQuoteFragment,
+  TabsFragment,
+  TestimonialFragment,
+  TestimonialSliderFragment,
+} from "@/lib/graphql/types";
+import { getTestimonialByTag } from "@/data/drupal/testimonial";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
     __typename
+    uuid
     id
     headingLevel
     accordionSectionTitle: title
     items {
       ... on ParagraphAccordionBlock {
+        uuid
         headingLevel
         accordionTitle: title
         text {
@@ -24,6 +49,7 @@ export const ACCORDION_FRAGMENT = gql(/* gql */ `
 export const BLOCK_FRAGMENT = gql(/* gql */ `
   fragment Block on ParagraphBlockWidget {
     __typename
+    uuid
     sectionColumn {
       ...SectionColumn
     }
@@ -39,6 +65,7 @@ export const BLOCK_FRAGMENT = gql(/* gql */ `
 export const BUTTONS_FRAGMENT = gql(/* gql */ `
   fragment Buttons on ParagraphButtonWidget {
     __typename
+    uuid
     ctaAnalyticsGoal {
       ... on TermGoal {
         action
@@ -73,6 +100,7 @@ export const BUTTONS_FRAGMENT = gql(/* gql */ `
 export const BUTTON_SECTION_FRAGMENT = gql(/* gql */ `
   fragment ButtonSection on ParagraphSectionButton {
     __typename
+    uuid
     id
     buttons {
       ...Buttons
@@ -88,6 +116,7 @@ export const BUTTON_SECTION_FRAGMENT = gql(/* gql */ `
 export const CALL_TO_ACTION_FRAGMENT = gql(/* gql */ `
   fragment CallToAction on ParagraphCallToAction {
     __typename
+    uuid
     id
     sectionColumn {
       ...SectionColumn
@@ -112,6 +141,7 @@ export const CALL_TO_ACTION_FRAGMENT = gql(/* gql */ `
 export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
   fragment GeneralText on ParagraphGeneralText {
     __typename
+    uuid
     id
     sectionColumn {
       ...SectionColumn
@@ -125,6 +155,7 @@ export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
 export const IMAGE_OVERLAY_FRAGMENT = gql(/* gql */ `
   fragment ImageOverlay on ParagraphImageOverlay {
     __typename
+    uuid
     id
     backgroundImage {
       ...Image
@@ -151,7 +182,10 @@ export const IMAGE_OVERLAY_FRAGMENT = gql(/* gql */ `
 export const LINKS_FRAGMENT = gql(/* gql */ `
   fragment Links on ParagraphLinksWidget {
     __typename
+    uuid
     id
+    title
+    linksDescription: description
     links {
       ... on ParagraphLinkItem {
         url {
@@ -170,6 +204,7 @@ export const LINKS_FRAGMENT = gql(/* gql */ `
 export const MEDIA_TEXT_FRAGMENT = gql(/* gql */ `
   fragment MediaText on ParagraphMediaText {
     __typename
+    uuid
     id
     heading: title
     mediaImageSize
@@ -202,6 +237,7 @@ export const MEDIA_TEXT_FRAGMENT = gql(/* gql */ `
 export const MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   fragment ModalVideo on ParagraphModalVideoWidget {
     __typename
+    uuid
     id
     video {
       ...RemoteVideo
@@ -209,9 +245,79 @@ export const MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
+  fragment ProfileBlock on ParagraphProfileBlock {
+    __typename
+    id
+    sectionColumn {
+      ...SectionColumn
+    }
+    headingLevel
+    profileBlockTitle
+    profileType {
+      ... on TermProfileType {
+        name
+      }
+    }
+    researchArea {
+      ... on TermResearch {
+        name
+      }
+    }
+    unit {
+      ... on TermUnit {
+        id
+        name
+        acronym
+      }
+    }
+    enableNameSearch
+    enableResearchFilter
+    enableTypeFilter
+    enableUnitFilter
+  }
+`);
+
+export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
+  fragment ProfileCard on ParagraphProfileCard {
+    __typename
+    id
+    profileInfo {
+      ... on NodeProfile {
+        id
+        title
+        centralLoginId
+        customLink {
+          title
+          url
+        }
+        directoryEmail
+        directoryOffice
+        directoryPhone
+        profileJobTitle
+        path
+        profilePicture {
+          ...Image
+        }
+        profileFields {
+          label {
+            processed
+            value
+          }
+          value {
+            processed
+            value
+          }
+        }
+      }
+    }
+  }
+`);
+
 export const SECTION_FRAGMENT = gql(/* gql */ `
   fragment Section on ParagraphSection {
     __typename
+    uuid
     id
     heading: title
     headingLevel
@@ -227,6 +333,8 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
       ...Tabs
       ...Statistics
       ...ImageOverlay
+      ...ProfileBlock
+      ...ProfileCard
     }
   }
 `);
@@ -234,6 +342,7 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
 export const SOCIAL_MEDIA_FRAGMENT = gql(/* gql */ `
   fragment SocialMedia on ParagraphSocialMediaWidget {
     __typename
+    uuid
     id
     socialMediaTitle
     headingLevel
@@ -249,6 +358,7 @@ export const SOCIAL_MEDIA_FRAGMENT = gql(/* gql */ `
 export const STATISTICS_FRAGMENT = gql(/* gql */ `
   fragment Statistics on ParagraphStatisticWidget {
     __typename
+    uuid
     id
     content {
       ... on ParagraphStatisticItem {
@@ -273,6 +383,7 @@ export const STATISTICS_FRAGMENT = gql(/* gql */ `
 export const STORY_FRAGMENT = gql(/* gql */ `
   fragment Story on ParagraphStoryWidget {
     __typename
+    uuid
     id
     content {
       ...Statistics
@@ -301,6 +412,7 @@ export const STORY_FRAGMENT = gql(/* gql */ `
 export const STORY_MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   fragment StoryModalVideo on ParagraphStoryModalVideo {
     __typename
+    uuid
     id
     title {
       processed
@@ -314,6 +426,7 @@ export const STORY_MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
 export const STORY_QUOTE_FRAGMENT = gql(/* gql */ `
   fragment StoryQuote on ParagraphStoryQuote {
     __typename
+    uuid
     id
     quoteContent: content
     quoteSource: source
@@ -327,6 +440,7 @@ export const STORY_QUOTE_FRAGMENT = gql(/* gql */ `
 export const TABS_FRAGMENT = gql(/* gql */ `
   fragment Tabs on ParagraphSectionTab {
     __typename
+    uuid
     id
     tabs {
       ... on ParagraphTabContent {
@@ -345,6 +459,7 @@ export const TABS_FRAGMENT = gql(/* gql */ `
 export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
   fragment TestimonialSlider on ParagraphTestimonialSlider {
     __typename
+    uuid
     id
     title
     byTitle {
@@ -357,3 +472,51 @@ export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+export async function getFullTestimonialSlider(data: TestimonialSliderFragment) {
+  const tags =
+    data.byTags
+      ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
+      .filter((tag) => typeof tag === "string") ?? [];
+
+  if (tags.length === 0) {
+    return data;
+  }
+
+  return {
+    ...data,
+    byTags: await getTestimonialByTag(tags),
+  } as FullTestimonialSlider;
+}
+
+export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
+  byTags: TestimonialFragment[];
+};
+
+export type Widgets =
+  | AccordionFragment
+  | BlockFragment
+  | ButtonSectionFragment
+  | CallToActionFragment
+  | GeneralTextFragment
+  | ImageOverlayFragment
+  | LinksFragment
+  | MediaTextFragment
+  | ModalVideoFragment
+  | ProfileBlockFragment
+  | ProfileCardFragment
+  | SectionFragment
+  | SocialMediaFragment
+  | StatisticsFragment
+  | StoryFragment
+  | StoryModalVideoFragment
+  | StoryQuoteFragment
+  | TabsFragment
+  | TestimonialSliderFragment
+  | FullTestimonialSlider
+  | {
+      __typename: "ParagraphYamlWidget";
+    }
+  | {
+      __typename?: "ParagraphCallToAction";
+    };
