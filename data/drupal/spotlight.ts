@@ -21,7 +21,7 @@ export const SPOTLIGHT_HERO_FRAGMENT = gql(/* gql */ `
         url
         width
         height
-        variations(styles: SPOTLIGHT_CARD_BY_FOCAL_POINT) {
+        variations(styles: FOCAL_POINT600X400) {
           url
         }
       }
@@ -41,7 +41,7 @@ export const SPOTLIGHT_CARD_FRAGMENT = gql(/* gql */ `
     image {
       image {
         alt
-        variations(styles: SPOTLIGHT_CARD_BY_FOCAL_POINT) {
+        variations(styles: FOCAL_POINT600X400) {
           url
         }
       }
@@ -321,8 +321,8 @@ async function getSpotlightCardById(id: string): Promise<SpotlightCard | null> {
     image: {
       alt: data.nodeSpotlight.image.image.alt ?? "",
       url: data.nodeSpotlight.image.image.variations?.[0].url ?? "",
-      width: 600,
-      height: 400,
+      width: 300,
+      height: 200,
     },
   };
 }
