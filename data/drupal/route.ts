@@ -2,6 +2,8 @@ import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery, RouteBreadcrumbsQuery } from "@/lib/graphql/types";
+import { getMenuLinkByURI } from "@/data/drupal/menu";
+import { Link } from "@/lib/graphql/graphql";
 
 export type Route = NonNullable<RouteQuery["route"]>;
 
@@ -164,6 +166,31 @@ export async function getRoute(url: string) {
   }
 }
 
+function filterBreadcrumbs (breadcrumbs: Link[], currentPage: {title: string}) {
+  // Filter out elements without titles and the root from Breadcrumb Path
+  let breadcrumbPath = breadcrumbs.filter((breadcrumb) => {
+    if (!breadcrumb.title) {
+      return false;
+    }
+    return breadcrumb.url !== "/";
+  });
+
+  // Remove last breadcrumb item if same as current page
+  if(breadcrumbPath.length > 0){
+    const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
+    if((currentPage.title === lastBreadcrumbItem?.title) && (lastBreadcrumbItem?.url === '')){
+      if(breadcrumbPath.length > 1){
+        // pop returns undefined if only one item
+        breadcrumbPath.pop(); 
+      }else{
+        breadcrumbPath = [];
+      }
+    } 
+  }
+
+  return breadcrumbPath;
+}
+
 export async function getRouteBreadcrumbs(url: string, primary_navigation: string | undefined) {
   const client = getClient();
   const breadcrumbsQuery = gql(/* gql */ `
@@ -175,6 +202,7 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
             __typename
             title
             url
+            internal
           }
           entity {
             ... on NodeArticle {
@@ -199,6 +227,8 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
               title
             }
             ... on NodePage {
+              id
+              path
               title
               primaryNavigation {
                 menuName
@@ -218,9 +248,6 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
               title
             }
             ... on NodeTestimonial {
-              title
-            }
-            ... on NodeUserDocumentation {
               title
             }
           }
@@ -259,33 +286,42 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
         return [ currentPage ];
       }
 
-      // Filter out elements without titles and the root from Breadcrumb Path
-      let breadcrumbPath = data.route.breadcrumbs.filter((breadcrumb) => {
-        if (!breadcrumb.title) {
-          return false;
-        }
-        return breadcrumb.url !== "/";
-      });
-
-      // Remove last breadcrumb item if same as current page
-      if(breadcrumbPath.length > 0){
-        const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
-        if((currentPage.title === lastBreadcrumbItem?.title) && (lastBreadcrumbItem?.url === '')){
-          if(breadcrumbPath.length > 1){
-            // pop returns undefined if only one item
-            breadcrumbPath.pop(); 
-          }else{
-            breadcrumbPath = [];
-          }
-        } 
-      }
+      // let breadcrumbPath = filterBreadcrumbs(
+      //   data.route.breadcrumbs.map((breadcrumb) => ({
+      //     __typename: breadcrumb.__typename,
+      //     title: breadcrumb.title,
+      //     url: breadcrumb.url,
+      //     internal: breadcrumb.internal, // or derive this value from the data
+      //   })),
+      //   currentPage
+      // );
+      let breadcrumbPath = filterBreadcrumbs(data.route.breadcrumbs, currentPage);
       
-      // Handle Basic Pages with Primary Navigation Homepage URL
+      /* ---- Handle Basic Pages with Primary Navigation Homepage URL --- */
       if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
         const primaryNavigationHome = {
           title: data.route.entity.primaryNavigation?.primaryNavigationUrl?.title,
           url: data.route.entity.primaryNavigation?.primaryNavigationUrl?.url,
         };
+
+        /* ---- Handle pages that are NOT in the menu --- */
+        if(primary_navigation){
+          const entityNodeURL = `node/${data.route.entity.id}`;
+          const checkMenuForEntityID = entityNodeURL ? await getMenuLinkByURI(entityNodeURL, primary_navigation) : null;
+
+          // Check both node URL and path URL
+          if(!checkMenuForEntityID || checkMenuForEntityID?.length === 0){
+            const entityPathURL = data.route.entity.path;
+            const checkMenuForEntityPath = entityPathURL ? await getMenuLinkByURI(entityPathURL, primary_navigation) : null;
+            if(!checkMenuForEntityPath || checkMenuForEntityPath?.length === 0){
+              // Strip out breadcrumb if page is not in menu
+              return [
+                primaryNavigationHome,
+                currentPage,
+              ];
+            }
+          }
+        }
 
         // Only add Primary Nav Homepage URL if not already at start of breadcrumbPath
         if (primaryNavigationHome && (breadcrumbPath[0]?.url !== primaryNavigationHome.url)){
