@@ -166,7 +166,7 @@ export async function getRoute(url: string) {
   }
 }
 
-export async function checkIsPageInMenu (entity_id: string, entity_path: string | null | undefined, primary_navigation: string | undefined) {
+export async function checkIsEntityInMenu (entity_id: string, entity_path: string | null | undefined, primary_navigation: string | undefined) {
   if(primary_navigation){
     const entityNodeURL = entity_id ? `node/${entity_id}` : null;
     const checkMenuForEntityID = entityNodeURL ? await getMenuLinkByURI(entityNodeURL, primary_navigation) : null;
@@ -315,14 +315,13 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
 
         /* ---- Handle pages that are NOT in the menu --- */
         // If page NOT in menu, return [Primary Nav Home > currentPage]
-        const isPageInMenu = await checkIsPageInMenu(data.route.entity.id, data.route.entity.path, primary_navigation); 
+        const isPageInMenu = await checkIsEntityInMenu(data.route.entity.id, data.route.entity.path, primary_navigation); 
         if(!isPageInMenu){
           return [
             primaryNavigationHome,
             currentPage,
           ];
         }
-        
 
         // Only add Primary Nav Homepage URL if NOT already at start of breadcrumbPath
         if (primaryNavigationHome && (breadcrumbPath[0]?.url !== primaryNavigationHome.url)){
