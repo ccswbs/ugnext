@@ -36,7 +36,7 @@ export const Section = ({ primary, secondary, equal = false }: SectionProps) => 
 
       {secondary && (
         <SectionContext.Provider value={{ column: "secondary", equal, hasSecondary }}>
-          <div>{secondary}</div>
+          <div className="w-full">{secondary}</div>
         </SectionContext.Provider>
       )}
     </Grid>
