@@ -21,6 +21,35 @@ export const MENU_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
+  const { data, error } = await query({
+    query: gql(/* gql */ `
+      query MenuLinkByURI($link_uri: String!, $menu_name: String!) {
+        menuLinkContent(filter: {link__uri: $link_uri, menu_name: $menu_name}) {
+          results {
+            id
+          }
+        }
+      }
+    `),
+    variables: {
+      // @ts-ignore
+      link_uri: link_uri,
+      menu_name: menu_name,
+    },
+  });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  return data.menuLinkContent?.results;
+}
+
 export async function getMenuByName(name: string) {
   if (name === "NO_MENU") {
     return null;
