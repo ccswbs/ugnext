@@ -127,10 +127,13 @@ export function ProfileSearch(props: ProfileSearchProps) {
     return finalUrl;
   }, [options, selectedUnit]);
 
+  const hasActiveTypes = props.types.enabled;
+  const backgroundClass = hasActiveTypes ? "bg-yellow" : "bg-grey-light-bg";
+
   return (
     <>
-      <div className="w-full bg-grey-light-bg border-t-4 border-yellow -mt-1">
-        <Container className="w-full bg-grey-light-bg flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end empty:hidden">
+      <div className={`w-full ${backgroundClass} border-t-4 border-yellow -mt-1`}>
+        <Container className={`w-full ${backgroundClass} flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end empty:hidden`}>
           {props.queryByName.enabled && (
             <div className="flex-1">
               <TextInput
