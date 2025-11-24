@@ -5,11 +5,10 @@ import type { PartialProfileData, Unit } from "@/data/drupal/profile";
 import { Container } from "@uoguelph/react-components/container";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
 import type { ProfileSearchOptions } from "@/data/drupal/profile";
-import { useMemo, useState, useEffect, useCallback } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
-import { useSearchParams, useRouter } from "next/navigation";
 
 type ProfileSearchField<T> = {
   enabled: boolean;
@@ -26,69 +25,27 @@ export type ProfileSearchProps = {
 };
 
 export function ProfileSearch(props: ProfileSearchProps) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  // Initialize state from URL parameters or default values
-  const getInitialSelectedUnit = useCallback(() => {
-    const unitId = searchParams.get('unit');
-    if (unitId && props.availableUnits) {
-      return props.availableUnits.find(unit => unit.id === unitId) || null;
-    }
-    return null;
-  }, [searchParams, props.availableUnits]);
-
   const [options, setOptions] = useState<Omit<ProfileSearchOptions, "page" | "pageSize">>({
-    queryByName: searchParams.get('name') || props.queryByName.defaultValue || "",
-    queryByResearchArea: searchParams.get('research') || props.queryByResearchArea.defaultValue || "",
+    queryByName: props.queryByName.defaultValue ?? "",
+    queryByResearchArea: props.queryByResearchArea.defaultValue ?? "",
     units: props.units.defaultValue ?? [],
     types: props.types.defaultValue ?? [],
     isAcceptingGraduateStudents: props.isAcceptingGraduateStudents.defaultValue ?? null,
   });
 
-  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(getInitialSelectedUnit);
-
-  // Effect to update URL parameters when search options change
-  useEffect(() => {
-    const params = new URLSearchParams();
-    
-    if (options.queryByName && options.queryByName.trim()) {
-      params.set('name', options.queryByName);
-    }
-    
-    if (options.queryByResearchArea && options.queryByResearchArea.trim()) {
-      params.set('research', options.queryByResearchArea);
-    }
-    
-    if (selectedUnit && selectedUnit.id) {
-      params.set('unit', selectedUnit.id);
-    }
-    
-    const url = params.toString() ? `?${params.toString()}` : '';
-    router.replace(url, { scroll: false });
-  }, [options.queryByName, options.queryByResearchArea, selectedUnit, router]);
-
-  // Update state when search criteria change
-  const updateOptions = useCallback((updater: (prev: typeof options) => typeof options) => {
-    setOptions(updater);
-  }, []);
-
-  const updateSelectedUnit = useCallback((unit: Unit | null) => {
-    setSelectedUnit(unit);
-  }, []);
+  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
 
   // Update options when props change (especially types.defaultValue)
   useEffect(() => {
     setOptions(prevOptions => ({
       ...prevOptions,
-      queryByName: searchParams.get('name') || props.queryByName.defaultValue || prevOptions.queryByName,
-      queryByResearchArea: searchParams.get('research') || props.queryByResearchArea.defaultValue || prevOptions.queryByResearchArea,
+      queryByName: props.queryByName.defaultValue ?? prevOptions.queryByName,
+      queryByResearchArea: props.queryByResearchArea.defaultValue ?? prevOptions.queryByResearchArea,
       units: props.units.defaultValue ?? prevOptions.units,
       types: props.types.defaultValue ?? prevOptions.types,
       isAcceptingGraduateStudents: props.isAcceptingGraduateStudents.defaultValue ?? prevOptions.isAcceptingGraduateStudents,
     }));
   }, [
-    searchParams,
     props.queryByName.defaultValue,
     props.queryByResearchArea.defaultValue,
     props.units.defaultValue,
@@ -137,9 +94,8 @@ export function ProfileSearch(props: ProfileSearchProps) {
           {props.queryByName.enabled && (
             <div className="flex-1">
               <TextInput
-                value={options.queryByName}
-                onChange={(e) => {
-                  updateOptions((prevState) => {
+                onInput={(e) => {
+                  setOptions((prevState) => {
                     return {
                       ...prevState,
                       queryByName: (e.target as HTMLInputElement).value,
@@ -155,9 +111,8 @@ export function ProfileSearch(props: ProfileSearchProps) {
           {props.queryByResearchArea.enabled && (
             <div className="flex-1">
               <TextInput
-                value={options.queryByResearchArea}
-                onChange={(e) => {
-                  updateOptions((prevState) => {
+                onInput={(e) => {
+                  setOptions((prevState) => {
                     return {
                       ...prevState,
                       queryByResearchArea: (e.target as HTMLInputElement).value,
@@ -176,7 +131,7 @@ export function ProfileSearch(props: ProfileSearchProps) {
               <Select
                 value={selectedUnit}
                 onChange={(value) => {
-                  updateSelectedUnit(value);
+                  setSelectedUnit(value);
                 }}
                 as="div"
               >
