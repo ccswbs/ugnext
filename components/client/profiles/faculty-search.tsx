@@ -9,7 +9,7 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import { Field, Label } from "@headlessui/react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 type ProfileSearchField<T> = {
   enabled: boolean;
@@ -29,6 +29,7 @@ export type FacultySearchProps = {
 export function FacultySearch(props: FacultySearchProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
 
   // Initialize state from URL parameters or default values
   const getInitialSelectedUnit = useCallback(() => {
@@ -53,6 +54,9 @@ export function FacultySearch(props: FacultySearchProps) {
 
   // Effect to update URL parameters when search options change
   useEffect(() => {
+    // Only run on client side to avoid SSR issues
+    if (typeof window === 'undefined') return;
+    
     const params = new URLSearchParams();
     
     if (options.queryByName && options.queryByName.trim()) {
@@ -67,9 +71,23 @@ export function FacultySearch(props: FacultySearchProps) {
       params.set('unit', selectedUnit.id);
     }
     
-    const url = params.toString() ? `?${params.toString()}` : '';
-    router.replace(url, { scroll: false });
-  }, [options.queryByName, options.queryByResearchArea, selectedUnit, router]);
+    const searchString = params.toString();
+    const newUrl = searchString ? `${pathname}?${searchString}` : pathname;
+    
+    // Only update if URL actually changed to avoid unnecessary updates
+    if (window.location.pathname + window.location.search !== newUrl) {
+      try {
+        window.history.replaceState({}, '', newUrl);
+        
+        // Manually dispatch a popstate event to help Next.js stay in sync
+        window.dispatchEvent(new PopStateEvent('popstate', { state: {} }));
+      } catch (error) {
+        console.warn('Failed to update URL:', error);
+        // Fallback to Next.js router
+        router.replace(newUrl, { scroll: false });
+      }
+    }
+  }, [options.queryByName, options.queryByResearchArea, selectedUnit, pathname, router]);
 
   // Update state when search criteria change
   const updateOptions = useCallback((updater: (prev: typeof options) => typeof options) => {
