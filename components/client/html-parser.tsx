@@ -92,6 +92,12 @@ function unwrapTags(children: ReactNode): ReactNode {
 let rowspanTdCounter = 0;
 
 const defaultInstructions: ParserInstruction[] = [
+  {
+    shouldProcessNode: (node, props) => (props.className as string)?.includes("collapse"),
+    processNode: (node, props, children) => {
+      return <>{children}</>;
+    },
+  },
   // vcard
   {
     shouldProcessNode: (node, props) => {
