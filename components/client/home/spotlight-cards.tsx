@@ -4,8 +4,9 @@ import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-compone
 import Link from "next/link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
+import type { SpotlightCard } from "@/data/drupal/spotlight";
 
-export const SpotlightCards = ({ cards }) => {
+export const SpotlightCards = ({ cards }: { cards: SpotlightCard[] }) => {
   const classes = tv({
     slots: {
       container: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
@@ -25,16 +26,15 @@ export const SpotlightCards = ({ cards }) => {
           id={`uofg-homepage-spotlight-card-${index + 2}`}
           key={data.id}
           as={Link}
-          href={data.url.url}
+          href={data.url}
           className={`uofg-spotlight-card ${card()}`}
           centered
         >
           <CardImage
-            src={data.image.image.url}
+            src={data.image.url}
             alt=""
-            width={data.image.image.width}
-            height={data.image.image.height}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            width={`${data.image.width}`}
+            height={`${data.image.height}`}
             className={image()}
             as={Image}
           />
