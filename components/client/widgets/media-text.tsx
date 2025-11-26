@@ -52,6 +52,10 @@ const getMedia = (data: MediaTextFragment) => {
 const getPosition = (data: MediaTextFragment, column?: SectionContextValue["column"]) => {
   switch (column) {
     case "primary":
+      // For MediaRemoteVideo, always return "above" in primary column
+      if (data.media?.__typename === "MediaRemoteVideo") {
+        return "above";
+      }
       switch (data.mediaImageSize) {
         case "small":
         case "medium":
