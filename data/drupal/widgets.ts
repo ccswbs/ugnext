@@ -387,24 +387,28 @@ export const STORY_FRAGMENT = gql(/* gql */ `
     id
     content {
       ...Statistics
-      ... on ParagraphStoryImageCutoutBackground {
-        __typename
-        id
-        backgroundImage {
-          ...Image
-        }
-        foregroundImage {
-          ...Image
-        }
-        title
-        text {
-          processed
-        }
-        storyContent: content {
-          ...StoryModalVideo
-          ...StoryQuote
-        }
-      }
+      ...StoryImageCutoutBackground
+    }
+  }
+`);
+
+export const STORY_IMAGE_CUTOUT_BACKGROUND_FRAGMENT = gql(/* gql */ `
+  fragment StoryImageCutoutBackground on ParagraphStoryImageCutoutBackground {
+    __typename
+    id
+    backgroundImage {
+      ...Image
+    }
+    foregroundImage {
+      ...Image
+    }
+    title
+    text {
+      processed
+    }
+    storyContent: content {
+      ...StoryModalVideo
+      ...StoryQuote
     }
   }
 `);
