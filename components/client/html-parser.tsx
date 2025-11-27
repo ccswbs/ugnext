@@ -559,8 +559,6 @@ const defaultInstructions: ParserInstruction[] = [
 
       let convertedGrid: string[] = [];
 
-      console.log(node);
-
       {
         React.Children.map(children, (child) => {
           // Parse divs with Boostrap column classes
