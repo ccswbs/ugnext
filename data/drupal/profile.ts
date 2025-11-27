@@ -185,6 +185,9 @@ export const PARTIAL_PROFILE_FRAGMENT = gql(/* gql */ `
     title
     profileJobTitle
     path
+    profileResearchAreas {
+      ...Research
+    }
     profilePicture {
       ... on MediaImage {
         image {

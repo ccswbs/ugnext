@@ -182,6 +182,8 @@ export async function GET(request: NextRequest) {
     console.log("Strategy 1: Search individual and expanded terms");
     
     const allResults = [];
+    const matchedTermsByProfile = new Map(); // Track which terms matched each profile
+    
     for (const term of searchTerms) { // Try expanded terms
       try {
         console.log(`Searching for: "${term}"`);
@@ -197,6 +199,14 @@ export async function GET(request: NextRequest) {
         
         console.log(`"${term}" returned ${termResults.results?.length || 0} results`);
         if (termResults.results && termResults.results.length > 0) {
+          // Track which term matched each profile
+          termResults.results.forEach(profile => {
+            if (!matchedTermsByProfile.has(profile.id)) {
+              matchedTermsByProfile.set(profile.id, new Set());
+            }
+            matchedTermsByProfile.get(profile.id).add(term);
+          });
+          
           allResults.push(...termResults.results);
         }
       } catch (error) {
@@ -207,15 +217,21 @@ export async function GET(request: NextRequest) {
     // Remove duplicate profiles and limit to requested page size
     const uniqueProfiles = allResults.filter((profile, index, arr) => 
       arr.findIndex(p => p.id === profile.id) === index
-    ).slice(page * pageSize, (page + 1) * pageSize);
+    );
     
-    console.log(`Combined results: ${allResults.length} total, ${uniqueProfiles.length} unique on this page`);
+    // Add matched terms to each profile
+    const profilesWithMatches = uniqueProfiles.map(profile => ({
+      ...profile,
+      _matchedTerms: Array.from(matchedTermsByProfile.get(profile.id) || [])
+    })).slice(page * pageSize, (page + 1) * pageSize);
+    
+    console.log(`Combined results: ${allResults.length} total, ${profilesWithMatches.length} unique on this page`);
 
-    if (uniqueProfiles.length > 0) {
+    if (profilesWithMatches.length > 0) {
       facultyResults = {
-        results: uniqueProfiles,
-        totalPages: Math.ceil(allResults.length / pageSize),
-        totalItems: allResults.length
+        results: profilesWithMatches,
+        totalPages: Math.ceil(uniqueProfiles.length / pageSize),
+        totalItems: uniqueProfiles.length
       };
     } else {
       // Strategy 2: Try more flexible searching with partial terms
@@ -298,7 +314,7 @@ export async function GET(request: NextRequest) {
 
     try {
       // Add AI metadata to the results
-      const strategy = uniqueProfiles.length > 0 ? "expanded_terms" : 
+      const strategy = profilesWithMatches.length > 0 ? "expanded_terms" : 
                       facultyResults.results?.length > 0 ? "flexible_search" : "combined_search";
                       
       const enhancedResults = {
