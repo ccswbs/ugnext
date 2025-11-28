@@ -8,7 +8,7 @@ import { ButtonSectionWidget } from "@/components/client/widgets/button-section"
 import { GeneralTextWidget } from "@/components/client/widgets/general-text";
 import { LinksWidget } from "@/components/client/widgets/links";
 import { MediaTextWidget } from "@/components/client/widgets/media-text";
-import { SectionWidget } from "@/components/client/widgets/section.js";
+import { SectionWidget } from "@/components/client/widgets/section-widget";
 import { StatisticsWidget } from "@/components/client/widgets/statistics";
 import { ImageOverlayWidget } from "@/components/client/widgets/image-overlay";
 import { StoryWidget } from "@/components/client/widgets/story";
