@@ -545,7 +545,7 @@ const defaultInstructions: ParserInstruction[] = [
   },
   // Rows and Columns
   {
-    shouldProcessNode: (node, props) => (props.className as string)?.includes("row"),
+    shouldProcessNode: (node, props) => /\brow\b/.test(props.className as string),
     processNode: (node, props, children, index) => {
       interface TemplateValues {
         [key: string]: string[] | undefined;
@@ -568,7 +568,7 @@ const defaultInstructions: ParserInstruction[] = [
             // console.log("Converting:" + bsClasses);
 
             // Assumes Bootstrap format can be col, col-6, col-md, or col-md-6
-            if (bsClasses.includes("col")) {
+            if (bsClasses?.includes("col")) {
               let bsColumnClasses: string[] = bsClasses.split(" ");
 
               bsColumnClasses.forEach((columnClass) => {
