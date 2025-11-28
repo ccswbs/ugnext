@@ -314,36 +314,6 @@ const defaultInstructions: ParserInstruction[] = [
       );
     },
   },
-  // Strong/Bold elements - ensure they inherit link colors when inside links
-  {
-    shouldProcessNode: (node, props) => {
-      return node.tagName === "strong" || node.tagName === "b";
-    },
-    processNode: (node, props, children) => {
-      // Check if this bold element is inside a link by looking at ancestors
-      let isInsideLink = false;
-      let current = node.parent;
-      while (current && !isInsideLink) {
-        if (current && typeof current === "object" && "type" in current && isElement(current as DOMNode)) {
-          const element = current as Element;
-          if (element.tagName === "a") {
-            isInsideLink = true;
-          }
-        }
-        current = current.parent;
-      }
-
-      const className = isInsideLink 
-        ? twMerge("!text-body-copy-link hover:!text-body-copy-link-hover", props.className as string)
-        : props.className as string;
-
-      return React.createElement(
-        node.tagName,
-        { ...props, key: nanoid(), className },
-        children
-      );
-    },
-  },
   // Font Awesome Icons
   {
     shouldProcessNode: (node, props) => {
