@@ -3,6 +3,7 @@ import { Section } from "@/components/client/section";
 import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import { Grid } from "@uoguelph/react-components/grid";
+import type { SectionFragment } from "@/lib/graphql/types";
 import type { Widgets } from "@/data/drupal/widgets";
 
 interface MediaTextWidget {
@@ -11,27 +12,13 @@ interface MediaTextWidget {
   uuid: string;
 }
 
-interface SectionWidgetData {
-  uuid: string;
-  heading?: string;
-  headingLevel?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  classes?: string;
-  content: Array<{
-    __typename: string;
-    buttonSectionColumn?: { name: string };
-    sectionColumn?: { name: string };
-    mediaImageSize?: string;
-    uuid: string;
-  }>;
-}
-
 interface SectionWidgetProps {
-  data: SectionWidgetData;
+  data: SectionFragment;
 }
 
 // Create a grid if only media + text widgets in Primary section
 // Considers both number of elements and their size settings
-function renderMediaGrid(widgetGroup: MediaTextWidget | MediaTextWidget[], sectionClasses?: string) {
+function renderMediaGrid(widgetGroup: MediaTextWidget | MediaTextWidget[], sectionClasses?: string | null) {
   let mediaGridTemplate = {
     base: ["1fr"],
     sm: ["1fr", "1fr"],
@@ -84,9 +71,9 @@ export function SectionWidget({ data }: SectionWidgetProps) {
     primary: ungroupedPrimary,
     secondary,
     others,
-  } = data?.content?.reduce(
+  } = data.content.reduce(
     (acc, widget, index) => {
-      const columnName = widget?.buttonSectionColumn?.name ?? widget?.sectionColumn?.name ?? "primary";
+      const columnName = (widget as any)?.buttonSectionColumn?.name ?? (widget as any)?.sectionColumn?.name ?? "primary";
       const column = columnName ? columnName.toLowerCase() : "";
 
       switch (column) {
@@ -107,7 +94,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
       return acc;
     },
     {
-      primary: [] as Array<SectionWidgetData["content"][0]>,
+      primary: [] as Array<SectionFragment["content"][0]>,
       secondary: [] as React.ReactElement[],
       others: [] as React.ReactElement[],
     }
@@ -123,7 +110,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
     // Check if the previous widget is a media text widget group
     const previous = acc[acc.length - 1];
 
-    if (Array.isArray(previous) && widget?.mediaImageSize === previous[0]?.mediaImageSize) {
+    if (Array.isArray(previous) && (widget as any)?.mediaImageSize === (previous[0] as any)?.mediaImageSize) {
       // The current media text widget has the same size as the ones in a group before it, add the widget to the group
       previous.push(widget as MediaTextWidget);
       return acc;
@@ -132,12 +119,12 @@ export function SectionWidget({ data }: SectionWidgetProps) {
     // There is no previous group or the current media text widget has a different size, create a new group
     acc.push([widget as MediaTextWidget]);
     return acc;
-  }, [] as Array<SectionWidgetData["content"][0] | MediaTextWidget[]>);
+  }, [] as Array<SectionFragment["content"][0] | MediaTextWidget[]>);
 
   return (
     <>
       {data.heading && (
-        <Typography id={`section-heading-${data.uuid}`} type={data.headingLevel ?? "h2"} as={data.headingLevel ?? "h2"}>
+        <Typography id={`section-heading-${data.uuid}`} type={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"} as={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"}>
           {data.heading}
         </Typography>
       )}
