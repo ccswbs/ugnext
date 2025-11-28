@@ -1,14 +1,14 @@
 "use client";
 
 import { Container } from "@uoguelph/react-components/container";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { AccordionWidget } from "@/components/client/widgets/accordions";
 import { ButtonSectionWidget } from "@/components/client/widgets/button-section";
 import { GeneralTextWidget } from "@/components/client/widgets/general-text";
 import { LinksWidget } from "@/components/client/widgets/links";
 import { MediaTextWidget } from "@/components/client/widgets/media-text";
-import { SectionWidget } from "@/components/client/widgets/section.js";
+import { SectionWidget } from "@/components/client/widgets/section-widget";
 import { StatisticsWidget } from "@/components/client/widgets/statistics";
 import { ImageOverlayWidget } from "@/components/client/widgets/image-overlay";
 import { StoryWidget } from "@/components/client/widgets/story";
@@ -75,6 +75,14 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     }
   };
 
+  // Add spacing wrapper for widgets within sections (except general text)
+  const SpacingWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (!context || data.__typename === "ParagraphGeneralText") {
+      return <>{children}</>;
+    }
+    return <div className="py-4">{children}</div>;
+  };
+
   if (!noWrapWidgets.includes(data.__typename) && !context && !neverWrap) {
     return (
       <Container>
@@ -83,5 +91,9 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     );
   }
 
-  return <Widget />;
+  return (
+    <SpacingWrapper>
+      <Widget />
+    </SpacingWrapper>
+  );
 }
