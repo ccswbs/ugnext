@@ -84,13 +84,13 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
 
   // Add spacing wrapper for certain widgets within sections
   const SpacingWrapper = ({ children }: { children: React.ReactNode }) => {
-    if (noSpaceWidgets.includes(data.__typename) || !context) {
+    if (noSpaceWidgets.includes(data.__typename || '') || !context) {
       return <>{children}</>;
     }
     return <div className="py-4">{children}</div>;
   };
 
-  if (!noWrapWidgets.includes(data.__typename) && !context && !neverWrap) {
+  if (!noWrapWidgets.includes(data.__typename || '') && !context && !neverWrap) {
     return (
       <Container>
         <Widget />
