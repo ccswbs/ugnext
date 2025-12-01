@@ -23,7 +23,14 @@ import type { Widgets } from "@/data/drupal/widgets";
 export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; neverWrap?: boolean }) {
   // If this widget is within a section, we don't want to render a container around it
   const context = useContext(SectionContext);
-
+  
+  // Some widgets don't need extra vertical padding
+  const noSpaceWidgets = [
+    "ParagraphSectionButton",
+    "ParagraphGeneralText",
+    "ParagraphLinksWidget",
+  ];
+  
   // Some widgets need to span the full width of the page
   const noWrapWidgets = [
     "ParagraphTestimonialSlider",
@@ -31,7 +38,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     "ParagraphStoryWidget",
     "ParagraphProfileBlock",
   ];
-
+  
   if (!data.__typename) {
     console.error("Widget Error: Widget type is not defined", data);
     return <></>;
@@ -75,9 +82,9 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     }
   };
 
-  // Add spacing wrapper for widgets within sections (except general text)
+  // Add spacing wrapper for certain widgets within sections
   const SpacingWrapper = ({ children }: { children: React.ReactNode }) => {
-    if (!context || data.__typename === "ParagraphGeneralText") {
+    if (noSpaceWidgets.includes(data.__typename) || !context) {
       return <>{children}</>;
     }
     return <div className="py-4">{children}</div>;
@@ -90,7 +97,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
       </Container>
     );
   }
-
+  
   return (
     <SpacingWrapper>
       <Widget />
