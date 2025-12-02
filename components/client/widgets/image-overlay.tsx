@@ -76,7 +76,7 @@ const StoryQuoteContent: React.FC<StoryQuoteContentProps> = ({ data, style, over
         src: data.image.image.url,
         height: data.image.image.height,
         width: data.image.image.width,
-        alt: data.image.image.alt,
+        alt: data.image.image.alt ?? undefined,
       }
     : null;
 
@@ -107,7 +107,7 @@ const StoryQuoteContent: React.FC<StoryQuoteContentProps> = ({ data, style, over
         src={image.url}
         width={image.width}
         height={image.height}
-        alt={image.alt}
+        alt={image.alt ?? ""}
         className="[&_.uofg-media-caption-media]:rounded-full h-full"
         as={Image}
       >
