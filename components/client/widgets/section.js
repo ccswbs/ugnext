@@ -4,23 +4,47 @@ import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import { Grid } from "@uoguelph/react-components/grid";
 
 // Create a grid if only media + text widgets in Primary section
-// default is two columns; if more, then 3 or 4 columns
-function renderMediaGrid(numElements, sectionClasses) {
+// Considers both number of elements and their size settings
+function renderMediaGrid(widgetGroup, sectionClasses) {
   let mediaGridTemplate = {
     base: ["1fr"],
     sm: ["1fr", "1fr"],
   };
 
-  // if section has col-md-6 in classes, use two columns
+  // If section has col-md-6 in classes, use two columns max
   if (sectionClasses && sectionClasses.includes("col-md-6")) {
     return mediaGridTemplate;
   }
 
-  if (numElements > 1) {
-    let gridDivision = ["1fr", "1fr"];
+  const numElements = Array.isArray(widgetGroup) ? widgetGroup.length : 1;
+  
+  // If only one element, return default
+  if (numElements === 1) {
+    return mediaGridTemplate;
+  }
+
+  // Determine optimal columns based on media size
+  const firstWidget = Array.isArray(widgetGroup) ? widgetGroup[0] : widgetGroup;
+  const mediaSize = firstWidget?.mediaImageSize;
+  
+  let maxColumns = 2; // default
+  
+  if (mediaSize && (mediaSize === "small" || mediaSize === "medium" || mediaSize === "large")) {
+    // When size is explicitly set (small, medium, large), use 2 columns
+    // due to caption placement considerations
+    maxColumns = 2;
+  } else {
+    // When no size is set, use original logic with remainder handling
     if (numElements > 2) {
-      gridDivision = numElements % 4 === 0 ? ["1fr", "1fr", "1fr", "1fr"] : ["1fr", "1fr", "1fr"];
+      maxColumns = numElements % 4 === 0 ? 4 : 3;
+    } else {
+      maxColumns = 2;
     }
+  }
+
+  // Apply the column layout
+  if (numElements > 1) {
+    const gridDivision = Array(Math.min(maxColumns, numElements)).fill("1fr");
     mediaGridTemplate.sm = gridDivision;
   }
 
@@ -105,7 +129,7 @@ export function SectionWidget({ data }) {
               // Handle Media Grid Layout
               if (widget[0].__typename === "ParagraphMediaText") {
                 return (
-                  <Grid key={index} className="gap-4" template={renderMediaGrid(widget.length, sectionClasses)}>
+                  <Grid key={index} className="gap-4" template={renderMediaGrid(widget, sectionClasses)}>
                     {widget.map((w, i) => (
                       <WidgetSelector data={w} key={i} />
                     ))}
