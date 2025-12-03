@@ -113,7 +113,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
     <>
       {heading && (
         <div className="basis-full">
-          <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={classes.heading()}>
+          <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}>
             <HtmlParser html={heading} />
           </Typography>
         </div>

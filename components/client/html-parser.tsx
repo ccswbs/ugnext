@@ -305,7 +305,7 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       // Ensure link color is preserved even when content is bold
-      const linkClassName = twMerge("!text-body-copy-link hover:!text-body-copy-link-hover [&_*]:!text-body-copy-link [&_*:hover]:!text-body-copy-link-hover", className);
+      const linkClassName = twMerge("!text-body-copy-link hover:!text-body-copy-link-hover dark:!text-body-copy-link-on-dark dark:hover:!text-body-copy-link-hover-on-dark light:!text-body-copy-link-on-light light:hover:!text-body-copy-link-hover-on-light [&_*]:!text-body-copy-link [&_*:hover]:!text-body-copy-link-hover [&_*]:dark:!text-body-copy-link-on-dark [&_*]:light:!text-body-copy-link-on-light", className);
 
       return (
         <Link {...props} key={nanoid()} href={href} as={NextLink} className={linkClassName}>
