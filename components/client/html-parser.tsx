@@ -304,8 +304,11 @@ const defaultInstructions: ParserInstruction[] = [
         );
       }
 
+      // Ensure link color is preserved even when content is bold
+      const linkClassName = twMerge("!text-body-copy-link hover:!text-body-copy-link-hover [&_*]:!text-body-copy-link [&_*:hover]:!text-body-copy-link-hover", className);
+
       return (
-        <Link {...props} key={nanoid()} href={href} as={NextLink}>
+        <Link {...props} key={nanoid()} href={href} as={NextLink} className={linkClassName}>
           {children}
         </Link>
       );
@@ -545,7 +548,7 @@ const defaultInstructions: ParserInstruction[] = [
   },
   // Rows and Columns
   {
-    shouldProcessNode: (node, props) => (props.className as string)?.includes("row"),
+    shouldProcessNode: (node, props) => /\brow\b/.test(props.className as string),
     processNode: (node, props, children, index) => {
       interface TemplateValues {
         [key: string]: string[] | undefined;
@@ -568,7 +571,7 @@ const defaultInstructions: ParserInstruction[] = [
             // console.log("Converting:" + bsClasses);
 
             // Assumes Bootstrap format can be col, col-6, col-md, or col-md-6
-            if (bsClasses.includes("col")) {
+            if (bsClasses?.includes("col")) {
               let bsColumnClasses: string[] = bsClasses.split(" ");
 
               bsColumnClasses.forEach((columnClass) => {
@@ -769,10 +772,42 @@ const defaultInstructions: ParserInstruction[] = [
   },
 ];
 
+// Helper function to normalize whitespace between elements
+function normalizeWhitespace(html: string): string {
+  return html
+    // Preserve single spaces between inline elements and text
+    .replace(/>\s+</g, (match) => {
+      // If there's whitespace between tags, preserve a single space
+      return match.includes(' ') ? '> <' : '><';
+    })
+    // Remove excessive whitespace at the beginning and end of lines
+    .replace(/^\s+|\s+$/gm, '')
+    // Normalize multiple consecutive spaces to single space
+    .replace(/[ \t]+/g, ' ')
+    // Remove empty lines
+    .replace(/\n\s*\n/g, '\n');
+}
+
 export function HtmlParser({ html, instructions = [] }: { html: string; instructions?: ParserInstruction[] }) {
+  const normalizedHtml = useMemo(() => normalizeWhitespace(html), [html]);
+  
   const options: HTMLReactParserOptions = useMemo(() => {
     return {
       replace: (node, index) => {
+        // Handle text nodes to preserve necessary spacing
+        if (node.type === 'text') {
+          const text = (node as any).data;
+          if (text && typeof text === 'string') {
+            // Preserve single spaces but trim excessive whitespace
+            const trimmedText = text.replace(/\s+/g, ' ');
+            // Don't render empty text nodes
+            if (trimmedText.trim() === '') {
+              return trimmedText.includes(' ') ? <>{' '}</> : <></>;
+            }
+            return <>{trimmedText}</>;
+          }
+        }
+
         if (!isElement(node)) {
           return;
         }
@@ -819,11 +854,11 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
           </node.name>
         );
       },
-      trim: true,
+      trim: false,
     };
   }, [instructions]);
 
-  const content = useMemo(() => parse(html, options), [html, options]);
+  const content = useMemo(() => parse(normalizedHtml, options), [normalizedHtml, options]);
 
   return <>{content}</>;
 }
