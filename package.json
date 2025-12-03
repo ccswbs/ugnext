@@ -39,7 +39,7 @@
     "html-react-parser": "^5.2.10",
     "ldapts": "^8.0.8",
     "nanoid": "^5.1.6",
-    "next": "^16.0.3",
+    "next": "^16.0.7",
     "next-drupal": "^2.0.0",
     "object-hash": "^3.0.0",
     "prop-types": "^15.8.1",
