@@ -2,7 +2,8 @@ import { Container } from "@uoguelph/react-components/container";
 import { Link } from "@uoguelph/react-components/link";
 import { Typography } from "@uoguelph/react-components/typography";
 import Image from "next/image";
-import ovcCrest from "@/img/ovc/OVC-crest.png";
+import ovcCrest from "@/img/ovc/img/ovc/OVC__UOFG_FULLCOLOUR_WHITEBG_V1_1.5IN_H_300PPI.png";
+
 
 export const OVCFooter = () => {
   return (
