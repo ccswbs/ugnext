@@ -1,0 +1,32 @@
+@layer components {
+  /* Target a top-level list inside the GeneralTextWidget wrapper.
+     Use Tailwind utilities via @apply for maintainability. Default to 1 column,
+     switch to 3 columns at the md breakpoint. */
+  .general-text > ul:first-child,
+  .general-text > ul:only-child,
+  .general-text > *:first-child + ul {
+    /* Tailwind utilities */
+    @apply list-inside m-0 p-0 columns-1;
+
+    /* Column gap, fill, and width need to be applied as raw properties */
+    column-gap: 1.5rem;
+    -webkit-column-fill: balance;
+    column-fill: balance;
+    -webkit-column-width: 8rem;
+    column-width: 8rem;
+  }
+
+  /* Prevent list items from splitting across columns */
+  .general-text > ul > li {
+    @apply break-inside-avoid py-1;
+  }
+
+  /* On medium+ screens, use 3 columns */
+  @screen md {
+    .general-text > ul:first-child,
+    .general-text > ul:only-child,
+    .general-text > *:first-child + ul {
+      @apply columns-3;
+    }
+  }
+}
