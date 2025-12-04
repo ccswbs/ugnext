@@ -1,6 +1,7 @@
 @import "@uoguelph/tailwind-theme";
 @source '../node_modules/@uoguelph/react-components';
 @plugin '@headlessui/tailwindcss';
+@import "./list-columns.css";
 
 @layer base {
   #__next {
