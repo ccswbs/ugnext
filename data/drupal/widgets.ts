@@ -30,6 +30,9 @@ export const ACCORDION_FRAGMENT = gql(/* gql */ `
     id
     headingLevel
     accordionSectionTitle: title
+    accordionDescription {
+      processed
+    }
     items {
       ... on ParagraphAccordionBlock {
         uuid
