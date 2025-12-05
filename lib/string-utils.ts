@@ -90,3 +90,24 @@ export function collapseSlashes(str: string) {
   // Preserve protocol (e.g., http://, https://, ftp://), then collapse remaining runs of slashes
   return str.replace(/(^[a-zA-Z][a-zA-Z\d+.-]*:)?\/{2,}/g, (m, proto) => (proto ? proto + "//" : "/"));
 }
+
+/**
+ * Convert a string to a URL-friendly slug
+ * @param str - The string to slugify
+ * @returns A URL-friendly slug
+ */
+export function slugify(str: string): string {
+  if (typeof str !== "string") return "";
+
+  return str
+    .toLowerCase()
+    .trim()
+    // Replace spaces and underscores with hyphens
+    .replace(/[\s_]+/g, "-")
+    // Remove special characters except hyphens and alphanumeric
+    .replace(/[^a-z0-9-]/g, "")
+    // Replace multiple consecutive hyphens with single hyphen
+    .replace(/-+/g, "-")
+    // Remove leading and trailing hyphens
+    .replace(/^-+|-+$/g, "");
+}
