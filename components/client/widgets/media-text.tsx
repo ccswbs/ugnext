@@ -143,16 +143,18 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
     transcript: media?.transcript?.url,
   } as const;
 
+  const title = data.heading?.trim();
+
   return (
     <MediaCaption {...mediaCaptionProps}>
-      {data.heading && (
+      {title && (
         <Typography
-          id={slugify(data.heading)}
+          id={slugify(title)}
           className={classes.heading()}
           type={(data?.headingLevel as TypographyProps<"span">["type"]) ?? "h3"}
           as={(data?.headingLevel as TypographyProps<"span">["as"]) ?? "h3"}
         >
-          {data.heading}
+          {title}
         </Typography>
       )}
 

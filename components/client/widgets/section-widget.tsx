@@ -126,15 +126,17 @@ export function SectionWidget({ data }: SectionWidgetProps) {
     [] as Array<SectionFragment["content"][0] | MediaTextWidget[]>
   );
 
+  const title = data.heading?.trim();
+
   return (
     <>
-      {data.heading && (
+      {title && (
         <Typography
-          id={data.heading ? slugify(data.heading) : `section-heading-${data.uuid}`}
+          id={slugify(title)}
           type={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"}
           as={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"}
         >
-          {data.heading}
+          {title}
         </Typography>
       )}
 

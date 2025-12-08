@@ -6,7 +6,7 @@ import type { AccordionFragment } from "@/lib/graphql/types";
 
 export function AccordionWidget({ data }: { data: AccordionFragment }) {
   const level = data.headingLevel ? (getHeadingLevel(data.headingLevel) ?? 3) : 2;
-  const title = data?.accordionSectionTitle;
+  const title = data?.accordionSectionTitle?.trim();
   const description = data?.accordionDescription?.processed;
 
   return (

@@ -11,6 +11,7 @@ import { slugify } from "@/lib/string-utils";
 export function LinksWidget({ data }: { data: LinksFragment }) {
   if (!data.links || data.links.length === 0) return null;
 
+  const title = data.title?.trim();
   const useCards = data.links.some((link) => Boolean(link.image));
   const count = data.links.length ?? 0;
   const classes = tv({
@@ -67,9 +68,9 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
   return (
     <div id={`links-${data.uuid}`} className="mb-5">
-      {data.title && (
-        <Typography id={slugify(data.title)} type="h2" as="h2" className="mb-4">
-          {data.title}
+      {title && (
+        <Typography id={slugify(title)} type="h2" as="h2" className="mb-4">
+          {title}
         </Typography>
       )}
 
