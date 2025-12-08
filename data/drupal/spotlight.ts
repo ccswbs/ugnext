@@ -21,9 +21,6 @@ export const SPOTLIGHT_HERO_FRAGMENT = gql(/* gql */ `
         url
         width
         height
-        variations(styles: FOCAL_POINT600X400) {
-          url
-        }
       }
     }
   }
@@ -41,9 +38,9 @@ export const SPOTLIGHT_CARD_FRAGMENT = gql(/* gql */ `
     image {
       image {
         alt
-        variations(styles: FOCAL_POINT600X400) {
-          url
-        }
+        url
+        width
+        height
       }
     }
   }
@@ -277,7 +274,7 @@ async function getSpotlightHeroById(id: string): Promise<SpotlightHero | null> {
       height: data.nodeSpotlight.image.image.height,
     },
     thumbnail: {
-      url: data.nodeSpotlight.image.image.variations?.[0].url ?? "",
+      url: "",
       width: 600,
       height: 400,
     },
@@ -289,7 +286,7 @@ async function getSpotlightCardById(id: string): Promise<SpotlightCard | null> {
 
   const { data, error } = await query({
     query: gql(/* gql */ `
-      query SpotlightCard($id: ID!, $revision: ID = "current") {
+      query SpotlightCardData($id: ID!, $revision: ID = "current") {
         nodeSpotlight(id: $id, revision: $revision) {
           ...SpotlightCard
         }
@@ -320,7 +317,7 @@ async function getSpotlightCardById(id: string): Promise<SpotlightCard | null> {
     url: data.nodeSpotlight.url.url ?? "/",
     image: {
       alt: data.nodeSpotlight.image.image.alt ?? "",
-      url: data.nodeSpotlight.image.image.variations?.[0].url ?? "",
+      url: data.nodeSpotlight.image.image.url ?? "",
       width: 300,
       height: 200,
     },

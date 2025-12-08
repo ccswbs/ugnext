@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useMediaQuery } from "@/lib/use-media-query";
 
 export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
-  const showLargeImage = useMediaQuery("(min-width: 768px)");
+  const showLargeImage = /*useMediaQuery("(min-width: 768px)")*/ true;
 
   const classes = tv({
     slots: {
