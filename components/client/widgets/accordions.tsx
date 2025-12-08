@@ -6,22 +6,22 @@ import type { AccordionFragment } from "@/lib/graphql/types";
 
 export function AccordionWidget({ data }: { data: AccordionFragment }) {
   const level = data.headingLevel ? (getHeadingLevel(data.headingLevel) ?? 3) : 2;
-  const sectionTitle = data?.accordionSectionTitle;
-  const id = sectionTitle ? slugify(sectionTitle) : `accordions-heading-${data.uuid}`;
-  const sectionDescription = data?.accordionDescription?.processed;
+  const title = data?.accordionSectionTitle;
+  const description = data?.accordionDescription?.processed;
 
   return (
     <>
-      {sectionTitle && (
+      {title && (
         <Typography
-          id={id}
+          id={slugify(title)}
           type={`h${level}` as TypographyProps<any>["type"]}
           as={`h${level}` as TypographyProps<any>["as"]}
         >
-          {sectionTitle}
+          {title}
         </Typography>
       )}
-      {sectionDescription && <HtmlParser html={sectionDescription} />}
+
+      {description && <HtmlParser html={description} />}
 
       {data?.items.map((item, index) => (
         <Accordion id={`accordion-${item.uuid}`} key={index}>

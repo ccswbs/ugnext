@@ -5,6 +5,7 @@ import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import { Grid } from "@uoguelph/react-components/grid";
 import type { SectionFragment } from "@/lib/graphql/types";
 import type { Widgets } from "@/data/drupal/widgets";
+import { slugify } from "@/lib/string-utils";
 
 interface MediaTextWidget {
   __typename: "ParagraphMediaText";
@@ -30,7 +31,7 @@ function renderMediaGrid(widgetGroup: MediaTextWidget | MediaTextWidget[], secti
   }
 
   const numElements = Array.isArray(widgetGroup) ? widgetGroup.length : 1;
-  
+
   // If only one element, return default
   if (numElements === 1) {
     return mediaGridTemplate;
@@ -39,9 +40,9 @@ function renderMediaGrid(widgetGroup: MediaTextWidget | MediaTextWidget[], secti
   // Determine optimal columns based on media size
   const firstWidget = Array.isArray(widgetGroup) ? widgetGroup[0] : widgetGroup;
   const mediaSize = firstWidget?.mediaImageSize;
-  
+
   let maxColumns = 2; // default
-  
+
   if (mediaSize && (mediaSize === "small" || mediaSize === "medium" || mediaSize === "large")) {
     // When size is explicitly set (small, medium, large), use 2 columns
     // due to caption placement considerations
@@ -73,7 +74,8 @@ export function SectionWidget({ data }: SectionWidgetProps) {
     others,
   } = data.content.reduce(
     (acc, widget, index) => {
-      const columnName = (widget as any)?.buttonSectionColumn?.name ?? (widget as any)?.sectionColumn?.name ?? "primary";
+      const columnName =
+        (widget as any)?.buttonSectionColumn?.name ?? (widget as any)?.sectionColumn?.name ?? "primary";
       const column = columnName ? columnName.toLowerCase() : "";
 
       switch (column) {
@@ -100,31 +102,38 @@ export function SectionWidget({ data }: SectionWidgetProps) {
     }
   ) ?? { primary: [], secondary: [], others: [] };
 
-  const primary = ungroupedPrimary.reduce((acc, widget, index) => {
-    // Only media text widgets can be grouped, add all other widgets to the primary array
-    if (widget?.__typename !== "ParagraphMediaText") {
-      acc.push(widget);
+  const primary = ungroupedPrimary.reduce(
+    (acc, widget, index) => {
+      // Only media text widgets can be grouped, add all other widgets to the primary array
+      if (widget?.__typename !== "ParagraphMediaText") {
+        acc.push(widget);
+        return acc;
+      }
+
+      // Check if the previous widget is a media text widget group
+      const previous = acc[acc.length - 1];
+
+      if (Array.isArray(previous) && (widget as any)?.mediaImageSize === (previous[0] as any)?.mediaImageSize) {
+        // The current media text widget has the same size as the ones in a group before it, add the widget to the group
+        previous.push(widget as MediaTextWidget);
+        return acc;
+      }
+
+      // There is no previous group or the current media text widget has a different size, create a new group
+      acc.push([widget as MediaTextWidget]);
       return acc;
-    }
-
-    // Check if the previous widget is a media text widget group
-    const previous = acc[acc.length - 1];
-
-    if (Array.isArray(previous) && (widget as any)?.mediaImageSize === (previous[0] as any)?.mediaImageSize) {
-      // The current media text widget has the same size as the ones in a group before it, add the widget to the group
-      previous.push(widget as MediaTextWidget);
-      return acc;
-    }
-
-    // There is no previous group or the current media text widget has a different size, create a new group
-    acc.push([widget as MediaTextWidget]);
-    return acc;
-  }, [] as Array<SectionFragment["content"][0] | MediaTextWidget[]>);
+    },
+    [] as Array<SectionFragment["content"][0] | MediaTextWidget[]>
+  );
 
   return (
     <>
       {data.heading && (
-        <Typography id={`section-heading-${data.uuid}`} type={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"} as={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"}>
+        <Typography
+          id={data.heading ? slugify(data.heading) : `section-heading-${data.uuid}`}
+          type={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"}
+          as={(data.headingLevel as "h1" | "h2" | "h3" | "h4" | "h5" | "h6") || "h2"}
+        >
           {data.heading}
         </Typography>
       )}

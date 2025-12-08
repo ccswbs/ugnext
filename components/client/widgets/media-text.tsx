@@ -9,6 +9,7 @@ import { twMerge } from "tailwind-merge";
 import Image from "next/image";
 import { EmbeddedVideo } from "@uoguelph/react-components/embedded-video";
 import type { MediaTextFragment } from "@/lib/graphql/types";
+import { slugify } from "@/lib/string-utils";
 
 const getBackground = (data: MediaTextFragment) => {
   switch (data.background?.name) {
@@ -107,10 +108,10 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
   // If no content, render just the media element directly
   if (!hasContent) {
     const MediaComponent = media.__typename === "image" ? Image : EmbeddedVideo;
-    
+
     // For small images with no content, render at original dimensions with no classes
     const isSmallImage = media.__typename === "image" && size === "small";
-    
+
     const mediaProps = {
       id: `media-and-text-${data.uuid}`,
       src: media.src,
@@ -118,9 +119,9 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
       width: media?.width,
       alt: data.mediaIsDecorative ? "" : (media?.alt ?? ""),
       ...(isSmallImage ? {} : { className: twMerge("w-full object-cover", classes.base()) }),
-      ...(media.__typename === "video" && { 
+      ...(media.__typename === "video" && {
         title: media.title,
-        transcript: media?.transcript?.url 
+        transcript: media?.transcript?.url,
       }),
     };
 
@@ -146,7 +147,7 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
     <MediaCaption {...mediaCaptionProps}>
       {data.heading && (
         <Typography
-          id={`media-and-text-heading-${data.uuid}`}
+          id={slugify(data.heading)}
           className={classes.heading()}
           type={(data?.headingLevel as TypographyProps<"span">["type"]) ?? "h3"}
           as={(data?.headingLevel as TypographyProps<"span">["as"]) ?? "h3"}
