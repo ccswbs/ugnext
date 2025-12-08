@@ -8,6 +8,7 @@ export function AccordionWidget({ data }: { data: AccordionFragment }) {
   const level = data.headingLevel ? (getHeadingLevel(data.headingLevel) ?? 3) : 2;
   const sectionTitle = data?.accordionSectionTitle;
   const id = sectionTitle ? slugify(sectionTitle) : `accordions-heading-${data.uuid}`;
+  const sectionDescription = data?.accordionDescription?.processed;
 
   return (
     <>
@@ -20,6 +21,7 @@ export function AccordionWidget({ data }: { data: AccordionFragment }) {
           {sectionTitle}
         </Typography>
       )}
+      {sectionDescription && <HtmlParser html={sectionDescription} />}
 
       {data?.items.map((item, index) => (
         <Accordion id={`accordion-${item.uuid}`} key={index}>
