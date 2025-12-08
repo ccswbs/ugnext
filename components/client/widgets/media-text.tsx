@@ -52,6 +52,10 @@ const getMedia = (data: MediaTextFragment) => {
 const getPosition = (data: MediaTextFragment, column?: SectionContextValue["column"]) => {
   switch (column) {
     case "primary":
+      // For MediaRemoteVideo, always return "above" in primary column
+      if (data.media?.__typename === "MediaRemoteVideo") {
+        return "above";
+      }
       switch (data.mediaImageSize) {
         case "small":
         case "medium":
@@ -92,20 +96,54 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
     },
   })({ background: background });
 
+  // Early return if no media
+  if (!media) {
+    return null;
+  }
+
+  // Determine if we have any content to show
+  const hasContent = !!(data.heading || data.description?.processed || data.buttonSection);
+
+  // If no content, render just the media element directly
+  if (!hasContent) {
+    const MediaComponent = media.__typename === "image" ? Image : EmbeddedVideo;
+    
+    // For small images with no content, render at original dimensions with no classes
+    const isSmallImage = media.__typename === "image" && size === "small";
+    
+    const mediaProps = {
+      id: `media-and-text-${data.uuid}`,
+      src: media.src,
+      height: media?.height,
+      width: media?.width,
+      alt: data.mediaIsDecorative ? "" : (media?.alt ?? ""),
+      ...(isSmallImage ? {} : { className: twMerge("w-full object-cover", classes.base()) }),
+      ...(media.__typename === "video" && { 
+        title: media.title,
+        transcript: media?.transcript?.url 
+      }),
+    };
+
+    return <MediaComponent {...mediaProps} />;
+  }
+
+  // Otherwise, render the full MediaCaption layout
+  const mediaCaptionProps = {
+    id: `media-and-text-${data.uuid}`,
+    src: media.src,
+    height: media?.height,
+    width: media?.width,
+    alt: data.mediaIsDecorative ? "" : (media?.alt ?? ""),
+    as: media.__typename === "image" ? Image : EmbeddedVideo,
+    background,
+    size,
+    position,
+    className: twMerge(classes.base(), data.description ? null : classes.no_body()),
+    transcript: media?.transcript?.url,
+  } as const;
+
   return (
-    <MediaCaption
-      id={`media-and-text-${data.uuid}`}
-      src={media.src}
-      height={media?.height}
-      width={media?.width}
-      alt={data.mediaIsDecorative ? "" : (media?.alt ?? "")}
-      as={media.__typename === "image" ? Image : EmbeddedVideo}
-      background={background}
-      size={size}
-      position={position}
-      className={twMerge(classes.base(), data.description ? null : classes.no_body())}
-      transcript={media?.transcript?.url}
-    >
+    <MediaCaption {...mediaCaptionProps}>
       {data.heading && (
         <Typography
           id={`media-and-text-heading-${data.uuid}`}
