@@ -7,10 +7,10 @@ import {
   LinkCarouselContent,
   LinkCarouselItem,
 } from "@uoguelph/react-components/link-carousel";
-import undergraduate from "@/img/leah-weller-environmental-engineering-u-of-g.jpg";
-import graduate from "@/img/caroline-pottruff-landscape-architecture-u-of-g.jpg";
-import international from "@/img/ryan-ahlers-theatre-studies-u-of-g.jpg";
-import lifelong from "@/img/kathryn-knowles-jenna-schamowski-environmental-sciences-u-of-g.jpg";
+import undergraduate from "@/img/home/leah-weller-environmental-engineering-u-of-g.jpg";
+import graduate from "@/img/home/caroline-pottruff-landscape-architecture-u-of-g.jpg";
+import international from "@/img/home/ryan-ahlers-theatre-studies-u-of-g.jpg";
+import lifelong from "@/img/home/kathryn-knowles-jenna-schamowski-environmental-sciences-u-of-g.jpg";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 

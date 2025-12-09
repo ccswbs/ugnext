@@ -1,7 +1,7 @@
 "use client";
 
-import foreground from "@/img/asha-edwin.png";
-import background from "@/img/change-happens-banner.jpg";
+import foreground from "@/img/home/asha-edwin.png";
+import background from "@/img/home/change-happens-banner.jpg";
 import {
   Story,
   StoryBackground,

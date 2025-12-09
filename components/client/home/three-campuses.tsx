@@ -1,9 +1,9 @@
 "use client";
 
 import { Card, CardImage, CardContent, CardTitle } from "@uoguelph/react-components/card";
-import guelph from "@/img/guelph.png";
-import ridgetown from "@/img/ridgetown.png";
-import guelphHumber from "@/img/guelph-humber.png";
+import guelph from "@/img/home/guelph.png";
+import ridgetown from "@/img/home/ridgetown.png";
+import guelphHumber from "@/img/home/guelph-humber.png";
 import Link from "next/link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
