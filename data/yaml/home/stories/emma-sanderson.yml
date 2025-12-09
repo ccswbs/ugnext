@@ -1,0 +1,8 @@
+first-name: Emma
+last-name: Sanderson
+quotes:
+  - The University of Guelph in engineering has really provided opportunities for students to work together and get that hands-on teamwork experience that is really valuable once they progress into the professional world.
+  - U of G has a really great reputation as an environmental school and for being very sustainable. And that was really what pushed me to choose the U of G. ...I was looking for somewhere where I could learn the tools that would help me make a difference in the environment.
+image:
+  src: @/img/home/stories/emma-sanderson.png
+  alt: ""

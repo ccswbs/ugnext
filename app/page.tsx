@@ -13,14 +13,18 @@ import { StudyHere } from "@/components/client/home/study-here";
 import { Rankings } from "@/components/client/home/rankings";
 import { ThreeCampuses } from "@/components/client/home/three-campuses";
 import { HomeStory } from "@/components/client/home/story";
+import { getStoryById } from "@/data/yaml/home/stories";
 
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
+  const story = getStoryById("asha-edwin");
 
   return (
     <Layout>
       <Header></Header>
+
+      <img src="/assets/home/stories/alicia-chandrathasan.webp" width={400} height={400} />
 
       <LayoutContent container={false} className="pb-0!">
         <div className="flex flex-col-reverse">
@@ -56,7 +60,7 @@ export default async function Page() {
           <ThreeCampuses />
         </Container>
 
-        <HomeStory />
+        {/*<HomeStory />*/}
         <div className="w-full p-5"></div>
       </LayoutContent>
 

@@ -1,0 +1,8 @@
+first-name: Sophia
+last-name: Trothen
+quotes:
+  - U of G is a great place to start a career in business because I feel like it's very hands-on and I think there's a lot of opportunities for experiential learning.
+  - I feel comfortable going to class, walking around campus, even walking around downtown Guelph. The city overall is just a really nice place.
+image:
+  src: @/img/home/sophia-trothen.png
+  alt: ""

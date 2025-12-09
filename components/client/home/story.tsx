@@ -1,7 +1,6 @@
 "use client";
 
-import foreground from "@/img/home/asha-edwin.png";
-import background from "@/img/home/change-happens-banner.jpg";
+import background from "@/img/home/johnston-green-background.jpg";
 import {
   Story,
   StoryBackground,
@@ -15,14 +14,23 @@ import {
 import { Button } from "@uoguelph/react-components/button";
 import { Blockquote, BlockquoteContent } from "@uoguelph/react-components/blockquote";
 import Image from "next/image";
+import type { HomeStory } from "@/data/yaml/home/stories";
 
-export function HomeStory() {
+export type HomeStoryProps = {
+  firstName: HomeStory["firstName"];
+  lastName: HomeStory["lastName"];
+  quote: HomeStory["quotes"][number];
+  image: HomeStory["image"];
+};
+
+export function HomeStory({ firstName, lastName, quote, image }: HomeStoryProps) {
+  console.log(background);
   return (
     <Story>
       <StoryBody>
         <StoryBackground>
           <StoryBackgroundImage
-            alt="Student volunteers"
+            alt=""
             className="object-cover lg:[object-position:left_20px] brightness-100!"
             src={background.src}
             width={background.width}
@@ -35,17 +43,16 @@ export function HomeStory() {
           <StoryForegroundContent>
             <Blockquote className="text-white pt-[40px]">
               <BlockquoteContent>
-                Pieces of experiential learning allow an opportunity for students to engage with their community, beyond
-                the academic sphere, and for me that became pivotal...in shaping my life. ~ Asha Edwin, BA &apos;21
+                {quote} ~ {firstName} {lastName}
               </BlockquoteContent>
             </Blockquote>
           </StoryForegroundContent>
           <StoryForegroundImage
-            alt="Asha Edwin smiling"
-            src={foreground.src}
-            width={foreground.width}
-            height={foreground.height}
-            blurDataURL={foreground.blurDataURL}
+            alt={image.alt}
+            src={image.src}
+            width={image.width}
+            height={image.height}
+            blurDataURL={image.blurDataURL}
             as={Image}
             className="max-w-[40rem]"
           />
