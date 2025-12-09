@@ -16,7 +16,7 @@ import { Button } from "@uoguelph/react-components/button";
 import { Blockquote, BlockquoteContent } from "@uoguelph/react-components/blockquote";
 import Image from "next/image";
 
-export const HomeStory = () => {
+export function HomeStory() {
   return (
     <Story>
       <StoryBody>
@@ -24,7 +24,10 @@ export const HomeStory = () => {
           <StoryBackgroundImage
             alt="Student volunteers"
             className="object-cover lg:[object-position:left_20px] brightness-100!"
-            src={background}
+            src={background.src}
+            width={background.width}
+            height={background.height}
+            blurDataURL={background.blurDataURL}
             as={Image}
           />
         </StoryBackground>
@@ -37,7 +40,15 @@ export const HomeStory = () => {
               </BlockquoteContent>
             </Blockquote>
           </StoryForegroundContent>
-          <StoryForegroundImage alt="Asha Edwin smiling" src={foreground} as={Image} className="max-w-[40rem]" />
+          <StoryForegroundImage
+            alt="Asha Edwin smiling"
+            src={foreground.src}
+            width={foreground.width}
+            height={foreground.height}
+            blurDataURL={foreground.blurDataURL}
+            as={Image}
+            className="max-w-[40rem]"
+          />
         </StoryForeground>
       </StoryBody>
       <StoryFooter>
@@ -54,4 +65,4 @@ export const HomeStory = () => {
       </StoryFooter>
     </Story>
   );
-};
+}

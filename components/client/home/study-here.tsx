@@ -14,7 +14,7 @@ import lifelong from "@/img/kathryn-knowles-jenna-schamowski-environmental-scien
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 
-export const StudyHere = () => {
+export function StudyHere() {
   const classes = tv({
     slots: {
       link: "text-xl",
@@ -67,4 +67,4 @@ export const StudyHere = () => {
       </LinkCarouselContent>
     </LinkCarousel>
   );
-};
+}

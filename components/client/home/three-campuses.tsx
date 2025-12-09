@@ -8,7 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 
-export const ThreeCampuses = () => {
+export function ThreeCampuses() {
   const classes = tv({
     slots: {
       container: "grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3",
@@ -24,7 +24,15 @@ export const ThreeCampuses = () => {
   return (
     <div className={container()}>
       <Card as={Link} href="https://www.uoguelph.ca/admission/undergraduate/tours/" className={card()} centered>
-        <CardImage src={guelph} className={image()} as={Image} alt="" />
+        <CardImage
+          src={guelph.src}
+          width={guelph.width}
+          height={guelph.height}
+          blurDataURL={guelph.blurDataURL}
+          className={image()}
+          as={Image}
+          alt=""
+        />
 
         <CardContent className={content()}>
           <CardTitle className={title()}>Guelph Campus</CardTitle>
@@ -32,7 +40,15 @@ export const ThreeCampuses = () => {
       </Card>
 
       <Card as={Link} href="https://www.ridgetownc.com/" className={card()} centered>
-        <CardImage src={ridgetown} className={image()} as={Image} alt="" />
+        <CardImage
+          src={ridgetown.src}
+          width={ridgetown.width}
+          height={ridgetown.height}
+          blurDataURL={ridgetown.blurDataURL}
+          className={image()}
+          as={Image}
+          alt=""
+        />
 
         <CardContent className={content()}>
           <CardTitle className={title()}>Ridgetown Campus</CardTitle>
@@ -40,7 +56,15 @@ export const ThreeCampuses = () => {
       </Card>
 
       <Card as={Link} href="https://www.guelphhumber.ca/" className={card()} centered>
-        <CardImage src={guelphHumber} className={image()} as={Image} alt="" />
+        <CardImage
+          src={guelphHumber.src}
+          width={guelphHumber.width}
+          height={guelphHumber.height}
+          blurDataURL={guelphHumber.blurDataURL}
+          className={image()}
+          as={Image}
+          alt=""
+        />
 
         <CardContent className={content()}>
           <CardTitle className={title()}>Guelph-Humber Campus</CardTitle>
@@ -48,4 +72,4 @@ export const ThreeCampuses = () => {
       </Card>
     </div>
   );
-};
+}
