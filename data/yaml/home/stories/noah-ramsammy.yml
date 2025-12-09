@@ -5,5 +5,7 @@ quotes:
   - There are so many scholarships...for racialized individuals, scholarships that are grade based, scholarships for volunteer work. And when the University of Guelph does that, it really makes coming to post-secondary education more accessible for people like me.
   - The sweet potato black bean burger at Creelman is really good. I’m not a vegetarian, but for that burger I would be. It's nice to know that I can stay on campus, grab a nice bite to eat, sit with my friends a little bit, we can study together and then I can head on home.
 image:
-  src: @/img/home/krish-tangri.png
+  src: /assets/home/stories/krish-tangri.webp
+  width: 400
+  height: 400
   alt: ""

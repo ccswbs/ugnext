@@ -4,5 +4,7 @@ quotes:
   - As someone who did live off campus... being part of a club introduced me to that social campus life...Things about leading a team, things about working with your peers, taking a break from all the studying, being with these new found friends.
   - The experiential opportunities prepared me because these are also moments that you just can't find in a lecture hall anywhere. Being in a lab setting, helping out a professor...a researcher, seeing that lab work, being there, getting that experience, being in the anatomy lab with hands-on cadaveric based learning. These are all the things you learn by doing.
 image:
-  src: @/img/home/stories/kevin-magda.png
+  src: /assets/home/stories/kevin-magda.webp
+  width: 400
+  height: 400
   alt: ""

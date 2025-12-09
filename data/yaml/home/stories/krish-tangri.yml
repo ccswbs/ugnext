@@ -6,5 +6,7 @@ quotes:
   - I'd say the staff and faculty here have been really, really helpful for my development as a student, as a person, as a leader.
   - I feel like there's very few universities out there who put the focus on the students being the ones to improve life and give the students the power to change the way the world works.
 image:
-  src: @/img/home/krish-tangri.png
+  src: /assets/home/stories/krish-tangri.webp
+  width: 400
+  height: 400
   alt: ""
