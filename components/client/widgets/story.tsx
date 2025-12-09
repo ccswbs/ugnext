@@ -20,28 +20,32 @@ import {
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import type { StoryFragment, StoryImageCutoutBackgroundFragment } from "@/lib/graphql/types";
+import { twJoin } from "tailwind-merge";
 
-function StoryImageCutoutBackground({ data }) {
+function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackgroundFragment }) {
   const quotes = data.storyContent?.filter((node) => node.__typename === "ParagraphStoryQuote") ?? [];
   const buttons = data.storyContent?.filter((node) => node.__typename === "ParagraphStoryModalVideo") ?? [];
 
   return (
     <Story className={"mb-4"}>
-      <StoryBody>
-        <StoryBackground>
-          <StoryBackgroundImage
-            src={data.backgroundImage.image.url}
-            alt={data.backgroundImage.image.alt}
-            height={data.backgroundImage.image.height}
-            width={data.backgroundImage.image.width}
-            as={Image}
-          />
+      <StoryBody className="dark p-4">
+        <StoryBackground className=" bg-grey-dark-bg">
+          {data.backgroundImage && (
+            <StoryBackgroundImage
+              src={data.backgroundImage.image.url}
+              alt={data.backgroundImage.image.alt ?? ""}
+              height={data.backgroundImage.image.height}
+              width={data.backgroundImage.image.width}
+              as={Image}
+            />
+          )}
         </StoryBackground>
 
         <StoryForeground>
           <StoryForegroundContent className="pt-8!">
             <div className="flex flex-col *:text-white!">
-              <span className="text-2xl font-bold mb-4">{data.title.toUpperCase()}</span>
+              {data.title && <span className="text-2xl font-bold mb-4">{data.title.toUpperCase()}</span>}
               {data.text && <HtmlParser html={data.text.processed} />}
               {buttons.map((button) => (
                 <EmbeddedVideo
@@ -61,7 +65,7 @@ function StoryImageCutoutBackground({ data }) {
 
           <StoryForegroundImage
             src={data.foregroundImage.image.url}
-            alt={data.foregroundImage.image.alt}
+            alt={data.foregroundImage.image.alt ?? ""}
             height={data.foregroundImage.image.height}
             width={data.foregroundImage.image.width}
             as={Image}
@@ -89,16 +93,16 @@ function StoryImageCutoutBackground({ data }) {
   );
 }
 
-export function StoryWidget({ data }) {
+export function StoryWidget({ data }: { data: StoryFragment }) {
   return (
     <>
       {data.content
-        ?.map((content) => {
+        ?.map((content, index) => {
           switch (content.__typename) {
             case "ParagraphStoryImageCutoutBackground":
-              return <StoryImageCutoutBackground key={content?.id ?? index} data={content} />;
+              return <StoryImageCutoutBackground key={content.id} data={content} />;
             case "ParagraphStatisticWidget":
-              return <StatisticsWidget key={content?.id ?? index} data={content} />;
+              return <StatisticsWidget key={content.id} data={content} />;
             default:
               return null;
           }
