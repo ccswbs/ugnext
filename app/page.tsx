@@ -18,13 +18,13 @@ import { getStoryById } from "@/data/yaml/home/stories";
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
-  const story = getStoryById("asha-edwin");
+  const story = await getStoryById("emma-sanderson");
+
+  console.log(story);
 
   return (
     <Layout>
       <Header></Header>
-
-      <img src="/assets/home/stories/alicia-chandrathasan.webp" width={400} height={400} />
 
       <LayoutContent container={false} className="pb-0!">
         <div className="flex flex-col-reverse">
@@ -60,7 +60,14 @@ export default async function Page() {
           <ThreeCampuses />
         </Container>
 
-        {/*<HomeStory />*/}
+        {story && (
+          <HomeStory
+            firstName={story.firstName}
+            lastName={story.lastName}
+            image={story.image}
+            quote={story.quotes[0]}
+          />
+        )}
         <div className="w-full p-5"></div>
       </LayoutContent>
 

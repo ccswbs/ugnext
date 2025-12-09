@@ -24,7 +24,6 @@ export type HomeStoryProps = {
 };
 
 export function HomeStory({ firstName, lastName, quote, image }: HomeStoryProps) {
-  console.log(background);
   return (
     <Story>
       <StoryBody>
