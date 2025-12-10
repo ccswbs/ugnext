@@ -15,8 +15,11 @@ import { Button } from "@uoguelph/react-components/button";
 import { Blockquote, BlockquoteContent } from "@uoguelph/react-components/blockquote";
 import Image from "next/image";
 import type { StoryData } from "@/data/yaml/home/stories";
+import { twJoin } from "tailwind-merge";
 
 export function HomeStory({ data }: { data: StoryData }) {
+  const longQuote = data.quote.length > 300;
+
   return (
     <Story>
       <StoryBody>
@@ -34,8 +37,8 @@ export function HomeStory({ data }: { data: StoryData }) {
         <StoryForeground>
           <StoryForegroundContent>
             <Blockquote className="inline text-center text-white pt-[40px]">
-              <BlockquoteContent className="inline">{data.quote}</BlockquoteContent>
-              <span className="text-3xl">
+              <BlockquoteContent className={twJoin("inline", longQuote && "text-2xl")}>{data.quote}</BlockquoteContent>
+              <span className={twJoin("italic", !longQuote && "text-3xl", longQuote && "text-2xl")}>
                 {" "}
                 - {data.firstName} {data.lastName} {data.title && `, ${data.title}`}
               </span>
