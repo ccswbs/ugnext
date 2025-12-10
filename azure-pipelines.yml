@@ -28,9 +28,9 @@ steps:
   #     path: "$(System.DefaultWorkingDirectory)/.next/cache"
   #   displayName: "Cache .next/cache"
 
-  # - script: |
-  #     find app -mindepth 1 ! -name "error.tsx" ! -name "layout.tsx" ! -name "loading.tsx" ! -name "not-found.tsx" ! -name "opengraph-image.alt.txt" ! -name "opengraph-image.jpg" ! -name "page.tsx" ! -name "twitter-image.alt.txt" ! -name "twitter-image.jpg" -exec rm -rf {} +
-  #   displayName: "Remove all files and folder in app dir except for home, template and error pages"
+  - script: |
+      find app -mindepth 1 ! -name "error.tsx" ! -name "layout.tsx" ! -name "loading.tsx" ! -name "not-found.tsx" ! -name "ovc" ! -name "programs" ! -name "opengraph-image.alt.txt" ! -name "opengraph-image.jpg" ! -name "page.tsx" ! -name "twitter-image.alt.txt" ! -name "twitter-image.jpg" -exec rm -rf {} +
+    displayName: "Remove all files and folder in app dir except for home, template and error pages"
 
   - script: |
       bun run static-build
