@@ -19,7 +19,7 @@ import { clamp } from "@uoguelph/react-components";
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
-  const story = await getStoryById(process.env.HOME_ACTIVE_STORY_ID ?? "asha-edwin");
+  const story = await getStoryById(process.env.HOME_ACTIVE_STORY_ID ?? "alicia-chandrathasan");
   const storyQuoteIndex = clamp(
     Number.parseInt(process.env.HOME_ACTIVE_STORY_QUOTE_INDEX ?? "0"),
     0,
