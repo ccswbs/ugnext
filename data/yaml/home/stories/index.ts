@@ -8,7 +8,7 @@ export type StoryData = {
   firstName: string;
   lastName: string;
   title: string | null;
-  quotes: string[];
+  quote: string;
   image: {
     src: string;
     width?: number;
@@ -17,8 +17,6 @@ export type StoryData = {
     alt: string;
   };
 };
-
-export type ActiveStoryData = Omit<StoryData, "quotes"> & { quote: StoryData["quotes"][number] };
 
 export const HOME_STORIES_ROOT = path.join(YAML_DATA_ROOT, "home", "stories");
 
@@ -56,11 +54,6 @@ export async function getStoryById(id: string) {
     return null;
   }
 
-  if (!Array.isArray(file.data.quotes) || file.data.quotes.length === 0) {
-    console.error(`getStoryById: quotes field in ${filepath} must be an array with at least one element`);
-    return null;
-  }
-
   if (!("image" in file.data)) {
     console.error(`getStoryById: Missing image field in ${filepath}`);
     return null;
@@ -80,7 +73,7 @@ export async function getStoryById(id: string) {
     id: file.filename,
     firstName: file.data["first-name"],
     lastName: file.data["last-name"],
-    quotes: file.data.quotes,
+    quote: file.data.quote,
     image: {
       src: file.data.image.src,
       width: file.data.image.width,
@@ -100,22 +93,9 @@ export async function getActiveStory() {
     story = await getStoryById(process.env.HOME_ACTIVE_STORY_ID);
   }
 
-  const index = clamp(
-    Number.parseInt(process.env.HOME_ACTIVE_STORY_QUOTE_INDEX ?? "0"),
-    0,
-    (story?.quotes.length ?? 1) - 1
-  );
-
   if (story === null) {
     return null;
   }
 
-  return {
-    id: story.id,
-    firstName: story.firstName,
-    lastName: story.lastName,
-    title: story.title,
-    quote: story.quotes[index],
-    image: story.image,
-  } as ActiveStoryData;
+  return story;
 }

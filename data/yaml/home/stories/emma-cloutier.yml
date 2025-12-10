@@ -1,9 +1,6 @@
 first-name: Emma
 last-name: Cloutier
-quotes:
-  - I think U of G is the right place to start a career in the arts because there are lots of different pathways that you can take.
-  - Specifically in my program, we do a combination of psychology and our chosen art form, so we can go into lots of different things like art therapy is very beneficial to the community and society in general.
-  - Top three things that I like here are my professors. They're all fantastic and everyone is so dedicated and interested in what they're doing. Second is all of the nature around here. It's beautiful...especially the arboretum. And third, I think the variety of courses.
+quote: "Top three things that I like here are my professors. They're all fantastic and everyone is so dedicated and interested in what they're doing. Second is all of the nature around here. It's beautiful…especially the arboretum. And third, I think the variety of courses."
 image:
   src: /assets/home/stories/emma-cloutier.webp
   width: 800

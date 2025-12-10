@@ -14,9 +14,9 @@ import {
 import { Button } from "@uoguelph/react-components/button";
 import { Blockquote, BlockquoteContent } from "@uoguelph/react-components/blockquote";
 import Image from "next/image";
-import type { ActiveStoryData } from "@/data/yaml/home/stories";
+import type { StoryData } from "@/data/yaml/home/stories";
 
-export function HomeStory({ data }: { data: ActiveStoryData }) {
+export function HomeStory({ data }: { data: StoryData }) {
   return (
     <Story>
       <StoryBody>
