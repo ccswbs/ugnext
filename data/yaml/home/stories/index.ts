@@ -49,8 +49,8 @@ export async function getStoryById(id: string) {
     return null;
   }
 
-  if (!("quotes" in file.data)) {
-    console.error(`getStoryById: Missing quotes field in ${filepath}`);
+  if (!("quote" in file.data)) {
+    console.error(`getStoryById: Missing quote field in ${filepath}`);
     return null;
   }
 
