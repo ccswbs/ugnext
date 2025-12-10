@@ -21,9 +21,10 @@ export type HomeStoryProps = {
   lastName: HomeStory["lastName"];
   quote: HomeStory["quotes"][number];
   image: HomeStory["image"];
+  title?: HomeStory["title"];
 };
 
-export function HomeStory({ firstName, lastName, quote, image }: HomeStoryProps) {
+export function HomeStory({ firstName, lastName, quote, image, title }: HomeStoryProps) {
   return (
     <Story>
       <StoryBody>
@@ -40,10 +41,12 @@ export function HomeStory({ firstName, lastName, quote, image }: HomeStoryProps)
         </StoryBackground>
         <StoryForeground>
           <StoryForegroundContent>
-            <Blockquote className="text-white pt-[40px]">
-              <BlockquoteContent>
-                {quote} ~ {firstName} {lastName}
-              </BlockquoteContent>
+            <Blockquote className="inline text-center text-white pt-[40px]">
+              <BlockquoteContent className="inline">{quote}</BlockquoteContent>
+              <span className="text-3xl">
+                {" "}
+                - {firstName} {lastName} {title && `, ${title}`}
+              </span>
             </Blockquote>
           </StoryForegroundContent>
           <StoryForegroundImage
@@ -66,7 +69,7 @@ export function HomeStory({ firstName, lastName, quote, image }: HomeStoryProps)
           color="red"
           className="py-2! px-4! mx-[.25em] text-2xl! text-center"
         >
-          Improve Life
+          Improve Your Life
         </Button>
       </StoryFooter>
     </Story>

@@ -7,6 +7,7 @@ export type HomeStory = {
   id: string;
   firstName: string;
   lastName: string;
+  title: string | null;
   quotes: string[];
   image: {
     src: string;
@@ -84,5 +85,6 @@ export async function getStoryById(id: string) {
       height: file.data.image.height,
       alt: file.data.image.alt,
     },
+    title: file.data.title ?? null,
   } as HomeStory;
 }

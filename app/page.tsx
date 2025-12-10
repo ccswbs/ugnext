@@ -14,13 +14,17 @@ import { Rankings } from "@/components/client/home/rankings";
 import { ThreeCampuses } from "@/components/client/home/three-campuses";
 import { HomeStory } from "@/components/client/home/story";
 import { getStoryById } from "@/data/yaml/home/stories";
+import { clamp } from "@uoguelph/react-components";
 
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
-  const story = await getStoryById("emma-sanderson");
-
-  console.log(story);
+  const story = await getStoryById(process.env.HOME_ACTIVE_STORY_ID ?? "asha-edwin");
+  const storyQuoteIndex = clamp(
+    Number.parseInt(process.env.HOME_ACTIVE_STORY_QUOTE_INDEX ?? "0"),
+    0,
+    (story?.quotes.length ?? 1) - 1
+  );
 
   return (
     <Layout>
@@ -65,7 +69,8 @@ export default async function Page() {
             firstName={story.firstName}
             lastName={story.lastName}
             image={story.image}
-            quote={story.quotes[0]}
+            quote={story.quotes[storyQuoteIndex]}
+            title={story.title}
           />
         )}
         <div className="w-full p-5"></div>
