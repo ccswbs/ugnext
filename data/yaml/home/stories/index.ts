@@ -1,9 +1,9 @@
-import { glob } from "glob";
 import path from "path";
 import { yaml, YAML_DATA_ROOT } from "@/data/yaml";
 import * as fs from "fs/promises";
+import { clamp } from "@uoguelph/react-components";
 
-export type HomeStory = {
+export type StoryData = {
   id: string;
   firstName: string;
   lastName: string;
@@ -17,6 +17,8 @@ export type HomeStory = {
     alt: string;
   };
 };
+
+export type ActiveStoryData = Omit<StoryData, "quotes"> & { quote: StoryData["quotes"][number] };
 
 export const HOME_STORIES_ROOT = path.join(YAML_DATA_ROOT, "home", "stories");
 
@@ -86,5 +88,34 @@ export async function getStoryById(id: string) {
       alt: file.data.image.alt,
     },
     title: file.data.title ?? null,
-  } as HomeStory;
+  } as StoryData;
+}
+
+export async function getActiveStory() {
+  let story: StoryData | null = null;
+
+  if (process.env.USE_TESTING_DATA === "true" || typeof process.env.HOME_ACTIVE_STORY_ID !== "string") {
+    story = await getStoryById("asha-edwin");
+  } else {
+    story = await getStoryById(process.env.HOME_ACTIVE_STORY_ID);
+  }
+
+  const index = clamp(
+    Number.parseInt(process.env.HOME_ACTIVE_STORY_QUOTE_INDEX ?? "0"),
+    0,
+    (story?.quotes.length ?? 1) - 1
+  );
+
+  if (story === null) {
+    return null;
+  }
+
+  return {
+    id: story.id,
+    firstName: story.firstName,
+    lastName: story.lastName,
+    title: story.title,
+    quote: story.quotes[index],
+    image: story.image,
+  } as ActiveStoryData;
 }

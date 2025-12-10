@@ -14,17 +14,9 @@ import {
 import { Button } from "@uoguelph/react-components/button";
 import { Blockquote, BlockquoteContent } from "@uoguelph/react-components/blockquote";
 import Image from "next/image";
-import type { HomeStory } from "@/data/yaml/home/stories";
+import type { ActiveStoryData } from "@/data/yaml/home/stories";
 
-export type HomeStoryProps = {
-  firstName: HomeStory["firstName"];
-  lastName: HomeStory["lastName"];
-  quote: HomeStory["quotes"][number];
-  image: HomeStory["image"];
-  title?: HomeStory["title"];
-};
-
-export function HomeStory({ firstName, lastName, quote, image, title }: HomeStoryProps) {
+export function HomeStory({ data }: { data: ActiveStoryData }) {
   return (
     <Story>
       <StoryBody>
@@ -42,19 +34,19 @@ export function HomeStory({ firstName, lastName, quote, image, title }: HomeStor
         <StoryForeground>
           <StoryForegroundContent>
             <Blockquote className="inline text-center text-white pt-[40px]">
-              <BlockquoteContent className="inline">{quote}</BlockquoteContent>
+              <BlockquoteContent className="inline">{data.quote}</BlockquoteContent>
               <span className="text-3xl">
                 {" "}
-                - {firstName} {lastName} {title && `, ${title}`}
+                - {data.firstName} {data.lastName} {data.title && `, ${data.title}`}
               </span>
             </Blockquote>
           </StoryForegroundContent>
           <StoryForegroundImage
-            alt={image.alt}
-            src={image.src}
-            width={image.width}
-            height={image.height}
-            blurDataURL={image.blurDataURL}
+            alt={data.image.alt}
+            src={data.image.src}
+            width={data.image.width}
+            height={data.image.height}
+            blurDataURL={data.image.blurDataURL}
             as={Image}
             className="max-w-[40rem]"
           />
