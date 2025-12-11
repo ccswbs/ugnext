@@ -64,7 +64,7 @@ export function HomeStory({ data }: { data: StoryData }) {
           color="red"
           className="py-2! px-4! mx-[.25em] text-2xl! text-center"
         >
-          Improve Your Life
+          Improve your Life
         </Button>
       </StoryFooter>
     </Story>

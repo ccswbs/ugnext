@@ -29,9 +29,7 @@ export function Rankings() {
       </StatisticsItem>
 
       <StatisticsItem>
-        <StatisticsItemValue>
-          A <strong>Top Comprehensive University</strong> in Canada
-        </StatisticsItemValue>
+        <StatisticsItemValue>A Top Canadian Comprehensive University</StatisticsItemValue>
         <StatisticsItemRepresents>
           <Link
             className={linkClasses}
