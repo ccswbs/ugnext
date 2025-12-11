@@ -52,7 +52,10 @@ export default defineConfig({
   // Run your local dev server before starting the tests.
   webServer: {
     timeout: 2 * 60 * 1000,
-    command: "USE_TESTING_DATA=true bun run start",
+    command: "bun run start",
+    env: {
+      USE_TESTING_DATA: "true",
+    },
     url: "http://localhost:3000",
     reuseExistingServer: false,
   },
