@@ -6,7 +6,6 @@ variables:
 
 pool:
   vmImage: ubuntu-latest
-  container: mcr.microsoft.com/playwright:v1.57.0-noble
 
 steps:
   - task: Npm@1
@@ -19,6 +18,10 @@ steps:
   - script: |
       bun install --frozen-lockfile
     displayName: "Install dependencies using bun"
+
+  - script: | 
+      npx playwright install --with-deps
+    displayName: 'Install Playwright browsers'
 
   - script: |
       bun run test
