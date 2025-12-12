@@ -36,7 +36,7 @@
     "@uoguelph/react-components": "^1.6.2",
     "@uoguelph/web-components": "^2.0.6",
     "conditional-wrap": "^1.0.3",
-    "glob": "^12.0.0",
+    "glob": "^13.0.0",
     "html-react-parser": "^5.2.10",
     "ldapts": "^8.0.20",
     "nanoid": "^5.1.6",
@@ -68,8 +68,8 @@
     "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^24.10.3",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@uoguelph/tailwind-theme": "^1.0.2",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
@@ -94,9 +94,5 @@
     "esbuild",
     "sharp",
     "unrs-resolver"
-  ],
-  "overrides": {
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2"
-  }
+  ]
 }
