@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
 
-        <AppArmor />
+        {process.env.USE_TESTING_DATA !== "true" && <AppArmor />}
 
         {isDraftMode && (
           <div className="sticky left-0 top-0 z-20 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
