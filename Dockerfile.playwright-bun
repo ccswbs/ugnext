@@ -1,0 +1,11 @@
+FROM mcr.microsoft.com/playwright:v1.57.0-jammy
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends unzip ca-certificates curl \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install bun once into a stable location inside the image
+ENV BUN_INSTALL=/opt/bun
+ENV PATH=/opt/bun/bin:$PATH
+
+RUN curl -fsSL https://bun.sh/install | bash
