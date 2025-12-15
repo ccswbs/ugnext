@@ -1,22 +1,27 @@
 import { Accordion, AccordionButton, AccordionContent } from "@uoguelph/react-components/accordion";
 import { HtmlParser } from "@/components/client/html-parser";
-import { getHeadingLevel } from "@/lib/string-utils";
+import { getHeadingLevel, slugify } from "@/lib/string-utils";
 import { Typography, TypographyProps } from "@uoguelph/react-components/typography";
 import type { AccordionFragment } from "@/lib/graphql/types";
 
 export function AccordionWidget({ data }: { data: AccordionFragment }) {
   const level = data.headingLevel ? (getHeadingLevel(data.headingLevel) ?? 3) : 2;
-  const sectionTitle = data?.accordionSectionTitle;
-  const sectionDescription = data?.accordionDescription?.processed;
+  const title = data?.accordionSectionTitle?.trim();
+  const description = data?.accordionDescription?.processed;
 
   return (
     <>
-      {sectionTitle && (
-        <Typography id={`accordions-heading-${data.uuid}`} type={`h${level}` as TypographyProps<any>["type"]}>
-          {sectionTitle}
+      {title && (
+        <Typography
+          id={slugify(title)}
+          type={`h${level}` as TypographyProps<any>["type"]}
+          as={`h${level}` as TypographyProps<any>["as"]}
+        >
+          {title}
         </Typography>
       )}
-      {sectionDescription && <HtmlParser html={sectionDescription} />}
+
+      {description && <HtmlParser html={description} />}
 
       {data?.items.map((item, index) => (
         <Accordion id={`accordion-${item.uuid}`} key={index}>

@@ -58,7 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <Script src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous" strategy="lazyOnload" />
 
-        <AppArmor />
+        {process.env.USE_TESTING_DATA !== "true" && <AppArmor />}
 
         {isDraftMode && <DraftModeBanner />}
 
