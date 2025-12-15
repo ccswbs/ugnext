@@ -17,7 +17,8 @@
     "export": "next build && next export",
     "format": "prettier -w ./",
     "test": "bunx playwright test",
-    "update-snapshots": "bunx playwright test --update-snapshots",
+    "update-snapshots:host": "bunx playwright test --update-snapshots",
+    "update-snapshots:docker": "docker compose build playwright && docker compose run --rm playwright",
     "codegen:compile": "graphql-codegen",
     "codegen:watch": "graphql-codegen -w"
   },

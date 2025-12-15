@@ -1,0 +1,15 @@
+services:
+  playwright:
+    build:
+      context: .
+      dockerfile: Dockerfile.playwright-bun
+    working_dir: /workspace
+    ipc: host
+    environment:
+      HOME: /tmp
+    volumes:
+      - ./:/workspace
+    command: >
+      bash -lc
+      "bun install --frozen-lockfile
+      && bunx playwright test --update-snapshots"
