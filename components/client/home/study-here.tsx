@@ -36,7 +36,7 @@ export function StudyHere() {
         <LinkCarouselLink href="https://graduatestudies.uoguelph.ca/" id="graduate-programs" className={link()}>
           Graduate Programs
         </LinkCarouselLink>
-        <LinkCarouselLink href="https://www.uoguelph.ca/study-in-canada/" id="international" className={link()}>
+        <LinkCarouselLink href="https://www.uoguelph.ca/international/" id="international" className={link()}>
           International Students
         </LinkCarouselLink>
         <LinkCarouselLink href="https://www.uoguelph.ca/continuing-studies/" id="lifelong-learning" className={link()}>
