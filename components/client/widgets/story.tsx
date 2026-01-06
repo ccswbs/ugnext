@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import type { StoryFragment, StoryImageCutoutBackgroundFragment } from "@/lib/graphql/types";
 import { twJoin } from "tailwind-merge";
+import { Typography } from "@uoguelph/react-components/typography";
 
 function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackgroundFragment }) {
   const quotes = data.storyContent?.filter((node) => node.__typename === "ParagraphStoryQuote") ?? [];
@@ -45,7 +46,11 @@ function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackground
         <StoryForeground>
           <StoryForegroundContent className="pt-8!">
             <div className="flex flex-col *:text-white!">
-              {data.title && <span className="text-2xl font-bold mb-4">{data.title.toUpperCase()}</span>}
+              {data.title && (
+                <Typography type="h3" as="h3" className="text-2xl font-bold mb-4">
+                  {data.title.toUpperCase()}
+                </Typography>
+              )}
               {data.text && <HtmlParser html={data.text.processed} />}
               {buttons.map((button) => (
                 <EmbeddedVideo

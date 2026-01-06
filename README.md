@@ -87,3 +87,12 @@ If vector search is not working:
 
 The application will gracefully fall back to regular search if there are any issues with the vector search configuration.
 
+## Regenerating Playwright Snapshots
+
+ugnext uses playwright to generate visual regression snapshots. Sometimes these snapshots need to be regenerated when the underlying markup changes.
+
+As the playwright tests are ran in an AzureDevOps pipeline, the snapshots must be generated using a Linux environment.
+
+If you are using a Linux machine, then simply run `bun run update-snapshots:host`.
+
+If you are using a Mac or Windows machine, you will first need to download Docker Desktop, then run the following command: `bun run update-snapshots:docker`. 
