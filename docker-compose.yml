@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - FONTAWESOME_PACKAGE_TOKEN=${FONTAWESOME_PACKAGE_TOKEN}
     working_dir: /workspace
     ipc: host
     # Use a named volume for node_modules to prevent host-mismatch issues

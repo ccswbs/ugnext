@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y curl unzip \
 
 WORKDIR /workspace
 
+ARG FONTAWESOME_PACKAGE_TOKEN
+ENV FONTAWESOME_PACKAGE_TOKEN=$FONTAWESOME_PACKAGE_TOKEN
+
 # 2. Copy dependency files first for better caching
 COPY package.json bun.lock bunfig.toml ./
 
