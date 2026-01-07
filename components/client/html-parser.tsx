@@ -1,7 +1,7 @@
 "use client";
 
-import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { Fragment, useMemo, ReactNode, isValidElement, ReactElement } from "react";
+import parse, { attributesToProps, type DOMNode, domToReact, Element, HTMLReactParserOptions } from "html-react-parser";
+import React, { Fragment, isValidElement, ReactElement, ReactNode, useMemo } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
@@ -19,6 +19,7 @@ import NextLink from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
 import { clamp } from "@uoguelph/react-components";
 import { Blockquote, BlockquoteContent } from "@uoguelph/react-components/blockquote";
+import { ElementType } from "domelementtype";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -321,7 +322,7 @@ const defaultInstructions: ParserInstruction[] = [
   // Font Awesome Icons
   {
     shouldProcessNode: (node, props) => {
-      if (node.tagName !== "i") {
+      if (node.tagName !== "i" && node.tagName !== "span") {
         return false;
       }
 
@@ -332,8 +333,20 @@ const defaultInstructions: ParserInstruction[] = [
     },
     processNode: (node, props, children) => {
       const className = (props.className as string) ?? "";
-      const classes = twMerge(props.className as string, className.includes("fs-1") && "sm:text-3xl p-0");
-      // Font Awesome's library adds aria-hidden automatically on the client side, but this causes a hydration error because React doesn't see that aria-hidden on the server side rendered code. So adding it here should fix that error
+
+      const inlineTags = new Set(["i", "span", "a"]);
+      const hasInlineNextSibling =
+        node.next?.type === "text" || (node.next?.type === ElementType.Tag && inlineTags.has(node.next?.tagName));
+      const hasInlinePreSibling =
+        node.prev?.type === "text" || (node.prev?.type === ElementType.Tag && inlineTags.has(node.prev?.tagName));
+
+      const classes = twMerge(
+        props.className as string,
+        className.includes("fs-1") && "sm:text-3xl p-0",
+        hasInlineNextSibling && "mr-[0.3em]",
+        hasInlinePreSibling && "ml-[0.3em]"
+      );
+
       return (
         <i {...props} key={nanoid()} aria-hidden="true" className={classes}>
           {children}
@@ -525,6 +538,7 @@ const defaultInstructions: ParserInstruction[] = [
       );
     },
   },
+  // Blockquote
   {
     shouldProcessNode: (node, props) => node.tagName === "blockquote",
     processNode: (node, props, children, index, childParser) => {
