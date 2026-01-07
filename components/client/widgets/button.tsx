@@ -77,7 +77,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
       },
       hasHeading: {
         true: {
-          button: "py-4 px-10",
+          button: "p-4",
         },
         false: {
           button: "p-4",
@@ -90,12 +90,15 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
         red: {
           icon: "text-red",
         },
+        match: {
+          icon: "text-current",
+        },
       },
     },
   })({
     column: column,
     hasHeading: !!heading,
-    iconColor: icon.color,
+    iconColor: icon.color === "red" && color === "primary" ? "match" : icon.color,
   });
 
   const analyticsHandler: MouseEventHandler<HTMLAnchorElement> = (e) => {
@@ -113,7 +116,12 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
     <>
       {heading && (
         <div className="basis-full">
-          <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}>
+          <Typography
+            id={`button-heading-${data.uuid}`}
+            type="h3"
+            as="h2"
+            className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}
+          >
             <HtmlParser html={heading} />
           </Typography>
         </div>
