@@ -61,11 +61,7 @@ export async function getPageContent(id: string) {
   });
 
   if (error) {
-    try {
-      handleGraphQLError(error);
-    } catch (e) {
-      console.error(`GraphQL Error occurred when attempting to retrieve content for basic page with id ${id}: ${e}`);
-    }
+    console.error(`GraphQL Error occurred when attempting to retrieve content for basic page ${id} : ${error}`);
     return null;
   }
 
