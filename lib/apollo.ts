@@ -5,6 +5,7 @@ import { PersistedQueryLink } from "@apollo/client/link/persisted-queries";
 import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
 import crypto from "node:crypto";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
 
 function sha256(data: string) {
   const hash = crypto.createHash("sha256");
@@ -68,12 +69,14 @@ const persistedQuerylink = new PersistedQueryLink({
   sha256,
 });
 
-const httpLink = new HttpLink({
+const httpLink = new BatchHttpLink({
   // this needs to be an absolute url, as relative urls cannot be used in SSR
   uri: `${DRUPAL_BASE_URL}/graphql`,
   headers: {
     "api-key": process.env.DRUPAL_API_KEY ?? "",
   },
+  batchMax: 5, // No more than 5 operations per batch
+  batchInterval: 20, // Wait no more than 20ms after first batched operation
 });
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
