@@ -18,7 +18,8 @@
     "format": "prettier -w ./",
     "test": "bunx playwright test",
     "update-snapshots:host": "bunx playwright test --update-snapshots",
-    "update-snapshots:docker": "docker compose build playwright && docker compose run --rm playwright",
+    "update-snapshots:docker": "docker compose up",
+    "docker:clean": "docker compose down -v",
     "codegen:compile": "graphql-codegen",
     "codegen:watch": "graphql-codegen -w"
   },
