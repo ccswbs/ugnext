@@ -16,7 +16,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   let url = data.link?.url;
 
   if (!url) {
-    console.error(`Widget Error ${data.__typename}: A URL must be defined for the button`, data);
+    console.error(`Widget Error ${data.__typename}: A URL must be defined for the button\n`, data);
     return <></>;
   }
 
@@ -29,7 +29,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
 
   if (!title) {
     console.error(
-      `Widget Error ${data.__typename}: A title must be defined for the button either in its formatted title field or link title field`,
+      `Widget Error ${data.__typename}: A title must be defined for the button either in its formatted title field or link title field\n`,
       data
     );
     return <></>;
@@ -113,7 +113,12 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
     <>
       {heading && (
         <div className="basis-full">
-          <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}>
+          <Typography
+            id={`button-heading-${data.uuid}`}
+            type="h3"
+            as="h2"
+            className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}
+          >
             <HtmlParser html={heading} />
           </Typography>
         </div>
