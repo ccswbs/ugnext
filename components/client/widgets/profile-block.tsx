@@ -7,6 +7,7 @@ import { ProfileSearch } from "@/components/client/profiles/profile-search";
 import { ProfileTypeFilter } from "@/components/client/profiles/profile-type-filter";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
+import { slugify } from "@/lib/string-utils";
 import useSWR from "swr";
 import type { ProfileType, PartialProfileData } from "@/data/drupal/profile";
 import { useState, useContext } from "react";
@@ -20,6 +21,21 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
   // Check if this is a secondary column using SectionContext - if so, skip search/pagination and show first 20 results
   const sectionContext = useContext(SectionContext) as SectionContextType | null;
   const isSecondaryColumn = sectionContext?.column === "secondary";
+
+  // Helper function to render the profile block title
+  const renderTitle = () => {
+    if (!data.profileBlockTitle?.trim()) return null;
+    
+    return (
+      <Typography 
+        id={slugify(data.profileBlockTitle)} 
+        type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
+        as={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
+      >
+        {data.profileBlockTitle}
+      </Typography>
+    );
+  };
   
   // Fetch profile types from API if type filtering is enabled OR if backend has selected types
   const backendHasSelectedTypes = data.profileType && data.profileType.length > 0;
@@ -109,15 +125,7 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
   if (isSecondaryColumn) {
     return (
       <>
-        {data.profileBlockTitle && (
-          <Typography 
-            id={`profile-block-heading-${data.id}`} 
-            type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
-            as={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
-          >
-            {data.profileBlockTitle}
-          </Typography>
-        )}
+        {renderTitle()}
         
         {secondaryLoading && (
           <div className="flex w-full items-center justify-center flex-1 py-5">
@@ -157,23 +165,9 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
   // Default behavior for non-secondary columns
   return (
     <>
-      {sectionContext ? (
-        <Typography 
-          id={`profile-block-heading-${data.id}`} 
-          type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
-          as={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
-        >
-          {data.profileBlockTitle}
-        </Typography>
-      ) : (
+      {sectionContext ? renderTitle() : (
         <Container>
-          <Typography 
-            id={`profile-block-heading-${data.id}`} 
-            type={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"} 
-            as={(data.headingLevel ?? "h2") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
-          >
-            {data.profileBlockTitle}
-          </Typography>
+          {renderTitle()}
         </Container>
       )}
       {data.enableTypeFilter && profileTypes && (
