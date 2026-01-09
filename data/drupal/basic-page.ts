@@ -94,6 +94,10 @@ export async function getPageContent(id: string) {
 }
 
 export async function getAllBasicPagePaths() {
+  if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
+    return [];
+  }
+
   const client = getClient();
 
   const pathQuery = gql(/* gql */ `
