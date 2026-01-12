@@ -406,7 +406,14 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       return (
-        <Typography {...props} key={nanoid()} type={type} as={level} emphasize={emphasize} className={className}>
+        <Typography
+          {...props}
+          key={nanoid()}
+          type={type}
+          as={level}
+          emphasize={emphasize}
+          className={twMerge("group-first/html-parser:first:mt-0", className)}
+        >
           {cleanedChildren}
         </Typography>
       );
@@ -445,7 +452,13 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       return (
-        <Typography {...props} key={nanoid()} type="body" as="p" className={updatedClassname}>
+        <Typography
+          {...props}
+          key={nanoid()}
+          type="body"
+          as="p"
+          className={twMerge("group-first/html-parser:first:mt-0", updatedClassname)}
+        >
           {children}
         </Typography>
       );
@@ -456,7 +469,12 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, props, children, index) => {
       return (
-        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={"list-outside pl-4 pt-3 text-lg"}>
+        <List
+          {...props}
+          key={nanoid()}
+          as={node.tagName as "ul" | "ol"}
+          className={"group-first/html-parser:first:pt-0 list-outside pl-4 pt-3 text-lg"}
+        >
           {children}
         </List>
       );
@@ -877,5 +895,5 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
 
   const content = useMemo(() => parse(normalizedHtml, options), [normalizedHtml, options]);
 
-  return <>{content}</>;
+  return <div className="contents group/html-parser">{content}</div>;
 }

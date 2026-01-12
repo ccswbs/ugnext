@@ -63,7 +63,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
 
   const classes = tv({
     slots: {
-      heading: "block text-black",
+      heading: "block text-black basis-full group-first/button:first:mt-0",
       button: "w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
       icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
@@ -113,18 +113,16 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   };
 
   return (
-    <div id={`button-${data.uuid}-container`} className="contents first:[&_.button-heading]:mt-0!">
+    <div id={`button-${data.uuid}-container`} className="contents group/button">
       {heading && (
-        <div className="basis-full">
-          <Typography
-            id={`button-heading-${data.uuid}`}
-            type="h3"
-            as="h2"
-            className={twMerge(classes.heading(), column === "call-to-action" && "text-center", "button-heading")}
-          >
-            <HtmlParser html={heading} />
-          </Typography>
-        </div>
+        <Typography
+          id={`button-heading-${data.uuid}`}
+          type="h3"
+          as="h2"
+          className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}
+        >
+          <HtmlParser html={heading} />
+        </Typography>
       )}
 
       <Button
