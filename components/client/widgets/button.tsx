@@ -113,14 +113,14 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   };
 
   return (
-    <>
+    <div id={`button-${data.uuid}-container`} className="contents first:[&_.button-heading]:mt-0!">
       {heading && (
         <div className="basis-full">
           <Typography
             id={`button-heading-${data.uuid}`}
             type="h3"
             as="h2"
-            className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}
+            className={twMerge(classes.heading(), column === "call-to-action" && "text-center", "button-heading")}
           >
             <HtmlParser html={heading} />
           </Typography>
@@ -139,6 +139,6 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
         {icon && icon.data && <i className={classes.icon()} aria-hidden="true"></i>}
         <HtmlParser html={title} />
       </Button>
-    </>
+    </div>
   );
 };
