@@ -445,13 +445,7 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       return (
-        <Typography
-          {...props}
-          key={nanoid()}
-          type="body"
-          as="p"
-          className={twMerge(index === 0 && "mt-0", updatedClassname)}
-        >
+        <Typography {...props} key={nanoid()} type="body" as="p" className={updatedClassname}>
           {children}
         </Typography>
       );
