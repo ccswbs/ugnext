@@ -218,7 +218,7 @@ const defaultInstructions: ParserInstruction[] = [
       return (
         <Fragment key={nanoid()}>
           <div className="mt-4"></div>
-          <Info>
+          <Info color="yellow">
             {React.Children.toArray(children).filter((child) => React.isValidElement(child) && child.type !== "br")}
           </Info>
         </Fragment>
