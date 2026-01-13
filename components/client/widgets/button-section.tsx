@@ -10,7 +10,7 @@ export const ButtonSectionWidget = ({ data }: { data: ButtonSectionFragment }) =
   const column = (data?.buttonSectionColumn?.name?.toLowerCase()?.replaceAll(" ", "-") ?? "primary") as ButtonColumn;
 
   const classes = tv({
-    base: "flex gap-2 pt-4",
+    base: "flex gap-2 pt-4 group/button-section first:pt-0",
     variants: {
       column: {
         primary: "flex flex-wrap px-0 mx-0",
