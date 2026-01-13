@@ -144,11 +144,9 @@
   text-rendering: auto;
 }
 
-
 @utility vcard {
   @apply bg-grey-light-bg;
 }
-
 
 svg.svg-inline--fa {
   height: 1em;
