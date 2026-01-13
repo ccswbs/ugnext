@@ -9,7 +9,7 @@ import {
 import { twJoin } from "tailwind-merge";
 import { Link } from "@uoguelph/react-components/link";
 
-export const Rankings = () => {
+export function Rankings() {
   const linkClasses = twJoin("text-inherit! outline-inherit!");
 
   return (
@@ -29,9 +29,7 @@ export const Rankings = () => {
       </StatisticsItem>
 
       <StatisticsItem>
-        <StatisticsItemValue>
-          A <strong>Top Comprehensive University</strong> in Canada
-        </StatisticsItemValue>
+        <StatisticsItemValue>A Top Canadian Comprehensive University</StatisticsItemValue>
         <StatisticsItemRepresents>
           <Link
             className={linkClasses}
@@ -71,4 +69,4 @@ export const Rankings = () => {
       </StatisticsItem>
     </Statistics>
   );
-};
+}
