@@ -28,7 +28,12 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
   const context = useContext(SectionContext);
 
   // Some widgets don't need extra vertical padding
-  const noSpaceWidgets = ["ParagraphSectionButton", "ParagraphGeneralText", "ParagraphLinksWidget"];
+  const noSpaceWidgets = [
+    "ParagraphSectionButton",
+    "ParagraphGeneralText",
+    "ParagraphLinksWidget",
+    "ParagraphBlockWidget",
+  ];
 
   // Some widgets need to span the full width of the page
   const noWrapWidgets = [

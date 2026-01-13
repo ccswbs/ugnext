@@ -64,7 +64,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
 
   const classes = tv({
     slots: {
-      heading: "block text-black",
+      heading: "block text-black basis-full group-first/button:first:mt-0",
       button: "w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
       icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
@@ -78,7 +78,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
       },
       hasHeading: {
         true: {
-          button: "py-4 px-10",
+          button: "p-4",
         },
         false: {
           button: "p-4",
@@ -91,12 +91,15 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
         red: {
           icon: "text-red",
         },
+        match: {
+          icon: "text-current",
+        },
       },
     },
   })({
     column: column,
     hasHeading: !!heading,
-    iconColor: icon.color,
+    iconColor: icon.color === "red" && color === "primary" ? "match" : icon.color,
   });
 
   const analyticsHandler: MouseEventHandler<HTMLAnchorElement> = (e) => {
@@ -111,18 +114,16 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   };
 
   return (
-    <>
+    <div id={`button-${data.uuid}-container`} className="contents group/button">
       {heading && (
-        <div className="basis-full">
-          <Typography
-            id={`button-heading-${data.uuid}`}
-            type="h3"
-            as="h2"
-            className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}
-          >
-            <HtmlParser html={heading} />
-          </Typography>
-        </div>
+        <Typography
+          id={`button-heading-${data.uuid}`}
+          type="h3"
+          as="h2"
+          className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}
+        >
+          <HtmlParser html={heading} />
+        </Typography>
       )}
 
       <Button
@@ -137,6 +138,6 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
         {icon && icon.data && <i className={classes.icon()} aria-hidden="true"></i>}
         <HtmlParser html={title} />
       </Button>
-    </>
+    </div>
   );
 };
