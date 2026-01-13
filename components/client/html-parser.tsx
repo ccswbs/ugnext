@@ -1,7 +1,7 @@
 "use client";
 
-import parse, { HTMLReactParserOptions, Element, attributesToProps, domToReact, type DOMNode } from "html-react-parser";
-import React, { Fragment, useMemo, ReactNode, isValidElement, ReactElement } from "react";
+import parse, { attributesToProps, type DOMNode, domToReact, Element, HTMLReactParserOptions } from "html-react-parser";
+import React, { Fragment, isValidElement, ReactElement, ReactNode, useMemo } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
@@ -18,6 +18,8 @@ import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "
 import NextLink from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
 import { clamp } from "@uoguelph/react-components";
+import { Blockquote, BlockquoteContent } from "@uoguelph/react-components/blockquote";
+import { ElementType } from "domelementtype";
 
 type ParserInstruction = {
   shouldProcessNode: (
@@ -216,7 +218,7 @@ const defaultInstructions: ParserInstruction[] = [
       return (
         <Fragment key={nanoid()}>
           <div className="mt-4"></div>
-          <Info>
+          <Info color="yellow">
             {React.Children.toArray(children).filter((child) => React.isValidElement(child) && child.type !== "br")}
           </Info>
         </Fragment>
@@ -305,7 +307,10 @@ const defaultInstructions: ParserInstruction[] = [
       }
 
       // Ensure link color is preserved even when content is bold
-      const linkClassName = twMerge("!text-body-copy-link hover:!text-body-copy-link-hover dark:!text-body-copy-link-on-dark dark:hover:!text-body-copy-link-hover-on-dark light:!text-body-copy-link-on-light light:hover:!text-body-copy-link-hover-on-light [&_*]:!text-body-copy-link [&_*:hover]:!text-body-copy-link-hover [&_*]:dark:!text-body-copy-link-on-dark [&_*]:light:!text-body-copy-link-on-light", className);
+      const linkClassName = twMerge(
+        "!text-body-copy-link hover:!text-body-copy-link-hover dark:!text-body-copy-link-on-dark dark:hover:!text-body-copy-link-hover-on-dark light:!text-body-copy-link-on-light light:hover:!text-body-copy-link-hover-on-light [&_*]:!text-body-copy-link [&_*:hover]:!text-body-copy-link-hover [&_*]:dark:!text-body-copy-link-on-dark [&_*]:light:!text-body-copy-link-on-light",
+        className
+      );
 
       return (
         <Link {...props} key={nanoid()} href={href} as={NextLink} className={linkClassName}>
@@ -317,7 +322,7 @@ const defaultInstructions: ParserInstruction[] = [
   // Font Awesome Icons
   {
     shouldProcessNode: (node, props) => {
-      if (node.tagName !== "i") {
+      if (node.tagName !== "i" && node.tagName !== "span") {
         return false;
       }
 
@@ -328,8 +333,20 @@ const defaultInstructions: ParserInstruction[] = [
     },
     processNode: (node, props, children) => {
       const className = (props.className as string) ?? "";
-      const classes = twMerge(props.className as string, className.includes("fs-1") && "sm:text-3xl p-0");
-      // Font Awesome's library adds aria-hidden automatically on the client side, but this causes a hydration error because React doesn't see that aria-hidden on the server side rendered code. So adding it here should fix that error
+
+      const inlineTags = new Set(["i", "span", "a"]);
+      const hasInlineNextSibling =
+        node.next?.type === "text" || (node.next?.type === ElementType.Tag && inlineTags.has(node.next?.tagName));
+      const hasInlinePreSibling =
+        node.prev?.type === "text" || (node.prev?.type === ElementType.Tag && inlineTags.has(node.prev?.tagName));
+
+      const classes = twMerge(
+        props.className as string,
+        className.includes("fs-1") && "sm:text-3xl p-0",
+        hasInlineNextSibling && "mr-[0.3em]",
+        hasInlinePreSibling && "ml-[0.3em]"
+      );
+
       return (
         <i {...props} key={nanoid()} aria-hidden="true" className={classes}>
           {children}
@@ -395,7 +412,7 @@ const defaultInstructions: ParserInstruction[] = [
           type={type}
           as={level}
           emphasize={emphasize}
-          className={twMerge(index === 0 && "mt-0", className)}
+          className={twMerge("group-first/html-parser:first:mt-0", className)}
         >
           {cleanedChildren}
         </Typography>
@@ -440,7 +457,7 @@ const defaultInstructions: ParserInstruction[] = [
           key={nanoid()}
           type="body"
           as="p"
-          className={twMerge(index === 0 && "mt-0", updatedClassname)}
+          className={twMerge("group-first/html-parser:first:mt-0", updatedClassname)}
         >
           {children}
         </Typography>
@@ -452,7 +469,12 @@ const defaultInstructions: ParserInstruction[] = [
     shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
     processNode: (node, props, children, index) => {
       return (
-        <List {...props} key={nanoid()} as={node.tagName as "ul" | "ol"} className={"list-outside pl-4 pt-3 text-lg"}>
+        <List
+          {...props}
+          key={nanoid()}
+          as={node.tagName as "ul" | "ol"}
+          className={"group-first/html-parser:first:pt-0 list-outside pl-4 pt-3 text-lg"}
+        >
           {children}
         </List>
       );
@@ -518,6 +540,17 @@ const defaultInstructions: ParserInstruction[] = [
             <figcaption className="text-sm text-body-copy-on-light mt-2">{props["data-caption"]}</figcaption>
           )}
         </figure>
+      );
+    },
+  },
+  // Blockquote
+  {
+    shouldProcessNode: (node, props) => node.tagName === "blockquote",
+    processNode: (node, props, children, index, childParser) => {
+      return (
+        <Blockquote>
+          <BlockquoteContent className="[&_*]:text-2xl mt-4 [&_*]:inline [&_i]:hidden!">{children}</BlockquoteContent>
+        </Blockquote>
       );
     },
   },
@@ -774,35 +807,37 @@ const defaultInstructions: ParserInstruction[] = [
 
 // Helper function to normalize whitespace between elements
 function normalizeWhitespace(html: string): string {
-  return html
-    // Preserve single spaces between inline elements and text
-    .replace(/>\s+</g, (match) => {
-      // If there's whitespace between tags, preserve a single space
-      return match.includes(' ') ? '> <' : '><';
-    })
-    // Remove excessive whitespace at the beginning and end of lines
-    .replace(/^\s+|\s+$/gm, '')
-    // Normalize multiple consecutive spaces to single space
-    .replace(/[ \t]+/g, ' ')
-    // Remove empty lines
-    .replace(/\n\s*\n/g, '\n');
+  return (
+    html
+      // Preserve single spaces between inline elements and text
+      .replace(/>\s+</g, (match) => {
+        // If there's whitespace between tags, preserve a single space
+        return match.includes(" ") ? "> <" : "><";
+      })
+      // Remove excessive whitespace at the beginning and end of lines
+      .replace(/^\s+|\s+$/gm, "")
+      // Normalize multiple consecutive spaces to single space
+      .replace(/[ \t]+/g, " ")
+      // Remove empty lines
+      .replace(/\n\s*\n/g, "\n")
+  );
 }
 
 export function HtmlParser({ html, instructions = [] }: { html: string; instructions?: ParserInstruction[] }) {
   const normalizedHtml = useMemo(() => normalizeWhitespace(html), [html]);
-  
+
   const options: HTMLReactParserOptions = useMemo(() => {
     return {
       replace: (node, index) => {
         // Handle text nodes to preserve necessary spacing
-        if (node.type === 'text') {
+        if (node.type === "text") {
           const text = (node as any).data;
-          if (text && typeof text === 'string') {
+          if (text && typeof text === "string") {
             // Preserve single spaces but trim excessive whitespace
-            const trimmedText = text.replace(/\s+/g, ' ');
+            const trimmedText = text.replace(/\s+/g, " ");
             // Don't render empty text nodes
-            if (trimmedText.trim() === '') {
-              return trimmedText.includes(' ') ? <>{' '}</> : <></>;
+            if (trimmedText.trim() === "") {
+              return trimmedText.includes(" ") ? <> </> : <></>;
             }
             return <>{trimmedText}</>;
           }
@@ -860,5 +895,5 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
 
   const content = useMemo(() => parse(normalizedHtml, options), [normalizedHtml, options]);
 
-  return <>{content}</>;
+  return <div className="contents group/html-parser">{content}</div>;
 }
