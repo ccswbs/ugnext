@@ -93,8 +93,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
       units: [] as string[],
     }
   );
-console.log("tags:",tags, "units",
-   units);
+
   return (
     <Layout>
       <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
