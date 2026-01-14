@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@uoguelph/react-components/container";
 import { Metadata, ResolvingMetadata } from "next";
 import { getRoute } from "@/data/drupal/route";
-import { OVCFooter } from "@/components/client/ovc/ovc-footer";
+import { CustomFooter } from "@/components/server/custom-footer";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -81,7 +81,7 @@ export default async function OVCNewsArticle({ params }: Props) {
         </Container>
       </LayoutContent>
 
-      <OVCFooter />
+            <CustomFooter units={["273"]} />
       <Footer></Footer>
     </Layout>
   );
