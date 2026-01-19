@@ -6,7 +6,7 @@ import { OVCCards } from "@/components/client/ovc/ovc-cards";
 import { OVCFeaturedNews } from "@/components/client/ovc/ovc-featured-news";
 import { getFeaturedNewsArticles } from "@/data/drupal/ovc-news";
 import { Metadata } from "next";
-import { OVCFooter } from "@/components/client/ovc/ovc-footer";
+import { CustomFooter } from "@/components/server/custom-footer";
 
 export const metadata: Metadata = {
   title: "Ontario Veterinary College",
@@ -36,7 +36,7 @@ export default async function OVCHome() {
             <OVCFeaturedNews articles={featuredNews} />
             <OVCCards />
           </Container>
-          <OVCFooter />
+                <CustomFooter units={["273"]} />
         </>
       }
     />

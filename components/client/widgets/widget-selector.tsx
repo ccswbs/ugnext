@@ -1,14 +1,14 @@
 "use client";
 
 import { Container } from "@uoguelph/react-components/container";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { AccordionWidget } from "@/components/client/widgets/accordions";
 import { ButtonSectionWidget } from "@/components/client/widgets/button-section";
 import { GeneralTextWidget } from "@/components/client/widgets/general-text";
 import { LinksWidget } from "@/components/client/widgets/links";
 import { MediaTextWidget } from "@/components/client/widgets/media-text";
-import { SectionWidget } from "@/components/client/widgets/section.js";
+import { SectionWidget } from "@/components/client/widgets/section-widget";
 import { StatisticsWidget } from "@/components/client/widgets/statistics";
 import { ImageOverlayWidget } from "@/components/client/widgets/image-overlay";
 import { StoryWidget } from "@/components/client/widgets/story";
@@ -23,6 +23,14 @@ import type { Widgets } from "@/data/drupal/widgets";
 export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; neverWrap?: boolean }) {
   // If this widget is within a section, we don't want to render a container around it
   const context = useContext(SectionContext);
+
+  // Some widgets don't need extra vertical padding
+  const noSpaceWidgets = [
+    "ParagraphSectionButton",
+    "ParagraphGeneralText",
+    "ParagraphLinksWidget",
+    "ParagraphBlockWidget",
+  ];
 
   // Some widgets need to span the full width of the page
   const noWrapWidgets = [
@@ -75,7 +83,15 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     }
   };
 
-  if (!noWrapWidgets.includes(data.__typename) && !context && !neverWrap) {
+  // Add spacing wrapper for certain widgets within sections
+  const SpacingWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (noSpaceWidgets.includes(data.__typename || "") || !context) {
+      return <>{children}</>;
+    }
+    return <div className="py-4">{children}</div>;
+  };
+
+  if (!noWrapWidgets.includes(data.__typename || "") && !context && !neverWrap) {
     return (
       <Container>
         <Widget />
@@ -83,5 +99,9 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     );
   }
 
-  return <Widget />;
+  return (
+    <SpacingWrapper>
+      <Widget />
+    </SpacingWrapper>
+  );
 }

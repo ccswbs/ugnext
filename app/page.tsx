@@ -13,10 +13,12 @@ import { StudyHere } from "@/components/client/home/study-here";
 import { Rankings } from "@/components/client/home/rankings";
 import { ThreeCampuses } from "@/components/client/home/three-campuses";
 import { HomeStory } from "@/components/client/home/story";
+import { getActiveStory } from "@/data/yaml/home/stories";
 
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
+  const story = await getActiveStory();
 
   return (
     <Layout>
@@ -56,7 +58,7 @@ export default async function Page() {
           <ThreeCampuses />
         </Container>
 
-        <HomeStory />
+        {story && <HomeStory data={story} />}
         <div className="w-full p-5"></div>
       </LayoutContent>
 
