@@ -10,7 +10,7 @@ import { Breadcrumbs } from "@/components/server/breadcrumbs";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
-import { LdapContactInfo } from "@/components/server/ldap-contact-info";
+import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { 
   UniwebAffiliations,
@@ -78,11 +78,11 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 </Typography>
               )}
 
-              {/* Directory contact info from LDAP */}
+              {/* Directory contact info from AAD */}
               {content.centralLoginId && content.centralLoginId.trim() && (
                 <div id="contact-info" className="mb-4">
-                  <LdapContactInfo 
-                    centralLoginId={content.centralLoginId}
+                  <AadContactInfo 
+                    email={`${content.centralLoginId}@uoguelph.ca`}
                     directoryEmail={content.directoryEmail}
                     directoryOffice={content.directoryOffice}
                     directoryPhone={content.directoryPhone}
