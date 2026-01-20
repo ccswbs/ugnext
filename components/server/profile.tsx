@@ -12,14 +12,14 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
-import { 
-  UniwebAffiliations,
-  UniwebCurrentTeaching,
-  UniwebDegrees,
-  UniwebPublications,
-  UniwebResearchDesc,
-  UniwebResearchInterests 
-} from "@/components/server/uniweb-components";
+// import { 
+//   UniwebAffiliations,
+//   UniwebCurrentTeaching,
+//   UniwebDegrees,
+//   UniwebPublications,
+//   UniwebResearchDesc,
+//   UniwebResearchInterests 
+// } from "@/components/server/uniweb-components";
 import { FullProfile } from "@/lib/types/profile";
 
 // Component-specific interface that extends the shared FullProfile type
@@ -167,26 +167,26 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             }
             
             // UniWeb profile part
-            if (section.uniwebSelect?.name && content.uniwebId) {
-              const sectionName = section.uniwebSelect.name;
-              
-              switch (sectionName) {
-                case 'Affiliations':
-                  return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
-                case 'Research Description':
-                  return <UniwebResearchDesc key={index} uniwebId={content.uniwebId} />;
-                case 'Current Teaching':
-                  return <UniwebCurrentTeaching key={index} uniwebId={content.uniwebId} />;
-                case 'Selected Degrees':
-                  return <UniwebDegrees key={index} uniwebId={content.uniwebId} />;
-                case 'Selected Publications':
-                  return <UniwebPublications key={index} uniwebId={content.uniwebId} />;
-                case 'Research Interests':
-                  return <UniwebResearchInterests key={index} uniwebId={content.uniwebId} />;
-                default:
-                  return null;
-              }
-            }
+            // if (section.uniwebSelect?.name && content.uniwebId) {
+            //   const sectionName = section.uniwebSelect.name;
+            //   
+            //   switch (sectionName) {
+            //     case 'Affiliations':
+            //       return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
+            //     case 'Research Description':
+            //       return <UniwebResearchDesc key={index} uniwebId={content.uniwebId} />;
+            //     case 'Current Teaching':
+            //       return <UniwebCurrentTeaching key={index} uniwebId={content.uniwebId} />;
+            //     case 'Selected Degrees':
+            //       return <UniwebDegrees key={index} uniwebId={content.uniwebId} />;
+            //     case 'Selected Publications':
+            //       return <UniwebPublications key={index} uniwebId={content.uniwebId} />;
+            //     case 'Research Interests':
+            //       return <UniwebResearchInterests key={index} uniwebId={content.uniwebId} />;
+            //     default:
+            //       return null;
+            //   }
+            // }
             
             // Empty section or unrecognized format
             return null;
