@@ -50,7 +50,7 @@ export async function AadContactInfo({
         <a 
           href={href}
           dangerouslySetInnerHTML={{ __html: display }}
-          className="text-decoration-none"
+          className="text-body-copy-link underline hover:decoration-transparent"
           aria-label={`Send email to ${aadData.mail}`}
         />
       </React.Fragment>
