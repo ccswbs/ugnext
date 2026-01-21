@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography } from "@uoguelph/react-components/typography";
 import { fetchAadProfile } from "@/lib/aad-utils";
+import { obfuscateEmail } from "@/lib/string-utils";
 
 interface AadContactInfoProps {
   email?: string;
@@ -41,10 +42,17 @@ export async function AadContactInfo({
   const contactInfo = [];
   
   if (directoryEmail === true && aadData?.mail) {
+    const { display, href } = obfuscateEmail(aadData.mail);
     contactInfo.push(
       <React.Fragment key="email">
         <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
-        <span className="sr-only">Email:</span>{aadData.mail}
+        <span className="sr-only">Email:</span>
+        <a 
+          href={href}
+          dangerouslySetInnerHTML={{ __html: display }}
+          className="text-decoration-none"
+          aria-label={`Send email to ${aadData.mail}`}
+        />
       </React.Fragment>
     );
   }
