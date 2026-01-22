@@ -1,0 +1,3 @@
+// Type definitions for AAD Profile API
+
+export interface RateLimitData {\n  count: number;\n  lastReset: number;\n}\n\nexport interface AADUser {\n  id: string;\n  displayName: string;\n  mail: string;\n  userPrincipalName: string;\n  givenName: string;\n  surname: string;\n  jobTitle?: string;\n  department?: string;\n  officeLocation?: string;\n}\n\nexport interface ErrorResponse {\n  error: string;\n  message?: string;\n}\n\nexport interface AADProfileAPIConfig {\n  rateLimit: {\n    windowMs: number;\n    maxRequests: number;\n  };\n  validation: {\n    emailRegex: RegExp;\n    maxEmailLength: number;\n  };\n}
