@@ -1,6 +1,7 @@
 // app/api/azure-profile/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from 'next/headers';
+import jwt from 'jsonwebtoken';
 
 // Production-ready configuration with intelligent rate limiting
 const CONFIG = {
@@ -26,11 +27,18 @@ const CONFIG = {
   },
   cache: {
     ttl: 300, // 5 minutes cache for user data
-    enabled: process.env.DISABLE_CACHING !== 'true'
+    enabled: process.env.DISABLE_CACHING !== 'true',
+    maxSize: parseInt(process.env.CACHE_MAX_SIZE || '1000') // Prevent memory exhaustion
   },
   validation: {
     emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    maxEmailLength: 254
+    maxEmailLength: 254,
+    maxRequestSize: parseInt(process.env.MAX_REQUEST_SIZE || '1024') // 1KB max request
+  },
+  security: {
+    // Prevent timing attacks
+    minResponseTime: parseInt(process.env.MIN_RESPONSE_TIME || '100'), // 100ms minimum
+    maxCacheEntries: parseInt(process.env.MAX_CACHE_ENTRIES || '1000')
   }
 };
 
@@ -48,6 +56,23 @@ class IntelligentRateLimiter {
         IntelligentRateLimiter.cleanup();
       }, 2 * 60 * 1000);
     }
+
+    // Clean up on process exit to prevent memory leaks
+    if (typeof process !== 'undefined') {
+      process.on('exit', () => IntelligentRateLimiter.destroy());
+      process.on('SIGINT', () => IntelligentRateLimiter.destroy());
+      process.on('SIGTERM', () => IntelligentRateLimiter.destroy());
+    }
+  }
+
+  static destroy(): void {
+    if (IntelligentRateLimiter.cleanupInterval) {
+      clearInterval(IntelligentRateLimiter.cleanupInterval);
+      IntelligentRateLimiter.cleanupInterval = null;
+    }
+    IntelligentRateLimiter.ipRequests.clear();
+    IntelligentRateLimiter.emailRequests.clear();
+    IntelligentRateLimiter.suspiciousActivity.clear();
   }
   
   private static cleanup(): void {
@@ -242,38 +267,54 @@ class IntelligentRateLimiter {
 
 // Enhanced authorization with multiple strategies
 class AuthorizationService {
-  static isAuthorized(request: NextRequest): boolean {
-    // Check API key
+  static async isAuthorized(request: NextRequest): Promise<{ authorized: boolean; context?: any }> {
+    // Check API key for internal services
     const apiKey = request.headers.get('x-api-key');
     if (apiKey && apiKey === process.env.INTERNAL_API_KEY) {
-      return true;
+      return { authorized: true, context: { type: 'api-key' } };
     }
     
-    // Check Bearer token (implement JWT validation in production)
+    // Check Bearer token with proper JWT validation
     const authHeader = request.headers.get('authorization');
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.substring(7);
-      return AuthorizationService.validateJWT(token);
+      const jwtResult = AuthorizationService.validateJWT(token);
+      if (jwtResult.valid) {
+        return { 
+          authorized: true, 
+          context: { 
+            type: 'jwt', 
+            claims: jwtResult.claims 
+          } 
+        };
+      }
     }
     
-    // Allow bypass for development
-    if (process.env.NODE_ENV === 'development' && process.env.DISABLE_AUTH === 'true') {
-      return true;
-    }
-    
-    return false;
+    return { authorized: false };
   }
   
-  private static validateJWT(token: string): boolean {
-    // Basic token validation - implement proper JWT validation in production
-    // This is a placeholder that checks for a minimum token length
-    if (!token || token.length < 10) {
-      return false;
+  private static validateJWT(token: string): { valid: boolean; claims?: any } {
+    if (!token || !process.env.JWT_SECRET) {
+      return { valid: false };
     }
     
-    // Add your JWT validation logic here
-    // Example: verify signature, check expiration, validate claims
-    return true;
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+        algorithms: ['HS256'], // Specify allowed algorithms
+        maxAge: '1h', // Maximum token age
+        clockTolerance: 30 // 30 second clock skew tolerance
+      });
+      
+      // Validate required claims
+      if (typeof decoded === 'object' && decoded.sub && decoded.exp) {
+        return { valid: true, claims: decoded };
+      }
+      
+      return { valid: false };
+    } catch (error) {
+      console.warn('JWT validation failed:', error instanceof Error ? error.message : 'Unknown error');
+      return { valid: false };
+    }
   }
 }
 
@@ -303,14 +344,30 @@ class ValidationService {
 // Safe GraphQL filter construction
 class GraphQLService {
   static buildSafeFilter(email: string): string {
-    const escapedEmail = email.replace(/'/g, "''");
+    // Comprehensive OData escaping
+    const escapedEmail = email
+      .replace(/'/g, "''")  // Escape single quotes
+      .replace(/%/g, "%25") // Escape percent (wildcard)
+      .replace(/_/g, "\_")   // Escape underscore (wildcard)
+      .replace(/\(/g, "%28") // Escape parentheses
+      .replace(/\)/g, "%29")
+      .replace(/\*/g, "%2A") // Escape asterisk
+      .replace(/;/g, "%3B")  // Escape semicolon
+      .replace(/--/g, "%2D%2D"); // Escape SQL comment
+    
+    // Validate email format before building filter
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      throw new Error('Invalid email format for filter');
+    }
+    
     return `mail eq '${escapedEmail}' or userPrincipalName eq '${escapedEmail}'`;
   }
 }
 
 // Caching service for production
 class CacheService {
-  private static cache = new Map<string, { data: any; expiry: number }>();
+  private static cache = new Map<string, { data: any; expiry: number; accessTime: number }>();
   
   static get(key: string): any | null {
     if (!CONFIG.cache.enabled) return null;
@@ -321,18 +378,56 @@ class CacheService {
       return null;
     }
     
+    // Update access time for LRU
+    item.accessTime = Date.now();
+    CacheService.cache.set(key, item);
+    
     return item.data;
   }
   
   static set(key: string, data: any): void {
     if (!CONFIG.cache.enabled) return;
     
+    // Prevent cache poisoning with input validation
+    if (typeof key !== 'string' || key.length > 100) {
+      console.warn('Invalid cache key rejected:', key?.substring?.(0, 50));
+      return;
+    }
+    
+    // Implement cache size limit with LRU eviction
+    if (CacheService.cache.size >= CONFIG.security.maxCacheEntries) {
+      CacheService.evictLRU();
+    }
+    
     const expiry = Date.now() + (CONFIG.cache.ttl * 1000);
-    CacheService.cache.set(key, { data, expiry });
+    const accessTime = Date.now();
+    CacheService.cache.set(key, { data, expiry, accessTime });
+  }
+  
+  private static evictLRU(): void {
+    let oldestKey = '';
+    let oldestTime = Date.now();
+    
+    for (const [key, item] of CacheService.cache.entries()) {
+      if (item.accessTime < oldestTime) {
+        oldestTime = item.accessTime;
+        oldestKey = key;
+      }
+    }
+    
+    if (oldestKey) {
+      CacheService.cache.delete(oldestKey);
+    }
   }
   
   static generateKey(email: string): string {
-    return `aad_profile:${email}`;
+    // Prevent cache key injection
+    const sanitizedEmail = email.replace(/[^a-zA-Z0-9@._-]/g, '');
+    return `aad_profile:${sanitizedEmail}`;
+  }
+  
+  static clear(): void {
+    CacheService.cache.clear();
   }
 }
 
@@ -342,6 +437,17 @@ export async function GET(req: NextRequest) {
   let email = '';
   
   try {
+    // Check request size to prevent DoS attacks
+    const contentLength = req.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > CONFIG.validation.maxRequestSize) {
+      return new NextResponse(JSON.stringify({ error: 'Request too large' }), {
+        status: 413,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store'
+        }
+      });
+    }
     // Extract client IP with multiple fallbacks for different hosting providers
     const headersList = await headers();
     const forwardedFor = headersList.get('x-forwarded-for');
@@ -355,6 +461,13 @@ export async function GET(req: NextRequest) {
                clientIPHeader ||
                forwardedFor?.split(',')[0]?.trim() || 
                'unknown';
+    
+    // Validate and sanitize IP address to prevent injection
+    const ipRegex = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$|^(?:[a-fA-F0-9]{1,4}:){7}[a-fA-F0-9]{1,4}$|^unknown$/;
+    if (!ipRegex.test(clientIP)) {
+      console.warn('Invalid IP format detected, using unknown:', clientIP);
+      clientIP = 'unknown';
+    }
     
     // Validate environment configuration
     const requiredEnvVars = ['AZURE_AD_TENANT_ID', 'AZURE_AD_CLIENT_ID', 'AZURE_AD_CLIENT_SECRET'];
@@ -371,12 +484,40 @@ export async function GET(req: NextRequest) {
       });
     }
     
-    // Check authorization first
-    if (!AuthorizationService.isAuthorized(req)) {
+// Get and validate email parameter FIRST
+    const rawEmail = req.nextUrl.searchParams.get('email');
+    if (!rawEmail) {
+      return new NextResponse(JSON.stringify({ error: 'Missing email parameter' }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store'
+        }
+      });
+    }
+
+    // Sanitize and validate email
+    email = ValidationService.sanitizeEmail(rawEmail);
+    const validation = ValidationService.validateEmail(email);
+    
+    if (!validation.valid) {
+      return new NextResponse(JSON.stringify({ error: validation.error }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store'
+        }
+      });
+    }
+
+    // Check authorization with proper async handling
+    const authResult = await AuthorizationService.isAuthorized(req);
+    if (!authResult.authorized) {
       console.warn(`Unauthorized access attempt from IP: ${clientIP}`, {
         userAgent: req.headers.get('user-agent'),
         referer: req.headers.get('referer'),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        email: email.replace(/(.{2}).*(@.*)/, '$1***$2')
       });
       
       return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
@@ -387,8 +528,8 @@ export async function GET(req: NextRequest) {
         }
       });
     }
-    
-    // Check rate limiting with intelligent analysis
+
+    // Check rate limiting with validated email
     const userAgent = req.headers.get('user-agent') || '';
     const rateLimitResult = IntelligentRateLimiter.check(clientIP, email, userAgent);
     
@@ -429,32 +570,6 @@ export async function GET(req: NextRequest) {
       });
     }
     
-    // Get and validate email parameter
-    const rawEmail = req.nextUrl.searchParams.get('email');
-    if (!rawEmail) {
-      return new NextResponse(JSON.stringify({ error: 'Missing email parameter' }), {
-        status: 400,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-store'
-        }
-      });
-    }
-    
-    // Sanitize and validate email
-    email = ValidationService.sanitizeEmail(rawEmail);
-    const validation = ValidationService.validateEmail(email);
-    
-    if (!validation.valid) {
-      return new NextResponse(JSON.stringify({ error: validation.error }), {
-        status: 400,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-store'
-        }
-      });
-    }
-    
     // Check cache first
     const cacheKey = CacheService.generateKey(email);
     const cachedResult = CacheService.get(cacheKey);
@@ -489,6 +604,7 @@ export async function GET(req: NextRequest) {
     });
     
     if (!tokenResponse.ok) {
+      // Log detailed error internally but return generic message
       console.error('Azure AD token request failed:', {
         status: tokenResponse.status,
         statusText: tokenResponse.statusText,
@@ -496,11 +612,20 @@ export async function GET(req: NextRequest) {
         clientIP
       });
       
-      return new NextResponse(JSON.stringify({ error: 'Authentication failed' }), {
-        status: 401,
+      // Prevent timing attacks - ensure minimum response time
+      const elapsed = Date.now() - startTime;
+      if (elapsed < CONFIG.security.minResponseTime) {
+        await new Promise(resolve => setTimeout(resolve, CONFIG.security.minResponseTime - elapsed));
+      }
+      
+      return new NextResponse(JSON.stringify({ error: 'Service temporarily unavailable' }), {
+        status: 503,
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'no-store'
+          'Cache-Control': 'no-store',
+          'X-Content-Type-Options': 'nosniff',
+          'X-Frame-Options': 'DENY',
+          'X-XSS-Protection': '1; mode=block'
         }
       });
     }
@@ -541,12 +666,20 @@ export async function GET(req: NextRequest) {
           email: email.replace(/(.{2}).*(@.*)/, '$1***$2') // Partially mask email in logs
         });
         
-        const status = searchResponse.status >= 500 ? 503 : 400;
+        // Prevent timing attacks
+        const elapsed = Date.now() - startTime;
+        if (elapsed < CONFIG.security.minResponseTime) {
+          await new Promise(resolve => setTimeout(resolve, CONFIG.security.minResponseTime - elapsed));
+        }
+        
         return new NextResponse(JSON.stringify({ error: 'User lookup failed' }), {
-          status,
+          status: 503, // Always return 503 to avoid information leakage
           headers: {
             'Content-Type': 'application/json',
-            'Cache-Control': 'no-store'
+            'Cache-Control': 'no-store',
+            'X-Content-Type-Options': 'nosniff',
+            'X-Frame-Options': 'DENY',
+            'X-XSS-Protection': '1; mode=block'
           }
         });
       }
@@ -619,7 +752,11 @@ export async function GET(req: NextRequest) {
         'X-Cache': 'MISS',
         'X-Response-Time': `${Date.now() - startTime}ms`,
         'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
-        'X-RateLimit-Legitimate': rateLimitResult.isLegitimate ? 'true' : 'false'
+        'X-RateLimit-Legitimate': rateLimitResult.isLegitimate ? 'true' : 'false',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'X-XSS-Protection': '1; mode=block',
+        'Referrer-Policy': 'strict-origin-when-cross-origin'
       }
     });
     
@@ -648,10 +785,34 @@ export async function GET(req: NextRequest) {
 // Add OPTIONS handler for CORS preflight requests
 export async function OPTIONS(req: NextRequest) {
   const origin = req.headers.get('origin');
-  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['*'];
-  const allowOrigin = allowedOrigins.includes('*') || (origin && allowedOrigins.includes(origin)) 
-    ? (origin || '*') 
-    : 'null';
+  
+  // Default to localhost for development, require explicit configuration for production
+  const defaultOrigins = process.env.NODE_ENV === 'development' 
+    ? ['http://localhost:3000', 'http://localhost:3001']
+    : [];
+  
+  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || defaultOrigins;
+  
+  // Never allow wildcard in production
+  if (process.env.NODE_ENV === 'production' && allowedOrigins.includes('*')) {
+    console.error('CORS wildcard (*) not allowed in production. Set ALLOWED_ORIGINS environment variable.');
+    return new NextResponse(JSON.stringify({ error: 'CORS misconfiguration' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+  
+  const allowOrigin = origin && allowedOrigins.includes(origin) ? origin : 'null';
+  
+  // Log blocked CORS attempts
+  if (origin && allowOrigin === 'null') {
+    console.warn('Blocked CORS request from unauthorized origin:', {
+      origin,
+      allowedOrigins: allowedOrigins.length > 0 ? '[CONFIGURED]' : '[NONE]',
+      userAgent: req.headers.get('user-agent'),
+      timestamp: new Date().toISOString()
+    });
+  }
   
   return new NextResponse(null, {
     status: 200,
@@ -660,6 +821,7 @@ export async function OPTIONS(req: NextRequest) {
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
       'Access-Control-Allow-Headers': 'Authorization, Content-Type, x-api-key',
       'Access-Control-Max-Age': '86400',
+      'Access-Control-Allow-Credentials': 'true',
       'Vary': 'Origin'
     }
   });
