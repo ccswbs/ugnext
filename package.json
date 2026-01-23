@@ -34,7 +34,7 @@
     "@orama/stopwords": "^3.1.18",
     "@oramacloud/client": "^2.1.4",
     "@plaiceholder/next": "^3.0.0",
-    "@uoguelph/react-components": "^1.6.3-rc.10",
+    "@uoguelph/react-components": "1.6.3-rc.11",
     "@uoguelph/web-components": "^2.0.10-rc.4",
     "conditional-wrap": "^1.0.3",
     "glob": "^13.0.0",
