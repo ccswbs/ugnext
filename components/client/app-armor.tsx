@@ -1,14 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DismissibleAlert } from "@uoguelph/react-components/dismissible-alert";
+import { DismissibleAlert, DismissibleAlertProps } from "@uoguelph/react-components/dismissible-alert";
 import unraw from "unraw";
-
-export type Alert = {
-  title: string;
-  description: string;
-  timestamp: string;
-};
 
 export async function getAlert(test = false) {
   const id = test ? "162" : "163";
@@ -56,7 +50,7 @@ export async function getAlert(test = false) {
 }
 
 export function AppArmor() {
-  const [alert, setAlert] = useState<Alert>();
+  const [alert, setAlert] = useState<DismissibleAlertProps>();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -69,11 +63,17 @@ export function AppArmor() {
         title: alert.title,
         description: alert.description,
         timestamp: alert.timestamp,
+        link: {
+          url: "https://uoguelph.ca/campus-status",
+          text: "Learn More - Status Page",
+        },
       });
     });
   }, []);
 
-  return <DismissibleAlert alert={alert} />;
+  if (!alert) return <></>;
+
+  return <DismissibleAlert {...alert} />;
 }
 
 export default AppArmor;
