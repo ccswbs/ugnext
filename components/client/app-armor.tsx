@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import { DismissibleAlert, DismissibleAlertProps } from "@uoguelph/react-components/dismissible-alert";
 import unraw from "unraw";
 
+function linkifyUrls(input: string) {
+  const urlRegex = /\b(?:https?:\/\/)?(?:www\.)?[a-z0-9.-]+\.[a-z]{2,}(?:\/[^\s<]*)?/gi;
+
+  return input.replace(urlRegex, (match) => {
+    const href = match.startsWith("http://") || match.startsWith("https://") ? match : `https://${match}`;
+    return `<a href="${href}">${match}</a>`;
+  });
+}
+
 export async function getAlert(test = false) {
   const id = test ? "162" : "163";
   const res = await fetch(`https://uoguelph.apparmor.com/Notifications/Feeds/Javascript/?AlertID=${id}`);
@@ -30,7 +39,9 @@ export async function getAlert(test = false) {
     const html = parser.parseFromString(text, "text/html");
 
     const title = html.querySelector('[slot="subtitle"]')?.textContent;
-    const description = html.querySelector('[slot="message"]')?.textContent;
+    const description =
+      html.querySelector('[slot="message"]')?.textContent ??
+      `Please visit <a href="https://uoguelph.ca/campus-status">uoguelph.ca/campus-status</a> for more information.`;
     const timestamp = html
       .querySelector('[slot="footer"]')
       ?.textContent?.replace("Last updated", "")
@@ -42,7 +53,7 @@ export async function getAlert(test = false) {
       return null;
     }
 
-    return { title, description, timestamp };
+    return { title, description: linkifyUrls(description), timestamp };
   } catch (e) {
     console.error(`Failed to parse AppArmor alert JSON`);
     return null;
@@ -63,10 +74,6 @@ export function AppArmor() {
         title: alert.title,
         description: alert.description,
         timestamp: alert.timestamp,
-        link: {
-          url: "https://uoguelph.ca/campus-status",
-          text: "Learn More - Status Page",
-        },
       });
     });
   }, []);
