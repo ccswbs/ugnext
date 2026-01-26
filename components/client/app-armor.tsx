@@ -39,9 +39,9 @@ export async function getAlert(test = false) {
     const html = parser.parseFromString(text, "text/html");
 
     const title = html.querySelector('[slot="subtitle"]')?.textContent;
-    const description =
+    let description =
       html.querySelector('[slot="message"]')?.textContent ??
-      `Please visit <a href="https://uoguelph.ca/campus-status">uoguelph.ca/campus-status</a> for more information.`;
+      `Please visit uoguelph.ca/campus-status for more information.`;
     const timestamp = html
       .querySelector('[slot="footer"]')
       ?.textContent?.replace("Last updated", "")
@@ -51,6 +51,10 @@ export async function getAlert(test = false) {
     if (!title || !description || !timestamp) {
       console.error(`Failed to parse AppArmor alert JSON`);
       return null;
+    }
+
+    if (!description.includes("Please visit uoguelph.ca/campus-status for more information.")) {
+      description += `<br> Please visit uoguelph.ca/campus-status for more information.`;
     }
 
     return { title, description: linkifyUrls(description), timestamp };
