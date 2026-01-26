@@ -83,7 +83,7 @@ function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackground
           {quotes.map((quote) => {
             return (
               <div className="flex flex-col justify-center items-center gap-4" key={quote.id}>
-                <Blockquote color="blue" className="font-thin text-3xl tracking-wider">
+                <Blockquote color="yellow" className="font-thin text-3xl tracking-wider">
                   <BlockquoteContent>{quote.quoteContent}</BlockquoteContent>
                 </Blockquote>
                 <BlockquoteAuthor className="text-light-blue">
