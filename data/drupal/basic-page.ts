@@ -92,3 +92,65 @@ export async function getPageContent(id: string) {
     ),
   };
 }
+
+export async function getAllBasicPagePaths() {
+  if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
+    return [];
+  }
+
+  const client = getClient();
+
+  const pathQuery = gql(/* gql */ `
+    query BasicPagePaths($cursor: Cursor) {
+      nodePages(after: $cursor, first: 100) {
+        nodes {
+          __typename
+          id
+          status
+          path
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const paths: string[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await client.query({
+      query: pathQuery,
+      variables: {
+        cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return paths;
+    }
+
+    if (!data.nodePages.nodes.length) {
+      return paths;
+    }
+
+    const currentPaths = data.nodePages.nodes
+      .filter((page) => page.status && page.id !== "1429")
+      .map((page) => page.path)
+      .filter((path) => typeof path === "string");
+
+    paths.push(...currentPaths);
+
+    cursor = data.nodePages.pageInfo.endCursor;
+    hasNextPage = data.nodePages.pageInfo.hasNextPage;
+  }
+
+  return paths;
+}
