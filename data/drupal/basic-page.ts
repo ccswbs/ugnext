@@ -1,6 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { handleGraphQLError, query } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
 import { getProfileTypes } from "@/data/drupal/profile";
 import { getFullTestimonialSlider } from "@/data/drupal/widgets";
@@ -61,7 +61,8 @@ export async function getPageContent(id: string) {
   });
 
   if (error) {
-    handleGraphQLError(error);
+    console.error(`GraphQL Error: failed to retrieve content for basic page ${id}:\n\t${error}\n`);
+    return null;
   }
 
   if (!data?.nodePage) {
