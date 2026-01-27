@@ -111,3 +111,26 @@ export function slugify(str: string): string {
     // Remove leading and trailing hyphens
     .replace(/^-+|-+$/g, "");
 }
+
+/**
+ * Obfuscates an email address to protect against bots/spammers
+ * Converts email display to character entities while keeping href functional
+ * @param email - The email address to obfuscate
+ * @returns Object with obfuscated display and plain href
+ */
+export const obfuscateEmail = (email: string) => {
+  if (!email || typeof email !== 'string') {
+    return { display: '', href: '' };
+  }
+
+  // Convert to HTML entities for display to make it harder for bots to parse
+  const entities = email
+    .split('')
+    .map(char => `&#${char.charCodeAt(0)};`)
+    .join('');
+
+  return {
+    display: entities,
+    href: `mailto:${email}`, // Use plain email for functional mailto link
+  };
+};

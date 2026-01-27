@@ -10,16 +10,16 @@ import { Breadcrumbs } from "@/components/server/breadcrumbs";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
-import { LdapContactInfo } from "@/components/server/ldap-contact-info";
+import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
-import { 
-  UniwebAffiliations,
-  UniwebCurrentTeaching,
-  UniwebDegrees,
-  UniwebPublications,
-  UniwebResearchDesc,
-  UniwebResearchInterests 
-} from "@/components/server/uniweb-components";
+// import { 
+//   UniwebAffiliations,
+//   UniwebCurrentTeaching,
+//   UniwebDegrees,
+//   UniwebPublications,
+//   UniwebResearchDesc,
+//   UniwebResearchInterests 
+// } from "@/components/server/uniweb-components";
 import { FullProfile } from "@/lib/types/profile";
 
 // Component-specific interface that extends the shared FullProfile type
@@ -78,11 +78,11 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 </Typography>
               )}
 
-              {/* Directory contact info from LDAP */}
+              {/* Directory contact info from AAD */}
               {content.centralLoginId && content.centralLoginId.trim() && (
                 <div id="contact-info" className="mb-4">
-                  <LdapContactInfo 
-                    centralLoginId={content.centralLoginId}
+                  <AadContactInfo 
+                    email={`${content.centralLoginId}@uoguelph.ca`}
                     directoryEmail={content.directoryEmail}
                     directoryOffice={content.directoryOffice}
                     directoryPhone={content.directoryPhone}
@@ -167,26 +167,26 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             }
             
             // UniWeb profile part
-            if (section.uniwebSelect?.name && content.uniwebId) {
-              const sectionName = section.uniwebSelect.name;
-              
-              switch (sectionName) {
-                case 'Affiliations':
-                  return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
-                case 'Research Description':
-                  return <UniwebResearchDesc key={index} uniwebId={content.uniwebId} />;
-                case 'Current Teaching':
-                  return <UniwebCurrentTeaching key={index} uniwebId={content.uniwebId} />;
-                case 'Selected Degrees':
-                  return <UniwebDegrees key={index} uniwebId={content.uniwebId} />;
-                case 'Selected Publications':
-                  return <UniwebPublications key={index} uniwebId={content.uniwebId} />;
-                case 'Research Interests':
-                  return <UniwebResearchInterests key={index} uniwebId={content.uniwebId} />;
-                default:
-                  return null;
-              }
-            }
+            // if (section.uniwebSelect?.name && content.uniwebId) {
+            //   const sectionName = section.uniwebSelect.name;
+            //   
+            //   switch (sectionName) {
+            //     case 'Affiliations':
+            //       return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
+            //     case 'Research Description':
+            //       return <UniwebResearchDesc key={index} uniwebId={content.uniwebId} />;
+            //     case 'Current Teaching':
+            //       return <UniwebCurrentTeaching key={index} uniwebId={content.uniwebId} />;
+            //     case 'Selected Degrees':
+            //       return <UniwebDegrees key={index} uniwebId={content.uniwebId} />;
+            //     case 'Selected Publications':
+            //       return <UniwebPublications key={index} uniwebId={content.uniwebId} />;
+            //     case 'Research Interests':
+            //       return <UniwebResearchInterests key={index} uniwebId={content.uniwebId} />;
+            //     default:
+            //       return null;
+            //   }
+            // }
             
             // Empty section or unrecognized format
             return null;
