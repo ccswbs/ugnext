@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { LdapContactInfoClient } from "@/components/client/ldap-contact-info-client";
+import { AadContactInfoClient } from "@/components/client/aad-contact-info-client";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -48,10 +48,10 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
           </Typography>
         )}
 
-        {/* Directory contact info from LDAP - using reusable component */}
+        {/* Directory contact info from AAD - using reusable component */}
         {profileInfo.centralLoginId && (
-          <LdapContactInfoClient
-            centralLoginId={profileInfo.centralLoginId}
+          <AadContactInfoClient
+            email={`${profileInfo.centralLoginId}@uoguelph.ca`}
             directoryEmail={!!profileInfo.directoryEmail}
             directoryOffice={false}
             directoryPhone={!!profileInfo.directoryPhone}
