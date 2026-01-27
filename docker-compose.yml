@@ -2,14 +2,17 @@ services:
   playwright:
     build:
       context: .
-      dockerfile: Dockerfile.playwright-bun
+      dockerfile: Dockerfile
+      args:
+        - FONTAWESOME_PACKAGE_TOKEN=${FONTAWESOME_PACKAGE_TOKEN}
     working_dir: /workspace
     ipc: host
-    environment:
-      HOME: /tmp
+    # Use a named volume for node_modules to prevent host-mismatch issues
     volumes:
-      - ./:/workspace
-    command: >
-      bash -lc
-      "bun install --frozen-lockfile
-      && bunx playwright test --update-snapshots"
+      - .:/workspace
+      - /workspace/node_modules
+    environment:
+      - HOME=/tmp
+    env_file:
+      - .env
+    command: bunx playwright test --update-snapshots
