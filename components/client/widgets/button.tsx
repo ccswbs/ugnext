@@ -9,14 +9,16 @@ import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import Link from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
 import { twMerge } from "tailwind-merge";
+import { usePathname } from "next/navigation";
 
 export type ButtonColumn = "primary" | "secondary" | "call-to-action";
 
 export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: ButtonColumn }) => {
   let url = data.link?.url;
+  const pathname = usePathname();
 
   if (!url) {
-    console.error(`Widget Error ${data.__typename}: A URL must be defined for the button`, data);
+    console.error(`Widget Error: ${data.__typename} must have a URL defined\n\t@ ${pathname}\n`);
     return <></>;
   }
 
@@ -29,8 +31,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
 
   if (!title) {
     console.error(
-      `Widget Error ${data.__typename}: A title must be defined for the button either in its formatted title field or link title field`,
-      data
+      `Widget Error: ${data.__typename} must have a title defined either in its formatted title field or link title field\n\t@ ${pathname}\n`
     );
     return <></>;
   }

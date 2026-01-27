@@ -1,6 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { handleGraphQLError, query } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
 import { getProfileTypes } from "@/data/drupal/profile";
 import { getFullTestimonialSlider } from "@/data/drupal/widgets";
@@ -61,7 +61,8 @@ export async function getPageContent(id: string) {
   });
 
   if (error) {
-    handleGraphQLError(error);
+    console.error(`GraphQL Error: failed to retrieve content for basic page ${id}:\n\t${error}\n`);
+    return null;
   }
 
   if (!data?.nodePage) {
@@ -90,4 +91,66 @@ export async function getPageContent(id: string) {
       })
     ),
   };
+}
+
+export async function getAllBasicPagePaths() {
+  if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
+    return [];
+  }
+
+  const client = getClient();
+
+  const pathQuery = gql(/* gql */ `
+    query BasicPagePaths($cursor: Cursor) {
+      nodePages(after: $cursor, first: 100) {
+        nodes {
+          __typename
+          id
+          status
+          path
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const paths: string[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await client.query({
+      query: pathQuery,
+      variables: {
+        cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return paths;
+    }
+
+    if (!data.nodePages.nodes.length) {
+      return paths;
+    }
+
+    const currentPaths = data.nodePages.nodes
+      .filter((page) => page.status && page.id !== "1429")
+      .map((page) => page.path)
+      .filter((path) => typeof path === "string");
+
+    paths.push(...currentPaths);
+
+    cursor = data.nodePages.pageInfo.endCursor;
+    hasNextPage = data.nodePages.pageInfo.hasNextPage;
+  }
+
+  return paths;
 }
