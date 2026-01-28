@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography } from "@uoguelph/react-components/typography";
+import { Link } from "@uoguelph/react-components/link";
 import { fetchAadProfile } from "@/lib/aad-utils";
 import { obfuscateEmail } from "@/lib/string-utils";
 
@@ -47,10 +48,9 @@ export async function AadContactInfo({
       <React.Fragment key="email">
         <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
         <span className="sr-only">Email:</span>
-        <a 
+        <Link 
           href={href}
           dangerouslySetInnerHTML={{ __html: display }}
-          className="text-body-copy-link underline hover:decoration-transparent"
           aria-label={`Send email to ${aadData.mail}`}
         />
       </React.Fragment>
