@@ -95,9 +95,9 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 <div className="mb-4">
                   {content.customLink.map((link, idx) => (
                     <div key={idx} className="mb-2">
-                      <Link href={link.url} className="flex items-center gap-2">
-                        <i className={`${getIconForUrl(link.url)} w-4`} aria-hidden="true"></i>
-                        <span>{link.title}</span>
+                      <i className={`${getIconForUrl(link.url)} me-2`} aria-hidden="true"></i>
+                      <Link href={link.url}>                        
+                        {link.title}
                       </Link>
                     </div>
                   ))}
