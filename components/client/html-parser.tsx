@@ -526,9 +526,13 @@ const defaultInstructions: ParserInstruction[] = [
         props.className as string
       );
 
-      const src = (props.src as string).startsWith("/sites/default/files")
-        ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${props.src}`
-        : (props.src as string);
+      let src = props.src as string;
+
+      if (src.startsWith("/sites/default/files")) {
+        src = `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${props.src}`;
+      } else if (src.startsWith("/.netlify/images?url=")) {
+        src = src.replace("/.netlify/images?url=", "");
+      }
 
       const ImageComponent = props.width && props.height ? Image : "img";
 

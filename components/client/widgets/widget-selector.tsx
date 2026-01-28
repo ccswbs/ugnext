@@ -19,8 +19,11 @@ import { SocialMediaWidget } from "@/components/client/widgets/social-media";
 import { ProfileBlock } from "@/components/client/widgets/profile-block";
 import { ProfileCard } from "@/components/client/widgets/profile-card";
 import type { Widgets } from "@/data/drupal/widgets";
+import { usePathname } from "next/navigation";
 
 export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; neverWrap?: boolean }) {
+  const pathname = usePathname();
+
   // If this widget is within a section, we don't want to render a container around it
   const context = useContext(SectionContext);
 
@@ -41,7 +44,8 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
   ];
 
   if (!data.__typename) {
-    console.error("Widget Error: Widget type is not defined", data);
+    console.error(`Widget Error: encountered a widget with no __typename\n`);
+
     return <></>;
   }
 
@@ -78,7 +82,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
       case "ParagraphProfileCard":
         return <ProfileCard data={data} />;
       default:
-        console.error(`Widget Error ${data.__typename}: Widget type is not supported`, data);
+        console.error(`Widget Error: ${data.__typename} is not a supported widget\n\t@ ${pathname}\n`);
         return <></>;
     }
   };

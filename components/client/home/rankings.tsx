@@ -49,7 +49,7 @@ export function Rankings() {
             className={linkClasses}
             href="https://www.timeshighereducation.com/world-university-rankings/by-subject"
           >
-            Times Higher Education, 2025
+            Times Higher Education, 2026
           </Link>
         </StatisticsItemRepresents>
       </StatisticsItem>
