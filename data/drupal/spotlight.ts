@@ -25,6 +25,7 @@ export const SPOTLIGHT_HERO_FRAGMENT = gql(/* gql */ `
           url
         }
       }
+      placeholderBase64
     }
   }
 `);
@@ -45,6 +46,7 @@ export const SPOTLIGHT_CARD_FRAGMENT = gql(/* gql */ `
           url
         }
       }
+      placeholderBase64
     }
   }
 `);
@@ -66,6 +68,7 @@ export type SpotlightCard = {
     url: string;
     width: number;
     height: number;
+    placeholderBase64?: string;
   };
 };
 
@@ -275,6 +278,7 @@ async function getSpotlightHeroById(id: string): Promise<SpotlightHero | null> {
       url: data.nodeSpotlight.image.image.url,
       width: data.nodeSpotlight.image.image.width,
       height: data.nodeSpotlight.image.image.height,
+      placeholderBase64: data.nodeSpotlight.image.placeholderBase64 ?? undefined,
     },
     thumbnail: {
       url: data.nodeSpotlight.image.image.variations?.[0].url ?? "",
@@ -323,6 +327,7 @@ async function getSpotlightCardById(id: string): Promise<SpotlightCard | null> {
       url: data.nodeSpotlight.image.image.variations?.[0].url ?? "",
       width: 300,
       height: 200,
+      placeholderBase64: data.nodeSpotlight.image.placeholderBase64 ?? undefined,
     },
   };
 }

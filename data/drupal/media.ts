@@ -11,6 +11,7 @@ export const IMAGE_FRAGMENT = gql(/* gql */ `
       width
       url
     }
+    placeholderBase64
   }
 `);
 
