@@ -96,7 +96,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   {content.customLink.map((link, idx) => (
                     <div key={idx} className="mb-2">
                       <i className={`${getIconForUrl(link.url)} me-2`} aria-hidden="true"></i>
-                      <Link href={link.url}>                        
+                      <Link href={link.url}>
                         {link.title}
                       </Link>
                     </div>
