@@ -37,6 +37,8 @@ export const SpotlightCards = ({ cards }: { cards: SpotlightCard[] }) => {
             height={`${data.image.height}`}
             className={image()}
             as={Image}
+            placeholder={data.image.placeholderBase64 ? "blur" : "empty"}
+            blurDataURL={data.image.placeholderBase64}
           />
           <CardContent className={content()}>
             <CardTitle className={title()}>{data.title}</CardTitle>

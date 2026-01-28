@@ -31,6 +31,8 @@ export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
       alignment={(data.captionAlignment ?? "left") as HeroProps["alignment"]}
       className={hero()}
       preload={true}
+      placeholder={data.image.placeholderBase64 ? "blur" : "empty"}
+      blurDataURL={data.image.placeholderBase64}
     >
       <HeroTitle as="h2" className={title()}>
         {data.title}
