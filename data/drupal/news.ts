@@ -42,6 +42,9 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
     primaryNavigation {
       ...Navigation
     }
+    tags {
+      ...Tag
+    }
     doNotDisplayImage
     widgets {
       __typename
