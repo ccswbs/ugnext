@@ -166,15 +166,19 @@ export async function getRoute(url: string) {
   }
 }
 
-export async function checkIsEntityInMenu (entity_id: string, entity_path: string | null | undefined, primary_navigation: string | undefined) {
-  if(primary_navigation){
+export async function checkIsEntityInMenu(
+  entity_id: string,
+  entity_path: string | null | undefined,
+  primary_navigation: string | undefined
+) {
+  if (primary_navigation) {
     const entityNodeURL = entity_id ? `node/${entity_id}` : null;
     const checkMenuForEntityID = entityNodeURL ? await getMenuLinkByURI(entityNodeURL, primary_navigation) : null;
 
     // Check both node URL and path URL
-    if(!checkMenuForEntityID || checkMenuForEntityID?.length === 0){
+    if (!checkMenuForEntityID || checkMenuForEntityID?.length === 0) {
       const checkMenuForEntityPath = entity_path ? await getMenuLinkByURI(entity_path, primary_navigation) : null;
-      if(!checkMenuForEntityPath || checkMenuForEntityPath?.length === 0){
+      if (!checkMenuForEntityPath || checkMenuForEntityPath?.length === 0) {
         return false;
       }
     }
@@ -182,7 +186,7 @@ export async function checkIsEntityInMenu (entity_id: string, entity_path: strin
   return true;
 }
 
-function filterBreadcrumbs (breadcrumbs: Link[], currentPage: {title: string}) {
+function filterBreadcrumbs(breadcrumbs: Link[], currentPage: { title: string }) {
   // Filter out elements without titles and the root from Breadcrumb Path
   let breadcrumbPath = breadcrumbs.filter((breadcrumb) => {
     if (!breadcrumb.title) {
@@ -206,7 +210,6 @@ function filterBreadcrumbs (breadcrumbs: Link[], currentPage: {title: string}) {
 
   return breadcrumbPath;
 }
-
 
 // Route assumes we are using Menu-generated Breadcrumbs instead of Path-based Breadcrumbs
 export async function getRouteBreadcrumbs(url: string, primary_navigation: string | undefined) {
