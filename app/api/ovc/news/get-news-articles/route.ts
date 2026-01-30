@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getNewsArticles } from "@/data/drupal/ovc-news";
+import { getLegacyNewsArticles } from "@/data/drupal/legacy-news";
 
 export async function GET(request: NextRequest) {
   const page = Number.parseInt(request.nextUrl.searchParams.get("page") ?? "");
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const data = await getNewsArticles(page, size);
+  const data = await getLegacyNewsArticles(page, size);
 
   return NextResponse.json(data);
 }
