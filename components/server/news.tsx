@@ -11,6 +11,10 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Hero, HeroTitle } from "@uoguelph/react-components/hero";
 import Image from "next/image";
 import { Widgets } from "@/data/drupal/widgets";
+import { Breadcrumbs, Breadcrumb, BreadcrumbHome } from "@uoguelph/react-components/breadcrumbs";
+import Link from "next/link";
+import { slugify } from "@/lib/string-utils";
+import { NewsBreadcrumbs } from "@/components/client/news/news-breadcrumbs";
 
 export async function News({ id }: { id: string }) {
   const article = await getNewsArticle(id);
@@ -50,6 +54,8 @@ export async function News({ id }: { id: string }) {
           <HeroTitle>{article.title}</HeroTitle>
         </Hero>
       )}
+
+      <NewsBreadcrumbs title={article.title} unit={article.unit} categories={article.category ?? []} />
 
       <LayoutContent container={false}>
         {(article.widgets as Widgets[])?.map((widget, index) => (
