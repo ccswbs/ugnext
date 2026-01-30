@@ -36,28 +36,28 @@ export async function News({ id }: { id: string }) {
     <Layout>
       <Header name={article.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
 
-      {article.doNotDisplayImage || !article.hero ? (
-        <Container>
-          <Typography type="h1" as="h1">
-            {article.title}
-          </Typography>
-        </Container>
-      ) : (
-        <Hero
-          as={Image}
-          src={article.hero.image.url}
-          width={article.hero.image.width}
-          height={article.hero.image.height}
-          alt={article.hero.image.alt ?? ""}
-          variant="basic"
-        >
-          <HeroTitle>{article.title}</HeroTitle>
-        </Hero>
-      )}
-
-      <NewsBreadcrumbs title={article.title} unit={article.unit} categories={article.category ?? []} />
-
       <LayoutContent container={false}>
+        {article.doNotDisplayImage || !article.hero ? (
+          <Container>
+            <Typography type="h1" as="h1">
+              {article.title}
+            </Typography>
+          </Container>
+        ) : (
+          <Hero
+            as={Image}
+            src={article.hero.image.url}
+            width={article.hero.image.width}
+            height={article.hero.image.height}
+            alt={article.hero.image.alt ?? ""}
+            variant="basic"
+          >
+            <HeroTitle>{article.title}</HeroTitle>
+          </Hero>
+        )}
+
+        <NewsBreadcrumbs title={article.title} unit={article.unit} categories={article.category ?? []} />
+
         {(article.widgets as Widgets[])?.map((widget, index) => (
           <WidgetSelector key={index} data={widget} />
         ))}
