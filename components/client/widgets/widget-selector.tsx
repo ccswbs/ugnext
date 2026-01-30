@@ -20,6 +20,7 @@ import { ProfileBlock } from "@/components/client/widgets/profile-block";
 import { ProfileCard } from "@/components/client/widgets/profile-card";
 import type { Widgets } from "@/data/drupal/widgets";
 import { usePathname } from "next/navigation";
+import { ButtonWidget } from "@/components/client/widgets/button";
 
 export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; neverWrap?: boolean }) {
   const pathname = usePathname();
@@ -53,6 +54,8 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     switch (data.__typename) {
       case "ParagraphAccordionSection":
         return <AccordionWidget data={data} />;
+      case "ParagraphButtonWidget":
+        return <ButtonWidget data={data} column={"primary"} />;
       case "ParagraphSectionButton":
         return <ButtonSectionWidget data={data} />;
       case "ParagraphGeneralText":
@@ -81,6 +84,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
         return <ProfileBlock data={data} />;
       case "ParagraphProfileCard":
         return <ProfileCard data={data} />;
+
       default:
         console.error(`Widget Error: ${data.__typename} is not a supported widget\n\t@ ${pathname}\n`);
         return <></>;
