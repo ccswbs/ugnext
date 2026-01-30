@@ -11,6 +11,7 @@ import {
   ModalVideoFragment,
   ProfileBlockFragment,
   ProfileCardFragment,
+  RelatedContentFragment,
   SectionFragment,
   SocialMediaFragment,
   StatisticsFragment,
@@ -535,6 +536,7 @@ export type Widgets =
   | TabsFragment
   | TestimonialSliderFragment
   | FullTestimonialSlider
+  | RelatedContentFragment
   | {
       __typename: "ParagraphYamlWidget";
     }
