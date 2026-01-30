@@ -110,14 +110,31 @@ export async function getFilteredNews(options: NewsSearchOptions) {
 
   const { data, error } = await client.query({
     query: gql(/* gql */ `
-      query NewsSearch {
-        nodeNewsItems(first: 100) {
-          nodes {
+      query NewsSearch(
+        $page: Int = 10
+        $pageSize: Int = 10
+        $unit: String = ""
+        $categories: [String] = ""
+        $query: String = ""
+      ) {
+        newsSearch(page: $page, pageSize: $pageSize, filter: { unit: $unit, categories: $categories, query: $query }) {
+          results {
             ...NewsWithoutContent
+          }
+          pageInfo {
+            pageSize
+            total
           }
         }
       }
     `),
+    variables: {
+      page: page,
+      pageSize: pageSize,
+      unit: unit,
+      categories: categories,
+      query: query,
+    },
   });
 
   if (error) {
@@ -125,15 +142,24 @@ export async function getFilteredNews(options: NewsSearchOptions) {
     return [];
   }
 
-  if (!data?.nodeNewsItems?.nodes) {
+  if (!data) {
     return [];
   }
 
-  const articles = data.nodeNewsItems.nodes as NewsWithoutContentFragment[];
+  if (!data.newsSearch) {
+    return [];
+  }
+
+  let results = data.newsSearch.results as NewsWithoutContentFragment[];
+
+  if (showUnpublished) {
+    // The search database only indexes the current revision of a node, so we need to fetch the latest revision.
+    // TODO fetch latest revision of news node and replace it in the results
+  }
 
   return {
-    results: articles,
-    totalPages: 1,
-    total: articles.length,
+    results: results,
+    totalPages: Math.ceil(data.newsSearch.pageInfo.total / options.pageSize),
+    total: data.newsSearch.pageInfo.total,
   };
 }
