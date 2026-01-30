@@ -22,7 +22,7 @@ export function NewsBreadcrumbs({
     <Breadcrumbs>
       <BreadcrumbHome />
       <Breadcrumb href={directory} as={Link}>
-        {unit.name} News
+        {unit.name}
       </Breadcrumb>
 
       {categories.length > 0 && (
