@@ -16,7 +16,6 @@ export function NewsBreadcrumbs({
   unit: UnitFragment;
 }) {
   const directory = `/news/${slugify(unit.name)}`;
-  const categoryIDs = categories.map((category) => category.id).join(",") ?? "";
 
   return (
     <Breadcrumbs>
@@ -27,17 +26,19 @@ export function NewsBreadcrumbs({
 
       {categories.length > 0 && (
         <Breadcrumb as="span">
-          {categories.map((category, index) => (
-            <span key={index}>
-              <Link
-                className="underline decoration-transparent decoration-1 transition-colors hocus-visible:decoration-black"
-                href={`${directory}?categories=${categoryIDs}`}
-              >
-                {category.name}
-              </Link>
-              {index < categories.length - 1 && " / "}
-            </span>
-          ))}
+          <ul>
+            {categories.map((category, index) => (
+              <li key={index} className="inline">
+                <Link
+                  className="underline decoration-transparent decoration-1 transition-colors hocus-visible:decoration-black"
+                  href={`${directory}?categories=${category.id}`}
+                >
+                  {category.name}
+                </Link>
+                <span aria-hidden={true}>{index < categories.length - 1 && " / "}</span>
+              </li>
+            ))}
+          </ul>
         </Breadcrumb>
       )}
 
