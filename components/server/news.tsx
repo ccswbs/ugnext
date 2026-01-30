@@ -11,9 +11,6 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Hero, HeroTitle } from "@uoguelph/react-components/hero";
 import Image from "next/image";
 import { Widgets } from "@/data/drupal/widgets";
-import { Breadcrumbs, Breadcrumb, BreadcrumbHome } from "@uoguelph/react-components/breadcrumbs";
-import Link from "next/link";
-import { slugify } from "@/lib/string-utils";
 import { NewsBreadcrumbs } from "@/components/client/news/news-breadcrumbs";
 
 export async function News({ id }: { id: string }) {
