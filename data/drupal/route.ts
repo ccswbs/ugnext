@@ -87,6 +87,11 @@ export async function getRoute(url: string) {
               id
               title
             }
+            ... on NodeNews {
+              uuid
+              id
+              title
+            }
             ... on TermUndergraduateStudentType {
               uuid
               id

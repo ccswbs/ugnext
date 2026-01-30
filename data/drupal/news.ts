@@ -18,7 +18,9 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
       ...NewsCategory
     }
     tags {
+      __typename
       ...Tag
+      ...Unit
     }
     externalLink {
       url
