@@ -10,6 +10,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { CustomFooter } from "@/components/server/custom-footer";
 import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
 import Link from "next/link";
+import { NewsGrid } from "@/components/client/news/news-grid";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -35,6 +36,8 @@ export default async function NewsArticle({ params }: Props) {
         <Typography type="h1" as="h1">
           {unit.name} News
         </Typography>
+
+        <NewsGrid />
       </LayoutContent>
 
       <CustomFooter tags={[]} units={[unit.id]} />
