@@ -3,6 +3,7 @@ import {
   AccordionFragment,
   BlockFragment,
   ButtonSectionFragment,
+  ButtonsFragment,
   CallToActionFragment,
   GeneralTextFragment,
   ImageOverlayFragment,
@@ -518,6 +519,7 @@ export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & 
 export type Widgets =
   | AccordionFragment
   | BlockFragment
+  | ButtonsFragment
   | ButtonSectionFragment
   | CallToActionFragment
   | GeneralTextFragment

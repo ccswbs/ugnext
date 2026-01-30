@@ -44,6 +44,7 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
       ...Block
       ...Buttons
       ...RelatedContent
+      ...Statistics
     }
   }
 `);
