@@ -3,12 +3,9 @@
 import { PaginatedGrid } from "@/components/client/paginated-grid";
 import { NewsWithoutContentFragment } from "@/lib/graphql/types";
 import { NewsCard } from "@/components/client/news/news-card";
+import { NewsSearchOptions } from "@/data/drupal/news";
 
-export type NewsCardParams = {
-  unit: string;
-  categories: string[];
-  query: string;
-};
+export type NewsCardParams = NewsSearchOptions;
 
 export function NewsGrid() {
   return (

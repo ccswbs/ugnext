@@ -7,27 +7,30 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
   fragment NewsWithoutContent on NodeNews {
     id
     title
+    path
     status
-    primaryNavigation {
-      ...Navigation
-    }
     unit {
       ...Unit
     }
     category {
       ...NewsCategory
     }
-    tags {
-      __typename
-      ...Tag
-      ...Unit
-    }
     externalLink {
       url
       title
     }
     hero {
-      ...Image
+      image {
+        alt
+        url
+        width
+        height
+        variations(styles: FOCAL_POINT600X400) {
+          url
+          width
+          height
+        }
+      }
     }
     externallyLinked
   }
@@ -36,6 +39,9 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
 export const NEWS_FRAGMENT = gql(/* gql */ `
   fragment News on NodeNews {
     ...NewsWithoutContent
+    primaryNavigation {
+      ...Navigation
+    }
     doNotDisplayImage
     widgets {
       __typename
