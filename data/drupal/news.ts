@@ -91,15 +91,15 @@ export async function getNewsArticle(id: string) {
 export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
 
 export type NewsSearchOptions = {
-  query: string;
+  query?: string;
   page: number;
   pageSize: number;
-  unit: string;
-  categories: string[];
+  unit?: string;
+  categories?: string[];
 };
 
 export async function getFilteredNews(options: NewsSearchOptions) {
-  const { query = "", page = 0, pageSize = 20, unit = "", categories = [] } = options;
+  const { query, page = 0, pageSize = 20, unit, categories } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
     throw new Error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
@@ -116,8 +116,13 @@ export async function getFilteredNews(options: NewsSearchOptions) {
         $unit: String = ""
         $categories: [String] = ""
         $query: String = ""
+        $status: Boolean = null
       ) {
-        newsSearch(page: $page, pageSize: $pageSize, filter: { unit: $unit, categories: $categories, query: $query }) {
+        newsSearch(
+          page: $page
+          pageSize: $pageSize
+          filter: { unit: $unit, categories: $categories, query: $query, status: $status }
+        ) {
           results {
             ...NewsWithoutContent
           }
@@ -131,9 +136,10 @@ export async function getFilteredNews(options: NewsSearchOptions) {
     variables: {
       page: page,
       pageSize: pageSize,
-      unit: unit,
-      categories: categories,
-      query: query,
+      unit: unit ?? null,
+      categories: categories ?? [],
+      query: query ?? "",
+      status: showUnpublished ? null : true,
     },
   });
 
@@ -154,7 +160,37 @@ export async function getFilteredNews(options: NewsSearchOptions) {
 
   if (showUnpublished) {
     // The search database only indexes the current revision of a node, so we need to fetch the latest revision.
-    // TODO fetch latest revision of news node and replace it in the results
+    // Map each result to its latest revision.
+    // Unfortunately, this means making a request for each result individually.
+    // This is not ideal as it is bad for performance,
+    // but it is the best we can do for now,
+    // and since this will only be used in draft mode or the dev server, it should be fine.
+
+    const latestRevisionQuery = gql(/* gql */ `
+      query LatestRevisionNews($id: ID!) {
+        nodeNews(id: $id, revision: "latest") {
+          ...NewsWithoutContent
+        }
+      }
+    `);
+
+    results = await Promise.all(
+      results.map(async (result) => {
+        const { data } = await client.query({
+          query: latestRevisionQuery,
+          variables: { id: result.id },
+        });
+
+        if (!data || !data.nodeNews) {
+          console.warn(
+            `Failed to fetch latest revision for news article ${result.id}, falling back to original result`
+          );
+          return result;
+        }
+
+        return data.nodeNews;
+      })
+    );
   }
 
   return {
