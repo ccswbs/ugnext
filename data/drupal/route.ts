@@ -196,16 +196,16 @@ function filterBreadcrumbs(breadcrumbs: Link[], currentPage: { title: string }) 
   });
 
   // Remove last breadcrumb item if same as current page
-  if(breadcrumbPath.length > 0){
+  if (breadcrumbPath.length > 0) {
     const lastBreadcrumbItem = breadcrumbPath[breadcrumbPath.length - 1];
-    if((currentPage.title === lastBreadcrumbItem?.title) && (lastBreadcrumbItem?.url === '')){
-      if(breadcrumbPath.length > 1){
+    if (currentPage.title === lastBreadcrumbItem?.title && lastBreadcrumbItem?.url === "") {
+      if (breadcrumbPath.length > 1) {
         // pop returns undefined if only one item
-        breadcrumbPath.pop(); 
-      }else{
+        breadcrumbPath.pop();
+      } else {
         breadcrumbPath = [];
       }
-    } 
+    }
   }
 
   return breadcrumbPath;
@@ -304,13 +304,13 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
       };
 
       if (!Array.isArray(data.route.breadcrumbs)) {
-        return [ currentPage ];
+        return [currentPage];
       }
 
       let breadcrumbPath = filterBreadcrumbs(data.route.breadcrumbs, currentPage);
 
       /* ---- Handle Basic Pages with Primary Navigation Homepage URL --- */
-      if(data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
+      if (data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
         const primaryNavigationHome = {
           title: data.route.entity.primaryNavigation?.primaryNavigationUrl?.title,
           url: data.route.entity.primaryNavigation?.primaryNavigationUrl?.url,
@@ -318,46 +318,36 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
 
         /* ---- Handle pages that are NOT in the menu --- */
         // If page NOT in menu, return [Primary Nav Home > currentPage]
-        const isPageInMenu = await checkIsEntityInMenu(data.route.entity.id, data.route.entity.path, primary_navigation); 
-        if(!isPageInMenu){
-          return [
-            primaryNavigationHome,
-            currentPage,
-          ];
+        const isPageInMenu = await checkIsEntityInMenu(
+          data.route.entity.id,
+          data.route.entity.path,
+          primary_navigation
+        );
+        if (!isPageInMenu) {
+          return [primaryNavigationHome, currentPage];
         }
 
         // Only add Primary Nav Homepage URL if NOT already at start of breadcrumbPath
-        if (primaryNavigationHome && (breadcrumbPath[0]?.url !== primaryNavigationHome.url)){
-          
+        if (primaryNavigationHome && breadcrumbPath[0]?.url !== primaryNavigationHome.url) {
           // If Primary Nav Home and currentPage are SAME, only return [ Primary Nav Home ]
-          if(primaryNavigationHome.title === currentPage.title && breadcrumbPath.length === 0){
-            return [ primaryNavigationHome ];
+          if (primaryNavigationHome.title === currentPage.title && breadcrumbPath.length === 0) {
+            return [primaryNavigationHome];
           }
 
           /* ---- Handle pages in MULTIPLE MENUS --- */
           // Pages in multiple menus can have breadcrumb path from a different menu than Primary Navigation
           // If page in multiple menus, return [Primary Nav Home > currentPage]
-          if(data.route.entity.primaryNavigation?.menuName !== primary_navigation){  
-            return [
-              primaryNavigationHome,
-              currentPage,
-            ];
+          if (data.route.entity.primaryNavigation?.menuName !== primary_navigation) {
+            return [primaryNavigationHome, currentPage];
           }
 
           // Default return
-          return [
-            primaryNavigationHome,
-            ...breadcrumbPath,
-            currentPage,
-          ];
+          return [primaryNavigationHome, ...breadcrumbPath, currentPage];
         }
       }
 
       // Handle content without Primary Navigation
-      return [
-        ...breadcrumbPath,
-        currentPage,
-      ];
+      return [...breadcrumbPath, currentPage];
     default:
       return null;
   }
