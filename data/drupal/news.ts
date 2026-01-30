@@ -111,12 +111,12 @@ export async function getFilteredNews(options: NewsSearchOptions) {
   const { data, error } = await client.query({
     query: gql(/* gql */ `
       query NewsSearch(
-        $page: Int = 10
-        $pageSize: Int = 10
-        $unit: String = ""
-        $categories: [String] = ""
-        $query: String = ""
-        $status: Boolean = null
+        $page: Int
+        $pageSize: Int
+        $unit: String
+        $categories: [String]
+        $query: String
+        $status: Boolean
       ) {
         newsSearch(
           page: $page
