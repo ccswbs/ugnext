@@ -37,7 +37,7 @@ export default async function NewsArticle({ params }: Props) {
           {unit.name} News
         </Typography>
 
-        <NewsGrid />
+        <NewsGrid options={{ unit: { enabled: false, defaultValue: unit.id } }} />
       </LayoutContent>
 
       <CustomFooter tags={[]} units={[unit.id]} />
