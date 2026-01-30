@@ -3,12 +3,11 @@ import { getRoute } from "@/data/drupal/route";
 import { News } from "@/components/server/news";
 
 type Props = {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<{ slug: string }>;
 };
 
 export default async function NewsArticle({ params }: Props) {
-  const { slug } = await params;
-  const unit = slug[0];
+  const { slug: unitName } = await params;
 
-  return <>{unit}</>;
+  return <>{unitName}</>;
 }
