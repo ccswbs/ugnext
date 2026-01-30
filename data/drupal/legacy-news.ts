@@ -49,7 +49,7 @@ export async function getLegacyNewsArticle(id: string) {
     query: gql(/* gql */ `
       query GetLegacyNewsArticle($id: ID = "", $revision: ID = "current") {
         nodeArticle(id: $id, revision: $revision) {
-          ...News
+          ...LegacyNews
         }
       }
     `),
