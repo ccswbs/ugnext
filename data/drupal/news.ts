@@ -1,5 +1,5 @@
 import { gql } from "@/lib/graphql";
-import { getClient, handleGraphQLError } from "@/lib/apollo";
+import { getClient } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { NewsFragment } from "@/lib/graphql/types";
 
