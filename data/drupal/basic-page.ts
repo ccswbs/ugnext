@@ -3,6 +3,15 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { query } from "@/lib/apollo";
 import { getFullTestimonialSlider } from "@/data/drupal/widgets";
 
+export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
+  fragment BasicPageMinimal on NodePage {
+    status
+    id
+    title
+    path
+  }
+`);
+
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
     status
