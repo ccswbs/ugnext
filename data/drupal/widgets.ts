@@ -480,6 +480,20 @@ export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
+  fragment RelatedContent on ParagraphRelatedContent {
+    __typename
+    uuid
+    id
+    relatedContentHeadingLevel: headingLevel
+    content {
+      __typename
+      ...BasicPageMinimal
+    }
+    label: contentLabel
+  }
+`);
+
 export async function getFullTestimonialSlider(data: TestimonialSliderFragment) {
   const tags =
     data.byTags
