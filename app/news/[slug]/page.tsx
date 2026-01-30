@@ -8,14 +8,7 @@ type Props = {
 
 export default async function NewsArticle({ params }: Props) {
   const { slug } = await params;
-  const path = "/news/" + slug.join("/");
-  const route = await getRoute(path);
+  const unit = slug[0];
 
-  if (!route || route.__typename !== "RouteInternal" || !route.entity || route.entity.__typename !== "NodeNews") {
-    notFound();
-  }
-
-  const id = route.entity.id;
-
-  return <News id={id} />;
+  return <>{unit}</>;
 }

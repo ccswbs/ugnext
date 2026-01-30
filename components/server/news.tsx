@@ -10,7 +10,6 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Hero, HeroTitle } from "@uoguelph/react-components/hero";
 import Image from "next/image";
-import { ar } from "@/public/@uoguelph/web-components/index-DjzKNneJ";
 import { Widgets } from "@/data/drupal/widgets";
 
 export async function News({ id }: { id: string }) {

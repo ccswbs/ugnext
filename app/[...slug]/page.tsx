@@ -3,6 +3,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { BasicPage } from "@/components/server/basic-page";
 import { Profile } from "@/components/server/profile";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { News } from "@/components/server/news";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -65,6 +66,8 @@ export default async function Page({ params }: Props) {
     case "NodeArticle":
       permanentRedirect(`/ovc/news/node/${route.entity.id}`);
       break;
+    case "NodeNews":
+      return <News id={route.entity.id} />;
     case "NodeProfile":
       return <Profile id={route.entity.uuid} />;
     case "NodeUndergraduateProgram":
