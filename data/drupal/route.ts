@@ -4,24 +4,13 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery, RouteBreadcrumbsQuery, NodePage } from "@/lib/graphql/types";
 import { getMenuLinkByURI } from "@/data/drupal/menu";
 import { Link, RouteEntityUnion } from "@/lib/graphql/graphql";
+import { Metadata } from "next";
 
 export type Route = NonNullable<RouteQuery["route"]>;
-
-const METATAGS_VALUE_FRAGMENT = gql(/* gql */ `
-  fragment MetaValue on MetaTagValue {
-    __typename
-    tag
-    attributes {
-      name
-      content
-    }
-  }
-`);
 
 const METATAGS_PROPERTY_FRAGMENT = gql(/* gql */ `
   fragment MetaProperty on MetaTagProperty {
     __typename
-    tag
     attributes {
       property
       content
@@ -74,7 +63,6 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         title
         metatag {
           __typename
-          ...MetaValue
           ...MetaProperty
         }
       }
@@ -185,6 +173,56 @@ export async function getRoute(url: string) {
   }
 
   return _getRoute(showUnpublished ?? false);
+}
+
+export async function getRouteMetadata(url: string): Promise<Metadata> {
+  const route = await getRoute(url);
+
+  if (!route) {
+    return {};
+  }
+
+  if (route.__typename !== "RouteInternal") {
+    return {};
+  }
+
+  if (!route.entity) {
+    return {};
+  }
+
+  if (!("title" in route.entity)) {
+    return {};
+  }
+
+  if (!("metatag" in route.entity)) {
+    return {
+      title: route.entity.title,
+    };
+  }
+
+  let description = "";
+
+  for (const metatag of route.entity.metatag) {
+    if (
+      metatag.__typename === "MetaTagProperty" &&
+      metatag.attributes.property === "og:description" &&
+      metatag.attributes.content
+    ) {
+      description = metatag.attributes.content;
+      break;
+    }
+  }
+
+  if (description) {
+    return {
+      title: route.entity.title,
+      description: description,
+    };
+  }
+
+  return {
+    title: route.entity.title,
+  };
 }
 
 export async function checkIsEntityInMenu(
