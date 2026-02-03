@@ -7,7 +7,7 @@ UGNext uses bun as its runtime/package manager.
 To get started:
 
 1. Install bun https://bun.sh/docs/installation
-2. Ensure you have a .env file with the appropriate environment variables set
+2. Ensure you have a .env file with the appropriate environment variables set:
    
    ```
    DRUPAL_CLIENT_ID
