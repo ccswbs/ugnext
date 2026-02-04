@@ -8,7 +8,6 @@ const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api
 
 const nextConfig: NextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
-  htmlLimitedBots: /.*/,
   reactStrictMode: true,
   images: {
     unoptimized: process.env.NEXT_STATIC_OUTPUT === "true",
