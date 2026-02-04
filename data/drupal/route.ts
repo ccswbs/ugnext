@@ -5,6 +5,7 @@ import { RouteQuery, RouteBreadcrumbsQuery, NodePage } from "@/lib/graphql/types
 import { getMenuLinkByURI } from "@/data/drupal/menu";
 import { Link, RouteEntityUnion } from "@/lib/graphql/graphql";
 import { Metadata } from "next";
+import { cache } from "react";
 
 export type Route = NonNullable<RouteQuery["route"]>;
 
@@ -128,7 +129,7 @@ const ROUTE_REDIRECT_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export async function getRoute(url: string) {
+async function retrieveRoute(url: string) {
   const client = getClient();
   const showUnpublished = await showUnpublishedContent();
 
@@ -174,6 +175,8 @@ export async function getRoute(url: string) {
 
   return _getRoute(showUnpublished ?? false);
 }
+
+export const getRoute = cache(retrieveRoute);
 
 export async function getRouteMetadata(url: string): Promise<Metadata> {
   const route = await getRoute(url);
