@@ -231,6 +231,16 @@ export async function getRouteMetadata(url: string): Promise<Metadata> {
         height: 630,
       },
     ];
+
+    metadata.twitter = {};
+    metadata.twitter.images = [
+      {
+        url: route.entity.image.image.variations[0].url,
+        alt: route.entity.image.image.alt ?? "",
+        width: 1200,
+        height: 630,
+      },
+    ];
   }
 
   // Convert metatags to appropriate Next.js compatible metadata
