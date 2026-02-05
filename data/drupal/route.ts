@@ -66,6 +66,14 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
           __typename
           ...MetaProperty
         }
+        image {
+          image {
+            alt
+            variations(styles: OPENGRAPH_IMAGE) {
+              url
+            }
+          }
+        }
       }
       ... on NodeProfile {
         uuid
@@ -203,29 +211,41 @@ export async function getRouteMetadata(url: string): Promise<Metadata> {
     };
   }
 
-  let description = "";
+  const metadata: Metadata = {
+    title: route.entity.title,
+  };
 
+  // Get og:image from image field if it exists
+  if (
+    "image" in route.entity &&
+    route.entity.image &&
+    route.entity.image.image &&
+    route.entity.image.image.variations
+  ) {
+    metadata.openGraph = {};
+    metadata.openGraph.images = [
+      {
+        url: route.entity.image.image.variations[0].url,
+        alt: route.entity.image.image.alt ?? "",
+        width: 1200,
+        height: 630,
+      },
+    ];
+  }
+
+  // Convert metatags to appropriate Next.js compatible metadata
   for (const metatag of route.entity.metatag) {
     if (
       metatag.__typename === "MetaTagProperty" &&
       metatag.attributes.property === "og:description" &&
       metatag.attributes.content
     ) {
-      description = metatag.attributes.content;
+      metadata.description = metatag.attributes.content;
       break;
     }
   }
 
-  if (description) {
-    return {
-      title: route.entity.title,
-      description: description,
-    };
-  }
-
-  return {
-    title: route.entity.title,
-  };
+  return metadata;
 }
 
 export async function checkIsEntityInMenu(
