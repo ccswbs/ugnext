@@ -1,8 +1,9 @@
 import React from "react";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Link } from "@uoguelph/react-components/link";
+import { ContactEmail, ContactPhone } from "@uoguelph/react-components/contact";
 import { fetchAadProfile } from "@/lib/aad-utils";
-import { obfuscateEmail } from "@/lib/string-utils";
+import { obfuscateEmail, parsePhoneNumber } from "@/lib/string-utils";
 
 interface AadContactInfoProps {
   email?: string;
@@ -43,17 +44,8 @@ export async function AadContactInfo({
   const contactInfo = [];
   
   if (directoryEmail === true && aadData?.mail) {
-    const { display, href } = obfuscateEmail(aadData.mail);
     contactInfo.push(
-      <React.Fragment key="email">
-        <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
-        <span className="sr-only">Email:</span>
-        <Link 
-          href={href}
-          dangerouslySetInnerHTML={{ __html: display }}
-          aria-label={`Send email to ${aadData.mail}`}
-        />
-      </React.Fragment>
+      <ContactEmail key="email" email={aadData.mail} />
     );
   }
   
@@ -69,40 +61,19 @@ export async function AadContactInfo({
   if (directoryPhone === true) {
     // Handle business phones (array)
     if (aadData?.businessPhones && Array.isArray(aadData.businessPhones) && aadData.businessPhones.length > 0) {
-      contactInfo.push(
-        <React.Fragment key="phone-business">
-          <i className="fa-solid fa-phone me-2" aria-hidden="true"></i>
-          <span className="sr-only">Phone:</span>{aadData.businessPhones[0]}
-          {aadData.businessPhones.slice(1).map((phone, index) => (
-            <React.Fragment key={`business-${index}`}>
-              <br />
-              <span className="ms-6">{phone}</span>
-            </React.Fragment>
-          ))}
-        </React.Fragment>
-      );
+      aadData.businessPhones.forEach((phone, index) => {
+        const { number, extension } = parsePhoneNumber(phone);
+        contactInfo.push(
+          <ContactPhone key={`phone-business-${index}`} number={number} extension={extension} />
+        );
+      });
     }
     
     // Handle mobile phone if no business phones or as additional number
     if (aadData?.mobilePhone && typeof aadData.mobilePhone === 'string' && aadData.mobilePhone.trim()) {
-      const isAdditional = aadData?.businessPhones && aadData.businessPhones.length > 0;
+      const { number, extension } = parsePhoneNumber(aadData.mobilePhone);
       contactInfo.push(
-        <React.Fragment key="phone-mobile">
-          {!isAdditional && (
-            <>
-              <i className="fa-solid fa-mobile me-2" aria-hidden="true"></i>
-              <span className="sr-only">Mobile:</span>
-            </>
-          )}
-          {isAdditional && (
-            <>
-              <br />
-              <i className="fa-solid fa-mobile ms-0 me-2" aria-hidden="true"></i>
-              <span className="sr-only">Mobile:</span>
-            </>
-          )}
-          {aadData.mobilePhone}
-        </React.Fragment>
+        <ContactPhone key="phone-mobile" number={number} extension={extension} />
       );
     }
   }

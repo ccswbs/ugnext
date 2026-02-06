@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { AadContactInfoClient } from "@/components/client/aad-contact-info-client";
+import { PublicContactInfo } from "@/components/client/public-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -48,9 +48,9 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
           </Typography>
         )}
 
-        {/* Directory contact info from AAD - using reusable component */}
+        {/* Directory contact info from AAD - using secure public API */}
         {profileInfo.centralLoginId && (
-          <AadContactInfoClient
+          <PublicContactInfo
             email={`${profileInfo.centralLoginId}@uoguelph.ca`}
             directoryEmail={!!profileInfo.directoryEmail}
             directoryOffice={false}
