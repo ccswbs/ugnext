@@ -3,8 +3,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Typography } from "@uoguelph/react-components/typography";
-import { ContactEmail, ContactPhone } from "@uoguelph/react-components/contact";
-import { parsePhoneNumber } from "@/lib/string-utils";
+import { buildContactInfoArray, renderContactInfo } from "@/lib/contact-info-utils";
 
 interface PublicContactInfoProps {
   email?: string;
@@ -65,42 +64,10 @@ export function PublicContactInfo({
   }, [email, directoryEmail, directoryOffice, directoryPhone]);
 
   // Build contact info array
-  const contactInfo = [];
-  
-  if (directoryEmail && contactData?.mail) {
-    contactInfo.push(
-      <ContactEmail key="email" email={contactData.mail} />
-    );
-  }
-  
-  if (directoryOffice && contactData?.officeLocation && typeof contactData.officeLocation === 'string' && contactData.officeLocation.trim()) {
-    contactInfo.push(
-      <React.Fragment key="office">
-        <i className="fa-solid fa-building-columns me-2" aria-hidden="true"></i>
-        <span className="sr-only">Office:</span>{contactData.officeLocation}
-      </React.Fragment>
-    );
-  }
-  
-  if (directoryPhone) {
-    // Handle business phones (array)
-    if (contactData?.businessPhones && Array.isArray(contactData.businessPhones) && contactData.businessPhones.length > 0) {
-      contactData.businessPhones.forEach((phone, index) => {
-        const { number, extension } = parsePhoneNumber(phone);
-        contactInfo.push(
-          <ContactPhone key={`phone-business-${index}`} number={number} extension={extension} />
-        );
-      });
-    }
-    
-    // Handle mobile phone if no business phones or as additional number
-    if (contactData?.mobilePhone && typeof contactData.mobilePhone === 'string' && contactData.mobilePhone.trim()) {
-      const { number, extension } = parsePhoneNumber(contactData.mobilePhone);
-      contactInfo.push(
-        <ContactPhone key="phone-mobile" number={number} extension={extension} />
-      );
-    }
-  }
+  const contactInfo = buildContactInfoArray(
+    contactData, 
+    { directoryEmail, directoryOffice, directoryPhone }
+  );
 
   // Handle loading state
   if (loading) {
@@ -116,19 +83,5 @@ export function PublicContactInfo({
     return null; // Silently fail for better UX
   }
 
-  // Return null if no contact info to display
-  if (contactInfo.length === 0) {
-    return null;
-  }
-
-  return (
-    <Typography type="body" className={className}>
-      {contactInfo.map((info, index) => (
-        <React.Fragment key={index}>
-          {index > 0 && <br />}
-          {info}
-        </React.Fragment>
-      ))}
-    </Typography>
-  );
+  return renderContactInfo(contactInfo, directoryEmail, className);
 }
