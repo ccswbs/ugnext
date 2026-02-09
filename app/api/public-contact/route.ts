@@ -1,28 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fetchAadProfile } from "@/lib/aad-utils";
+import { ValidationService, createValidationErrorResponse } from "@/lib/validation-utils";
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const email = searchParams.get('email');
+    const rawEmail = searchParams.get('email');
 
-    if (!email || !email.trim()) {
-      return NextResponse.json({ error: 'Email parameter is required' }, { status: 400 });
-    }
-
-    // Basic email validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
-    }
-
-    // Only allow @uoguelph.ca emails for security
-    if (!email.endsWith('@uoguelph.ca')) {
-      return NextResponse.json({ error: 'Only @uoguelph.ca emails are allowed' }, { status: 403 });
+    // Validate and sanitize email using shared utility
+    const { email: validatedEmail, validation } = ValidationService.processEmail(rawEmail, {
+      requireDomain: '@uoguelph.ca'
+    });
+    
+    if (!validation.valid || !validatedEmail) {
+      return createValidationErrorResponse(validation.error!);
     }
 
     // Fetch AAD data using server-side authentication
-    const aadData = await fetchAadProfile(email);
+    const aadData = await fetchAadProfile(validatedEmail);
     
     // Return only the contact information fields (no sensitive data)
     const contactInfo = {
