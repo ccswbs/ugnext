@@ -1,22 +1,44 @@
 import { nanoid } from "nanoid";
-import { twMerge } from "tailwind-merge";
-import { HTMLParserInstruction } from "@/components/client/html-parser";
+import { extractTextFromDOMNode, HTMLParserInstruction } from "@/components/client/html-parser";
+import { Figure, FigureCaption, FigureImage } from "@uoguelph/react-components/figure";
+import { DOMNode } from "html-react-parser";
 
 export const FigureInstruction: HTMLParserInstruction = {
   shouldProcessNode: (node) => node.tagName === "figure",
   processNode: (node, props, children) => {
+    const id = nanoid();
     const className = typeof props.className === "string" ? props.className : "";
-    const classes = twMerge(
-      "my-4",
-      (className.includes("align-left") || props["data-align"] === "left") && "float-left mr-4 ml-0",
-      (className.includes("align-right") || props["data-align"] === "right") && "float-right ml-4 mr-0",
-      props.className as string
-    );
+
+    const imgNode: DOMNode = node.children.find((child) => child.type === "tag" && child.name === "img");
+
+    if (!imgNode) {
+      return (
+        <figure {...props} key={id}>
+          {children}
+        </figure>
+      );
+    }
+
+    let alignment: "left" | "right" = "left";
+
+    if (className.includes("align-right") || props["data-align"] === "right") {
+      alignment = "right";
+    }
+
+    const caption: DOMNode = node.children.find((child) => child.type === "tag" && child.name === "figcaption");
 
     return (
-      <figure {...props} key={nanoid()} className={classes}>
-        {children}
-      </figure>
+      <Figure align={alignment} {...props} key={id}>
+        <FigureImage
+          key={`${id}-figure-image`}
+          src={imgNode.attribs.src}
+          alt={imgNode.attribs.alt}
+          width={imgNode.attribs.width}
+          height={imgNode.attribs.height}
+        />
+
+        {caption && <FigureCaption key={`${id}-figure-caption`}>{extractTextFromDOMNode(caption)}</FigureCaption>}
+      </Figure>
     );
   },
 };
