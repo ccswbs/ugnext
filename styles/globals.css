@@ -151,3 +151,22 @@
 svg.svg-inline--fa {
   height: 1em;
 }
+
+/* Profile Card Group multicolumn utilities */
+.profile-card-group {
+  contain: layout style;
+}
+
+.profile-card-group > div {
+  contain: layout;
+}
+
+/* Prevent profile cards from overflowing container boundaries */
+@layer utilities {
+  .multicolumn-safe {
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+}

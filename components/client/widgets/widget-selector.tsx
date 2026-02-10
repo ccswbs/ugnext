@@ -18,6 +18,7 @@ import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial
 import { SocialMediaWidget } from "@/components/client/widgets/social-media";
 import { ProfileBlock } from "@/components/client/widgets/profile-block";
 import { ProfileCard } from "@/components/client/widgets/profile-card";
+import { ProfileCardGroup } from "@/components/client/widgets/profile-card-group";
 import type { Widgets } from "@/data/drupal/widgets";
 import { usePathname } from "next/navigation";
 
@@ -41,6 +42,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     "ParagraphImageOverlay",
     "ParagraphStoryWidget",
     "ParagraphProfileBlock",
+    "ParagraphProfileCard", // Profile cards are handled by WidgetRenderer grouping
   ];
 
   if (!data.__typename) {

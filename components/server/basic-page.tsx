@@ -8,7 +8,7 @@ import { Hero, HeroTitle, HeroVideo } from "@uoguelph/react-components/hero";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
-import { WidgetSelector } from "@/components/client/widgets/widget-selector";
+import { WidgetRenderer } from "@/components/client/widgets/widget-renderer";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
 
@@ -103,9 +103,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
         {pre && pre}
 
-        {content?.widgets?.map((widget, index) => (
-          <WidgetSelector key={index} data={widget} />
-        ))}
+        <WidgetRenderer widgets={content?.widgets ?? []} />
 
         {post && post}
       </LayoutContent>

@@ -2,6 +2,7 @@ import React from "react";
 import { Section } from "@/components/client/section";
 import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
+import { WidgetRenderer } from "@/components/client/widgets/widget-renderer";
 import { Grid } from "@uoguelph/react-components/grid";
 import type { SectionFragment } from "@/lib/graphql/types";
 import type { Widgets } from "@/data/drupal/widgets";
@@ -86,7 +87,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
           acc.primary.push(widget);
           break;
         case "secondary":
-          acc.secondary.push(<WidgetSelector key={index} data={widget as Widgets} />);
+          acc.secondary.push(widget as Widgets);
           break;
         default:
           acc.others.push(<WidgetSelector key={index} data={widget as Widgets} />);
@@ -97,7 +98,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
     },
     {
       primary: [] as Array<SectionFragment["content"][0]>,
-      secondary: [] as React.ReactElement[],
+      secondary: [] as Widgets[],
       others: [] as React.ReactElement[],
     }
   ) ?? { primary: [], secondary: [], others: [] };
@@ -175,7 +176,13 @@ export function SectionWidget({ data }: SectionWidgetProps) {
 
             return <WidgetSelector key={index} data={widget as Widgets} />;
           })}
-          secondary={secondary}
+          secondary={
+            <WidgetRenderer 
+              widgets={secondary} 
+              profileCardColumns={1}
+              groupProfileCards={true}
+            />
+          }
           equal={sectionClasses === "col-md-6"}
         />
       )}

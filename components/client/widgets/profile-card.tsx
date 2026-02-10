@@ -20,7 +20,7 @@ export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCard
   }
 
   const sharedClassName = inMultiColumn 
-    ? `block overflow-hidden h-full w-full break-inside-avoid` 
+    ? `block overflow-hidden h-full w-full break-inside-avoid box-border multicolumn-safe` 
     : `block overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4`;
 
   const content = (
