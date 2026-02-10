@@ -28,7 +28,7 @@ export const FigureInstruction: HTMLParserInstruction = {
     const caption: DOMNode = node.children.find((child) => child.type === "tag" && child.name === "figcaption");
 
     return (
-      <Figure align={alignment} {...props} key={id}>
+      <Figure align={alignment} {...props} key={id} className="pt-[1em]">
         <FigureImage
           key={`${id}-figure-image`}
           src={imgNode.attribs.src}
