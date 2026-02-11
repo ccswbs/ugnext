@@ -90,10 +90,10 @@ export const ContactInstruction: HTMLParserInstruction = {
 
     return (
       <Contact {...props} key={nanoid()}>
-        <ContactName key="name">{name}</ContactName>
-        <ContactTitle key="title">{title}</ContactTitle>
-        <ContactPhone key="phone" number={phone} extension={extension}></ContactPhone>
-        <ContactEmail key="email" email={email} />
+        {name && <ContactName key="name">{name}</ContactName>}
+        {title && <ContactTitle key="title">{title}</ContactTitle>}
+        {phone && <ContactPhone key="phone" number={phone} extension={extension}></ContactPhone>}
+        {email && <ContactEmail key="email" email={email} />}
       </Contact>
     );
   },
