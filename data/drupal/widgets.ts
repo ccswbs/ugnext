@@ -304,6 +304,9 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         }
       }
     }
+    # Uncomment when backend field is implemented on Profile Card widget:
+    # showProfilePicture
+    # showProfileLink
   }
 `);
 

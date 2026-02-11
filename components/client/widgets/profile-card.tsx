@@ -1,11 +1,9 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 import { PublicContactInfo } from "@/components/client/public-contact-info";
-import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
-import { HtmlParser } from "@/components/client/html-parser";
-import { ContactEmail, ContactPhone } from "@uoguelph/react-components/contact";
+import { getIconForUrl } from "@/lib/ug-utils";
+import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 import { Link } from "@uoguelph/react-components/link";
 import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileCardFragment } from "@/lib/graphql/types";
@@ -19,6 +17,12 @@ export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCard
     return <div>Profile data not available - missing profileInfo</div>;
   }
 
+  // Determine if profile picture and link to full profile should be shown
+  // These fields will be added to the Profile Card widget configuration (not the Profile content type)
+  // Default to true (show picture) if the field is undefined for backward compatibility
+  const shouldShowProfilePicture = (data as any).showProfilePicture !== false;
+  const shouldShowProfileLink = (data as any).showProfileLink === true;
+
   const sharedClassName = inMultiColumn 
     ? `block overflow-hidden h-full w-full break-inside-avoid` 
     : `block overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4`;
@@ -26,8 +30,8 @@ export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCard
   const content = (
     <div className="flex flex-col md:flex-row h-full md:items-start">
     
-      {/* Image Section */}
-      {profileInfo.profilePicture && (
+      {/* Image Section - now conditionally rendered based on shouldShowProfilePicture */}
+      {profileInfo.profilePicture && shouldShowProfilePicture && (
         <div className="shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3 aspect-square max-w-xs md:max-w-none">
           <Image
             src={profileInfo.profilePicture.image.url}
@@ -91,11 +95,11 @@ export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCard
           </div>
         )}
         
-        {/* {profileInfo.path && (
+        {profileInfo.path && shouldShowProfileLink && (
           <Link href={profileInfo.path} className="block">
             View full profile
           </Link>
-        )} */}
+        )}
 
       </div>
     </div>
