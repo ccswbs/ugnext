@@ -51,8 +51,8 @@ export const ContactInstruction: HTMLParserInstruction = {
             const href = node.attribs.href;
 
             if (href.startsWith("tel:")) {
-              const tokens = href.replace("tel:", "").split("p");
-              phone = extractTextFromDOMNode(node);
+              const tokens = href.replace("tel:", "").split(/[;p]/);
+              phone = phone = tokens[0];
               extension = tokens[1] || "";
             } else if (href.startsWith("mailto:")) {
               email = href.replace("mailto:", "");
