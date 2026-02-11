@@ -302,16 +302,6 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         profilePicture {
           ...Image
         }
-        profileFields {
-          label {
-            processed
-            value
-          }
-          value {
-            processed
-            value
-          }
-        }
       }
     }
   }
