@@ -52,7 +52,7 @@ export const ContactInstruction: HTMLParserInstruction = {
 
             if (href.startsWith("tel:")) {
               const tokens = href.replace("tel:", "").split(/[;p]/);
-              phone = phone = tokens[0];
+              phone = tokens[0];
               extension = tokens[1] || "";
             } else if (href.startsWith("mailto:")) {
               email = href.replace("mailto:", "");
