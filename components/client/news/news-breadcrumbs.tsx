@@ -16,17 +16,20 @@ export function NewsBreadcrumbs({ data }: { data: NewsFragment }) {
     data.primaryNavigation.menuName !== "no-menu"
   ) {
     directory = `/news${data.primaryNavigation.newsUrlAliasPattern}`;
-    directoryName = data.primaryNavigation.name;
   } else {
     directory = "/news";
-    directoryName = "News";
   }
 
   return (
     <Breadcrumbs>
       <BreadcrumbHome />
+
+      {data.primaryNavigation.primaryNavigationUrl?.url && (
+        <Breadcrumb href={data.primaryNavigation.primaryNavigationUrl.url}>{data.primaryNavigation.name}</Breadcrumb>
+      )}
+
       <Breadcrumb href={directory} as={Link}>
-        {directoryName}
+        News
       </Breadcrumb>
 
       {data.category && data.category.length > 0 && (

@@ -51,6 +51,9 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
       ... on TermPrimaryNavigation {
         newsUrlAliasPattern
         name
+        primaryNavigationUrl {
+          url
+        }
       }
     }
     tags {
