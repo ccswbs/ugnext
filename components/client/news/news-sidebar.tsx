@@ -2,7 +2,7 @@
 
 import { tv } from "tailwind-variants";
 import { Typography } from "@uoguelph/react-components/typography";
-import { NewsCategoryFragment, NewsFragment } from "@/lib/graphql/types";
+import { NewsFragment } from "@/lib/graphql/types";
 import { useEffect, useState } from "react";
 import { Button } from "@uoguelph/react-components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

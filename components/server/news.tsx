@@ -31,8 +31,6 @@ export async function News({ id }: { id: string }) {
     }
   });
 
-  console.log(article);
-
   return (
     <Layout>
       <Header name={article.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
@@ -57,11 +55,7 @@ export async function News({ id }: { id: string }) {
           </Hero>
         )}
 
-        <NewsBreadcrumbs
-          title={article.title}
-          primaryNavigation={article.primaryNavigation}
-          categories={article.category ?? []}
-        />
+        <NewsBreadcrumbs data={article} />
 
         <Container>
           <Section

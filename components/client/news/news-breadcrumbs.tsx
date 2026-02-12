@@ -6,21 +6,17 @@ import { slugify } from "@/lib/string-utils";
 import React from "react";
 import { NewsCategoryFragment, NewsFragment, UnitFragment } from "@/lib/graphql/types";
 
-export function NewsBreadcrumbs({
-  title,
-  categories,
-  primaryNavigation,
-}: {
-  title: string;
-  categories: NewsCategoryFragment[];
-  primaryNavigation?: NewsFragment["primaryNavigation"];
-}) {
+export function NewsBreadcrumbs({ data }: { data: NewsFragment }) {
   let directory: string;
   let directoryName: string;
 
-  if (primaryNavigation && primaryNavigation.newsUrlAliasPattern && primaryNavigation.menuName !== "no-menu") {
-    directory = `/news${primaryNavigation.newsUrlAliasPattern}`;
-    directoryName = primaryNavigation.name;
+  if (
+    data.primaryNavigation &&
+    data.primaryNavigation.newsUrlAliasPattern &&
+    data.primaryNavigation.menuName !== "no-menu"
+  ) {
+    directory = `/news${data.primaryNavigation.newsUrlAliasPattern}`;
+    directoryName = data.primaryNavigation.name;
   } else {
     directory = "/news";
     directoryName = "News";
@@ -33,10 +29,10 @@ export function NewsBreadcrumbs({
         {directoryName}
       </Breadcrumb>
 
-      {categories.length > 0 && (
+      {data.category && data.category.length > 0 && (
         <Breadcrumb as="span">
           <ul>
-            {categories.map((category, index) => (
+            {data.category.map((category, index) => (
               <li key={index} className="inline">
                 <Link
                   className="underline decoration-transparent decoration-1 transition-colors hocus-visible:decoration-black"
@@ -44,14 +40,15 @@ export function NewsBreadcrumbs({
                 >
                   {category.name}
                 </Link>
-                <span aria-hidden={true}>{index < categories.length - 1 && " / "}</span>
+
+                {data.category && <span aria-hidden={true}>{index < data.category.length - 1 && " / "}</span>}
               </li>
             ))}
           </ul>
         </Breadcrumb>
       )}
 
-      <Breadcrumb as="span">{title}</Breadcrumb>
+      <Breadcrumb as="span">{data.title}</Breadcrumb>
     </Breadcrumbs>
   );
 }
