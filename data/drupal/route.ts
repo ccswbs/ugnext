@@ -105,6 +105,11 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         id
         title
       }
+      ... on NodeNews {
+        uuid
+        id
+        title
+      }
       ... on TermUndergraduateStudentType {
         uuid
         id
