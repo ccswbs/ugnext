@@ -109,6 +109,10 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         uuid
         id
         title
+        metatag {
+          __typename
+          ...MetaProperty
+        }
       }
       ... on TermUndergraduateStudentType {
         uuid

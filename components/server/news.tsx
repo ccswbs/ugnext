@@ -53,7 +53,11 @@ export async function News({ id }: { id: string }) {
           </Hero>
         )}
 
-        <NewsBreadcrumbs title={article.title} unit={article.unit} categories={article.category ?? []} />
+        <NewsBreadcrumbs
+          title={article.title}
+          primaryNavigation={article.primaryNavigation}
+          categories={article.category ?? []}
+        />
 
         {(article.widgets as Widgets[])?.map((widget, index) => (
           <WidgetSelector key={index} data={widget} />

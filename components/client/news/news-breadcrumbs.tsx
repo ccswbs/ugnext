@@ -4,24 +4,33 @@ import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-compone
 import Link from "next/link";
 import { slugify } from "@/lib/string-utils";
 import React from "react";
-import { NewsCategoryFragment, UnitFragment } from "@/lib/graphql/types";
+import { NewsCategoryFragment, NewsFragment, UnitFragment } from "@/lib/graphql/types";
 
 export function NewsBreadcrumbs({
   title,
   categories,
-  unit,
+  primaryNavigation,
 }: {
   title: string;
   categories: NewsCategoryFragment[];
-  unit: UnitFragment;
+  primaryNavigation?: NewsFragment["primaryNavigation"];
 }) {
-  const directory = `/news/${slugify(unit.name)}`;
+  let directory: string;
+  let directoryName: string;
+
+  if (primaryNavigation && primaryNavigation.newsUrlAliasPattern && primaryNavigation.menuName !== "no-menu") {
+    directory = `/news${primaryNavigation.newsUrlAliasPattern}`;
+    directoryName = primaryNavigation.name;
+  } else {
+    directory = "/news";
+    directoryName = "News";
+  }
 
   return (
     <Breadcrumbs>
       <BreadcrumbHome />
       <Breadcrumb href={directory} as={Link}>
-        {unit.name}
+        {directoryName}
       </Breadcrumb>
 
       {categories.length > 0 && (
