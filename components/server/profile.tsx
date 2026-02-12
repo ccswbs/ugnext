@@ -12,13 +12,13 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
-// import { 
+// import {
 //   UniwebAffiliations,
 //   UniwebCurrentTeaching,
 //   UniwebDegrees,
 //   UniwebPublications,
 //   UniwebResearchDesc,
-//   UniwebResearchInterests 
+//   UniwebResearchInterests
 // } from "@/components/server/uniweb-components";
 import { FullProfile } from "@/lib/types/profile";
 
@@ -34,7 +34,7 @@ export type ProfileProps = {
 };
 
 export async function Profile({ id, pre, post }: ProfileProps) {
-  const content = await getProfileContent(id) as ProfileContent | null;
+  const content = (await getProfileContent(id)) as ProfileContent | null;
 
   // Couldn't fetch content for this id.
   if (!content) {
@@ -57,7 +57,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
         <Breadcrumbs url={content.path ?? undefined} />
         <Container>
           <Typography type="h1" as="h1" className="mb-4">
-            {content?.title}       
+            {content?.title}
           </Typography>
           <div className="md:flex md:gap-6 md:items-start">
             {content.profilePicture && (
@@ -68,20 +68,24 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 src={content.profilePicture.image.url}
                 className="w-full max-w-full md:w-1/3 md:max-w-1/3 object-contain mb-4"
               />
-            )}            
+            )}
             <div className="md:flex-1">
               {pre && pre}
-              {content.profileJobTitle && <Typography type="h3" as="p" className="mt-0">{content.profileJobTitle}</Typography>}
+              {content.profileJobTitle && (
+                <Typography type="h3" as="p" className="mt-0">
+                  {content.profileJobTitle}
+                </Typography>
+              )}
               {content.profileUnit && content.profileUnit.length > 0 && (
                 <Typography type="body" as="p" className="mt-0 mb-2">
-                  {content.profileUnit.map(unit => unit.name).join(', ')}
+                  {content.profileUnit.map((unit) => unit.name).join(", ")}
                 </Typography>
               )}
 
               {/* Directory contact info from AAD */}
               {content.centralLoginId && content.centralLoginId.trim() && (
                 <div id="contact-info" className="mb-4">
-                  <AadContactInfo 
+                  <AadContactInfo
                     email={`${content.centralLoginId}@uoguelph.ca`}
                     directoryEmail={content.directoryEmail}
                     directoryOffice={content.directoryOffice}
@@ -96,9 +100,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   {content.customLink.map((link, idx) => (
                     <div key={idx} className="mb-2">
                       <i className={`${getIconForUrl(link.url)} me-2`} aria-hidden="true"></i>
-                      <Link href={link.url}>
-                        {link.title}
-                      </Link>
+                      <Link href={link.url}>{link.title}</Link>
                     </div>
                   ))}
                 </div>
@@ -123,7 +125,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   ))}
                 </div>
               )}
-              
+
               {/* Research Areas */}
               {content.profileResearchAreas?.length && (
                 <div className="mb-4">
@@ -151,7 +153,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             </div>
           )}
           <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
-          
+
           {/* Render all Profile Sections in order (both regular parts and UniWeb parts) */}
           {content?.profileSections?.map((section, index) => {
             // Regular profile part with custom content
@@ -161,15 +163,19 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   <Typography type="h2" as="h2">
                     {section.profilePartLabel}
                   </Typography>
-                  <HtmlParser key={section.id} html={section.profilePartText?.processed ?? ""} instructions={undefined} />
+                  <HtmlParser
+                    key={section.id}
+                    html={section.profilePartText?.processed ?? ""}
+                    instructions={undefined}
+                  />
                 </div>
               );
             }
-            
+
             // UniWeb profile part
             // if (section.uniwebSelect?.name && content.uniwebId) {
             //   const sectionName = section.uniwebSelect.name;
-            //   
+            //
             //   switch (sectionName) {
             //     case 'Affiliations':
             //       return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
@@ -187,7 +193,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             //       return null;
             //   }
             // }
-            
+
             // Empty section or unrecognized format
             return null;
           })}
