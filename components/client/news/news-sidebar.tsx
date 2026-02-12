@@ -25,13 +25,13 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
   const sidebar = tv({
     slots: {
       base: "flex flex-col gap-6",
-      share: "flex flex-row gap-2 flex-wrap w-full",
-      shareButton: "p-3 text-xl",
+      buttons: "flex flex-row gap-2 flex-wrap w-full",
+      button: "p-3 text-xl",
       info: "flex flex-col gap-1 *:m-0",
     },
   });
 
-  const { base, share, shareButton, info } = sidebar();
+  const { base, buttons, button, info } = sidebar();
 
   let directory: string;
 
@@ -51,9 +51,9 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
         Share This Page
       </Typography>
 
-      <div className={share()}>
+      <div className={buttons()}>
         <Button
-          className={shareButton()}
+          className={button()}
           outlined={true}
           color="secondary"
           as="a"
@@ -64,7 +64,7 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
         </Button>
 
         <Button
-          className={shareButton()}
+          className={button()}
           outlined={true}
           color="secondary"
           as="a"
@@ -75,7 +75,7 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
         </Button>
 
         <Button
-          className={shareButton()}
+          className={button()}
           outlined={true}
           color="secondary"
           as="a"
@@ -86,7 +86,7 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
         </Button>
 
         <Button
-          className={shareButton()}
+          className={button()}
           outlined={true}
           color="secondary"
           as="a"
@@ -105,12 +105,28 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
         )}
 
         <Typography type="body" as="span">
-          <strong>Published on:</strong> {data.datePublished.time}
+          <strong>Published on:</strong>{" "}
+          {new Date(data.datePublished.time).toLocaleString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "2-digit",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          })}
         </Typography>
 
         {data.dateUpdated && (
           <Typography type="body" as="span">
-            <strong>Updated on:</strong> {data.dateUpdated.time}
+            <strong>Updated on:</strong>{" "}
+            {new Date(data.dateUpdated.time).toLocaleString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            })}
           </Typography>
         )}
 
@@ -127,10 +143,10 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
             Filed under
           </Typography>
 
-          <div className={share()}>
+          <div className={buttons()}>
             {data.category.map((category) => (
               <Button
-                className={twMerge(shareButton(), "text-base")}
+                className={twMerge(button(), "text-base")}
                 href={`${directory}?categories=${category.id}`}
                 key={category.id}
                 color="secondary"
