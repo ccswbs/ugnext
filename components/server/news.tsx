@@ -12,6 +12,8 @@ import { Hero, HeroTitle } from "@uoguelph/react-components/hero";
 import Image from "next/image";
 import { Widgets } from "@/data/drupal/widgets";
 import { NewsBreadcrumbs } from "@/components/client/news/news-breadcrumbs";
+import { Section } from "@/components/client/section";
+import { NewsSidebar } from "@/components/client/news/news-sidebar";
 
 export async function News({ id }: { id: string }) {
   const article = await getNewsArticle(id);
@@ -28,6 +30,8 @@ export async function News({ id }: { id: string }) {
       tags.push(tag.id);
     }
   });
+
+  console.log(article);
 
   return (
     <Layout>
@@ -59,9 +63,14 @@ export async function News({ id }: { id: string }) {
           categories={article.category ?? []}
         />
 
-        {(article.widgets as Widgets[])?.map((widget, index) => (
-          <WidgetSelector key={index} data={widget} />
-        ))}
+        <Container>
+          <Section
+            primary={(article.widgets as Widgets[])?.map((widget, index) => (
+              <WidgetSelector key={index} data={widget} />
+            ))}
+            secondary={<NewsSidebar data={article} />}
+          />
+        </Container>
       </LayoutContent>
 
       <CustomFooter tags={tags} units={units} />

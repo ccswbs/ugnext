@@ -39,6 +39,13 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
 export const NEWS_FRAGMENT = gql(/* gql */ `
   fragment News on NodeNews {
     ...NewsWithoutContent
+    datePublished {
+      time
+    }
+    dateUpdated {
+      time
+    }
+    author
     primaryNavigation {
       ...Navigation
       ... on TermPrimaryNavigation {
