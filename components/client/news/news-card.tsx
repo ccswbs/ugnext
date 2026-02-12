@@ -7,8 +7,6 @@ import Image from "next/image";
 import defaultImage from "@/img/university-of-guelph-logo.png";
 
 export function NewsCard({ data }: { data: NewsWithoutContentFragment }) {
-  console.log(data);
-
   let url = "";
 
   if (data.externallyLinked && data.externalLink) {

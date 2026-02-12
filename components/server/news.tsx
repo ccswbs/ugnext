@@ -1,5 +1,5 @@
 import { getNewsArticle } from "@/data/drupal/news";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Header } from "@/components/server/header";
 import React from "react";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
@@ -20,6 +20,10 @@ export async function News({ id }: { id: string }) {
 
   if (!article) {
     notFound();
+  }
+
+  if (article.externallyLinked && article.externalLink && article.externalLink.url) {
+    redirect(article.externalLink.url);
   }
 
   const tags: string[] = [];

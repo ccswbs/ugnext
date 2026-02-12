@@ -24,6 +24,10 @@ export default async function Page({ params }: Props) {
   // Handle redirects to other pages.
   // Couldn't get info for this route from Drupal.
   if (!route) {
+    if (slug.length === 2 && slug[0] === "news") {
+      redirect("/news");
+    }
+
     notFound();
   }
 
