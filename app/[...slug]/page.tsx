@@ -1,4 +1,4 @@
-import { getRoute } from "@/data/drupal/route";
+import { getRoute, getRouteMetadata } from "@/data/drupal/route";
 import { Metadata, ResolvingMetadata } from "next";
 import { BasicPage } from "@/components/server/basic-page";
 import { Profile } from "@/components/server/profile";
@@ -12,16 +12,8 @@ type Props = {
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const { slug } = await params;
   const url = "/" + slug.join("/");
-  const route = await getRoute(url);
 
-  // If the entity associated with this route has a title, we can use it for the page title.
-  if (route && route.__typename === "RouteInternal" && route?.entity && "title" in route.entity) {
-    return {
-      title: route.entity.title,
-    };
-  }
-
-  return {};
+  return await getRouteMetadata(url);
 }
 
 export default async function Page({ params }: Props) {

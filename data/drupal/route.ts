@@ -4,150 +4,157 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery, RouteBreadcrumbsQuery, NodePage } from "@/lib/graphql/types";
 import { getMenuLinkByURI } from "@/data/drupal/menu";
 import { Link, RouteEntityUnion } from "@/lib/graphql/graphql";
+import { Metadata } from "next";
+import { cache } from "react";
 
 export type Route = NonNullable<RouteQuery["route"]>;
 
-export async function getRoute(url: string) {
-  const showUnpublished = await showUnpublishedContent();
-  const client = getClient();
-  const routeQuery = gql(/* gql */ `
-    query Route($path: String!, $revision: ID = "current") {
-      route(path: $path, revision: $revision) {
-        __typename
-        ... on RouteInternal {
-          entity {
-            __typename
-            ... on NodeArticle {
-              uuid
-              id
-              title
-            }
-            ... on NodeCallToAction {
-              uuid
-              id
-              title
-            }
-            ... on NodeCareer {
-              uuid
-              id
-              title
-            }
-            ... on NodeCourse {
-              uuid
-              id
-              title
-            }
-            ... on NodeCustomFooter {
-              uuid
-              id
-              title
-            }
-            ... on NodeEmployer {
-              uuid
-              id
-              title
-            }
-            ... on NodeEvent {
-              uuid
-              id
-              title
-            }
-            ... on NodePage {
-              uuid
-              id
-              title
-            }
-            ... on NodeProfile {
-              uuid
-              id
-              title
-            }
-            ... on NodeSpotlight {
-              uuid
-              id
-              title
-            }
-            ... on NodeTestimonial {
-              uuid
-              id
-              title
-            }
-            ... on NodeUserDocumentation {
-              uuid
-              id
-              title
-            }
-            ... on NodeUndergraduateProgram {
-              uuid
-              id
-              title
-            }
-            ... on NodeUndergraduateDegree {
-              uuid
-              id
-              title
-            }
-            ... on NodeNews {
-              uuid
-              id
-              title
-            }
-            ... on TermUndergraduateStudentType {
-              uuid
-              id
-              name
-            }
-            ... on TermAdmissionLocation {
-              uuid
-              id
-              name
-              weight
-            }
-            ... on NodeUndergraduateRequirement {
-              uuid
-              id
-              title
-            }
-            ... on TermProfileType {
-              uuid
-              id
-              name
+const METATAGS_PROPERTY_FRAGMENT = gql(/* gql */ `
+  fragment MetaProperty on MetaTagProperty {
+    __typename
+    attributes {
+      property
+      content
+    }
+  }
+`);
+
+const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
+  fragment InternalRoute on RouteInternal {
+    entity {
+      __typename
+      ... on NodeArticle {
+        uuid
+        id
+        title
+      }
+      ... on NodeCallToAction {
+        uuid
+        id
+        title
+      }
+      ... on NodeCareer {
+        uuid
+        id
+        title
+      }
+      ... on NodeCourse {
+        uuid
+        id
+        title
+      }
+      ... on NodeCustomFooter {
+        uuid
+        id
+        title
+      }
+      ... on NodeEmployer {
+        uuid
+        id
+        title
+      }
+      ... on NodeEvent {
+        uuid
+        id
+        title
+      }
+      ... on NodePage {
+        uuid
+        id
+        title
+        metatag {
+          __typename
+          ...MetaProperty
+        }
+        image {
+          image {
+            alt
+            variations(styles: OPENGRAPH_IMAGE) {
+              url
             }
           }
         }
-        ... on RouteRedirect {
-          status
-          url
-        }
+      }
+      ... on NodeProfile {
+        uuid
+        id
+        title
+      }
+      ... on NodeSpotlight {
+        uuid
+        id
+        title
+      }
+      ... on NodeTestimonial {
+        uuid
+        id
+        title
+      }
+      ... on NodeUserDocumentation {
+        uuid
+        id
+        title
+      }
+      ... on NodeUndergraduateProgram {
+        uuid
+        id
+        title
+      }
+      ... on NodeUndergraduateDegree {
+        uuid
+        id
+        title
+      }
+      ... on TermUndergraduateStudentType {
+        uuid
+        id
+        name
+      }
+      ... on TermAdmissionLocation {
+        uuid
+        id
+        name
+        weight
+      }
+      ... on NodeUndergraduateRequirement {
+        uuid
+        id
+        title
+      }
+      ... on TermProfileType {
+        uuid
+        id
+        name
       }
     }
-  `);
-
-  const { data, error } = await client.query({
-    query: routeQuery,
-    variables: {
-      path: url,
-      revision: showUnpublished ? "latest" : "current",
-    },
-  });
-
-  if (error) {
-    handleGraphQLError(error);
   }
+`);
 
-  if (!data) {
-    return null;
+const ROUTE_REDIRECT_FRAGMENT = gql(/* gql */ `
+  fragment RedirectRoute on RouteRedirect {
+    status
+    url
   }
+`);
 
-  if (showUnpublished && data.route?.__typename === "RouteInternal" && data.route.entity === null) {
-    // For some reason, the route is found, but the entity is null.
-    // This only happens when we are looking for the latest revision and the entity has no revisions.
-    // We need to query again with the current revision.
+async function retrieveRoute(url: string) {
+  const client = getClient();
+  const showUnpublished = await showUnpublishedContent();
+
+  async function _getRoute(showUnpublished: boolean) {
     const { data, error } = await client.query({
-      query: routeQuery,
+      query: gql(/* gql */ `
+        query Route($path: String!, $revision: ID = "current") {
+          route(path: $path, revision: $revision) {
+            __typename
+            ...InternalRoute
+            ...RedirectRoute
+          }
+        }
+      `),
       variables: {
         path: url,
-        revision: "current",
+        revision: showUnpublished ? "latest" : "current",
       },
     });
 
@@ -159,16 +166,96 @@ export async function getRoute(url: string) {
       return null;
     }
 
-    return data.route;
+    // For some reason, if we are looking for the latest revision and the entity has no revisions, the route is found, but the entity is null.
+    // We need to query again with the current revision.
+    if (showUnpublished && data.route?.__typename === "RouteInternal" && data.route.entity === null) {
+      return _getRoute(false);
+    }
+
+    switch (data.route?.__typename) {
+      case "RouteInternal":
+      case "RouteRedirect":
+        return data?.route;
+      default:
+        return null;
+    }
   }
 
-  switch (data.route?.__typename) {
-    case "RouteInternal":
-    case "RouteRedirect":
-      return data?.route;
-    default:
-      return null;
+  return _getRoute(showUnpublished ?? false);
+}
+
+export const getRoute = cache(retrieveRoute);
+
+export async function getRouteMetadata(url: string): Promise<Metadata> {
+  const route = await getRoute(url);
+
+  if (!route) {
+    return {};
   }
+
+  if (route.__typename !== "RouteInternal") {
+    return {};
+  }
+
+  if (!route.entity) {
+    return {};
+  }
+
+  if (!("title" in route.entity)) {
+    return {};
+  }
+
+  if (!("metatag" in route.entity)) {
+    return {
+      title: route.entity.title,
+    };
+  }
+
+  const metadata: Metadata = {
+    title: route.entity.title,
+  };
+
+  // Get og:image from image field if it exists
+  if (
+    "image" in route.entity &&
+    route.entity.image &&
+    route.entity.image.image &&
+    route.entity.image.image.variations
+  ) {
+    metadata.openGraph = {};
+    metadata.openGraph.images = [
+      {
+        url: route.entity.image.image.variations[0].url,
+        alt: route.entity.image.image.alt ?? "",
+        width: 1200,
+        height: 630,
+      },
+    ];
+
+    metadata.twitter = {};
+    metadata.twitter.images = [
+      {
+        url: route.entity.image.image.variations[0].url,
+        alt: route.entity.image.image.alt ?? "",
+        width: 1200,
+        height: 630,
+      },
+    ];
+  }
+
+  // Convert metatags to appropriate Next.js compatible metadata
+  for (const metatag of route.entity.metatag) {
+    if (
+      metatag.__typename === "MetaTagProperty" &&
+      metatag.attributes.property === "og:description" &&
+      metatag.attributes.content
+    ) {
+      metadata.description = metatag.attributes.content;
+      break;
+    }
+  }
+
+  return metadata;
 }
 
 export async function checkIsEntityInMenu(
