@@ -8,7 +8,7 @@ import { Link } from "@uoguelph/react-components/link";
 import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileCardFragment } from "@/lib/graphql/types";
 
-export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCardFragment; inMultiColumn?: boolean }) => {
+export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
   const { profileInfo } = data;
 
   // Add defensive check to prevent errors if profileInfo is undefined
@@ -23,9 +23,7 @@ export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCard
   const shouldShowProfilePicture = (data as any).showProfilePicture !== false;
   const shouldShowProfileLink = (data as any).showProfileLink === true;
 
-  const sharedClassName = inMultiColumn 
-    ? `block overflow-hidden h-full w-full break-inside-avoid` 
-    : `block overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4`;
+  const sharedClassName = `inline-block overflow-hidden h-full w-full max-w-[475px] align-top mx-2 mb-4 ${!shouldShowProfilePicture ? 'bg-grey-light-bg py-4' : ''}`;
 
   const content = (
     <div className="flex flex-col md:flex-row h-full md:items-start">
@@ -45,7 +43,7 @@ export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCard
       )}
 
       {/* Content Section */}
-      <div className="flex-1 md:px-6 flex flex-col justify-start">
+      <div className="flex-1 md:px-4 flex flex-col justify-start">
         
         {profileInfo.title && (
           <Typography type="h3" as="h3" className="md:mt-0">
@@ -106,8 +104,6 @@ export const ProfileCard = ({ data, inMultiColumn = false }: { data: ProfileCard
   );
 
   return (
-    <div className="xl:after:content-[''] xl:after:display-table xl:after:clear-both">
-      <div className={sharedClassName}>{content}</div>
-    </div>
+    <div className={sharedClassName}>{content}</div>
   );
 };
