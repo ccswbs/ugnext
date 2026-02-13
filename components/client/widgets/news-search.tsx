@@ -1,6 +1,47 @@
-import { NewsSearchFragment } from "@/lib/graphql/types";
-import { NewsSearch as NewsSearchComponent } from "@/components/client/news/news-search";
+import { NewsCategoryFragment, NewsSearchFragment, NewsWithoutContentFragment } from "@/lib/graphql/types";
+import { useMemo } from "react";
+import { FilterablePaginatedGrid } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid";
+import { NewsCard } from "@/components/client/news/news-card";
+import { FilterablePaginatedGridTextBox } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-textbox";
+import useSWR from "swr";
+import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
+
+async function fetcher(...args: Parameters<typeof fetch>) {
+  const response = await fetch(...args);
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+}
 
 export function NewsSearch({ data }: { data: NewsSearchFragment }) {
-  return <NewsSearchComponent></NewsSearchComponent>;
+  const url = useMemo(() => {
+    if (!data.units || data.units.length === 0) return `/api/news/get-news`;
+
+    return `/api/news/get-news?${data.units.join(",")}`;
+  }, [data]);
+
+  const { data: categories, error, isLoading } = useSWR<NewsCategoryFragment[]>(`/api/news/get-categories`, fetcher);
+
+  if (isLoading) {
+    return (
+      <div className="flex w-full items-center justify-center flex-1 py-5">
+        <LoadingIndicator />
+        <span className="sr-only">Loading...</span>
+      </div>
+    );
+  }
+
+  console.log(categories);
+
+  return (
+    <FilterablePaginatedGrid
+      url={url}
+      render={(item: NewsWithoutContentFragment) => <NewsCard key={item.id} data={item} />}
+    >
+      <FilterablePaginatedGridTextBox id="query" label="Search by keywords" />
+    </FilterablePaginatedGrid>
+  );
 }
