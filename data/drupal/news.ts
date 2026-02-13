@@ -119,7 +119,13 @@ export async function getFilteredNews(options: NewsSearchOptions) {
   const { query, page = 0, pageSize = 20, units, categories } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
-    throw new Error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
+    console.error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
+
+    return {
+      results: [],
+      totalPages: 0,
+      total: 0,
+    };
   }
 
   const client = getClient();
@@ -160,17 +166,13 @@ export async function getFilteredNews(options: NewsSearchOptions) {
     },
   });
 
-  if (error) {
+  if (error || !data || !data.newsSearch) {
     console.error(`GraphQL Error: failed to retrieve news articles:\n\t${error}\n`);
-    return [];
-  }
-
-  if (!data) {
-    return [];
-  }
-
-  if (!data.newsSearch) {
-    return [];
+    return {
+      results: [],
+      totalPages: 0,
+      total: 0,
+    };
   }
 
   let results = data.newsSearch.results as NewsWithoutContentFragment[];

@@ -21,6 +21,8 @@ import { ProfileCard } from "@/components/client/widgets/profile-card";
 import type { Widgets } from "@/data/drupal/widgets";
 import { usePathname } from "next/navigation";
 import { ButtonWidget } from "@/components/client/widgets/button";
+import { FeaturedNews } from "@/components/client/widgets/featured-news";
+import { NewsSearch } from "@/components/client/widgets/news-search";
 
 export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; neverWrap?: boolean }) {
   const pathname = usePathname();
@@ -58,12 +60,16 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
         return <ButtonWidget data={data} column={"primary"} />;
       case "ParagraphSectionButton":
         return <ButtonSectionWidget data={data} />;
+      case "ParagraphFeaturedNews":
+        return <FeaturedNews data={data} />;
       case "ParagraphGeneralText":
         return <GeneralTextWidget data={data} />;
       case "ParagraphLinksWidget":
         return <LinksWidget data={data} />;
       case "ParagraphMediaText":
         return <MediaTextWidget data={data} />;
+      case "ParagraphNewsSearch":
+        return <NewsSearch data={data} />;
       case "ParagraphTestimonialSlider":
         return <TestimonialSliderWidget data={data} />;
       case "ParagraphSection":
