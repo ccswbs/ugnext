@@ -23,7 +23,7 @@ export function NewsSearch({ data }: { data: NewsSearchFragment }) {
   const url = useMemo(() => {
     if (!data.units || data.units.length === 0) return `/api/news/get-news`;
 
-    return `/api/news/get-news?${data.units.join(",")}`;
+    return `/api/news/get-news?units=${data.units.map((unit) => unit.id).join(",")}`;
   }, [data]);
 
   const { data: categories, error, isLoading } = useSWR<NewsCategoryFragment[]>(`/api/news/get-categories`, fetcher);
