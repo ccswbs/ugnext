@@ -8,7 +8,7 @@ import defaultImage from "@/img/university-of-guelph-logo.png";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-export function NewsCard({ data, large }: { data: NewsWithoutContentFragment; large?: boolean }) {
+export function NewsCard({ data, className }: { data: NewsWithoutContentFragment; className?: string }) {
   let url = "";
 
   if (data.externallyLinked && data.externalLink) {
@@ -19,26 +19,18 @@ export function NewsCard({ data, large }: { data: NewsWithoutContentFragment; la
 
   const newsCard = tv({
     slots: {
-      card: "h-full",
+      card: "h-full w-full",
       image: "aspect-3/2 w-full object-cover",
-    },
-    variants: {
-      large: {
-        true: {
-          card: "",
-          image: "h-82 w-full object-cover",
-        },
-      },
     },
   });
 
-  const { card, image } = newsCard({ large });
+  const { card, image } = newsCard();
 
-  const img = large ? data.hero?.image : data.hero?.image.variations?.[0];
+  const img = data.hero?.image.variations?.[0];
   const alt = data.hero?.image.alt ?? "";
 
   return (
-    <Card key={data.id} as={Link} href={url} className={card()}>
+    <Card key={data.id} as={Link} href={url} className={twMerge(card(), className)}>
       <CardImage
         as={Image}
         src={img?.url ?? defaultImage.src}

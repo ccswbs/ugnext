@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
+import { twJoin } from "tailwind-merge";
 
 export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   const context = useContext(SectionContext);
@@ -35,9 +36,7 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
   }
 
   return (
-    <div className="flex flex-col gap-4 max-w-[calc(137rem*2/3)]">
-      {data.articles?.[0] && <NewsCard key={data.articles[0].id} data={data.articles[0]} large={true} />}
-
+    <div className="flex flex-col gap-4 @container">
       <Grid
         template={{
           base: ["1fr"],
@@ -49,8 +48,12 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
           y: 16,
         }}
       >
-        {data.articles?.slice(1)?.map((article) => (
-          <NewsCard key={article.id} data={article} />
+        {data.articles?.map((article, index) => (
+          <NewsCard
+            key={article.id}
+            data={article}
+            className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
+          />
         ))}
       </Grid>
     </div>
