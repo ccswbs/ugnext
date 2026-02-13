@@ -1,6 +1,6 @@
 "use client";
 
-import { PaginatedGrid } from "@/components/client/filterable-paginated-grid/paginated-grid";
+import { PaginatedGrid } from "@/components/client/paginated-grid";
 import type { PartialProfileData, Unit } from "@/data/drupal/profile";
 import { Container } from "@uoguelph/react-components/container";
 import { ProfileCard } from "@/components/client/profiles/profile-card";
