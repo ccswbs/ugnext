@@ -30,7 +30,9 @@ export function NewsCard({ data }: { data: NewsWithoutContentFragment }) {
         <CardTitle>{data.title}</CardTitle>
       </CardContent>
 
-      <CardFooter>{data.category?.map((category) => category.name).join(", ")}</CardFooter>
+      {data.category && data.category.length > 0 && (
+        <CardFooter>{data.category?.map((category) => category.name).join(", ")}</CardFooter>
+      )}
     </Card>
   );
 }
