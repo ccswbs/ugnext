@@ -1,4 +1,4 @@
-import { getNewsArticle } from "@/data/drupal/ovc-news";
+import { getLegacyNewsArticle } from "@/data/drupal/legacy-news";
 import { Header } from "@/components/server/header";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 export default async function OVCNewsArticle({ params }: Props) {
   const { id } = await params;
-  const content = await getNewsArticle(id);
+  const content = await getLegacyNewsArticle(id);
 
   if (!content) {
     notFound();

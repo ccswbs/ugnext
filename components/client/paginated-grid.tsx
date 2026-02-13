@@ -12,7 +12,7 @@ type PaginatedGridData<T> = {
   total: number;
 };
 
-type PaginatedGridProps<T> = {
+export type PaginatedGridProps<T> = {
   url: string;
   render: (item: T, index: number) => ReactNode;
   debounce?: number;

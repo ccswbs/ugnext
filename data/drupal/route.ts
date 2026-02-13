@@ -105,6 +105,15 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         id
         title
       }
+      ... on NodeNews {
+        uuid
+        id
+        title
+        metatag {
+          __typename
+          ...MetaProperty
+        }
+      }
       ... on TermUndergraduateStudentType {
         uuid
         id

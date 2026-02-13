@@ -128,6 +128,8 @@ export function SectionWidget({ data }: SectionWidgetProps) {
 
   const title = data.heading?.trim();
 
+  console.log(data);
+
   return (
     <>
       {title && (

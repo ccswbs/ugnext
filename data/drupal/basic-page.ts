@@ -1,7 +1,16 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { query } from "@/lib/apollo";
-import { getFullTestimonialSlider } from "@/data/drupal/widgets";
+import { getFullFeaturedNews, getFullTestimonialSlider, SectionWidgets, Widgets } from "@/data/drupal/widgets";
+
+export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
+  fragment BasicPageMinimal on NodePage {
+    status
+    id
+    title
+    path
+  }
+`);
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
@@ -25,6 +34,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...GeneralText
       ...Links
       ...MediaText
+      ...NewsSearch
       ...Tabs
       ...Statistics
       ...TestimonialSlider
@@ -40,6 +50,29 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+async function processSectionWidget(widget: SectionWidgets) {
+  switch (widget.__typename) {
+    case "ParagraphFeaturedNews":
+      return await getFullFeaturedNews(widget);
+    default:
+      return widget;
+  }
+}
+
+async function processWidget(widget: Widgets) {
+  switch (widget.__typename) {
+    case "ParagraphTestimonialSlider":
+      return await getFullTestimonialSlider(widget);
+    case "ParagraphSection":
+      return {
+        ...widget,
+        content: await Promise.all(widget.content.map((nestedWidget) => processSectionWidget(nestedWidget))),
+      };
+    default:
+      return widget;
+  }
+}
 
 export async function getPageContent(id: string) {
   const showUnpublished = await showUnpublishedContent();
@@ -75,18 +108,10 @@ export async function getPageContent(id: string) {
     return data.nodePage;
   }
 
+  console.log(data);
   // We need to resolve testimonials by tag.
   return {
     ...data.nodePage,
-    widgets: await Promise.all(
-      data.nodePage.widgets.map(async (widget) => {
-        switch (widget.__typename) {
-          case "ParagraphTestimonialSlider":
-            return await getFullTestimonialSlider(widget);
-          default:
-            return widget;
-        }
-      })
-    ),
+    widgets: await Promise.all(data.nodePage.widgets.map(async (widget) => await processWidget(widget))),
   };
 }
