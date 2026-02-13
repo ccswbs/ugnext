@@ -111,12 +111,12 @@ export type NewsSearchOptions = {
   query?: string;
   page: number;
   pageSize: number;
-  unit?: string;
+  units?: string[];
   categories?: string[];
 };
 
 export async function getFilteredNews(options: NewsSearchOptions) {
-  const { query, page = 0, pageSize = 20, unit, categories } = options;
+  const { query, page = 0, pageSize = 20, units, categories } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
     throw new Error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
@@ -130,7 +130,7 @@ export async function getFilteredNews(options: NewsSearchOptions) {
       query NewsSearch(
         $page: Int
         $pageSize: Int
-        $unit: String
+        $units: [String]
         $categories: [String]
         $query: String
         $status: Boolean
@@ -138,7 +138,7 @@ export async function getFilteredNews(options: NewsSearchOptions) {
         newsSearch(
           page: $page
           pageSize: $pageSize
-          filter: { unit: $unit, categories: $categories, query: $query, status: $status }
+          filter: { units: $units, categories: $categories, query: $query, status: $status }
         ) {
           results {
             ...NewsWithoutContent
@@ -153,7 +153,7 @@ export async function getFilteredNews(options: NewsSearchOptions) {
     variables: {
       page: page,
       pageSize: pageSize,
-      unit: unit ?? null,
+      units: units ?? [],
       categories: categories ?? [],
       query: query ?? "",
       status: showUnpublished ? null : true,
@@ -215,4 +215,35 @@ export async function getFilteredNews(options: NewsSearchOptions) {
     totalPages: Math.ceil(data.newsSearch.pageInfo.total / options.pageSize),
     total: data.newsSearch.pageInfo.total,
   };
+}
+
+export async function getAllNewsCategories() {
+  const client = getClient();
+
+  const { data, error } = await client.query({
+    query: gql(/* gql */ `
+      query GetAllNewsCategories {
+        termNewsCategories(first: 100) {
+          nodes {
+            ...NewsCategory
+          }
+        }
+      }
+    `),
+  });
+
+  if (error) {
+    console.error(`GraphQL Error: failed to retrieve news categories:\n\t${error}\n`);
+    return [];
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  if (!data.termNewsCategories) {
+    return [];
+  }
+
+  return data.termNewsCategories.nodes;
 }

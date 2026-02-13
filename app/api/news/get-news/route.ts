@@ -7,7 +7,11 @@ export async function GET(request: NextRequest) {
   const page: number = Math.ceil(parseInt(params.get("page") ?? "0", 10));
   const pageSize: number = Math.ceil(parseInt(params.get("size") ?? "20", 10));
   const query: string = params.get("query") ?? "";
-  const unit: string | undefined = params.get("unit") ?? undefined;
+
+  const units: string[] = (params.get("units") ?? "")
+    .split(",")
+    .map((type) => type.trim())
+    .filter(Boolean);
 
   const categories: string[] = (params.get("categories") ?? "")
     .split(",")
@@ -18,7 +22,7 @@ export async function GET(request: NextRequest) {
     const data = await getFilteredNews({
       page,
       pageSize,
-      unit,
+      units,
       query,
       categories,
     });
