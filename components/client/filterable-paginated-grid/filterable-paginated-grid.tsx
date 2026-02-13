@@ -3,8 +3,15 @@
 import { PaginatedGrid, PaginatedGridProps } from "@/components/client/paginated-grid";
 import { createContext, PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { Container } from "@uoguelph/react-components/container";
+import { FilterablePaginatedGridSelectOption } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-select";
 
-export type FilterablePaginatedGridFilterValue = string | string[] | boolean | number;
+export type FilterablePaginatedGridFilterValue =
+  | string
+  | string[]
+  | boolean
+  | number
+  | FilterablePaginatedGridSelectOption
+  | FilterablePaginatedGridSelectOption[];
 
 export type FilterablePaginatedGridFilter<T extends FilterablePaginatedGridFilterValue> = {
   id: string;
@@ -75,3 +82,4 @@ export function FilterablePaginatedGrid<T>({
 }
 
 export { FilterablePaginatedGridTextBox } from "./filterable-paginated-grid-textbox";
+export { FilterablePaginatedGridSelect } from "./filterable-paginated-grid-select";
