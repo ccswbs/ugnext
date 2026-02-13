@@ -5,8 +5,10 @@ import { Card, CardContent, CardFooter, CardImage, CardTitle } from "@uoguelph/r
 import Link from "next/link";
 import Image from "next/image";
 import defaultImage from "@/img/university-of-guelph-logo.png";
+import { twMerge } from "tailwind-merge";
+import { tv } from "tailwind-variants";
 
-export function NewsCard({ data }: { data: NewsWithoutContentFragment }) {
+export function NewsCard({ data, large }: { data: NewsWithoutContentFragment; large?: boolean }) {
   let url = "";
 
   if (data.externallyLinked && data.externalLink) {
@@ -15,15 +17,35 @@ export function NewsCard({ data }: { data: NewsWithoutContentFragment }) {
     url = data.path ?? "";
   }
 
+  const newsCard = tv({
+    slots: {
+      card: "h-full",
+      image: "aspect-3/2 w-full object-cover",
+    },
+    variants: {
+      large: {
+        true: {
+          card: "",
+          image: "h-82 w-full object-cover",
+        },
+      },
+    },
+  });
+
+  const { card, image } = newsCard({ large });
+
+  const img = large ? data.hero?.image : data.hero?.image.variations?.[0];
+  const alt = data.hero?.image.alt ?? "";
+
   return (
-    <Card key={data.id} as={Link} href={url}>
+    <Card key={data.id} as={Link} href={url} className={card()}>
       <CardImage
         as={Image}
-        src={data.hero?.image.variations?.[0]?.url ?? defaultImage.src}
-        alt={data.hero?.image.alt ?? ""}
-        width={`${data.hero?.image.variations?.[0]?.width ?? defaultImage.width}`}
-        height={`${data.hero?.image.variations?.[0]?.height ?? defaultImage.height}`}
-        className="aspect-3/2 object-cover object-center"
+        src={img?.url ?? defaultImage.src}
+        alt={alt ?? ""}
+        width={`${img?.width ?? defaultImage.width}`}
+        height={`${img?.height ?? defaultImage.height}`}
+        className={image()}
       />
 
       <CardContent>
