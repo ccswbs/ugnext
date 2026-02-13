@@ -1,6 +1,6 @@
 "use client";
 
-import { PaginatedGrid } from "@/components/client/paginated-grid";
+import { PaginatedGrid } from "@/components/client/filterable-paginated-grid/paginated-grid";
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import Image from "next/image";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";

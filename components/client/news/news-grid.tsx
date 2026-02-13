@@ -1,6 +1,6 @@
 "use client";
 
-import { PaginatedGrid } from "@/components/client/paginated-grid";
+import { PaginatedGrid } from "@/components/client/filterable-paginated-grid/paginated-grid";
 import { NewsWithoutContentFragment } from "@/lib/graphql/types";
 import { NewsCard } from "@/components/client/news/news-card";
 import { NewsSearchOptions } from "@/data/drupal/news";
