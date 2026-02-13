@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getFilteredProfiles } from "@/data/drupal/profile";
 import { getFilteredNews } from "@/data/drupal/news";
 
 export async function GET(request: NextRequest) {
