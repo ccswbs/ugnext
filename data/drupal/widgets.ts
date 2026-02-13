@@ -552,11 +552,6 @@ export async function getFullFeaturedNews(data: FeaturedNewsFragment) {
     return copy;
   }
 
-  // If there are no units or categories, return whatever the featured articles the user selected
-  if (units.length === 0 && categories.length === 0) {
-    return copy;
-  }
-
   const allArticles = [];
   const ids = new Set<string>();
 
