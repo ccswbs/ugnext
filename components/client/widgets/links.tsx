@@ -125,7 +125,9 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
             return (
               <ListItem key={url + index}>
-                <Link href={url}>{title}</Link>
+                <Link as={NextLink} href={url}>
+                  {title}
+                </Link>
               </ListItem>
             );
           })}
