@@ -33,6 +33,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     "ParagraphGeneralText",
     "ParagraphLinksWidget",
     "ParagraphBlockWidget",
+    "ParagraphProfileCard",
   ];
 
   // Some widgets need to span the full width of the page

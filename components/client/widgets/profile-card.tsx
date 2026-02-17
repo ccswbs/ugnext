@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { AadContactInfoClient } from "@/components/client/aad-contact-info-client";
-import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
-import { HtmlParser } from "@/components/client/html-parser";
+import { PublicContactInfo } from "@/components/client/public-contact-info";
+import { getIconForUrl } from "@/lib/ug-utils";
+import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
+import { Link } from "@uoguelph/react-components/link";
 import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileCardFragment } from "@/lib/graphql/types";
 
@@ -18,57 +17,55 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
     return <div>Profile data not available - missing profileInfo</div>;
   }
 
-  const sharedClassName =
-    "group block bg-grey-light-bg hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full xl:w-[calc(45%-0.75rem)] xl:inline-block xl:align-top xl:mr-3 xl:mb-4";
+  // Determine if profile picture and link to full profile should be shown
+  // These fields will be added to the Profile Card widget configuration (not the Profile content type)
+  // Default to true (show picture) if the field is undefined for backward compatibility
+  const shouldShowProfilePicture = (data as any).showProfilePicture !== false;
+  const shouldShowProfileLink = (data as any).showProfileLink === true;
+
+  const sharedClassName = `inline-block overflow-hidden h-full w-full max-w-[475px] align-top mx-2 mb-4 ${!shouldShowProfilePicture ? 'bg-grey-light-bg py-4' : ''}`;
 
   const content = (
-    <div className="flex flex-col md:flex-row h-full">
-      {/* Image Section */}
-      {profileInfo.profilePicture && (
-        <div className="shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3">
+    <div className="flex flex-col md:flex-row h-full md:items-start">
+    
+      {/* Image Section - now conditionally rendered based on shouldShowProfilePicture */}
+      {profileInfo.profilePicture && shouldShowProfilePicture && (
+        <div className="shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3 aspect-square max-w-xs md:max-w-none">
           <Image
             src={profileInfo.profilePicture.image.url}
             alt={profileInfo.profilePicture.image.alt ?? ""}
             width={400}
             height={400}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 192px, (max-width: 1280px) 224px, 50vw"
-            className="aspect-square object-cover object-top w-full h-full md:h-full"
+            className="w-full h-full object-cover object-top"
           />
         </div>
       )}
 
       {/* Content Section */}
-      <div className="flex-1 p-6 flex flex-col justify-center">
-        <Typography type="h3" as="p" className="m-0">
-          {profileInfo.title}
-        </Typography>
+      <div className="flex-1 md:px-4 flex flex-col justify-start">
+        
+        {profileInfo.title && (
+          <Typography type="h3" as="h3" className="md:mt-0">
+            {profileInfo.title}
+          </Typography>
+        )}
+        
         {profileInfo.profileJobTitle && (
           <Typography type="h5" as="p" className="m-0">
             {profileInfo.profileJobTitle}
           </Typography>
         )}
 
-        {/* Directory contact info from AAD - using reusable component */}
+        {/* Directory contact info from AAD - using secure public API */}
         {profileInfo.centralLoginId && (
-          <AadContactInfoClient
+          <PublicContactInfo
             email={`${profileInfo.centralLoginId}@uoguelph.ca`}
             directoryEmail={!!profileInfo.directoryEmail}
-            directoryOffice={false}
+            directoryOffice={!!profileInfo.directoryOffice}
             directoryPhone={!!profileInfo.directoryPhone}
             className="mt-2"
           />
-        )}
-
-        {/* Profile Fields */}
-        {profileInfo.profileFields && profileInfo.profileFields.length > 0 && (
-          <div className="mt-2">
-            {profileInfo.profileFields.map((field, index) => (
-              <div key={index}>
-                <HtmlParser html={getDisplayText(field.label)} instructions={undefined} />
-                <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
-              </div>
-            ))}
-          </div>
         )}
 
         {/* Custom links if available */}
@@ -78,30 +75,35 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
               (link, idx) =>
                 link.url && (
                   <div key={idx}>
-                    <Link href={link.url} className="flex items-center gap-2">
-                      <i className={`${getIconForUrl(link.url)} w-4`} aria-hidden="true"></i>
-                      <span className="text-body-copy-link underline hover:decoration-transparent">{link.title}</span>
-                    </Link>
+                    {link.url.startsWith("mailto:") ? (
+                      <ContactEmail email={link.url.replace("mailto:", "")} />
+                    ) : link.url.startsWith("tel:") ? (
+                      <ContactPhone number={link.url.replace("tel:", "")} />
+                    ) : (
+                      <>
+                        <i className={`${getIconForUrl(link.url)} me-2`} aria-hidden="true"></i>
+                        <Link href={link.url}>                      
+                          {link.title}
+                        </Link>
+                      </>
+                    )}
                   </div>
                 )
             )}
           </div>
         )}
+        
+        {profileInfo.path && shouldShowProfileLink && (
+          <Link href={profileInfo.path} className="block">
+            View full profile
+          </Link>
+        )}
+
       </div>
     </div>
   );
 
-  if (profileInfo.path) {
-    return (
-      <Link href={profileInfo.path} className={sharedClassName}>
-        {content}
-      </Link>
-    );
-  }
-
   return (
-    <div className="xl:after:content-[''] xl:after:display-table xl:after:clear-both">
-      <div className={sharedClassName}>{content}</div>
-    </div>
+    <div className={sharedClassName}>{content}</div>
   );
 };

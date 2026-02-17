@@ -134,3 +134,25 @@ export const obfuscateEmail = (email: string) => {
     href: `mailto:${email}`, // Use plain email for functional mailto link
   };
 };
+
+/**
+ * Parse a phone number string to separate the main number from extension
+ * @param phoneString - Phone number string (e.g., "+1-519-824-4120 x54019")
+ * @returns Object with number and extension (if present)
+ */
+export const parsePhoneNumber = (phoneString: string) => {
+  const trimmed = phoneString.trim();
+  const extensionMatch = trimmed.match(/^(.+?)\s+x(\d+)$/i);
+  
+  if (extensionMatch) {
+    return {
+      number: extensionMatch[1].trim(),
+      extension: extensionMatch[2].trim()
+    };
+  }
+  
+  return {
+    number: trimmed,
+    extension: undefined
+  };
+};
