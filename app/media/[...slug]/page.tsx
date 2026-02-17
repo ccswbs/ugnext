@@ -22,24 +22,38 @@ function convertToRelativePath(absoluteUrl: string): string {
 }
 
 export default async function MediaPage({ params }: Props) {
-  const { slug } = await params;
+  console.log(`[MediaPage] Handler called with params:`, params);
   
   try {
-    const path = await getMediaPathById(slug[0]);
+    const { slug } = await params;
+    console.log(`[MediaPage] Slug array:`, slug);
+    
+    if (!slug || !slug[0]) {
+      console.error(`[MediaPage] Invalid slug:`, slug);
+      notFound();
+    }
+    
+    const mediaId = slug[0];
+    console.log(`[MediaPage] Looking up media ID: ${mediaId}`);
+    
+    const path = await getMediaPathById(mediaId);
+    console.log(`[MediaPage] GraphQL returned path:`, path);
 
     if (!path) {
-      console.error(`[MediaPage] No media found for ID: ${slug[0]}`);
+      console.error(`[MediaPage] No media found for ID: ${mediaId}`);
       notFound();
     }
 
     // Convert absolute URLs to relative paths so Next.js redirects can handle them
     const relativePath = convertToRelativePath(path);
+    console.log(`[MediaPage] Original: ${path}`);
+    console.log(`[MediaPage] Converted: ${relativePath}`);
     
-    console.log(`[MediaPage] Redirecting media ${slug[0]} from ${path} to ${relativePath}`);
-    
+    console.log(`[MediaPage] Performing permanentRedirect to: ${relativePath}`);
     permanentRedirect(relativePath);
   } catch (error) {
-    console.error(`[MediaPage] Error processing media ${slug[0]}:`, error);
+    console.error(`[MediaPage] Unhandled error:`, error);
+    console.error(`[MediaPage] Error stack:`, error instanceof Error ? error.stack : 'No stack trace');
     notFound();
   }
 }
