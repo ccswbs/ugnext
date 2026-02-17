@@ -22,20 +22,18 @@ function convertToRelativePath(absoluteUrl: string): string {
 }
 
 export default async function MediaPage({ params }: Props) {
-  console.log(`[MediaPage] Handler called with params:`, params);
+  const { slug } = await params;
+  console.log(`[MediaPage] Handler called with slug:`, slug);
+  
+  if (!slug || !slug[0]) {
+    console.error(`[MediaPage] Invalid slug:`, slug);
+    notFound();
+  }
+  
+  const mediaId = slug[0];
+  console.log(`[MediaPage] Looking up media ID: ${mediaId}`);
   
   try {
-    const { slug } = await params;
-    console.log(`[MediaPage] Slug array:`, slug);
-    
-    if (!slug || !slug[0]) {
-      console.error(`[MediaPage] Invalid slug:`, slug);
-      notFound();
-    }
-    
-    const mediaId = slug[0];
-    console.log(`[MediaPage] Looking up media ID: ${mediaId}`);
-    
     const path = await getMediaPathById(mediaId);
     console.log(`[MediaPage] GraphQL returned path:`, path);
 
@@ -52,7 +50,12 @@ export default async function MediaPage({ params }: Props) {
     console.log(`[MediaPage] Performing permanentRedirect to: ${relativePath}`);
     permanentRedirect(relativePath);
   } catch (error) {
-    console.error(`[MediaPage] Unhandled error:`, error);
+    // Don't catch redirect errors - they're how Next.js implements redirects
+    if (error instanceof Error && (error.message === 'NEXT_REDIRECT' || error.digest?.includes('NEXT_REDIRECT'))) {
+      throw error;
+    }
+    
+    console.error(`[MediaPage] GraphQL or other error:`, error);
     console.error(`[MediaPage] Error stack:`, error instanceof Error ? error.stack : 'No stack trace');
     notFound();
   }

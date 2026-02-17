@@ -4,7 +4,7 @@ import { getMediaPathById } from "@/data/drupal/media";
 function convertToRelativePath(absoluteUrl: string): string {
   try {
     const url = new URL(absoluteUrl);
-    const pathMatch = url.pathname.match(/(\\/sites\\/default\\/files\\/.*)$/);
+    const pathMatch = url.pathname.match(/(\/sites\/default\/files\/.*)$/);
     if (pathMatch) {
       return pathMatch[1];
     }
