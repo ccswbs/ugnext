@@ -39,8 +39,15 @@ export function extractBuildingAcronyms(officeLocation: string): string[] {
  * Looks up building information by acronym in the locations data.
  */
 export function findBuildingByAcronym(acronym: string): LocationData | null {
-  const building = locationsData.find(
-    (location) => location.acronym && location.acronym.toUpperCase() === acronym.toUpperCase()
+  // Filter to only include locations that have the required properties
+  const validLocations = locationsData.filter((location): location is LocationData => 
+    typeof location.acronym === 'string' && 
+    typeof location.name === 'string' && 
+    typeof location.link === 'string'
+  );
+  
+  const building = validLocations.find(
+    (location) => location.acronym.toUpperCase() === acronym.toUpperCase()
   );
   return building ?? null;
 }
