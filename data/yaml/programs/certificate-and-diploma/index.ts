@@ -111,7 +111,7 @@ export async function getCertificateAndDiplomaProgram(filepath: string) {
 }
 
 export async function getCertificateAndDiplomaPrograms() {
-  const paths = await glob(path.join(CERTIFICATE_AND_DIPLOMA_PROGRAMS_ROOT, "*.yml"));
+  const paths = await glob(path.posix.join(CERTIFICATE_AND_DIPLOMA_PROGRAMS_ROOT, "*.yml"));
   const programs = await Promise.all(paths.map((path) => getCertificateAndDiplomaProgram(path)));
 
   return programs.sort((a, b) => a.title.localeCompare(b.title));
