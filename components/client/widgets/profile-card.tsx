@@ -6,7 +6,9 @@ import { getIconForUrl } from "@/lib/ug-utils";
 import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 import { Link } from "@uoguelph/react-components/link";
 import { Typography } from "@uoguelph/react-components/typography";
+import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import type { ProfileCardFragment } from "@/lib/graphql/types";
+import defaultImage from "@/img/university-of-guelph-logo.png";
 
 export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
   const { profileInfo } = data;
@@ -23,32 +25,25 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
   const shouldShowProfilePicture = (data as any).showProfilePicture !== false;
   const shouldShowProfileLink = (data as any).showProfileLink === true;
 
-  const sharedClassName = `inline-block overflow-hidden h-full w-full max-w-[475px] align-top mx-2 mb-4 ${!shouldShowProfilePicture ? 'bg-grey-light-bg py-4' : ''}`;
-
-  const content = (
-    <div className="flex flex-col md:flex-row h-full md:items-start">
-    
+  return (
+    <Card key={profileInfo.id} className="@xl:w-100 @xl:inline-block @xl:me-5 mb-5">
       {/* Image Section - now conditionally rendered based on shouldShowProfilePicture */}
       {profileInfo.profilePicture && shouldShowProfilePicture && (
-        <div className="shrink-0 w-full md:w-48 lg:w-56 xl:w-1/3 aspect-square max-w-xs md:max-w-none">
-          <Image
-            src={profileInfo.profilePicture.image.url}
-            alt={profileInfo.profilePicture.image.alt ?? ""}
-            width={400}
-            height={400}
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 192px, (max-width: 1280px) 224px, 50vw"
-            className="w-full h-full object-cover object-top"
-          />
-        </div>
+        <CardImage
+          as={Image}
+          src={profileInfo.profilePicture.image.url}
+          alt={profileInfo.profilePicture.image.alt ?? ""}
+          width={`${profileInfo.profilePicture.image.variations?.[0]?.width ?? defaultImage.width}`}
+          height={`${profileInfo.profilePicture.image.variations?.[0]?.height ?? defaultImage.height}`}
+          className="aspect-square object-cover object-center"        
+        />
       )}
 
-      {/* Content Section */}
-      <div className="flex-1 md:px-4 flex flex-col justify-start">
-        
+      <CardContent>
         {profileInfo.title && (
-          <Typography type="h3" as="h3" className="md:mt-0">
+          <CardTitle className="@lg:mt-0">
             {profileInfo.title}
-          </Typography>
+          </CardTitle>
         )}
         
         {profileInfo.profileJobTitle && (
@@ -98,12 +93,7 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
             View full profile
           </Link>
         )}
-
-      </div>
-    </div>
-  );
-
-  return (
-    <div className={sharedClassName}>{content}</div>
+      </CardContent>
+    </Card>
   );
 };
