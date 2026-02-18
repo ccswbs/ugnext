@@ -33,8 +33,8 @@ export const ProfileCard = ({ data }: { data: ProfileCardFragment }) => {
           as={Image}
           src={profileInfo.profilePicture.image.url}
           alt={profileInfo.profilePicture.image.alt ?? ""}
-          width={`${profileInfo.profilePicture.image.variations?.[0]?.width ?? defaultImage.width}`}
-          height={`${profileInfo.profilePicture.image.variations?.[0]?.height ?? defaultImage.height}`}
+          width={`${profileInfo.profilePicture.image.width ?? defaultImage.width}`}
+          height={`${profileInfo.profilePicture.image.height ?? defaultImage.height}`}
           className="aspect-square object-cover object-center"        
         />
       )}
