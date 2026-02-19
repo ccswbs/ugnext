@@ -5,7 +5,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileBlockFragment } from "@/lib/graphql/types";
 import { ProfileSearch } from "@/components/client/profiles/profile-search";
 import { ProfileTypeFilter } from "@/components/client/profiles/profile-type-filter";
-import { ProfileCard } from "@/components/client/profiles/profile-card";
+import { ProfileContact } from "@/components/client/widgets/profile-contact";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import { slugify } from "@/lib/string-utils";
 import useSWR from "swr";
@@ -146,7 +146,7 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
           <Container>
             <div className="grid grid-cols-1 gap-5 py-8">
               {secondaryProfiles.results.map((profile) => (
-                <ProfileCard key={profile.id} data={profile} />
+                <ProfileContact key={profile.id} data={profile} />
               ))}
               {secondaryProfiles.results.length === 0 && (
                 <div className="flex w-full items-center justify-center flex-1 py-5">
