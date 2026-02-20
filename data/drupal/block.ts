@@ -21,6 +21,7 @@ export const WIDGET_BLOCK_FRAGMENT = gql(/* gql */ `
       ...ButtonSection
       ...GeneralText
       ...MediaText
+      ...ProfileCard
       ...SocialMedia
       ...Tabs
     }
