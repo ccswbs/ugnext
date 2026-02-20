@@ -23,11 +23,11 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
   const shouldShowProfileLink = (data as any).showProfileLink === true;
 
   return (
-    <Contact key={profileInfo.id} className="@xl:w-[475px] @xl:inline-block @xl:align-top @xl:me-5 @xl:p-0 my-5">
-      <div className="@xl:grid @xl:grid-cols-[128px_1fr] @xl:gap-4 @xl:bg-white">
+    <Contact key={profileInfo.id} className="@xl:w-[47%] @xl:inline-block @xl:align-top @xl:me-5 @xl:p-0 my-5">
+      <div className="@xl:grid @xl:grid-cols-[1fr_2fr] @xl:gap-4 @xl:bg-white">
         {/* Image Section - conditionally rendered based on shouldShowProfilePicture */}
         {profileInfo.profilePicture && shouldShowProfilePicture && (
-          <div className="@xl:w-32 -mx-4 -mt-4 mb-4 @xl:m-0">
+          <div className="-mx-4 -mt-4 mb-4 @xl:m-0">
             <Image
               src={profileInfo.profilePicture.image.url}
               alt={profileInfo.profilePicture.image.alt ?? ""}
@@ -40,13 +40,13 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
         
         <div>
         {profileInfo.title && (
-          <ContactName className="@xl:mt-0 text-2xl">
+          <ContactName className="@xl:mt-0 @xl:text-2xl">
             {profileInfo.title}
           </ContactName>
         )}
       
         {profileInfo.profileJobTitle && (
-          <ContactTitle className="block font-bold text-lg mb-2">
+          <ContactTitle className="block @xl:font-bold @xl:text-lg mb-2">
             {profileInfo.profileJobTitle}
           </ContactTitle>
         )}
