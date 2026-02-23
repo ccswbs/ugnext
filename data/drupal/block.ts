@@ -23,6 +23,7 @@ export const WIDGET_BLOCK_FRAGMENT = gql(/* gql */ `
       ...MediaText
       ...ProfileCard
       ...SocialMedia
+      ...Statistics
       ...Tabs
     }
   }
