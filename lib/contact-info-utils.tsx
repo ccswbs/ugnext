@@ -124,17 +124,6 @@ export function buildContactInfoArray(
     );
   }
 
-  // Office
-  if (directoryOffice && data?.officeLocation && typeof data.officeLocation === 'string' && data.officeLocation.trim()) {
-    contactInfo.push(
-      <React.Fragment key="office">
-        <i className="fa-solid fa-building-columns me-2" aria-hidden="true"></i>
-        <span className="sr-only">Office:</span>
-        {renderOfficeLocationWithLinks(data.officeLocation)}
-      </React.Fragment>
-    );
-  }
-
   // Phone numbers  
   if (directoryPhone) {
     // Handle business phones (array)
@@ -156,6 +145,16 @@ export function buildContactInfoArray(
     }
   }
 
+  // Office
+  if (directoryOffice && data?.officeLocation && typeof data.officeLocation === 'string' && data.officeLocation.trim()) {
+    contactInfo.push(
+      <div className="flex items-center gap-2">
+        <i className="fa-regular fa-location-dot fa-fw" aria-hidden="true"></i>
+        <span className="sr-only">Office:</span>
+        {renderOfficeLocationWithLinks(data.officeLocation)}
+      </div>
+    );
+  }
   return contactInfo;
 }
 
@@ -170,13 +169,13 @@ export function renderContactInfo(
   }
 
   return (
-    <Typography type="body" className={className}>
+    <React.Fragment>
       {contactInfo.map((info, index) => (
         <React.Fragment key={index}>
-          {index > 0 && !(index === 1 && directoryEmail) && <br />}
+          {index > 0 && !(index === 1 && directoryEmail)}
           {info}
         </React.Fragment>
-      ))}
-    </Typography>
+    ))}
+    </React.Fragment>
   );
 }
