@@ -7,9 +7,18 @@ import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "
 import { Link } from "@uoguelph/react-components/link";
 //import { Typography } from "@uoguelph/react-components/typography";
 import type { ProfileCardFragment } from "@/lib/graphql/types";
+import { useContext } from "react";
+import { SectionContext } from "@/components/client/section";
+import type { SectionContextType } from "@/lib/types/section-context";
+import { parsePhoneNumber, parseTelUrl } from "@/lib/string-utils";
+import { parse } from "path";
 
 export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
   const { profileInfo } = data;
+
+  // Check if this is a secondary column using SectionContext - if so, omit the profile picture
+  const sectionContext = useContext(SectionContext) as SectionContextType | null;
+  const isSecondary = sectionContext?.column === "secondary";
 
   // Add defensive check to prevent errors if profileInfo is undefined
   if (!profileInfo) {
@@ -19,7 +28,8 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
 
   // Determine if profile picture and link to full profile should be shown
   // Default to true (show picture) if the field is undefined for backward compatibility
-  const shouldShowProfilePicture = (data as any).showProfilePicture !== false;
+  // BUT omit profile picture if in secondary column
+  const shouldShowProfilePicture = (data as any).showProfilePicture !== false && !isSecondary;
   const shouldShowProfileLink = (data as any).showProfileLink === true;
 
   return (
@@ -46,7 +56,7 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
         )}
       
         {profileInfo.profileJobTitle && (
-          <ContactTitle className="block @xl:font-bold @xl:text-lg mb-2">
+          <ContactTitle className="block mb-2">
             {profileInfo.profileJobTitle}
           </ContactTitle>
         )}
@@ -56,41 +66,63 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
           <PublicContactInfo
             email={`${profileInfo.centralLoginId}@uoguelph.ca`}
             directoryEmail={!!profileInfo.directoryEmail}
-            directoryOffice={!!profileInfo.directoryOffice}
+            directoryOffice={false}
             directoryPhone={!!profileInfo.directoryPhone}
             className="mt-2"
           />
         )}
 
-        {/* Custom links if available */} 
+        {/* Custom links if available - mailto/tel links are exempt from count limit */} 
         {profileInfo.customLink && profileInfo.customLink.length > 0 && (
-          <div className="mb-4">
-            {profileInfo.customLink.map(
-              (link, idx) =>
+          <div>
+            {(() => {
+              // Separate mailto/tel links from other custom links
+              const mailTelLinks = profileInfo.customLink.filter(link => 
+                link.url && (link.url.startsWith("mailto:") || link.url.startsWith("tel:"))
+              );
+              const otherLinks = profileInfo.customLink.filter(link => 
+                link.url && !link.url.startsWith("mailto:") && !link.url.startsWith("tel:")
+              );
+              
+              // Determine limit for non-mailto/tel links
+              const otherLinksLimit = isSecondary && !shouldShowProfileLink ? 1 : 3;
+              const linksToRender = [...mailTelLinks, ...otherLinks.slice(0, otherLinksLimit)];
+              
+              return linksToRender.map((link, idx) =>
                 link.url && (
                   <div key={idx}>
                     {link.url.startsWith("mailto:") ? (
                       <ContactEmail email={link.url.replace("mailto:", "")} />
                     ) : link.url.startsWith("tel:") ? (
-                      <ContactPhone number={link.url.replace("tel:", "")} />
+                      (() => {
+                        const { number, extension } = parseTelUrl(link.url);
+                        return <ContactPhone number={number} extension={extension} />;
+                      })()
                     ) : (
-                      <>
+                      <div className="flex items-center gap-1">
                         <i className={`${getIconForUrl(link.url)} me-2`} aria-hidden="true"></i>
                         <Link href={link.url}>                      
                           {link.title}
                         </Link>
-                      </>
+                      </div>
                     )}
                   </div>
                 )
-            )}
+              );
+            })()}
           </div>
-      )}
-        
+        )}
+
+        {/* Profile link - show if enabled and not in secondary column, even without custom links */}
         {profileInfo.path && shouldShowProfileLink && (
-          <Link href={profileInfo.path} className="block">
-            View full profile
-          </Link>
+          <div className="mt-0 mb-4">
+            <div className="flex items-center gap-1">
+              <i className="fa-regular fa-user me-2" aria-hidden="true"></i>
+              <Link href={profileInfo.path}>                      
+                {profileInfo.profileFirstName}'s full profile
+              </Link>
+            </div>
+          </div>
         )}
         </div>
       </div>
