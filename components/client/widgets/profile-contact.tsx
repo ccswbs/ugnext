@@ -99,8 +99,8 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
                         return <ContactPhone number={number} extension={extension} />;
                       })()
                     ) : (
-                      <div className="flex items-center gap-1">
-                        <i className={`${getIconForUrl(link.url)} me-2`} aria-hidden="true"></i>
+                      <div className="flex items-center gap-2">
+                        <i className={`${getIconForUrl(link.url)} fa-fw`} aria-hidden="true"></i>
                         <Link href={link.url}>                      
                           {link.title}
                         </Link>
@@ -116,8 +116,8 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
         {/* Profile link - show if enabled and not in secondary column, even without custom links */}
         {profileInfo.path && shouldShowProfileLink && (
           <div className="mt-0 mb-4">
-            <div className="flex items-center gap-1">
-              <i className="fa-regular fa-user me-2" aria-hidden="true"></i>
+            <div className="flex items-center gap-2">
+              <i className="fa-regular fa-user fa-fw" aria-hidden="true"></i>
               <Link href={profileInfo.path}>                      
                 {profileInfo.profileFirstName}'s full profile
               </Link>
