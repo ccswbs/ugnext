@@ -298,6 +298,7 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         directoryOffice
         directoryPhone
         profileJobTitle
+        profileFirstName
         path
         profilePicture {
           ...Image
