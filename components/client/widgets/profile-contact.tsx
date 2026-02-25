@@ -100,8 +100,8 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
                       })()
                     ) : (
                       <div className="flex items-center gap-2">
-                        <i className={`${getIconForUrl(link.url)} fa-fw`} aria-hidden="true"></i>
-                        <Link href={link.url}>                      
+                        <i className={`${getIconForUrl(link.url)} fa-fw shrink-0`} aria-hidden="true"></i>
+                        <Link href={link.url} className="min-w-0 break-words">                      
                           {link.title}
                         </Link>
                       </div>
@@ -117,7 +117,7 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
         {profileInfo.path && shouldShowProfileLink && (
           <div className="mt-0 mb-4">
             <div className="flex items-center gap-2">
-              <i className="fa-regular fa-user fa-fw" aria-hidden="true"></i>
+              <i className="fa-regular fa-user fa-fw shrink-0" aria-hidden="true"></i>
               <Link href={profileInfo.path}>                      
                 {profileInfo.profileFirstName}'s full profile
               </Link>
