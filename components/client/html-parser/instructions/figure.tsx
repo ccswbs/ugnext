@@ -9,7 +9,7 @@ export const FigureInstruction: HTMLParserInstruction = {
     const id = nanoid();
     const className = typeof props.className === "string" ? props.className : "";
 
-    const imgNode: DOMNode = node.children.find((child) => child.type === "tag" && child.name === "img");
+    const imgNode: DOMNode | undefined = (node.children as DOMNode[]).find((child) => child.type === "tag" && child.name === "img");
 
     if (!imgNode) {
       return (
@@ -25,16 +25,16 @@ export const FigureInstruction: HTMLParserInstruction = {
       alignment = "right";
     }
 
-    const caption: DOMNode = node.children.find((child) => child.type === "tag" && child.name === "figcaption");
+    const caption: DOMNode | undefined = (node.children as DOMNode[]).find((child) => child.type === "tag" && child.name === "figcaption");
 
     return (
       <Figure align={alignment} {...props} key={id} className="pt-[1em]">
         <FigureImage
           key={`${id}-figure-image`}
-          src={imgNode.attribs.src}
-          alt={imgNode.attribs.alt}
-          width={imgNode.attribs.width}
-          height={imgNode.attribs.height}
+          src={(imgNode as any).attribs?.src}
+          alt={(imgNode as any).attribs?.alt}
+          width={(imgNode as any).attribs?.width}
+          height={(imgNode as any).attribs?.height}
         />
 
         {caption && <FigureCaption key={`${id}-figure-caption`}>{extractTextFromDOMNode(caption)}</FigureCaption>}
