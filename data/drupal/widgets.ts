@@ -308,7 +308,6 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
     sectionColumn {
       ...SectionColumn
     }
-    showProfilePicture
     showProfileLink
   }
 `);

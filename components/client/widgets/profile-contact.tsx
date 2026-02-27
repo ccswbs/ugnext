@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import type { SectionContextType } from "@/lib/types/section-context";
 import { parsePhoneNumber, parseTelUrl } from "@/lib/string-utils";
+import defaultImage from "@/img/university-of-guelph-logo.png";
 import { parse } from "path";
 
 export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
@@ -26,24 +27,20 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
     return <div>Profile data not available - missing profileInfo</div>;
   }
 
-  // Determine if profile picture and link to full profile should be shown
-  // Default to true (show picture) if the field is undefined for backward compatibility
-  // BUT omit profile picture if in secondary column
-  const shouldShowProfilePicture = (data as any).showProfilePicture !== false && !isSecondary;
   const shouldShowProfileLink = (data as any).showProfileLink === true;
 
   return (
     <Contact key={profileInfo.id} className="@xl:w-[47%] @xl:inline-block @xl:align-top @xl:me-5 @xl:p-0 my-5">
       <div className="@xl:grid @xl:grid-cols-[1fr_2fr] @xl:gap-4 @xl:bg-white">
-        {/* Image Section - conditionally rendered based on shouldShowProfilePicture */}
-        {profileInfo.profilePicture && shouldShowProfilePicture && (
+        {/* Image Section - conditionally rendered based on section column */}
+        {!isSecondary && (
           <div className="-mx-4 -mt-4 mb-4 @xl:m-0">
             <Image
-              src={profileInfo.profilePicture.image.url}
-              alt={profileInfo.profilePicture.image.alt ?? ""}
-              width={profileInfo.profilePicture.image.width}
-              height={profileInfo.profilePicture.image.height}
-              className="aspect-square object-cover object-center"        
+              src={profileInfo.profilePicture?.image?.url ?? defaultImage.src}
+              alt={profileInfo.profilePicture?.image?.alt ?? ""}
+              width={profileInfo.profilePicture?.image?.width ?? defaultImage.width}
+              height={profileInfo.profilePicture?.image?.height ?? defaultImage.height}
+              className="aspect-square object-cover object-center"           
             />
           </div>
         )}
