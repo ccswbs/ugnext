@@ -50,6 +50,7 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
       >
         {data.articles?.map((article, index) => (
           <NewsCard
+            variant="grid"
             key={article.id}
             data={article}
             className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
