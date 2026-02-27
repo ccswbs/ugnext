@@ -11,8 +11,6 @@ import { twJoin } from "tailwind-merge";
 export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   const context = useContext(SectionContext);
 
-  console.log(context);
-
   if (context?.column === "secondary") {
     return (
       <List>

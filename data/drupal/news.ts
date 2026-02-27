@@ -39,10 +39,10 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
 export const NEWS_FRAGMENT = gql(/* gql */ `
   fragment News on NodeNews {
     ...NewsWithoutContent
-    datePublished {
+    created {
       time
     }
-    dateUpdated {
+    changed {
       time
     }
     author
@@ -70,6 +70,49 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+export async function getNewsArticlePublishedDate(id: string) {
+  const client = getClient();
+
+  const { data, error } = await client.query({
+    query: gql(/* gql */ `
+      query NewsArticlePublishedDate($id: Float) {
+        firstPublishedRevision(filter: { id: $id }) {
+          results {
+            __typename
+            ... on NodeNews {
+              changed {
+                time
+              }
+            }
+          }
+        }
+      }
+    `),
+    variables: {
+      id: Number.parseInt(id),
+    },
+  });
+
+  if (error) {
+    console.error(`GraphQL Error: failed to retrieve published date for news article ${id}:\n\t${error}\n`);
+    return null;
+  }
+
+  if (!data?.firstPublishedRevision?.results?.length) {
+    return null;
+  }
+
+  if (data.firstPublishedRevision.results.length === 0) {
+    return null;
+  }
+
+  if (data.firstPublishedRevision.results[0].__typename !== "NodeNews") {
+    return null;
+  }
+
+  return data.firstPublishedRevision.results[0].changed.time;
+}
 
 export async function getNewsArticle(id: string) {
   const showUnpublished = await showUnpublishedContent();
@@ -100,6 +143,17 @@ export async function getNewsArticle(id: string) {
 
   if (data.nodeNews.status === false && !showUnpublished) {
     return null;
+  }
+
+  const publishedDate = await getNewsArticlePublishedDate(id);
+
+  if (publishedDate) {
+    return {
+      ...(data.nodeNews as NewsFragment),
+      created: {
+        time: publishedDate,
+      },
+    };
   }
 
   return data.nodeNews as NewsFragment;

@@ -106,7 +106,7 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
 
         <Typography type="body" as="span">
           <strong>Published on:</strong>{" "}
-          {new Date(data.datePublished.time).toLocaleString("en-US", {
+          {new Date(data.created.time).toLocaleString("en-US", {
             weekday: "long",
             month: "long",
             day: "2-digit",
@@ -116,10 +116,10 @@ export function NewsSidebar({ data }: NewsSidebarProps) {
           })}
         </Typography>
 
-        {data.dateUpdated && (
+        {data.changed.time !== data.created.time && (
           <Typography type="body" as="span">
             <strong>Updated on:</strong>{" "}
-            {new Date(data.dateUpdated.time).toLocaleString("en-US", {
+            {new Date(data.changed.time).toLocaleString("en-US", {
               weekday: "long",
               month: "long",
               day: "2-digit",
