@@ -32,6 +32,7 @@ export function FilterablePaginatedGrid<T>({
   url,
   render,
   debounce = 300,
+  layout = "grid",
   children,
 }: PropsWithChildren<PaginatedGridProps<T>>) {
   const [filters, setFilters] = useState<FilterablePaginatedGridFilters>({});
@@ -75,7 +76,7 @@ export function FilterablePaginatedGrid<T>({
       </div>
 
       <Container>
-        <PaginatedGrid url={urlWithFilters} render={render} debounce={debounce} />
+        <PaginatedGrid url={urlWithFilters} render={render} debounce={debounce} layout={layout} />
       </Container>
     </div>
   );
