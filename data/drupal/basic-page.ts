@@ -108,7 +108,6 @@ export async function getPageContent(id: string) {
     return data.nodePage;
   }
 
-  console.log(data);
   // We need to resolve testimonials by tag.
   return {
     ...data.nodePage,
