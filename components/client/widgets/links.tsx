@@ -21,6 +21,11 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
       cardImage: "aspect-[4/3] w-full object-cover",
     },
     variants: {
+      isLargeGrid: {
+      true: {
+        container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+        },
+      },
       centered: {
         true: {
           container: "mx-auto justify-center",
@@ -61,9 +66,9 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
     ],
   })({
     centered: false,
-    divisibleByTwo: count % 2 === 0,
-    divisibleByThree: count % 3 === 0,
-    divisibleByFour: count % 4 === 0,
+    isLargeGrid: count > 8, 
+    divisibleByTwo: count % 2 === 0 && count <= 8,
+    divisibleByThree: count % 3 === 0 && count <= 8,
   });
 
   return (
