@@ -65,7 +65,6 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
       ...GeneralText
       ...MediaText
       ...Block
-      ...Buttons
       ...RelatedContent
     }
   }
