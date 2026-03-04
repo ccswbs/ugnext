@@ -37,20 +37,21 @@ export function ProfileSearch(props: ProfileSearchProps) {
 
   // Update options when props change (especially types.defaultValue)
   useEffect(() => {
-    setOptions(prevOptions => ({
+    setOptions((prevOptions) => ({
       ...prevOptions,
       queryByName: props.queryByName.defaultValue ?? prevOptions.queryByName,
       queryByResearchArea: props.queryByResearchArea.defaultValue ?? prevOptions.queryByResearchArea,
       units: props.units.defaultValue ?? prevOptions.units,
       types: props.types.defaultValue ?? prevOptions.types,
-      isAcceptingGraduateStudents: props.isAcceptingGraduateStudents.defaultValue ?? prevOptions.isAcceptingGraduateStudents,
+      isAcceptingGraduateStudents:
+        props.isAcceptingGraduateStudents.defaultValue ?? prevOptions.isAcceptingGraduateStudents,
     }));
   }, [
     props.queryByName.defaultValue,
     props.queryByResearchArea.defaultValue,
     props.units.defaultValue,
     props.types.defaultValue,
-    props.isAcceptingGraduateStudents.defaultValue
+    props.isAcceptingGraduateStudents.defaultValue,
   ]);
 
   const url = useMemo(() => {
@@ -65,7 +66,7 @@ export function ProfileSearch(props: ProfileSearchProps) {
     }
 
     // If a unit is selected from dropdown, use only that unit; otherwise use default units
-    const unitsToFilter = selectedUnit ? [selectedUnit.id] : (options.units || []);
+    const unitsToFilter = selectedUnit ? [selectedUnit.id] : options.units || [];
 
     if (unitsToFilter.length > 0) {
       params.set("units", unitsToFilter.join(","));
@@ -80,7 +81,7 @@ export function ProfileSearch(props: ProfileSearchProps) {
     }
 
     const finalUrl = `/api/profiles/get-profiles?${params.toString()}`;
-    
+
     return finalUrl;
   }, [options, selectedUnit]);
 
@@ -90,7 +91,9 @@ export function ProfileSearch(props: ProfileSearchProps) {
   return (
     <>
       <div className={`w-full ${backgroundClass} border-t-4 border-yellow -mt-1`}>
-        <Container className={`w-full ${backgroundClass} flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end empty:hidden`}>
+        <Container
+          className={`w-full ${backgroundClass} flex flex-col gap-4 py-[4rem]! sm:flex-row sm:items-end empty:hidden`}
+        >
           {props.queryByName.enabled && (
             <div className="flex-1">
               <TextInput

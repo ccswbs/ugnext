@@ -1,4 +1,7 @@
 import { gql } from "@/lib/graphql";
+import { query } from "@/lib/apollo";
+import { slugify } from "@/lib/string-utils";
+import { UnitFragment } from "@/lib/graphql/types";
 
 export const GOAL_FRAGMENT = gql(/* gql */ `
   fragment Goal on TermGoal {
@@ -134,3 +137,50 @@ export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SECTION_TYPE = gql(/* gql */ `
     name
   }
 `);
+
+export async function getAllUnits() {
+  const unitQuery = gql(/* gql */ `
+    query GetAllTermUnits($cursor: Cursor) {
+      termUnits(first: 100, after: $cursor) {
+        nodes {
+          ...Unit
+        }
+        pageInfo {
+          hasNextPage
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const units: UnitFragment[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await query({
+      query: unitQuery,
+      variables: {
+        cursor: cursor,
+      },
+    });
+
+    if (error) {
+      console.error(`GraphQL Error: failed to retrieve units in getAllUnits: ${error}`);
+      return units;
+    }
+
+    if (!data) {
+      break;
+    }
+
+    units.push(...data.termUnits.nodes);
+    hasNextPage = data?.termUnits.pageInfo.hasNextPage ?? false;
+  }
+
+  return units;
+}
+
+export async function getUnitBySlugifiedName(name: string) {
+  const units = await getAllUnits();
+  return units.find((unit) => slugify(unit.name) === name.toLowerCase());
+}

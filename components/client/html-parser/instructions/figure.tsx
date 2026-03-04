@@ -9,7 +9,27 @@ export const FigureInstruction: HTMLParserInstruction = {
     const id = nanoid();
     const className = typeof props.className === "string" ? props.className : "";
 
-    const imgNode: DOMNode = node.children.find((child) => child.type === "tag" && child.name === "img");
+    function findImage(node: DOMNode): DOMNode | null {
+      if (node.type !== "tag") {
+        return null;
+      }
+
+      if (node.name !== "img") {
+        for (const child of node.children) {
+          const result = findImage(child);
+
+          if (result) {
+            return result;
+          }
+        }
+
+        return null;
+      }
+
+      return node;
+    }
+
+    const imgNode: DOMNode = findImage(node);
 
     if (!imgNode) {
       return (

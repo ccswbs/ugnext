@@ -3,14 +3,19 @@ import {
   AccordionFragment,
   BlockFragment,
   ButtonSectionFragment,
+  ButtonsFragment,
   CallToActionFragment,
+  FeaturedNewsFragment,
   GeneralTextFragment,
   ImageOverlayFragment,
   LinksFragment,
   MediaTextFragment,
   ModalVideoFragment,
+  NewsSearchFragment,
+  NewsWithoutContentFragment,
   ProfileBlockFragment,
   ProfileCardFragment,
+  RelatedContentFragment,
   SectionFragment,
   SocialMediaFragment,
   StatisticsFragment,
@@ -22,6 +27,7 @@ import {
   TestimonialSliderFragment,
 } from "@/lib/graphql/types";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
+import { getFilteredNews } from "@/data/drupal/news";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -141,6 +147,27 @@ export const CALL_TO_ACTION_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const FEATURED_NEWS_FRAGMENT = gql(/* gql */ `
+  fragment FeaturedNews on ParagraphFeaturedNews {
+    __typename
+    uuid
+    id
+    count
+    sectionColumn {
+      ...SectionColumn
+    }
+    articles {
+      ...NewsWithoutContent
+    }
+    categories {
+      ...NewsCategory
+    }
+    units {
+      ...Unit
+    }
+  }
+`);
+
 export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
   fragment GeneralText on ParagraphGeneralText {
     __typename
@@ -248,6 +275,17 @@ export const MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const NEWS_SEARCH_FRAGMENT = gql(/* gql */ `
+  fragment NewsSearch on ParagraphNewsSearch {
+    __typename
+    uuid
+    id
+    units {
+      ...Unit
+    }
+  }
+`);
+
 export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
   fragment ProfileBlock on ParagraphProfileBlock {
     __typename
@@ -329,6 +367,7 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
       __typename
       ...Accordion
       ...Block
+      ...FeaturedNews
       ...GeneralText
       ...Links
       ...MediaText
@@ -480,7 +519,77 @@ export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export async function getFullTestimonialSlider(data: TestimonialSliderFragment) {
+export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
+  fragment RelatedContent on ParagraphRelatedContent {
+    __typename
+    uuid
+    id
+    relatedContentHeadingLevel: headingLevel
+    content {
+      __typename
+      ...BasicPageMinimal
+    }
+    label: contentLabel
+  }
+`);
+
+export type FullFeaturedNews = Omit<FeaturedNewsFragment, "units" | "categories"> & {
+  isFull: true;
+};
+
+export async function getFullFeaturedNews(data: FeaturedNewsFragment) {
+  const units = data.units?.map((unit) => unit.id) ?? [];
+  const categories = data.categories?.map((category) => category.id) ?? [];
+  const copy = { ...data };
+
+  delete copy.units;
+  delete copy.categories;
+
+  const articlesNeeded = data.count - (data.articles?.length ?? 0);
+
+  // If there are enough articles selected by the user that we don't need to fill anymore, return whatever the featured articles the user selected
+  if (articlesNeeded <= 0) {
+    return copy;
+  }
+
+  const allArticles = [];
+  const ids = new Set<string>();
+
+  for (const article of data.articles ?? []) {
+    allArticles.push(article);
+    ids.add(article.id);
+  }
+
+  // We need to fetch the rest of the articles.
+  const extra = await getFilteredNews({
+    page: 0,
+    pageSize: 10,
+    units,
+    categories,
+  });
+
+  for (const article of extra.results) {
+    if (allArticles.length >= data.count) {
+      break;
+    }
+
+    if (!ids.has(article.id)) {
+      allArticles.push(article);
+    }
+  }
+
+  return {
+    ...copy,
+    articles: allArticles as NewsWithoutContentFragment[],
+    isFull: true,
+  } as FullFeaturedNews;
+}
+
+export async function getFullTestimonialSlider(data: TestimonialSliderFragment | FullTestimonialSlider) {
+  if ("isFull" in data && data.isFull) {
+    return data;
+  }
+
   const tags =
     data.byTags
       ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
@@ -493,23 +602,28 @@ export async function getFullTestimonialSlider(data: TestimonialSliderFragment) 
   return {
     ...data,
     byTags: await getTestimonialByTag(tags),
+    isFull: true,
   } as FullTestimonialSlider;
 }
 
 export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
+  isFull: true;
   byTags: TestimonialFragment[];
 };
 
 export type Widgets =
   | AccordionFragment
   | BlockFragment
+  | ButtonsFragment
   | ButtonSectionFragment
   | CallToActionFragment
+  | FeaturedNewsFragment
   | GeneralTextFragment
   | ImageOverlayFragment
   | LinksFragment
   | MediaTextFragment
   | ModalVideoFragment
+  | NewsSearchFragment
   | ProfileBlockFragment
   | ProfileCardFragment
   | SectionFragment
@@ -521,9 +635,27 @@ export type Widgets =
   | TabsFragment
   | TestimonialSliderFragment
   | FullTestimonialSlider
+  | RelatedContentFragment
   | {
       __typename: "ParagraphYamlWidget";
     }
   | {
       __typename?: "ParagraphCallToAction";
+    };
+
+export type SectionWidgets =
+  | AccordionFragment
+  | BlockFragment
+  | ButtonSectionFragment
+  | FeaturedNewsFragment
+  | GeneralTextFragment
+  | ImageOverlayFragment
+  | LinksFragment
+  | MediaTextFragment
+  | ProfileBlockFragment
+  | ProfileCardFragment
+  | StatisticsFragment
+  | TabsFragment
+  | {
+      __typename: "ParagraphYamlWidget";
     };
