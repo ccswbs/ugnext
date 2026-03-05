@@ -67,8 +67,9 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
   })({
     centered: false,
     isLargeGrid: count > 8, 
-    divisibleByTwo: count % 2 === 0 && count <= 8,
-    divisibleByThree: count % 3 === 0 && count <= 8,
+    divisibleByTwo: count % 2 === 0,
+    divisibleByThree: count % 3 === 0,
+    divisibleByFour: count % 4 === 0,
   });
 
   return (
