@@ -54,6 +54,7 @@ export function findBuildingByAcronym(acronym: string): LocationData | null {
 
 /**
  * Renders office location with linked building acronyms where applicable.
+ * Also handles "Rm:" substitution with "Room".
  */
 export function renderOfficeLocationWithLinks(officeLocation: string): React.ReactNode {
   // Safety check for empty or invalid office location
@@ -61,13 +62,16 @@ export function renderOfficeLocationWithLinks(officeLocation: string): React.Rea
     return officeLocation || '';
   }
 
-  const acronyms = extractBuildingAcronyms(officeLocation);
+  // Replace "Rm:" with "Room"
+  const processedLocation = officeLocation.replace(/\bRm:/g, 'Room ');
+
+  const acronyms = extractBuildingAcronyms(processedLocation);
   
   if (acronyms.length === 0) {
-    return officeLocation;
+    return processedLocation;
   }
 
-  let result: React.ReactNode = officeLocation;
+  let result: React.ReactNode = processedLocation;
 
   // Replace each found acronym with a link if it exists in locations data
   acronyms.forEach((acronym, index) => {
@@ -79,10 +83,10 @@ export function renderOfficeLocationWithLinks(officeLocation: string): React.Rea
       // Create a regex to find the acronym in the current result
       const acronymRegex = new RegExp(`\\b${acronym}\\b`, 'g');
       
-      // For the first acronym, we work with the original string
+      // For the first acronym, we work with the processed string
       if (index === 0) {
-        const parts = officeLocation.split(acronymRegex);
-        const matches = officeLocation.match(acronymRegex) || [];
+        const parts = processedLocation.split(acronymRegex);
+        const matches = processedLocation.match(acronymRegex) || [];
         
         result = (
           <>
@@ -91,7 +95,7 @@ export function renderOfficeLocationWithLinks(officeLocation: string): React.Rea
                 {part}
                 {partIndex < matches.length && (
                   <Link href={mapUrl}>
-                    {building.name}
+                    {building.name},
                   </Link>
                 )}
               </React.Fragment>
