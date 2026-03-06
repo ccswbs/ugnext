@@ -12,6 +12,8 @@ import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
+import { ContactEmail, ContactPhone } from "@uoguelph/react-components/contact";
+import { parseTelUrl } from "@/lib/string-utils";
 // import {
 //   UniwebAffiliations,
 //   UniwebCurrentTeaching,
@@ -84,7 +86,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
 
               {/* Directory contact info from AAD */}
               {content.centralLoginId && content.centralLoginId.trim() && (
-                <div id="contact-info" className="mb-4">
+                <div id="contact-info">
                   <AadContactInfo
                     email={`${content.centralLoginId}@uoguelph.ca`}
                     directoryEmail={content.directoryEmail}
@@ -97,12 +99,40 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {/* Custom links if available */}
               {content.customLink && content.customLink.length > 0 && (
                 <div className="mb-4">
-                  {content.customLink.map((link, idx) => (
-                    <div key={idx} className="mb-2">
-                      <i className={`${getIconForUrl(link.url)} me-2`} aria-hidden="true"></i>
-                      <Link href={link.url}>{link.title}</Link>
-                    </div>
-                  ))}
+                  {/* Email links first */}
+                  {content.customLink
+                    .filter(link => link.url.startsWith("mailto:"))
+                    .map((link, idx) => (
+                      <div key={`email-${idx}`}>
+                        <ContactEmail email={link.url.replace("mailto:", "")} />
+                      </div>
+                    ))}
+                  
+                  {/* Tel links second */}
+                  {content.customLink
+                    .filter(link => link.url.startsWith("tel:"))
+                    .map((link, idx) => (
+                      <div key={`tel-${idx}`}>
+                        {(() => {
+                          const { number, extension } = parseTelUrl(link.url);
+                          return <ContactPhone number={number} extension={extension} />;
+                        })()}
+                      </div>
+                    ))}
+                  
+                  {/* Other links last */}
+                  {content.customLink
+                    .filter(link => !link.url.startsWith("mailto:") && !link.url.startsWith("tel:"))
+                    .map((link, idx) => (
+                      <div key={`other-${idx}`}>
+                        <div className="flex items-center gap-2">
+                          <i className={`${getIconForUrl(link.url)} fa-fw shrink-0`} aria-hidden="true"></i>
+                          <Link href={link.url} className="min-w-0 break-words">
+                            {link.title}
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               )}
 
