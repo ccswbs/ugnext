@@ -116,7 +116,7 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
             <div className="flex items-center gap-2">
               <i className="fa-regular fa-user fa-fw shrink-0" aria-hidden="true"></i>
               <Link href={profileInfo.path}>                      
-                {profileInfo.profileFirstName.trim()}'s full profile
+                {profileInfo.profileFirstName?.trim() ? `${profileInfo.profileFirstName.trim()}'s full profile` : "View full profile"}
               </Link>
             </div>
           </div>
