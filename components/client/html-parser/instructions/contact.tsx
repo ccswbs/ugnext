@@ -80,7 +80,7 @@ export const ContactInstruction: HTMLParserInstruction = {
 
       // Process all children of the vcard node
       if (domNode.children) {
-        domNode.children.forEach((child) => processNode(child));
+        (domNode.children as DOMNode[]).forEach((child) => processNode(child));
       }
 
       return { name, title, phone, extension, email };
