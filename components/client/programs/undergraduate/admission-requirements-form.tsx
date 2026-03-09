@@ -57,7 +57,6 @@ export default function AdmissionRequirementsForm({
     data: programs,
     stemming: true,
     plugins: [pluginQPS()],
-    stopwords: ["development"],
   });
 
   const filteredPrograms = useMemo(() => {

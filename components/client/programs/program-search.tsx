@@ -58,7 +58,6 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
     data: programs,
     plugins: [pluginQPS()],
     stemming: true,
-    stopwords: ["development"],
   });
 
   const fuzzyMatches = useMemo(() => {
