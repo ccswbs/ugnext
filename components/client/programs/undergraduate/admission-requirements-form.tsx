@@ -55,6 +55,7 @@ export default function AdmissionRequirementsForm({
       tags: "string[]",
     },
     data: programs,
+    stemming: true,
     plugins: [pluginQPS()],
     stopwords: ["development"],
   });
@@ -66,9 +67,9 @@ export default function AdmissionRequirementsForm({
       term: programQuery,
       properties: ["title", "tags"],
       boost: {
-        title: 2,
+        title: 4,
       },
-      tolerance: 1,
+      tolerance: 2,
     });
 
     return results.hits.map((hit) => hit.document as UndergraduateProgram);

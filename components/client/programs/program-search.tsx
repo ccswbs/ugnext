@@ -68,9 +68,9 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
       term: input,
       properties: ["title", "tags"],
       boost: {
-        title: 2,
+        title: 4,
       },
-      tolerance: 1,
+      tolerance: 2,
     });
 
     // console.log(`Found ${results.count} results in ${results.elapsed.formatted}`);
