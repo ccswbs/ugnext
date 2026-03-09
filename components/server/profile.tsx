@@ -140,18 +140,16 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {content.profileFields && content.profileFields.length > 0 && (
                 <div className="mb-4">
                   {content.profileFields.map((field, index) => (
-                    <div key={index} className="mb-3">
+                    <React.Fragment key={index}>
                       {field.label && (
-                        <div className="font-bold mb-1">
+                        <div className="font-bold mt-2">
                           <HtmlParser html={getDisplayText(field.label)} instructions={undefined} />
                         </div>
                       )}
                       {field.value && (
-                        <div>
-                          <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
-                        </div>
+                        <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
                       )}
-                    </div>
+                    </React.Fragment>
                   ))}
                 </div>
               )}
