@@ -13,6 +13,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { ContactEmail, ContactPhone } from "@uoguelph/react-components/contact";
+import { List, ListItem } from "@uoguelph/react-components/list";
 import { parseTelUrl } from "@/lib/string-utils";
 // import {
 //   UniwebAffiliations,
@@ -160,15 +161,15 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                   <Typography type="h3" as="h2" className="mt-0 mb-2">
                     Research Areas
                   </Typography>
-                  <ul className="list-disc list-inside">
+                  <List as="ul">
                     {content.profileResearchAreas.map((area) => (
-                      <li key={area.id}>
+                      <ListItem key={area.id}>
                         <Typography type="body" as="span">
                           {area.name}
                         </Typography>
-                      </li>
+                      </ListItem>
                     ))}
-                  </ul>
+                  </List>
                 </div>
               )}
             </div>
