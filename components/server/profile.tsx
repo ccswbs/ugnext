@@ -147,7 +147,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                         </div>
                       )}
                       {field.value && (
-                        <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
+                        <HtmlParser html={getDisplayText(field.value)} instructions={undefined} useContentsClass={false} />
                       )}
                     </React.Fragment>
                   ))}
