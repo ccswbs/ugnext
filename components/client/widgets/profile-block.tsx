@@ -162,6 +162,23 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
     );
   }
 
+  // Determine which profile types to show in the filter
+  // If backend has selected specific types, only show those
+  // Otherwise show all available types
+  const typesToShowInFilter = (() => {
+    if (!profileTypes) return [];
+    
+    if (backendSelectedTypes.length > 0) {
+      // Filter to only show types that are selected in the backend
+      return profileTypes.filter(type => 
+        backendSelectedTypes.includes(type.name)
+      );
+    }
+    
+    // If no backend types selected, show all available types
+    return profileTypes;
+  })();
+
   // Default behavior for non-secondary columns
   return (
     <>
@@ -170,9 +187,9 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
           {renderTitle()}
         </Container>
       )}
-      {data.enableTypeFilter && profileTypes && (
+      {data.enableTypeFilter && typesToShowInFilter.length > 0 && (
         <ProfileTypeFilter 
-          types={profileTypes} 
+          types={typesToShowInFilter} 
           onTypeChange={setSelectedTypeId}
           defaultTypeId={null}
         />

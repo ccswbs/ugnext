@@ -111,7 +111,7 @@ export async function getContinuingEducationProgram(filepath: string) {
 }
 
 export async function getContinuingEducationPrograms() {
-  const paths = await glob(path.join(CONTINUING_EDUCATION_PROGRAMS_ROOT, "*.yml"));
+  const paths = await glob(path.posix.join(CONTINUING_EDUCATION_PROGRAMS_ROOT, "*.yml"));
   const programs = await Promise.all(paths.map((path) => getContinuingEducationProgram(path)));
 
   return programs.sort((a, b) => a.title.localeCompare(b.title));

@@ -81,7 +81,7 @@ export default async function OVCNewsArticle({ params }: Props) {
         </Container>
       </LayoutContent>
 
-            <CustomFooter units={["273"]} />
+      <CustomFooter units={["273"]} />
       <Footer></Footer>
     </Layout>
   );

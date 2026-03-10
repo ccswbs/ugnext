@@ -213,7 +213,7 @@ export function getIconForUrl(url: string) {
       
       case 'twitter.com':
       case 'x.com':
-        return 'fa-brands fa-twitter';
+        return 'fa-brands fa-x-twitter';
       
       case 'facebook.com':
         return 'fa-brands fa-facebook';
