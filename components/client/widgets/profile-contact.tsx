@@ -10,16 +10,19 @@ import type { ProfileCardFragment } from "@/lib/graphql/types";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import type { SectionContextType } from "@/lib/types/section-context";
-import { parsePhoneNumber, parseTelUrl } from "@/lib/string-utils";
+import { parseTelUrl } from "@/lib/string-utils";
 import defaultImage from "@/img/university-of-guelph-logo.png";
-import { parse } from "path";
 
 export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
   const { profileInfo } = data;
 
-  // Check if this is a secondary column using SectionContext - if so, omit the profile picture
+  // Check section context for column layout decisions
   const sectionContext = useContext(SectionContext) as SectionContextType | null;
   const isSecondary = sectionContext?.column === "secondary";
+  const isPrimaryWithSecondary = sectionContext?.column === "primary" && sectionContext?.hasSecondary;
+  
+  // Determine if we should use grid layout (photo beside text) or stacked layout (photo on top)
+  const useGridLayout = !isSecondary && !isPrimaryWithSecondary;
 
   // Add defensive check to prevent errors if profileInfo is undefined
   if (!profileInfo) {
@@ -30,24 +33,24 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
   const shouldShowProfileLink = (data as any).showProfileLink === true;
 
   return (
-    <Contact key={profileInfo.id} className="@xl:w-[47%] @xl:inline-block @xl:align-top @xl:me-5 @xl:p-0 my-5">
-      <div className="@xl:grid @xl:grid-cols-[1fr_2fr] @xl:gap-4 @xl:bg-white">
+    <Contact key={profileInfo.id} className={`${!isSecondary ? 'lg:w-[calc(50%-2rem)] lg:inline-block lg:align-top lg:me-5 lg:p-0' : ''} my-5 ${isSecondary ? '' : 'bg-transparent'}`}>
+      <div className={`${useGridLayout ? 'md:grid md:grid-cols-[1fr_2fr] md:gap-4' : ''} ${isSecondary ? 'bg-grey-light-bg' : ''}`}>
         {/* Image Section - conditionally rendered based on section column */}
         {!isSecondary && (
-          <div className="-mx-4 -mt-4 mb-4 @xl:m-0">
+          <div className={`mb-4 ${useGridLayout ? 'md:m-0' : ''}`}>
             <Image
               src={profileInfo.profilePicture?.image?.url ?? defaultImage.src}
               alt={profileInfo.profilePicture?.image?.alt ?? ""}
-              width={profileInfo.profilePicture?.image?.width ?? defaultImage.width}
-              height={profileInfo.profilePicture?.image?.height ?? defaultImage.height}
-              className="aspect-square object-cover object-center"           
+              width={300}
+              height={300}
+              className="w-full h-auto max-w-[300px] aspect-square object-cover object-center"           
             />
           </div>
         )}
         
         <div>
         {profileInfo.title && (
-          <ContactName className="@xl:mt-0 @xl:text-2xl">
+          <ContactName className={`${useGridLayout ? 'md:mt-0 md:text-2xl' : ''}`}>
             {profileInfo.title}
           </ContactName>
         )}

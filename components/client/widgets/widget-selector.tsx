@@ -98,7 +98,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
 
   if (!noWrapWidgets.includes(data.__typename || "") && !context && !neverWrap) {
     return (
-      <Container className="@container">
+      <Container>
         <Widget />
       </Container>
     );
