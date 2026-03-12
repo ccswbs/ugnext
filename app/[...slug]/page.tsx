@@ -10,6 +10,10 @@ type Props = {
 };
 
 export async function generateStaticParams() {
+  if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
+    return [];
+  }
+
   const paths = await getAllBasicPagePaths();
 
   return paths.map((path) => ({
