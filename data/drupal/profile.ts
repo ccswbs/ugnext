@@ -27,6 +27,7 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     id
     title
     path
+    profileFirstName
     primaryNavigation {
       ...Navigation
     }

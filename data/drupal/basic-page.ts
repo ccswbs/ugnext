@@ -32,7 +32,6 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...ImageOverlay
       ...Section
       ...ProfileBlock
-      ...ProfileCard
     }
     tags {
       ...Tag
