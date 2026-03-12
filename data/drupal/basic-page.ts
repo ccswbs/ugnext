@@ -136,7 +136,7 @@ export async function getAllBasicPagePaths() {
     }
 
     const currentPaths = data.nodePages.nodes
-      .filter((page) => page.status && page.id !== "1429")
+      .filter((page) => page.status)
       .map((page) => page.path)
       .filter((path) => typeof path === "string");
 
