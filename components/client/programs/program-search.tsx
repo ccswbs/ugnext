@@ -69,7 +69,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
       boost: {
         title: 4,
       },
-      tolerance: 2,
+      tolerance: 1,
     });
 
     // console.log(`Found ${results.count} results in ${results.elapsed.formatted}`);
