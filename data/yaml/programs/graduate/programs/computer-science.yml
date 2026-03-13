@@ -7,14 +7,14 @@ degrees:
 types:
   - thesis-based
 tags:
-  - technology
-  - science
-  - mathematics
-  - programming
+  - data
   - data engineering
-  - data*
   - design patterns
   - ehealth innovation
-  - health*
+  - health
+  - mathematics
   - physical design
+  - programming
+  - science
   - software engineering & development
+  - technology

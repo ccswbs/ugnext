@@ -7,35 +7,34 @@ degrees:
 types:
   - course-based
 tags:
-  - health
-  - medical
-  - science
-  - biology
   - aging
-  - agri*
+  - agriculture
+  - animal
   - animal health
-  - animal*
   - applied modeling
+  - biology
   - biostatistics
   - clinical veterinary communications
   - communications
-  - data*
+  - data
   - disease
   - epidemiology
+  - food
   - food safety
-  - food*
   - government policy
+  - health
   - health management
-  - health*
   - infection control
   - infectious disease modeling
-  - law*
+  - law
+  - medical
   - one health
-  - patho*
+  - pathology
   - population
   - public health
+  - science
   - vaccines
   - water safety
   - waterbourne diseases
-  - zoo*
+  - zoology
   - zoontoic disease
