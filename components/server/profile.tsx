@@ -14,7 +14,7 @@ import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
 import { ContactEmail, ContactPhone } from "@uoguelph/react-components/contact";
 import { List, ListItem } from "@uoguelph/react-components/list";
-import { parseTelUrl } from "@/lib/string-utils";
+import { parseTelUrl, slugify } from "@/lib/string-utils";
 // import {
 //   UniwebAffiliations,
 //   UniwebCurrentTeaching,
@@ -62,6 +62,11 @@ export async function Profile({ id, pre, post }: ProfileProps) {
           <Typography type="h1" as="h1" className="mb-4">
             {content?.title}
           </Typography>
+          {content.credentials && (
+            <Typography type="h3" as="p" className="-mt-3">
+              {content.credentials}
+            </Typography>
+          )}
           <div className="md:flex md:gap-6 md:items-start">
             {content.profilePicture && (
               <Image
@@ -189,7 +194,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             if (section.profilePartLabel && !section.uniwebSelect) {
               return (
                 <div key={section.id || index}>
-                  <Typography type="h2" as="h2">
+                  <Typography id={slugify(section.profilePartLabel)} type="h2" as="h2">
                     {section.profilePartLabel}
                   </Typography>
                   <HtmlParser

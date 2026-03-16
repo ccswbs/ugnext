@@ -32,6 +32,7 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
       ...Navigation
     }
     centralLoginId
+    credentials
     directoryEmail
     directoryOffice
     directoryPhone
