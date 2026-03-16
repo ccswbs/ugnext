@@ -14,6 +14,9 @@ import { Widgets } from "@/data/drupal/widgets";
 import { NewsBreadcrumbs } from "@/components/client/news/news-breadcrumbs";
 import { Section } from "@/components/client/section";
 import { NewsSidebar } from "@/components/client/news/news-sidebar";
+import { Info } from "@uoguelph/react-components/info";
+import { HtmlParser } from "@/components/client/html-parser";
+import { Divider } from "@uoguelph/react-components/divider";
 
 export async function News({ id }: { id: string }) {
   const article = await getNewsArticle(id);
@@ -39,36 +42,58 @@ export async function News({ id }: { id: string }) {
     <Layout>
       <Header name={article.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
 
-      <LayoutContent container={false}>
-        {article.doNotDisplayImage || !article.hero ? (
-          <Container>
-            <Typography type="h1" as="h1">
-              {article.title}
+      <NewsBreadcrumbs data={article} />
+
+      <LayoutContent>
+        <div className="flex flex-col gap-3 mb-6">
+          {Array.isArray(article.category) && article.category.length > 0 && (
+            <Typography type="body" as="span" className="uppercase m-0 font-medium">
+              {article.category.map((category) => category.name).join(", ")}
             </Typography>
-          </Container>
-        ) : (
-          <Hero
-            as={Image}
-            src={article.hero.image.url}
-            width={article.hero.image.width}
-            height={article.hero.image.height}
-            alt={article.hero.image.alt ?? ""}
-            variant="basic"
-          >
-            <HeroTitle>{article.title}</HeroTitle>
-          </Hero>
-        )}
+          )}
 
-        <NewsBreadcrumbs data={article} />
+          <Typography type="h1" as="h1" className="m-0">
+            {article.title}
+          </Typography>
 
-        <Container>
-          <Section
-            primary={(article.widgets as Widgets[])?.map((widget, index) => (
-              <WidgetSelector key={index} data={widget} />
-            ))}
-            secondary={<NewsSidebar data={article} />}
-          />
-        </Container>
+          {article.leadParagraph && (
+            <Info color="yellow">
+              <Typography type="body" emphasize={true} as="span" className="m-0 text-2xl font-light leading-normal">
+                {article.leadParagraph.value}
+              </Typography>
+            </Info>
+          )}
+
+          <div>
+            {article.author && <strong className="pr-4 border-r border-grey-light-focus">{article.author}</strong>}
+            <span className="even:pl-4">
+              {new Date(article.created.time).toLocaleString("en-US", {
+                month: "long",
+                day: "2-digit",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </span>
+          </div>
+
+          {!article.doNotDisplayImage && article.hero && (
+            <Image
+              className="aspect-video w-full object-cover"
+              src={article.hero.image.url}
+              width={article.hero.image.width}
+              height={article.hero.image.height}
+              alt={article.hero.image.alt ?? ""}
+            />
+          )}
+        </div>
+
+        <Section
+          primary={(article.widgets as Widgets[])?.map((widget, index) => (
+            <WidgetSelector key={index} data={widget} />
+          ))}
+          secondary={<div></div>}
+        />
       </LayoutContent>
 
       <CustomFooter tags={tags} units={units} />

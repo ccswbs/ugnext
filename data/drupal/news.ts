@@ -33,6 +33,9 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
       }
     }
     externallyLinked
+    leadParagraph {
+      value
+    }
   }
 `);
 
