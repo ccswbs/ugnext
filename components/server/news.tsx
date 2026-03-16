@@ -19,6 +19,7 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Divider } from "@uoguelph/react-components/divider";
 import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
 import Link from "next/link";
+import { NewsFragment } from "@/lib/graphql/types";
 
 export async function News({ id }: { id: string }) {
   const article = await getNewsArticle(id);
@@ -50,6 +51,25 @@ export async function News({ id }: { id: string }) {
     directory = `/news${article.primaryNavigation.newsUrlAliasPattern}`;
   } else {
     directory = "/news";
+  }
+
+  type ArticleWidgets = NonNullable<NewsFragment["widgets"]>;
+
+  const primaryWidgets: ArticleWidgets = [];
+  const secondaryWidgets: ArticleWidgets = [];
+
+  for (const widget of article?.widgets ?? []) {
+    switch (widget.__typename) {
+      case "ParagraphGeneralText":
+      case "ParagraphBlockWidget":
+      case "ParagraphMediaText":
+        if (widget.sectionColumn.name.toLowerCase() === "secondary") {
+          secondaryWidgets.push(widget);
+          continue;
+        }
+    }
+
+    primaryWidgets.push(widget);
   }
 
   return (
@@ -125,8 +145,8 @@ export async function News({ id }: { id: string }) {
         </div>
 
         <Section
-          primary={(article.widgets as Widgets[])?.map((widget, index) => (
-            <WidgetSelector key={index} data={widget} />
+          primary={primaryWidgets.map((widget, index) => (
+            <WidgetSelector key={index} data={widget as Widgets} />
           ))}
           secondary={<div></div>}
         />
