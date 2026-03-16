@@ -17,6 +17,8 @@ import { NewsSidebar } from "@/components/client/news/news-sidebar";
 import { Info } from "@uoguelph/react-components/info";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Divider } from "@uoguelph/react-components/divider";
+import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
+import Link from "next/link";
 
 export async function News({ id }: { id: string }) {
   const article = await getNewsArticle(id);
@@ -38,17 +40,52 @@ export async function News({ id }: { id: string }) {
     }
   });
 
+  let directory: string;
+  let directoryName: string;
+
+  if (
+    article.primaryNavigation &&
+    article.primaryNavigation.newsUrlAliasPattern &&
+    article.primaryNavigation.menuName !== "no-menu"
+  ) {
+    directory = `/news${article.primaryNavigation.newsUrlAliasPattern}`;
+  } else {
+    directory = "/news";
+  }
+
   return (
     <Layout>
       <Header name={article.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
 
-      <NewsBreadcrumbs data={article} />
+      <Breadcrumbs>
+        <BreadcrumbHome />
+
+        {article.primaryNavigation.primaryNavigationUrl?.url && (
+          <Breadcrumb href={article.primaryNavigation.primaryNavigationUrl.url}>
+            {article.primaryNavigation.name}
+          </Breadcrumb>
+        )}
+
+        <Breadcrumb href={directory} as={Link}>
+          News
+        </Breadcrumb>
+
+        <Breadcrumb as="span">{article.title}</Breadcrumb>
+      </Breadcrumbs>
 
       <LayoutContent>
         <div className="flex flex-col gap-3 mb-6">
           {Array.isArray(article.category) && article.category.length > 0 && (
-            <Typography type="body" as="span" className="uppercase m-0 font-medium">
-              {article.category.map((category) => category.name).join(", ")}
+            <Typography type="body" as="span" className="flex uppercase m-0 font-medium">
+              {article.category.map((category) => (
+                <Link
+                  className="hocus:text-blue transition-colors not-first:pl-2 not-last:pr-2 not-first:border-l-2 border-grey-light-focus"
+                  key={category.id}
+                  href={`${directory}?categories=${category.id}`}
+                >
+                  {category.name}
+                </Link>
+              ))}
             </Typography>
           )}
 
