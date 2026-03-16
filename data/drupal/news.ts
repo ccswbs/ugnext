@@ -69,6 +69,7 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
       ...MediaText
       ...Block
       ...RelatedContent
+      ...ButtonSection
     }
   }
 `);

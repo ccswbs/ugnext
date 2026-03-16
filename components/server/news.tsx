@@ -67,6 +67,13 @@ export async function News({ id }: { id: string }) {
           secondaryWidgets.push(widget);
           continue;
         }
+        break;
+      case "ParagraphSectionButton":
+        if (widget.buttonSectionColumn.name.toLowerCase() === "secondary") {
+          secondaryWidgets.push(widget);
+          continue;
+        }
+        break;
     }
 
     primaryWidgets.push(widget);
@@ -145,10 +152,18 @@ export async function News({ id }: { id: string }) {
         </div>
 
         <Section
-          primary={primaryWidgets.map((widget, index) => (
-            <WidgetSelector key={index} data={widget as Widgets} />
-          ))}
-          secondary={<div></div>}
+          primary={[
+            <div key="share-and-read-info"></div>,
+            ...primaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
+          ]}
+          secondary={[
+            article.hero?.image && (
+              <Typography key="lead-image" type="body" as="span">
+                <strong>Lead Image:</strong> {article.hero.image.alt}
+              </Typography>
+            ),
+            ...secondaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
+          ]}
         />
       </LayoutContent>
 
