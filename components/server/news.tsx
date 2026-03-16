@@ -100,7 +100,7 @@ export async function News({ id }: { id: string }) {
       </Breadcrumbs>
 
       <LayoutContent>
-        <div className="flex flex-col gap-3 mb-6">
+        <div className="flex flex-col gap-5 mb-6">
           {Array.isArray(article.category) && article.category.length > 0 && (
             <Typography type="body" as="span" className="flex uppercase m-0 font-medium">
               {article.category.map((category) => (
