@@ -41,7 +41,6 @@ export async function News({ id }: { id: string }) {
   });
 
   let directory: string;
-  let directoryName: string;
 
   if (
     article.primaryNavigation &&
