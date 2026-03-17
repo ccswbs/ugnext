@@ -10,6 +10,7 @@ import "@uoguelph/web-components/style";
 import { Button } from "@uoguelph/react-components/button";
 import { WebComponentsLoader, WebComponentsLoaderProps } from "@/components/client/web-components-loader";
 import { BackToTop } from "@uoguelph/react-components/back-to-top";
+import { CookieAlert } from "@/components/client/cookie-alert";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -72,6 +73,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {children}
 
         <BackToTop />
+        <CookieAlert />
       </body>
 
       {/* Analytics */}
