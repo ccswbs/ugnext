@@ -35,6 +35,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...Links
       ...MediaText
       ...NewsSearch
+      ...FeaturedNews
       ...Tabs
       ...Statistics
       ...TestimonialSlider
@@ -69,6 +70,8 @@ async function processWidget(widget: Widgets) {
         ...widget,
         content: await Promise.all(widget.content.map((nestedWidget) => processSectionWidget(nestedWidget))),
       };
+    case "ParagraphFeaturedNews":
+      return await getFullFeaturedNews(widget);
     default:
       return widget;
   }
