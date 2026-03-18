@@ -39,13 +39,19 @@ export const FigureInstruction: HTMLParserInstruction = {
       );
     }
 
-    let alignment: "left" | "right" = "left";
+    let alignment: "left" | "right" | "center" = "left";
+
+    if (className.includes("align-center") || props["data-align"] === "center") {
+      alignment = "center";
+    }
 
     if (className.includes("align-right") || props["data-align"] === "right") {
       alignment = "right";
     }
 
-    const caption: DOMNode | undefined = (node.children as DOMNode[]).find((child) => child.type === "tag" && child.name === "figcaption");
+    const caption: DOMNode | undefined = (node.children as DOMNode[]).find(
+      (child) => child.type === "tag" && child.name === "figcaption"
+    );
 
     return (
       <Figure align={alignment} {...props} key={id} className="pt-[1em]">
