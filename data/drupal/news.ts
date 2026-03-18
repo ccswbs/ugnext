@@ -130,7 +130,7 @@ export async function getNewsDirectory(article: NewsFragment) {
   ) {
     directory = `/news${article.primaryNavigation.newsUrlAliasPattern}`;
   } else {
-    directory = "/news";
+    directory = "/news/search";
   }
 
   return directory;

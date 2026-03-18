@@ -167,13 +167,7 @@ export async function News({ id }: { id: string }) {
         <div className="flex flex-col gap-5 mb-6">
           {Array.isArray(article.category) && article.category.length > 0 && (
             <Typography type="body" as="span" className="flex uppercase m-0 font-medium">
-              <Link
-                className="hocus:text-blue transition-colors not-first:pl-2 not-last:pr-2 not-first:border-l-2 border-grey-light-focus"
-                key={article.category[0].id}
-                href={`${article.directory}?categories=${article.category[0].id}`}
-              >
-                {article.category[0].name}
-              </Link>
+              {article.category[0].name}
             </Typography>
           )}
 
