@@ -93,7 +93,7 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
 
           {/* Custom links if available - mailto/tel links are exempt from count limit */} 
           {profileInfo.customLink && profileInfo.customLink.length > 0 && (
-            <div>
+            <>
               {(() => {
                 // Separate mailto/tel links from other custom links
                 const mailTelLinks = profileInfo.customLink.filter(link => 
@@ -129,7 +129,7 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
                   )
                 );
               })()}
-            </div>
+            </>
           )}
 
             {/* Profile link - show if enabled and not in secondary column, even without custom links */}
