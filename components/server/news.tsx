@@ -137,8 +137,6 @@ export async function News({ id }: { id: string }) {
                 month: "long",
                 day: "2-digit",
                 year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
               })}
             </span>
           </div>
