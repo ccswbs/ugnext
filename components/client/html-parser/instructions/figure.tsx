@@ -4,7 +4,7 @@ import { Figure, FigureCaption, FigureImage } from "@uoguelph/react-components/f
 import { DOMNode } from "html-react-parser";
 
 export const FigureInstruction: HTMLParserInstruction = {
-  shouldProcessNode: (node) => node.tagName === "figure",
+  shouldProcessNode: (node) => node.tagName === "figure" || node.tagName === "article",
   processNode: (node, props, children) => {
     const id = nanoid();
     const className = typeof props.className === "string" ? props.className : "";
