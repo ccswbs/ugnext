@@ -20,6 +20,10 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
       title
     }
     hero {
+      attribution {
+        url
+        title
+      }
       image {
         alt
         url
@@ -32,10 +36,9 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
         }
       }
     }
+    heroDescription
     externallyLinked
-    leadParagraph {
-      value
-    }
+    leadParagraph
   }
 `);
 
