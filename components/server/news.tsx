@@ -86,7 +86,7 @@ function NewsLeadParagraph({ article }: { article: FullNewsArticle }) {
 
 function NewsPublishInfo({ article }: { article: FullNewsArticle }) {
   return (
-    <div className="flex md:items-center flex-col md:flex-row">
+    <div className="flex md:items-center flex-col md:flex-row gap-2 md:gap-0">
       {article.author && <strong className="md:pr-4 md:border-r-2 border-grey-light-focus">{article.author}</strong>}
       <span className="md:even:pl-4">
         {new Date(article.created.time).toLocaleString("en-US", {
