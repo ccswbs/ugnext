@@ -99,6 +99,22 @@ function NewsPublishInfo({ article }: { article: FullNewsArticle }) {
   );
 }
 
+function NewsHero({ article }: { article: FullNewsArticle }) {
+  if (!article.hero || article.doNotDisplayImage) {
+    return <></>;
+  }
+
+  return (
+    <Image
+      className="aspect-video w-full object-cover"
+      src={article.hero.image.url}
+      width={article.hero.image.width}
+      height={article.hero.image.height}
+      alt={article.hero.image.alt ?? ""}
+    />
+  );
+}
+
 function NewsShareAndReadInfo() {
   return (
     <div className="flex items-center">
@@ -179,15 +195,7 @@ export async function News({ id }: { id: string }) {
 
           <NewsPublishInfo article={article} />
 
-          {!article.doNotDisplayImage && article.hero && (
-            <Image
-              className="aspect-video w-full object-cover"
-              src={article.hero.image.url}
-              width={article.hero.image.width}
-              height={article.hero.image.height}
-              alt={article.hero.image.alt ?? ""}
-            />
-          )}
+          <NewsHero article={article} />
         </div>
 
         <div id="uofg-news-article-content">
