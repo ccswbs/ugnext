@@ -20,6 +20,9 @@ import { Divider } from "@uoguelph/react-components/divider";
 import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
 import Link from "next/link";
 import { NewsFragment } from "@/lib/graphql/types";
+import { NewsTimeEstimate } from "@/components/client/news/news-time-estimate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShare } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 
 export async function News({ id }: { id: string }) {
   const article = await getNewsArticle(id);
@@ -128,7 +131,7 @@ export async function News({ id }: { id: string }) {
           )}
 
           <div>
-            {article.author && <strong className="pr-4 border-r border-grey-light-focus">{article.author}</strong>}
+            {article.author && <strong className="pr-4 border-r-2 border-grey-light-focus">{article.author}</strong>}
             <span className="even:pl-4">
               {new Date(article.created.time).toLocaleString("en-US", {
                 month: "long",
@@ -149,26 +152,36 @@ export async function News({ id }: { id: string }) {
               alt={article.hero.image.alt ?? ""}
             />
           )}
+
+          <div className="flex items-center">
+            <NewsTimeEstimate />
+            <button className="inline-flex cursor-pointer items-center gap-1 pl-4 border-l-2 border-grey-light-focus">
+              <FontAwesomeIcon icon={faShare} />
+              Share
+            </button>
+          </div>
         </div>
 
-        <Section
-          primary={[
-            <div key="share-and-read-info"></div>,
-            ...primaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
-          ]}
-          secondary={[
-            article.hero?.image && (
-              <Typography key="lead-image" type="body" as="span">
-                {article.heroDescription && (
-                  <>
-                    <strong>Lead Image:</strong> {article.heroDescription}
-                  </>
-                )}
-              </Typography>
-            ),
-            ...secondaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
-          ]}
-        />
+        <div id="uofg-news-article-content">
+          <Section
+            primary={[
+              <div key="share-and-read-info"></div>,
+              ...primaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
+            ]}
+            secondary={[
+              article.hero?.image && (
+                <Typography key="lead-image" type="body" as="span">
+                  {article.heroDescription && (
+                    <>
+                      <strong>Lead Image:</strong> {article.heroDescription}
+                    </>
+                  )}
+                </Typography>
+              ),
+              ...secondaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
+            ]}
+          />
+        </div>
       </LayoutContent>
 
       <CustomFooter tags={tags} units={units} />
