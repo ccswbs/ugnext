@@ -120,6 +120,26 @@ export async function getNewsArticlePublishedDate(id: string) {
   return data.firstPublishedRevision.results[0].changed.time;
 }
 
+export async function getNewsDirectory(article: NewsFragment) {
+  let directory: string;
+
+  if (
+    article.primaryNavigation &&
+    article.primaryNavigation.newsUrlAliasPattern &&
+    article.primaryNavigation.menuName !== "no-menu"
+  ) {
+    directory = `/news${article.primaryNavigation.newsUrlAliasPattern}`;
+  } else {
+    directory = "/news";
+  }
+
+  return directory;
+}
+
+export type FullNewsArticle = NewsFragment & {
+  directory: string;
+};
+
 export async function getNewsArticle(id: string) {
   const showUnpublished = await showUnpublishedContent();
   const client = getClient();
@@ -152,6 +172,7 @@ export async function getNewsArticle(id: string) {
   }
 
   const publishedDate = await getNewsArticlePublishedDate(id);
+  const directory = await getNewsDirectory(data.nodeNews);
 
   if (publishedDate) {
     return {
@@ -159,10 +180,11 @@ export async function getNewsArticle(id: string) {
       created: {
         time: publishedDate,
       },
-    };
+      directory: directory,
+    } as FullNewsArticle;
   }
 
-  return data.nodeNews as NewsFragment;
+  return { ...(data.nodeNews as NewsFragment), directory: directory } as FullNewsArticle;
 }
 
 export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
