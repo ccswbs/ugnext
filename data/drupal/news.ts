@@ -36,7 +36,6 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
         }
       }
     }
-    heroDescription
     externallyLinked
     leadParagraph
   }
@@ -52,6 +51,7 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
       time
     }
     author
+    heroDescription
     primaryNavigation {
       ...Navigation
       ... on TermPrimaryNavigation {

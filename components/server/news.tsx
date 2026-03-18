@@ -122,7 +122,7 @@ export async function News({ id }: { id: string }) {
           {article.leadParagraph && (
             <Info color="yellow">
               <Typography type="body" emphasize={true} as="span" className="m-0 text-2xl font-light leading-normal">
-                {article.leadParagraph.value}
+                {article.leadParagraph}
               </Typography>
             </Info>
           )}
@@ -159,7 +159,11 @@ export async function News({ id }: { id: string }) {
           secondary={[
             article.hero?.image && (
               <Typography key="lead-image" type="body" as="span">
-                <strong>Lead Image:</strong> {article.hero.image.alt}
+                {article.heroDescription && (
+                  <>
+                    <strong>Lead Image:</strong> {article.heroDescription}
+                  </>
+                )}
               </Typography>
             ),
             ...secondaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
