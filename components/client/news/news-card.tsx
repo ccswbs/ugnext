@@ -41,7 +41,7 @@ export function NewsCard({
     variants: {
       variant: {
         spotlight: {
-          content: "px-4 md:px-0",
+          content: "px-4 lg:px-0",
           title: "text-black font-serif",
         },
         vertical: {
@@ -53,7 +53,7 @@ export function NewsCard({
         horizontal: {
           card: "flex-row items-center gap-4",
           content: "w-1/2",
-          category: "hidden md:block",
+          category: "hidden lg:block",
           imageContainer: "w-1/3 md:w-1/2",
           image: "aspect-square md:aspect-video",
           title: "block ",

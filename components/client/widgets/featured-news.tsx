@@ -13,7 +13,7 @@ import { Button } from "@uoguelph/react-components/button";
 
 function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="peer flex flex-col gap-4">
       {data.articles?.map((article) => (
         <li key={article.id}>
           <NewsCard data={article} variant={data.hideImages ? "no-image" : "vertical"} />
@@ -25,7 +25,7 @@ function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
 
 function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
-    <Container className="flex flex-col gap-4 px-0">
+    <Container className="peer flex flex-col gap-4 px-0 [.uofg-container]:px-0">
       {data.articles?.map((article, index) => (
         <NewsCard variant="horizontal" key={article.id} data={article} hideCategory={data.categories?.length === 1} />
       ))}
@@ -57,7 +57,7 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
   }
 
   return (
-    <Container className="md:px-0">
+    <Container className="peer">
       <Grid
         template={gridTemplate}
         gap={{
@@ -80,11 +80,11 @@ function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNews
 
   return (
     <div className="flex flex-col gap-6 pb-0">
-      <div className="flex flex-col md:flex-row gap-6 md:max-w-[137rem] md:mx-auto md:px-0">
-        <div className="w-full md:w-2/3">
+      <div className="flex flex-col lg:flex-row gap-6 lg:max-w-[137rem] lg:mx-auto lg:px-4">
+        <div className="w-full lg:w-2/3">
           <NewsCard variant="spotlight" data={data.articles[0]} />
         </div>
-        <Container className="w-full md:w-1/3 flex flex-col gap-6 px-4 md:p-0">
+        <Container className="w-full lg:w-1/3 flex flex-col md:flex-row lg:flex-col gap-6 px-4 lg:p-0">
           {data.articles?.slice(1, 3).map((article, index) => (
             <NewsCard variant="vertical" key={article.id} data={article} />
           ))}
@@ -148,7 +148,7 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
         <FeaturedNewsList data={data} />
       )}
 
-      <Container className={twJoin("px-0", variant === "spotlight" && "px-4 md:px-0")}>
+      <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
         <Button as={Link} href={directory} outlined={true} color="secondary" className="w-full md:w-fit mt-4">
           {Array.isArray(data.categories) && data.categories.length === 1
             ? `More ${data.categories[0].name}`
