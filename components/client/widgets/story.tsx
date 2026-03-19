@@ -31,7 +31,7 @@ function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackground
   return (
     <Story className={"mb-4"}>
       <StoryBody className="dark py-8 lg:py-0">
-        <StoryBackground className=" bg-grey-dark-bg">
+        <StoryBackground className=" bg-black">
           {data.backgroundImage && (
             <StoryBackgroundImage
               src={data.backgroundImage.image.url}
@@ -45,13 +45,15 @@ function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackground
 
         <StoryForeground>
           <StoryForegroundContent className="">
-            <div className="flex flex-col *:text-white!">
+            <div className="flex flex-col [*]:text-white!">
               {data.title && (
-                <Typography type="h3" as="h3" className="text-2xl font-bold mb-4 mt-0">
+                <Typography type="h3" as="h3" className="text-2xl text-white! font-bold mb-4 mt-0">
                   {data.title.toUpperCase()}
                 </Typography>
               )}
-              {data.text && <HtmlParser html={data.text.processed} />}
+
+              <div className="text-white!">{data.text && <HtmlParser html={data.text.processed} />}</div>
+
               {buttons.map((button) => (
                 <EmbeddedVideo
                   key={button.video.url}
