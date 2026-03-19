@@ -9,6 +9,7 @@ import { Link } from "@uoguelph/react-components/link";
 import { twJoin } from "tailwind-merge";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Container } from "@uoguelph/react-components/container";
+import { Button } from "@uoguelph/react-components/button";
 
 function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
@@ -26,13 +27,7 @@ function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedN
   return (
     <Container className="flex flex-col gap-4 px-0">
       {data.articles?.map((article, index) => (
-        <NewsCard
-          variant="horizontal"
-          key={article.id}
-          data={article}
-          hideCategory={data.categories?.length === 1}
-          className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
-        />
+        <NewsCard variant="horizontal" key={article.id} data={article} hideCategory={data.categories?.length === 1} />
       ))}
     </Container>
   );
@@ -62,7 +57,7 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
   }
 
   return (
-    <Container>
+    <Container className="md:px-0">
       <Grid
         template={gridTemplate}
         gap={{
@@ -84,12 +79,12 @@ function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNews
   }
 
   return (
-    <div className="flex flex-col gap-6 pb-8">
-      <div className="flex flex-col md:flex-row gap-6 md:max-w-[137rem] md:mx-auto md:px-4">
+    <div className="flex flex-col gap-6 pb-0">
+      <div className="flex flex-col md:flex-row gap-6 md:max-w-[137rem] md:mx-auto md:px-0">
         <div className="w-full md:w-2/3">
           <NewsCard variant="spotlight" data={data.articles[0]} />
         </div>
-        <Container className="w-full md:w-1/3 flex flex-col gap-6  px-4 md:p-0">
+        <Container className="w-full md:w-1/3 flex flex-col gap-6 px-4 md:p-0">
           {data.articles?.slice(1, 3).map((article, index) => (
             <NewsCard variant="vertical" key={article.id} data={article} />
           ))}
@@ -128,6 +123,13 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
     variant = "spotlight";
   }
 
+  let directory = "/news/search";
+
+  if (Array.isArray(data.categories)) {
+    directory += "?categories=";
+    directory += data.categories.map((category) => category.id).join(",");
+  }
+
   return (
     <div>
       {data.title && (
@@ -145,6 +147,14 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
       ) : (
         <FeaturedNewsList data={data} />
       )}
+
+      <Container className={twJoin("px-0", variant === "spotlight" && "px-4 md:px-0")}>
+        <Button as={Link} href={directory} outlined={true} color="secondary" className="w-full md:w-fit mt-4">
+          {Array.isArray(data.categories) && data.categories.length === 1
+            ? `More ${data.categories[0].name}`
+            : `More News`}
+        </Button>
+      </Container>
     </div>
   );
 }
