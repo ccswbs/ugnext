@@ -54,7 +54,7 @@ export const FigureInstruction: HTMLParserInstruction = {
     );
 
     return (
-      <Figure align={alignment} {...props} key={id} className="pt-[1em]">
+      <Figure align={alignment} {...props} key={id} className="pt-[1em] pb-[1em]">
         <FigureImage
           key={`${id}-figure-image`}
           src={(imgNode as any).attribs?.src}
