@@ -5,7 +5,7 @@ import {
   FilterablePaginatedGridFilter,
 } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid";
 import { TextInput } from "@uoguelph/react-components/text-input";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 export function FilterablePaginatedGridTextBox({ id, label }: FilterablePaginatedGridFilter<string>) {

@@ -17,7 +17,6 @@ export type FilterablePaginatedGridFilterValue =
 export type FilterablePaginatedGridFilter<T extends FilterablePaginatedGridFilterValue> = {
   id: string;
   label: string;
-  defaultValue?: T;
 };
 
 export type FilterablePaginatedGridFilters = Record<string, FilterablePaginatedGridFilterValue>;

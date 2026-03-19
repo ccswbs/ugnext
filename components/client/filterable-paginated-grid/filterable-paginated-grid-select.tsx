@@ -21,7 +21,6 @@ export type FilterablePaginatedGridSelectProps = {
 export function FilterablePaginatedGridSelect({
   id,
   label,
-  defaultValue,
   multiple = false,
   options,
 }: FilterablePaginatedGridSelectProps) {
