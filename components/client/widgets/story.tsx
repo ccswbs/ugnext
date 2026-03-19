@@ -30,7 +30,7 @@ function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackground
 
   return (
     <Story className={"mb-4"}>
-      <StoryBody className="dark p-4">
+      <StoryBody className="dark py-8 lg:py-0">
         <StoryBackground className=" bg-grey-dark-bg">
           {data.backgroundImage && (
             <StoryBackgroundImage
@@ -44,10 +44,10 @@ function StoryImageCutoutBackground({ data }: { data: StoryImageCutoutBackground
         </StoryBackground>
 
         <StoryForeground>
-          <StoryForegroundContent className="pt-8!">
+          <StoryForegroundContent className="">
             <div className="flex flex-col *:text-white!">
               {data.title && (
-                <Typography type="h3" as="h3" className="text-2xl font-bold mb-4">
+                <Typography type="h3" as="h3" className="text-2xl font-bold mb-4 mt-0">
                   {data.title.toUpperCase()}
                 </Typography>
               )}
