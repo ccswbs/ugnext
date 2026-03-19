@@ -111,8 +111,6 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
 
   let variant: "spotlight" | "grid" | "single-column" | "list" = "grid";
 
-  console.log(data);
-
   if (!Array.isArray(data.articles)) {
     return null;
   }
