@@ -14,7 +14,7 @@ function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
     <ul className="flex flex-col gap-4">
       {data.articles?.map((article) => (
         <li key={article.id}>
-          <NewsCard data={article} variant="vertical" />
+          <NewsCard data={article} variant={data.hideImages ? "no-image" : "vertical"} />
         </li>
       ))}
     </ul>
@@ -103,11 +103,15 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
 
   let variant: "spotlight" | "grid" | "single-column" | "list" = "grid";
 
+  console.log(data);
+
   if (!Array.isArray(data.articles)) {
     return null;
   }
 
   if (context?.column === "secondary" && !context?.equal) {
+    variant = "list";
+  } else if (context?.equal && context?.hasSecondary && data.hideImages) {
     variant = "list";
   } else if (
     (context?.column === "primary" && context?.equal && context?.hasSecondary) ||

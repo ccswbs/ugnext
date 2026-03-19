@@ -154,6 +154,7 @@ export const FEATURED_NEWS_FRAGMENT = gql(/* gql */ `
     id
     count
     title: newsSearchTitle
+    hideImages
     headingLevel
     sectionColumn {
       ...SectionColumn
