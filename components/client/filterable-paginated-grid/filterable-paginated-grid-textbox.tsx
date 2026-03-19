@@ -5,28 +5,25 @@ import {
   FilterablePaginatedGridFilter,
 } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid";
 import { TextInput } from "@uoguelph/react-components/text-input";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 
-export function FilterablePaginatedGridTextBox({ id, label, defaultValue }: FilterablePaginatedGridFilter<string>) {
+export function FilterablePaginatedGridTextBox({ id, label }: FilterablePaginatedGridFilter<string>) {
   const context = useContext(FilterablePaginatedGridContext);
+  const searchParams = useSearchParams();
+  const defaultValue = useMemo(() => {
+    return searchParams.get(id) ?? "";
+  }, [searchParams]);
 
   if (!context) {
     console.error("FilterablePaginatedGridTextBox must be used within a FilterablePaginatedGrid");
     return null;
   }
 
-  useEffect(() => {
-    if (defaultValue) {
-      context.setFilters({
-        ...context.filters,
-        [id]: defaultValue,
-      });
-    }
-  }, [defaultValue]);
-
   return (
     <div className="flex-1">
       <TextInput
+        value={defaultValue}
         onInput={(e) => {
           context.setFilters({
             ...context.filters,

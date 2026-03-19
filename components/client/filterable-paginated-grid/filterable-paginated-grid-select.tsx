@@ -6,6 +6,7 @@ import { PropsWithChildren, useContext, useEffect } from "react";
 import { Field, Label } from "@headlessui/react";
 import { Select, SelectButton, SelectOption, SelectOptions } from "@uoguelph/react-components/select";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export type FilterablePaginatedGridSelectOption = {
   id: string;
@@ -24,13 +25,25 @@ export function FilterablePaginatedGridSelect({
   multiple = false,
   options,
 }: FilterablePaginatedGridSelectProps) {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.has(id)) {
+      const ids = searchParams.get(id)?.split(",") ?? [];
+
+      const defaultOptions = ids
+        .map((id) => {
+          return options.find((option) => option.id === id);
+        })
+        .filter((option): option is FilterablePaginatedGridSelectOption => option !== undefined);
+
+      setSelectedOptions(defaultOptions);
+    }
+  }, []);
+
   const [selectedOptions, setSelectedOptions] = useState<FilterablePaginatedGridSelectOption[]>(
     multiple ? [] : [options[0]]
   );
-
-  useEffect(() => {
-    console.log(selectedOptions);
-  }, [selectedOptions]);
 
   const context = useContext(FilterablePaginatedGridContext);
 

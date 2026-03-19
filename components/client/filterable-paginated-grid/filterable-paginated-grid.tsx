@@ -4,6 +4,7 @@ import { PaginatedGrid, PaginatedGridProps } from "@/components/client/paginated
 import { createContext, PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { Container } from "@uoguelph/react-components/container";
 import { FilterablePaginatedGridSelectOption } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-select";
+import { useSearchParams } from "next/navigation";
 
 export type FilterablePaginatedGridFilterValue =
   | string
@@ -36,6 +37,7 @@ export function FilterablePaginatedGrid<T>({
   children,
 }: PropsWithChildren<PaginatedGridProps<T>>) {
   const [filters, setFilters] = useState<FilterablePaginatedGridFilters>({});
+  const searchParams = useSearchParams();
 
   const urlWithFilters = useMemo(() => {
     const entries = Object.entries(filters);
@@ -60,6 +62,18 @@ export function FilterablePaginatedGrid<T>({
 
     return `${url}?${params.toString()}`;
   }, [filters]);
+
+  useEffect(() => {
+    const defaultFilters: FilterablePaginatedGridFilters = {};
+
+    for (const [key, value] of searchParams.entries()) {
+      if (value) {
+        defaultFilters[key] = value;
+      }
+    }
+
+    setFilters(defaultFilters);
+  }, [searchParams]);
 
   useEffect(() => {
     console.log(urlWithFilters);
