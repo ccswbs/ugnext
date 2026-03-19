@@ -40,8 +40,8 @@ export function NewsSearch({ data }: { data: NewsSearchFragment }) {
   return (
     <FilterablePaginatedGrid
       url={url}
-      render={(item: NewsWithoutContentFragment) => <NewsCard key={item.id} data={item} />}
-      layout="list"
+      render={(item: NewsWithoutContentFragment) => <NewsCard variant="vertical" key={item.id} data={item} />}
+      layout="grid"
     >
       <FilterablePaginatedGridTextBox id="query" label="Search by keywords" />
       {categories && categories.length > 0 && (
