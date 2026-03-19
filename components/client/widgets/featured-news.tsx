@@ -1,7 +1,7 @@
 import { FullFeaturedNews } from "@/data/drupal/widgets";
 import { FeaturedNewsFragment } from "@/lib/graphql/types";
 import { NewsCard } from "@/components/client/news/news-card";
-import { Grid } from "@uoguelph/react-components/grid";
+import { Grid, GridProps } from "@uoguelph/react-components/grid";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { List, ListItem } from "@uoguelph/react-components/list";
@@ -14,7 +14,7 @@ function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
     <ul className="flex flex-col gap-4">
       {data.articles?.map((article) => (
         <li key={article.id}>
-          <NewsCard data={article} />
+          <NewsCard data={article} variant="vertical" />
         </li>
       ))}
     </ul>
@@ -29,6 +29,7 @@ function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedN
           variant="horizontal"
           key={article.id}
           data={article}
+          hideCategory={data.categories?.length === 1}
           className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
         />
       ))}
@@ -37,12 +38,46 @@ function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedN
 }
 
 function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+  const gridTemplate: GridProps["template"] = {
+    base: ["1fr"],
+  };
+
+  if (Array.isArray(data.articles)) {
+    if (data.articles.length >= 2) {
+      gridTemplate.sm = ["1fr", "1fr"];
+    }
+    if (data.articles.length >= 3) {
+      gridTemplate.md = ["1fr", "1fr", "1fr"];
+    }
+
+    if (data.articles.length >= 4) {
+      gridTemplate.lg = ["1fr", "1fr", "1fr", "1fr"];
+    }
+  }
+
+  return (
+    <Grid
+      template={gridTemplate}
+      gap={{
+        x: 16,
+        y: 16,
+      }}
+    >
+      {data.articles?.map((article, index) => (
+        <NewsCard variant="vertical" key={article.id} data={article} />
+      ))}
+    </Grid>
+  );
+}
+
+function FeaturedNewsGridSpotlight({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
     <Grid
       template={{
         base: ["1fr"],
         sm: ["1fr", "1fr"],
         md: ["1fr", "1fr", "1fr"],
+        lg: ["1fr", "1fr", "1fr", "1fr"],
       }}
       gap={{
         x: 16,
@@ -54,7 +89,7 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
           variant={index === 0 ? "spotlight" : "vertical"}
           key={article.id}
           data={article}
-          className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
+          className={twJoin(index === 0 && "sm:col-span-2 lg:col-span-3 lg:row-span-2")}
         />
       ))}
     </Grid>

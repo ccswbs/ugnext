@@ -535,7 +535,7 @@ export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export type FullFeaturedNews = Omit<FeaturedNewsFragment, "units" | "categories"> & {
+export type FullFeaturedNews = Omit<FeaturedNewsFragment, "units"> & {
   isFull: true;
 };
 
@@ -545,7 +545,6 @@ export async function getFullFeaturedNews(data: FeaturedNewsFragment) {
   const copy = { ...data };
 
   delete copy.units;
-  delete copy.categories;
 
   const articlesNeeded = data.count - (data.articles?.length ?? 0);
 

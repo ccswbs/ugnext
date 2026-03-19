@@ -8,7 +8,6 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Info } from "@uoguelph/react-components/info";
-import { Link as UofGLink } from "@uoguelph/react-components/link";
 
 export function NewsCard({
   data,
@@ -42,7 +41,7 @@ export function NewsCard({
     variants: {
       variant: {
         spotlight: {
-          card: "",
+          title: "text-black font-serif",
         },
         vertical: {
           card: "",
@@ -67,7 +66,15 @@ export function NewsCard({
   const alt = data.hero?.image.alt ?? "";
 
   if (variant === "no-image") {
-    return <UofGLink href={url}>{data.title}</UofGLink>;
+    return (
+      <Link href={url} className="group">
+        <Info color="yellow">
+          <Typography as="span" type="h4" className={title()}>
+            {data.title}
+          </Typography>
+        </Info>
+      </Link>
+    );
   }
 
   return (
@@ -89,7 +96,7 @@ export function NewsCard({
           </Typography>
         )}
 
-        <Typography as="span" type="h4" className={title()}>
+        <Typography as="span" type={variant === "spotlight" ? "h1" : "h4"} className={title()}>
           {data.title}
         </Typography>
       </div>
