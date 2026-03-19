@@ -59,8 +59,8 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
     <Grid
       template={gridTemplate}
       gap={{
-        x: 16,
-        y: 16,
+        x: 24,
+        y: 24,
       }}
     >
       {data.articles?.map((article, index) => (
@@ -70,36 +70,42 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
   );
 }
 
-function FeaturedNewsGridSpotlight({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+  if (!Array.isArray(data.articles) || (data.articles.length !== 3 && data.articles.length < 6)) {
+    throw new Error("FeaturedNewsSpotlight must have exactly 3 or more than 5 articles");
+  }
+
   return (
-    <Grid
-      template={{
-        base: ["1fr"],
-        sm: ["1fr", "1fr"],
-        md: ["1fr", "1fr", "1fr"],
-        lg: ["1fr", "1fr", "1fr", "1fr"],
-      }}
-      gap={{
-        x: 16,
-        y: 16,
-      }}
-    >
-      {data.articles?.map((article, index) => (
-        <NewsCard
-          variant={index === 0 ? "spotlight" : "vertical"}
-          key={article.id}
-          data={article}
-          className={twJoin(index === 0 && "sm:col-span-2 lg:col-span-3 lg:row-span-2")}
-        />
-      ))}
-    </Grid>
+    <div className="flex flex-col gap-6 pb-8">
+      <div className="flex gap-6">
+        <div className="w-2/3">
+          <NewsCard variant="spotlight" data={data.articles[0]} />
+        </div>
+        <div className="w-1/3 flex flex-col gap-6">
+          {data.articles?.slice(1, 3).map((article, index) => (
+            <NewsCard variant="vertical" key={article.id} data={article} />
+          ))}
+        </div>
+      </div>
+
+      <FeaturedNewsGrid
+        data={{
+          ...data,
+          articles: data.articles.slice(3),
+        }}
+      />
+    </div>
   );
 }
 
 export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   const context = useContext(SectionContext);
 
-  let variant: "grid" | "single-column" | "list" = "grid";
+  let variant: "spotlight" | "grid" | "single-column" | "list" = "grid";
+
+  if (!Array.isArray(data.articles)) {
+    return null;
+  }
 
   if (context?.column === "secondary" && !context?.equal) {
     variant = "list";
@@ -108,6 +114,8 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
     context?.column === "secondary"
   ) {
     variant = "single-column";
+  } else if (!context?.hasSecondary && (data.articles.length === 3 || data.articles.length >= 6)) {
+    variant = "spotlight";
   }
 
   return (
@@ -117,7 +125,10 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
           {data.title}
         </Typography>
       )}
-      {variant === "grid" ? (
+
+      {variant === "spotlight" ? (
+        <FeaturedNewsSpotlight data={data} />
+      ) : variant === "grid" ? (
         <FeaturedNewsGrid data={data} />
       ) : variant === "single-column" ? (
         <FeaturedNewsSingleColumn data={data} />
