@@ -44,6 +44,7 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
   return (
     <div key={profileInfo.id} className={twJoin(
       "my-5",
+      isSecondary && "first:my-0",
       !isSecondary && "lg:w-[calc(50%-2rem)] lg:inline-block lg:align-top lg:me-5 lg:p-0"
     )}>
       <GridWrapper>
