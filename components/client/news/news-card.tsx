@@ -1,7 +1,6 @@
 "use client";
 
 import { NewsWithoutContentFragment } from "@/lib/graphql/types";
-import { Card, CardContent, CardFooter, CardImage, CardTitle } from "@uoguelph/react-components/card";
 import Link from "next/link";
 import Image from "next/image";
 import defaultImage from "@/img/university-of-guelph-logo.png";
@@ -9,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Info } from "@uoguelph/react-components/info";
+import { Link as UofGLink } from "@uoguelph/react-components/link";
 
 export function NewsCard({
   data,
@@ -66,19 +66,21 @@ export function NewsCard({
   const img = data.hero?.image.variations?.[0];
   const alt = data.hero?.image.alt ?? "";
 
+  if (variant === "no-image") {
+    return <UofGLink href={url}>{data.title}</UofGLink>;
+  }
+
   return (
     <Link key={data.id} href={url} className={twMerge(card(), className)}>
-      {variant !== "no-image" && (
-        <div className={imageContainer()}>
-          <Image
-            src={img?.url ?? defaultImage.src}
-            alt={alt ?? ""}
-            width={`${img?.width ?? defaultImage.width}`}
-            height={`${img?.height ?? defaultImage.height}`}
-            className={image()}
-          />
-        </div>
-      )}
+      <div className={imageContainer()}>
+        <Image
+          src={img?.url ?? defaultImage.src}
+          alt={alt ?? ""}
+          width={`${img?.width ?? defaultImage.width}`}
+          height={`${img?.height ?? defaultImage.height}`}
+          className={image()}
+        />
+      </div>
 
       <div className={content()}>
         {data.category && data.category.length > 0 && !hideCategory && (
