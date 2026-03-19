@@ -11,7 +11,7 @@ import { twJoin } from "tailwind-merge";
 export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   const context = useContext(SectionContext);
 
-  if (context?.column === "secondary") {
+  if (context?.column === "secondary" && !context?.equal) {
     return (
       <List>
         {data.articles?.map((article) => {
@@ -33,6 +33,21 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
     );
   }
 
+  if (context?.equal && context?.hasSecondary) {
+    return (
+      <div className="flex flex-col gap-4">
+        {data.articles?.map((article, index) => (
+          <NewsCard
+            variant="horizontal"
+            key={article.id}
+            data={article}
+            className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4 @container">
       <Grid
@@ -48,7 +63,7 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
       >
         {data.articles?.map((article, index) => (
           <NewsCard
-            variant="grid"
+            variant="vertical"
             key={article.id}
             data={article}
             className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}

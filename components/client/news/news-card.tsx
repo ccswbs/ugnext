@@ -17,8 +17,8 @@ export function NewsCard({
   className,
 }: {
   data: NewsWithoutContentFragment;
-  variant: "spotlight" | "vertical" | "horizontal" | "no-image";
-  hideCategory: boolean;
+  variant?: "spotlight" | "vertical" | "horizontal" | "no-image";
+  hideCategory?: boolean;
   className?: string;
 }) {
   let url = "";
