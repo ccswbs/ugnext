@@ -153,6 +153,8 @@ export const FEATURED_NEWS_FRAGMENT = gql(/* gql */ `
     uuid
     id
     count
+    title: newsSearchTitle
+    headingLevel
     sectionColumn {
       ...SectionColumn
     }

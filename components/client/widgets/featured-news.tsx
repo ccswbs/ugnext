@@ -7,49 +7,75 @@ import { SectionContext } from "@/components/client/section";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
 import { twJoin } from "tailwind-merge";
+import { Typography } from "@uoguelph/react-components/typography";
 
 export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   const context = useContext(SectionContext);
+  console.log(context);
 
   if (context?.column === "secondary" && !context?.equal) {
     return (
-      <List>
-        {data.articles?.map((article) => {
-          let url = "";
+      <div>
+        {data.title && (
+          <Typography type="h3" as="h3">
+            {data.title}
+          </Typography>
+        )}
 
-          if (article.externallyLinked && article.externalLink) {
-            url = article.externalLink.url ?? article.path ?? "";
-          } else {
-            url = article.path ?? "";
-          }
+        <List>
+          {data.articles?.map((article) => {
+            let url = "";
 
-          return (
-            <ListItem key={article.id}>
-              <Link href={url}>{article.title}</Link>
-            </ListItem>
-          );
-        })}
-      </List>
+            if (article.externallyLinked && article.externalLink) {
+              url = article.externalLink.url ?? article.path ?? "";
+            } else {
+              url = article.path ?? "";
+            }
+
+            return (
+              <ListItem key={article.id}>
+                <Link href={url}>{article.title}</Link>
+              </ListItem>
+            );
+          })}
+        </List>
+      </div>
     );
   }
 
-  if (context?.equal && context?.hasSecondary) {
+  if ((context?.column === "primary" && context?.equal && context?.hasSecondary) || context?.column === "secondary") {
     return (
-      <div className="flex flex-col gap-4">
-        {data.articles?.map((article, index) => (
-          <NewsCard
-            variant="horizontal"
-            key={article.id}
-            data={article}
-            className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
-          />
-        ))}
+      <div>
+        {data.title && (
+          <Typography type="h3" as="h3">
+            {data.title}
+          </Typography>
+        )}
+
+        <div className="flex flex-col gap-4">
+          {data.articles?.map((article, index) => (
+            <NewsCard
+              variant="horizontal"
+              key={article.id}
+              data={article}
+              className={twJoin(
+                index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80"
+              )}
+            />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col gap-4 @container">
+      {data.title && (
+        <Typography type="h3" as="h3">
+          {data.title}
+        </Typography>
+      )}
+
       <Grid
         template={{
           base: ["1fr"],
