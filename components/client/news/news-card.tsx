@@ -41,6 +41,7 @@ export function NewsCard({
     variants: {
       variant: {
         spotlight: {
+          content: "px-4 md:px-0",
           title: "text-black font-serif",
         },
         vertical: {
@@ -50,9 +51,11 @@ export function NewsCard({
           category: "",
         },
         horizontal: {
-          card: "flex-row items-center gap-4 ",
+          card: "flex-row items-center gap-4",
           content: "w-1/2",
-          imageContainer: "w-1/2",
+          category: "hidden md:block",
+          imageContainer: "w-1/3 md:w-1/2",
+          image: "aspect-square md:aspect-video",
           title: "block ",
         },
         "no-image": {},
@@ -99,9 +102,9 @@ export function NewsCard({
         <Typography as="span" type={variant === "spotlight" ? "h1" : "h4"} className={title()}>
           {data.title}
         </Typography>
-      </div>
 
-      {data.leadParagraph && variant === "spotlight" && <Info color="yellow">{data.leadParagraph}</Info>}
+        {data.leadParagraph && variant === "spotlight" && <Info color="yellow">{data.leadParagraph}</Info>}
+      </div>
     </Link>
   );
 }

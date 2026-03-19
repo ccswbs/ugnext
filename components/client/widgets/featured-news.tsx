@@ -8,6 +8,7 @@ import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
 import { twJoin } from "tailwind-merge";
 import { Typography } from "@uoguelph/react-components/typography";
+import { Container } from "@uoguelph/react-components/container";
 
 function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
@@ -23,7 +24,7 @@ function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
 
 function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
-    <div className="flex flex-col gap-4">
+    <Container className="flex flex-col gap-4 px-0">
       {data.articles?.map((article, index) => (
         <NewsCard
           variant="horizontal"
@@ -33,7 +34,7 @@ function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedN
           className={twJoin(index === 0 && "sm:col-span-2 md:@max-[991px]:col-span-3 sm:w-full sm:[&_img]:max-h-80")}
         />
       ))}
-    </div>
+    </Container>
   );
 }
 
@@ -46,6 +47,7 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
     if (data.articles.length >= 2) {
       gridTemplate.sm = ["1fr", "1fr"];
     }
+
     if (data.articles.length >= 3) {
       gridTemplate.md = ["1fr", "1fr", "1fr"];
     }
@@ -53,20 +55,26 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
     if (data.articles.length >= 4) {
       gridTemplate.lg = ["1fr", "1fr", "1fr", "1fr"];
     }
+
+    if (data.articles.length % 2 == 0) {
+      gridTemplate.md = ["1fr", "1fr"];
+    }
   }
 
   return (
-    <Grid
-      template={gridTemplate}
-      gap={{
-        x: 24,
-        y: 24,
-      }}
-    >
-      {data.articles?.map((article, index) => (
-        <NewsCard variant="vertical" key={article.id} data={article} />
-      ))}
-    </Grid>
+    <Container>
+      <Grid
+        template={gridTemplate}
+        gap={{
+          x: 24,
+          y: 24,
+        }}
+      >
+        {data.articles?.map((article, index) => (
+          <NewsCard variant="vertical" key={article.id} data={article} />
+        ))}
+      </Grid>
+    </Container>
   );
 }
 
@@ -77,15 +85,15 @@ function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNews
 
   return (
     <div className="flex flex-col gap-6 pb-8">
-      <div className="flex gap-6">
-        <div className="w-2/3">
+      <div className="flex flex-col md:flex-row gap-6 md:max-w-[137rem] md:mx-auto md:px-4">
+        <div className="w-full md:w-2/3">
           <NewsCard variant="spotlight" data={data.articles[0]} />
         </div>
-        <div className="w-1/3 flex flex-col gap-6">
+        <Container className="w-full md:w-1/3 flex flex-col gap-6  px-4 md:p-0">
           {data.articles?.slice(1, 3).map((article, index) => (
             <NewsCard variant="vertical" key={article.id} data={article} />
           ))}
-        </div>
+        </Container>
       </div>
 
       <FeaturedNewsGrid

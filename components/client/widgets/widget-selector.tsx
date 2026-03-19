@@ -44,6 +44,7 @@ export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; nev
     "ParagraphImageOverlay",
     "ParagraphStoryWidget",
     "ParagraphProfileBlock",
+    "ParagraphFeaturedNews",
   ];
 
   if (!data.__typename) {
