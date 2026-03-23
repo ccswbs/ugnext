@@ -1,8 +1,7 @@
 import React from "react";
 import { Typography } from "@uoguelph/react-components/typography";
-import { Link } from "@uoguelph/react-components/link";
 import { fetchAadProfile } from "@/lib/aad-utils";
-import { obfuscateEmail } from "@/lib/string-utils";
+import { buildContactInfoArray, renderContactInfo } from "@/lib/contact-info-utils";
 
 interface AadContactInfoProps {
   email?: string;
@@ -40,88 +39,16 @@ export async function AadContactInfo({
     }
 
   // Build contact info array to avoid complex conditional markup
-  const contactInfo = [];
-  
-  if (directoryEmail === true && aadData?.mail) {
-    const { display, href } = obfuscateEmail(aadData.mail);
-    contactInfo.push(
-      <React.Fragment key="email">
-        <i className="fa-solid fa-envelope me-2" aria-hidden="true"></i>
-        <span className="sr-only">Email:</span>
-        <Link 
-          href={href}
-          dangerouslySetInnerHTML={{ __html: display }}
-          aria-label={`Send email to ${aadData.mail}`}
-        />
-      </React.Fragment>
-    );
-  }
-  
-  if (directoryOffice === true && aadData?.officeLocation && typeof aadData.officeLocation === 'string' && aadData.officeLocation.trim()) {
-    contactInfo.push(
-      <React.Fragment key="office">
-        <i className="fa-solid fa-building-columns me-2" aria-hidden="true"></i>
-        <span className="sr-only">Office:</span>{aadData.officeLocation}
-      </React.Fragment>
-    );
-  }
-  
-  if (directoryPhone === true) {
-    // Handle business phones (array)
-    if (aadData?.businessPhones && Array.isArray(aadData.businessPhones) && aadData.businessPhones.length > 0) {
-      contactInfo.push(
-        <React.Fragment key="phone-business">
-          <i className="fa-solid fa-phone me-2" aria-hidden="true"></i>
-          <span className="sr-only">Phone:</span>{aadData.businessPhones[0]}
-          {aadData.businessPhones.slice(1).map((phone, index) => (
-            <React.Fragment key={`business-${index}`}>
-              <br />
-              <span className="ms-6">{phone}</span>
-            </React.Fragment>
-          ))}
-        </React.Fragment>
-      );
+  const contactInfo = buildContactInfoArray(
+    aadData,
+    {
+      directoryEmail: !!directoryEmail,
+      directoryOffice: !!directoryOffice,
+      directoryPhone: !!directoryPhone
     }
-    
-    // Handle mobile phone if no business phones or as additional number
-    if (aadData?.mobilePhone && typeof aadData.mobilePhone === 'string' && aadData.mobilePhone.trim()) {
-      const isAdditional = aadData?.businessPhones && aadData.businessPhones.length > 0;
-      contactInfo.push(
-        <React.Fragment key="phone-mobile">
-          {!isAdditional && (
-            <>
-              <i className="fa-solid fa-mobile me-2" aria-hidden="true"></i>
-              <span className="sr-only">Mobile:</span>
-            </>
-          )}
-          {isAdditional && (
-            <>
-              <br />
-              <i className="fa-solid fa-mobile ms-0 me-2" aria-hidden="true"></i>
-              <span className="sr-only">Mobile:</span>
-            </>
-          )}
-          {aadData.mobilePhone}
-        </React.Fragment>
-      );
-    }
-  }
-
-  // Return null if no contact info to display
-  if (contactInfo.length === 0) {
-    return null;
-  }
-
-  return (
-    <Typography type="body" className={className}>
-      {contactInfo.map((info, index) => (
-        <React.Fragment key={index}>
-          {index > 0 && <br />}
-          {info}
-        </React.Fragment>
-      ))}
-    </Typography>
   );
+
+  return renderContactInfo(contactInfo, !!directoryEmail, className);
   } catch (error) {
     console.error('Error in AadContactInfo component:', error);
     return null;
