@@ -74,10 +74,6 @@ export function FilterablePaginatedGrid<T>({
     setFilters(defaultFilters);
   }, [searchParams]);
 
-  useEffect(() => {
-    console.log(urlWithFilters);
-  }, [filters]);
-
   return (
     <div>
       <div className="w-full border-t-4 border-yellow bg-grey-light-bg -mt-1">
