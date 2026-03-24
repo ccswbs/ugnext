@@ -188,6 +188,7 @@ export const PARTIAL_PROFILE_FRAGMENT = gql(/* gql */ `
     title
     profileJobTitle
     path
+    acceptingNewGrads
     profilePicture {
       ... on MediaImage {
         image {

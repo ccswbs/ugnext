@@ -42,6 +42,7 @@ export interface ProfileWithImage extends BaseProfile {
   profilePicture?: ProfileImage;
   profileFirstName?: string;
   profileLastName?: string;
+  acceptingNewGrads?: boolean;
 }
 
 /**
