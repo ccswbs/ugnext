@@ -93,6 +93,7 @@ export interface ProfileField {
  */
 export interface FullProfile extends ProfileWithImage {
   uniwebId?: string;
+  acceptingNewGrads?: boolean;
   primaryNavigation?: {
     menuName?: string;
   };

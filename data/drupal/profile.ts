@@ -37,6 +37,7 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     directoryOffice
     directoryPhone
     uniwebId
+    acceptingNewGrads
     body {
       processed
       summary
