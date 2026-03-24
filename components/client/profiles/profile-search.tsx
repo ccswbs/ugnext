@@ -8,6 +8,7 @@ import type { ProfileSearchOptions } from "@/data/drupal/profile";
 import { useMemo, useState, useEffect } from "react";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
+import { Checkbox } from "@uoguelph/react-components/checkbox";
 import { Field, Label } from "@headlessui/react";
 
 type ProfileSearchField<T> = {
@@ -151,6 +152,21 @@ export function ProfileSearch(props: ProfileSearchProps) {
                   ))}
                 </SelectOptions>
               </Select>
+            </Field>
+          )}
+
+          {props.isAcceptingGraduateStudents.enabled && (
+            <Field className="flex items-center gap-2">
+              <Checkbox
+                checked={options.isAcceptingGraduateStudents === true}
+                onChange={(checked: boolean) => {
+                  setOptions((prevState) => ({
+                    ...prevState,
+                    isAcceptingGraduateStudents: checked ? true : null,
+                  }));
+                }}
+              />
+              <Label className="text-yellow-contrast font-bold">Accepting new graduate students</Label>
             </Field>
           )}
         </Container>
