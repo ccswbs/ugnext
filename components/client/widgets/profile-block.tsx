@@ -188,9 +188,11 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
   return (
     <>
       {sectionContext ? renderTitle() : (
-        <Container>
-          {renderTitle()}
-        </Container>
+        data.profileBlockTitle?.trim() && (
+          <Container>
+            {renderTitle()}
+          </Container>
+        )
       )}
       {data.enableTypeFilter && typesToShowInFilter.length > 0 && (
         <ProfileTypeFilter 
