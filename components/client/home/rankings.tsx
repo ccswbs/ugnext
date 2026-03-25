@@ -10,63 +10,47 @@ import { twJoin } from "tailwind-merge";
 import { Link } from "@uoguelph/react-components/link";
 
 export function Rankings() {
-  const linkClasses = twJoin("text-inherit! outline-inherit!");
+  type RankingItem = {
+    title: string;
+    link: string;
+    description: string;
+  };
+
+  const rankings: RankingItem[] = [
+    {
+      title: "Among World's Best in 15 Subject Areas",
+      link: "https://news.uoguelph.ca/2026/03/u-of-g-veterinary-agriculture-sciences-rank-among-best-in-world-in-new-rankings/",
+      description: "QS World University Rankings by Subject, 2026",
+    },
+    {
+      title: "A Top Comprehensive University",
+      link: "https://news.uoguelph.ca/2025/11/u-of-g-among-canadas-top-comprehensive-universities-macleans-rankings/",
+      description: "Macleans, 2026",
+    },
+    {
+      title: "Top 150 in the world for Life Sciences",
+      link: "https://www.timeshighereducation.com/world-university-rankings/by-subject",
+      description: "Times Higher Education, 2026",
+    },
+    {
+      title: "Top 10 in Canada for Reputation",
+      link: "https://news.uoguelph.ca/2025/02/u-of-g-ranked-among-top-universities-in-world-for-reputation/",
+      description: "Times Higher Education, 2025",
+    },
+  ];
 
   return (
     <Statistics variant="solid-colors-no-gap">
-      <StatisticsItem>
-        <StatisticsItemValue>
-          Among <strong>World's Best</strong> in 12 Subject Areas
-        </StatisticsItemValue>
-        <StatisticsItemRepresents>
-          <Link
-            className={linkClasses}
-            href="https://news.uoguelph.ca/2025/03/u-of-gs-ovc-ranks-6th-in-world-oac-in-top-tier-in-new-global-ranking/"
-          >
-            QS World University Rankings by Subject, 2025
-          </Link>
-        </StatisticsItemRepresents>
-      </StatisticsItem>
-
-      <StatisticsItem>
-        <StatisticsItemValue>A Top Canadian Comprehensive University</StatisticsItemValue>
-        <StatisticsItemRepresents>
-          <Link
-            className={linkClasses}
-            href="https://news.uoguelph.ca/2025/11/u-of-g-among-canadas-top-comprehensive-universities-macleans-rankings/"
-          >
-            Macleans, 2026
-          </Link>
-        </StatisticsItemRepresents>
-      </StatisticsItem>
-
-      <StatisticsItem>
-        <StatisticsItemValue>
-          <strong>Top 150</strong> in the world for <strong>Life Sciences</strong>
-        </StatisticsItemValue>
-        <StatisticsItemRepresents>
-          <Link
-            className={linkClasses}
-            href="https://www.timeshighereducation.com/world-university-rankings/by-subject"
-          >
-            Times Higher Education, 2026
-          </Link>
-        </StatisticsItemRepresents>
-      </StatisticsItem>
-
-      <StatisticsItem>
-        <StatisticsItemValue>
-          <strong>Top 10</strong> in Canada for Reputation
-        </StatisticsItemValue>
-        <StatisticsItemRepresents>
-          <Link
-            className={linkClasses}
-            href="https://news.uoguelph.ca/2025/02/u-of-g-ranked-among-top-universities-in-world-for-reputation/"
-          >
-            Times Higher Education, 2025
-          </Link>
-        </StatisticsItemRepresents>
-      </StatisticsItem>
+      {rankings.map((ranking, index) => (
+        <StatisticsItem>
+          <StatisticsItemValue>{ranking.title}</StatisticsItemValue>
+          <StatisticsItemRepresents>
+            <Link className="text-inherit! outline-inherit!" href={ranking.link}>
+              {ranking.description}
+            </Link>
+          </StatisticsItemRepresents>
+        </StatisticsItem>
+      ))}
     </Statistics>
   );
 }
