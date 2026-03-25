@@ -38,6 +38,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@uoguelph/react-components": "^1.8.2-rc.2",
     "@uoguelph/web-components": "^2.0.10",
+    "async-mutex": "^0.5.0",
     "conditional-wrap": "^1.0.3",
     "glob": "^13.0.0",
     "html-react-parser": "^5.2.13",
