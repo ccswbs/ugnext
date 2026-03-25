@@ -540,74 +540,6 @@ export type FullFeaturedNews = Omit<FeaturedNewsFragment, "units"> & {
   isFull: true;
 };
 
-export async function getFullFeaturedNews(data: FeaturedNewsFragment) {
-  const units = data.units?.map((unit) => unit.id) ?? [];
-  const categories = data.categories?.map((category) => category.id) ?? [];
-  const copy = { ...data };
-
-  delete copy.units;
-
-  const articlesNeeded = data.count - (data.articles?.length ?? 0);
-
-  // If there are enough articles selected by the user that we don't need to fill anymore, return whatever the featured articles the user selected
-  if (articlesNeeded <= 0) {
-    return copy;
-  }
-
-  const allArticles = [];
-  const ids = new Set<string>();
-
-  for (const article of data.articles ?? []) {
-    allArticles.push(article);
-    ids.add(article.id);
-  }
-
-  // We need to fetch the rest of the articles.
-  const extra = await getFilteredNews({
-    page: 0,
-    pageSize: 10,
-    units,
-    categories,
-  });
-
-  for (const article of extra.results) {
-    if (allArticles.length >= data.count) {
-      break;
-    }
-
-    if (!ids.has(article.id)) {
-      allArticles.push(article);
-    }
-  }
-
-  return {
-    ...copy,
-    articles: allArticles as NewsWithoutContentFragment[],
-    isFull: true,
-  } as FullFeaturedNews;
-}
-
-export async function getFullTestimonialSlider(data: TestimonialSliderFragment | FullTestimonialSlider) {
-  if ("isFull" in data && data.isFull) {
-    return data;
-  }
-
-  const tags =
-    data.byTags
-      ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
-      .filter((tag) => typeof tag === "string") ?? [];
-
-  if (tags.length === 0) {
-    return data;
-  }
-
-  return {
-    ...data,
-    byTags: await getTestimonialByTag(tags),
-    isFull: true,
-  } as FullTestimonialSlider;
-}
-
 export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
   isFull: true;
   byTags: TestimonialFragment[];
@@ -661,3 +593,117 @@ export type SectionWidgets =
   | {
       __typename: "ParagraphYamlWidget";
     };
+
+export class WidgetProcessor {
+  public newsArticles: Set<string>;
+  private newsArticleMutex: Mutex;
+
+  constructor() {
+    this.newsArticles = new Set();
+    this.newsArticleMutex = new Mutex();
+  }
+
+  private async getFullFeaturedNews(data: FeaturedNewsFragment) {
+    const units = data.units?.map((unit) => unit.id) ?? [];
+    const categories = data.categories?.map((category) => category.id) ?? [];
+    const copy = { ...data };
+
+    delete copy.units;
+
+    const articlesNeeded = data.count - (data.articles?.length ?? 0);
+
+    // If there are enough articles selected by the user that we don't need to fill anymore, return whatever the featured articles the user selected
+    if (articlesNeeded <= 0) {
+      return copy;
+    }
+
+    const allArticles = [];
+    const ids = new Set<string>();
+
+    for (const article of data.articles ?? []) {
+      allArticles.push(article);
+      this.newsArticles.add(article.id);
+    }
+
+    // We need to fetch the rest of the articles.
+    const extra = await getFilteredNews({
+      page: 0,
+      pageSize: 10,
+      units,
+      categories,
+    });
+
+    for (const article of extra.results) {
+      if (allArticles.length >= data.count) {
+        break;
+      }
+
+      if (!ids.has(article.id)) {
+        allArticles.push(article);
+        this.newsArticles.add(article.id);
+      }
+    }
+
+    return {
+      ...copy,
+      articles: allArticles as NewsWithoutContentFragment[],
+      isFull: true,
+    } as FullFeaturedNews;
+  }
+
+  private async getFullTestimonialSlider(data: TestimonialSliderFragment | FullTestimonialSlider) {
+    if ("isFull" in data && data.isFull) {
+      return data;
+    }
+
+    const tags =
+      data.byTags
+        ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
+        .filter((tag) => typeof tag === "string") ?? [];
+
+    if (tags.length === 0) {
+      return data;
+    }
+
+    return {
+      ...data,
+      byTags: await getTestimonialByTag(tags),
+      isFull: true,
+    } as FullTestimonialSlider;
+  }
+
+  public async processSectionWidget(widget: SectionWidgets) {
+    switch (widget.__typename) {
+      case "ParagraphFeaturedNews":
+        return await this.getFullFeaturedNews(widget);
+      default:
+        return widget;
+    }
+  }
+
+  public async processWidget(widget: Widgets) {
+    switch (widget.__typename) {
+      case "ParagraphTestimonialSlider":
+        return await this.getFullTestimonialSlider(widget);
+      case "ParagraphSection":
+        return {
+          ...widget,
+          content: await Promise.all(widget.content.map((nestedWidget) => this.processSectionWidget(nestedWidget))),
+        };
+      case "ParagraphFeaturedNews":
+        return await this.getFullFeaturedNews(widget);
+      default:
+        return widget;
+    }
+  }
+
+  public async processWidgets(widgets: Widgets[]) {
+    const processed: Awaited<ReturnType<WidgetProcessor["processWidget"]>>[] = [];
+
+    for (const widget of widgets) {
+      processed.push(await this.processWidget(widget));
+    }
+
+    return processed;
+  }
+}

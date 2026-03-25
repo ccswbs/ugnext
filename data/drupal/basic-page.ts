@@ -1,7 +1,7 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { query } from "@/lib/apollo";
-import { getFullFeaturedNews, getFullTestimonialSlider, SectionWidgets, Widgets } from "@/data/drupal/widgets";
+import { WidgetProcessor } from "@/data/drupal/widgets";
 
 export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
   fragment BasicPageMinimal on NodePage {
@@ -52,31 +52,6 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-async function processSectionWidget(widget: SectionWidgets) {
-  switch (widget.__typename) {
-    case "ParagraphFeaturedNews":
-      return await getFullFeaturedNews(widget);
-    default:
-      return widget;
-  }
-}
-
-async function processWidget(widget: Widgets) {
-  switch (widget.__typename) {
-    case "ParagraphTestimonialSlider":
-      return await getFullTestimonialSlider(widget);
-    case "ParagraphSection":
-      return {
-        ...widget,
-        content: await Promise.all(widget.content.map((nestedWidget) => processSectionWidget(nestedWidget))),
-      };
-    case "ParagraphFeaturedNews":
-      return await getFullFeaturedNews(widget);
-    default:
-      return widget;
-  }
-}
-
 export async function getPageContent(id: string) {
   const showUnpublished = await showUnpublishedContent();
 
@@ -111,9 +86,9 @@ export async function getPageContent(id: string) {
     return data.nodePage;
   }
 
-  // We need to resolve testimonials by tag.
+  const processor = new WidgetProcessor();
   return {
     ...data.nodePage,
-    widgets: await Promise.all(data.nodePage.widgets.map(async (widget) => await processWidget(widget))),
+    widgets: await processor.processWidgets(data.nodePage.widgets),
   };
 }
