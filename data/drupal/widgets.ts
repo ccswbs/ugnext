@@ -596,11 +596,9 @@ export type SectionWidgets =
 
 export class WidgetProcessor {
   public newsArticles: Set<string>;
-  private newsArticleMutex: Mutex;
 
   constructor() {
     this.newsArticles = new Set();
-    this.newsArticleMutex = new Mutex();
   }
 
   private async getFullFeaturedNews(data: FeaturedNewsFragment) {
