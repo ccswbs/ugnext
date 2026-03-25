@@ -169,7 +169,8 @@ export function ProfileSearch(props: ProfileSearchProps) {
               <Field className="flex items-center gap-2">
                 <Checkbox
                   checked={options.isAcceptingGraduateStudents === true}
-                  onChange={(checked: boolean) => {
+                  onChange={(event) => {
+                    const checked = typeof event === 'boolean' ? event : event.target.checked;
                     setOptions((prevState) => ({
                       ...prevState,
                       isAcceptingGraduateStudents: checked ? true : null,
