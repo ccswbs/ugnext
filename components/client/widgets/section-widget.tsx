@@ -153,7 +153,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
               // Handle Media Grid Layout
               if (widget[0].__typename === "ParagraphMediaText") {
                 return (
-                  <Grid key={index} className="gap-4" template={renderMediaGrid(widget, sectionClasses)}>
+                  <Grid key={index} className="gap-4 items-stretch" template={renderMediaGrid(widget, sectionClasses)}>
                     {widget.map((w, i) => (
                       <WidgetSelector data={w as Widgets} key={i} />
                     ))}

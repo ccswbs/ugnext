@@ -14,6 +14,7 @@ export interface BaseProfile {
   title: string;
   path?: string;
   centralLoginId?: string;
+  credentials?: string;
   directoryEmail: boolean;
   directoryOffice: boolean;
   directoryPhone: boolean;
