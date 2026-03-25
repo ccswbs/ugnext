@@ -1,6 +1,6 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { query } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { WidgetProcessor } from "@/data/drupal/widgets";
 
 export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
@@ -43,7 +43,6 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...ImageOverlay
       ...Section
       ...ProfileBlock
-      ...ProfileCard
     }
     tags {
       ...Tag
@@ -91,4 +90,62 @@ export async function getPageContent(id: string) {
     ...data.nodePage,
     widgets: await processor.processWidgets(data.nodePage.widgets),
   };
+}
+
+export async function getAllBasicPagePaths() {
+  const client = getClient();
+
+  const pathQuery = gql(/* gql */ `
+    query BasicPagePaths($cursor: Cursor) {
+      nodePages(after: $cursor, first: 100) {
+        nodes {
+          __typename
+          id
+          status
+          path
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const paths: string[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await client.query({
+      query: pathQuery,
+      variables: {
+        cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return paths;
+    }
+
+    if (!data.nodePages.nodes.length) {
+      return paths;
+    }
+
+    const currentPaths = data.nodePages.nodes
+      .filter((page) => page.status)
+      .map((page) => page.path)
+      .filter((path) => typeof path === "string");
+
+    paths.push(...currentPaths);
+
+    cursor = data.nodePages.pageInfo.endCursor;
+    hasNextPage = data.nodePages.pageInfo.hasNextPage;
+  }
+
+  return paths;
 }

@@ -15,7 +15,7 @@ function ListRenderer({ node, props, children }: any) {
       {...props}
       key={nanoid()}
       as={node.tagName as "ul" | "ol"}
-      columns={context?.column == "secondary" ? false : true}
+      columns={context?.column == "secondary" || node.attribs?.class?.includes("columns-1") ? false : true}
       className={"group-first/html-parser:first:pt-0 list-outside pl-4 pt-3 text-lg"}
     >
       {children}
