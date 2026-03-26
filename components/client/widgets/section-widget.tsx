@@ -3,23 +3,17 @@ import { Section } from "@/components/client/section";
 import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import { Grid } from "@uoguelph/react-components/grid";
-import type { SectionFragment } from "@/lib/graphql/types";
-import type { Widgets } from "@/data/drupal/widgets";
+import type { MediaTextFragment, SectionFragment } from "@/lib/graphql/types";
+import type { ProcessedSection, ProcessedSectionWidgets, ProcessedWidgets, Widgets } from "@/data/drupal/widgets";
 import { slugify } from "@/lib/string-utils";
 
-interface MediaTextWidget {
-  __typename: "ParagraphMediaText";
-  mediaImageSize?: string;
-  uuid: string;
-}
-
 interface SectionWidgetProps {
-  data: SectionFragment;
+  data: ProcessedSection;
 }
 
 // Create a grid if only media + text widgets in Primary section
 // Considers both number of elements and their size settings
-function renderMediaGrid(widgetGroup: MediaTextWidget | MediaTextWidget[], sectionClasses?: string | null) {
+function renderMediaGrid(widgetGroup: MediaTextFragment | MediaTextFragment[], sectionClasses?: string | null) {
   let mediaGridTemplate = {
     base: ["1fr"],
     sm: ["1fr", "1fr"],
@@ -86,17 +80,17 @@ export function SectionWidget({ data }: SectionWidgetProps) {
           acc.primary.push(widget);
           break;
         case "secondary":
-          acc.secondary.push(<WidgetSelector key={index} data={widget as Widgets} />);
+          acc.secondary.push(<WidgetSelector key={index} data={widget} />);
           break;
         default:
-          acc.others.push(<WidgetSelector key={index} data={widget as Widgets} />);
+          acc.others.push(<WidgetSelector key={index} data={widget} />);
           break;
       }
 
       return acc;
     },
     {
-      primary: [] as Array<SectionFragment["content"][0]>,
+      primary: [] as ProcessedSectionWidgets[],
       secondary: [] as React.ReactElement[],
       others: [] as React.ReactElement[],
     }
@@ -115,15 +109,15 @@ export function SectionWidget({ data }: SectionWidgetProps) {
 
       if (Array.isArray(previous) && (widget as any)?.mediaImageSize === (previous[0] as any)?.mediaImageSize) {
         // The current media text widget has the same size as the ones in a group before it, add the widget to the group
-        previous.push(widget as MediaTextWidget);
+        previous.push(widget as MediaTextFragment);
         return acc;
       }
 
       // There is no previous group or the current media text widget has a different size, create a new group
-      acc.push([widget as MediaTextWidget]);
+      acc.push([widget as MediaTextFragment]);
       return acc;
     },
-    [] as Array<SectionFragment["content"][0] | MediaTextWidget[]>
+    [] as Array<SectionFragment["content"][0] | MediaTextFragment[]>
   );
 
   const title = data.heading?.trim();
@@ -147,7 +141,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
           primary={primary.map((widget, index) => {
             if (Array.isArray(widget)) {
               if (widget.length === 1) {
-                return <WidgetSelector key={index} data={widget[0] as Widgets} />;
+                return <WidgetSelector key={index} data={widget[0]} />;
               }
 
               // Handle Media Grid Layout
@@ -155,7 +149,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
                 return (
                   <Grid key={index} className="gap-4 items-stretch" template={renderMediaGrid(widget, sectionClasses)}>
                     {widget.map((w, i) => (
-                      <WidgetSelector data={w as Widgets} key={i} />
+                      <WidgetSelector data={w} key={i} />
                     ))}
                   </Grid>
                 );
@@ -166,14 +160,14 @@ export function SectionWidget({ data }: SectionWidgetProps) {
                 <div key={index} className="sm:flex gap-4">
                   {widget.map((w, i) => (
                     <div key={i} className="sm:flex-1">
-                      <WidgetSelector data={w as Widgets} />
+                      <WidgetSelector data={w} />
                     </div>
                   ))}
                 </div>
               );
             }
 
-            return <WidgetSelector key={index} data={widget as Widgets} />;
+            return <WidgetSelector key={index} data={widget as ProcessedWidgets} />;
           })}
           secondary={secondary}
           equal={sectionClasses === "col-md-6"}

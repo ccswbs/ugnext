@@ -18,13 +18,19 @@ import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial
 import { SocialMediaWidget } from "@/components/client/widgets/social-media";
 import { ProfileBlock } from "@/components/client/widgets/profile-block";
 import { ProfileContact } from "@/components/client/widgets/profile-contact";
-import type { Widgets } from "@/data/drupal/widgets";
+import type { ProcessedSectionWidgets, ProcessedWidgets, Widgets } from "@/data/drupal/widgets";
 import { usePathname } from "next/navigation";
 import { ButtonWidget } from "@/components/client/widgets/button";
 import { FeaturedNews } from "@/components/client/widgets/featured-news";
 import { NewsSearch } from "@/components/client/widgets/news-search";
 
-export function WidgetSelector({ data, neverWrap = false }: { data: Widgets; neverWrap?: boolean }) {
+export function WidgetSelector({
+  data,
+  neverWrap = false,
+}: {
+  data: ProcessedWidgets | ProcessedSectionWidgets;
+  neverWrap?: boolean;
+}) {
   const pathname = usePathname();
 
   // If this widget is within a section, we don't want to render a container around it

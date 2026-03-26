@@ -540,6 +540,23 @@ export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & 
   byTags: TestimonialFragment[];
 };
 
+export type SectionWidgets =
+  | AccordionFragment
+  | BlockFragment
+  | ButtonSectionFragment
+  | FeaturedNewsFragment
+  | GeneralTextFragment
+  | ImageOverlayFragment
+  | LinksFragment
+  | MediaTextFragment
+  | ProfileBlockFragment
+  | ProfileCardFragment
+  | StatisticsFragment
+  | TabsFragment
+  | {
+      __typename: "ParagraphYamlWidget";
+    };
+
 export type Widgets =
   | AccordionFragment
   | BlockFragment
@@ -563,7 +580,6 @@ export type Widgets =
   | StoryQuoteFragment
   | TabsFragment
   | TestimonialSliderFragment
-  | FullTestimonialSlider
   | RelatedContentFragment
   | {
       __typename: "ParagraphYamlWidget";
@@ -572,50 +588,48 @@ export type Widgets =
       __typename?: "ParagraphCallToAction";
     };
 
-export type SectionWidgets =
-  | AccordionFragment
-  | BlockFragment
-  | ButtonSectionFragment
-  | FeaturedNewsFragment
-  | GeneralTextFragment
-  | ImageOverlayFragment
-  | LinksFragment
-  | MediaTextFragment
-  | ProfileBlockFragment
-  | ProfileCardFragment
-  | StatisticsFragment
-  | TabsFragment
-  | {
-      __typename: "ParagraphYamlWidget";
-    };
+export type ProcessedSectionWidgets = Exclude<SectionWidgets, FeaturedNewsFragment> | FullFeaturedNews;
+
+export type ProcessedSection = Omit<SectionFragment, "content"> & {
+  content: ProcessedSectionWidgets[];
+};
+
+export type ProcessedWidgets =
+  | Exclude<Widgets, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment>
+  | FullTestimonialSlider
+  | FullFeaturedNews
+  | ProcessedSection;
 
 export class WidgetProcessor {
   public newsArticles: Set<string>;
+  private featuredNewsWidgetGrouping: Map<
+    string,
+    { categories: string[]; units: string[]; count: number; found: NewsWithoutContentFragment[] }
+  >;
 
   constructor() {
     this.newsArticles = new Set();
+    this.featuredNewsWidgetGrouping = new Map();
   }
 
-  private async getFullFeaturedNews(data: FeaturedNewsFragment) {
+  private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<FullFeaturedNews> {
     const units = data.units?.map((unit) => unit.id) ?? [];
     const categories = data.categories?.map((category) => category.id) ?? [];
-    const copy = { ...data };
-
-    delete copy.units;
 
     const articlesNeeded = data.count - (data.articles?.length ?? 0);
 
     // If there are enough articles selected by the user that we don't need to fill anymore, return whatever the featured articles the user selected
     if (articlesNeeded <= 0) {
-      return copy;
+      return {
+        ...data,
+        isFull: true,
+      };
     }
 
     const allArticles = [];
-    const ids = new Set<string>();
 
     for (const article of data.articles ?? []) {
       allArticles.push(article);
-      this.newsArticles.add(article.id);
     }
 
     // We need to fetch the rest of the articles.
@@ -631,41 +645,38 @@ export class WidgetProcessor {
         break;
       }
 
-      if (!ids.has(article.id)) {
-        allArticles.push(article);
-        this.newsArticles.add(article.id);
-      }
+      allArticles.push(article);
     }
 
     return {
-      ...copy,
+      ...data,
       articles: allArticles as NewsWithoutContentFragment[],
       isFull: true,
-    } as FullFeaturedNews;
+    };
   }
 
-  private async getFullTestimonialSlider(data: TestimonialSliderFragment | FullTestimonialSlider) {
-    if ("isFull" in data && data.isFull) {
-      return data;
-    }
-
+  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider> {
     const tags =
       data.byTags
         ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
         .filter((tag) => typeof tag === "string") ?? [];
 
     if (tags.length === 0) {
-      return data;
+      return {
+        ...data,
+        isFull: true,
+        byTags: [],
+      };
     }
 
     return {
       ...data,
-      byTags: await getTestimonialByTag(tags),
       isFull: true,
+      byTags: await getTestimonialByTag(tags),
     } as FullTestimonialSlider;
   }
 
-  public async processSectionWidget(widget: SectionWidgets) {
+  public async processSectionWidget(widget: SectionWidgets): Promise<ProcessedSectionWidgets> {
     switch (widget.__typename) {
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
@@ -674,14 +685,20 @@ export class WidgetProcessor {
     }
   }
 
-  public async processWidget(widget: Widgets) {
+  public async processWidget(widget: Widgets): Promise<ProcessedWidgets> {
     switch (widget.__typename) {
       case "ParagraphTestimonialSlider":
         return await this.getFullTestimonialSlider(widget);
       case "ParagraphSection":
+        const sectionContent: ProcessedSectionWidgets[] = [];
+
+        for (const sectionWidget of widget.content) {
+          sectionContent.push(await this.processSectionWidget(sectionWidget));
+        }
+
         return {
           ...widget,
-          content: await Promise.all(widget.content.map((nestedWidget) => this.processSectionWidget(nestedWidget))),
+          content: sectionContent,
         };
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
@@ -690,8 +707,8 @@ export class WidgetProcessor {
     }
   }
 
-  public async processWidgets(widgets: Widgets[]) {
-    const processed: Awaited<ReturnType<WidgetProcessor["processWidget"]>>[] = [];
+  public async processWidgets(widgets: Widgets[]): Promise<ProcessedWidgets[]> {
+    const processed: ProcessedWidgets[] = [];
 
     for (const widget of widgets) {
       processed.push(await this.processWidget(widget));

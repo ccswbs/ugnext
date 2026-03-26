@@ -1,7 +1,8 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
-import { WidgetProcessor } from "@/data/drupal/widgets";
+import { ProcessedWidgets, WidgetProcessor } from "@/data/drupal/widgets";
+import { BasicPageFragment } from "@/lib/graphql/types";
 
 export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
   fragment BasicPageMinimal on NodePage {
@@ -51,7 +52,11 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export async function getPageContent(id: string) {
+export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets"> & {
+  widgets: ProcessedWidgets[];
+};
+
+export async function getPageContent(id: string): Promise<ProcessedBasicPage | null> {
   const showUnpublished = await showUnpublishedContent();
 
   const { data, error } = await query({
@@ -82,7 +87,10 @@ export async function getPageContent(id: string) {
   }
 
   if (!data.nodePage.widgets) {
-    return data.nodePage;
+    return {
+      ...data.nodePage,
+      widgets: [] as ProcessedWidgets[],
+    };
   }
 
   const processor = new WidgetProcessor();
