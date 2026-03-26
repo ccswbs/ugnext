@@ -12,10 +12,10 @@ export function NewsBreadcrumbs({ data }: { data: NewsFragment }) {
 
   if (
     data.primaryNavigation &&
-    data.primaryNavigation.newsUrlAliasPattern &&
+    data.primaryNavigation.primaryNavUrlAliasStem &&
     data.primaryNavigation.menuName !== "no-menu"
   ) {
-    directory = `/news${data.primaryNavigation.newsUrlAliasPattern}`;
+    directory = `/news${data.primaryNavigation.primaryNavUrlAliasStem}`;
   } else {
     directory = "/news";
   }
