@@ -56,9 +56,18 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
       ...Navigation
       ... on TermPrimaryNavigation {
         name
-        primaryNavUrlAliasStem
-        primaryNavigationUrl {
+        menuName
+        homePage {
           url
+          title
+        }
+        newsHomePage {
+          url
+          title
+        }
+        newsDirectoryPage {
+          url
+          title
         }
       }
     }
@@ -120,24 +129,49 @@ export async function getNewsArticlePublishedDate(id: string) {
   return data.firstPublishedRevision.results[0].changed.time;
 }
 
-export async function getNewsDirectory(article: NewsFragment) {
-  let directory: string;
+export function getNewsHomeAndDirectory(article: NewsFragment) {
+  const values = {
+    home: {
+      url: "/news",
+      title: "News",
+    },
+    directory: {
+      url: "/news/directory",
+      title: "News Directory",
+    },
+  };
 
-  if (
-    article.primaryNavigation &&
-    article.primaryNavigation.primaryNavUrlAliasStem &&
-    article.primaryNavigation.menuName !== "no-menu"
-  ) {
-    directory = `/news${article.primaryNavigation.primaryNavUrlAliasStem}`;
-  } else {
-    directory = "/news/search";
+  if (!article.primaryNavigation) {
+    return values;
   }
 
-  return directory;
+  if (article.primaryNavigation.menuName === "no-menu") {
+    return values;
+  }
+
+  if (article.primaryNavigation.newsHomePage?.url) {
+    values.home.url = article.primaryNavigation.newsHomePage.url;
+    values.home.title = article.primaryNavigation.newsHomePage.title ?? `${article.primaryNavigation.name} News`;
+  }
+
+  if (article.primaryNavigation.newsDirectoryPage?.url) {
+    values.directory.url = article.primaryNavigation.newsDirectoryPage.url;
+    values.directory.title =
+      article.primaryNavigation.newsDirectoryPage.title ?? `${article.primaryNavigation.name} News Directory`;
+  }
+
+  return values;
 }
 
 export type FullNewsArticle = NewsFragment & {
-  directory: string;
+  home: {
+    url: string;
+    title: string;
+  };
+  directory: {
+    url: string;
+    title: string;
+  };
 };
 
 export async function getNewsArticle(id: string) {
@@ -172,7 +206,7 @@ export async function getNewsArticle(id: string) {
   }
 
   const publishedDate = await getNewsArticlePublishedDate(id);
-  const directory = await getNewsDirectory(data.nodeNews);
+  const { home, directory } = getNewsHomeAndDirectory(data.nodeNews);
 
   if (publishedDate) {
     return {
@@ -180,11 +214,12 @@ export async function getNewsArticle(id: string) {
       created: {
         time: publishedDate,
       },
+      home: home,
       directory: directory,
     } as FullNewsArticle;
   }
 
-  return { ...(data.nodeNews as NewsFragment), directory: directory } as FullNewsArticle;
+  return { ...(data.nodeNews as NewsFragment), home: home, directory: directory } as FullNewsArticle;
 }
 
 export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];

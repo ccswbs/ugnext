@@ -21,16 +21,10 @@ import { faShare } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
     <Breadcrumbs>
-      <BreadcrumbHome />
+      <BreadcrumbHome href={article.home.url} title={article.home.title} />
 
-      {article.primaryNavigation.primaryNavigationUrl?.url && (
-        <Breadcrumb href={article.primaryNavigation.primaryNavigationUrl.url}>
-          {article.primaryNavigation.name}
-        </Breadcrumb>
-      )}
-
-      <Breadcrumb href={article.directory} as={Link}>
-        News
+      <Breadcrumb href={article.directory.url} as={Link}>
+        {article.directory.title}
       </Breadcrumb>
 
       <Breadcrumb as="span">{article.title}</Breadcrumb>
