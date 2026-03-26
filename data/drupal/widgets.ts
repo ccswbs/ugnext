@@ -601,57 +601,56 @@ export type ProcessedWidgets =
   | ProcessedSection;
 
 export class WidgetProcessor {
-  public newsArticles: Set<string>;
-  private featuredNewsWidgetGrouping: Map<
-    string,
-    { categories: string[]; units: string[]; count: number; found: NewsWithoutContentFragment[] }
-  >;
+  public excludeNewsArticles: Set<string>;
 
   constructor() {
-    this.newsArticles = new Set();
-    this.featuredNewsWidgetGrouping = new Map();
+    this.excludeNewsArticles = new Set();
   }
 
   private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<FullFeaturedNews> {
     const units = data.units?.map((unit) => unit.id) ?? [];
     const categories = data.categories?.map((category) => category.id) ?? [];
-
-    const articlesNeeded = data.count - (data.articles?.length ?? 0);
-
-    // If there are enough articles selected by the user that we don't need to fill anymore, return whatever the featured articles the user selected
-    if (articlesNeeded <= 0) {
-      return {
-        ...data,
-        isFull: true,
-      };
-    }
-
     const allArticles = [];
+    let articlesNeeded = data.count - (data.articles?.length ?? 0);
 
     for (const article of data.articles ?? []) {
       allArticles.push(article);
+      this.excludeNewsArticles.add(article.id);
     }
 
-    // We need to fetch the rest of the articles.
-    const extra = await getFilteredNews({
-      page: 0,
-      pageSize: 10,
-      units,
-      categories,
-    });
+    let page = 0;
+    let totalPages = 1;
 
-    for (const article of extra.results) {
-      if (allArticles.length >= data.count) {
-        break;
+    while (articlesNeeded > 0 && allArticles.length < data.count && page < totalPages) {
+      const extra = await getFilteredNews({
+        page: page,
+        pageSize: 10,
+        units,
+        categories,
+      });
+
+      for (const article of extra.results) {
+        if (this.excludeNewsArticles.has(article.id)) {
+          continue;
+        }
+
+        if (allArticles.length >= data.count) {
+          break;
+        }
+
+        allArticles.push(article);
+        this.excludeNewsArticles.add(article.id);
+        articlesNeeded--;
       }
 
-      allArticles.push(article);
+      page++;
+      totalPages = extra.totalPages;
     }
 
     return {
       ...data,
-      articles: allArticles as NewsWithoutContentFragment[],
       isFull: true,
+      articles: allArticles as NewsWithoutContentFragment[],
     };
   }
 
