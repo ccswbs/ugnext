@@ -55,8 +55,8 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
     primaryNavigation {
       ...Navigation
       ... on TermPrimaryNavigation {
-        newsUrlAliasPattern
         name
+        primaryNavUrlAliasStem
         primaryNavigationUrl {
           url
         }
@@ -125,10 +125,10 @@ export async function getNewsDirectory(article: NewsFragment) {
 
   if (
     article.primaryNavigation &&
-    article.primaryNavigation.newsUrlAliasPattern &&
+    article.primaryNavigation.primaryNavUrlAliasStem &&
     article.primaryNavigation.menuName !== "no-menu"
   ) {
-    directory = `/news${article.primaryNavigation.newsUrlAliasPattern}`;
+    directory = `/news${article.primaryNavigation.primaryNavUrlAliasStem}`;
   } else {
     directory = "/news/search";
   }
