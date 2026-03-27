@@ -55,7 +55,7 @@ function NewsSidebar({ article }: { article: FullNewsArticle }) {
           </Typography>
           <div className="flex flex-col">
             {article.category.map((category) => (
-              <UofGLink key={category.id} href={`${article.directory}?categories=${category.id}`}>
+              <UofGLink key={category.id} href={`${article.directory.url}?categories=${category.id}`}>
                 {category.name}
               </UofGLink>
             ))}
