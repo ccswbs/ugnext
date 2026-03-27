@@ -26,7 +26,7 @@ export function NewsShare({ title }: { title: string }) {
     variants: {
       socialMedia: {
         bluesky: {
-          shareButton: "hocus:bg-facebook-blue hocus:text-white",
+          shareButton: "hocus:bg-bluesky-blue hocus:text-white",
         },
         facebook: {
           shareButton: "hocus:bg-facebook-blue hover:text-white",
