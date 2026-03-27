@@ -18,6 +18,7 @@ import { NewsTimeEstimate } from "@/components/client/news/news-time-estimate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { ProcessedWidget } from "@/data/drupal/widgets";
+import { NewsShare } from "@/components/client/news/news-share";
 
 function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
@@ -110,14 +111,11 @@ function NewsHero({ article }: { article: FullNewsArticle }) {
   );
 }
 
-function NewsShareAndReadInfo() {
+function NewsShareAndReadInfo({ article }: { article: FullNewsArticle }) {
   return (
     <div className="flex items-center">
       <NewsTimeEstimate />
-      <button className="inline-flex cursor-pointer items-center gap-1 pl-4 border-l-2 border-grey-light-focus">
-        <FontAwesomeIcon icon={faShare} />
-        Share
-      </button>
+      <NewsShare title={article.title} />
     </div>
   );
 }
@@ -194,7 +192,7 @@ export async function News({ id }: { id: string }) {
         <div id="uofg-news-article-content">
           <Section
             primary={[
-              <NewsShareAndReadInfo key="share-and-read" />,
+              <NewsShareAndReadInfo article={article} key="share-and-read" />,
               ...primaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
             ]}
             secondary={[
