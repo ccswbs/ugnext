@@ -121,7 +121,7 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
     variant = "spotlight";
   }
 
-  let directory = "/news/search";
+  let directory = "/news/directory";
 
   if (Array.isArray(data.categories)) {
     directory += "?categories=";

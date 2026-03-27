@@ -3,7 +3,7 @@
 import { NewsWithoutContentFragment } from "@/lib/graphql/types";
 import Link from "next/link";
 import Image from "next/image";
-import defaultImage from "@/img/university-of-guelph-logo.png";
+import defaultImage from "@/img/university-of-guelph-logo-16x9.jpeg";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 import { Typography } from "@uoguelph/react-components/typography";
@@ -86,8 +86,8 @@ export function NewsCard({
         <Image
           src={img?.url ?? defaultImage.src}
           alt={alt ?? ""}
-          width={`${img?.width ?? defaultImage.width}`}
-          height={`${img?.height ?? defaultImage.height}`}
+          width={`${img?.width ?? 800}`}
+          height={`${img?.height ?? 450}`}
           className={image()}
         />
       </div>

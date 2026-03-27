@@ -614,6 +614,10 @@ export class WidgetProcessor {
     let articlesNeeded = data.count - (data.articles?.length ?? 0);
 
     for (const article of data.articles ?? []) {
+      if (allArticles.length === 7) {
+        break;
+      }
+
       allArticles.push(article);
       this.excludeNewsArticles.add(article.id);
     }
