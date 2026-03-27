@@ -4,9 +4,7 @@ import { NewsCard } from "@/components/client/news/news-card";
 import { Grid, GridProps } from "@uoguelph/react-components/grid";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
-import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
-import { twJoin } from "tailwind-merge";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Container } from "@uoguelph/react-components/container";
 import { Button } from "@uoguelph/react-components/button";
@@ -149,11 +147,11 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
       )}
 
       <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
-        <Button as={Link} href={directory} outlined={true} color="secondary" className="w-full md:w-fit mt-4">
+        <Link href={directory} className="w-full md:w-fit mt-4">
           {Array.isArray(data.categories) && data.categories.length === 1
             ? `More ${data.categories[0].name}`
             : `More News`}
-        </Button>
+        </Link>
       </Container>
     </div>
   );

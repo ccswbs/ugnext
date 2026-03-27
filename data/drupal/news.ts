@@ -45,10 +45,10 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
 export const NEWS_FRAGMENT = gql(/* gql */ `
   fragment News on NodeNews {
     ...NewsWithoutContent
-    created {
+    datePublished {
       time
     }
-    changed {
+    dateUpdated {
       time
     }
     author
@@ -86,49 +86,6 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
-
-export async function getNewsArticlePublishedDate(id: string) {
-  const client = getClient();
-
-  const { data, error } = await client.query({
-    query: gql(/* gql */ `
-      query NewsArticlePublishedDate($id: Float) {
-        firstPublishedRevision(filter: { id: $id }) {
-          results {
-            __typename
-            ... on NodeNews {
-              changed {
-                time
-              }
-            }
-          }
-        }
-      }
-    `),
-    variables: {
-      id: Number.parseInt(id),
-    },
-  });
-
-  if (error) {
-    console.error(`GraphQL Error: failed to retrieve published date for news article ${id}:\n\t${error}\n`);
-    return null;
-  }
-
-  if (!data?.firstPublishedRevision?.results?.length) {
-    return null;
-  }
-
-  if (data.firstPublishedRevision.results.length === 0) {
-    return null;
-  }
-
-  if (data.firstPublishedRevision.results[0].__typename !== "NodeNews") {
-    return null;
-  }
-
-  return data.firstPublishedRevision.results[0].changed.time;
-}
 
 export function getNewsHomeAndDirectory(article: NewsFragment) {
   const values = {
@@ -207,24 +164,15 @@ export async function getNewsArticle(id: string) {
     return null;
   }
 
-  const publishedDate = await getNewsArticlePublishedDate(id);
   const { home, directory } = getNewsHomeAndDirectory(data.nodeNews);
-
   const processor = new WidgetProcessor();
 
-  if (publishedDate) {
-    return {
-      ...(data.nodeNews as NewsFragment),
-      created: {
-        time: publishedDate,
-      },
-      home: home,
-      directory: directory,
-      widgets: await processor.processWidgets(data.nodeNews.widgets ?? []),
-    } as FullNewsArticle;
-  }
-
-  return { ...(data.nodeNews as NewsFragment), home: home, directory: directory } as FullNewsArticle;
+  return {
+    ...(data.nodeNews as NewsFragment),
+    home: home,
+    directory: directory,
+    widgets: await processor.processWidgets(data.nodeNews.widgets ?? []),
+  } as FullNewsArticle;
 }
 
 export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
