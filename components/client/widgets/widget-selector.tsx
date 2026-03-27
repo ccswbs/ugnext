@@ -18,7 +18,7 @@ import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial
 import { SocialMediaWidget } from "@/components/client/widgets/social-media";
 import { ProfileBlock } from "@/components/client/widgets/profile-block";
 import { ProfileContact } from "@/components/client/widgets/profile-contact";
-import type { ProcessedSectionWidgets, ProcessedWidgets, Widgets } from "@/data/drupal/widgets";
+import type { ProcessedSectionWidget, ProcessedWidget, Widget } from "@/data/drupal/widgets";
 import { usePathname } from "next/navigation";
 import { ButtonWidget } from "@/components/client/widgets/button";
 import { FeaturedNews } from "@/components/client/widgets/featured-news";
@@ -28,7 +28,7 @@ export function WidgetSelector({
   data,
   neverWrap = false,
 }: {
-  data: ProcessedWidgets | ProcessedSectionWidgets;
+  data: ProcessedWidget | ProcessedSectionWidget;
   neverWrap?: boolean;
 }) {
   const pathname = usePathname();

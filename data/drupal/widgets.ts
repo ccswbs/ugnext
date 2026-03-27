@@ -540,7 +540,7 @@ export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & 
   byTags: TestimonialFragment[];
 };
 
-export type SectionWidgets =
+export type SectionWidget =
   | AccordionFragment
   | BlockFragment
   | ButtonSectionFragment
@@ -557,7 +557,7 @@ export type SectionWidgets =
       __typename: "ParagraphYamlWidget";
     };
 
-export type Widgets =
+export type Widget =
   | AccordionFragment
   | BlockFragment
   | ButtonsFragment
@@ -588,14 +588,14 @@ export type Widgets =
       __typename?: "ParagraphCallToAction";
     };
 
-export type ProcessedSectionWidgets = Exclude<SectionWidgets, FeaturedNewsFragment> | FullFeaturedNews;
+export type ProcessedSectionWidget = Exclude<SectionWidget, FeaturedNewsFragment> | FullFeaturedNews;
 
 export type ProcessedSection = Omit<SectionFragment, "content"> & {
-  content: ProcessedSectionWidgets[];
+  content: ProcessedSectionWidget[];
 };
 
-export type ProcessedWidgets =
-  | Exclude<Widgets, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment>
+export type ProcessedWidget =
+  | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment>
   | FullTestimonialSlider
   | FullFeaturedNews
   | ProcessedSection;
@@ -675,7 +675,7 @@ export class WidgetProcessor {
     } as FullTestimonialSlider;
   }
 
-  public async processSectionWidget(widget: SectionWidgets): Promise<ProcessedSectionWidgets> {
+  public async processSectionWidget(widget: SectionWidget): Promise<ProcessedSectionWidget> {
     switch (widget.__typename) {
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
@@ -684,12 +684,12 @@ export class WidgetProcessor {
     }
   }
 
-  public async processWidget(widget: Widgets): Promise<ProcessedWidgets> {
+  public async processWidget(widget: Widget): Promise<ProcessedWidget> {
     switch (widget.__typename) {
       case "ParagraphTestimonialSlider":
         return await this.getFullTestimonialSlider(widget);
       case "ParagraphSection":
-        const sectionContent: ProcessedSectionWidgets[] = [];
+        const sectionContent: ProcessedSectionWidget[] = [];
 
         for (const sectionWidget of widget.content) {
           sectionContent.push(await this.processSectionWidget(sectionWidget));
@@ -706,8 +706,8 @@ export class WidgetProcessor {
     }
   }
 
-  public async processWidgets(widgets: Widgets[]): Promise<ProcessedWidgets[]> {
-    const processed: ProcessedWidgets[] = [];
+  public async processWidgets(widgets: Widget[]): Promise<ProcessedWidget[]> {
+    const processed: ProcessedWidget[] = [];
 
     for (const widget of widgets) {
       processed.push(await this.processWidget(widget));

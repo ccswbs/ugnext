@@ -17,6 +17,7 @@ import { NewsFragment } from "@/lib/graphql/types";
 import { NewsTimeEstimate } from "@/components/client/news/news-time-estimate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { ProcessedWidget } from "@/data/drupal/widgets";
 
 function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
@@ -141,10 +142,8 @@ export async function News({ id }: { id: string }) {
     }
   });
 
-  type ArticleWidgets = NonNullable<NewsFragment["widgets"]>;
-
-  const primaryWidgets: ArticleWidgets = [];
-  const secondaryWidgets: ArticleWidgets = [];
+  const primaryWidgets: ProcessedWidget[] = [];
+  const secondaryWidgets: ProcessedWidget[] = [];
 
   for (const widget of article?.widgets ?? []) {
     switch (widget.__typename) {

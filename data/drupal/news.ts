@@ -2,6 +2,7 @@ import { gql } from "@/lib/graphql";
 import { getClient } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { NewsFragment, NewsWithoutContentFragment } from "@/lib/graphql/types";
+import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
 
 export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
   fragment NewsWithoutContent on NodeNews {
@@ -163,7 +164,7 @@ export function getNewsHomeAndDirectory(article: NewsFragment) {
   return values;
 }
 
-export type FullNewsArticle = NewsFragment & {
+export type FullNewsArticle = Omit<NewsFragment, "widgets"> & {
   home: {
     url: string;
     title: string;
@@ -172,6 +173,7 @@ export type FullNewsArticle = NewsFragment & {
     url: string;
     title: string;
   };
+  widgets: ProcessedWidget[];
 };
 
 export async function getNewsArticle(id: string) {
@@ -208,6 +210,8 @@ export async function getNewsArticle(id: string) {
   const publishedDate = await getNewsArticlePublishedDate(id);
   const { home, directory } = getNewsHomeAndDirectory(data.nodeNews);
 
+  const processor = new WidgetProcessor();
+
   if (publishedDate) {
     return {
       ...(data.nodeNews as NewsFragment),
@@ -216,6 +220,7 @@ export async function getNewsArticle(id: string) {
       },
       home: home,
       directory: directory,
+      widgets: await processor.processWidgets(data.nodeNews.widgets ?? []),
     } as FullNewsArticle;
   }
 

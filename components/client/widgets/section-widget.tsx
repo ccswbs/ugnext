@@ -4,7 +4,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import { Grid } from "@uoguelph/react-components/grid";
 import type { MediaTextFragment, SectionFragment } from "@/lib/graphql/types";
-import type { ProcessedSection, ProcessedSectionWidgets, ProcessedWidgets, Widgets } from "@/data/drupal/widgets";
+import type { ProcessedSection, ProcessedSectionWidget, ProcessedWidget, Widget } from "@/data/drupal/widgets";
 import { slugify } from "@/lib/string-utils";
 
 interface SectionWidgetProps {
@@ -90,7 +90,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
       return acc;
     },
     {
-      primary: [] as ProcessedSectionWidgets[],
+      primary: [] as ProcessedSectionWidget[],
       secondary: [] as React.ReactElement[],
       others: [] as React.ReactElement[],
     }
@@ -167,7 +167,7 @@ export function SectionWidget({ data }: SectionWidgetProps) {
               );
             }
 
-            return <WidgetSelector key={index} data={widget as ProcessedWidgets} />;
+            return <WidgetSelector key={index} data={widget as ProcessedWidget} />;
           })}
           secondary={secondary}
           equal={sectionClasses === "col-md-6"}
