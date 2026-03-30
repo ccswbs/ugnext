@@ -36,7 +36,7 @@ export default async function OVCHome() {
             <OVCFeaturedNews articles={featuredNews} />
             <OVCCards />
           </Container>
-          <CustomFooter units={["273"]} />
+          <CustomFooter customFooterID="758" />
         </>
       }
     />

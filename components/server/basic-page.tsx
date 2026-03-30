@@ -110,7 +110,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
         {post && post}
       </LayoutContent>
 
-      <CustomFooter tags={tags} units={units} />
+      <CustomFooter tags={tags} units={units} customFooterID="" />
       <Footer></Footer>
     </Layout>
   );
