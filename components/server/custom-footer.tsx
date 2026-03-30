@@ -1,4 +1,4 @@
-import { getCustomFooterByTagsOrUnits } from "@/data/drupal/custom-footer";
+import { getCustomFooterByTagsOrUnitsOrID } from "@/data/drupal/custom-footer";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { HtmlParser } from "@/components/client/html-parser";
@@ -9,10 +9,11 @@ import React from "react";
 export type CustomFooterProps = {
   tags?: string[];
   units?: string[];
+  customFooterID?: string;
 };
 
-export async function CustomFooter({ tags, units }: CustomFooterProps) {
-  const content = await getCustomFooterByTagsOrUnits(tags ?? [], units ?? []);
+export async function CustomFooter({ tags, units, customFooterID }: CustomFooterProps) {
+  const content = await getCustomFooterByTagsOrUnitsOrID(tags ?? [], units ?? [], customFooterID ?? "");
 
   if (!content) {
     return <></>;

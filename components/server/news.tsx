@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { ProcessedWidget } from "@/data/drupal/widgets";
 import { NewsShare } from "@/components/client/news/news-share";
+import { customRandom } from "nanoid";
 
 function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
@@ -133,7 +134,8 @@ export async function News({ id }: { id: string }) {
 
   const tags: string[] = [];
   const units: string[] = [article.unit.id];
-
+  const customFooterID: string = article.primaryNavigation?.customFooter?.id ?? "";
+console.log("Custom Footer ID from article:", customFooterID);
   article.tags?.forEach((tag) => {
     if (tag.__typename === "TermTag") {
       tags.push(tag.id);
@@ -203,7 +205,7 @@ export async function News({ id }: { id: string }) {
         </div>
       </LayoutContent>
 
-      <CustomFooter tags={tags} units={units} />
+      <CustomFooter tags={tags} units={units} customFooterID={customFooterID}/>
       <Footer></Footer>
     </Layout>
   );

@@ -58,6 +58,9 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
       ... on TermPrimaryNavigation {
         name
         menuName
+        customFooter {
+          id
+          title}
         homePage {
           url
           title
