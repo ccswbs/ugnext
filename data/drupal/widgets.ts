@@ -298,22 +298,17 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         directoryOffice
         directoryPhone
         profileJobTitle
+        profileFirstName
         path
         profilePicture {
           ...Image
         }
-        profileFields {
-          label {
-            processed
-            value
-          }
-          value {
-            processed
-            value
-          }
-        }
       }
     }
+    sectionColumn {
+      ...SectionColumn
+    }
+    showProfileLink
   }
 `);
 

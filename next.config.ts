@@ -6,9 +6,16 @@ const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api
   ""
 );
 
+const CPU_COUNT = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
+
 const nextConfig: NextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
   reactStrictMode: true,
+  experimental: isNaN(CPU_COUNT)
+    ? undefined
+    : {
+        cpus: CPU_COUNT,
+      },
   images: {
     unoptimized: process.env.NEXT_STATIC_OUTPUT === "true",
     remotePatterns: [

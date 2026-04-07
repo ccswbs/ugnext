@@ -73,7 +73,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
   });
 
   return (
-    <div id={`links-${data.uuid}`} className="mb-5">
+    <div id={`links-${data.uuid}`} className="mb-5 py-4">
       {title && (
         <Typography id={slugify(title)} type="h2" as="h2" className="mb-4">
           {title}

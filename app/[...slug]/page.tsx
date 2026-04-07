@@ -3,10 +3,23 @@ import { Metadata, ResolvingMetadata } from "next";
 import { BasicPage } from "@/components/server/basic-page";
 import { Profile } from "@/components/server/profile";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { getAllBasicPagePaths } from "@/data/drupal/basic-page";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
 };
+
+export async function generateStaticParams() {
+  if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
+    return [];
+  }
+
+  const paths = await getAllBasicPagePaths();
+
+  return paths.map((path) => ({
+    slug: path.split("/").slice(1),
+  }));
+}
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const { slug } = await params;
