@@ -6,23 +6,23 @@ degrees:
 types:
   - thesis-based
 tags:
-  - technology
-  - science
-  - mathematics
   - applied modeling
   - artificial intelligence
   - bioinformatics
   - biology
   - crime
   - cybersecurity
+  - data
   - data analytics
   - data engineering
-  - data*
   - design patterns
   - ehealth innovation
-  - health*
+  - health
   - machine learning
+  - mathematics
   - patterns
   - physical design
+  - science
   - software engineering & development
+  - technology
   - theory

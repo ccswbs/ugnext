@@ -6,25 +6,26 @@ degrees:
 types:
   - course-based
 tags:
-  - technology
-  - engineering
-  - artificial intelligence
-  - ai
   - agriculture engineering
+  - ai
+  - aquatic
+  - artificial intelligence
   - energy
+  - engineering
+  - food
   - food engineering
-  - food*
   - government policy
   - innovation
   - intelligent systems
-  - law*
+  - law
   - machine learning
   - physical design
   - research development
   - resource management
-  - software engineering
   - software development
-  - sustainab*
+  - software engineering
+  - sustainable
   - sustainable energy systems
+  - technology
   - waste management
-  - water*
+  - water

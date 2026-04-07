@@ -9,28 +9,31 @@ degrees:
 types:
   - thesis-based
 tags:
+  - animal
+  - aquatic
   - biology
-  - science
-  - health
-  - medical
-  - animal*
-  - biomedical*
-  - cancer*
+  - biomedical
+  - cancer
   - diagnostics
   - disease
   - disorders
+  - health
   - illness
   - immunology
   - infectious diseases
-  - medicine*
+  - medical
+  - medicine
   - one health
-  - patho*
-  - pathogen*
-  - pharma*
-  - vet*
+  - pathogen
+  - pathology
+  - pet
+  - pharmacy
+  - science
+  - vet
+  - veterinary
   - veterinary pathology diagnostics
-  - water*
+  - water
   - waterbourne diseases
   - wildlife
   - zoo medicine
-  - zoo*
+  - zoology
