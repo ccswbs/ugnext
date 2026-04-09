@@ -15,4 +15,4 @@ services:
       - HOME=/tmp
     env_file:
       - .env
-    command: bunx playwright test --update-snapshots
+    command: npx playwright test --update-snapshots
