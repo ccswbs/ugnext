@@ -17,6 +17,11 @@ export async function GET(request: NextRequest) {
     .map((type) => type.trim())
     .filter(Boolean);
 
+  const tags: string[] = (params.get("tags") ?? "")
+    .split(",")
+    .map((type) => type.trim())
+    .filter(Boolean);
+
   try {
     const data = await getFilteredNews({
       page,
@@ -24,6 +29,7 @@ export async function GET(request: NextRequest) {
       units,
       query,
       categories,
+      tags,
     });
 
     return NextResponse.json(data);

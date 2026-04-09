@@ -60,7 +60,8 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
         menuName
         customFooter {
           id
-          title}
+          title
+        }
         homePage {
           url
           title
@@ -186,10 +187,11 @@ export type NewsSearchOptions = {
   pageSize: number;
   units?: string[];
   categories?: string[];
+  tags?: string[];
 };
 
 export async function getFilteredNews(options: NewsSearchOptions) {
-  const { query, page = 0, pageSize = 20, units, categories } = options;
+  const { query, page = 0, pageSize = 20, units, categories, tags } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
     console.error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
@@ -211,13 +213,14 @@ export async function getFilteredNews(options: NewsSearchOptions) {
         $pageSize: Int
         $units: [String]
         $categories: [String]
+        $tags: [String]
         $query: String
         $status: Boolean
       ) {
         newsSearch(
           page: $page
           pageSize: $pageSize
-          filter: { units: $units, categories: $categories, query: $query, status: $status }
+          filter: { units: $units, categories: $categories, tags: $tags, query: $query, status: $status }
         ) {
           results {
             ...NewsWithoutContent
@@ -234,6 +237,7 @@ export async function getFilteredNews(options: NewsSearchOptions) {
       pageSize: pageSize,
       units: units ?? [],
       categories: categories ?? [],
+      tags: tags ?? [],
       query: query ?? "",
       status: showUnpublished ? null : true,
     },

@@ -168,6 +168,9 @@ export const FEATURED_NEWS_FRAGMENT = gql(/* gql */ `
     units {
       ...Unit
     }
+    tags {
+      ...Tag
+    }
   }
 `);
 
