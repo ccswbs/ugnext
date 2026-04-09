@@ -7,22 +7,21 @@ degrees:
 types:
   - course-based
 tags:
-  - business
-  - management
-  - analy*
+  - analysis
   - applied modeling
+  - business
   - business analytics
-  - data*
+  - data
   - engineering
   - governance
+  - health
   - health care
-  - health*
   - information technology
   - leadership
   - logistics
-  - management*
-  - organization*
+  - management
+  - organization
+  - project
   - project management
-  - project*
   - supply chain management
   - transportation

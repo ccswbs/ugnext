@@ -57,7 +57,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
     },
     data: programs,
     plugins: [pluginQPS()],
-    stopwords: ["development"],
+    stemming: true,
   });
 
   const fuzzyMatches = useMemo(() => {
@@ -67,7 +67,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
       term: input,
       properties: ["title", "tags"],
       boost: {
-        title: 2,
+        title: 4,
       },
       tolerance: 1,
     });
