@@ -613,6 +613,7 @@ export class WidgetProcessor {
   private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<FullFeaturedNews> {
     const units = data.units?.map((unit) => unit.id) ?? [];
     const categories = data.categories?.map((category) => category.id) ?? [];
+    const tags = data.tags?.map((tag) => tag.id) ?? [];
     const allArticles = [];
     let articlesNeeded = data.count - (data.articles?.length ?? 0);
 
@@ -634,6 +635,7 @@ export class WidgetProcessor {
         pageSize: 10,
         units,
         categories,
+        tags,
       });
 
       for (const article of extra.results) {
