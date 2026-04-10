@@ -119,13 +119,13 @@ export async function getCustomFooterByID(id: string): Promise<ProcessedCustomFo
   };
 }
 
-export async function getCustomFooterByTagsOrUnitsOrID(tags: string[], units: string[], customFooterID: string) {
+export async function getCustomFooterByTagsOrUnitsOrID(tags: string[], units: string[], id: string) {
   const showUnpublished = await showUnpublishedContent();
-  const id = customFooterID === "" ?  await getCustomFooterID(tags, units): customFooterID;
+  const resolvedID = id === "" ? await getCustomFooterID(tags, units) : id;
 
-  if (!id) {
+  if (!resolvedID) {
     return null;
   }
 
-  return await getCustomFooterByID(id);
+  return await getCustomFooterByID(resolvedID);
 }

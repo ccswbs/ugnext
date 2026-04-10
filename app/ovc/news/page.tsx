@@ -26,7 +26,7 @@ export default async function OVCNewsHub() {
         <OvcNewsGrid />
       </LayoutContent>
 
-      <CustomFooter customFooterID="758" />
+      <CustomFooter id="758" />
       <Footer></Footer>
     </Layout>
   );

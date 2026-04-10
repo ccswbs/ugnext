@@ -205,7 +205,7 @@ export async function News({ id }: { id: string }) {
         </div>
       </LayoutContent>
 
-      <CustomFooter tags={tags} units={units} customFooterID={customFooterID}/>
+      <CustomFooter id={customFooterID} />
       <Footer></Footer>
     </Layout>
   );

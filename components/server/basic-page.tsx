@@ -43,14 +43,20 @@ function PageHero({ content }: { content: NonNullable<PageContent> }) {
           )}
         </Hero>
 
-        <Breadcrumbs url={content.path ?? undefined} primary_navigation={content.primaryNavigation?.menuName ?? undefined} />
+        <Breadcrumbs
+          url={content.path ?? undefined}
+          primary_navigation={content.primaryNavigation?.menuName ?? undefined}
+        />
       </>
     );
   }
 
   return (
     <>
-      <Breadcrumbs url={content.path ?? undefined} primary_navigation={content.primaryNavigation?.menuName ?? undefined} />
+      <Breadcrumbs
+        url={content.path ?? undefined}
+        primary_navigation={content.primaryNavigation?.menuName ?? undefined}
+      />
 
       <Container>
         <Typography type="h1" as="h1">
@@ -110,7 +116,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
         {post && post}
       </LayoutContent>
 
-      <CustomFooter tags={tags} units={units} customFooterID="" />
+      <CustomFooter tags={tags} units={units} id="" />
       <Footer></Footer>
     </Layout>
   );

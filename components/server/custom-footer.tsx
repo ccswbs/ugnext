@@ -9,11 +9,11 @@ import React from "react";
 export type CustomFooterProps = {
   tags?: string[];
   units?: string[];
-  customFooterID?: string;
+  id?: string;
 };
 
-export async function CustomFooter({ tags, units, customFooterID }: CustomFooterProps) {
-  const content = await getCustomFooterByTagsOrUnitsOrID(tags ?? [], units ?? [], customFooterID ?? "");
+export async function CustomFooter({ tags, units, id }: CustomFooterProps) {
+  const content = await getCustomFooterByTagsOrUnitsOrID(tags ?? [], units ?? [], id ?? "");
 
   if (!content) {
     return <></>;
