@@ -119,7 +119,7 @@ export async function getCustomFooterByID(id: string): Promise<ProcessedCustomFo
   };
 }
 
-export async function getCustomFooterByTagsOrUnitsOrID(tags: string[], units: string[], id: string) {
+export async function findCustomFooter(tags: string[], units: string[], id: string) {
   const showUnpublished = await showUnpublishedContent();
   const resolvedID = id === "" ? await getCustomFooterID(tags, units) : id;
 
