@@ -1,7 +1,11 @@
 {
   "name": "ugnext",
   "version": "0.5.0",
+  "type": "module",
   "private": true,
+  "engines": {
+    "node": "22.21.0"
+  },
   "scripts": {
     "prebuild:webpack": "npx tsx scripts/prebuild.ts && graphql-codegen",
     "prestart": "npx tsx scripts/prebuild.ts && graphql-codegen",
