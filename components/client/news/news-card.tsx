@@ -85,7 +85,7 @@ export function NewsCard({
       <div className={imageContainer()}>
         <Image
           src={img?.url ?? defaultImage.src}
-          alt={alt ?? ""}
+          alt=""
           width={`${img?.width ?? 800}`}
           height={`${img?.height ?? 450}`}
           className={image()}
