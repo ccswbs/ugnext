@@ -10,7 +10,7 @@
     "prebuild:webpack": "npx tsx scripts/prebuild.ts && graphql-codegen",
     "prestart": "npx tsx scripts/prebuild.ts && graphql-codegen",
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "npx tsx scripts/prebuild.ts && graphql-codegen && next build",
     "build:webpack": "next build --webpack",
     "start": "next build && next start",
     "static-build": "NEXT_STATIC_OUTPUT=true npm run build:webpack",
