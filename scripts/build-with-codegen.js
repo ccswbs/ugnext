@@ -14,7 +14,7 @@ const graphqlDir = path.join(__dirname, '..', 'lib', 'graphql');
 try {
   // Try to run codegen
   console.log('🚀 Running GraphQL codegen...');
-  execSync('bun run codegen:compile', { stdio: 'inherit' });
+  execSync('npm run codegen:compile', { stdio: 'inherit' });
   console.log('✅ Codegen completed successfully');
 } catch (error) {
   console.error('❌ Codegen failed:', error.message);
