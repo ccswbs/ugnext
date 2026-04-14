@@ -104,7 +104,7 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
 
   let variant: "spotlight" | "grid" | "single-column" | "list" = "grid";
 
-  if (!Array.isArray(data.articles)) {
+  if (!Array.isArray(data.articles) || (data.articles.length === 0)) {
     return null;
   }
 
