@@ -30,6 +30,8 @@
     "@drupal/linkset": "^1.0.3",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/react-fontawesome": "^3.1.1",
+    "@graphql-codegen/cli": "^6.1.1",
+    "@graphql-codegen/client-preset": "^5.2.2",
     "@netlify/plugin-nextjs": "^5.15.7",
     "@next/third-parties": "^16.1.6",
     "@orama/orama": "^3.1.18",
@@ -64,8 +66,6 @@
   "devDependencies": {
     "@apollo/client": "^4.1.2",
     "@apollo/client-integration-nextjs": "^0.14.4",
-    "@graphql-codegen/cli": "^6.1.1",
-    "@graphql-codegen/client-preset": "^5.2.2",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@headlessui/react": "^2.2.9",
     "@headlessui/tailwindcss": "^0.2.2",
