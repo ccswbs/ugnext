@@ -9,7 +9,8 @@ const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api
 const CPU_COUNT = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
 
 const nextConfig: NextConfig = {
-  output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
+  // output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
+  output: 'standalone',
   reactStrictMode: true,
   experimental: isNaN(CPU_COUNT)
     ? undefined
