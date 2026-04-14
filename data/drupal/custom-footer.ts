@@ -78,7 +78,7 @@ async function getCustomFooterID(tags: string[], units: string[]) {
   return data.customFooterByUnitOrTag.results[0].id;
 }
 
-export async function getCustomFooterByID(id: string): Promise<ProcessedCustomFooter | null> {
+async function getCustomFooterByID(id: string): Promise<ProcessedCustomFooter | null> {
   const showUnpublished = await showUnpublishedContent();
 
   const { data, error } = await query({
