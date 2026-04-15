@@ -133,12 +133,18 @@ export async function News({ id }: { id: string }) {
   }
 
   const tags: string[] = [];
-  const units: string[] = [article.unit.id];
+  const units: string[] = [];
   const customFooterID: string = article.primaryNavigation?.customFooter?.id ?? "";
 
   article.tags?.forEach((tag) => {
     if (tag.__typename === "TermTag") {
       tags.push(tag.id);
+    }
+  });
+
+  article.unit?.forEach((unit) => {
+    if (unit.__typename === "TermUnit") {
+      units.push(unit.id);
     }
   });
 
