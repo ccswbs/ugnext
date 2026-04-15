@@ -112,6 +112,10 @@ export function getNewsBreadcrumb(article: NewsFragment) {
   }
 
   if (article.primaryNavigation.menuName === "no-menu") {
+    values.unitHome.url = "/news";
+    values.unitHome.title = "News";
+    values.directory.url = "/news/directory";
+    values.directory.title = "News Directory";
     return values;
   }
 
