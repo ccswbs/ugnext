@@ -24,13 +24,22 @@ import { customRandom } from "nanoid";
 function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
     <Breadcrumbs>
-      <BreadcrumbHome href={article.home.url} title={article.home.title} />
+      <BreadcrumbHome href="/" />
+      {article.unitHome.title && 
+        <Breadcrumb href={article.unitHome.url} as={Link}>
+          {article.unitHome.title}
+        </Breadcrumb>}
+        
+      {article.newsHome.title && 
+        <Breadcrumb href={article.newsHome.url} as={Link}>
+          {article.newsHome.title}
+        </Breadcrumb>}
 
-      <Breadcrumb href={article.directory.url} as={Link}>
-        {article.directory.title}
-      </Breadcrumb>
+      {article.directory.title && 
+        <Breadcrumb href={article.directory.url} as={Link}>
+          {article.directory.title}
+        </Breadcrumb>}
 
-      <Breadcrumb as="span">{article.title}</Breadcrumb>
     </Breadcrumbs>
   );
 }

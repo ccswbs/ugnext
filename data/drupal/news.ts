@@ -91,15 +91,19 @@ export const NEWS_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export function getNewsHomeAndDirectory(article: NewsFragment) {
+export function getNewsBreadcrumb(article: NewsFragment) {
   const values = {
-    home: {
-      url: "/news",
-      title: "News",
+    unitHome: {
+      url: "",
+      title: "",
+    },
+    newsHome: {
+      url: "",
+      title: "",
     },
     directory: {
-      url: "/news/directory",
-      title: "News Directory",
+      url: "",
+      title: "",
     },
   };
 
@@ -111,9 +115,15 @@ export function getNewsHomeAndDirectory(article: NewsFragment) {
     return values;
   }
 
+  // Get primary Navigation homepage
+  if (article.primaryNavigation.homePage?.url) {
+    values.unitHome.url = article.primaryNavigation.homePage.url;
+    values.unitHome.title = article.primaryNavigation.homePage.title ?? "";
+  }
+
   if (article.primaryNavigation.newsHomePage?.url) {
-    values.home.url = article.primaryNavigation.newsHomePage.url;
-    values.home.title = article.primaryNavigation.newsHomePage.title ?? `${article.primaryNavigation.name} News`;
+    values.newsHome.url = article.primaryNavigation.newsHomePage.url;
+    values.newsHome.title = article.primaryNavigation.newsHomePage.title ?? `${article.primaryNavigation.name} News`;
   }
 
   if (article.primaryNavigation.newsDirectoryPage?.url) {
@@ -126,7 +136,11 @@ export function getNewsHomeAndDirectory(article: NewsFragment) {
 }
 
 export type FullNewsArticle = Omit<NewsFragment, "widgets"> & {
-  home: {
+  unitHome: {
+    url: string;
+    title: string;
+  };
+  newsHome: {
     url: string;
     title: string;
   };
@@ -168,12 +182,13 @@ export async function getNewsArticle(id: string) {
     return null;
   }
 
-  const { home, directory } = getNewsHomeAndDirectory(data.nodeNews);
+  const { unitHome, newsHome, directory } = getNewsBreadcrumb(data.nodeNews);
   const processor = new WidgetProcessor();
 
   return {
     ...(data.nodeNews as NewsFragment),
-    home: home,
+    unitHome: unitHome,
+    newsHome: newsHome,
     directory: directory,
     widgets: await processor.processWidgets(data.nodeNews.widgets ?? []),
   } as FullNewsArticle;
