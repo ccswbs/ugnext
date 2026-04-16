@@ -131,9 +131,11 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
   return (
     <div>
       {data.title && (
-        <Typography type="h3" as="h3">
-          {data.title}
-        </Typography>
+        <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
+          <Typography type="h3" as="h3">
+            {data.title}
+          </Typography>
+        </Container>
       )}
 
       {variant === "spotlight" ? (
@@ -149,7 +151,7 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
       <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
         <Link href={directory} className="w-full md:w-fit mt-4">
           {Array.isArray(data.categories) && data.categories.length === 1
-            ? `More ${data.categories[0].name}`
+            ? `More ${data.categories[0].name} News`
             : `More News`}
         </Link>
       </Container>
