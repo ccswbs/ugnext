@@ -15,6 +15,15 @@ export const NAVIGATION_FRAGMENT = gql(/* gql */ `
   fragment Navigation on TermPrimaryNavigation {
     __typename
     menuName
+    customFooter {
+      id
+    }
+    newsHomePage {
+      url
+    }
+    newsDirectoryPage {
+      url
+    }
   }
 `);
 
