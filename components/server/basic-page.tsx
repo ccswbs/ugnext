@@ -110,7 +110,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
         {pre && pre}
 
         {content?.widgets?.map((widget, index) => (
-          <WidgetSelector key={index} data={widget} />
+          <WidgetSelector key={index} data={widget} primaryNavigation={content.primaryNavigation} />
         ))}
 
         {post && post}

@@ -8,6 +8,7 @@ import { Link } from "@uoguelph/react-components/link";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Container } from "@uoguelph/react-components/container";
 import { Button } from "@uoguelph/react-components/button";
+import { PrimaryNavigationContext } from "@/components/client/widgets/widget-selector";
 
 function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
@@ -100,28 +101,29 @@ function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNews
 }
 
 export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
-  const context = useContext(SectionContext);
+  const sectionContext = useContext(SectionContext);
+  const primaryNavigationContext = useContext(PrimaryNavigationContext);
 
   let variant: "spotlight" | "grid" | "single-column" | "list" = "grid";
 
-  if (!Array.isArray(data.articles) || (data.articles.length === 0)) {
+  if (!Array.isArray(data.articles) || data.articles.length === 0) {
     return null;
   }
 
-  if (context?.column === "secondary" && !context?.equal) {
+  if (sectionContext?.column === "secondary" && !sectionContext?.equal) {
     variant = "list";
-  } else if (context?.equal && context?.hasSecondary && data.hideImages) {
+  } else if (sectionContext?.equal && sectionContext?.hasSecondary && data.hideImages) {
     variant = "list";
   } else if (
-    (context?.column === "primary" && context?.equal && context?.hasSecondary) ||
-    context?.column === "secondary"
+    (sectionContext?.column === "primary" && sectionContext?.equal && sectionContext?.hasSecondary) ||
+    sectionContext?.column === "secondary"
   ) {
     variant = "single-column";
-  } else if (!context?.hasSecondary && (data.articles.length === 3 || data.articles.length >= 6)) {
+  } else if (!sectionContext?.hasSecondary && (data.articles.length === 3 || data.articles.length >= 6)) {
     variant = "spotlight";
   }
 
-  let directory = "/news/directory";
+  let directory = primaryNavigationContext?.newsDirectoryPage?.url ?? "/news/directory";
 
   if (Array.isArray(data.categories)) {
     directory += "?categories=";
@@ -131,9 +133,11 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
   return (
     <div>
       {data.title && (
-        <Typography type="h3" as="h3">
-          {data.title}
-        </Typography>
+        <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
+          <Typography type="h3" as="h3">
+            {data.title}
+          </Typography>
+        </Container>
       )}
 
       {variant === "spotlight" ? (

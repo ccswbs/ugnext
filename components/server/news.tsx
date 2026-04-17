@@ -13,24 +13,29 @@ import { Info } from "@uoguelph/react-components/info";
 import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
 import Link from "next/link";
 import { Link as UofGLink } from "@uoguelph/react-components/link";
-import { NewsFragment } from "@/lib/graphql/types";
 import { NewsTimeEstimate } from "@/components/client/news/news-time-estimate";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShare } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { ProcessedWidget } from "@/data/drupal/widgets";
 import { NewsShare } from "@/components/client/news/news-share";
-import { customRandom } from "nanoid";
 
 function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
     <Breadcrumbs>
-      <BreadcrumbHome href={article.home.url} title={article.home.title} />
+      <BreadcrumbHome href="/" />
+      {article.unitHome.title && 
+        <Breadcrumb href={article.unitHome.url} as={Link}>
+          {article.unitHome.title}
+        </Breadcrumb>}
+        
+      {article.newsHome.title && 
+        <Breadcrumb href={article.newsHome.url} as={Link}>
+          {article.newsHome.title}
+        </Breadcrumb>}
 
-      <Breadcrumb href={article.directory.url} as={Link}>
-        {article.directory.title}
-      </Breadcrumb>
+      {article.directory.title && 
+        <Breadcrumb href={article.directory.url} as={Link}>
+          {article.directory.title}
+        </Breadcrumb>}
 
-      <Breadcrumb as="span">{article.title}</Breadcrumb>
     </Breadcrumbs>
   );
 }
@@ -91,6 +96,12 @@ function NewsPublishInfo({ article }: { article: FullNewsArticle }) {
           day: "2-digit",
           year: "numeric",
         })}
+        {article.dateUpdated?.time &&
+          ` - Updated ${new Date(article.dateUpdated.time).toLocaleString("en-US", {
+            month: "long",
+            day: "2-digit",
+            year: "numeric",
+          })}`}
       </span>
     </div>
   );

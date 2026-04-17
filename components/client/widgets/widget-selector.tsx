@@ -1,7 +1,7 @@
 "use client";
 
 import { Container } from "@uoguelph/react-components/container";
-import React, { useContext } from "react";
+import React, { createContext, useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { AccordionWidget } from "@/components/client/widgets/accordions";
 import { ButtonSectionWidget } from "@/components/client/widgets/button-section";
@@ -23,12 +23,17 @@ import { usePathname } from "next/navigation";
 import { ButtonWidget } from "@/components/client/widgets/button";
 import { FeaturedNews } from "@/components/client/widgets/featured-news";
 import { NewsSearch } from "@/components/client/widgets/news-search";
+import type { NavigationFragment } from "@/lib/graphql/types";
+
+export const PrimaryNavigationContext = createContext<NavigationFragment | null>(null);
 
 export function WidgetSelector({
   data,
+  primaryNavigation = null,
   neverWrap = false,
 }: {
   data: ProcessedWidget | ProcessedSectionWidget;
+  primaryNavigation?: NavigationFragment | null;
   neverWrap?: boolean;
 }) {
   const pathname = usePathname();
@@ -104,6 +109,14 @@ export function WidgetSelector({
     }
   };
 
+  const WidgetWithContext = () => {
+    return (
+      <PrimaryNavigationContext.Provider value={primaryNavigation}>
+        <Widget />
+      </PrimaryNavigationContext.Provider>
+    );
+  };
+
   // Add spacing wrapper for certain widgets within sections
   const SpacingWrapper = ({ children }: { children: React.ReactNode }) => {
     if (noSpaceWidgets.includes(data.__typename || "") || !context) {
@@ -115,14 +128,14 @@ export function WidgetSelector({
   if (!noWrapWidgets.includes(data.__typename || "") && !context && !neverWrap) {
     return (
       <Container>
-        <Widget />
+        <WidgetWithContext />
       </Container>
     );
   }
 
   return (
     <SpacingWrapper>
-      <Widget />
+      <WidgetWithContext />
     </SpacingWrapper>
   );
 }
