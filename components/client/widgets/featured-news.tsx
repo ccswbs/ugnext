@@ -133,9 +133,11 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
   return (
     <div>
       {data.title && (
-        <Typography type="h3" as="h3">
-          {data.title}
-        </Typography>
+        <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
+          <Typography type="h3" as="h3">
+            {data.title}
+          </Typography>
+        </Container>
       )}
 
       {variant === "spotlight" ? (
