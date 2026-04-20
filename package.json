@@ -7,12 +7,10 @@
     "node": "22.21.0"
   },
   "scripts": {
-    "prebuild:webpack": "npx tsx scripts/prebuild.ts && graphql-codegen",
-    "prestart": "npx tsx scripts/prebuild.ts && graphql-codegen",
     "dev": "next dev",
     "build": "npx tsx scripts/prebuild.ts && graphql-codegen && next build",
     "build:webpack": "next build --webpack",
-    "start": "next build && next start",
+    "start": "next start",
     "static-build": "NEXT_STATIC_OUTPUT=true npm run build:webpack",
     "static-start": "NEXT_STATIC_OUTPUT=true npx serve@latest out",
     "analyze": "ANALYZE=true next dev",
