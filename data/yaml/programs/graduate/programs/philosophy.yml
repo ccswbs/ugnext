@@ -8,22 +8,22 @@ types:
   - course-based
   - thesis-based
 tags:
-  - humanities
-  - culture
   - artificial intelligence
   - big data
   - changemaking
   - communications
-  - concept*
-  - data*
+  - concept
+  - culture
+  - data
   - education
   - ethics
   - government policy
-  - health*
+  - health
   - human rights
-  - law*
+  - humanities
+  - law
   - machine learning
-  - politic*
+  - politics
   - public service
   - social justice
-  - teach*
+  - teacher

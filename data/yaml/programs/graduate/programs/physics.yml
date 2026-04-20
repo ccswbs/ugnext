@@ -8,11 +8,9 @@ types:
   - course-based
   - thesis-based
 tags:
-  - physics
-  - science
   - applied modeling
   - applied physics
-  - astro*
+  - astronomy
   - astrophysics and gravitation
   - atomic, molecular and optical physics
   - biophysics
@@ -23,12 +21,14 @@ tags:
   - financial modeling
   - government policy
   - gravitational wave
-  - law*
+  - law
   - mars
   - nanoscience
   - outreach
+  - physics
   - physics education
   - planetary surface exploration
+  - science
   - space exploration
   - subatomic physics
-  - teach*
+  - teacher
