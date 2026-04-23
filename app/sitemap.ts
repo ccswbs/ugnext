@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllBasicPagePaths } from "@/data/drupal/basic-page";
 import { getAllProfilePaths } from "@/data/drupal/profile";
-import { getAllLegacyNewsArticlePaths } from "@/data/drupal/ovc-news";
+import { getAllLegacyNewsArticlePaths } from "@/data/drupal/legacy-news";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const mappingFunc = (path: string) => ({ url: `https://www.uoguelph.ca${path}` });
