@@ -2,6 +2,7 @@ import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { NewsWithoutBodyFragment } from "@/lib/graphql/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import { cache } from "react";
 
 export const NEWS_FRAGMENT = gql(/* gql */ `
   fragment News on NodeArticle {
@@ -196,3 +197,62 @@ export async function getFeaturedNewsArticles() {
 
   return data.featuredLegacyNews.results as NewsWithoutBodyFragment[];
 }
+
+async function getAllNewsArticlePathsUncached() {
+  const client = getClient();
+
+  const pathQuery = gql(/* gql */ `
+    query LegacyNewsIDs($cursor: Cursor) {
+      nodeArticles(after: $cursor, first: 100) {
+        nodes {
+          __typename
+          id
+          status
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const paths: string[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await client.query({
+      query: pathQuery,
+      variables: {
+        cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return paths;
+    }
+
+    if (!data.nodeArticles.nodes.length) {
+      return paths;
+    }
+
+    const currentPaths = data.nodeArticles.nodes
+      .filter((page) => page.status)
+      .map((page) => `/ovc/news/node/${page.id}`)
+      .filter((path) => typeof path === "string");
+
+    paths.push(...currentPaths);
+
+    cursor = data.nodeArticles.pageInfo.endCursor;
+    hasNextPage = data.nodeArticles.pageInfo.hasNextPage;
+  }
+
+  return paths;
+}
+
+export const getAllLegacyNewsArticlePaths = cache(getAllNewsArticlePathsUncached);

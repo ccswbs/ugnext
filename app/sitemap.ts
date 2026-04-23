@@ -1,14 +1,16 @@
 import type { MetadataRoute } from "next";
 import { getAllBasicPagePaths } from "@/data/drupal/basic-page";
 import { getAllProfilePaths } from "@/data/drupal/profile";
+import { getAllLegacyNewsArticlePaths } from "@/data/drupal/ovc-news";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const mappingFunc = (path: string) => ({ url: `https://www.uoguelph.ca${path}` });
+
   const basicPages = await getAllBasicPagePaths();
   const profiles = await getAllProfilePaths();
-  const paths = [
-    ...profiles.map((path) => ({ url: `https://uoguelph.ca${path}` })),
-    ...basicPages.map((path) => ({ url: `https://uoguelph.ca${path}` })),
-  ];
+  const legacyNews = await getAllLegacyNewsArticlePaths();
+
+  const paths = [...legacyNews.map(mappingFunc), ...profiles.map(mappingFunc), ...basicPages.map(mappingFunc)];
 
   if (paths.length > 50000) {
     throw new Error(
