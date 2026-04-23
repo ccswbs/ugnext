@@ -42,6 +42,7 @@ export interface ProfileWithImage extends BaseProfile {
   profilePicture?: ProfileImage;
   profileFirstName?: string;
   profileLastName?: string;
+  acceptingNewGrads?: boolean;
 }
 
 /**
@@ -93,6 +94,7 @@ export interface ProfileField {
  */
 export interface FullProfile extends ProfileWithImage {
   uniwebId?: string;
+  acceptingNewGrads?: boolean;
   primaryNavigation?: {
     menuName?: string;
   };

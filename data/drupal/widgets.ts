@@ -318,6 +318,8 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
         acronym
       }
     }
+    acceptingNewGrads
+    enableAcceptingNewGrad
     enableNameSearch
     enableResearchFilter
     enableTypeFilter

@@ -3,6 +3,7 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import type { FullProfile } from "@/lib/types";
 import type { PartialProfileFragment, ProfileTypeFragment } from "@/lib/graphql/types";
+import { cache } from "react";
 
 // GraphQL Response Types
 interface PageInfo {
@@ -37,6 +38,7 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     directoryOffice
     directoryPhone
     uniwebId
+    acceptingNewGrads
     body {
       processed
       summary
@@ -187,6 +189,7 @@ export const PARTIAL_PROFILE_FRAGMENT = gql(/* gql */ `
     title
     profileJobTitle
     path
+    acceptingNewGrads
     profilePicture {
       ... on MediaImage {
         image {
@@ -367,7 +370,7 @@ export type Unit = {
 export async function getAllUnits(): Promise<Unit[]> {
   try {
     const client = getClient();
-    
+
     const { data } = await client.query({
       query: gql(/* GraphQL */ `
         query GetAllUnits {
@@ -384,7 +387,7 @@ export async function getAllUnits(): Promise<Unit[]> {
 
     if ((data as any)?.termUnits?.edges) {
       const units = (data as any).termUnits.edges.map((edge: any) => edge.node) as Unit[];
-      
+
       // Sort units alphabetically by name
       return units.sort((a, b) => a.name.localeCompare(b.name));
     }
@@ -396,3 +399,63 @@ export async function getAllUnits(): Promise<Unit[]> {
     return [];
   }
 }
+
+async function getAllProfilePathsUncached() {
+  const client = getClient();
+
+  const pathQuery = gql(/* gql */ `
+    query ProfilePagePaths($cursor: Cursor) {
+      nodeProfiles(after: $cursor, first: 100) {
+        nodes {
+          __typename
+          id
+          status
+          path
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const paths: string[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await client.query({
+      query: pathQuery,
+      variables: {
+        cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return paths;
+    }
+
+    if (!data.nodeProfiles.nodes.length) {
+      return paths;
+    }
+
+    const currentPaths = data.nodeProfiles.nodes
+      .filter((page) => page.status)
+      .map((page) => page.path)
+      .filter((path) => typeof path === "string");
+
+    paths.push(...currentPaths);
+
+    cursor = data.nodeProfiles.pageInfo.endCursor;
+    hasNextPage = data.nodeProfiles.pageInfo.hasNextPage;
+  }
+
+  return paths;
+}
+
+export const getAllProfilePaths = cache(getAllProfilePathsUncached);
