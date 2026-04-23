@@ -37,6 +37,7 @@ export const PROFILE_FRAGMENT = gql(/* gql */ `
     directoryOffice
     directoryPhone
     uniwebId
+    acceptingNewGrads
     body {
       processed
       summary
@@ -187,6 +188,7 @@ export const PARTIAL_PROFILE_FRAGMENT = gql(/* gql */ `
     title
     profileJobTitle
     path
+    acceptingNewGrads
     profilePicture {
       ... on MediaImage {
         image {
