@@ -9,6 +9,8 @@ List all significant changes to the Drupal site (e.g., new fields, content types
 
 ## Checklist
 
+<details>
+<summary>Accessibility</summary>
 ### Accessibility
 - [ ] Changes comply with WCAG 2.0 Level AA standards minimum
 - [ ] All interactive elements are keyboard accessible
@@ -16,6 +18,7 @@ List all significant changes to the Drupal site (e.g., new fields, content types
 - [ ] Images and media have appropriate alt text
 - [ ] Colour is not used as the only means of conveying information
 - [ ] Screen reader testing performed for new components
+</details>
 
 ### Performance
 - [ ] No unnecessary re-renders or performance regressions
