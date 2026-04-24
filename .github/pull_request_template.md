@@ -44,7 +44,7 @@ List all significant changes to the Drupal site (e.g., new fields, content types
 ### Analytics
 - [ ] Changes have been reviewed to ensure they do not break existing analytics triggers
 - [DELETE?] New tracking has been added if user interactions were introduced --> OR decide if this is part of the workflow
-- [ ] Data layer updates are documented if applicable
+- [DELETE?] Data layer updates are documented if applicable
 </details>
 
 <details>
