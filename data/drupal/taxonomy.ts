@@ -15,6 +15,7 @@ export const NAVIGATION_FRAGMENT = gql(/* gql */ `
   fragment Navigation on TermPrimaryNavigation {
     __typename
     menuName
+    headerVariant
     customFooter {
       id
     }

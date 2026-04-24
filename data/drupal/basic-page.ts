@@ -1,6 +1,7 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
+import { cache } from "react";
 import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
 import { BasicPageFragment } from "@/lib/graphql/types";
 
@@ -100,7 +101,7 @@ export async function getPageContent(id: string): Promise<ProcessedBasicPage | n
   };
 }
 
-export async function getAllBasicPagePaths() {
+async function getAllBasicPagePathsUncached() {
   const client = getClient();
 
   const pathQuery = gql(/* gql */ `
@@ -157,3 +158,4 @@ export async function getAllBasicPagePaths() {
 
   return paths;
 }
+export const getAllBasicPagePaths = cache(getAllBasicPagePathsUncached);

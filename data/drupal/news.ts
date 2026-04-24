@@ -1,8 +1,10 @@
 import { gql } from "@/lib/graphql";
-import { getClient } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { NewsFragment, NewsWithoutContentFragment } from "@/lib/graphql/types";
 import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
+import { cache } from "react";
+import { ProcessedBasicPage } from "@/data/drupal/basic-page";
 
 export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
   fragment NewsWithoutContent on NodeNews {
@@ -345,3 +347,106 @@ export async function getAllNewsCategories() {
 
   return data.termNewsCategories.nodes;
 }
+
+export async function getPageContent(id: string): Promise<ProcessedBasicPage | null> {
+  const showUnpublished = await showUnpublishedContent();
+
+  const { data, error } = await query({
+    query: gql(/* gql */ `
+      query BasicPageContent($id: ID!, $revision: ID = "current") {
+        nodePage(id: $id, revision: $revision) {
+          ...BasicPage
+        }
+      }
+    `),
+    variables: {
+      id: id,
+      revision: showUnpublished ? "latest" : "current",
+    },
+  });
+
+  if (error) {
+    console.error(`GraphQL Error: failed to retrieve content for basic page ${id}:\n\t${error}\n`);
+    return null;
+  }
+
+  if (!data?.nodePage) {
+    return null;
+  }
+
+  if (data.nodePage.status === false && !showUnpublished) {
+    return null;
+  }
+
+  if (!data.nodePage.widgets) {
+    return {
+      ...data.nodePage,
+      widgets: [] as ProcessedWidget[],
+    };
+  }
+
+  const processor = new WidgetProcessor();
+  return {
+    ...data.nodePage,
+    widgets: await processor.processWidgets(data.nodePage.widgets),
+  };
+}
+
+async function getAllNewsArticlePathsUncached() {
+  const client = getClient();
+
+  const pathQuery = gql(/* gql */ `
+    query NewsPaths($cursor: Cursor) {
+      nodeNewsItems(after: $cursor, first: 100) {
+        nodes {
+          __typename
+          id
+          status
+          path
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const paths: string[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await client.query({
+      query: pathQuery,
+      variables: {
+        cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return paths;
+    }
+
+    if (!data.nodeNewsItems.nodes.length) {
+      return paths;
+    }
+
+    const currentPaths = data.nodeNewsItems.nodes
+      .filter((page) => page.status)
+      .map((page) => page.path)
+      .filter((path) => typeof path === "string");
+
+    paths.push(...currentPaths);
+
+    cursor = data.nodeNewsItems.pageInfo.endCursor;
+    hasNextPage = data.nodeNewsItems.pageInfo.hasNextPage;
+  }
+
+  return paths;
+}
+export const getAllNewsArticlePaths = cache(getAllNewsArticlePathsUncached);
