@@ -129,7 +129,7 @@ export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridP
         />
       )}
 
-      <div className="mb-4 text-center text-sm opacity-70">
+      <div className="mb-4 text-center text-sm text-body-copy">
         Showing {data.results.length} of {data.total} results
       </div>
 
