@@ -12,13 +12,13 @@ List all significant changes to the Drupal site (e.g., new fields, content types
 <details>
 <summary>Accessibility</summary>
 ### Accessibility
-- [ ] Changes comply with WCAG 2.0 Level AA standards minimum
-- [ ] All interactive elements are keyboard accessible
-- [ ] Form labels and error messages are properly associated
-- [ ] Images and media have appropriate alt text
-- [ ] Images and media have appropriate alt text
-- [ ] Colour is not used as the only means of conveying information
+- [ ] No errors show up on an Accessibility Insights FastPass
 - [ ] Screen reader testing performed for new components
+- [ ] Changes comply with WCAG 2.0 Level AA standards minimum
+- [DELETE?] All interactive elements are keyboard accessible --> this would come from a screen reader test
+- [DELETE?] Form labels and error messages are properly associated --> this would come from a fast pass
+- [DELETE?] Images and media have appropriate alt text --> this would come from a screen reader test
+- [ ] Colour is not used as the only means of conveying information
 </details>
 
 <details>
