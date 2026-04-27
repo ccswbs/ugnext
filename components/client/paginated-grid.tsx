@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import { Pagination } from "@uoguelph/react-components/pagination";
 import { Typography } from "@uoguelph/react-components/typography";
+import { Grid } from "@uoguelph/react-components/grid";
 
 type PaginatedGridData<T> = {
   results: T[];
@@ -12,10 +13,11 @@ type PaginatedGridData<T> = {
   total: number;
 };
 
-type PaginatedGridProps<T> = {
+export type PaginatedGridProps<T> = {
   url: string;
   render: (item: T, index: number) => ReactNode;
   debounce?: number;
+  layout?: "grid" | "list";
 };
 
 async function fetcher(...args: Parameters<typeof fetch>) {
@@ -39,7 +41,7 @@ async function fetcher(...args: Parameters<typeof fetch>) {
  * The endpoint also must support pagination using the 'page' query parameter.
  * For example /api/endpoint?page=1
  * */
-export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridProps<T>) {
+export function PaginatedGrid<T>({ url, render, debounce = 300, layout = "grid" }: PaginatedGridProps<T>) {
   const [page, setPage] = useState(0);
   const [debouncedUrl, setDebouncedUrl] = useState(url);
   const [isDebouncing, setIsDebouncing] = useState(false);
@@ -133,9 +135,24 @@ export function PaginatedGrid<T>({ url, render, debounce = 300 }: PaginatedGridP
         Showing {data.results.length} of {data.total} results
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {data.results.map(render)}
-      </div>
+      {layout === "list" ? (
+        <div className="flex flex-col gap-4">{data.results.map(render)}</div>
+      ) : (
+        <Grid
+          template={{
+            base: ["1fr"],
+            md: ["1fr", "1fr"],
+            lg: ["1fr", "1fr", "1fr"],
+            xl: ["1fr", "1fr", "1fr", "1fr"],
+          }}
+          gap={{
+            x: 16,
+            y: 16,
+          }}
+        >
+          {data.results.map(render)}
+        </Grid>
+      )}
 
       {data.results.length === 0 && (
         <div className="flex w-full items-center justify-center flex-1 py-5">

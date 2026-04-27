@@ -26,7 +26,7 @@ export default async function OVCNewsHub() {
         <OvcNewsGrid />
       </LayoutContent>
 
-      <CustomFooter units={["273"]} />
+      <CustomFooter id="758" />
       <Footer></Footer>
     </Layout>
   );

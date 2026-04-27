@@ -105,6 +105,15 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         id
         title
       }
+      ... on NodeNews {
+        uuid
+        id
+        title
+        metatag {
+          __typename
+          ...MetaProperty
+        }
+      }
       ... on TermUndergraduateStudentType {
         uuid
         id
@@ -345,7 +354,7 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
               title
               primaryNavigation {
                 menuName
-                primaryNavigationUrl {
+                homePage {
                   title
                   url
                 }
@@ -402,10 +411,10 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
       let breadcrumbPath = filterBreadcrumbs(data.route.breadcrumbs, currentPage);
 
       /* ---- Handle Basic Pages with Primary Navigation Homepage URL --- */
-      if (data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.primaryNavigationUrl) {
+      if (data.route.entity.__typename === "NodePage" && data.route.entity.primaryNavigation?.homePage) {
         const primaryNavigationHome = {
-          title: data.route.entity.primaryNavigation?.primaryNavigationUrl?.title,
-          url: data.route.entity.primaryNavigation?.primaryNavigationUrl?.url,
+          title: data.route.entity.primaryNavigation?.homePage?.title,
+          url: data.route.entity.primaryNavigation?.homePage?.url,
         };
 
         /* ---- Handle pages that are NOT in the menu --- */
