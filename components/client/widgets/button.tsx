@@ -72,7 +72,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
       column: {
         primary: {},
         secondary: {
-          button: "w-full mx-0",
+          button: "w-full md:w-full mx-0",
         },
         "call-to-action": {},
       },
