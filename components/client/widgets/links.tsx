@@ -16,14 +16,14 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
   const count = data.links.length ?? 0;
   const classes = tv({
     slots: {
-      container: "mx-0 my-0 flex flex-col flex-wrap sm:flex-row gap-4 w-fit",
-      card: "h-full max-w-[32.2rem]",
+      container: "mx-0 my-0 flex flex-col flex-wrap sm:flex-row gap-4 w-full md:w-fit",
+      card: "h-full md:max-w-[32.2rem]",
       cardImage: "aspect-[4/3] w-full object-cover",
     },
     variants: {
       isLargeGrid: {
       true: {
-        container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+        container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full",
         },
       },
       centered: {
@@ -43,7 +43,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
       },
       divisibleByFour: {
         true: {
-          container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+          container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full",
         },
       },
     },
