@@ -286,6 +286,7 @@ export const NEWS_SEARCH_FRAGMENT = gql(/* gql */ `
     __typename
     uuid
     id
+    newsSearchTitle
     units {
       ...Unit
     }
