@@ -56,7 +56,7 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
   }
 
   return (
-    <Container className="peer">
+    <div className="peer">
       <Grid
         template={gridTemplate}
         gap={{
@@ -68,7 +68,7 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
           <NewsCard variant="vertical" key={article.id} data={article} />
         ))}
       </Grid>
-    </Container>
+    </div>
   );
 }
 
@@ -79,11 +79,11 @@ function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNews
 
   return (
     <div className="flex flex-col gap-6 pb-0">
-      <div className="flex flex-col lg:flex-row gap-6 lg:max-w-[137rem] lg:mx-auto lg:px-4">
+      <div className="flex flex-col lg:flex-row gap-6 lg:max-w-[137rem]">
         <div className="w-full lg:w-2/3">
           <NewsCard variant="spotlight" data={data.articles[0]} />
         </div>
-        <Container className="w-full lg:w-1/3 flex flex-col md:flex-row lg:flex-col gap-6 px-4 lg:p-0">
+        <Container className="w-full lg:w-1/3 flex flex-col md:flex-row lg:flex-col gap-6 lg:p-0 px-0">
           {data.articles?.slice(1, 3).map((article, index) => (
             <NewsCard variant="vertical" key={article.id} data={article} />
           ))}
@@ -131,13 +131,11 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
   }
 
   return (
-    <div>
+    <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
       {data.title && (
-        <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0 ps-0">
-          <Typography type="h3" as="h3">
-            {data.title}
-          </Typography>
-        </Container>
+        <Typography type="h3" as="h3">
+          {data.title}
+        </Typography>
       )}
 
       {variant === "spotlight" ? (
@@ -150,13 +148,11 @@ export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFr
         <FeaturedNewsList data={data} />
       )}
 
-      <Container className="peer-[ul]:px-0 peer-[.uofg-container]:px-0">
-        <Link href={directory} className="w-full md:w-fit mt-4">
-          {Array.isArray(data.categories) && data.categories.length === 1
-            ? `More ${data.categories[0].name}`
-            : `More News`}
-        </Link>
-      </Container>
-    </div>
+      <Link href={directory} className="w-full md:w-fit mt-4">
+        {Array.isArray(data.categories) && data.categories.length === 1
+          ? `More ${data.categories[0].name}`
+          : `More News`}
+      </Link>
+    </Container>
   );
 }

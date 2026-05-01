@@ -41,7 +41,7 @@ export function NewsCard({
     variants: {
       variant: {
         spotlight: {
-          content: "px-4 lg:px-0",
+          content: "lg:px-0",
           title: "text-black font-serif",
         },
         vertical: {
@@ -66,7 +66,6 @@ export function NewsCard({
   const { card, imageContainer, image, content, title, category } = newsCard({ variant });
 
   const img = data.hero?.image.variations?.[0];
-  const alt = data.hero?.image.alt ?? "";
 
   if (variant === "no-image") {
     return (
