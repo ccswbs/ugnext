@@ -12,7 +12,7 @@ import { PrimaryNavigationContext } from "@/components/client/widgets/widget-sel
 
 function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
   return (
-    <ul className="peer flex flex-col gap-4">
+    <ul className="peer flex flex-col gap-4 py-4">
       {data.articles?.map((article) => (
         <li key={article.id}>
           <NewsCard data={article} variant={data.hideImages ? "no-image" : "vertical"} />
