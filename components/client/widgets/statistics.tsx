@@ -25,8 +25,6 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
     .replace("gradient-of-solid-colors", context === null ? "solid-colors-full" : "solid-colors-no-gap")
     .replace("light-blue", "light-grey") as StatisticsProps["variant"];
 
-console.log(variant);
-
   return (
     <StatisticsComponent id={`statistics-${data.uuid}`} variant={variant}>
       {data?.content.map((statistic, index) => {
