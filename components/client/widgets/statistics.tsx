@@ -12,15 +12,20 @@ import type { StatisticsFragment } from "@/lib/graphql/types";
 import { nanoid } from "nanoid";
 import NextLink from "next/link";
 import { Link } from "@uoguelph/react-components/link";
-import React from "react";
+import { useContext } from "react";
+import { SectionContext } from "@/components/client/section";
 
 export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
+  const context = useContext(SectionContext);
+
   const variant = data?.style?.name
     ?.toLowerCase()
     .replace(/\s/g, "-")
     .replace("colour", "color")
-    .replace("gradient-of-solid-colors", "solid-colors-full")
+    .replace("gradient-of-solid-colors", context === null ? "solid-colors-full" : "solid-colors-no-gap")
     .replace("light-blue", "light-grey") as StatisticsProps["variant"];
+
+console.log(variant);
 
   return (
     <StatisticsComponent id={`statistics-${data.uuid}`} variant={variant}>
