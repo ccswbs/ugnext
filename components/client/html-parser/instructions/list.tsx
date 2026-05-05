@@ -10,7 +10,8 @@ import { SectionContext } from "@/components/client/section";
 function ListRenderer({ node, props, children }: any) {
   const context = useContext(SectionContext);
   const hasColumns =
-    node.attribs?.class?.includes("columns-3") && context?.column !== "secondary" && context?.hasSecondary === false
+    node.attribs?.class?.includes("columns-3")
+    && (!context || ( context?.column !== "secondary" && context?.hasSecondary === false))
       ? true
       : false;
   
