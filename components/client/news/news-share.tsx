@@ -1,7 +1,7 @@
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShare } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
+import { faShareNodes } from "@awesome.me/kit-7993323d0c/icons/classic/regular";
 import { useState } from "react";
 import { Modal } from "@uoguelph/react-components/modal";
 import { tv } from "tailwind-variants";
@@ -44,7 +44,7 @@ export function NewsShare({ title }: { title: string }) {
   return (
     <>
       <button onClick={() => setOpen(true)} className={classes.button()}>
-        <FontAwesomeIcon icon={faShare} />
+        <FontAwesomeIcon icon={faShareNodes} />
         Share
       </button>
 
