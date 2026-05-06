@@ -396,17 +396,13 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
 
   switch (data.route?.__typename) {
     case "RouteInternal":
-      if (!data.route.entity || !("title" in data.route.entity)) {
+      if (!data.route.entity || !("title" in data.route.entity) || !Array.isArray(data.route.breadcrumbs)) {
         return null;
       }
 
       let currentPage = {
         title: data.route.entity.title,
       };
-
-      if (!Array.isArray(data.route.breadcrumbs)) {
-        return [currentPage];
-      }
 
       let breadcrumbPath = filterBreadcrumbs(data.route.breadcrumbs, currentPage);
 
@@ -425,7 +421,7 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
           primary_navigation
         );
         if (!isPageInMenu) {
-          return [primaryNavigationHome, currentPage];
+          return [primaryNavigationHome];
         }
 
         // Only add Primary Nav Homepage URL if NOT already at start of breadcrumbPath
@@ -439,16 +435,16 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
           // Pages in multiple menus can have breadcrumb path from a different menu than Primary Navigation
           // If page in multiple menus, return [Primary Nav Home > currentPage]
           if (data.route.entity.primaryNavigation?.menuName !== primary_navigation) {
-            return [primaryNavigationHome, currentPage];
+            return [primaryNavigationHome];
           }
 
           // Default return
-          return [primaryNavigationHome, ...breadcrumbPath, currentPage];
+          return [primaryNavigationHome, ...breadcrumbPath];
         }
       }
 
       // Handle content without Primary Navigation
-      return [...breadcrumbPath, currentPage];
+      return [...breadcrumbPath];
     default:
       return null;
   }
