@@ -16,6 +16,7 @@ import { Link as UofGLink } from "@uoguelph/react-components/link";
 import { NewsTimeEstimate } from "@/components/client/news/news-time-estimate";
 import { ProcessedWidget } from "@/data/drupal/widgets";
 import { NewsShare } from "@/components/client/news/news-share";
+import { Button } from "@uoguelph/react-components/button";
 
 function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
@@ -131,7 +132,25 @@ function NewsShareAndReadInfo({ article }: { article: FullNewsArticle }) {
     </div>
   );
 }
+function NewsExternalLinkButton({ article }: { article: FullNewsArticle }) {
+  if (article.externallyLinked || !article.externalLink?.title || !article.externalLink?.url) {
+    return <></>;
+  }
 
+  return (
+    <div className="mt-4">
+      <Button
+        as="a"
+        href={article.externalLink.url}
+        color="red"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {article.externalLink.title}
+      </Button>
+    </div>
+  );
+}
 export async function News({ id }: { id: string }) {
   const article = await getNewsArticle(id);
 
@@ -213,6 +232,7 @@ export async function News({ id }: { id: string }) {
             primary={[
               <NewsShareAndReadInfo article={article} key="share-and-read" />,
               ...primaryWidgets.map((widget, index) => <WidgetSelector key={index} data={widget} />),
+              <NewsExternalLinkButton article={article} key="external-link" />
             ]}
             secondary={[
               <NewsSidebar article={article} key="sidebar" />,
