@@ -9,6 +9,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { faBluesky, faFacebookF, faLinkedin, faXTwitter } from "@awesome.me/kit-7993323d0c/icons/classic/brands";
 import { faEnvelope } from "@awesome.me/kit-7993323d0c/icons/classic/solid";
 import { usePathname } from "next/navigation";
+import { Container } from "@uoguelph/react-components/container";
 
 export function NewsShare({ title }: { title: string }) {
   const [open, setOpen] = useState(false);
@@ -17,7 +18,7 @@ export function NewsShare({ title }: { title: string }) {
   const classes = tv({
     slots: {
       button: "inline-flex cursor-pointer items-center gap-1 pl-4 border-l-2 border-grey-light-focus",
-      container: "flex flex-col gap-2 bg-white p-6 w-dvw max-w-fit",
+      container: "flex flex-col gap-2 bg-white p-6 w-dvw max-w-fit w-fit",
       heading: "mt-0",
       buttons: "flex gap-2 flex-wrap",
       shareButton:
@@ -49,6 +50,7 @@ export function NewsShare({ title }: { title: string }) {
       </button>
 
       <Modal open={open} onClose={() => setOpen(false)} centered>
+
         <div className={classes.container()}>
           <Typography as="span" type="h2" className={classes.heading()}>
             Share this article
