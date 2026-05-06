@@ -65,14 +65,14 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   const classes = tv({
     slots: {
       heading: "block text-black basis-full group-first/button:first:mt-0",
-      button: "w-full md:w-fit font-medium flex items-center justify-center! gap-x-1 leading-6 mx-0",
+      button: "w-full md:w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
       icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
     variants: {
       column: {
         primary: {},
         secondary: {
-          button: "w-full mx-0",
+          button: "w-full md:w-full mx-0",
         },
         "call-to-action": {},
       },

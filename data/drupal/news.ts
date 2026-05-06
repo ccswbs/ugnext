@@ -323,7 +323,7 @@ export async function getAllNewsCategories() {
   const { data, error } = await client.query({
     query: gql(/* gql */ `
       query GetAllNewsCategories {
-        termNewsCategories(first: 100) {
+        termNewsCategories(first: 100, sortKey: TITLE) {
           nodes {
             ...NewsCategory
           }

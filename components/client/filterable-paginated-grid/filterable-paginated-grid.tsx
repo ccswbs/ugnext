@@ -84,9 +84,7 @@ export function FilterablePaginatedGrid<T>({
         </FilterablePaginatedGridContext.Provider>
       </div>
 
-      <Container>
-        <PaginatedGrid url={urlWithFilters} render={render} debounce={debounce} layout={layout} />
-      </Container>
+      <PaginatedGrid url={urlWithFilters} render={render} debounce={debounce} layout={layout} />
     </div>
   );
 }
