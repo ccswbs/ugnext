@@ -1,4 +1,4 @@
-import { getCustomFooterByTagsOrUnits } from "@/data/drupal/custom-footer";
+import { getCustomFooter } from "@/data/drupal/custom-footer";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { HtmlParser } from "@/components/client/html-parser";
@@ -9,10 +9,11 @@ import React from "react";
 export type CustomFooterProps = {
   tags?: string[];
   units?: string[];
+  id?: string;
 };
 
-export async function CustomFooter({ tags, units }: CustomFooterProps) {
-  const content = await getCustomFooterByTagsOrUnits(tags ?? [], units ?? []);
+export async function CustomFooter({ tags, units, id }: CustomFooterProps) {
+  const content = await getCustomFooter(tags ?? [], units ?? [], id ?? "");
 
   if (!content) {
     return <></>;
