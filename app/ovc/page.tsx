@@ -3,8 +3,6 @@ import { getRoute } from "@/data/drupal/route";
 import { notFound } from "next/navigation";
 import { Container } from "@uoguelph/react-components/container";
 import { OVCCards } from "@/components/client/ovc/ovc-cards";
-import { OVCFeaturedNews } from "@/components/client/ovc/ovc-featured-news";
-import { getFeaturedLegacyNewsArticles } from "@/data/drupal/legacy-news";
 import { Metadata } from "next";
 import { CustomFooter } from "@/components/server/custom-footer";
 
@@ -24,7 +22,7 @@ export default async function OVCHome() {
     notFound();
   }
 
-  const featuredNews = await getFeaturedLegacyNewsArticles();
+
 
   return (
     <BasicPage
@@ -33,7 +31,6 @@ export default async function OVCHome() {
         <>
           <Container>
             {/* @ts-ignore */}
-            <OVCFeaturedNews articles={featuredNews} />
             <OVCCards />
           </Container>
           <CustomFooter id="758" />
