@@ -9,14 +9,16 @@ import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import Link from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
 import { twMerge } from "tailwind-merge";
+import { usePathname } from "next/navigation";
 
 export type ButtonColumn = "primary" | "secondary" | "call-to-action";
 
 export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: ButtonColumn }) => {
   let url = data.link?.url;
+  const pathname = usePathname();
 
   if (!url) {
-    console.error(`Widget Error ${data.__typename}: A URL must be defined for the button`, data);
+    console.error(`Widget Error: ${data.__typename} must have a URL defined\n\t@ ${pathname}\n`);
     return <></>;
   }
 
@@ -29,8 +31,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
 
   if (!title) {
     console.error(
-      `Widget Error ${data.__typename}: A title must be defined for the button either in its formatted title field or link title field`,
-      data
+      `Widget Error: ${data.__typename} must have a title defined either in its formatted title field or link title field\n\t@ ${pathname}\n`
     );
     return <></>;
   }
@@ -63,21 +64,21 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
 
   const classes = tv({
     slots: {
-      heading: "block text-black",
-      button: "w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
+      heading: "block text-black basis-full group-first/button:first:mt-0",
+      button: "w-full md:w-fit font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
       icon: ["pe-3 text-4xl inline-block align-middle", icon.data],
     },
     variants: {
       column: {
         primary: {},
         secondary: {
-          button: "w-full mx-0",
+          button: "w-full md:w-full mx-0",
         },
         "call-to-action": {},
       },
       hasHeading: {
         true: {
-          button: "py-4 px-10",
+          button: "p-4",
         },
         false: {
           button: "p-4",
@@ -90,12 +91,15 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
         red: {
           icon: "text-red",
         },
+        match: {
+          icon: "text-current",
+        },
       },
     },
   })({
     column: column,
     hasHeading: !!heading,
-    iconColor: icon.color,
+    iconColor: icon.color === "red" && color === "primary" ? "match" : icon.color,
   });
 
   const analyticsHandler: MouseEventHandler<HTMLAnchorElement> = (e) => {
@@ -110,13 +114,16 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
   };
 
   return (
-    <>
+    <div id={`button-${data.uuid}-container`} className="contents group/button">
       {heading && (
-        <div className="basis-full">
-          <Typography id={`button-heading-${data.uuid}`} type="h3" as="h2" className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}>
-            <HtmlParser html={heading} />
-          </Typography>
-        </div>
+        <Typography
+          id={`button-heading-${data.uuid}`}
+          type="h3"
+          as="h2"
+          className={twMerge(classes.heading(), column === "call-to-action" && "text-center")}
+        >
+          <HtmlParser html={heading} />
+        </Typography>
       )}
 
       <Button
@@ -131,6 +138,6 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
         {icon && icon.data && <i className={classes.icon()} aria-hidden="true"></i>}
         <HtmlParser html={title} />
       </Button>
-    </>
+    </div>
   );
 };

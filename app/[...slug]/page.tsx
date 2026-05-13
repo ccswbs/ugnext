@@ -1,26 +1,32 @@
-import { getRoute } from "@/data/drupal/route";
+import { getRoute, getRouteMetadata } from "@/data/drupal/route";
 import { Metadata, ResolvingMetadata } from "next";
 import { BasicPage } from "@/components/server/basic-page";
 import { Profile } from "@/components/server/profile";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { getAllBasicPagePaths } from "@/data/drupal/basic-page";
+import { News } from "@/components/server/news";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
 };
 
+export async function generateStaticParams() {
+  if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
+    return [];
+  }
+
+  const paths = await getAllBasicPagePaths();
+
+  return paths.map((path) => ({
+    slug: path.split("/").slice(1),
+  }));
+}
+
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const { slug } = await params;
   const url = "/" + slug.join("/");
-  const route = await getRoute(url);
 
-  // If the entity associated with this route has a title, we can use it for the page title.
-  if (route && route.__typename === "RouteInternal" && route?.entity && "title" in route.entity) {
-    return {
-      title: route.entity.title,
-    };
-  }
-
-  return {};
+  return await getRouteMetadata(url);
 }
 
 export default async function Page({ params }: Props) {
@@ -31,6 +37,10 @@ export default async function Page({ params }: Props) {
   // Handle redirects to other pages.
   // Couldn't get info for this route from Drupal.
   if (!route) {
+    if (slug.length === 2 && slug[0] === "news") {
+      redirect("/news");
+    }
+
     notFound();
   }
 
@@ -65,6 +75,8 @@ export default async function Page({ params }: Props) {
     case "NodeArticle":
       permanentRedirect(`/ovc/news/node/${route.entity.id}`);
       break;
+    case "NodeNews":
+      return <News id={route.entity.id} />;
     case "NodeProfile":
       return <Profile id={route.entity.uuid} />;
     case "NodeUndergraduateProgram":

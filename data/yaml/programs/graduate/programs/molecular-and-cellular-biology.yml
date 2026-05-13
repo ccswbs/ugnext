@@ -7,55 +7,52 @@ degrees:
 types:
   - thesis-based
 tags:
-  - biol*
-  - science*
-  - life*
-  - living
-  - research*
-  - biochem*
-  - biomedic*
-  - health*
-  - molecu*
-  - cell*
-  - medic*
-  - biomolecu*
-  - disease
-  - gene*
-  - clinic*
-  - patho*
-  - micro*
-  - bacteria*
-  - immun*
-  - virolog*
-  - virus
-  - evolution*
-  - infect*
-  - dna
-  - pharma*
+  - bacteria
   - biochemistry
+  - biology
+  - biomedical
+  - biomolecule
   - biotechnology
+  - cell
   - cell biology
   - cell signalling
   - cell trafficking
   - cellular biology
+  - clinic
+  - disease
   - disorders
+  - dna
   - education
+  - evolution
+  - food
   - food safety
-  - food*
+  - gene
   - gene expression
   - genetics
+  - health
   - illness
-  - medicine*
+  - immunology
+  - infection
+  - life
+  - living
+  - medicine
   - microbiology
   - molecular basis of disease
   - molecular biology & genetics
-  - pathogen*
+  - molecule
+  - pathogen
+  - pathology
+  - pharmacy
   - plant biology
   - plant metabolism
+  - protein
   - protein function
   - protein structure
-  - protein*
   - regulation
+  - research
+  - science
   - science outreach
-  - sustainab*
-  - teach*
+  - sustainable
+  - teacher
+  - virology
+  - virus

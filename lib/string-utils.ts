@@ -111,3 +111,64 @@ export function slugify(str: string): string {
     // Remove leading and trailing hyphens
     .replace(/^-+|-+$/g, "");
 }
+
+/**
+ * Obfuscates an email address to protect against bots/spammers
+ * Converts email display to character entities while keeping href functional
+ * @param email - The email address to obfuscate
+ * @returns Object with obfuscated display and plain href
+ */
+export const obfuscateEmail = (email: string) => {
+  if (!email || typeof email !== 'string') {
+    return { display: '', href: '' };
+  }
+
+  // Convert to HTML entities for display to make it harder for bots to parse
+  const entities = email
+    .split('')
+    .map(char => `&#${char.charCodeAt(0)};`)
+    .join('');
+
+  return {
+    display: entities,
+    href: `mailto:${email}`, // Use plain email for functional mailto link
+  };
+};
+
+/**
+ * Parse a phone number string to separate the main number from extension
+ * @param phoneString - Phone number string (e.g., "+1-519-824-4120 x54019")
+ * @returns Object with number and extension (if present)
+ */
+export const parsePhoneNumber = (phoneString: string) => {
+  const trimmed = phoneString.trim();
+  const extensionMatch = trimmed.match(/^(.+?)\s+x(\d+)$/i);
+  
+  if (extensionMatch) {
+    return {
+      number: extensionMatch[1].trim(),
+      extension: extensionMatch[2].trim()
+    };
+  }
+  
+  return {
+    number: trimmed,
+    extension: undefined
+  };
+};
+
+/**
+ * Parse a tel: URL to separate the main number from extension
+ * tel: URLs can use semicolon or 'p' to separate extensions (RFC 3966)
+ * @param telUrl - Tel URL string (e.g., "tel:+15198244120;ext=54019" or "tel:5198244120p54019")
+ * @returns Object with number and extension (if present)
+ */
+export const parseTelUrl = (telUrl: string) => {
+  const cleanUrl = telUrl.replace("tel:", "");
+  const tokens = cleanUrl.split(/[;p]/);
+  
+  return {
+    number: tokens[0] || "",
+    extension: tokens[1] || ""
+  };
+};

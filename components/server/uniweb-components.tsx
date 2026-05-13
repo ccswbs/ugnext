@@ -5,10 +5,22 @@ import { getProfile } from "@/lib/uniweb-utils";
 
 // Helper function to format date
 const formatDate = (dateStr: string) => {
-  if (!dateStr) return '';
-  const [year, month] = dateStr.split('/');
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
+  if (!dateStr) return "";
+  const [year, month] = dateStr.split("/");
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   return `${monthNames[parseInt(month) - 1]} ${year}`;
 };
 
@@ -24,8 +36,8 @@ const parseJsonField = (field: string) => {
 
 // Helper function to format year
 const formatYear = (yearStr: string) => {
-  if (!yearStr) return '';
-  const [year] = yearStr.split('/');
+  if (!yearStr) return "";
+  const [year] = yearStr.split("/");
   return year;
 };
 
@@ -33,7 +45,7 @@ const formatYear = (yearStr: string) => {
 export async function UniwebAffiliations({ uniwebId }: { uniwebId: string }) {
   try {
     const uniwebProfile = await getProfile(uniwebId);
-    
+
     if (uniwebProfile.affiliations && uniwebProfile.affiliations.length > 0) {
       return (
         <div className="mb-4">
@@ -44,7 +56,9 @@ export async function UniwebAffiliations({ uniwebId }: { uniwebId: string }) {
             {uniwebProfile.affiliations.map((affiliation) => (
               <div key={affiliation.id} className="border border-gray-200 p-4 rounded">
                 <Typography type="body" className="font-semibold">
-                  {parseJsonField(affiliation.position_title)}, {parseJsonField(affiliation.organization)} ({formatDate(affiliation.start_date)}{affiliation.end_date ? ` - ${formatDate(affiliation.end_date)}` : ' - present'})
+                  {parseJsonField(affiliation.position_title)}, {parseJsonField(affiliation.organization)} (
+                  {formatDate(affiliation.start_date)}
+                  {affiliation.end_date ? ` - ${formatDate(affiliation.end_date)}` : " - present"})
                 </Typography>
               </div>
             ))}
@@ -53,9 +67,9 @@ export async function UniwebAffiliations({ uniwebId }: { uniwebId: string }) {
       );
     }
   } catch (error) {
-    console.error('Error fetching Uniweb affiliations:', error);
+    console.error("Error fetching Uniweb affiliations:", error);
   }
-  
+
   return null;
 }
 
@@ -63,7 +77,7 @@ export async function UniwebAffiliations({ uniwebId }: { uniwebId: string }) {
 export async function UniwebCurrentTeaching({ uniwebId }: { uniwebId: string }) {
   try {
     const uniwebProfile = await getProfile(uniwebId);
-    
+
     if (uniwebProfile.current_teaching && uniwebProfile.current_teaching.length > 0) {
       return (
         <div className="mb-4">
@@ -86,9 +100,9 @@ export async function UniwebCurrentTeaching({ uniwebId }: { uniwebId: string }) 
       );
     }
   } catch (error) {
-    console.error('Error fetching Uniweb current teaching:', error);
+    console.error("Error fetching Uniweb current teaching:", error);
   }
-  
+
   return null;
 }
 
@@ -96,7 +110,7 @@ export async function UniwebCurrentTeaching({ uniwebId }: { uniwebId: string }) 
 export async function UniwebDegrees({ uniwebId }: { uniwebId: string }) {
   try {
     const uniwebProfile = await getProfile(uniwebId);
-    
+
     if (uniwebProfile.selected_degrees && uniwebProfile.selected_degrees.length > 0) {
       return (
         <div className="mb-4">
@@ -107,7 +121,8 @@ export async function UniwebDegrees({ uniwebId }: { uniwebId: string }) {
             {uniwebProfile.selected_degrees.map((degree) => (
               <li key={degree.year + degree.degree_name}>
                 <Typography type="body">
-                  {parseJsonField(degree.degree_name)} in {parseJsonField(degree.specialty)}, {parseJsonField(degree.institution)} ({formatYear(degree.year)})
+                  {parseJsonField(degree.degree_name)} in {parseJsonField(degree.specialty)},{" "}
+                  {parseJsonField(degree.institution)} ({formatYear(degree.year)})
                 </Typography>
               </li>
             ))}
@@ -116,9 +131,9 @@ export async function UniwebDegrees({ uniwebId }: { uniwebId: string }) {
       );
     }
   } catch (error) {
-    console.error('Error fetching Uniweb degrees:', error);
+    console.error("Error fetching Uniweb degrees:", error);
   }
-  
+
   return null;
 }
 
@@ -126,14 +141,15 @@ export async function UniwebDegrees({ uniwebId }: { uniwebId: string }) {
 export async function UniwebPublications({ uniwebId }: { uniwebId: string }) {
   try {
     const uniwebProfile = await getProfile(uniwebId);
-    
-    if (uniwebProfile.selected_publications && 
-        (uniwebProfile.selected_publications.journal_articles?.length > 0 || 
-         uniwebProfile.selected_publications.pubmed_articles?.length > 0)) {
-      
+
+    if (
+      uniwebProfile.selected_publications &&
+      (uniwebProfile.selected_publications.journal_articles?.length > 0 ||
+        uniwebProfile.selected_publications.pubmed_articles?.length > 0)
+    ) {
       const allPublications = [
         ...(uniwebProfile.selected_publications.journal_articles || []),
-        ...(uniwebProfile.selected_publications.pubmed_articles || [])
+        ...(uniwebProfile.selected_publications.pubmed_articles || []),
       ];
 
       return (
@@ -160,9 +176,9 @@ export async function UniwebPublications({ uniwebId }: { uniwebId: string }) {
       );
     }
   } catch (error) {
-    console.error('Error fetching Uniweb publications:', error);
+    console.error("Error fetching Uniweb publications:", error);
   }
-  
+
   return null;
 }
 
@@ -170,7 +186,7 @@ export async function UniwebPublications({ uniwebId }: { uniwebId: string }) {
 export async function UniwebResearchDesc({ uniwebId }: { uniwebId: string }) {
   try {
     const uniwebProfile = await getProfile(uniwebId);
-    
+
     if (uniwebProfile.research_description && uniwebProfile.research_description.length > 0) {
       const researchDesc = parseJsonField(uniwebProfile.research_description[0].research_description);
 
@@ -184,9 +200,9 @@ export async function UniwebResearchDesc({ uniwebId }: { uniwebId: string }) {
       );
     }
   } catch (error) {
-    console.error('Error fetching Uniweb research description:', error);
+    console.error("Error fetching Uniweb research description:", error);
   }
-  
+
   return null;
 }
 
@@ -194,11 +210,10 @@ export async function UniwebResearchDesc({ uniwebId }: { uniwebId: string }) {
 export async function UniwebResearchInterests({ uniwebId }: { uniwebId: string }) {
   try {
     const uniwebProfile = await getProfile(uniwebId);
-    
+
     if (uniwebProfile.research_interests && uniwebProfile.research_interests.length > 0) {
-      const sortedInterests = uniwebProfile.research_interests
-        .sort((a, b) => parseInt(a.order) - parseInt(b.order));
-      
+      const sortedInterests = uniwebProfile.research_interests.sort((a, b) => parseInt(a.order) - parseInt(b.order));
+
       return (
         <div className="mb-4">
           <Typography type="h3" as="h3" className="mb-2">
@@ -217,8 +232,8 @@ export async function UniwebResearchInterests({ uniwebId }: { uniwebId: string }
       );
     }
   } catch (error) {
-    console.error('Error fetching Uniweb research interests:', error);
+    console.error("Error fetching Uniweb research interests:", error);
   }
-  
+
   return null;
 }

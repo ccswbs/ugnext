@@ -10,16 +10,19 @@ import { Breadcrumbs } from "@/components/server/breadcrumbs";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
-import { LdapContactInfo } from "@/components/server/ldap-contact-info";
+import { AadContactInfo } from "@/components/server/aad-contact-info";
 import { getIconForUrl, getDisplayText } from "@/lib/ug-utils";
-import { 
-  UniwebAffiliations,
-  UniwebCurrentTeaching,
-  UniwebDegrees,
-  UniwebPublications,
-  UniwebResearchDesc,
-  UniwebResearchInterests 
-} from "@/components/server/uniweb-components";
+import { ContactEmail, ContactPhone } from "@uoguelph/react-components/contact";
+import { List, ListItem } from "@uoguelph/react-components/list";
+import { parseTelUrl, slugify } from "@/lib/string-utils";
+// import {
+//   UniwebAffiliations,
+//   UniwebCurrentTeaching,
+//   UniwebDegrees,
+//   UniwebPublications,
+//   UniwebResearchDesc,
+//   UniwebResearchInterests
+// } from "@/components/server/uniweb-components";
 import { FullProfile } from "@/lib/types/profile";
 
 // Component-specific interface that extends the shared FullProfile type
@@ -34,7 +37,7 @@ export type ProfileProps = {
 };
 
 export async function Profile({ id, pre, post }: ProfileProps) {
-  const content = await getProfileContent(id) as ProfileContent | null;
+  const content = (await getProfileContent(id)) as ProfileContent | null;
 
   // Couldn't fetch content for this id.
   if (!content) {
@@ -57,8 +60,13 @@ export async function Profile({ id, pre, post }: ProfileProps) {
         <Breadcrumbs url={content.path ?? undefined} />
         <Container>
           <Typography type="h1" as="h1" className="mb-4">
-            {content?.title}       
+            {content?.title}
           </Typography>
+          {content.credentials && (
+            <Typography type="h3" as="p" className="-mt-3">
+              {content.credentials}
+            </Typography>
+          )}
           <div className="md:flex md:gap-6 md:items-start">
             {content.profilePicture && (
               <Image
@@ -68,21 +76,25 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 src={content.profilePicture.image.url}
                 className="w-full max-w-full md:w-1/3 md:max-w-1/3 object-contain mb-4"
               />
-            )}            
+            )}
             <div className="md:flex-1">
               {pre && pre}
-              {content.profileJobTitle && <Typography type="h3" as="p" className="mt-0">{content.profileJobTitle}</Typography>}
+              {content.profileJobTitle && (
+                <Typography type="h3" as="p" className="mt-0">
+                  {content.profileJobTitle}
+                </Typography>
+              )}
               {content.profileUnit && content.profileUnit.length > 0 && (
                 <Typography type="body" as="p" className="mt-0 mb-2">
-                  {content.profileUnit.map(unit => unit.name).join(', ')}
+                  {content.profileUnit.map((unit) => unit.name).join(", ")}
                 </Typography>
               )}
 
-              {/* Directory contact info from LDAP */}
+              {/* Directory contact info from AAD */}
               {content.centralLoginId && content.centralLoginId.trim() && (
-                <div id="contact-info" className="mb-4">
-                  <LdapContactInfo 
-                    centralLoginId={content.centralLoginId}
+                <div id="contact-info">
+                  <AadContactInfo
+                    email={`${content.centralLoginId}@uoguelph.ca`}
                     directoryEmail={content.directoryEmail}
                     directoryOffice={content.directoryOffice}
                     directoryPhone={content.directoryPhone}
@@ -93,14 +105,40 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {/* Custom links if available */}
               {content.customLink && content.customLink.length > 0 && (
                 <div className="mb-4">
-                  {content.customLink.map((link, idx) => (
-                    <div key={idx} className="mb-2">
-                      <Link href={link.url} className="flex items-center gap-2">
-                        <i className={`${getIconForUrl(link.url)} w-4`} aria-hidden="true"></i>
-                        <span>{link.title}</span>
-                      </Link>
-                    </div>
-                  ))}
+                  {/* Email links first */}
+                  {content.customLink
+                    .filter(link => link.url.startsWith("mailto:"))
+                    .map((link, idx) => (
+                      <div key={`email-${idx}`}>
+                        <ContactEmail email={link.url.replace("mailto:", "")} />
+                      </div>
+                    ))}
+                  
+                  {/* Tel links second */}
+                  {content.customLink
+                    .filter(link => link.url.startsWith("tel:"))
+                    .map((link, idx) => (
+                      <div key={`tel-${idx}`}>
+                        {(() => {
+                          const { number, extension } = parseTelUrl(link.url);
+                          return <ContactPhone number={number} extension={extension} />;
+                        })()}
+                      </div>
+                    ))}
+                  
+                  {/* Other links last */}
+                  {content.customLink
+                    .filter(link => !link.url.startsWith("mailto:") && !link.url.startsWith("tel:"))
+                    .map((link, idx) => (
+                      <div key={`other-${idx}`}>
+                        <div className="flex items-center gap-2">
+                          <i className={`${getIconForUrl(link.url)} fa-fw shrink-0`} aria-hidden="true"></i>
+                          <Link href={link.url} className="min-w-0 break-words">
+                            {link.title}
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               )}
 
@@ -108,37 +146,35 @@ export async function Profile({ id, pre, post }: ProfileProps) {
               {content.profileFields && content.profileFields.length > 0 && (
                 <div className="mb-4">
                   {content.profileFields.map((field, index) => (
-                    <div key={index} className="mb-3">
+                    <React.Fragment key={index}>
                       {field.label && (
-                        <div className="font-bold mb-1">
+                        <div className="font-bold mt-2">
                           <HtmlParser html={getDisplayText(field.label)} instructions={undefined} />
                         </div>
                       )}
                       {field.value && (
-                        <div>
-                          <HtmlParser html={getDisplayText(field.value)} instructions={undefined} />
-                        </div>
+                        <HtmlParser html={getDisplayText(field.value)} instructions={undefined} useContentsClass={false} />
                       )}
-                    </div>
+                    </React.Fragment>
                   ))}
                 </div>
               )}
-              
+
               {/* Research Areas */}
               {content.profileResearchAreas?.length && (
                 <div className="mb-4">
                   <Typography type="h3" as="h2" className="mt-0 mb-2">
                     Research Areas
                   </Typography>
-                  <ul className="list-disc list-inside">
+                  <List as="ul">
                     {content.profileResearchAreas.map((area) => (
-                      <li key={area.id}>
+                      <ListItem key={area.id}>
                         <Typography type="body" as="span">
                           {area.name}
                         </Typography>
-                      </li>
+                      </ListItem>
                     ))}
-                  </ul>
+                  </List>
                 </div>
               )}
             </div>
@@ -151,43 +187,47 @@ export async function Profile({ id, pre, post }: ProfileProps) {
             </div>
           )}
           <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
-          
+
           {/* Render all Profile Sections in order (both regular parts and UniWeb parts) */}
           {content?.profileSections?.map((section, index) => {
             // Regular profile part with custom content
             if (section.profilePartLabel && !section.uniwebSelect) {
               return (
                 <div key={section.id || index}>
-                  <Typography type="h2" as="h2">
+                  <Typography id={slugify(section.profilePartLabel)} type="h2" as="h2">
                     {section.profilePartLabel}
                   </Typography>
-                  <HtmlParser key={section.id} html={section.profilePartText?.processed ?? ""} instructions={undefined} />
+                  <HtmlParser
+                    key={section.id}
+                    html={section.profilePartText?.processed ?? ""}
+                    instructions={undefined}
+                  />
                 </div>
               );
             }
-            
+
             // UniWeb profile part
-            if (section.uniwebSelect?.name && content.uniwebId) {
-              const sectionName = section.uniwebSelect.name;
-              
-              switch (sectionName) {
-                case 'Affiliations':
-                  return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
-                case 'Research Description':
-                  return <UniwebResearchDesc key={index} uniwebId={content.uniwebId} />;
-                case 'Current Teaching':
-                  return <UniwebCurrentTeaching key={index} uniwebId={content.uniwebId} />;
-                case 'Selected Degrees':
-                  return <UniwebDegrees key={index} uniwebId={content.uniwebId} />;
-                case 'Selected Publications':
-                  return <UniwebPublications key={index} uniwebId={content.uniwebId} />;
-                case 'Research Interests':
-                  return <UniwebResearchInterests key={index} uniwebId={content.uniwebId} />;
-                default:
-                  return null;
-              }
-            }
-            
+            // if (section.uniwebSelect?.name && content.uniwebId) {
+            //   const sectionName = section.uniwebSelect.name;
+            //
+            //   switch (sectionName) {
+            //     case 'Affiliations':
+            //       return <UniwebAffiliations key={index} uniwebId={content.uniwebId} />;
+            //     case 'Research Description':
+            //       return <UniwebResearchDesc key={index} uniwebId={content.uniwebId} />;
+            //     case 'Current Teaching':
+            //       return <UniwebCurrentTeaching key={index} uniwebId={content.uniwebId} />;
+            //     case 'Selected Degrees':
+            //       return <UniwebDegrees key={index} uniwebId={content.uniwebId} />;
+            //     case 'Selected Publications':
+            //       return <UniwebPublications key={index} uniwebId={content.uniwebId} />;
+            //     case 'Research Interests':
+            //       return <UniwebResearchInterests key={index} uniwebId={content.uniwebId} />;
+            //     default:
+            //       return null;
+            //   }
+            // }
+
             // Empty section or unrecognized format
             return null;
           })}

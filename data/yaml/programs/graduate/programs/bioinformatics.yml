@@ -9,19 +9,17 @@ types:
   - course-based
   - thesis-based
 tags:
-  - biol*
-  - science*
-  - life*
-  - living
-  - research*
-  - informat*
-  - data
-  - statistic*
-  - programming
-  - analys*
+  - analysis
   - big data
   - biology
-  - data*
+  - data
+  - information
   - innovation
+  - life
+  - living
+  - programming
+  - research
+  - science
   - software development
   - software engineering
+  - statistic

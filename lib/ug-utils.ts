@@ -213,7 +213,7 @@ export function getIconForUrl(url: string) {
       
       case 'twitter.com':
       case 'x.com':
-        return 'fa-brands fa-twitter';
+        return 'fa-brands fa-x-twitter';
       
       case 'facebook.com':
         return 'fa-brands fa-facebook';
@@ -242,11 +242,11 @@ export function getIconForUrl(url: string) {
           return 'fa-solid fa-microscope';
         }
         
-        return 'fa-solid fa-earth-americas'; // Default icon for other URLs
+        return 'fa-regular fa-globe'; // Default icon for other URLs
     }
   } catch {
     // Fallback for invalid URLs
-    return 'fa-solid fa-external-link';
+    return 'fa-regular fa-globe';
   }
 }
 

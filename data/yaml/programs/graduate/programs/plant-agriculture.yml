@@ -9,24 +9,23 @@ types:
   - course-based
   - thesis-based
 tags:
-  - crops
-  - crop science
-  - biochemistry
-  - plant genetics
   - agri-food
-  - agri*
+  - agriculture
   - agronomy
   - applied bioinformatics
+  - biochemistry
   - biofuels
   - biological plant disease control
   - biology
   - breeding
+  - crop
   - crop production systems
-  - crop*
+  - crop science
+  - crops
   - cultureal plant disease control
   - energy
+  - food
   - food production
-  - food*
   - fruit and vegetable technology
   - genetics
   - grass
@@ -34,14 +33,15 @@ tags:
   - innovation
   - metabolic processes in crop plants
   - physiology of crop yield
+  - plant
   - plant biology
   - plant breeding
   - plant diseases
+  - plant genetics
   - plant production
-  - plant*
   - soil
   - soy
-  - sustainab*
-  - teach*
+  - sustainable
+  - teacher
   - turf
   - wheat

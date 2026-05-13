@@ -6,12 +6,12 @@ degrees:
 types:
   - course-based
 tags:
-  - biology
-  - science
   - agriculture
+  - animal
   - animal behavior
   - animal breeding
   - animal genetics
   - animal nutrition
   - animal welfare
-  - animal*
+  - biology
+  - science

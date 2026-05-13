@@ -1,5 +1,7 @@
 import { gql } from "@/lib/graphql";
 import { handleGraphQLError, query } from "@/lib/apollo";
+import { drupal } from "@/lib/drupal";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { parse, type LinksetInterface } from "@drupal/linkset";
 import type { MenuFragment } from "@/lib/graphql/types";
 
@@ -82,12 +84,15 @@ export async function getMenuByName(name: string) {
 
 export async function getMenuByNameLinkset(menuName: string) {
   const name = menuName.toLowerCase().replaceAll("_", "-");
+  const showUnpublished = await showUnpublishedContent();
 
   if (!name || name === "no-menu") {
     return null;
   }
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`);
+  const response = await drupal.fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`, {
+    withAuth: Boolean(showUnpublished),
+  });
 
   if (!response.ok) {
     console.error(`Failed to fetch menu ${name}: ${response.statusText}`);

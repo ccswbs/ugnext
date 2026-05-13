@@ -14,6 +14,7 @@ export interface BaseProfile {
   title: string;
   path?: string;
   centralLoginId?: string;
+  credentials?: string;
   directoryEmail: boolean;
   directoryOffice: boolean;
   directoryPhone: boolean;
@@ -41,6 +42,7 @@ export interface ProfileWithImage extends BaseProfile {
   profilePicture?: ProfileImage;
   profileFirstName?: string;
   profileLastName?: string;
+  acceptingNewGrads?: boolean;
 }
 
 /**
@@ -92,6 +94,7 @@ export interface ProfileField {
  */
 export interface FullProfile extends ProfileWithImage {
   uniwebId?: string;
+  acceptingNewGrads?: boolean;
   primaryNavigation?: {
     menuName?: string;
   };

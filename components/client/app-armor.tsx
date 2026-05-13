@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DismissibleAlert } from "@uoguelph/react-components/dismissible-alert";
+import { DismissibleAlert, DismissibleAlertProps } from "@uoguelph/react-components/dismissible-alert";
 import unraw from "unraw";
 
-export type Alert = {
-  title: string;
-  description: string;
-  timestamp: string;
-};
+function linkifyUrls(input: string) {
+  const urlRegex = /\b(?:https?:\/\/)?(?:www\.)?[a-z0-9.-]+\.[a-z]{2,}(?:\/[^\s<]*)?/gi;
+
+  return input.replace(urlRegex, (match) => {
+    const href = match.startsWith("http://") || match.startsWith("https://") ? match : `https://${match}`;
+    return `<a href="${href}">${match}</a>`;
+  });
+}
 
 export async function getAlert(test = false) {
   const id = test ? "162" : "163";
@@ -36,7 +39,9 @@ export async function getAlert(test = false) {
     const html = parser.parseFromString(text, "text/html");
 
     const title = html.querySelector('[slot="subtitle"]')?.textContent;
-    const description = html.querySelector('[slot="message"]')?.textContent;
+    let description =
+      html.querySelector('[slot="message"]')?.textContent ??
+      `Please visit uoguelph.ca/campus-status for more information.`;
     const timestamp = html
       .querySelector('[slot="footer"]')
       ?.textContent?.replace("Last updated", "")
@@ -48,7 +53,11 @@ export async function getAlert(test = false) {
       return null;
     }
 
-    return { title, description, timestamp };
+    if (!description.includes("Please visit uoguelph.ca/campus-status for more information.")) {
+      description += `<br> Please visit uoguelph.ca/campus-status for more information.`;
+    }
+
+    return { title, description: linkifyUrls(description), timestamp };
   } catch (e) {
     console.error(`Failed to parse AppArmor alert JSON`);
     return null;
@@ -56,7 +65,7 @@ export async function getAlert(test = false) {
 }
 
 export function AppArmor() {
-  const [alert, setAlert] = useState<Alert>();
+  const [alert, setAlert] = useState<DismissibleAlertProps>();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -73,7 +82,9 @@ export function AppArmor() {
     });
   }, []);
 
-  return <DismissibleAlert alert={alert} />;
+  if (!alert) return <></>;
+
+  return <DismissibleAlert {...alert} />;
 }
 
 export default AppArmor;

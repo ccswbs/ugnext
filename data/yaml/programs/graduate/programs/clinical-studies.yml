@@ -8,20 +8,21 @@ types:
   - thesis-based
   - course-based
 tags:
-  - biology
-  - science
-  - health
-  - medical
+  - animal
   - animal health industry
   - animal medicine
-  - animal*
-  - biomedical*
-  - clinic*
+  - biology
+  - biomedical
+  - clinic
   - disease
   - disorders
-  - health*
+  - health
   - illness
-  - medi*
-  - pharma*
-  - vet*
-  - zoo*
+  - medical
+  - medicine
+  - pet
+  - pharmacy
+  - science
+  - vet
+  - veterinary
+  - zoology

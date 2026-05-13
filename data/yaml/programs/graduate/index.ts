@@ -235,7 +235,7 @@ export async function getGraduateProgram(filepath: string) {
 }
 
 export async function getGraduatePrograms() {
-  const paths = await glob(path.join(GRADUATE_PROGRAMS_PROGRAMS_ROOT, "*.yml"));
+  const paths = await glob(path.posix.join(GRADUATE_PROGRAMS_PROGRAMS_ROOT, "*.yml"));
   const programs = await Promise.all(paths.map((path) => getGraduateProgram(path)));
 
   return programs.sort((a, b) => a.title.localeCompare(b.title));

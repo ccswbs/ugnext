@@ -1,4 +1,4 @@
-import { getNewsArticle } from "@/data/drupal/ovc-news";
+import { getLegacyNewsArticle } from "@/data/drupal/legacy-news";
 import { Header } from "@/components/server/header";
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@uoguelph/react-components/container";
 import { Metadata, ResolvingMetadata } from "next";
 import { getRoute } from "@/data/drupal/route";
-import { OVCFooter } from "@/components/client/ovc/ovc-footer";
+import { CustomFooter } from "@/components/server/custom-footer";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 export default async function OVCNewsArticle({ params }: Props) {
   const { id } = await params;
-  const content = await getNewsArticle(id);
+  const content = await getLegacyNewsArticle(id);
 
   if (!content) {
     notFound();
@@ -81,7 +81,7 @@ export default async function OVCNewsArticle({ params }: Props) {
         </Container>
       </LayoutContent>
 
-      <OVCFooter />
+      <CustomFooter id="758" />
       <Footer></Footer>
     </Layout>
   );

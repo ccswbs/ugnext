@@ -6,13 +6,12 @@ degrees:
 types:
   - course-based
 tags:
+  - agriculture
   - biology
+  - food
+  - health
+  - innovation
+  - medicine
+  - pharmacy
   - science
   - technology
-  - agri*
-  - food*
-  - health*
-  - innovation
-  - medi*
-  - medicine*
-  - pharma*

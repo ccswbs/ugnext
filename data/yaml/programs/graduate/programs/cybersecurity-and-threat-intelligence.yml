@@ -6,21 +6,22 @@ degrees:
 types:
   - course-based
 tags:
-  - technology
-  - science
-  - mathematics
-  - programming
   - attacks and defenses
   - biology
   - crime
   - cryptography
   - cybersecurity
-  - data*
+  - data
   - digital forensics
-  - government*
+  - government
   - information technology
-  - organization*
+  - mathematics
+  - organization
+  - political
   - privacy
+  - programming
+  - science
   - security
   - security architecture
+  - technology
   - threat

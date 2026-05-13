@@ -1,0 +1,1482 @@
+[
+    {
+        "acronym":  "THRN",
+        "link":  "/maps/locations/albert-a-thornbrough",
+        "name":  "Albert A. Thornbrough Building"
+    },
+    {
+        "acronym":  "ALEX",
+        "link":  "/maps/locations/alexander-hall",
+        "name":  "Alexander Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/alumni-house",
+        "name":  "Alumni House"
+    },
+    {
+        "acronym":  "ANNU",
+        "link":  "/maps/locations/animal-science",
+        "name":  "Animal Science and Nutrition"
+    },
+    {
+        "acronym":  "AVI",
+        "link":  "/maps/locations/aviary",
+        "name":  "Aviary"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.uoguelph.ca/arboretum",
+        "name":  "The Arboretum Information Booth"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/bedrock-aquifer",
+        "name":  "Bedrock Aquifer Field Facility"
+    },
+    {
+        "acronym":  "EBA",
+        "link":  "/maps/locations/bio-control",
+        "name":  "Bio Control Building"
+    },
+    {
+        "acronym":  "BIO",
+        "link":  "http://www.biodiversity.uoguelph.ca",
+        "name":  "Biodiversity Institute of Ontario"
+    },
+    {
+        "acronym":  "BDDC",
+        "link":  "https://www.bioproductscentre.com",
+        "name":  "Bioproducts Discovery and Development Centre"
+    },
+    {
+        "acronym":  "BWH",
+        "link":  "/maps/locations/blackwood-hall",
+        "name":  "Blackwood Hall"
+    },
+    {
+        "acronym":  "CRIFS",
+        "link":  "https://www.uoguelph.ca/foodscience/guelph-food-innovation-centre/canadian-research-institute-food-safety-crifs",
+        "name":  "Canadian Research Institute for Food Safety"
+    },
+    {
+        "acronym":  "CAF",
+        "link":  "https://www.uoguelph.ca/research/services-divisions/central-animal-facility",
+        "name":  "Central Animal Facility"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://biodiversitygenomics.net",
+        "name":  "Centre for Biodiversity Genomics"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/cesi",
+        "name":  "Community Engage Scholarship Institute"
+    },
+    {
+        "acronym":  "CMC",
+        "link":  "/maps/locations/chemical-management",
+        "name":  "Chemical Management Centre"
+    },
+    {
+        "acronym":  "CSB",
+        "link":  "/maps/locations/clinical-skills",
+        "name":  "Clinical Skills Building"
+    },
+    {
+        "acronym":  "CRSC",
+        "link":  "/maps/locations/crop-science",
+        "name":  "Crop Science Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/crop-science",
+        "name":  "Crop Science Greenhouse"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://uoguelph.ca/conservatory",
+        "name":  "D.M. Rutherford Family Conservatory"
+    },
+    {
+        "acronym":  "DAIR",
+        "link":  "/maps/locations/dairy-barn",
+        "name":  "Dairy Barn"
+    },
+    {
+        "acronym":  "DH",
+        "link":  "/maps/locations/day-hall",
+        "name":  "Day Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/drew-hall",
+        "name":  "Drew Hall"
+    },
+    {
+        "acronym":  "ESRC",
+        "link":  "/maps/locations/equine-sciences",
+        "name":  "Equine Sports Medicine and Reproduction Centre"
+    },
+    {
+        "acronym":  "FEDB",
+        "link":  "/maps/locations/federal-building",
+        "name":  "Federal Building (Indigenous Student Centre)"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://csaonline.ca/bike-centre",
+        "name":  "CSA Bike Centre and Foodbank"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/fielding-house",
+        "name":  "Fielding House (Diversity and Human Rights)"
+    },
+    {
+        "acronym":  "FS",
+        "link":  "/maps/locations/food-science",
+        "name":  "Food Science"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Food Science Addition"
+    },
+    {
+        "acronym":  "FVMI",
+        "link":  null,
+        "name":  "OVC Former VMI Building"
+    },
+    {
+        "acronym":  "PAIF",
+        "link":  "/maps/locations/ovc",
+        "name":  "Production Animal Isolation Facility"
+    },
+    {
+        "acronym":  "GRHM",
+        "link":  "/maps/locations/graham-hall",
+        "name":  "Graham Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.uoguelph.ca/alliance/",
+        "name":  "Agroforestry Research Site"
+    },
+    {
+        "acronym":  "GTIF",
+        "link":  "/maps/locations/guelph-turfgrass",
+        "name":  "G.M. Frost Centre"
+    },
+    {
+        "acronym":  "HUTT",
+        "link":  "/maps/locations/hl-hutt-building",
+        "name":  "H.L. Hutt Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.uoguelph.ca/ib/infrastructure_and_facilities/aqualab",
+        "name":  "Hagen Aqualab"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/header-house",
+        "name":  "Header House/Greenhouses"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/henry-kock",
+        "name":  "Henry Kock Propagation Centre"
+    },
+    {
+        "acronym":  "ARBHC",
+        "link":  "/maps/locations/hilton-centre",
+        "name":  "Hilton Centre"
+    },
+    {
+        "acronym":  "TCI",
+        "link":  "/maps/locations/institute-critical-studies",
+        "name":  "Institute for Critical Studies"
+    },
+    {
+        "acronym":  "GRAD",
+        "link":  "/maps/locations/grad-house",
+        "name":  "Grad House"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/hersey-building",
+        "name":  "J.C. Hersey Building"
+    },
+    {
+        "acronym":  "WONF",
+        "link":  "/maps/locations/wild-ontario",
+        "name":  "Wild Ontario Facility"
+    },
+    {
+        "acronym":  "ARBNC",
+        "link":  "/maps/locations/taylor-nature",
+        "name":  "J.C. Taylor Nature Interpretive Centre"
+    },
+    {
+        "acronym":  "MCLN",
+        "link":  "/maps/locations/jd-maclachlan",
+        "name":  "J.D. MacLachlan Building"
+    },
+    {
+        "acronym":  "JTP",
+        "link":  "/maps/locations/john-t-powell",
+        "name":  "John T. Powell Building"
+    },
+    {
+        "acronym":  "JHNH",
+        "link":  "/maps/locations/johnston-hall",
+        "name":  "Johnston Hall"
+    },
+    {
+        "acronym":  "LA",
+        "link":  "/maps/locations/landscape-architecture",
+        "name":  "Landscape Architecture"
+    },
+    {
+        "acronym":  "MCKN",
+        "link":  "/maps/locations/mackinnon",
+        "name":  "MacKinnon Building"
+    },
+    {
+        "acronym":  "MACN",
+        "link":  "/maps/locations/macnaughton",
+        "name":  "MacNaughton Building"
+    },
+    {
+        "acronym":  "MAC",
+        "link":  "/maps/locations/macdonald-hall",
+        "name":  "Macdonald Hall"
+    },
+    {
+        "acronym":  "MINS",
+        "link":  "/maps/locations/macdonald-institute",
+        "name":  "Macdonald Institute"
+    },
+    {
+        "acronym":  "MACS",
+        "link":  "/maps/locations/macdonald-stewart-hall",
+        "name":  "Macdonald Stewart Hall"
+    },
+    {
+        "acronym":  "MASS",
+        "link":  "/maps/locations/massey-hall",
+        "name":  "Massey Hall"
+    },
+    {
+        "acronym":  "MLIB",
+        "link":  "/maps/locations/mclaughlin-library",
+        "name":  "McLaughlin Library"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/ovc-embryo",
+        "name":  "OVC Animal Biotechnology Embryo Laboratory"
+    },
+    {
+        "acronym":  "BMED",
+        "link":  "/maps/locations/ovc-biomedical-science",
+        "name":  "OVC Biomedical Science"
+    },
+    {
+        "acronym":  "CRB",
+        "link":  "/maps/locations/ovc-clinical-research",
+        "name":  "OVC Clinical Research"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://www.ovc.uoguelph.ca/research/en/researchresources/comparativeclinicalresearchfacility.asp",
+        "name":  "OVC Comparative Clinical Research Facility"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/ovc-gnotobiotic",
+        "name":  "OVC Gnotobiotic Laboratory"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/ovc-healthcare",
+        "name":  "OVC Hill\u0027s Pet Nutrition Primary Healthcare Centre"
+    },
+    {
+        "acronym":  "JASAC",
+        "link":  "/maps/locations/ovc-small-animal",
+        "name":  "OVC James Archibald Small Animal Clinic"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/ovc-animal-isolation",
+        "name":  "OVC Large Animal Isolation Unit"
+    },
+    {
+        "acronym":  "LLC",
+        "link":  "/maps/locations/ovc-lifetime-learning",
+        "name":  "OVC Lifetime Learning Centre"
+    },
+    {
+        "acronym":  "ECL",
+        "link":  "/maps/locations/ovc-enhanced-clinical-learning",
+        "name":  "OVC Enhanced Clinical Learning"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/ovc-macnabb",
+        "name":  "OVC MacNabb House"
+    },
+    {
+        "acronym":  "OVC",
+        "link":  "/maps/locations/ovc-main-animal",
+        "name":  "OVC Main Animal Holding"
+    },
+    {
+        "acronym":  "OVCM",
+        "link":  "/maps/locations/ovc",
+        "name":  "OVC Main Building"
+    },
+    {
+        "acronym":  "ANCC",
+        "link":  "/maps/locations/ovc-animal-cancer",
+        "name":  "OVC Mona Campbell Centre for Animal Cancer"
+    },
+    {
+        "acronym":  "PAHL",
+        "link":  "/maps/locations/ovc-pahl",
+        "name":  "OVC Pathobiology/Animal Health Lab Building"
+    },
+    {
+        "acronym":  "SB",
+        "link":  "https://ovc.uoguelph.ca",
+        "name":  "OVC Stewart Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/old-fire-hall",
+        "name":  "Old Fire Hall Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/plant-growth",
+        "name":  "Plant Growth Facilities Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/raithby",
+        "name":  "Raithby House"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/research-innovation",
+        "name":  "Research Innovation"
+    },
+    {
+        "acronym":  "REYN",
+        "link":  "/maps/locations/reynolds",
+        "name":  "Reynolds Building"
+    },
+    {
+        "acronym":  "RICH",
+        "link":  "/maps/locations/richards",
+        "name":  "Richards Building"
+    },
+    {
+        "acronym":  "ROZH",
+        "link":  "/maps/locations/rozanski",
+        "name":  "Rozanski Hall"
+    },
+    {
+        "acronym":  "SSC",
+        "link":  "/maps/locations/science-complex",
+        "name":  "Summerlee Science Complex"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/equine-sciences",
+        "name":  "Temporary Horse Arena"
+    },
+    {
+        "acronym":  "ARB",
+        "link":  "https://www.uoguelph.ca/arboretum",
+        "name":  "The Arboretum Centre"
+    },
+    {
+        "acronym":  "HMS",
+        "link":  "https://www.uoguelph.ca/arboretum",
+        "name":  "Hales-McKay Shelter"
+    },
+    {
+        "acronym":  "ECBA",
+        "link":  "/maps/locations/bovey-admin",
+        "name":  "The Edmund C. Bovey Administration Building"
+    },
+    {
+        "acronym":  "ECBA",
+        "link":  "/maps/locations/bovey-lab",
+        "name":  "The Edmund C. Bovey Laboratory Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/townsend-house",
+        "name":  "Townsend House"
+    },
+    {
+        "acronym":  "WMEM",
+        "link":  "/maps/locations/war-memorial",
+        "name":  "War Memorial Hall"
+    },
+    {
+        "acronym":  "ZAV",
+        "link":  "/maps/locations/zavitz",
+        "name":  "Zavitz Hall"
+    },
+    {
+        "acronym":  "ZOOB",
+        "link":  "/maps/locations/zoology-annex-2",
+        "name":  "Zoology Annex 2"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/zoology-storage",
+        "name":  "Zoology Storage Shed"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Dundas Lane"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "East Ring Road"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "McGilvray Street"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P12"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P15 1"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P15 2"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P16 1"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P16 2"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P21"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P23"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P25 Zone A (Upper)"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P33"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P3"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P31 Kiosk"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P44 Kiosk"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P47"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P5"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P51"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P64"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P67"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P8"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P9"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P13"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P14"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P17"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P19"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P30"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P7"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P27"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P34"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P35"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P5"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P51"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P20"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P42"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P1"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P10"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P64"
+    },
+    {
+        "acronym":  "UC",
+        "link":  "/maps/locations/university-centre",
+        "name":  "University Centre"
+    },
+    {
+        "acronym":  "CUP",
+        "link":  "/maps/locations/central-utilties",
+        "name":  "Central Utilities Plant"
+    },
+    {
+        "acronym":  "GEN",
+        "link":  "/maps/locations/generator-building",
+        "name":  "Generator Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/maintenance",
+        "name":  "Maintenance Bldg #1"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/maintenance",
+        "name":  "Maintenance Bldg #2"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/alumni-stadium",
+        "name":  "Alumni Stadium"
+    },
+    {
+        "acronym":  "GRC",
+        "link":  "/maps/locations/gryphon-centre",
+        "name":  "Gryphon Centre"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://fitandrec.gryphons.ca/about/facilities/gryphon-fieldhouse",
+        "name":  "Gryphon Field House"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://fitandrec.gryphons.ca/about/facilities/outdoor-sports-fields/gryphon-soccer-complex",
+        "name":  "Gryphon Soccer Complex"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.buildingpotential.ca/home",
+        "name":  "Guelph Gryphons Athletics Centre"
+    },
+    {
+        "acronym":  "AC",
+        "link":  "/maps/locations/athletics-centre",
+        "name":  "W.F. Mitchell Athletics Centre"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "CIBC ATMs"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/rbc-on-campus-gryphons-athletic-centre",
+        "name":  "RBC On Campus Branch"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "MacNaughton ATM"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "MacNaughton/Summerlee ATM"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Gryphon Centre ATM"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "RBC ATM"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Alumni Walk at Massey Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Alumni Walk at Reynolds Bldg"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Animal Sciences"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Arboretum Rd/Seal Pond Rd"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Arboretum/Service Road"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Central Animal Facility"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Creelman Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Dairy Bush Path/78 College"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Dairy Bush Path/Chancellor\u0027s Way"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Dairy Bush Path/South of Barn"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Dairy Bush Path/Top of Hill"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Dundas Lane"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "East Ring Road/Dundas Lane"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "East Village"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Fieldhouse"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "McGilvary St/CRIFS"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Mountain Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P13"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P15"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P17"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P18"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P19"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P23/Macdonald Lane"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P31"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P31/McGilvary St"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P31/Smith Lane"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "P42"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Powerhouse/Alumni Walk"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Prairie Hall (Front)"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Raithby House"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Reynolds Walk"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Reynolds Walk/Food Sciences Bldg"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Richards/Thornborough"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Soccer Field"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Trent Lane"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Twin Pads"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Vehicle Services"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "War Memorial Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.uoguelph.ca/police/",
+        "name":  "Campus Police"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.uoguelph.ca/fire",
+        "name":  "Fire Safety"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://www.balzacs.com/locations/guelph",
+        "name":  "Balzac\u0027s Coffee Roasters"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://barmasonrestaurant.ca",
+        "name":  "Bar Mason"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://buffalowildwings.com/en",
+        "name":  "Buffalo Wild Wings"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.chocolatsfavoris.com/en",
+        "name":  "Chocolats Favoris"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.dairyqueen.com/ca-en/Locator/Detail/?localechange=1\u0026store-id=1983",
+        "name":  "Dairy Queen"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://www.dianadowntown.com",
+        "name":  "Diana Downtown"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://pizza.dominos.ca/Guelph-Ontario-10263",
+        "name":  "Domino\u0027s Pizza"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://www.doubledragonguelph.ca",
+        "name":  "Double Dragon"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.eastsidemarios.com",
+        "name":  "East Side Mario\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://origin-www.fionnmaccools.com",
+        "name":  "Fionn MacCool\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.kelseys.ca",
+        "name":  "Kelseys"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://marybrowns.com",
+        "name":  "Mary Brown\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://marybrowns.com",
+        "name":  "Mary Brown\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://marybrowns.com",
+        "name":  "Mary Brown\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.milestonesrestaurants.com",
+        "name":  "Milestones"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.montanas.ca",
+        "name":  "Montana\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://locations.muchoburrito.com/ll/CA/ON/Guelph/492-Edinburgh-Rd-S",
+        "name":  "Mucho Burrito"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://mrosmow.com/shawarma-guelph-wyndham-macdonell",
+        "name":  "Osmow\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://www.papajohns.ca",
+        "name":  "Papa John\u0027s Pizza"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://pitapit.ca",
+        "name":  "Pita Pit"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www5.pizzapizza.ca/store/1/delivery",
+        "name":  "Pizza Pizza"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.popeyes.com",
+        "name":  "Popeyes Louisiana Kitchen"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://quiznos.ca/en",
+        "name":  "Quiznos"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.rayschinese.com",
+        "name":  "Ray’s Chinese"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.stlouiswings.com",
+        "name":  "St. Louis Bar \u0026 Grill"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://theburgerspriest.com",
+        "name":  "The Burger\u0027s Priest"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://www.balzacs.com/locations/guelph",
+        "name":  "The Works"
+    },
+    {
+        "acronym":  null,
+        "link":  "http://www.twicethedealpizza.com",
+        "name":  "Twice the Deal Pizza at Pergola Commons"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.barburrito.ca",
+        "name":  "barBURRITO"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://woodlawnbowl.ca/",
+        "name":  "Woodlawn Bowl"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Bob\u0027s Dogs"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Booster Juice"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Booster Juice"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Brass Taps"
+    },
+    {
+        "acronym":  "CRLM",
+        "link":  "/maps/locations/creelman",
+        "name":  "Creelman Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Infusion"
+    },
+    {
+        "acronym":  null,
+        "link":  "www.//hospitality.uoguelph.ca/hours-menus",
+        "name":  "KFC Express"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Mack\u0027s Coffee Shop"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Mom\u0027s Kitchen"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Mountain Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Nature\u0027s Best"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Need A Pita"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "PJ\u0027s Restaurant in the Atrium"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Pizza Pizza"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Gryphs Restaurant"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Planet Bean Coffee"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Pouteen\u0027s"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Prairie Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Schneiders MainStreet Deli"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://secondcup.com/menu",
+        "name":  "Second Cup/Pinkberry"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Second Cup"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Second Cup"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Starbucks"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Starbucks"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Teriyaki Experience"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/bullring",
+        "name":  "The Bullring Pub"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "The Daily Grind"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "The Grill House"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Gryphon Centre Tim Hortons"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Macnaughton Tim Hortons"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "UC Food Court Tim Hortons"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Tim Hortons Express"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Wok-A-Thon"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Mom\u0027s Kitchen"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Nature\u0027s Best"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Exhibition Stadium"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Deli and Panini"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Mesa Mexicana"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Pizza Al Forno"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Mongolian BBQ"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "Marley Coffee"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/hours-menus",
+        "name":  "100 Mile Grille"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.uoguelph.ca/gsa/fifth-gsa-rooftop-patio-and-lounge",
+        "name":  "The Fifth: GSA Rooftop Patio and Lounge"
+    },
+    {
+        "acronym":  "AGG",
+        "link":  "/maps/locations/art-gallery",
+        "name":  "Art Gallery of Guelph"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/begging-bear",
+        "name":  "Begging Bear"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/branion-plaza",
+        "name":  "Branion Plaza"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/gryphon-statue",
+        "name":  "Gryphon Statue"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/johnston-green",
+        "name":  "Johnston Green"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/peter-clark",
+        "name":  "Peter Clark Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/presidents-house",
+        "name":  "President\u0027s House"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/art-gallery",
+        "name":  "Sculpture Park"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/the-cannon",
+        "name":  "The Cannon"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/the-portico",
+        "name":  "The Portico"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/founding-of-ug",
+        "name":  "The Founding of the University of Guelph"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/hoodless-garden",
+        "name":  "Hoodless Garden"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/the-beaver",
+        "name":  "Uhmikwahdeze \"The Beaver\""
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/east-residences",
+        "name":  "East Residences"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/east-village-town-hall",
+        "name":  "East Village Town Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/east-residences",
+        "name":  "East Village Townhouses"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/lambton-hall",
+        "name":  "Lambton Hall"
+    },
+    {
+        "acronym":  "LENN",
+        "link":  "/maps/locations/lennox-addington",
+        "name":  "Lennox / Addington Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/maids-hall",
+        "name":  "Maids Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/mills-hall",
+        "name":  "Mills Hall"
+    },
+    {
+        "acronym":  "SRES",
+        "link":  "/maps/locations/south-residences",
+        "name":  "South Residences"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/west-village",
+        "name":  "West Village"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/watson-hall",
+        "name":  "Watson Hall"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/wellington-woods",
+        "name":  "Wellington Woods"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "Click Signs"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/retail-outlets",
+        "name":  "Eastside Variety"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/retail-outlets",
+        "name":  "Gryph\u0027s Locker"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://hospitality.uoguelph.ca/retail-outlets",
+        "name":  "Gryphs Sports Shop"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.bookstore.uoguelph.ca",
+        "name":  "The University Bookstore"
+    },
+    {
+        "acronym":  null,
+        "link":  null,
+        "name":  "UC Pharmacy"
+    },
+    {
+        "acronym":  "CCLC",
+        "link":  "https://www.uoguelph.ca/childcare",
+        "name":  "Child Care and Learning Centre"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/eccles-centre",
+        "name":  "John Eccles Centre"
+    },
+    {
+        "acronym":  "COOP",
+        "link":  "https://www.recruitguelph.ca/cecs",
+        "name":  "Experiential Learning Hub"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/housekeeping",
+        "name":  "Housekeeping Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://csaonline.ca/bike-centre",
+        "name":  "The Bike Center"
+    },
+    {
+        "acronym":  null,
+        "link":  "/maps/locations/trent",
+        "name":  "Trent Building"
+    },
+    {
+        "acronym":  null,
+        "link":  "https://www.parking.uoguelph.ca/",
+        "name":  "Parking Services"
+    },
+    {
+        "acronym":  "VSER",
+        "link":  "/maps/locations/vehicle-services",
+        "name":  "Vehicle Services Building"
+    },
+    {
+        "acronym":  "GCUOF",
+        "link":  "https://www.uoguelph.ca/oac/gcuof",
+        "name":  "Guelph Centre for Urban Organic Farming"
+    }
+]

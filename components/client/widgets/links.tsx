@@ -16,11 +16,16 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
   const count = data.links.length ?? 0;
   const classes = tv({
     slots: {
-      container: "mx-0 my-0 flex flex-col flex-wrap sm:flex-row gap-4 w-fit",
-      card: "h-full max-w-[32.2rem]",
+      container: "mx-0 my-0 flex flex-col flex-wrap sm:flex-row gap-4 w-full md:w-fit",
+      card: "h-full md:max-w-[32.2rem]",
       cardImage: "aspect-[4/3] w-full object-cover",
     },
     variants: {
+      isLargeGrid: {
+      true: {
+        container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full",
+        },
+      },
       centered: {
         true: {
           container: "mx-auto justify-center",
@@ -38,7 +43,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
       },
       divisibleByFour: {
         true: {
-          container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+          container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full",
         },
       },
     },
@@ -61,13 +66,14 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
     ],
   })({
     centered: false,
+    isLargeGrid: count > 8, 
     divisibleByTwo: count % 2 === 0,
     divisibleByThree: count % 3 === 0,
     divisibleByFour: count % 4 === 0,
   });
 
   return (
-    <div id={`links-${data.uuid}`} className="mb-5">
+    <div id={`links-${data.uuid}`} className="mb-5 py-4">
       {title && (
         <Typography id={slugify(title)} type="h2" as="h2" className="mb-4">
           {title}
@@ -125,7 +131,9 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
             return (
               <ListItem key={url + index}>
-                <Link href={url}>{title}</Link>
+                <Link as={NextLink} href={url}>
+                  {title}
+                </Link>
               </ListItem>
             );
           })}

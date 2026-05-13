@@ -6,17 +6,17 @@ degrees:
 types:
   - course-based
 tags:
-  - technology
-  - statistics
-  - mathematics
-  - programming
-  - artificial intelligence
   - ai
   - applied modeling
+  - artificial intelligence
+  - data
   - data ethics
-  - data*
   - ethics
   - innovation
   - machine learning
+  - mathematics
+  - programming
   - software development
   - software engineering
+  - statistics
+  - technology
