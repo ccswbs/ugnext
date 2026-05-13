@@ -27,7 +27,7 @@ export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
   const { data, error } = await query({
     query: gql(/* gql */ `
       query MenuLinkByURI($link_uri: String!, $menu_name: String!) {
-        menuLinkContent(filter: {link__uri: $link_uri, menu_name: $menu_name}) {
+        menuLinkContent(filter: { link__uri: $link_uri, menu_name: $menu_name }) {
           results {
             id
           }
@@ -92,6 +92,9 @@ export async function getMenuByNameLinkset(menuName: string) {
 
   const response = await drupal.fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`, {
     withAuth: Boolean(showUnpublished),
+    next: {
+      tags: [`menu-${name}`],
+    },
   });
 
   if (!response.ok) {
