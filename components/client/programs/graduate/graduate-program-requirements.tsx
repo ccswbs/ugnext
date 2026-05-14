@@ -73,8 +73,13 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
     <Container className={container()}>
       <div className={column()}>
         <GraduateProgramRequirementsCategory title="Program Type" items={program.type} />
+        <GraduateProgramRequirementsCategory title="Degree" items={program.degree.map((degree) => degree.name)} />
+        <GraduateProgramRequirementsCategory title="Delivery" items={program.delivery} />
       </div>
-      <div className={column()}></div>
+      <div className={column()}>
+        <GraduateProgramRequirementsCategory title="Admission Average" items={[program.average.details]} />
+        <GraduateProgramRequirementsCategory title="Duration" items={[]} />
+      </div>
       <div className={column()}></div>
       <div className={column()}></div>
     </Container>
