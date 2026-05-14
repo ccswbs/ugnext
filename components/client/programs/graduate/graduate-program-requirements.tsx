@@ -80,7 +80,9 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
         <GraduateProgramRequirementsCategory title="Admission Average" items={[program.average.details]} />
         <GraduateProgramRequirementsCategory title="Duration" items={[]} />
       </div>
-      <div className={column()}></div>
+      <div className={column()}>
+        <GraduateProgramRequirementsCategory title="Deadlines & Entry Terms" items={[]} />
+      </div>
       <div className={column()}></div>
     </Container>
   );
