@@ -69,6 +69,10 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
 
   const { container, column } = classes();
 
+  const parseDuration = (duration: GraduateProgram["duration"]) => {
+    return [];
+  };
+
   const parseDeadlines = (deadlines: GraduateProgram["deadlines"]) => {
     const locationMap = new Map<string, string[]>();
 
@@ -100,7 +104,7 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
       </div>
       <div className={column()}>
         <GraduateProgramRequirementsCategory title="Admission Average" items={[program.average.details]} />
-        <GraduateProgramRequirementsCategory title="Duration" items={[]} />
+        <GraduateProgramRequirementsCategory title="Duration" items={parseDuration(program.duration)} />
       </div>
       <div className={column()}>
         <GraduateProgramRequirementsCategory
