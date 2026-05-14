@@ -28,25 +28,24 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
 
   const classes = tv({
     slots: {
-      represents: "",
       link: "text-inherit! outline-inherit!",
     },
     variants: {
       variant: {
         "light-grey": {
-          represents: "text-body-copy-on-light!",
+          link: "text-body-copy-link-on-light!",
         },
         "solid-colors-full": "",
         "solid-colors-no-gap": "",
         "left-border": {
-          represents: "text-body-copy-on-light!",
+          link: "text-body-copy-link-on-light!",
         },
         "solid-colors": "",
       },
     },
   });
 
-  const { represents: representsClasses, link: linkClasses } = classes({ variant: variant });
+  const { link: linkClasses } = classes({ variant: variant });
 
   return (
     <StatisticsComponent id={`statistics-${data.uuid}`} variant={variant}>
@@ -57,7 +56,7 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
               <i className={`${statistic.fontAwesomeIcon} fa-4x pt-6 -mb-6`}></i>
             )}
             <StatisticsItemValue>{statistic?.value}</StatisticsItemValue>
-            <StatisticsItemRepresents className={representsClasses()}>
+            <StatisticsItemRepresents>
               <HtmlParser
                 html={statistic?.represents?.processed}
                 instructions={[
