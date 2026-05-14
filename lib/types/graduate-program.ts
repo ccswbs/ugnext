@@ -13,16 +13,24 @@ export type GraduateProgramDuration = {
 
 export type GraduateProgramAdmissionAverage = {
   details: string;
-  minPercentage?: number;
-  maxPercentage?: number;
-  averageLetterGrade?: string;
+  percentage?: {
+    min: number;
+    max?: number;
+  };
+  letterGrade?: string;
+};
+
+export type GraduateDegree = {
+  id: string;
+  name: string;
+  acronym?: string;
 };
 
 export type GraduateProgram = {
   code: string;
-  degree: string;
+  degree: GraduateDegree[];
   type: string[];
-  delivery: string;
+  delivery: string[];
   average: GraduateProgramAdmissionAverage;
   duration: GraduateProgramDuration[];
   deadlines: GraduateProgramApplicationDeadline[];
