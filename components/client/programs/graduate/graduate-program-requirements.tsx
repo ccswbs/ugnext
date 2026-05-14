@@ -69,6 +69,28 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
 
   const { container, column } = classes();
 
+  const parseDeadlines = (deadlines: GraduateProgram["deadlines"]) => {
+    const locationMap = new Map<string, string[]>();
+
+    for (const deadline of deadlines) {
+      const existing = locationMap.get(deadline.location);
+
+      if (existing) {
+        locationMap.set(deadline.location, [...existing, `${deadline.term}: ${deadline.date}`]);
+      } else {
+        locationMap.set(deadline.location, [`${deadline.term}: ${deadline.date}`]);
+      }
+    }
+
+    return locationMap
+      .entries()
+      .map((entry) => ({
+        title: entry[0],
+        items: entry[1],
+      }))
+      .toArray();
+  };
+
   return (
     <Container className={container()}>
       <div className={column()}>
@@ -81,7 +103,10 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
         <GraduateProgramRequirementsCategory title="Duration" items={[]} />
       </div>
       <div className={column()}>
-        <GraduateProgramRequirementsCategory title="Deadlines & Entry Terms" items={[]} />
+        <GraduateProgramRequirementsCategory
+          title="Deadlines & Entry Terms"
+          items={parseDeadlines(program.deadlines) ?? []}
+        />
       </div>
       <div className={column()}></div>
     </Container>
