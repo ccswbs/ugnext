@@ -70,7 +70,26 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
   const { container, column } = classes();
 
   const parseDuration = (duration: GraduateProgram["duration"]) => {
-    return [];
+    const programTypeMap = new Map<string, string[]>();
+
+    for (const entry of duration) {
+      const existing = programTypeMap.get(entry.programType);
+      const strValue = `${entry.type}: ${entry.min}${entry.max ? `- ${entry.max}` : ""} Months`;
+
+      if (existing) {
+        programTypeMap.set(entry.type, [...existing, strValue]);
+      } else {
+        programTypeMap.set(entry.type, [strValue]);
+      }
+    }
+
+    return programTypeMap
+      .entries()
+      .map((entry) => ({
+        title: entry[0],
+        items: entry[1],
+      }))
+      .toArray();
   };
 
   const parseDeadlines = (deadlines: GraduateProgram["deadlines"]) => {
