@@ -2,10 +2,12 @@ import { GraduateProgram } from "@/lib/types/graduate-program";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 
-type GraduateProgramRequirementsCategoryItem = {
-  title: string;
-  items: string[];
-} & string;
+type GraduateProgramRequirementsCategoryItem =
+  | {
+      title: string;
+      items: string[];
+    }
+  | string;
 
 export function GraduateProgramRequirementsCategory({
   title,
@@ -31,13 +33,24 @@ export function GraduateProgramRequirementsCategory({
       <h2 className={categoryTitle()}>{title}</h2>
       <ul className={categoryList()}>
         {items.map((type) => {
-          if (typeof type !== "string") {
-            return "tes";
+          if (typeof type === "string") {
+            return (
+              <li key={type} className={categoryListItem()}>
+                {type}
+              </li>
+            );
           }
 
           return (
-            <li key={type} className={categoryListItem()}>
-              {type}
+            <li key={type.title} className={categoryListItem()}>
+              <span className={categorySubtitle()}>{type.title}</span>
+              <ul className={categoryList()}>
+                {type.items.map((item) => (
+                  <li key={item} className={categoryListItem()}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </li>
           );
         })}
@@ -49,7 +62,7 @@ export function GraduateProgramRequirementsCategory({
 export function GraduateProgramRequirements({ program }: { program: GraduateProgram }) {
   const classes = tv({
     slots: {
-      container: "p-4 w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-grey-dark-bg text-white",
+      container: "p-4 w-full grid md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-grey-dark-bg text-white",
       column: "",
     },
   });
@@ -58,7 +71,9 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
 
   return (
     <Container className={container()}>
-      <div className={column()}></div>
+      <div className={column()}>
+        <GraduateProgramRequirementsCategory title="Program Type" items={program.type} />
+      </div>
       <div className={column()}></div>
       <div className={column()}></div>
       <div className={column()}></div>
