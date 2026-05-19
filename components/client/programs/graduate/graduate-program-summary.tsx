@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { toTitleCase } from "@uoguelph/react-components";
 
-export function GraduateProgramRequirementsSummary({ program }: { program: GraduateProgram }) {
+export function GraduateProgramSummary({ program }: { program: GraduateProgram }) {
   const classes = tv({
     slots: {
       container: "p-4 w-full grid gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white",

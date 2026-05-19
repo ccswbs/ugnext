@@ -14,19 +14,14 @@ import { Rankings } from "@/components/client/home/rankings";
 import { ThreeCampuses } from "@/components/client/home/three-campuses";
 import { HomeStory } from "@/components/client/home/story";
 import { getActiveStory } from "@/data/yaml/home/stories";
-import { GraduateProgramRequirementsSummary } from "@/components/client/programs/graduate/graduate-program-requirements-summary";
-import {
-  exampleProgram,
-  GraduateDegree,
-  GraduateProgramAdmissionAverage,
-  GraduateProgramApplicationDeadline,
-  GraduateProgramDuration,
-} from "@/lib/types/graduate-program";
+import { GraduateProgramSummary } from "../components/client/programs/graduate/graduate-program-summary";
+import { getGraduateProgramById } from "@/data/drupal/graduate-program";
 
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
   const story = await getActiveStory();
+  const program = getGraduateProgramById("8904");
 
   return (
     <Layout>
@@ -38,7 +33,7 @@ export default async function Page() {
           {hero && <SpotlightHero data={hero} />}
         </div>
 
-        <GraduateProgramRequirementsSummary program={exampleProgram} />
+        {program && <GraduateProgramSummary program={program} />}
 
         <Container>
           <Typography className="text-black!" type="h2" as="h2">
