@@ -12,7 +12,7 @@ export type GraduateDegree = {
 export type GraduateProgramApplicationDeadline = {
   location: "domestic" | "international";
   term: "fall" | "winter" | "spring";
-  date: Date;
+  date: string;
   showYear?: boolean;
 };
 

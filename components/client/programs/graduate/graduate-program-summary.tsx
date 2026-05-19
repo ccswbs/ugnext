@@ -43,7 +43,7 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
   })();
 
   const deadlines = program.deadlines.reduce((acc, item) => {
-    const value = `${toTitleCase(item.term)}: ${item.date.toLocaleDateString("en-US", {
+    const value = `${toTitleCase(item.term)}: ${new Date(item.date).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: item.showYear ? "numeric" : undefined,
