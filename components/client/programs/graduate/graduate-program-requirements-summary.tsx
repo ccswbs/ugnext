@@ -63,7 +63,7 @@ export function GraduateProgramRequirementsCategory({
 export function GraduateProgramRequirementsSummary({ program }: { program: GraduateProgram }) {
   const classes = tv({
     slots: {
-      container: "p-4 w-full grid md:gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white",
+      container: "p-4 w-full grid gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white",
       column: "flex flex-col gap-4",
     },
   });
@@ -101,6 +101,7 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
       const fullFormattedStr = `${toTitleCase(deadline.term)}: ${deadline.date.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
+        year: deadline.showYear ? "numeric" : undefined,
       })}`;
 
       if (existing) {

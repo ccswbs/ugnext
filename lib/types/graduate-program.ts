@@ -2,6 +2,7 @@ export type GraduateProgramApplicationDeadline = {
   location: "domestic" | "international";
   term: "fall" | "winter" | "spring";
   date: Date;
+  showYear?: boolean;
 };
 
 export type GraduateProgramDuration = {
