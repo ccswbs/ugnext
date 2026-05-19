@@ -56,10 +56,11 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
   }, new Map<string, string[]>());
 
   const duration = program.duration.reduce((acc, item) => {
-    const value = `${toTitleCase(item.type)}: ${item.min} Months ${item.max ? `- ${item.max} Months` : ""}`.trim();
+    const range = item.min ? `${item.min} Months - ${item.max} Months` : `${item.max} Months`;
+    const value = `${toTitleCase(item.type)}: ${range}`;
 
-    const existing = acc.get(item.programType ?? "") ?? [];
-    acc.set(item.programType ?? "", [...existing, value]);
+    const existing = acc.get(item.programType?.name ?? "") ?? [];
+    acc.set(item.programType?.name ?? "", [...existing, value]);
 
     return acc;
   }, new Map<string, string[]>());

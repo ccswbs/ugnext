@@ -32,6 +32,20 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
       }
       programOngoing
     }
+    durationFullTime {
+      durationMinimum
+      durationMaximum
+      durationType {
+        ...GraduateProgramType
+      }
+    }
+    durationPartTime {
+      durationMaximum
+      durationMinimum
+      durationType {
+        ...GraduateProgramType
+      }
+    }
   }
 `);
 
@@ -65,6 +79,32 @@ export async function getGraduateProgramById(id: string): Promise<GraduateProgra
     return null;
   }
 
+  const duration: GraduateProgram["duration"] = [];
+
+  const parseDuration = (durationData: typeof data.nodeGraduateProgram.durationFullTime, durationType: string) => {
+    for (const item of durationData ?? []) {
+      if (!item.durationType) {
+        duration.push({
+          type: durationType,
+          min: item.durationMinimum ?? undefined,
+          max: item.durationMaximum,
+        });
+      }
+
+      for (const type of item.durationType ?? []) {
+        duration.push({
+          type: durationType,
+          min: item.durationMinimum ?? 0,
+          max: item.durationMaximum ?? 0,
+          programType: type ?? undefined,
+        });
+      }
+    }
+  };
+
+  parseDuration(data.nodeGraduateProgram.durationFullTime, "full-time");
+  parseDuration(data.nodeGraduateProgram.durationPartTime, "part-time");
+
   return {
     code: data.nodeGraduateProgram.graduateProgramCode ?? "",
     degree: {
@@ -78,7 +118,7 @@ export async function getGraduateProgramById(id: string): Promise<GraduateProgra
       maxPercentage: data.nodeGraduateProgram.admissionAverageMaxPerc ?? undefined,
       minPercentage: data.nodeGraduateProgram.admissionAverageMinPerc ?? undefined,
     },
-    duration: [],
+    duration: duration,
     deadlines: [],
   };
 }

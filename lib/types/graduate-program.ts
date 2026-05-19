@@ -10,17 +10,17 @@ export type GraduateDegree = {
 };
 
 export type GraduateProgramApplicationDeadline = {
-  location: "domestic" | "international";
-  term: "fall" | "winter" | "spring";
+  location: string;
+  term: string;
   date: string;
   showYear?: boolean;
 };
 
 export type GraduateProgramDuration = {
-  type: "full-time" | "part-time";
-  min: number;
-  max?: number;
-  programType?: string;
+  type: string;
+  min?: number;
+  max: number;
+  programType?: GraduateProgramType;
 };
 
 export type GraduateProgramAdmissionAverage = {
