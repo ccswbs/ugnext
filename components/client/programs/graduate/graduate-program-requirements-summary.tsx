@@ -1,6 +1,7 @@
-import { GraduateProgram } from "@/lib/types/graduate-program";
+import { GraduateProgram, GraduateProgramAdmissionAverage } from "@/lib/types/graduate-program";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
+import { toTitleCase } from "@uoguelph/react-components";
 
 type GraduateProgramRequirementsCategoryItem =
   | {
@@ -20,9 +21,9 @@ export function GraduateProgramRequirementsCategory({
     slots: {
       category: "",
       categoryTitle: "text-lg font-bold text-yellow-on-dark",
-      categorySubtitle: "",
-      categoryList: "",
-      categoryListItem: "",
+      categorySubtitle: "block font-bold text-white group-not-first-of-type:pt-4",
+      categoryList: "group flex flex-col",
+      categoryListItem: "not-first:has-[ul]:pt-4",
     },
   });
 
@@ -59,11 +60,11 @@ export function GraduateProgramRequirementsCategory({
   );
 }
 
-export function GraduateProgramRequirements({ program }: { program: GraduateProgram }) {
+export function GraduateProgramRequirementsSummary({ program }: { program: GraduateProgram }) {
   const classes = tv({
     slots: {
-      container: "p-4 w-full grid md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-grey-dark-bg text-white",
-      column: "",
+      container: "p-4 w-full grid md:gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white",
+      column: "flex flex-col gap-4",
     },
   });
 
@@ -74,19 +75,19 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
 
     for (const entry of duration) {
       const existing = programTypeMap.get(entry.programType);
-      const strValue = `${entry.type}: ${entry.min}${entry.max ? `- ${entry.max}` : ""} Months`;
+      const strValue = `${toTitleCase(entry.type)}: ${entry.min}${entry.max ? ` - ${entry.max}` : ""} Months`;
 
       if (existing) {
-        programTypeMap.set(entry.type, [...existing, strValue]);
+        programTypeMap.set(entry.programType, [...existing, strValue]);
       } else {
-        programTypeMap.set(entry.type, [strValue]);
+        programTypeMap.set(entry.programType, [strValue]);
       }
     }
 
     return programTypeMap
       .entries()
       .map((entry) => ({
-        title: entry[0],
+        title: toTitleCase(entry[0]) + ":",
         items: entry[1],
       }))
       .toArray();
@@ -97,32 +98,62 @@ export function GraduateProgramRequirements({ program }: { program: GraduateProg
 
     for (const deadline of deadlines) {
       const existing = locationMap.get(deadline.location);
+      const fullFormattedStr = `${toTitleCase(deadline.term)}: ${deadline.date.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+      })}`;
 
       if (existing) {
-        locationMap.set(deadline.location, [...existing, `${deadline.term}: ${deadline.date}`]);
+        locationMap.set(deadline.location, [...existing, fullFormattedStr]);
       } else {
-        locationMap.set(deadline.location, [`${deadline.term}: ${deadline.date}`]);
+        locationMap.set(deadline.location, [fullFormattedStr]);
       }
     }
 
     return locationMap
       .entries()
       .map((entry) => ({
-        title: entry[0],
+        title: toTitleCase(entry[0]) + ":",
         items: entry[1],
       }))
       .toArray();
+  };
+
+  const parseAverage = (average: GraduateProgramAdmissionAverage) => {
+    const { letterGrade, minPercentage, maxPercentage } = average;
+
+    const hasMin = minPercentage !== undefined;
+    const hasMax = maxPercentage !== undefined;
+
+    let percentageText = "";
+
+    if (hasMin && hasMax) {
+      percentageText = `${minPercentage}% - ${maxPercentage}%`;
+    } else if (hasMin) {
+      percentageText = `${minPercentage}%`;
+    } else if (hasMax) {
+      percentageText = `${maxPercentage}%`;
+    }
+
+    if (letterGrade && percentageText) {
+      return `${letterGrade} (${percentageText})`;
+    }
+
+    return letterGrade || percentageText || "";
   };
 
   return (
     <Container className={container()}>
       <div className={column()}>
         <GraduateProgramRequirementsCategory title="Program Type" items={program.type} />
-        <GraduateProgramRequirementsCategory title="Degree" items={program.degree.map((degree) => degree.name)} />
+        <GraduateProgramRequirementsCategory
+          title="Degree"
+          items={program.degree.map((degree) => (degree.acronym ? `${degree.acronym} (${degree.name})` : degree.name))}
+        />
         <GraduateProgramRequirementsCategory title="Delivery" items={program.delivery} />
       </div>
       <div className={column()}>
-        <GraduateProgramRequirementsCategory title="Admission Average" items={[program.average.details]} />
+        <GraduateProgramRequirementsCategory title="Admission Average" items={[parseAverage(program.average)]} />
         <GraduateProgramRequirementsCategory title="Duration" items={parseDuration(program.duration)} />
       </div>
       <div className={column()}>

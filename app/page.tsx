@@ -14,6 +14,14 @@ import { Rankings } from "@/components/client/home/rankings";
 import { ThreeCampuses } from "@/components/client/home/three-campuses";
 import { HomeStory } from "@/components/client/home/story";
 import { getActiveStory } from "@/data/yaml/home/stories";
+import { GraduateProgramRequirementsSummary } from "@/components/client/programs/graduate/graduate-program-requirements-summary";
+import {
+  exampleProgram,
+  GraduateDegree,
+  GraduateProgramAdmissionAverage,
+  GraduateProgramApplicationDeadline,
+  GraduateProgramDuration,
+} from "@/lib/types/graduate-program";
 
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
@@ -29,6 +37,8 @@ export default async function Page() {
           <TagLine />
           {hero && <SpotlightHero data={hero} />}
         </div>
+
+        <GraduateProgramRequirementsSummary program={exampleProgram} />
 
         <Container>
           <Typography className="text-black!" type="h2" as="h2">
