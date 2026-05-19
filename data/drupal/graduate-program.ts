@@ -2,11 +2,20 @@ import { GraduateProgram } from "@/lib/types/graduate-program";
 import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import { GraduateProgramFragment } from "@/lib/graphql/types";
 import { toTitleCase } from "@uoguelph/react-components";
 
 export const GRADUATE_PROGRAM = gql(/* gql */ `
   fragment GraduateProgram on NodeGraduateProgram {
     __typename
+    graduateProgramCode
+    graduateProgramDegree {
+      ...GraduateDegreeType
+    }
+    graduateProgramType {
+      ...GraduateProgramType
+    }
+    graduateDelivery
     admissionAverageLetter
     admissionAverageMaxPerc
     admissionAverageMinPerc
@@ -16,14 +25,6 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
         time
       }
       programOngoing
-    }
-    graduateProgramCode
-    graduateDelivery
-    graduateProgramDegree {
-      ...GraduateDegreeType
-    }
-    graduateProgramType {
-      ...GraduateProgramType
     }
     internationalAppDeadline {
       entryTerm
@@ -49,7 +50,7 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
   }
 `);
 
-export async function getGraduateProgramById(id: string): Promise<GraduateProgram | null> {
+async function getGraduateProgramById(id: string): Promise<GraduateProgram | null> {
   const showUnpublished = await showUnpublishedContent();
   const client = getClient();
 
@@ -80,8 +81,8 @@ export async function getGraduateProgramById(id: string): Promise<GraduateProgra
   }
 
   const duration: GraduateProgram["duration"] = [];
-
-  const parseDuration = (durationData: typeof data.nodeGraduateProgram.durationFullTime, durationType: string) => {
+  const deadlines: GraduateProgram["deadlines"] = [];
+  const parseDuration = (durationData: GraduateProgramFragment["durationFullTime"], durationType: string) => {
     for (const item of durationData ?? []) {
       if (!item.durationType) {
         duration.push({
@@ -102,8 +103,25 @@ export async function getGraduateProgramById(id: string): Promise<GraduateProgra
     }
   };
 
+  const parseDeadlines = (deadlineData: GraduateProgramFragment["domesticAppDeadline"], deadlineLocation: string) => {
+    for (const item of deadlineData ?? []) {
+      if (!item.entryTerm) {
+        continue;
+      }
+
+      deadlines.push({
+        term: item.entryTerm,
+        date: item.programEntryDate?.time as string,
+        location: deadlineLocation,
+        ongoing: item.programOngoing ?? false,
+      });
+    }
+  };
+
   parseDuration(data.nodeGraduateProgram.durationFullTime, "full-time");
   parseDuration(data.nodeGraduateProgram.durationPartTime, "part-time");
+  parseDeadlines(data.nodeGraduateProgram.domesticAppDeadline, "domestic");
+  parseDeadlines(data.nodeGraduateProgram.internationalAppDeadline, "international");
 
   return {
     code: data.nodeGraduateProgram.graduateProgramCode ?? "",
@@ -119,6 +137,8 @@ export async function getGraduateProgramById(id: string): Promise<GraduateProgra
       minPercentage: data.nodeGraduateProgram.admissionAverageMinPerc ?? undefined,
     },
     duration: duration,
-    deadlines: [],
+    deadlines: deadlines,
   };
 }
+
+export default getGraduateProgramById;

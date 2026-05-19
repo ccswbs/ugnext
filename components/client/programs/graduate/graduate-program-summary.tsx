@@ -43,11 +43,15 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
   })();
 
   const deadlines = program.deadlines.reduce((acc, item) => {
-    const value = `${toTitleCase(item.term)}: ${new Date(item.date).toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: item.showYear ? "numeric" : undefined,
-    })}`;
+    const date = item.ongoing
+      ? "Ongoing"
+      : new Date(item.date ?? "").toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: item.showYear ? "numeric" : undefined,
+        });
+
+    const value = `${toTitleCase(item.term)}: ${date}`;
 
     const existing = acc.get(item.location) ?? [];
     acc.set(item.location, [...existing, value]);

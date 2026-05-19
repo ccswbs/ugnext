@@ -14,8 +14,8 @@ import { Rankings } from "@/components/client/home/rankings";
 import { ThreeCampuses } from "@/components/client/home/three-campuses";
 import { HomeStory } from "@/components/client/home/story";
 import { getActiveStory } from "@/data/yaml/home/stories";
-import { GraduateProgramSummary } from "../components/client/programs/graduate/graduate-program-summary";
-import { getGraduateProgramById } from "@/data/drupal/graduate-program";
+import { GraduateProgramSummary } from "@/components/client/programs/graduate/graduate-program-summary";
+import getGraduateProgramById from "@/data/drupal/graduate-program";
 
 export default async function Page() {
   const { hero, cards } = await getSpotlights();
