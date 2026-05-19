@@ -31,7 +31,9 @@ export const toTitleCase = (str: string) => {
     str
       ?.toLowerCase()
       ?.split(/\s+|-|_+/)
-      ?.map((word) => (lowercaseWords.includes(word) ? word : word.charAt(0).toUpperCase() + word.slice(1)))
+      ?.map((word, index) =>
+        index === 0 || !lowercaseWords.includes(word) ? word.charAt(0).toUpperCase() + word.slice(1) : word
+      )
       ?.join(" ") ?? ""
   );
 };

@@ -3,7 +3,7 @@ import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { GraduateProgramFragment } from "@/lib/graphql/types";
-import { toTitleCase } from "@uoguelph/react-components";
+import { toTitleCase } from "@/lib/string-utils";
 
 export const GRADUATE_PROGRAM = gql(/* gql */ `
   fragment GraduateProgram on NodeGraduateProgram {

@@ -1,7 +1,7 @@
 import { GraduateProgram } from "@/lib/types/graduate-program";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
-import { toTitleCase } from "@uoguelph/react-components";
+import { toTitleCase } from "@/lib/string-utils";
 
 export function GraduateProgramSummary({ program }: { program: GraduateProgram }) {
   const classes = tv({
