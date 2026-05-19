@@ -10,8 +10,8 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
       column: "flex flex-col gap-4",
       section: "flex flex-col gap-2",
       sectionTitle: "text-yellow-on-dark font-bold text-xl",
-      sectionSubtitle: "font-bold",
-      sectionList: "flex flex-col has-[ul]:gap-4",
+      sectionSubtitle: "font-bold pt-2",
+      sectionList: "flex flex-col [&>li]:not-first:has-[ul]:pt-2",
     },
   });
 
@@ -64,24 +64,24 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
     return acc;
   }, new Map<string, string[]>());
 
-  const renderMap = (map: Map<string, string[]>) => {
-    const noTitleItems = map.get("");
+  const SectionMap = ({ data }: { data: Map<string, string[]> }) => {
+    const noTitleItems = data.get("");
 
     return (
       <ul className={sectionList()}>
-        {noTitleItems && noTitleItems.map((item) => <li>{item}</li>)}
+        {noTitleItems && noTitleItems.map((item) => <li key={item}>{item}</li>)}
 
-        {map
+        {data
           .entries()
           .toArray()
           .filter(([title]) => title != "")
           .map(([title, items]) => (
-            <li>
+            <li key={title}>
               <h3 className={sectionSubtitle()}>{toTitleCase(title)}:</h3>
 
               <ul>
                 {items.map((item) => (
-                  <li>{item}</li>
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
             </li>
@@ -98,7 +98,7 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
           <h2 className={sectionTitle()}>Program Type</h2>
           <ul className={sectionList()}>
             {program.type.map((type) => (
-              <li>{type}</li>
+              <li key={type}>{type}</li>
             ))}
           </ul>
         </div>
@@ -114,7 +114,7 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
           <h2 className={sectionTitle()}>Delivery</h2>
           <ul className={sectionList()}>
             {program.delivery.map((value) => (
-              <li>{value}</li>
+              <li key={value}>{value}</li>
             ))}
           </ul>
         </div>
@@ -131,7 +131,7 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
         <div className={section()}>
           <h2 className={sectionTitle()}>Duration</h2>
 
-          {renderMap(duration)}
+          <SectionMap data={duration} />
         </div>
       </div>
 
@@ -140,7 +140,7 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
         <div className={section()}>
           <h2 className={sectionTitle()}>Deadlines & Entry Terms</h2>
 
-          {renderMap(deadlines)}
+          <SectionMap data={deadlines} />
         </div>
       </div>
     </Container>
