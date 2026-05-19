@@ -61,6 +61,11 @@ export const exampleProgram: GraduateProgram = {
       max: 48,
       programType: "Major Research Paper/Project",
     },
+    {
+      type: "full-time",
+      min: 12,
+      max: 24,
+    },
   ],
   deadlines: [
     {

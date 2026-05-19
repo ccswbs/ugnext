@@ -1,8 +1,4 @@
-import {
-  GraduateProgram,
-  GraduateProgramAdmissionAverage,
-  GraduateProgramApplicationDeadline,
-} from "@/lib/types/graduate-program";
+import { GraduateProgram } from "@/lib/types/graduate-program";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { toTitleCase } from "@uoguelph/react-components";
@@ -45,28 +41,38 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
   })();
 
   const deadlines = program.deadlines.reduce((acc, item) => {
-    const deadlineStr = `${toTitleCase(item.term)}: ${item.date.toLocaleDateString("en-US", {
+    const value = `${toTitleCase(item.term)}: ${item.date.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: item.showYear ? "numeric" : undefined,
     })}`;
 
     const existing = acc.get(item.location) ?? [];
-    acc.set(item.location, [...existing, deadlineStr]);
+    acc.set(item.location, [...existing, value]);
 
     return acc;
   }, new Map<string, string[]>());
 
   const duration = program.duration.reduce((acc, item) => {
+    const value = `${toTitleCase(item.type)}: ${item.min} Months ${item.max ? `- ${item.max} Months` : ""}`.trim();
+
+    const existing = acc.get(item.programType ?? "") ?? [];
+    acc.set(item.programType ?? "", [...existing, value]);
+
     return acc;
   }, new Map<string, string[]>());
 
   const renderMap = (map: Map<string, string[]>) => {
+    const noTitleItems = map.get("");
+
     return (
       <ul className={sectionList()}>
+        {noTitleItems && noTitleItems.map((item) => <li>{item}</li>)}
+
         {map
           .entries()
           .toArray()
+          .filter(([title]) => title != "")
           .map(([title, items]) => (
             <li>
               <h3 className={sectionSubtitle()}>{toTitleCase(title)}:</h3>
