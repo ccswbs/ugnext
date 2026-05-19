@@ -17,6 +17,8 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
 
   const { container, column, section, sectionTitle, sectionSubtitle, sectionList } = classes();
 
+  const degree = program.degree.acronym ? `${program.degree.acronym} (${program.degree.name})` : program.degree.name;
+
   const average = (() => {
     const { letterGrade, minPercentage, maxPercentage } = program.average;
 
@@ -104,9 +106,7 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
         {/* Degree Section */}
         <div className={section()}>
           <h2 className={sectionTitle()}>Degree</h2>
-          <span>
-            {program.degree.acronym ? `${program.degree.acronym} (${program.degree.name})` : program.degree.name}
-          </span>
+          <span>{degree}</span>
         </div>
 
         {/* Delivery Section*/}
