@@ -9,7 +9,7 @@ export type GraduateProgramDuration = {
   type: "full-time" | "part-time";
   min: number;
   max?: number;
-  programType: string;
+  programType?: string;
 };
 
 export type GraduateProgramAdmissionAverage = {
@@ -26,7 +26,7 @@ export type GraduateDegree = {
 
 export type GraduateProgram = {
   code: string;
-  degree: GraduateDegree[];
+  degree: GraduateDegree;
   type: string[];
   delivery: string[];
   average: GraduateProgramAdmissionAverage;
@@ -36,13 +36,11 @@ export type GraduateProgram = {
 
 export const exampleProgram: GraduateProgram = {
   code: "MABS.ABSC",
-  degree: [
-    {
-      id: "mabs",
-      name: "Master of Animal Biosciences",
-      acronym: "MABS",
-    },
-  ],
+  degree: {
+    id: "mabs",
+    name: "Master of Animal Biosciences",
+    acronym: "MABS",
+  },
   type: ["Coursework", "Major Research Paper/Project"],
   delivery: ["In-person"],
   average: {

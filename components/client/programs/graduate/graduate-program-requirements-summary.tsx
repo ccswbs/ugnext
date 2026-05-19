@@ -1,127 +1,28 @@
-import { GraduateProgram, GraduateProgramAdmissionAverage } from "@/lib/types/graduate-program";
+import {
+  GraduateProgram,
+  GraduateProgramAdmissionAverage,
+  GraduateProgramApplicationDeadline,
+} from "@/lib/types/graduate-program";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { toTitleCase } from "@uoguelph/react-components";
-
-type GraduateProgramRequirementsCategoryItem =
-  | {
-      title: string;
-      items: string[];
-    }
-  | string;
-
-export function GraduateProgramRequirementsCategory({
-  title,
-  items,
-}: {
-  title: string;
-  items: GraduateProgramRequirementsCategoryItem[];
-}) {
-  const classes = tv({
-    slots: {
-      category: "",
-      categoryTitle: "text-lg font-bold text-yellow-on-dark",
-      categorySubtitle: "block font-bold text-white group-not-first-of-type:pt-4",
-      categoryList: "group flex flex-col",
-      categoryListItem: "not-first:has-[ul]:pt-4",
-    },
-  });
-
-  const { category, categoryTitle, categorySubtitle, categoryList, categoryListItem } = classes();
-
-  return (
-    <div className={category()}>
-      <h2 className={categoryTitle()}>{title}</h2>
-      <ul className={categoryList()}>
-        {items.map((type) => {
-          if (typeof type === "string") {
-            return (
-              <li key={type} className={categoryListItem()}>
-                {type}
-              </li>
-            );
-          }
-
-          return (
-            <li key={type.title} className={categoryListItem()}>
-              <span className={categorySubtitle()}>{type.title}</span>
-              <ul className={categoryList()}>
-                {type.items.map((item) => (
-                  <li key={item} className={categoryListItem()}>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
 
 export function GraduateProgramRequirementsSummary({ program }: { program: GraduateProgram }) {
   const classes = tv({
     slots: {
       container: "p-4 w-full grid gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white",
       column: "flex flex-col gap-4",
+      section: "flex flex-col gap-2",
+      sectionTitle: "text-yellow-on-dark font-bold text-xl",
+      sectionSubtitle: "font-bold",
+      sectionList: "flex flex-col has-[ul]:gap-4",
     },
   });
 
-  const { container, column } = classes();
+  const { container, column, section, sectionTitle, sectionSubtitle, sectionList } = classes();
 
-  const parseDuration = (duration: GraduateProgram["duration"]) => {
-    const programTypeMap = new Map<string, string[]>();
-
-    for (const entry of duration) {
-      const existing = programTypeMap.get(entry.programType);
-      const strValue = `${toTitleCase(entry.type)}: ${entry.min}${entry.max ? ` - ${entry.max}` : ""} Months`;
-
-      if (existing) {
-        programTypeMap.set(entry.programType, [...existing, strValue]);
-      } else {
-        programTypeMap.set(entry.programType, [strValue]);
-      }
-    }
-
-    return programTypeMap
-      .entries()
-      .map((entry) => ({
-        title: toTitleCase(entry[0]) + ":",
-        items: entry[1],
-      }))
-      .toArray();
-  };
-
-  const parseDeadlines = (deadlines: GraduateProgram["deadlines"]) => {
-    const locationMap = new Map<string, string[]>();
-
-    for (const deadline of deadlines) {
-      const existing = locationMap.get(deadline.location);
-      const fullFormattedStr = `${toTitleCase(deadline.term)}: ${deadline.date.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: deadline.showYear ? "numeric" : undefined,
-      })}`;
-
-      if (existing) {
-        locationMap.set(deadline.location, [...existing, fullFormattedStr]);
-      } else {
-        locationMap.set(deadline.location, [fullFormattedStr]);
-      }
-    }
-
-    return locationMap
-      .entries()
-      .map((entry) => ({
-        title: toTitleCase(entry[0]) + ":",
-        items: entry[1],
-      }))
-      .toArray();
-  };
-
-  const parseAverage = (average: GraduateProgramAdmissionAverage) => {
-    const { letterGrade, minPercentage, maxPercentage } = average;
+  const average = (() => {
+    const { letterGrade, minPercentage, maxPercentage } = program.average;
 
     const hasMin = minPercentage !== undefined;
     const hasMax = maxPercentage !== undefined;
@@ -141,29 +42,101 @@ export function GraduateProgramRequirementsSummary({ program }: { program: Gradu
     }
 
     return letterGrade || percentageText || "";
+  })();
+
+  const deadlines = program.deadlines.reduce((acc, item) => {
+    const deadlineStr = `${toTitleCase(item.term)}: ${item.date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: item.showYear ? "numeric" : undefined,
+    })}`;
+
+    const existing = acc.get(item.location) ?? [];
+    acc.set(item.location, [...existing, deadlineStr]);
+
+    return acc;
+  }, new Map<string, string[]>());
+
+  const duration = program.duration.reduce((acc, item) => {
+    return acc;
+  }, new Map<string, string[]>());
+
+  const renderMap = (map: Map<string, string[]>) => {
+    return (
+      <ul className={sectionList()}>
+        {map
+          .entries()
+          .toArray()
+          .map(([title, items]) => (
+            <li>
+              <h3 className={sectionSubtitle()}>{toTitleCase(title)}:</h3>
+
+              <ul>
+                {items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </li>
+          ))}
+      </ul>
+    );
   };
 
   return (
     <Container className={container()}>
       <div className={column()}>
-        <GraduateProgramRequirementsCategory title="Program Type" items={program.type} />
-        <GraduateProgramRequirementsCategory
-          title="Degree"
-          items={program.degree.map((degree) => (degree.acronym ? `${degree.acronym} (${degree.name})` : degree.name))}
-        />
-        <GraduateProgramRequirementsCategory title="Delivery" items={program.delivery} />
+        {/* Program Type Section */}
+        <div className={section()}>
+          <h2 className={sectionTitle()}>Program Type</h2>
+          <ul className={sectionList()}>
+            {program.type.map((type) => (
+              <li>{type}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Degree Section */}
+        <div className={section()}>
+          <h2 className={sectionTitle()}>Degree</h2>
+          <span>
+            {program.degree.acronym ? `${program.degree.acronym} (${program.degree.name})` : program.degree.name}
+          </span>
+        </div>
+
+        {/* Delivery Section*/}
+        <div className={section()}>
+          <h2 className={sectionTitle()}>Delivery</h2>
+          <ul className={sectionList()}>
+            {program.delivery.map((value) => (
+              <li>{value}</li>
+            ))}
+          </ul>
+        </div>
       </div>
+
       <div className={column()}>
-        <GraduateProgramRequirementsCategory title="Admission Average" items={[parseAverage(program.average)]} />
-        <GraduateProgramRequirementsCategory title="Duration" items={parseDuration(program.duration)} />
+        {/* Admission Average Section */}
+        <div className={section()}>
+          <h2 className={sectionTitle()}>Admission Average</h2>
+          <span>{average}</span>
+        </div>
+
+        {/* Duration Section */}
+        <div className={section()}>
+          <h2 className={sectionTitle()}>Duration</h2>
+
+          {renderMap(duration)}
+        </div>
       </div>
+
       <div className={column()}>
-        <GraduateProgramRequirementsCategory
-          title="Deadlines & Entry Terms"
-          items={parseDeadlines(program.deadlines) ?? []}
-        />
+        {/* Deadlines & Entry Terms Section */}
+        <div className={section()}>
+          <h2 className={sectionTitle()}>Deadlines & Entry Terms</h2>
+
+          {renderMap(deadlines)}
+        </div>
       </div>
-      <div className={column()}></div>
     </Container>
   );
 }
