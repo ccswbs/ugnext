@@ -98,7 +98,7 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
           <h2 className={sectionTitle()}>Program Type</h2>
           <ul className={sectionList()}>
             {program.type.map((type) => (
-              <li key={type}>{type}</li>
+              <li key={type.id}>{type.name}</li>
             ))}
           </ul>
         </div>

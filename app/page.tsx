@@ -21,7 +21,7 @@ export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
   const story = await getActiveStory();
-  const program = getGraduateProgramById("8904");
+  const program = await getGraduateProgramById("8904");
 
   return (
     <Layout>

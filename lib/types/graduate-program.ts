@@ -1,3 +1,14 @@
+export type GraduateProgramType = {
+  id: string;
+  name: string;
+};
+
+export type GraduateDegree = {
+  id: string;
+  name: string;
+  acronym?: string;
+};
+
 export type GraduateProgramApplicationDeadline = {
   location: "domestic" | "international";
   term: "fall" | "winter" | "spring";
@@ -18,16 +29,10 @@ export type GraduateProgramAdmissionAverage = {
   letterGrade?: string;
 };
 
-export type GraduateDegree = {
-  id: string;
-  name: string;
-  acronym?: string;
-};
-
 export type GraduateProgram = {
   code: string;
   degree: GraduateDegree;
-  type: string[];
+  type: GraduateProgramType[];
   delivery: string[];
   average: GraduateProgramAdmissionAverage;
   duration: GraduateProgramDuration[];
