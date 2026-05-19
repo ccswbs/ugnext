@@ -7,6 +7,7 @@ import {
   CallToActionFragment,
   FeaturedNewsFragment,
   GeneralTextFragment,
+  GraduateProgramSummaryFragment,
   ImageOverlayFragment,
   LinksFragment,
   MediaTextFragment,
@@ -28,6 +29,8 @@ import {
 } from "@/lib/graphql/types";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
 import { getFilteredNews } from "@/data/drupal/news";
+import { GraduateProgram } from "@/lib/types/graduate-program";
+import { parseGraduateProgram } from "@/data/drupal/graduate-program";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -184,6 +187,17 @@ export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
     }
     body {
       processed
+    }
+  }
+`);
+
+export const GRADUATE_PROGRAM_SUMMARY = gql(/* gql */ `
+  fragment GraduateProgramSummary on ParagraphGraduateProgramSummary {
+    __typename
+    uuid
+    id
+    graduateProgramVariation {
+      ...GraduateProgram
     }
   }
 `);
@@ -546,6 +560,10 @@ export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & 
   byTags: TestimonialFragment[];
 };
 
+export type FullGraduateProgram = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
+  program?: GraduateProgram;
+};
+
 export type SectionWidget =
   | AccordionFragment
   | BlockFragment
@@ -571,6 +589,7 @@ export type Widget =
   | CallToActionFragment
   | FeaturedNewsFragment
   | GeneralTextFragment
+  | GraduateProgramSummaryFragment
   | ImageOverlayFragment
   | LinksFragment
   | MediaTextFragment
@@ -601,9 +620,10 @@ export type ProcessedSection = Omit<SectionFragment, "content"> & {
 };
 
 export type ProcessedWidget =
-  | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment>
+  | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment | GraduateProgramSummaryFragment>
   | FullTestimonialSlider
   | FullFeaturedNews
+  | FullGraduateProgram
   | ProcessedSection;
 
 export class WidgetProcessor {
@@ -713,6 +733,13 @@ export class WidgetProcessor {
         };
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
+      case "ParagraphGraduateProgramSummary":
+        return {
+          __typename: widget.__typename,
+          id: widget.id,
+          uuid: widget.uuid,
+          program: parseGraduateProgram(widget.graduateProgramVariation) ?? undefined,
+        };
       default:
         return widget;
     }

@@ -50,33 +50,8 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
   }
 `);
 
-async function getGraduateProgramById(id: string): Promise<GraduateProgram | null> {
-  const showUnpublished = await showUnpublishedContent();
-  const client = getClient();
-
-  const { data, error } = await client.query({
-    query: gql(/* gql */ `
-      query GraduateProgramById($id: ID = "", $revision: ID = "") {
-        nodeGraduateProgram(id: $id, revision: $revision) {
-          ...GraduateProgram
-        }
-      }
-    `),
-    variables: {
-      id: id,
-      revision: showUnpublished ? "latest" : "current",
-    },
-  });
-
-  if (error) {
-    handleGraphQLError(error);
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  if (!data.nodeGraduateProgram) {
+export function parseGraduateProgram(program: GraduateProgramFragment | null | undefined) {
+  if (!program) {
     return null;
   }
 
@@ -118,27 +93,60 @@ async function getGraduateProgramById(id: string): Promise<GraduateProgram | nul
     }
   };
 
-  parseDuration(data.nodeGraduateProgram.durationFullTime, "full-time");
-  parseDuration(data.nodeGraduateProgram.durationPartTime, "part-time");
-  parseDeadlines(data.nodeGraduateProgram.domesticAppDeadline, "domestic");
-  parseDeadlines(data.nodeGraduateProgram.internationalAppDeadline, "international");
+  parseDuration(program.durationFullTime, "full-time");
+  parseDuration(program.durationPartTime, "part-time");
+  parseDeadlines(program.domesticAppDeadline, "domestic");
+  parseDeadlines(program.internationalAppDeadline, "international");
 
   return {
-    code: data.nodeGraduateProgram.graduateProgramCode ?? "",
+    code: program.graduateProgramCode ?? "",
     degree: {
-      ...data.nodeGraduateProgram.graduateProgramDegree,
-      acronym: data.nodeGraduateProgram.graduateProgramDegree.acronym ?? undefined,
+      ...program.graduateProgramDegree,
+      acronym: program.graduateProgramDegree.acronym ?? undefined,
     },
-    type: data.nodeGraduateProgram.graduateProgramType,
-    delivery: data.nodeGraduateProgram.graduateDelivery.map((str) => toTitleCase(str.replace("_", " "))),
+    type: program.graduateProgramType,
+    delivery: program.graduateDelivery.map((str) => toTitleCase(str.replace("_", " "))),
     average: {
-      letterGrade: data.nodeGraduateProgram.admissionAverageLetter ?? undefined,
-      maxPercentage: data.nodeGraduateProgram.admissionAverageMaxPerc ?? undefined,
-      minPercentage: data.nodeGraduateProgram.admissionAverageMinPerc ?? undefined,
+      letterGrade: program.admissionAverageLetter ?? undefined,
+      maxPercentage: program.admissionAverageMaxPerc ?? undefined,
+      minPercentage: program.admissionAverageMinPerc ?? undefined,
     },
     duration: duration,
     deadlines: deadlines,
   };
+}
+
+async function getGraduateProgramById(id: string): Promise<GraduateProgram | null> {
+  const showUnpublished = await showUnpublishedContent();
+  const client = getClient();
+
+  const { data, error } = await client.query({
+    query: gql(/* gql */ `
+      query GraduateProgramById($id: ID = "", $revision: ID = "") {
+        nodeGraduateProgram(id: $id, revision: $revision) {
+          ...GraduateProgram
+        }
+      }
+    `),
+    variables: {
+      id: id,
+      revision: showUnpublished ? "latest" : "current",
+    },
+  });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  if (!data.nodeGraduateProgram) {
+    return null;
+  }
+
+  return parseGraduateProgram(data.nodeGraduateProgram);
 }
 
 export default getGraduateProgramById;
