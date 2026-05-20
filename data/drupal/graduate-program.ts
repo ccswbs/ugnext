@@ -2,8 +2,35 @@ import { GraduateProgram } from "@/lib/types/graduate-program";
 import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { GraduateProgramFragment } from "@/lib/graphql/types";
+import {
+  GraduateProgramFragment,
+  GraduateProgramDurationFragment,
+  GraduateEntryApplicationDeadlineFragment,
+} from "@/lib/graphql/types";
 import { toTitleCase } from "@/lib/string-utils";
+
+export const GRADUATE_ENTRY_APPLICATION_DEADLINE = gql(/* gql */ `
+  fragment GraduateEntryApplicationDeadline on ParagraphGradEntryApplicationDeadline {
+    entryTerm
+    programEntryDate {
+      time
+    }
+    entryTermYear {
+      time
+    }
+    programOngoing
+  }
+`);
+
+export const GRADUATE_PROGRAM_DURATION = gql(/* gql */ `
+  fragment GraduateProgramDuration on ParagraphGraduateProgramDuration {
+    durationMaximum
+    durationMinimum
+    durationType {
+      ...GraduateProgramType
+    }
+  }
+`);
 
 export const GRADUATE_PROGRAM = gql(/* gql */ `
   fragment GraduateProgram on NodeGraduateProgram {
@@ -20,32 +47,16 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
     admissionAverageMaxPerc
     admissionAverageMinPerc
     domesticAppDeadline {
-      entryTerm
-      programEntryDate {
-        time
-      }
-      programOngoing
+      ...GraduateEntryApplicationDeadline
     }
     internationalAppDeadline {
-      entryTerm
-      programEntryDate {
-        time
-      }
-      programOngoing
+      ...GraduateEntryApplicationDeadline
     }
     durationFullTime {
-      durationMinimum
-      durationMaximum
-      durationType {
-        ...GraduateProgramType
-      }
+      ...GraduateProgramDuration
     }
     durationPartTime {
-      durationMaximum
-      durationMinimum
-      durationType {
-        ...GraduateProgramType
-      }
+      ...GraduateProgramDuration
     }
   }
 `);
@@ -57,8 +68,8 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
 
   const duration: GraduateProgram["duration"] = [];
   const deadlines: GraduateProgram["deadlines"] = [];
-  const parseDuration = (durationData: GraduateProgramFragment["durationFullTime"], durationType: string) => {
-    for (const item of durationData ?? []) {
+  const parseDuration = (durationData: GraduateProgramDurationFragment[], durationType: string) => {
+    for (const item of durationData) {
       if (!item.durationType) {
         duration.push({
           type: durationType,
@@ -78,8 +89,8 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
     }
   };
 
-  const parseDeadlines = (deadlineData: GraduateProgramFragment["domesticAppDeadline"], deadlineLocation: string) => {
-    for (const item of deadlineData ?? []) {
+  const parseDeadlines = (deadlineData: GraduateEntryApplicationDeadlineFragment[], deadlineLocation: string) => {
+    for (const item of deadlineData) {
       if (!item.entryTerm) {
         continue;
       }
@@ -93,10 +104,10 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
     }
   };
 
-  parseDuration(program.durationFullTime, "full-time");
-  parseDuration(program.durationPartTime, "part-time");
-  parseDeadlines(program.domesticAppDeadline, "domestic");
-  parseDeadlines(program.internationalAppDeadline, "international");
+  parseDuration(program.durationFullTime ?? [], "full-time");
+  parseDuration(program.durationPartTime ?? [], "part-time");
+  parseDeadlines(program.domesticAppDeadline ?? [], "domestic");
+  parseDeadlines(program.internationalAppDeadline ?? [], "international");
 
   return {
     code: program.graduateProgramCode ?? "",
