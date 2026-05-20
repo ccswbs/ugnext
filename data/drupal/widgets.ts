@@ -560,7 +560,7 @@ export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & 
   byTags: TestimonialFragment[];
 };
 
-export type FullGraduateProgram = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
+export type FullGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
   program?: GraduateProgram;
 };
 
@@ -623,7 +623,7 @@ export type ProcessedWidget =
   | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment | GraduateProgramSummaryFragment>
   | FullTestimonialSlider
   | FullFeaturedNews
-  | FullGraduateProgram
+  | FullGraduateProgramSummary
   | ProcessedSection;
 
 export class WidgetProcessor {
