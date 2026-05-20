@@ -21,7 +21,6 @@ export default async function Page() {
   const { hero, cards } = await getSpotlights();
   const containerClasses = twJoin("pt-6");
   const story = await getActiveStory();
-  const program = await getGraduateProgramById("8904");
 
   return (
     <Layout>
@@ -32,8 +31,6 @@ export default async function Page() {
           <TagLine />
           {hero && <SpotlightHero data={hero} />}
         </div>
-
-        {program && <GraduateProgramSummary program={program} />}
 
         <Container>
           <Typography className="text-black!" type="h2" as="h2">
