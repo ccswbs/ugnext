@@ -19,6 +19,13 @@ export const GRADUATE_DEGREE_TYPE = gql(/* gql */ `
   }
 `);
 
+export const GRADUATE_DELIVERY_TYPE = gql(/* gql */ `
+  fragment GraduateDelivery on TermGraduateProgramDelivery {
+    id
+    name
+  }
+`);
+
 export const GRADUATE_PROGRAM_TYPE = gql(/* gql */ `
   fragment GraduateProgramType on TermGraduateProgramType {
     id

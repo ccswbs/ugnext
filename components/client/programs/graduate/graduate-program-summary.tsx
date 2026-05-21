@@ -119,7 +119,7 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
           <h2 className={sectionTitle()}>Delivery</h2>
           <ul className={sectionList()}>
             {program.delivery.map((value) => (
-              <li key={value}>{value}</li>
+              <li key={value.id}>{value.name}</li>
             ))}
           </ul>
         </div>

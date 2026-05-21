@@ -9,6 +9,11 @@ export type GraduateDegree = {
   acronym?: string;
 };
 
+export type GraduateProgramDelivery = {
+  id: string;
+  name: string;
+};
+
 export type GraduateProgramApplicationDeadline = {
   location: string;
   term: string;
@@ -34,7 +39,7 @@ export type GraduateProgram = {
   code: string;
   degree: GraduateDegree;
   type: GraduateProgramType[];
-  delivery: string[];
+  delivery: GraduateProgramDelivery[];
   average: GraduateProgramAdmissionAverage;
   duration: GraduateProgramDuration[];
   deadlines: GraduateProgramApplicationDeadline[];

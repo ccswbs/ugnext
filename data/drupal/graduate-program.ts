@@ -42,7 +42,9 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
     graduateProgramType {
       ...GraduateProgramType
     }
-    graduateDelivery
+    graduateDelivery {
+      ...GraduateDelivery
+    }
     admissionAverageLetter
     admissionAverageMaxPerc
     admissionAverageMinPerc
@@ -116,7 +118,7 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
       acronym: program.graduateProgramDegree.acronym ?? undefined,
     },
     type: program.graduateProgramType,
-    delivery: program.graduateDelivery.map((str) => toTitleCase(str.replace("_", " "))),
+    delivery: program.graduateDelivery,
     average: {
       letterGrade: program.admissionAverageLetter ?? undefined,
       maxPercentage: program.admissionAverageMaxPerc ?? undefined,
