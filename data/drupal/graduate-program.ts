@@ -10,15 +10,18 @@ import {
 import { toTitleCase } from "@/lib/string-utils";
 
 export const GRADUATE_ENTRY_APPLICATION_DEADLINE = gql(/* gql */ `
-  fragment GraduateEntryApplicationDeadline on ParagraphGradEntryApplicationDeadline {
+  fragment GraduateEntryApplicationDeadline on ParagraphGraduateProgramEntryApplicati {
     entryTerm
-    programEntryDate {
+    domesticMonthDay {
       time
     }
-    entryTermYear {
+    domesticOngoing
+    domesticAppDedInfo
+    internationalMonthDay {
       time
     }
-    programOngoing
+    internationalOngoing
+    internationalAppDedInfo
   }
 `);
 
@@ -48,10 +51,7 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
     admissionAverageLetter
     admissionAverageMaxPerc
     admissionAverageMinPerc
-    domesticAppDeadline {
-      ...GraduateEntryApplicationDeadline
-    }
-    internationalAppDeadline {
+    graduateProgramEntryApp {
       ...GraduateEntryApplicationDeadline
     }
     durationFullTime {
@@ -91,7 +91,7 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
     }
   };
 
-  const parseDeadlines = (deadlineData: GraduateEntryApplicationDeadlineFragment[], deadlineLocation: string) => {
+  const parseDeadlines = (deadlineData: GraduateEntryApplicationDeadlineFragment[]) => {
     for (const item of deadlineData) {
       if (!item.entryTerm) {
         continue;
@@ -99,17 +99,31 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
 
       deadlines.push({
         term: item.entryTerm,
-        date: item.programEntryDate?.time as string,
-        location: deadlineLocation,
-        ongoing: item.programOngoing ?? false,
+        date: {
+          timestamp: item.domesticMonthDay?.time,
+          showYear: false,
+        },
+        location: "domestic",
+        ongoing: item.domesticOngoing ?? false,
+        info: item.domesticAppDedInfo ?? undefined,
+      });
+
+      deadlines.push({
+        term: item.entryTerm,
+        date: {
+          timestamp: item.internationalMonthDay?.time,
+          showYear: false,
+        },
+        location: "international",
+        ongoing: item.internationalOngoing ?? false,
+        info: item.internationalAppDedInfo ?? undefined,
       });
     }
   };
 
   parseDuration(program.durationFullTime ?? [], "full-time");
   parseDuration(program.durationPartTime ?? [], "part-time");
-  parseDeadlines(program.domesticAppDeadline ?? [], "domestic");
-  parseDeadlines(program.internationalAppDeadline ?? [], "international");
+  parseDeadlines(program.graduateProgramEntryApp ?? []);
 
   return {
     code: program.graduateProgramCode ?? "",

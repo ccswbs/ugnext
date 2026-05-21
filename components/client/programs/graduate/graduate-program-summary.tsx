@@ -45,10 +45,10 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
   const deadlines = program.deadlines.reduce((acc, item) => {
     const date = item.ongoing
       ? "Ongoing"
-      : new Date(item.date ?? "").toLocaleDateString("en-US", {
+      : new Date(item.date?.timestamp ?? "").toLocaleDateString("en-US", {
           month: "long",
           day: "numeric",
-          year: item.showYear ? "numeric" : undefined,
+          year: item.date?.showYear ? "numeric" : undefined,
         });
 
     const value = `${toTitleCase(item.term)}: ${date}`;

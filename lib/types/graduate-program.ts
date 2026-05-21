@@ -17,9 +17,12 @@ export type GraduateProgramDelivery = {
 export type GraduateProgramApplicationDeadline = {
   location: string;
   term: string;
-  date?: string;
-  showYear?: boolean;
+  date?: {
+    timestamp: string;
+    showYear: boolean;
+  };
   ongoing: boolean;
+  info?: string;
 };
 
 export type GraduateProgramDuration = {
