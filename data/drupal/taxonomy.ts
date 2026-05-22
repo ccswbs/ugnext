@@ -15,7 +15,7 @@ export const GRADUATE_DEGREE_TYPE = gql(/* gql */ `
   fragment GraduateDegreeType on TermGraduateDegreeType {
     id
     name
-    type: graduateDegreeTypes
+    #degreeType: graduateDegreeTypes
     acronym: acronymDegree
   }
 `);
