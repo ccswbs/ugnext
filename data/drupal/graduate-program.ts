@@ -12,13 +12,22 @@ import { toTitleCase } from "@/lib/string-utils";
 export const GRADUATE_ENTRY_APPLICATION_DEADLINE = gql(/* gql */ `
   fragment GraduateEntryApplicationDeadline on ParagraphGraduateProgramEntryApplicati {
     entryTerm
+    entryTermYear {
+      name
+    }
     domesticMonthDay {
       time
+    }
+    domesticYear {
+      name
     }
     domesticOngoing
     domesticAppDedInfo
     internationalMonthDay {
       time
+    }
+    internationalYear {
+      name
     }
     internationalOngoing
     internationalAppDedInfo
@@ -38,6 +47,7 @@ export const GRADUATE_PROGRAM_DURATION = gql(/* gql */ `
 export const GRADUATE_PROGRAM = gql(/* gql */ `
   fragment GraduateProgram on NodeGraduateProgram {
     __typename
+    id
     graduateProgramCode
     graduateProgramDegree {
       ...GraduateDegreeType
@@ -97,11 +107,18 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
         continue;
       }
 
+      const currentYear = new Date().getFullYear();
+      const domesticDate = new Date(item.domesticMonthDay?.time);
+      const internationalDate = new Date(item.internationalMonthDay?.time);
+
+      domesticDate.setFullYear(Number.parseInt(item.domesticYear?.name ?? "") || currentYear);
+      internationalDate.setFullYear(Number.parseInt(item.internationalYear?.name ?? "") || currentYear);
+
       deadlines.push({
         term: item.entryTerm,
         date: {
-          timestamp: item.domesticMonthDay?.time,
-          showYear: false,
+          timestamp: domesticDate.toISOString(),
+          showYear: Boolean(item.domesticYear?.name),
         },
         location: "domestic",
         ongoing: item.domesticOngoing ?? false,
@@ -111,8 +128,8 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
       deadlines.push({
         term: item.entryTerm,
         date: {
-          timestamp: item.internationalMonthDay?.time,
-          showYear: false,
+          timestamp: internationalDate.toISOString(),
+          showYear: Boolean(item.internationalYear?.name),
         },
         location: "international",
         ongoing: item.internationalOngoing ?? false,

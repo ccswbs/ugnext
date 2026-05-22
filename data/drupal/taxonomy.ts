@@ -15,6 +15,7 @@ export const GRADUATE_DEGREE_TYPE = gql(/* gql */ `
   fragment GraduateDegreeType on TermGraduateDegreeType {
     id
     name
+    type: graduateDegreeTypes
     acronym: acronymDegree
   }
 `);
@@ -36,6 +37,7 @@ export const GRADUATE_PROGRAM_TYPE = gql(/* gql */ `
 export const NAVIGATION_FRAGMENT = gql(/* gql */ `
   fragment Navigation on TermPrimaryNavigation {
     __typename
+    id
     menuName
     headerVariant
     customFooter {
