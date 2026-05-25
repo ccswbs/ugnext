@@ -1,7 +1,136 @@
-import { GraduateProgram } from "@/lib/types/graduate-program";
+import {
+  type GraduateDegree,
+  type GraduateProgram,
+  type GraduateProgramAdmissionAverage,
+  GraduateProgramApplicationDeadline,
+  type GraduateProgramDelivery,
+  type GraduateProgramDuration,
+  type GraduateProgramType,
+} from "@/lib/types/graduate-program";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { toTitleCase } from "@/lib/string-utils";
+
+const classes = tv({
+  slots: {
+    container: "p-4 w-full grid gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white",
+    column: "flex flex-col gap-4",
+    section: "flex flex-col gap-2",
+    sectionTitle: "text-yellow-on-dark font-bold text-xl",
+    sectionSubtitle: "font-bold pt-2",
+    sectionList: "flex flex-col [&>li]:not-first:has-[ul]:pt-2",
+  },
+})();
+
+function GraduateProgramTypes({ types }: { types: GraduateProgramType[] }) {
+  return (
+    <ul className={classes.sectionList()}>
+      {types.map((type) => (
+        <li key={type.id}>{toTitleCase(type.name)}</li>
+      ))}
+    </ul>
+  );
+}
+
+function GraduateDegree({ degree }: { degree: GraduateDegree }) {
+  const { acronym, name } = degree;
+
+  return <span>{acronym ? `${acronym} (${name})` : name}</span>;
+}
+
+function GraduateProgramAdmissionAverage({ average }: { average: GraduateProgramAdmissionAverage }) {
+  const { letterGrade, minPercentage, maxPercentage } = average;
+
+  const hasMin = minPercentage !== undefined;
+  const hasMax = maxPercentage !== undefined;
+
+  let percentageText = "";
+
+  if (hasMin && hasMax) {
+    percentageText = `${minPercentage}% - ${maxPercentage}%`;
+  } else if (hasMin) {
+    percentageText = `${minPercentage}%`;
+  } else if (hasMax) {
+    percentageText = `${maxPercentage}%`;
+  }
+
+  if (letterGrade && percentageText) {
+    return <span>{`${letterGrade} (${percentageText})`}</span>;
+  }
+
+  return <span>{letterGrade || percentageText || ""}</span>;
+}
+
+function GraduateProgramDelivery({ delivery }: { delivery: GraduateProgramDelivery[] }) {
+  return (
+    <ul className={classes.sectionList()}>
+      {delivery.map((value) => (
+        <li key={value.id}>{value.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+function GraduateProgramSummarySectionMap({ map }: { map: Map<string, string[]> }) {
+  const noTitleItems = map.get("");
+
+  return (
+    <ul className={classes.sectionList()}>
+      {noTitleItems && noTitleItems.map((item) => <li key={item}>{item}</li>)}
+
+      {map
+        .entries()
+        .toArray()
+        .filter(([title]) => title != "")
+        .map(([title, items]) => (
+          <li key={title}>
+            <h3 className={classes.sectionSubtitle()}>{toTitleCase(title)}:</h3>
+
+            <ul>
+              {items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+    </ul>
+  );
+}
+
+function GraduateProgramDuration({ duration }: { duration: GraduateProgramDuration[] }) {
+  const map = duration.reduce((acc, item) => {
+    const range = item.min ? `${item.min} Months - ${item.max} Months` : `${item.max} Months`;
+    const value = `${toTitleCase(item.type)}: ${range}`;
+
+    const existing = acc.get(item.programType?.name ?? "") ?? [];
+    acc.set(item.programType?.name ?? "", [...existing, value]);
+
+    return acc;
+  }, new Map<string, string[]>());
+
+  return <GraduateProgramSummarySectionMap map={map} />;
+}
+
+function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApplicationDeadline[] }) {
+  const firstMap = deadlines.reduce((acc, item) => {
+    const date = item.ongoing
+      ? "Ongoing"
+      : new Date(item.date?.timestamp ?? "").toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: item.date?.showYear ? "numeric" : undefined,
+        });
+
+    const value = `${toTitleCase(item.term)}: ${date}`;
+
+    const existing = acc.get(item.location) ?? [];
+    acc.set(item.location, [...existing, value]);
+
+    return acc;
+  }, new Map<string, string[]>());
+
+  return <GraduateProgramSummarySectionMap map={firstMap} />;
+}
 
 export function GraduateProgramSummary({ program }: { program: GraduateProgram }) {
   const classes = tv({
@@ -16,31 +145,6 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
   });
 
   const { container, column, section, sectionTitle, sectionSubtitle, sectionList } = classes();
-
-  const degree = program.degree.acronym ? `${program.degree.acronym} (${program.degree.name})` : program.degree.name;
-
-  const average = (() => {
-    const { letterGrade, minPercentage, maxPercentage } = program.average;
-
-    const hasMin = minPercentage !== undefined;
-    const hasMax = maxPercentage !== undefined;
-
-    let percentageText = "";
-
-    if (hasMin && hasMax) {
-      percentageText = `${minPercentage}% - ${maxPercentage}%`;
-    } else if (hasMin) {
-      percentageText = `${minPercentage}%`;
-    } else if (hasMax) {
-      percentageText = `${maxPercentage}%`;
-    }
-
-    if (letterGrade && percentageText) {
-      return `${letterGrade} (${percentageText})`;
-    }
-
-    return letterGrade || percentageText || "";
-  })();
 
   const deadlines = program.deadlines.reduce((acc, item) => {
     const date = item.ongoing
@@ -59,69 +163,25 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
     return acc;
   }, new Map<string, string[]>());
 
-  const duration = program.duration.reduce((acc, item) => {
-    const range = item.min ? `${item.min} Months - ${item.max} Months` : `${item.max} Months`;
-    const value = `${toTitleCase(item.type)}: ${range}`;
-
-    const existing = acc.get(item.programType?.name ?? "") ?? [];
-    acc.set(item.programType?.name ?? "", [...existing, value]);
-
-    return acc;
-  }, new Map<string, string[]>());
-
-  const SectionMap = ({ data }: { data: Map<string, string[]> }) => {
-    const noTitleItems = data.get("");
-
-    return (
-      <ul className={sectionList()}>
-        {noTitleItems && noTitleItems.map((item) => <li key={item}>{item}</li>)}
-
-        {data
-          .entries()
-          .toArray()
-          .filter(([title]) => title != "")
-          .map(([title, items]) => (
-            <li key={title}>
-              <h3 className={sectionSubtitle()}>{toTitleCase(title)}:</h3>
-
-              <ul>
-                {items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-      </ul>
-    );
-  };
-
   return (
     <Container className={container()}>
       <div className={column()}>
         {/* Program Type Section */}
         <div className={section()}>
           <h2 className={sectionTitle()}>Program Type</h2>
-          <ul className={sectionList()}>
-            {program.type.map((type) => (
-              <li key={type.id}>{type.name}</li>
-            ))}
-          </ul>
+          <GraduateProgramTypes types={program.type} />
         </div>
 
         {/* Degree Section */}
         <div className={section()}>
           <h2 className={sectionTitle()}>Degree</h2>
-          <span>{degree}</span>
+          <GraduateDegree degree={program.degree} />
         </div>
 
         {/* Delivery Section*/}
         <div className={section()}>
           <h2 className={sectionTitle()}>Delivery</h2>
-          <ul className={sectionList()}>
-            {program.delivery.map((value) => (
-              <li key={value.id}>{value.name}</li>
-            ))}
-          </ul>
+          <GraduateProgramDelivery delivery={program.delivery} />
         </div>
       </div>
 
@@ -129,14 +189,13 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
         {/* Admission Average Section */}
         <div className={section()}>
           <h2 className={sectionTitle()}>Admission Average</h2>
-          <span>{average}</span>
+          <GraduateProgramAdmissionAverage average={program.average} />
         </div>
 
         {/* Duration Section */}
         <div className={section()}>
           <h2 className={sectionTitle()}>Duration</h2>
-
-          <SectionMap data={duration} />
+          <GraduateProgramDuration duration={program.duration} />
         </div>
       </div>
 
@@ -144,8 +203,7 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgram }
         {/* Deadlines & Entry Terms Section */}
         <div className={section()}>
           <h2 className={sectionTitle()}>Deadlines & Entry Terms</h2>
-
-          <SectionMap data={deadlines} />
+          <GraduateProgramDeadlines deadlines={program.deadlines} />
         </div>
       </div>
     </Container>
