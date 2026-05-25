@@ -105,6 +105,20 @@ function GraduateProgramSummarySectionMap({ map }: { map: Map<string, string[]> 
         .entries()
         .toArray()
         .filter(([title]) => title != "")
+        .sort(([a], [b]) => {
+          const aHasAmpersand = a.includes("&");
+          const bHasAmpersand = b.includes("&");
+
+          if (aHasAmpersand && !bHasAmpersand) {
+            return -1;
+          }
+
+          if (!aHasAmpersand && bHasAmpersand) {
+            return 1;
+          }
+
+          return a.localeCompare(b);
+        })
         .map(([title, items]) => (
           <li key={title}>
             <h3 className={classes.sectionSubtitle()}>{toTitleCase(title)}:</h3>
