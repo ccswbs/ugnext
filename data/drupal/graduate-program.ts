@@ -109,15 +109,17 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
 
       const currentYear = new Date().getFullYear();
       const domesticDate = new Date(item.domesticMonthDay?.time);
+      const isValidDomesticDate = !isNaN(domesticDate.getTime());
       const internationalDate = new Date(item.internationalMonthDay?.time);
+      const isValidInternationalDate = !isNaN(internationalDate.getTime());
 
-      domesticDate.setFullYear(Number.parseInt(item.domesticYear?.name ?? "") || currentYear);
-      internationalDate.setFullYear(Number.parseInt(item.internationalYear?.name ?? "") || currentYear);
+      isValidDomesticDate && domesticDate.setFullYear(Number.parseInt(item.domesticYear?.name ?? "") || currentYear);
+      isValidInternationalDate && internationalDate.setFullYear(Number.parseInt(item.internationalYear?.name ?? "") || currentYear);
 
       deadlines.push({
         term: item.entryTerm,
         date: {
-          timestamp: domesticDate.toISOString(),
+          timestamp: isValidDomesticDate ? domesticDate.toISOString() : "",
           showYear: Boolean(item.domesticYear?.name),
         },
         location: "domestic",
@@ -128,7 +130,7 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
       deadlines.push({
         term: item.entryTerm,
         date: {
-          timestamp: internationalDate.toISOString(),
+          timestamp: isValidInternationalDate ? internationalDate.toISOString() : "",
           showYear: Boolean(item.internationalYear?.name),
         },
         location: "international",

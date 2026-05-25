@@ -152,13 +152,14 @@ function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApp
   const firstMap = deadlines.reduce((acc, item) => {
     const date = item.ongoing
       ? "Ongoing"
-      : new Date(item.date?.timestamp ?? "").toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: item.date?.showYear ? "numeric" : undefined,
-        });
+      : (item.date?.timestamp === "" ? "" 
+          : new Date(item.date?.timestamp ?? "").toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: item.date?.showYear ? "numeric" : undefined,
+          }));
 
-    const value = `${toTitleCase(item.term)}: ${date}`;
+    const value = `${toTitleCase(item.term)}: ${date} ${item.info ?? ""}`;
 
     const existing = acc.get(item.location) ?? [];
     acc.set(item.location, [...existing, value]);
