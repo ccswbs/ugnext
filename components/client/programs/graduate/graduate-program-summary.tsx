@@ -72,13 +72,36 @@ function GraduateProgramDelivery({ delivery }: { delivery: GraduateProgramDelive
 }
 
 function GraduateProgramSummarySectionMap({ map }: { map: Map<string, string[]> }) {
-  const noTitleItems = map.get("");
+  const combined = map
+    .entries()
+    .toArray()
+    .reduce((acc, [title, items]) => {
+      for (const item of items) {
+        const existing = acc.get(item) ?? [];
+
+        acc.set(item, [...existing, title]);
+      }
+
+      return acc;
+    }, new Map<string, string[]>())
+    .entries()
+    .toArray()
+    .reduce((acc, [value, keys]) => {
+      const combinedKey = toTitleCase(keys.join(" & "));
+      const existing = acc.get(combinedKey) ?? [];
+
+      acc.set(combinedKey, [...existing, value]);
+
+      return acc;
+    }, new Map<string, string[]>());
+
+  const noTitleItems = combined.get("");
 
   return (
     <ul className={classes.sectionList()}>
       {noTitleItems && noTitleItems.map((item) => <li key={item}>{item}</li>)}
 
-      {map
+      {combined
         .entries()
         .toArray()
         .filter(([title]) => title != "")
