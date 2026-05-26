@@ -17,10 +17,17 @@ export const metadata: Metadata = {
 
 export default async function ProgramsGraduate() {
   const types = await getGraduateProgramTypes();
-  // const typesDrupal = await getGraduateProgramSearchableTypes();
+  const typesDrupal = await getGraduateProgramSearchableTypes();
   const degreeTypes = await getGraduateDegreeTypes();
-  // const degreeTypesDrupal = await getGraduateDegreeTypesDrupal();
+  const degreeTypesDrupal = await getGraduateDegreeTypesDrupal();
   const programs = await getGraduatePrograms();
+
+  // console.log("------------YAML Program Types--------------");
+  // console.log(types);
+  // console.log(degreeTypes);
+  // console.log("------------DRUPAL Program Types--------------");
+  // console.log(typesDrupal);
+  // console.log(degreeTypesDrupal);
 
   return (
     <Layout>

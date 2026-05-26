@@ -33,6 +33,17 @@ export async function getGraduateProgramSearchableTypes() {
   return data.termGraduateProgramSearchableTypes.nodes;
 }
 
+export function parseGraduateDegreeTypes(degreeTypesData: GraduateDegreeTypeFragment[] | null | undefined) {
+  if (!degreeTypesData) {
+    return null;
+  }
+
+  const uniqueDegreeTypes = [...new Set(degreeTypesData.flatMap(
+    item => item.degreeType !== null ? item.degreeType : []))];
+
+  return uniqueDegreeTypes;
+}
+
 export async function getGraduateDegreeTypes() {
   const { data, error } = await query({
     query: gql(/* gql */ `
@@ -54,7 +65,7 @@ export async function getGraduateDegreeTypes() {
     return [];
   }
 
-  return data.termGraduateDegreeTypes.nodes;
+  return parseGraduateDegreeTypes(data.termGraduateDegreeTypes.nodes);
 }
 
 export const GRADUATE_ENTRY_APPLICATION_DEADLINE = gql(/* gql */ `
