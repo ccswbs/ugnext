@@ -1,6 +1,6 @@
 import { GraduateProgram } from "@/lib/types/graduate-program";
 import { gql } from "@/lib/graphql";
-import { getClient, handleGraphQLError } from "@/lib/apollo";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import {
   GraduateProgramFragment,
@@ -9,9 +9,59 @@ import {
 } from "@/lib/graphql/types";
 import { toTitleCase } from "@/lib/string-utils";
 
+export async function getGraduateProgramSearchableTypes() {
+  const { data, error } = await query({
+    query: gql(/* gql */ `
+      query GraduateProgramSearchableTypes {
+        termGraduateProgramSearchableTypes(first: 20) {
+          nodes {
+            ...GraduateProgramSearchableType
+          }
+        }
+      }
+    `),
+  });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  return data.termGraduateProgramSearchableTypes.nodes;
+}
+
+export async function getGraduateDegreeTypes() {
+  const { data, error } = await query({
+    query: gql(/* gql */ `
+      query GraduateDegreeTypes {
+        termGraduateDegreeTypes(first: 100) {
+          nodes {
+            ...GraduateDegreeType
+          }
+        }
+      }
+    `),
+  });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  return data.termGraduateDegreeTypes.nodes;
+}
+
 export const GRADUATE_ENTRY_APPLICATION_DEADLINE = gql(/* gql */ `
   fragment GraduateEntryApplicationDeadline on ParagraphGraduateProgramEntryApplicati {
-    entryTerm
+    entryTerm {
+      name
+    }
     entryTermYear {
       name
     }
@@ -117,7 +167,7 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
       isValidInternationalDate && internationalDate.setFullYear(Number.parseInt(item.internationalYear?.name ?? "") || currentYear);
 
       deadlines.push({
-        term: item.entryTerm,
+        term: item.entryTerm?.name,
         date: {
           timestamp: isValidDomesticDate ? domesticDate.toISOString() : "",
           showYear: Boolean(item.domesticYear?.name),
@@ -128,7 +178,7 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
       });
 
       deadlines.push({
-        term: item.entryTerm,
+        term: item.entryTerm?.name,
         date: {
           timestamp: isValidInternationalDate ? internationalDate.toISOString() : "",
           showYear: Boolean(item.internationalYear?.name),

@@ -6,6 +6,9 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProgramSearch } from "@/components/client/programs/program-search";
 import { getGraduateDegreeTypes, getGraduateProgramTypes, getGraduatePrograms } from "@/data/yaml/programs/graduate";
+import { 
+  getGraduateDegreeTypes as getGraduateDegreeTypesDrupal, 
+  getGraduateProgramSearchableTypes } from "@/data/drupal/graduate-program";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,7 +17,9 @@ export const metadata: Metadata = {
 
 export default async function ProgramsGraduate() {
   const types = await getGraduateProgramTypes();
+  // const typesDrupal = await getGraduateProgramSearchableTypes();
   const degreeTypes = await getGraduateDegreeTypes();
+  // const degreeTypesDrupal = await getGraduateDegreeTypesDrupal();
   const programs = await getGraduatePrograms();
 
   return (
