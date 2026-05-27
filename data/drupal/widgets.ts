@@ -29,8 +29,8 @@ import {
 } from "@/lib/graphql/types";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
 import { getFilteredNews } from "@/data/drupal/news";
-import { GraduateProgram } from "@/lib/types/graduate-program";
-import { parseGraduateProgram } from "@/data/drupal/graduate-program";
+import { GraduateProgramVariant } from "@/lib/types/graduate-program-variant";
+import { parseGraduateProgramVariant } from "@/data/drupal/graduate-program";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -197,7 +197,7 @@ export const GRADUATE_PROGRAM_SUMMARY = gql(/* gql */ `
     uuid
     id
     graduateProgramVariation {
-      ...GraduateProgram
+      ...GraduateProgramVariant
     }
   }
 `);
@@ -561,7 +561,7 @@ export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & 
 };
 
 export type FullGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
-  program?: GraduateProgram;
+  program?: GraduateProgramVariant;
 };
 
 export type SectionWidget =
@@ -738,7 +738,7 @@ export class WidgetProcessor {
           __typename: widget.__typename,
           id: widget.id,
           uuid: widget.uuid,
-          program: parseGraduateProgram(widget.graduateProgramVariation) ?? undefined,
+          program: parseGraduateProgramVariant(widget.graduateProgramVariation) ?? undefined,
         };
       default:
         return widget;

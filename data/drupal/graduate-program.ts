@@ -1,9 +1,10 @@
-import { GraduateProgram } from "@/lib/types/graduate-program";
+import { GraduateProgramVariant } from "@/lib/types/graduate-program-variant";
 import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import {
-  GraduateProgramFragment,
+  GraduateDegreeTypeFragment,
+  GraduateProgramVariantFragment,
   GraduateProgramDurationFragment,
   GraduateEntryApplicationDeadlineFragment,
 } from "@/lib/graphql/types";
@@ -105,8 +106,8 @@ export const GRADUATE_PROGRAM_DURATION = gql(/* gql */ `
   }
 `);
 
-export const GRADUATE_PROGRAM = gql(/* gql */ `
-  fragment GraduateProgram on NodeGraduateProgram {
+export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
+  fragment GraduateProgramVariant on NodeGraduateProgramVariant {
     __typename
     id
     graduateProgramCode
@@ -134,13 +135,13 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
   }
 `);
 
-export function parseGraduateProgram(program: GraduateProgramFragment | null | undefined) {
+export function parseGraduateProgramVariant(program: GraduateProgramVariantFragment | null | undefined) {
   if (!program) {
     return null;
   }
 
-  const duration: GraduateProgram["duration"] = [];
-  const deadlines: GraduateProgram["deadlines"] = [];
+  const duration: GraduateProgramVariant["duration"] = [];
+  const deadlines: GraduateProgramVariant["deadlines"] = [];
   const parseDuration = (durationData: GraduateProgramDurationFragment[], durationType: string) => {
     for (const item of durationData) {
       if (!item.durationType) {
@@ -223,15 +224,15 @@ export function parseGraduateProgram(program: GraduateProgramFragment | null | u
   };
 }
 
-async function getGraduateProgramById(id: string): Promise<GraduateProgram | null> {
+async function getGraduateProgramById(id: string): Promise<GraduateProgramVariant | null> {
   const showUnpublished = await showUnpublishedContent();
   const client = getClient();
 
   const { data, error } = await client.query({
     query: gql(/* gql */ `
       query GraduateProgramById($id: ID = "", $revision: ID = "") {
-        nodeGraduateProgram(id: $id, revision: $revision) {
-          ...GraduateProgram
+        nodeGraduateProgramVariant(id: $id, revision: $revision) {
+          ...GraduateProgramVariant
         }
       }
     `),
@@ -249,11 +250,11 @@ async function getGraduateProgramById(id: string): Promise<GraduateProgram | nul
     return null;
   }
 
-  if (!data.nodeGraduateProgram) {
+  if (!data.nodeGraduateProgramVariant) {
     return null;
   }
 
-  return parseGraduateProgram(data.nodeGraduateProgram);
+  return parseGraduateProgramVariant(data.nodeGraduateProgramVariant);
 }
 
 export default getGraduateProgramById;

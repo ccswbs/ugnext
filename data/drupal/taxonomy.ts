@@ -37,6 +37,16 @@ export const GRADUATE_PROGRAM_TYPE = gql(/* gql */ `
   }
 `);
 
+export const GRADUATE_PROGRAMS = gql(/* gql */ `
+  fragment GraduateProgram on TermGraduateProgramType {
+    id
+    name
+    searchableType {
+      name
+    }
+  }
+`);
+
 export const GRADUATE_PROGRAM_SEARCHABLE_TYPE = gql(/* gql */ `
   fragment GraduateProgramSearchableType on TermGraduateProgramSearchableType {
     name

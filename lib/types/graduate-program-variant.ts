@@ -38,7 +38,7 @@ export type GraduateProgramAdmissionAverage = {
   letterGrade?: string;
 };
 
-export type GraduateProgram = {
+export type GraduateProgramVariant = {
   code: string;
   degree: GraduateDegree;
   type: GraduateProgramType[];

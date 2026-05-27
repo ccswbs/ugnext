@@ -1,12 +1,12 @@
 import {
   type GraduateDegree,
-  type GraduateProgram,
+  type GraduateProgramVariant,
   type GraduateProgramAdmissionAverage,
   GraduateProgramApplicationDeadline,
   type GraduateProgramDelivery,
   type GraduateProgramDuration,
   type GraduateProgramType,
-} from "@/lib/types/graduate-program";
+} from "@/lib/types/graduate-program-variant";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { toTitleCase } from "@/lib/string-utils";
@@ -170,7 +170,7 @@ function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApp
   return <GraduateProgramSummarySectionMap map={firstMap} />;
 }
 
-export function GraduateProgramSummary({ program }: { program: GraduateProgram }) {
+export function GraduateProgramSummary({ program }: { program: GraduateProgramVariant }) {
   return (
     <Container className={classes.container()}>
       <div className={classes.column()}>
