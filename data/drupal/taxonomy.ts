@@ -37,12 +37,19 @@ export const GRADUATE_PROGRAM_TYPE = gql(/* gql */ `
   }
 `);
 
-export const GRADUATE_PROGRAMS = gql(/* gql */ `
-  fragment GraduateProgram on TermGraduateProgramType {
+export const GRADUATE_PROGRAM = gql(/* gql */ `
+  fragment GraduateProgram on TermGraduateProgram {
     id
     name
-    searchableType {
+    programSearchTags {
       name
+    }
+    relatedLinks {
+      graduateLinkTypes
+      relatedLink {
+        title
+        url
+      }
     }
   }
 `);

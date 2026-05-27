@@ -10,6 +10,31 @@ import {
 } from "@/lib/graphql/types";
 import { toTitleCase } from "@/lib/string-utils";
 
+
+export async function getGraduatePrograms() {
+  const { data, error } = await query({
+    query: gql(/* gql */ `
+      query GraduatePrograms {
+        termGraduatePrograms(first: 100) {
+          nodes {
+            ...GraduateProgram
+          }
+        }
+      }
+    `),
+  });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  return data.termGraduatePrograms.nodes;
+}
+
 export async function getGraduateProgramSearchableTypes() {
   const { data, error } = await query({
     query: gql(/* gql */ `

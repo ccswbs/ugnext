@@ -8,7 +8,8 @@ import { ProgramSearch } from "@/components/client/programs/program-search";
 import { getGraduateDegreeTypes, getGraduateProgramTypes, getGraduatePrograms } from "@/data/yaml/programs/graduate";
 import { 
   getGraduateDegreeTypes as getGraduateDegreeTypesDrupal, 
-  getGraduateProgramSearchableTypes } from "@/data/drupal/graduate-program";
+  getGraduateProgramSearchableTypes,
+  getGraduatePrograms as getGraduateProgramsDrupal } from "@/data/drupal/graduate-program";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,6 +23,12 @@ export default async function ProgramsGraduate() {
 
   // const typesDrupal = await getGraduateProgramSearchableTypes();
   // const degreeTypesDrupal = await getGraduateDegreeTypesDrupal();
+  const programsDrupal = await getGraduateProgramsDrupal();
+
+  console.log("--------yaml---------");
+  console.log(programs);
+  console.log("--------drupal---------")
+  console.log(programsDrupal);
 
   return (
     <Layout>
