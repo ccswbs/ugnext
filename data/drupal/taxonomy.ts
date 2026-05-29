@@ -22,6 +22,13 @@ export const GRADUATE_DEGREE = gql(/* gql */ `
   }
 `);
 
+export const GRADUATE_PROGRAM_DEGREE_TYPE = gql(/* gql */ `
+  fragment GraduateProgramDegreeType on TermGraduateProgramDegreeType {
+    id
+    name
+  }
+`);
+
 export const GRADUATE_DELIVERY_TYPE = gql(/* gql */ `
   fragment GraduateDelivery on TermGraduateProgramDelivery {
     id
@@ -34,6 +41,7 @@ export const GRADUATE_PROGRAM_TYPE = gql(/* gql */ `
     id
     name
     searchableType {
+      id
       name
     }
   }
@@ -62,6 +70,7 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
 
 export const GRADUATE_PROGRAM_SEARCHABLE_TYPE = gql(/* gql */ `
   fragment GraduateProgramSearchableType on TermGraduateProgramSearchableType {
+    id
     name
   }
 `);

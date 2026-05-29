@@ -9,8 +9,15 @@ import { Container } from "@uoguelph/react-components/container";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import type { UndergraduateProgram, UndergraduateProgramType } from "@/data/drupal/undergraduate-program";
 import type { UndergraduateDegree, UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree";
+// PHASE 1 - YAML-BASED (Graduate)
 import type { GraduateDegreeType, GraduateProgram, GraduateProgramType } from "@/data/yaml/programs/graduate";
-// import type { GraduateDegreeType, GraduateProgramSearchableType, GraduateProgramVariant, GraduateProgramType } from "@/data/drupal/graduate-program";
+// PHASE 2 - DRUPAL-BASED (Graduate)
+import type { 
+//   GraduateDegreeType,
+//   GraduateProgramVariantResult as GraduateProgram, 
+  GraduateProgramSearchableType,
+//   GraduateProgramType,
+} from "@/data/drupal/graduate-program";
 import type {
   CertificateAndDiplomaProgram,
   CertificateAndDiplomaProgramType,
@@ -25,7 +32,7 @@ import { Field, Label } from "@headlessui/react";
 export type ProgramType =
   | UndergraduateProgramType
   | UndergraduateDegreeType
-  // | GraduateProgramSearchableType
+  | GraduateProgramSearchableType
   | GraduateProgramType
   | CertificateAndDiplomaProgramType
   | ContinuingEducationProgramType;
@@ -36,7 +43,6 @@ export type Program =
   | UndergraduateProgram
   | UndergraduateDegree
   | GraduateProgram
-  // | GraduateProgramVariant
   | CertificateAndDiplomaProgram
   | ContinuingEducationProgram;
 

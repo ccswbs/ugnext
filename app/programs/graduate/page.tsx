@@ -6,11 +6,10 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProgramSearch } from "@/components/client/programs/program-search";
 import { getGraduateDegreeTypes, getGraduateProgramTypes, getGraduatePrograms } from "@/data/yaml/programs/graduate";
-// import { 
-//   getGraduateDegrees, 
-//   getGraduateProgramSearchableTypes,
-//   getGraduateProgramVariants,
-//   getGraduatePrograms as getGraduateProgramsDrupal } from "@/data/drupal/graduate-program";
+import { 
+  getGraduateProgramDegreeTypes as getGraduateDegreeTypesDrupal, 
+  getGraduateProgramSearchableTypes,
+  getGraduateProgramVariants } from "@/data/drupal/graduate-program";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,19 +17,16 @@ export const metadata: Metadata = {
 };
 
 export default async function ProgramsGraduate() {
-  const types = await getGraduateProgramTypes();
-  const degreeTypes = await getGraduateDegreeTypes();
-  const programs = await getGraduatePrograms();
+    // PHASE 1 - YAML-BASED 
+    // const types = await getGraduateProgramTypes();
+    // const degreeTypes = await getGraduateDegreeTypes();
+    // const programs = await getGraduatePrograms();
 
-  // const types = await getGraduateProgramSearchableTypes();
-  // const degreeTypesDrupal = await getGraduateDegrees();
-  // const programs = await getGraduateProgramVariants();
-
-  // console.log("--------yaml---------");
-  // console.log(degreeTypes);
-  // console.log("--------drupal---------")
-  // console.log(degreeTypesDrupal);
-
+    // PHASE 2 - DRUPAL-BASED (remember to eventually switch program-search.tsx imports as well)
+    const types = await getGraduateProgramSearchableTypes();
+    const degreeTypes = await getGraduateDegreeTypesDrupal();
+    const programs = await getGraduateProgramVariants();
+  
   return (
     <Layout>
       <Header></Header>

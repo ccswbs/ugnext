@@ -3,8 +3,7 @@ import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import {
-  GraduateDegreeFragment,
-  GraduateProgramFragment,
+  GraduateProgramDegreeTypeFragment,
   GraduateProgramSearchableTypeFragment,
   GraduateProgramTypeFragment,
   GraduateProgramVariantFragment,
@@ -14,30 +13,44 @@ import {
 } from "@/lib/graphql/types";
 import { toTitleCase } from "@/lib/string-utils";
 
-export type GraduateDegree = GraduateDegreeFragment;
+export type GraduateDegreeType = GraduateProgramDegreeTypeFragment;
 export type GraduateProgramSearchableType = GraduateProgramSearchableTypeFragment;
 export type GraduateProgramType = GraduateProgramTypeFragment;
-// export type GraduateProgramVariant = Omit<GraduateProgramVariantFragment, "tags"> & {
-//   tags: string[];
-// };
 
-// function parse(variant: GraduateProgramVariantFragment) {
-//   return {
-//     ...variant,
-//     tags: variant?.tags?.map((tag) => tag.name) ?? [],
-//   } as GraduateProgramVariant;
-// }
+export type GraduateProgramVariantResult = GraduateProgramVariant & {
+  __typename: "GraduateProgram",
+  id: string;
+  title: string;
+  url: string;
+  degrees: {
+    __typename: "GraduateDegree";
+    id: string;
+    title: string;
+    acronym?: string;
+  }[],
+  tags: string[];
+};
 
-// export function parseGraduateProgramTypes(programTypesData: GraduateProgramTypeFragment[] | null | undefined) {
-//   if (!programTypesData) {
-//     return null;
-//   }
+function parse(variant: GraduateProgramVariantFragment) {
+  const uniqueTypes = [...new Set(variant.graduateProgramType.flatMap(
+    item => item.searchableType !== null ? item.searchableType : []))];
 
-//   const uniqueProgramTypes = [...new Set(programTypesData.flatMap(
-//     item => item.searchableType !== null ? item.searchableType : []))];
-
-//   return uniqueProgramTypes;
-// }
+  return {
+    __typename: "GraduateProgram",
+    id: variant.id,
+    title: variant.graduateProgramGrouping.name,
+    url: variant.programUrl?.url ?? "",
+    type: uniqueTypes,
+    degrees: [
+      {
+      __typename: "GraduateDegree",
+      id: variant.graduateProgramDegree.id,
+      title: variant.graduateProgramDegree.name,
+      acronym: variant.graduateProgramDegree.acronym,
+    }],
+    tags: variant?.graduateProgramGrouping.tags?.map((tag) => tag.name) ?? [],
+  } as GraduateProgramVariantResult;
+}
 
 async function getDraftGraduateProgramVariants() {
   const variantsQuery = gql(/* gql */ `
@@ -82,8 +95,7 @@ async function getDraftGraduateProgramVariants() {
     page++;
   }
 
-  // return variants.map(parse);
-  return variants;
+  return variants.map(parse);
 }
 
 async function getPublishedGraduateProgramVariants() {
@@ -127,8 +139,7 @@ async function getPublishedGraduateProgramVariants() {
     }
   }
 
-  // return programs.filter((program) => program.status).map(parseGraduateProgramVariants);
-  return variants.filter((variant) => variant.status);
+  return variants.filter((variant) => variant.status).map(parse);
 }
 
 export async function getGraduateProgramVariants() {
@@ -138,20 +149,6 @@ export async function getGraduateProgramVariants() {
 
   return await getPublishedGraduateProgramVariants();
 }
-
-// export function parseGraduatePrograms(program: GraduateProgramFragment | null | undefined) {
-//   if (!program) {
-//     return null;
-//   }
-
-  // Get a list of program variations based on the program
-
-  //   type: each program variation has a type [list of values]
-  //     we can find if it's course-based or thesis-based on that type
-  //   degree: each program variation has a degree associated with it.
-
-  // return program;
-// }
 
 export async function getGraduatePrograms() {
   const { data, error } = await query({
@@ -173,22 +170,6 @@ export async function getGraduatePrograms() {
   if (!data) {
     return [];
   }
-
-  // variant contains:
-    // [graduateProgramGrouping.name] program name (and all affiliated content)
-    // [graduateProgramDegree.acronym] degree acronym
-    // [graduateProgramtype.searchableType] thesis-based or course-based
-
-  // program contains 
-    // [tags] SEARCH tags for the program
-    // [name] program name
-    // [url] single URL if needed
-
-  const variants = await getGraduateProgramVariants();
-  const programs = data.termGraduatePrograms.nodes;
-
-  console.log(variants);
-  console.log(programs);
 
   return data.termGraduatePrograms.nodes;
 }
@@ -217,24 +198,13 @@ export async function getGraduateProgramSearchableTypes() {
   return data.termGraduateProgramSearchableTypes.nodes;
 }
 
-// export function parseGraduateDegrees(degreesData: GraduateDegreeFragment[] | null | undefined) {
-//   if (!degreesData) {
-//     return null;
-//   }
-
-//   const uniqueDegrees = [...new Set(degreesData.flatMap(
-//     item => item.name !== null ? item.name : []))];
-
-//   return uniqueDegrees;
-// }
-
-export async function getGraduateDegrees() {
+export async function getGraduateProgramDegreeTypes() {
   const { data, error } = await query({
     query: gql(/* gql */ `
-      query GraduateDegrees {
-        termGraduateDegrees(first: 100) {
+      query GraduateProgramDegreeTypes {
+        termGraduateProgramDegreeTypes(first: 100) {
           nodes {
-            ...GraduateDegree
+            ...GraduateProgramDegreeType
           }
         }
       }
@@ -249,8 +219,7 @@ export async function getGraduateDegrees() {
     return [];
   }
 
-  // return parseGraduateDegrees(data.termGraduateDegrees.nodes);
-  return data.termGraduateDegrees.nodes
+  return data.termGraduateProgramDegreeTypes.nodes
 }
 
 export const GRADUATE_ENTRY_APPLICATION_DEADLINE = gql(/* gql */ `
@@ -295,6 +264,11 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
     __typename
     id
     status
+    title
+    programUrl {
+      url
+      title
+    }
     graduateProgramCode
     graduateProgramDegree {
       ...GraduateDegree
