@@ -6,10 +6,11 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProgramSearch } from "@/components/client/programs/program-search";
 import { getGraduateDegreeTypes, getGraduateProgramTypes, getGraduatePrograms } from "@/data/yaml/programs/graduate";
-import { 
-  getGraduateDegreeTypes as getGraduateDegreeTypesDrupal, 
-  getGraduateProgramSearchableTypes,
-  getGraduatePrograms as getGraduateProgramsDrupal } from "@/data/drupal/graduate-program";
+// import { 
+//   getGraduateDegrees, 
+//   getGraduateProgramSearchableTypes,
+//   getGraduateProgramVariants,
+//   getGraduatePrograms as getGraduateProgramsDrupal } from "@/data/drupal/graduate-program";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -21,14 +22,14 @@ export default async function ProgramsGraduate() {
   const degreeTypes = await getGraduateDegreeTypes();
   const programs = await getGraduatePrograms();
 
-  // const typesDrupal = await getGraduateProgramSearchableTypes();
-  // const degreeTypesDrupal = await getGraduateDegreeTypesDrupal();
-  const programsDrupal = await getGraduateProgramsDrupal();
+  // const types = await getGraduateProgramSearchableTypes();
+  // const degreeTypesDrupal = await getGraduateDegrees();
+  // const programs = await getGraduateProgramVariants();
 
-  console.log("--------yaml---------");
-  console.log(programs);
-  console.log("--------drupal---------")
-  console.log(programsDrupal);
+  // console.log("--------yaml---------");
+  // console.log(degreeTypes);
+  // console.log("--------drupal---------")
+  // console.log(degreeTypesDrupal);
 
   return (
     <Layout>

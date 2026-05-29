@@ -11,11 +11,13 @@ export const GOAL_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export const GRADUATE_DEGREE_TYPE = gql(/* gql */ `
-  fragment GraduateDegreeType on TermGraduateDegreeType {
+export const GRADUATE_DEGREE = gql(/* gql */ `
+  fragment GraduateDegree on TermGraduateDegree {
     id
     name
-    degreeType: graduateDegreeTypes
+    degreeType: graduateDegreeTypes {
+      name
+    }
     acronym: acronymDegree
   }
 `);
@@ -41,7 +43,11 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
   fragment GraduateProgram on TermGraduateProgram {
     id
     name
-    programSearchTags {
+    url: graduateProgramUrl {
+      title
+      url
+    }
+    tags: programSearchTags {
       name
     }
     relatedLinks {

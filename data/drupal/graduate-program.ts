@@ -3,13 +3,155 @@ import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import {
-  GraduateDegreeTypeFragment,
+  GraduateDegreeFragment,
+  GraduateProgramFragment,
+  GraduateProgramSearchableTypeFragment,
+  GraduateProgramTypeFragment,
   GraduateProgramVariantFragment,
+  GraduateProgramVariantsQuery,
   GraduateProgramDurationFragment,
   GraduateEntryApplicationDeadlineFragment,
 } from "@/lib/graphql/types";
 import { toTitleCase } from "@/lib/string-utils";
 
+export type GraduateDegree = GraduateDegreeFragment;
+export type GraduateProgramSearchableType = GraduateProgramSearchableTypeFragment;
+export type GraduateProgramType = GraduateProgramTypeFragment;
+// export type GraduateProgramVariant = Omit<GraduateProgramVariantFragment, "tags"> & {
+//   tags: string[];
+// };
+
+// function parse(variant: GraduateProgramVariantFragment) {
+//   return {
+//     ...variant,
+//     tags: variant?.tags?.map((tag) => tag.name) ?? [],
+//   } as GraduateProgramVariant;
+// }
+
+// export function parseGraduateProgramTypes(programTypesData: GraduateProgramTypeFragment[] | null | undefined) {
+//   if (!programTypesData) {
+//     return null;
+//   }
+
+//   const uniqueProgramTypes = [...new Set(programTypesData.flatMap(
+//     item => item.searchableType !== null ? item.searchableType : []))];
+
+//   return uniqueProgramTypes;
+// }
+
+async function getDraftGraduateProgramVariants() {
+  const variantsQuery = gql(/* gql */ `
+    query DraftGraduatePrograms($pageSize: Int = 100, $page: Int = 0) {
+      latestContentRevisions(filter: { type: "graduate_program_variant" }, pageSize: $pageSize, page: $page) {
+        pageInfo {
+          total
+        }
+        results {
+          __typename
+          ...GraduateProgramVariant
+        }
+      }
+    }
+  `);
+
+  const variants: GraduateProgramVariantsQuery["nodeGraduateProgramVariants"]["nodes"] = [];
+  const pageSize = 100;
+  let page = 0;
+  let total = 1;
+
+  while (page < total) {
+    const { data, error } = await query({
+      query: variantsQuery,
+      variables: {
+        pageSize,
+        page,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    for (const variant of data?.latestContentRevisions?.results ?? []) {
+      if (variant.__typename === "NodeGraduateProgramVariant") {
+        variants.push(variant);
+      }
+    }
+
+    total = Math.ceil((data?.latestContentRevisions?.pageInfo?.total ?? 0) / pageSize);
+    page++;
+  }
+
+  // return variants.map(parse);
+  return variants;
+}
+
+async function getPublishedGraduateProgramVariants() {
+  const variantsQuery = gql(/* gql */ `
+    query GraduateProgramVariants($after: Cursor = "") {
+      nodeGraduateProgramVariants(after: $after, first: 100) {
+        nodes {
+          ...GraduateProgramVariant
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const variants: GraduateProgramVariantsQuery["nodeGraduateProgramVariants"]["nodes"] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await query({
+      query: variantsQuery,
+      variables: {
+        after: cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (data) {
+      variants.push(...data.nodeGraduateProgramVariants.nodes);
+      cursor = data.nodeGraduateProgramVariants.pageInfo.endCursor;
+      hasNextPage = data.nodeGraduateProgramVariants.pageInfo.hasNextPage;
+    } else {
+      hasNextPage = false;
+      console.warn("Graduate Program Variants: failed to retrieve all programs, showing partial results");
+    }
+  }
+
+  // return programs.filter((program) => program.status).map(parseGraduateProgramVariants);
+  return variants.filter((variant) => variant.status);
+}
+
+export async function getGraduateProgramVariants() {
+  if (await showUnpublishedContent()) {
+    return await getDraftGraduateProgramVariants();
+  }
+
+  return await getPublishedGraduateProgramVariants();
+}
+
+// export function parseGraduatePrograms(program: GraduateProgramFragment | null | undefined) {
+//   if (!program) {
+//     return null;
+//   }
+
+  // Get a list of program variations based on the program
+
+  //   type: each program variation has a type [list of values]
+  //     we can find if it's course-based or thesis-based on that type
+  //   degree: each program variation has a degree associated with it.
+
+  // return program;
+// }
 
 export async function getGraduatePrograms() {
   const { data, error } = await query({
@@ -31,6 +173,22 @@ export async function getGraduatePrograms() {
   if (!data) {
     return [];
   }
+
+  // variant contains:
+    // [graduateProgramGrouping.name] program name (and all affiliated content)
+    // [graduateProgramDegree.acronym] degree acronym
+    // [graduateProgramtype.searchableType] thesis-based or course-based
+
+  // program contains 
+    // [tags] SEARCH tags for the program
+    // [name] program name
+    // [url] single URL if needed
+
+  const variants = await getGraduateProgramVariants();
+  const programs = data.termGraduatePrograms.nodes;
+
+  console.log(variants);
+  console.log(programs);
 
   return data.termGraduatePrograms.nodes;
 }
@@ -59,24 +217,24 @@ export async function getGraduateProgramSearchableTypes() {
   return data.termGraduateProgramSearchableTypes.nodes;
 }
 
-export function parseGraduateDegreeTypes(degreeTypesData: GraduateDegreeTypeFragment[] | null | undefined) {
-  if (!degreeTypesData) {
-    return null;
-  }
+// export function parseGraduateDegrees(degreesData: GraduateDegreeFragment[] | null | undefined) {
+//   if (!degreesData) {
+//     return null;
+//   }
 
-  const uniqueDegreeTypes = [...new Set(degreeTypesData.flatMap(
-    item => item.degreeType !== null ? item.degreeType : []))];
+//   const uniqueDegrees = [...new Set(degreesData.flatMap(
+//     item => item.name !== null ? item.name : []))];
 
-  return uniqueDegreeTypes;
-}
+//   return uniqueDegrees;
+// }
 
-export async function getGraduateDegreeTypes() {
+export async function getGraduateDegrees() {
   const { data, error } = await query({
     query: gql(/* gql */ `
-      query GraduateDegreeTypes {
-        termGraduateDegreeTypes(first: 100) {
+      query GraduateDegrees {
+        termGraduateDegrees(first: 100) {
           nodes {
-            ...GraduateDegreeType
+            ...GraduateDegree
           }
         }
       }
@@ -91,7 +249,8 @@ export async function getGraduateDegreeTypes() {
     return [];
   }
 
-  return parseGraduateDegreeTypes(data.termGraduateDegreeTypes.nodes);
+  // return parseGraduateDegrees(data.termGraduateDegrees.nodes);
+  return data.termGraduateDegrees.nodes
 }
 
 export const GRADUATE_ENTRY_APPLICATION_DEADLINE = gql(/* gql */ `
@@ -135,10 +294,14 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
   fragment GraduateProgramVariant on NodeGraduateProgramVariant {
     __typename
     id
+    status
     graduateProgramCode
     graduateProgramDegree {
-      ...GraduateDegreeType
+      ...GraduateDegree
     }
+    graduateProgramGrouping {
+      ...GraduateProgram
+    } 
     graduateProgramType {
       ...GraduateProgramType
     }
@@ -160,8 +323,8 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
   }
 `);
 
-export function parseGraduateProgramVariant(program: GraduateProgramVariantFragment | null | undefined) {
-  if (!program) {
+export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragment | null | undefined) {
+  if (!variant) {
     return null;
   }
 
@@ -227,22 +390,22 @@ export function parseGraduateProgramVariant(program: GraduateProgramVariantFragm
     }
   };
 
-  parseDuration(program.durationFullTime ?? [], "full-time");
-  parseDuration(program.durationPartTime ?? [], "part-time");
-  parseDeadlines(program.graduateProgramEntryApp ?? []);
+  parseDuration(variant.durationFullTime ?? [], "full-time");
+  parseDuration(variant.durationPartTime ?? [], "part-time");
+  parseDeadlines(variant.graduateProgramEntryApp ?? []);
 
   return {
-    code: program.graduateProgramCode ?? "",
+    code: variant.graduateProgramCode ?? "",
     degree: {
-      ...program.graduateProgramDegree,
-      acronym: program.graduateProgramDegree.acronym ?? undefined,
+      ...variant.graduateProgramDegree,
+      acronym: variant.graduateProgramDegree.acronym ?? undefined,
     },
-    type: program.graduateProgramType,
-    delivery: program.graduateDelivery,
+    type: variant.graduateProgramType,
+    delivery: variant.graduateDelivery,
     average: {
-      letterGrade: program.admissionAverageLetter ?? undefined,
-      maxPercentage: program.admissionAverageMaxPerc ?? undefined,
-      minPercentage: program.admissionAverageMinPerc ?? undefined,
+      letterGrade: variant.admissionAverageLetter ?? undefined,
+      maxPercentage: variant.admissionAverageMaxPerc ?? undefined,
+      minPercentage: variant.admissionAverageMinPerc ?? undefined,
     },
     duration: duration,
     deadlines: deadlines,
