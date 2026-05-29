@@ -10,13 +10,13 @@ import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/rea
 import type { UndergraduateProgram, UndergraduateProgramType } from "@/data/drupal/undergraduate-program";
 import type { UndergraduateDegree, UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree";
 // PHASE 1 - YAML-BASED (Graduate)
-import type { GraduateDegreeType, GraduateProgram, GraduateProgramType } from "@/data/yaml/programs/graduate";
+// import type { GraduateDegreeType, GraduateProgram, GraduateProgramType } from "@/data/yaml/programs/graduate";
 // PHASE 2 - DRUPAL-BASED (Graduate)
 import type { 
-//   GraduateDegreeType,
-//   GraduateProgramVariantResult as GraduateProgram, 
+  GraduateDegreeType,
+  GraduateProgramVariantResult as GraduateProgram, 
   GraduateProgramSearchableType,
-//   GraduateProgramType,
+  GraduateProgramType,
 } from "@/data/drupal/graduate-program";
 import type {
   CertificateAndDiplomaProgram,
