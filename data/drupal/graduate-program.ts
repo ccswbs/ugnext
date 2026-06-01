@@ -282,7 +282,9 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
     graduateDelivery {
       ...GraduateDelivery
     }
-    admissionAverageLetter
+    admissionLetterGrade{
+      name
+    }
     admissionAverageMaxPerc
     admissionAverageMinPerc
     graduateProgramEntryApp {
@@ -377,7 +379,7 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
     type: variant.graduateProgramType,
     delivery: variant.graduateDelivery,
     average: {
-      letterGrade: variant.admissionAverageLetter ?? undefined,
+      letterGrade: variant.admissionLetterGrade?.name ?? undefined,
       maxPercentage: variant.admissionAverageMaxPerc ?? undefined,
       minPercentage: variant.admissionAverageMinPerc ?? undefined,
     },
