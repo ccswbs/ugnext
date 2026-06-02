@@ -12,7 +12,6 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
   const title = data.title?.trim();
   const useCards = data.links.some((link) => Boolean(link.image));
-  // const count = data.links.length;
   const containerClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full gap-4";
   const cardClass = "h-full md:max-w-[32.2rem]";
   const cardImageClass = "aspect-[4/3] w-full object-cover";
