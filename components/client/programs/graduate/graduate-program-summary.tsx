@@ -138,7 +138,7 @@ function GraduateProgramSummarySectionMap({ map }: { map: Map<string, string[]> 
 
 function GraduateProgramDuration({ duration }: { duration: GraduateProgramDuration[] }) {
   const map = duration.reduce((acc, item) => {
-    const range = item.min ? `${item.min} Months - ${item.max} Months` : `${item.max} Months`;
+    const range = item.min ? `${item.min}-${item.max} months` : `${item.max} months`;
     const value = `${toTitleCase(item.type)}: ${range}`;
 
     const existing = acc.get(item.programType?.name ?? "") ?? [];
