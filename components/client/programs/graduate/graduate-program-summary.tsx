@@ -9,11 +9,12 @@ import {
 } from "@/lib/types/graduate-program-variant";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
+import { Link } from '@uoguelph/react-components/link';
 import { toTitleCase } from "@/lib/string-utils";
 
 const classes = tv({
   slots: {
-    container: "p-4 w-full grid gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white",
+    container: "p-4 w-full grid gap-4 grid-cols-1 md:grid-cols-3  bg-grey-dark-bg text-white dark",
     column: "flex flex-col gap-4",
     section: "flex flex-col gap-2",
     sectionTitle: "text-yellow-on-dark font-bold text-xl",
@@ -38,13 +39,14 @@ function GraduateDegree({ degree }: { degree: GraduateDegree }) {
   return <span>{acronym ? `${acronym} (${name})` : name}</span>;
 }
 
-function GraduateProgramAdmissionAverage({ average }: { average: GraduateProgramAdmissionAverage }) {
+function GraduateProgramAdmissionAverage({ average, hasFootnote = false }: { average: GraduateProgramAdmissionAverage, hasFootnote: boolean }) {
   const { letterGrade, minPercentage, maxPercentage } = average;
 
   const hasMin = minPercentage !== undefined;
   const hasMax = maxPercentage !== undefined;
 
   let percentageText = "";
+  let footnote = hasFootnote ? "*" : "";
 
   if (hasMin && hasMax) {
     percentageText = `${minPercentage}% - ${maxPercentage}%`;
@@ -58,7 +60,7 @@ function GraduateProgramAdmissionAverage({ average }: { average: GraduateProgram
     return <span>{`${letterGrade} (${percentageText})`}</span>;
   }
 
-  return <span>{letterGrade || percentageText || ""}</span>;
+  return <span>{letterGrade || percentageText || ""}{footnote}</span>;
 }
 
 function GraduateProgramDelivery({ delivery }: { delivery: GraduateProgramDelivery[] }) {
@@ -171,6 +173,11 @@ function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApp
 }
 
 export function GraduateProgramSummary({ program }: { program: GraduateProgramVariant }) {
+  // @TO DO - confirm if Additional Requirements should come from the Program or Program Variant
+  const hasAdditionalRequirements = (program.additionalRequirements && program.additionalRequirements?.length > 0) ?? false;
+  // @TO DO - confirm if Program Structure should come from the Program or Program Variant
+  const hasProgramStructure = (program.programStructure && program.programStructure?.length > 0) ?? false;
+
   return (
     <Container className={classes.container()}>
       <div className={classes.column()}>
@@ -193,26 +200,36 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgramVa
         </div>
       </div>
 
-      <div className={classes.column()}>
-        {/* Admission Average Section */}
+    <div className={classes.column()}>
+        {/* Deadlines & Entry Terms Section */}
+        {/* >>>>>> TO DO - if only entry term and no content, do not render anything */}
         <div className={classes.section()}>
-          <h2 className={classes.sectionTitle()}>Admission Average</h2>
-          <GraduateProgramAdmissionAverage average={program.average} />
+          <h2 className={classes.sectionTitle()}>Deadlines & Entry Terms</h2>
+          <GraduateProgramDeadlines deadlines={program.deadlines} />
         </div>
+      </div>
 
+      <div className={classes.column()}>
         {/* Duration Section */}
         <div className={classes.section()}>
           <h2 className={classes.sectionTitle()}>Duration</h2>
           <GraduateProgramDuration duration={program.duration} />
         </div>
-      </div>
 
-      <div className={classes.column()}>
-        {/* Deadlines & Entry Terms Section */}
+        {/* Admission Average Section */}
         <div className={classes.section()}>
-          <h2 className={classes.sectionTitle()}>Deadlines & Entry Terms</h2>
-          <GraduateProgramDeadlines deadlines={program.deadlines} />
+          <h2 className={classes.sectionTitle()}>Admission Average</h2>
+          <GraduateProgramAdmissionAverage average={program.average} hasFootnote={hasAdditionalRequirements} />
+          {program.additionalRequirements && hasAdditionalRequirements && 
+            <Link href={program.additionalRequirements[0]?.url}>*Additional Requirements</Link>}
         </div>
+
+        {/* Program Structure Link */}
+        <div className={classes.section()}>
+          {program.programStructure && hasProgramStructure && 
+            <Link href={program.programStructure[0]?.url}>Program Structure</Link>}
+        </div>
+
       </div>
     </Container>
   );

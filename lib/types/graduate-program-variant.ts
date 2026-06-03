@@ -38,6 +38,12 @@ export type GraduateProgramAdmissionAverage = {
   letterGrade?: string;
 };
 
+export type GraduateProgramRelatedLink = {
+  type: "Additional Requirements" | "Program Structure";
+  title: string;
+  url: string;
+};
+
 export type GraduateProgramVariant = {
   code: string;
   degree: GraduateDegree;
@@ -46,4 +52,6 @@ export type GraduateProgramVariant = {
   average: GraduateProgramAdmissionAverage;
   duration: GraduateProgramDuration[];
   deadlines: GraduateProgramApplicationDeadline[];
+  additionalRequirements?: GraduateProgramRelatedLink[];
+  programStructure?: GraduateProgramRelatedLink[];
 };

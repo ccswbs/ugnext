@@ -2,6 +2,7 @@ import { gql } from "@/lib/graphql";
 import { query } from "@/lib/apollo";
 import { slugify } from "@/lib/string-utils";
 import { UnitFragment } from "@/lib/graphql/types";
+import { GRADUATE_PROGRAM_LINK } from "./graduate-program";
 
 export const GOAL_FRAGMENT = gql(/* gql */ `
   fragment Goal on TermGoal {
@@ -59,13 +60,7 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
       name
     }
     relatedLinks {
-      graduateRelatedLinkType {
-        name
-      }
-      relatedLink {
-        title
-        url
-      }
+      ...GraduateProgramLink
     }
   }
 `);

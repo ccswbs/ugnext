@@ -1,4 +1,4 @@
-import { GraduateProgramVariant } from "@/lib/types/graduate-program-variant";
+import { GraduateProgramVariant, GraduateProgramRelatedLink } from "@/lib/types/graduate-program-variant";
 import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
@@ -9,6 +9,7 @@ import {
   GraduateProgramVariantFragment,
   GraduateProgramVariantsQuery,
   GraduateProgramDurationFragment,
+  GraduateProgramLinkFragment,
   GraduateEntryApplicationDeadlineFragment,
 } from "@/lib/graphql/types";
 import { toTitleCase } from "@/lib/string-utils";
@@ -259,6 +260,18 @@ export const GRADUATE_PROGRAM_DURATION = gql(/* gql */ `
   }
 `);
 
+export const GRADUATE_PROGRAM_LINK = gql(/* gql */ `
+  fragment GraduateProgramLink on ParagraphGraduateProgramLink {
+    graduateRelatedLinkType {
+      name
+    }
+    relatedLink {
+      title
+      url
+    }
+  }
+`);
+
 export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
   fragment GraduateProgramVariant on NodeGraduateProgramVariant {
     __typename
@@ -296,12 +309,35 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
     durationPartTime {
       ...GraduateProgramDuration
     }
+    relatedLinks {
+      ...GraduateProgramLink
+    }
   }
 `);
 
 export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragment | null | undefined) {
   if (!variant) {
     return null;
+  }
+
+  const additionalRequirements: GraduateProgramRelatedLink[] = [];
+  const programStructure: GraduateProgramRelatedLink[] = [];
+  const parseLinks = (linksData: GraduateProgramLinkFragment[]) => {
+    for (const item of linksData) {
+      if(item.graduateRelatedLinkType?.name === "Additional Requirements"){
+        additionalRequirements.push({
+          type: "Additional Requirements",
+          title: item.relatedLink?.title ?? "",
+          url: item.relatedLink?.url ?? "",
+        })
+      } else if(item.graduateRelatedLinkType?.name === "Program Structure"){
+        programStructure.push({
+          type: "Program Structure",
+          title: item.relatedLink?.title ?? "",
+          url: item.relatedLink?.url ?? "",
+        })
+      }
+    }
   }
 
   const duration: GraduateProgramVariant["duration"] = [];
@@ -369,6 +405,7 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
   parseDuration(variant.durationFullTime ?? [], "full-time");
   parseDuration(variant.durationPartTime ?? [], "part-time");
   parseDeadlines(variant.graduateProgramEntryApp ?? []);
+  parseLinks(variant.relatedLinks ?? []);
 
   return {
     code: variant.graduateProgramCode ?? "",
@@ -385,10 +422,12 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
     },
     duration: duration,
     deadlines: deadlines,
+    additionalRequirements: additionalRequirements ?? undefined,
+    programStructure: programStructure ?? undefined,
   };
 }
 
-async function getGraduateProgramById(id: string): Promise<GraduateProgramVariant | null> {
+async function getGraduateProgramVariantById(id: string): Promise<GraduateProgramVariant | null> {
   const showUnpublished = await showUnpublishedContent();
   const client = getClient();
 
@@ -421,4 +460,4 @@ async function getGraduateProgramById(id: string): Promise<GraduateProgramVarian
   return parseGraduateProgramVariant(data.nodeGraduateProgramVariant);
 }
 
-export default getGraduateProgramById;
+export default getGraduateProgramVariantById;
