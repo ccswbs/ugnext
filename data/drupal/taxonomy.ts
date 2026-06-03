@@ -59,7 +59,9 @@ export const GRADUATE_PROGRAM = gql(/* gql */ `
       name
     }
     relatedLinks {
-      graduateLinkTypes
+      graduateRelatedLinkType {
+        name
+      }
       relatedLink {
         title
         url
@@ -105,6 +107,13 @@ export const PROFILE_TYPE_FRAGMENT = gql(/* gql */ `
     id
     name
     path
+  }
+`);
+
+export const PROGRAM_SEARCH_TAG = gql(/* gql */ `
+  fragment ProgramSearchTag on TermProgramSearchTag {
+    __typename
+    name
   }
 `);
 
