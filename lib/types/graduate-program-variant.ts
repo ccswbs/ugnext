@@ -42,6 +42,7 @@ export type GraduateProgramRelatedLink = {
   type: "Additional Requirements" | "Program Structure";
   title: string;
   url: string;
+  level: "program" | "variant";
 };
 
 export type GraduateProgramVariant = {

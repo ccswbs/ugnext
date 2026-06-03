@@ -322,19 +322,42 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
 
   const additionalRequirements: GraduateProgramRelatedLink[] = [];
   const programStructure: GraduateProgramRelatedLink[] = [];
-  const parseLinks = (linksData: GraduateProgramLinkFragment[]) => {
-    for (const item of linksData) {
+  const parseLinks = (variantLinksData: GraduateProgramLinkFragment[], programLinksData: GraduateProgramLinkFragment[]) => {
+
+    // Parse Variants first - these take precedence
+    for (const item of variantLinksData) {
       if(item.graduateRelatedLinkType?.name === "Additional Requirements"){
         additionalRequirements.push({
           type: "Additional Requirements",
           title: item.relatedLink?.title ?? "",
           url: item.relatedLink?.url ?? "",
+          level: "variant",
         })
       } else if(item.graduateRelatedLinkType?.name === "Program Structure"){
         programStructure.push({
           type: "Program Structure",
           title: item.relatedLink?.title ?? "",
           url: item.relatedLink?.url ?? "",
+          level: "variant",
+        })
+      }
+    }
+
+    // Program Links are secondary
+    for (const item of programLinksData) {
+      if(item.graduateRelatedLinkType?.name === "Additional Requirements"){
+        additionalRequirements.push({
+          type: "Additional Requirements",
+          title: item.relatedLink?.title ?? "",
+          url: item.relatedLink?.url ?? "",
+          level: "program",
+        })
+      } else if(item.graduateRelatedLinkType?.name === "Program Structure"){
+        programStructure.push({
+          type: "Program Structure",
+          title: item.relatedLink?.title ?? "",
+          url: item.relatedLink?.url ?? "",
+          level: "program",
         })
       }
     }
@@ -405,7 +428,7 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
   parseDuration(variant.durationFullTime ?? [], "full-time");
   parseDuration(variant.durationPartTime ?? [], "part-time");
   parseDeadlines(variant.graduateProgramEntryApp ?? []);
-  parseLinks(variant.relatedLinks ?? []);
+  parseLinks(variant.relatedLinks ?? [], variant.graduateProgramGrouping?.relatedLinks ?? []);
 
   return {
     code: variant.graduateProgramCode ?? "",
