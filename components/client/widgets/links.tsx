@@ -3,7 +3,6 @@ import { Card, CardContent, CardTitle, CardImage } from "@uoguelph/react-compone
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
 import NextLink from "next/link";
-import { tv } from "tailwind-variants";
 import type { LinksFragment } from "@/lib/graphql/types";
 import { Typography } from "@uoguelph/react-components/typography";
 import { slugify } from "@/lib/string-utils";
@@ -12,66 +11,12 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
   if (!data.links || data.links.length === 0) return null;
 
   const title = data.title?.trim();
+  const description = data.linksDescription;
   const useCards = data.links.some((link) => Boolean(link.image));
-  const count = data.links.length ?? 0;
-  const classes = tv({
-    slots: {
-      container: "mx-0 my-0 flex flex-col flex-wrap sm:flex-row gap-4 w-full md:w-fit",
-      card: "h-full md:max-w-[32.2rem]",
-      cardImage: "aspect-[4/3] w-full object-cover",
-    },
-    variants: {
-      isLargeGrid: {
-      true: {
-        container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full",
-        },
-      },
-      centered: {
-        true: {
-          container: "mx-auto justify-center",
-        },
-      },
-      divisibleByTwo: {
-        true: {
-          container: "",
-        },
-      },
-      divisibleByThree: {
-        true: {
-          container: "",
-        },
-      },
-      divisibleByFour: {
-        true: {
-          container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full",
-        },
-      },
-    },
-    compoundVariants: [
-      {
-        divisibleByTwo: true,
-        divisibleByThree: false,
-        divisibleByFour: false,
-        class: {
-          container: "grid grid-cols-1 sm:grid-cols-2",
-        },
-      },
-      {
-        divisibleByThree: true,
-        divisibleByFour: false,
-        class: {
-          container: "grid grid-cols-1 sm:grid-cols-3",
-        },
-      },
-    ],
-  })({
-    centered: false,
-    isLargeGrid: count > 8, 
-    divisibleByTwo: count % 2 === 0,
-    divisibleByThree: count % 3 === 0,
-    divisibleByFour: count % 4 === 0,
-  });
-
+  const containerClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:w-full gap-4";
+  const cardClass = "h-full md:max-w-[32.2rem]";
+  const cardImageClass = "aspect-[4/3] w-full object-cover";
+  
   return (
     <div id={`links-${data.uuid}`} className="mb-5 py-4">
       {title && (
@@ -79,9 +24,14 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
           {title}
         </Typography>
       )}
+      {description && (
+        <Typography type="body" as="p" className="mb-4">
+          {description}
+        </Typography>)
+      }
 
       {useCards ? (
-        <div className={classes.container()}>
+        <div className={containerClass}>
           {data.links?.map((link, index) => {
             const url = link.url?.url;
             const title = link.url?.title;
@@ -96,7 +46,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
                 as={NextLink}
                 id={`link-${data.uuid}`}
                 href={url}
-                className={classes.card()}
+                className={cardClass}
                 centered
                 key={url + index}
               >
@@ -107,7 +57,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
                     width={image.width}
                     height={image.height}
                     alt={image.alt ?? ""}
-                    className={classes.cardImage()}
+                    className={cardImageClass}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 )}
