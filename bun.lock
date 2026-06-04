@@ -18,7 +18,7 @@
         "@plaiceholder/next": "^3.0.0",
         "@types/jsonwebtoken": "^9.0.10",
         "@uoguelph/react-components": "^1.9.0",
-        "@uoguelph/web-components": "^2.1.0",
+        "@uoguelph/web-components": "^2.1.2",
         "conditional-wrap": "^1.0.3",
         "glob": "^13.0.0",
         "html-react-parser": "^5.2.13",
@@ -593,7 +593,7 @@
 
     "@uoguelph/tailwind-theme": ["@uoguelph/tailwind-theme@1.0.2", "", { "dependencies": { "tailwindcss": "^4.0.9" } }, "sha512-T7hQPcXQaprzhYhBCWysIfYfxZINv9yebCs/V1+ZasjnTEIR4YGK5LLwH/6WkNSSa5PJgjp2mYoRRONyUD0iiQ=="],
 
-    "@uoguelph/web-components": ["@uoguelph/web-components@2.1.0", "", {}, "sha512-2mnnyYUg+CJW5HauEyoscODoUCFxnBMWZpKdLFSKfHbUBC9EzWadjwAbrXui1OxphB2u1GH1uyOyaQbNfeKSfg=="],
+    "@uoguelph/web-components": ["@uoguelph/web-components@2.1.2", "", {}, "sha512-5+7+KjV3TlKLiqiBlqISJQwy1rS5C92QtwgD/sPayRvRxHuM2PjVKMI/YbliYQ2pzCtOWN5N4K1QBVo9Z99oIg=="],
 
     "@webassemblyjs/ast": ["@webassemblyjs/ast@1.14.1", "", { "dependencies": { "@webassemblyjs/helper-numbers": "1.13.2", "@webassemblyjs/helper-wasm-bytecode": "1.13.2" } }, "sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ=="],
 
