@@ -105,9 +105,9 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
       <LayoutContent container={false}>
         <PageHero content={content} />
-
         {content?.heroWidgets
-          ?.filter((widget) => widget.__typename !== "ParagraphModalVideoWidget")
+          ?.filter((widget) => widget.__typename === "ParagraphGraduateProgramSummary")
+          .slice(0, 1)
           .map((widget, index) => (
             <WidgetSelector key={index} data={widget} primaryNavigation={content.primaryNavigation} />
           ))}
