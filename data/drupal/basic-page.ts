@@ -90,9 +90,7 @@ export async function getPageContent(id: string): Promise<ProcessedBasicPage | n
   }
 
   const processor = new WidgetProcessor();
-  const processedHeroWidgets = await processor.processWidgets(
-    data.nodePage.heroWidgets ? [data.nodePage.heroWidgets] : []
-  );
+  const processedHeroWidgets = await processor.processWidgets(data.nodePage.heroWidgets ?? []);
   const processedWidgets = await processor.processWidgets(data.nodePage.widgets ?? []);
 
   return {

@@ -38,7 +38,7 @@ function PageHero({ content }: { content: NonNullable<PageContent> }) {
             ?.filter((widget) => widget.__typename === "ParagraphModalVideoWidget")
             .slice(0, 1)
             .map((widget) => (
-              <HeroVideo src={widget.video.url} title={widget.video.name} transcript={widget.video.transcript?.url} />
+              <HeroVideo key={`hero-video-${widget.video.name}`} src={widget.video.url} title={widget.video.name} transcript={widget.video.transcript?.url} />
             ))}
         </Hero>
 
