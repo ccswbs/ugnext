@@ -33,10 +33,14 @@ function GraduateProgramTypes({ types }: { types: GraduateProgramType[] }) {
   );
 }
 
-function GraduateDegree({ degree }: { degree: GraduateDegree }) {
-  const { acronym, name } = degree;
-
-  return <span>{acronym ? `${acronym} (${name})` : name}</span>;
+function GraduateDegree({ degrees }: { degrees: GraduateDegree[] }) {
+  return (
+    <ul className={classes.sectionList()}>
+      {degrees.map((degree) => (
+        <li>{degree.acronym ? `${degree.acronym} (${degree.name})` : degree.name}</li>
+      ))}
+    </ul>
+  );
 }
 
 function GraduateProgramAdmissionAverage({ average, hasFootnote = false }: { average: GraduateProgramAdmissionAverage, hasFootnote: boolean }) {
@@ -173,9 +177,7 @@ function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApp
 }
 
 export function GraduateProgramSummary({ program }: { program: GraduateProgramVariant }) {
-  // @TO DO - confirm if Additional Requirements should come from the Program or Program Variant
   const hasAdditionalRequirements = (program.additionalRequirements && program.additionalRequirements?.length > 0) ?? false;
-  // @TO DO - confirm if Program Structure should come from the Program or Program Variant
   const hasProgramStructure = (program.programStructure && program.programStructure?.length > 0) ?? false;
 
   return (
@@ -190,7 +192,7 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgramVa
         {/* Degree Section */}
         <div className={classes.section()}>
           <h2 className={classes.sectionTitle()}>Degree</h2>
-          <GraduateDegree degree={program.degree} />
+          <GraduateDegree degrees={program.degrees} />
         </div>
 
         {/* Delivery Section*/}

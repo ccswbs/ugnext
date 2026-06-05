@@ -3,9 +3,13 @@ export type GraduateProgramType = {
   name: string;
 };
 
+// Yaml uses node + title field
+// Drupal uses taxonomy + name field
 export type GraduateDegree = {
+  __typename: "GraduateDegree";
   id: string;
-  name: string;
+  name?: string;
+  title?: string;
   acronym?: string;
 };
 
@@ -47,7 +51,7 @@ export type GraduateProgramRelatedLink = {
 
 export type GraduateProgramVariant = {
   code: string;
-  degree: GraduateDegree;
+  degrees: GraduateDegree[];
   type: GraduateProgramType[];
   delivery: GraduateProgramDelivery[];
   average: GraduateProgramAdmissionAverage;

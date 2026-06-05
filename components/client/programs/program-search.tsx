@@ -9,7 +9,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import type { UndergraduateProgram, UndergraduateProgramType } from "@/data/drupal/undergraduate-program";
 import type { UndergraduateDegree, UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree";
-// PHASE 1 - YAML-BASED (Graduate)
+// PHASE 1 - YAML-BASED (Graduate) - also update /apps/programs/graduate/page
 // import type { GraduateDegreeType, GraduateProgram, GraduateProgramType } from "@/data/yaml/programs/graduate";
 // PHASE 2 - DRUPAL-BASED (Graduate)
 import type { 

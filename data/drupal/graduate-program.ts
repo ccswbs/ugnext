@@ -23,12 +23,6 @@ export type GraduateProgramVariantResult = GraduateProgramVariant & {
   id: string;
   title: string;
   url: string;
-  degrees: {
-    __typename: "GraduateDegree";
-    id: string;
-    title: string;
-    acronym?: string;
-  }[],
   tags: string[];
 };
 
@@ -42,13 +36,13 @@ function parse(variant: GraduateProgramVariantFragment) {
     title: variant.graduateProgramGrouping.name,
     url: variant.programUrl?.url ?? "",
     type: uniqueTypes,
-    degrees: [
-      {
+    degrees: variant.graduateProgramDegree?.map((degree) => ({
       __typename: "GraduateDegree",
-      id: variant.graduateProgramDegree.id,
-      title: variant.graduateProgramDegree.name,
-      acronym: variant.graduateProgramDegree.acronym,
-    }],
+      id: degree.id,
+      name: degree.name,
+      title: degree.name,
+      acronym: degree.acronym,
+    })) ?? [],
     tags: variant?.graduateProgramGrouping.tags?.map((tag) => tag.name) ?? [],
   } as GraduateProgramVariantResult;
 }
@@ -432,10 +426,13 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
 
   return {
     code: variant.graduateProgramCode ?? "",
-    degree: {
-      ...variant.graduateProgramDegree,
-      acronym: variant.graduateProgramDegree.acronym ?? undefined,
-    },
+    degrees: variant.graduateProgramDegree?.map((degree) => ({
+      __typename: "GraduateDegree",
+      id: degree.id,
+      name: degree.name,
+      title: degree.name,
+      acronym: degree.acronym ?? undefined,
+    })) ?? [],
     type: variant.graduateProgramType,
     delivery: variant.graduateDelivery,
     average: {
@@ -447,10 +444,10 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
     deadlines: deadlines,
     additionalRequirements: additionalRequirements ?? undefined,
     programStructure: programStructure ?? undefined,
-  };
+  } as GraduateProgramVariantResult;
 }
 
-async function getGraduateProgramVariantById(id: string): Promise<GraduateProgramVariant | null> {
+async function getGraduateProgramVariantById(id: string): Promise<GraduateProgramVariantResult | null> {
   const showUnpublished = await showUnpublishedContent();
   const client = getClient();
 
