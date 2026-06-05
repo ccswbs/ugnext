@@ -26,6 +26,13 @@ export type GraduateProgramVariantResult = GraduateProgramVariant & {
   tags: string[];
 };
 
+function sortVariants(variants: GraduateProgramVariantFragment[]) {
+  const sortedVariants = [...variants].sort((a, b) => 
+    a.graduateProgramGrouping.name.localeCompare(b.graduateProgramGrouping.name)
+  );
+  return sortedVariants;
+}
+
 function parse(variant: GraduateProgramVariantFragment) {
   const uniqueTypes = [...new Set(variant.graduateProgramType.flatMap(
     item => item.searchableType !== null ? item.searchableType : []))];
@@ -49,7 +56,7 @@ function parse(variant: GraduateProgramVariantFragment) {
 
 async function getDraftGraduateProgramVariants() {
   const variantsQuery = gql(/* gql */ `
-    query DraftGraduatePrograms($pageSize: Int = 100, $page: Int = 0) {
+    query DraftGraduateProgramVariants($pageSize: Int = 100, $page: Int = 0) {
       latestContentRevisions(filter: { type: "graduate_program_variant" }, pageSize: $pageSize, page: $page) {
         pageInfo {
           total
@@ -90,7 +97,9 @@ async function getDraftGraduateProgramVariants() {
     page++;
   }
 
-  return variants.map(parse);
+  const sortedVariants = sortVariants(variants);
+
+  return sortedVariants.map(parse);
 }
 
 async function getPublishedGraduateProgramVariants() {
@@ -134,7 +143,9 @@ async function getPublishedGraduateProgramVariants() {
     }
   }
 
-  return variants.filter((variant) => variant.status).map(parse);
+  const sortedVariants = sortVariants(variants);
+
+  return sortedVariants.filter((variant) => variant.status).map(parse);
 }
 
 export async function getGraduateProgramVariants() {
