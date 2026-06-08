@@ -3,7 +3,7 @@
 import { Button } from "@uoguelph/react-components/button";
 import { usePathname } from "next/navigation";
 
-export function DraftModeBanner() {
+export function DraftModeBanner({ primaryNavigation }: { primaryNavigation?: { id: string; name: string } }) {
   const pathname = usePathname();
   const searchParams = new URLSearchParams(window.location.search);
   const shareableLink = searchParams.get("secret")
@@ -21,6 +21,17 @@ export function DraftModeBanner() {
       <Button color="yellow" className="p-2" href={`/api/revalidate?path=${pathname}`} as="a">
         Revalidate Page
       </Button>
+
+      {primaryNavigation && (
+        <Button
+          color="yellow"
+          className="p-2"
+          href={`/api/revalidate?tag=primary-navigation-${primaryNavigation.id}`}
+          as="a"
+        >
+          Revalidate All {primaryNavigation.name} Pages
+        </Button>
+      )}
 
       {shareableLink && (
         <Button
