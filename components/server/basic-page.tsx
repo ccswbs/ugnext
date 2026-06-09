@@ -102,7 +102,6 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
   }
 
   const cacheTags = getCacheTags(content);
-  console.log(`Cache tags for basic page with id ${id}:`, cacheTags);
   cacheTag(...cacheTags);
 
   const { tags, units } = (content.tags ?? []).reduce(

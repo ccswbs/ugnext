@@ -118,6 +118,10 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         uuid
         id
         name
+        customFooter {
+          __typename
+          id
+        }
       }
       ... on TermUndergraduateStudentType {
         uuid
