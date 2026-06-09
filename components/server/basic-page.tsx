@@ -12,6 +12,8 @@ import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
 import { cacheTag } from "next/cache";
+import { DraftModePrimaryNavigationButton } from "@/components/client/draft-mode/draft-mode-primary-navigation-button";
+import { toTitleCase } from "@/lib/string-utils";
 
 export type BasicPageProps = {
   id: string;
@@ -123,6 +125,15 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
   return (
     <Layout>
       <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
+
+      {content.primaryNavigation && (
+        <DraftModePrimaryNavigationButton
+          primaryNavigation={{
+            id: content.primaryNavigation.id,
+            name: toTitleCase(content.primaryNavigation.menuName ?? ""),
+          }}
+        />
+      )}
 
       <LayoutContent container={false}>
         <PageHero content={content} />
