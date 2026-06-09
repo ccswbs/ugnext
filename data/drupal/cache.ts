@@ -39,7 +39,8 @@ export function getTagsToRevalidateByEntity(entity: RouteEntity) {
       break;
   }
 
-  return tags;
+  // Remove duplicates
+  return Array.from(new Set(tags));
 }
 
 /*
@@ -66,5 +67,6 @@ export function getBasicPageLinkedCacheTags(page: ProcessedBasicPage) {
     }
   }
 
-  return tags;
+  // Remove duplicates
+  return Array.from(new Set(tags));
 }
