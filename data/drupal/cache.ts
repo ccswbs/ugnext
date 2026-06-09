@@ -1,4 +1,5 @@
 import { type ProcessedBasicPage } from "@/data/drupal/basic-page";
+import { RouteEntity } from "@/data/drupal/route";
 
 /*
  * Cache tags are used to determine if cache entries are related to a specific entity.
@@ -7,6 +8,8 @@ import { type ProcessedBasicPage } from "@/data/drupal/basic-page";
  * For example, with basic pages, we can mark the basic page with "TermPrimaryNavigation-ID-123", so that when the primary navigation changes, the basic page is invalidated.
  */
 
+const CACHE_TAG_FEATURED_NEWS = "Featured-News";
+
 /*
  * Gets the cache tag that can be used to link an arbitrary entity to a cache entry by combining its typename and id
  */
@@ -14,22 +17,30 @@ export function getCacheTag(entity: { __typename: string; id: string }) {
   return `${entity.__typename}-ID-${entity.id}`;
 }
 
-export function getNewsArticleCacheTags(units: string[], categories: string[], tags: string[]) {
-  const cacheTags: string[] = [];
+/*
+ * Get the tags that should be revalidated when an entity is updated
+ */
+export function getTagsToRevalidateByEntity(entity: RouteEntity) {
+  const tags: string[] = [];
 
-  for (const unit of units) {
-    cacheTags.push(`NodeNews-Unit-${unit}`);
+  if ("id" in entity) {
+    tags.push(getCacheTag(entity));
   }
 
-  for (const category of categories) {
-    cacheTags.push(`NodeNews-Category-${category}`);
+  switch (entity.__typename) {
+    case "NodeNews":
+      /* When a news article is updated, we need to revalidate any pages that use the featured news widget.
+       * Unfortunately, this will not be limited to only pages with feature news widgets that would actually use the updated news article.
+       * Although, since there will most likely only be a few pages with featured news widgets, this is not a major issue.
+       */
+
+      tags.push(CACHE_TAG_FEATURED_NEWS);
+      break;
+    default:
+      break;
   }
 
-  for (const tag of tags) {
-    cacheTags.push(`NodeNews-Tag-${tag}`);
-  }
-
-  return cacheTags;
+  return tags;
 }
 
 /*
@@ -49,13 +60,7 @@ export function getBasicPageLinkedCacheTags(page: ProcessedBasicPage) {
   for (const widget of page.widgets) {
     switch (widget.__typename) {
       case "ParagraphFeaturedNews":
-        const newsArticleCacheTags = getNewsArticleCacheTags(
-          widget.units?.map((unit) => unit.id) ?? [],
-          widget.categories?.map((category) => category.id) ?? [],
-          widget.tags?.map((tag) => tag.id) ?? []
-        );
-
-        tags.push(...newsArticleCacheTags);
+        tags.push(CACHE_TAG_FEATURED_NEWS);
         break;
       default:
         break;

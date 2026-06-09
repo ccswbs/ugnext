@@ -2,33 +2,10 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
 import { getRoute, RouteEntity } from "@/data/drupal/route";
 import { draftMode } from "next/headers";
-import { getCacheTag, getNewsArticleCacheTags } from "@/data/drupal/cache";
+import { getTagsToRevalidateByEntity } from "@/data/drupal/cache";
 
-function getTagsToRevalidate(entity: RouteEntity) {
-  const tags: string[] = [];
-
-  if ("id" in entity) {
-    tags.push(getCacheTag(entity));
-  }
-
-  switch (entity.__typename) {
-    case "NodeNews":
-      const newsArticleCacheTags = getNewsArticleCacheTags(
-        entity.unit.map((unit) => unit.id) ?? [],
-        entity.category?.map((category) => category.id) ?? [],
-        entity.tags?.map((tag) => tag.id) ?? []
-      );
-
-      tags.push(...newsArticleCacheTags);
-      break;
-    default:
-      break;
-  }
-
-  return tags;
-}
 function revalidateEntity(entity: RouteEntity) {
-  const tags = getTagsToRevalidate(entity);
+  const tags = getTagsToRevalidateByEntity(entity);
 
   for (const tag of tags) {
     revalidateTag(tag, "max");
