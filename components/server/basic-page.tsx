@@ -11,6 +11,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
+import { cacheTag } from "next/cache";
 
 export type BasicPageProps = {
   id: string;
@@ -19,6 +20,19 @@ export type BasicPageProps = {
 };
 
 type PageContent = NonNullable<Awaited<ReturnType<typeof getPageContent>>>;
+
+function getCacheTags(data: PageContent) {
+  const tags = [];
+
+  if (data.primaryNavigation) {
+    tags.push(`${data.primaryNavigation.__typename}-ID-${data.primaryNavigation.id}`);
+    if (data.primaryNavigation.customFooter) {
+      tags.push(`${data.primaryNavigation.customFooter.__typename}-ID-${data.primaryNavigation.customFooter.id}`);
+    }
+  }
+
+  return tags;
+}
 
 function PageHero({ content }: { content: NonNullable<PageContent> }) {
   if (content.image) {
@@ -68,6 +82,8 @@ function PageHero({ content }: { content: NonNullable<PageContent> }) {
 }
 
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
+  "use cache";
+
   const content = await getPageContent(id);
 
   // Couldn't fetch content for this id.
@@ -82,6 +98,10 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
     notFound();
   }
+
+  const cacheTags = getCacheTags(content);
+  console.log(`Cache tags for basic page with id ${id}:`, cacheTags);
+  cacheTag(...cacheTags);
 
   const { tags, units } = (content.tags ?? []).reduce(
     (acc, tag) => {
