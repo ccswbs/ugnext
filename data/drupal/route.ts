@@ -120,24 +120,7 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
           id
         }
         tags {
-          ... on TermTag {
-            id
-          }
-          ... on TermDegree {
-            id
-          }
-          ... on TermSpecialization {
-            id
-          }
-          ... on TermUnit {
-            id
-          }
-          ... on TermProgram {
-            id
-          }
-          ... on TermInterface {
-            id
-          }
+          id
         }
         metatag {
           __typename

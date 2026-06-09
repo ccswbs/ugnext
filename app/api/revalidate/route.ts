@@ -6,6 +6,7 @@ import { getTagsToRevalidateByEntity } from "@/data/drupal/cache";
 
 function revalidateEntity(entity: RouteEntity) {
   const tags = getTagsToRevalidateByEntity(entity);
+  console.log("Revalidating tags:", tags);
 
   for (const tag of tags) {
     revalidateTag(tag, "max");
