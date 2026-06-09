@@ -18,6 +18,9 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
     category {
       ...NewsCategory
     }
+    tags {
+      ...Tag
+    }
     externalLink {
       url
       title
@@ -184,7 +187,7 @@ export async function getNewsArticle(id: string) {
     return null;
   }
 
-  if (data.nodeNews.status === false && !showUnpublished) {
+  if (!data.nodeNews.status && !showUnpublished) {
     return null;
   }
 
@@ -199,6 +202,8 @@ export async function getNewsArticle(id: string) {
     widgets: await processor.processWidgets(data.nodeNews.widgets ?? []),
   } as FullNewsArticle;
 }
+
+export async function getNewsArticleWithoutContent(id: string) {}
 
 export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
 

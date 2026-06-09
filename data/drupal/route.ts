@@ -1,13 +1,17 @@
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { RouteQuery, RouteBreadcrumbsQuery, NodePage } from "@/lib/graphql/types";
+import { RouteQuery } from "@/lib/graphql/types";
 import { getMenuLinkByURI } from "@/data/drupal/menu";
-import { Link, RouteEntityUnion } from "@/lib/graphql/graphql";
+import { Link } from "@/lib/graphql/graphql";
 import { Metadata } from "next";
 import { cache } from "react";
 
 export type Route = NonNullable<RouteQuery["route"]>;
+
+export type RouteEntities = NonNullable<
+  (Awaited<ReturnType<typeof getRoute>> & { __typename: "RouteInternal" })["entity"]
+>;
 
 const METATAGS_PROPERTY_FRAGMENT = gql(/* gql */ `
   fragment MetaProperty on MetaTagProperty {

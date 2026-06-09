@@ -1,12 +1,41 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
-import { getRoute } from "@/data/drupal/route";
+import { getRoute, RouteEntities } from "@/data/drupal/route";
 import { draftMode } from "next/headers";
+
+function getEntityCacheTags(entity: RouteEntities) {
+  const cacheTags: string[] = [];
+
+  if ("id" in entity) {
+    cacheTags.push(`${entity.__typename}-ID-${entity.id}`);
+  }
+
+  switch (entity.__typename) {
+    case "TermPrimaryNavigation":
+      if (entity.customFooter) {
+        cacheTags.push(`${entity.__typename}-ID-${entity.customFooter.id}`);
+      }
+      break;
+  }
+
+  return cacheTags;
+}
+function revalidateEntity(entity: RouteEntities) {
+  const entityCacheTags = getEntityCacheTags(entity);
+
+  for (const tag of entityCacheTags) {
+    revalidateTag(tag, "max");
+  }
+
+  switch (entity.__typename) {
+    case "NodeUndergraduateRequirement":
+      revalidatePath("/programs/undergraduate/requirements/[...slug]", "page");
+      break;
+  }
+}
 
 async function handler(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const path = searchParams.get("path");
-  const tags = searchParams.get("tags");
   const secret = searchParams.get("secret");
   const { isEnabled } = await draftMode();
 
@@ -15,53 +44,29 @@ async function handler(request: NextRequest) {
     return new Response("Invalid secret or you are not in draft mode.", { status: 401 });
   }
 
+  const path = searchParams.get("path");
+  const tags = searchParams.get("tags");
+
   // Either tags or path must be provided.
   if (!path && !tags) {
     return new Response("Missing path or tags.", { status: 400 });
   }
 
-  // Some node types might require some custom revalidation logic.
   if (path) {
     const route = await getRoute(path);
 
     if (route && route.__typename === "RouteInternal" && route.entity) {
-      let idCacheTag = "";
-
-      if ("id" in route.entity) {
-        idCacheTag = `${route.entity.__typename}-ID-${route.entity.id}`;
-        console.log(`Revalidating entity of type ${route.entity.__typename} with ID ${route.entity.id}`);
-      }
-
-      switch (route.entity.__typename) {
-        case "TermPrimaryNavigation":
-          // Revalidate routes tagged with this primary navigation's id
-          revalidateTag(idCacheTag, "max");
-
-          // If the primary navigation has a custom footer, revalidate pages tagged with the footer's id
-          if (route.entity.customFooter) {
-            revalidateTag(`${route.entity.__typename}-ID-${route.entity.customFooter.id}`, "max");
-          }
-          break;
-        case "NodeCustomFooter":
-        case "NodeProfile":
-        case "NodePage":
-          revalidateTag(idCacheTag, "max");
-          break;
-        case "NodeUndergraduateRequirement":
-          revalidatePath("/programs/undergraduate/requirements/[...slug]", "page");
-          break;
-      }
+      revalidateEntity(route.entity);
     }
+
+    revalidatePath(path);
   }
 
-  try {
-    path && revalidatePath(path);
-    tags?.split(",").forEach((tag) => revalidateTag(tag, "max"));
-
-    return new Response("Revalidated.");
-  } catch (error) {
-    return new Response((error as Error).message, { status: 500 });
+  if (tags) {
+    tags.split(",").forEach((tag) => revalidateTag(tag, "max"));
   }
+
+  return new Response("Revalidated.");
 }
 
 export { handler as GET, handler as POST };

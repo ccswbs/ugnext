@@ -33,6 +33,16 @@ function getCacheTags(data: PageContent) {
     }
   }
 
+  for (const widget of data.widgets) {
+    switch (widget.__typename) {
+      case "ParagraphFeaturedNews":
+        tags.push(widget.__typename);
+        break;
+      default:
+        break;
+    }
+  }
+
   return tags;
 }
 

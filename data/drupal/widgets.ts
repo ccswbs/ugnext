@@ -539,6 +539,7 @@ export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
 
 export type FullFeaturedNews = Omit<FeaturedNewsFragment, "units"> & {
   isFull: true;
+  cacheTags: string[];
 };
 
 export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
@@ -618,6 +619,7 @@ export class WidgetProcessor {
     const categories = data.categories?.map((category) => category.id) ?? [];
     const tags = data.tags?.map((tag) => tag.id) ?? [];
     const allArticles = [];
+    const cacheTags = [];
     let articlesNeeded = data.count - (data.articles?.length ?? 0);
 
     for (const article of data.articles ?? []) {
@@ -626,6 +628,7 @@ export class WidgetProcessor {
       }
 
       allArticles.push(article);
+      cacheTags.push(`${article.__typename}-ID-${article.id}`);
       this.excludeNewsArticles.add(article.id);
     }
 
@@ -662,6 +665,7 @@ export class WidgetProcessor {
     return {
       ...data,
       isFull: true,
+      cacheTags: cacheTags,
       articles: allArticles as NewsWithoutContentFragment[],
     };
   }
