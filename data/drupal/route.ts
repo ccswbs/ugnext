@@ -118,10 +118,6 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         uuid
         id
         name
-        customFooter {
-          id
-          uuid
-        }
       }
       ... on TermUndergraduateStudentType {
         uuid
@@ -387,8 +383,8 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
     }
   `);
 
-  const { data, error } = await client.query<RouteBreadcrumbsQuery>({
-    query: breadcrumbsQuery as any,
+  const { data, error } = await client.query({
+    query: breadcrumbsQuery,
     variables: {
       path: url,
       revision: (await showUnpublishedContent()) ? "latest" : "current",
@@ -400,6 +396,10 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
   }
 
   if (!data) {
+    return null;
+  }
+
+  if (!data.route) {
     return null;
   }
 
