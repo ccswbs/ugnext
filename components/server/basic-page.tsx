@@ -104,6 +104,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
   const cacheTags = getCacheTags(content);
   cacheTag(...cacheTags);
 
+  const customFooterID: string = content.primaryNavigation?.customFooter?.id ?? "";
   const { tags, units } = (content.tags ?? []).reduce(
     (acc, tag) => {
       if (tag.__typename === "TermTag") {
@@ -146,7 +147,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
         {post && post}
       </LayoutContent>
 
-      <CustomFooter tags={tags} units={units} id="" />
+      <CustomFooter tags={tags} units={units} id={customFooterID} />
       <Footer></Footer>
     </Layout>
   );
