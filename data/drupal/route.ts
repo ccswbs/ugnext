@@ -9,7 +9,7 @@ import { cache } from "react";
 
 export type Route = NonNullable<RouteQuery["route"]>;
 
-export type RouteEntities = NonNullable<
+export type RouteEntity = NonNullable<
   (Awaited<ReturnType<typeof getRoute>> & { __typename: "RouteInternal" })["entity"]
 >;
 
@@ -113,6 +113,32 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         uuid
         id
         title
+        unit {
+          id
+        }
+        category {
+          id
+        }
+        tags {
+          ... on TermTag {
+            id
+          }
+          ... on TermDegree {
+            id
+          }
+          ... on TermSpecialization {
+            id
+          }
+          ... on TermUnit {
+            id
+          }
+          ... on TermProgram {
+            id
+          }
+          ... on TermInterface {
+            id
+          }
+        }
         metatag {
           __typename
           ...MetaProperty

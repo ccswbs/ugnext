@@ -1,7 +1,7 @@
 import { Layout, LayoutContent } from "@uoguelph/react-components/layout";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Header } from "@/components/server/header";
-import { getPageContent } from "@/data/drupal/basic-page";
+import { getPageContent, ProcessedBasicPage } from "@/data/drupal/basic-page";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/server/breadcrumbs";
 import { Hero, HeroTitle, HeroVideo } from "@uoguelph/react-components/hero";
@@ -14,6 +14,7 @@ import { CustomFooter } from "@/components/server/custom-footer";
 import { cacheTag } from "next/cache";
 import { DraftModeSiteButton } from "@/components/client/draft-mode/draft-mode-site-button";
 import { toTitleCase } from "@/lib/string-utils";
+import { getBasicPageLinkedCacheTags } from "@/data/drupal/cache";
 
 export type BasicPageProps = {
   id: string;
@@ -21,32 +22,7 @@ export type BasicPageProps = {
   post?: React.ReactNode;
 };
 
-type PageContent = NonNullable<Awaited<ReturnType<typeof getPageContent>>>;
-
-function getCacheTags(data: PageContent) {
-  const tags = [];
-
-  if (data.primaryNavigation) {
-    tags.push(`${data.primaryNavigation.__typename}-ID-${data.primaryNavigation.id}`);
-    if (data.primaryNavigation.customFooter) {
-      tags.push(`${data.primaryNavigation.customFooter.__typename}-ID-${data.primaryNavigation.customFooter.id}`);
-    }
-  }
-
-  for (const widget of data.widgets) {
-    switch (widget.__typename) {
-      case "ParagraphFeaturedNews":
-        tags.push(widget.__typename);
-        break;
-      default:
-        break;
-    }
-  }
-
-  return tags;
-}
-
-function PageHero({ content }: { content: NonNullable<PageContent> }) {
+function PageHero({ content }: { content: ProcessedBasicPage }) {
   if (content.image) {
     return (
       <>
@@ -96,10 +72,10 @@ function PageHero({ content }: { content: NonNullable<PageContent> }) {
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
   "use cache";
 
-  const content = await getPageContent(id);
+  const page = await getPageContent(id);
 
   // Couldn't fetch content for this id.
-  if (!content) {
+  if (!page) {
     if (process.env.NODE_ENV === "development") {
       console.warn(`Couldn't find content for basic page with id ${id}`);
 
@@ -111,11 +87,12 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     notFound();
   }
 
-  const cacheTags = getCacheTags(content);
+  const cacheTags = getBasicPageLinkedCacheTags(page);
+  console.log(cacheTags);
   cacheTag(...cacheTags);
 
-  const customFooterID: string = content.primaryNavigation?.customFooter?.id ?? "";
-  const { tags, units } = (content.tags ?? []).reduce(
+  const customFooterID: string = page.primaryNavigation?.customFooter?.id ?? "";
+  const { tags, units } = (page.tags ?? []).reduce(
     (acc, tag) => {
       if (tag.__typename === "TermTag") {
         acc.tags.push(tag.id);
@@ -134,24 +111,17 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
   return (
     <Layout>
-      <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
+      <Header name={page.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
 
-      {content.primaryNavigation && (
-        <DraftModeSiteButton
-          primaryNavigation={{
-            id: content.primaryNavigation.id,
-            name: toTitleCase(content.primaryNavigation.menuName ?? ""),
-          }}
-        />
-      )}
+      {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />}
 
       <LayoutContent container={false}>
-        <PageHero content={content} />
+        <PageHero content={page} />
 
         {pre && pre}
 
-        {content?.widgets?.map((widget, index) => (
-          <WidgetSelector key={index} data={widget} primaryNavigation={content.primaryNavigation} />
+        {page?.widgets?.map((widget, index) => (
+          <WidgetSelector key={index} data={widget} primaryNavigation={page.primaryNavigation} />
         ))}
 
         {post && post}

@@ -1,29 +1,36 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
-import { getRoute, RouteEntities } from "@/data/drupal/route";
+import { getRoute, RouteEntity } from "@/data/drupal/route";
 import { draftMode } from "next/headers";
+import { getCacheTag, getNewsArticleCacheTags } from "@/data/drupal/cache";
 
-function getEntityCacheTags(entity: RouteEntities) {
-  const cacheTags: string[] = [];
+function getTagsToRevalidate(entity: RouteEntity) {
+  const tags: string[] = [];
 
   if ("id" in entity) {
-    cacheTags.push(`${entity.__typename}-ID-${entity.id}`);
+    tags.push(getCacheTag(entity));
   }
 
   switch (entity.__typename) {
-    case "TermPrimaryNavigation":
-      if (entity.customFooter) {
-        cacheTags.push(`${entity.__typename}-ID-${entity.customFooter.id}`);
-      }
+    case "NodeNews":
+      const newsArticleCacheTags = getNewsArticleCacheTags(
+        entity.unit.map((unit) => unit.id) ?? [],
+        entity.category?.map((category) => category.id) ?? [],
+        entity.tags?.map((tag) => tag.id) ?? []
+      );
+
+      tags.push(...newsArticleCacheTags);
+      break;
+    default:
       break;
   }
 
-  return cacheTags;
+  return tags;
 }
-function revalidateEntity(entity: RouteEntities) {
-  const entityCacheTags = getEntityCacheTags(entity);
+function revalidateEntity(entity: RouteEntity) {
+  const tags = getTagsToRevalidate(entity);
 
-  for (const tag of entityCacheTags) {
+  for (const tag of tags) {
     revalidateTag(tag, "max");
   }
 

@@ -18,6 +18,7 @@ export const NAVIGATION_FRAGMENT = gql(/* gql */ `
     menuName
     headerVariant
     customFooter {
+      __typename
       id
     }
     newsHomePage {

@@ -3,8 +3,9 @@
 import { createPortal } from "react-dom";
 import { Button } from "@uoguelph/react-components/button";
 import { useEffect, useState } from "react";
+import { getCacheTag } from "@/data/drupal/cache";
 
-export function DraftModeSiteButton({ primaryNavigation }: { primaryNavigation: { id: string; name: string } }) {
+export function DraftModeSiteButton({ primaryNavigation }: { primaryNavigation: { __typename: string; id: string } }) {
   const [idExists, setIdExists] = useState<boolean>(false);
 
   useEffect(() => {
@@ -15,12 +16,7 @@ export function DraftModeSiteButton({ primaryNavigation }: { primaryNavigation: 
     <>
       {idExists &&
         createPortal(
-          <Button
-            color="yellow"
-            className="p-2"
-            href={`/api/revalidate?tag=TermPrimaryNavigation-ID-${primaryNavigation.id}`}
-            as="a"
-          >
+          <Button color="yellow" className="p-2" href={`/api/revalidate?tag=${getCacheTag(primaryNavigation)}`} as="a">
             Revalidate Site
           </Button>,
           // @ts-expect-error We check the element exists in the useEffect, so this will never be null but TypeScript doesn't know that
