@@ -6,15 +6,15 @@ import { useEffect, useState } from "react";
 import { getCacheTag } from "@/data/drupal/cache";
 
 export function DraftModeSiteButton({ primaryNavigation }: { primaryNavigation: { __typename: string; id: string } }) {
-  const [idExists, setIdExists] = useState<boolean>(false);
+  const [containerExists, setContainerExists] = useState<boolean>(false);
 
   useEffect(() => {
-    setIdExists(Boolean(document.getElementById("uofg-draft-mode-banner-extra-buttons")));
+    setContainerExists(Boolean(document.getElementById("uofg-draft-mode-banner-extra-buttons")));
   }, []);
 
   return (
     <>
-      {idExists &&
+      {containerExists &&
         createPortal(
           <Button color="yellow" className="p-2" href={`/api/revalidate?tag=${getCacheTag(primaryNavigation)}`} as="a">
             Revalidate Site
