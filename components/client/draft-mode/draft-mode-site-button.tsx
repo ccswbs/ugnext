@@ -4,11 +4,7 @@ import { createPortal } from "react-dom";
 import { Button } from "@uoguelph/react-components/button";
 import { useEffect, useState } from "react";
 
-export function DraftModePrimaryNavigationButton({
-  primaryNavigation,
-}: {
-  primaryNavigation: { id: string; name: string };
-}) {
+export function DraftModeSiteButton({ primaryNavigation }: { primaryNavigation: { id: string; name: string } }) {
   const [idExists, setIdExists] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,9 +21,7 @@ export function DraftModePrimaryNavigationButton({
             href={`/api/revalidate?tag=TermPrimaryNavigation-ID-${primaryNavigation.id}`}
             as="a"
           >
-            {primaryNavigation.name
-              ? `Revalidate All ${primaryNavigation.name} Pages`
-              : "Revalidate All Pages With This Primary Navigation"}
+            Revalidate Site
           </Button>,
           // @ts-expect-error We check the element exists in the useEffect, so this will never be null but TypeScript doesn't know that
           document.getElementById("uofg-draft-mode-banner-extra-buttons")
