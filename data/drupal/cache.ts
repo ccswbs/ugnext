@@ -33,7 +33,6 @@ export function getTagsToRevalidateByEntity(entity: RouteEntity) {
        * Unfortunately, this will not be limited to only pages with feature news widgets that would actually use the updated news article.
        * Although, since there will most likely only be a few pages with featured news widgets, this is not a major issue.
        */
-
       tags.push(CACHE_TAG_FEATURED_NEWS);
       break;
     default:
