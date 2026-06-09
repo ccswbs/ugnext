@@ -64,7 +64,7 @@ function GraduateProgramAdmissionAverage({ average, hasFootnote = false }: { ave
     return <span>{`${letterGrade} (${percentageText})`}</span>;
   }
 
-  return <span>{letterGrade || percentageText || ""}{footnote}</span>;
+  return <span>{letterGrade || percentageText || "Coming Soon"}{footnote}</span>;
 }
 
 function GraduateProgramDelivery({ delivery }: { delivery: GraduateProgramDelivery[] }) {
@@ -151,7 +151,7 @@ function GraduateProgramDuration({ duration }: { duration: GraduateProgramDurati
     return acc;
   }, new Map<string, string[]>());
 
-  return <GraduateProgramSummarySectionMap map={map} />;
+  return map.size > 0 ? <GraduateProgramSummarySectionMap map={map} /> : "Coming Soon";
 }
 
 function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApplicationDeadline[] }) {
@@ -173,7 +173,7 @@ function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApp
     return acc;
   }, new Map<string, string[]>());
 
-  return <GraduateProgramSummarySectionMap map={firstMap} />;
+  return firstMap.size > 0 ? <GraduateProgramSummarySectionMap map={firstMap} /> : "Coming Soon";
 }
 
 export function GraduateProgramSummary({ program }: { program: GraduateProgramVariant }) {
