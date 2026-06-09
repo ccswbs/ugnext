@@ -59,4 +59,5 @@ export type GraduateProgramVariant = {
   deadlines: GraduateProgramApplicationDeadline[];
   additionalRequirements?: GraduateProgramRelatedLink[];
   programStructure?: GraduateProgramRelatedLink[];
+  status: boolean;
 };

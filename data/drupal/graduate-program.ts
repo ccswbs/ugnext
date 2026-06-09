@@ -455,6 +455,7 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
     deadlines: deadlines,
     additionalRequirements: additionalRequirements ?? undefined,
     programStructure: programStructure ?? undefined,
+    status: variant.status,
   } as GraduateProgramVariantResult;
 }
 
