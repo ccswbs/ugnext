@@ -113,15 +113,6 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         uuid
         id
         title
-        unit {
-          id
-        }
-        category {
-          id
-        }
-        tags {
-          id
-        }
         metatag {
           __typename
           ...MetaProperty
