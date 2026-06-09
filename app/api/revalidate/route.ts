@@ -25,7 +25,27 @@ async function handler(request: NextRequest) {
     const route = await getRoute(path);
 
     if (route && route.__typename === "RouteInternal" && route.entity) {
+      let idCacheTag = "";
+
+      if ("id" in route.entity) {
+        idCacheTag = `${route.entity.__typename}-ID-${route.entity.id}`;
+      }
+
       switch (route.entity.__typename) {
+        case "TermPrimaryNavigation":
+          // Revalidate routes tagged with this primary navigation's id
+          revalidateTag(idCacheTag, "max");
+
+          // If the primary navigation has a custom footer, revalidate pages tagged with the footer's id
+          if (route.entity.customFooter) {
+            revalidateTag(`${route.entity.__typename}-ID-${route.entity.customFooter.id}`, "max");
+          }
+          break;
+        case "NodeCustomFooter":
+        case "NodeProfile":
+        case "NodePage":
+          revalidateTag(idCacheTag, "max");
+          break;
         case "NodeUndergraduateRequirement":
           revalidatePath("/programs/undergraduate/requirements/[...slug]", "page");
           break;

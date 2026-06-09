@@ -114,6 +114,15 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
           ...MetaProperty
         }
       }
+      ... on TermPrimaryNavigation {
+        uuid
+        id
+        name
+        customFooter {
+          id
+          uuid
+        }
+      }
       ... on TermUndergraduateStudentType {
         uuid
         id
