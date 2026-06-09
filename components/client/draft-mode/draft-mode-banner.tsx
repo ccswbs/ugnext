@@ -22,7 +22,7 @@ export function DraftModeBanner() {
         Revalidate Page
       </Button>
 
-      <div id="uofg-draft-mode-banner-extra-buttons" className="display"></div>
+      <div id="uofg-draft-mode-banner-extra-buttons" className="contents"></div>
 
       {shareableLink && (
         <Button
