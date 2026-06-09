@@ -16,7 +16,7 @@ export function DraftModeSiteButton({ primaryNavigation }: { primaryNavigation: 
     <>
       {containerExists &&
         createPortal(
-          <Button color="yellow" className="p-2" href={`/api/revalidate?tag=${getCacheTag(primaryNavigation)}`} as="a">
+          <Button color="yellow" className="p-2" href={`/api/revalidate?tags=${getCacheTag(primaryNavigation)}`} as="a">
             Revalidate Site
           </Button>,
           // @ts-expect-error We check the element exists in the useEffect, so this will never be null but TypeScript doesn't know that
