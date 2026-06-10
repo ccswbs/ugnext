@@ -1,9 +1,9 @@
 import { Header as HeaderComponent, HeaderLink, HeaderMenu, HeaderMenuItem } from "@uoguelph/react-components/header";
-import { getMenuByName, getMenuByPrimaryNavigationLinkset } from "@/data/drupal/primary-navigation";
+import { getMenuByPrimaryNavigation, getMenuByPrimaryNavigationLinkset } from "@/data/drupal/primary-navigation";
 import { type NavigationFragment } from "@/lib/graphql/types";
 import { Nullable } from "@orama/orama";
 
-type Menu = NonNullable<Awaited<ReturnType<typeof getMenuByName>>>;
+type Menu = NonNullable<Awaited<ReturnType<typeof getMenuByPrimaryNavigation>>>;
 type MenuItem = Menu["items"][number];
 
 async function HeaderSubNavigationItem({ item }: { item: MenuItem }) {
@@ -25,8 +25,8 @@ async function HeaderSubNavigationItem({ item }: { item: MenuItem }) {
 type HeaderProps = { primaryNavigation?: Nullable<NavigationFragment> };
 
 export async function Header({ primaryNavigation }: HeaderProps) {
-  const menu = await getMenuByPrimaryNavigationLinkset(primaryNavigation);
-  //?.menuName?.toUpperCase().replaceAll("-", "_")
+  const menu = await getMenuByPrimaryNavigation(primaryNavigation);
+
   if (!menu) {
     return <HeaderComponent></HeaderComponent>;
   }

@@ -78,8 +78,8 @@ export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
   return data.menuLinkContent?.results;
 }
 
-export async function getMenuByName(name: string) {
-  if (name === "NO_MENU") {
+export async function getMenuByPrimaryNavigation(primaryNavigation?: NavigationFragment | null) {
+  if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "NO_MENU") {
     return null;
   }
 
@@ -93,7 +93,7 @@ export async function getMenuByName(name: string) {
     `),
     variables: {
       // @ts-ignore
-      name: name,
+      name: primaryNavigation.menuName.toUpperCase().replaceAll("-", "_"),
     },
   });
 
