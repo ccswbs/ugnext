@@ -15,7 +15,7 @@ export function DraftModeBanner() {
 
   const revalidatePage = async () => {
     setRevalidating(true);
-    const res = await fetch(`/api/disable-draft?path=${pathname}`);
+    const res = await fetch(`/api/revalidate?path=${pathname}`);
 
     if (res.ok) {
       toast.success("Page rebuilt successfully!");
