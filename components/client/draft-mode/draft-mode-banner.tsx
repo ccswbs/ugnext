@@ -2,14 +2,29 @@
 
 import { Button } from "@uoguelph/react-components/button";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { toast } from "@uoguelph/react-components/toaster";
 
 export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = new URLSearchParams(window.location.search);
-  const pathRevalidationUrl = `/api/disable-draft?path=${pathname}`;
   const shareableLink = searchParams.get("secret")
     ? `${window.location.origin}/api/draft/?${searchParams.toString()}`
     : null;
+  const [revalidating, setRevalidating] = useState(false);
+
+  const revalidatePage = async () => {
+    setRevalidating(true);
+    const res = await fetch(`/api/disable-draft?path=${pathname}`);
+
+    if (res.ok) {
+      toast.success("Page rebuilt successfully!");
+    } else {
+      toast.error("Failed to rebuild page.");
+    }
+
+    setRevalidating(false);
+  };
 
   return (
     <div className="sticky left-0 top-0 z-1000 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
@@ -19,7 +34,7 @@ export function DraftModeBanner() {
         Disable Draft Mode
       </Button>
 
-      <Button color="yellow" className="p-2" href={pathRevalidationUrl} as="a">
+      <Button color="yellow" className="p-2" onClick={revalidatePage} disabled={revalidating} as="button">
         Rebuild Page
       </Button>
 
