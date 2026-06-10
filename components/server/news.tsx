@@ -21,21 +21,23 @@ function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
   return (
     <Breadcrumbs>
       <BreadcrumbHome href="/" />
-      {article.unitHome.title && 
+      {article.unitHome.title && (
         <Breadcrumb href={article.unitHome.url} as={Link}>
           {article.unitHome.title}
-        </Breadcrumb>}
-        
-      {article.newsHome.title && 
+        </Breadcrumb>
+      )}
+
+      {article.newsHome.title && (
         <Breadcrumb href={article.newsHome.url} as={Link}>
           {article.newsHome.title}
-        </Breadcrumb>}
+        </Breadcrumb>
+      )}
 
-      {article.directory.title && 
+      {article.directory.title && (
         <Breadcrumb href={article.directory.url} as={Link}>
           {article.directory.title}
-        </Breadcrumb>}
-
+        </Breadcrumb>
+      )}
     </Breadcrumbs>
   );
 }
@@ -185,7 +187,7 @@ export async function News({ id }: { id: string }) {
 
   return (
     <Layout>
-      <Header name={article.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
+      <Header primaryNavigation={article.primaryNavigation}></Header>
 
       <NewsBreadcrumbs article={article} />
 

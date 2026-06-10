@@ -111,7 +111,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
   return (
     <Layout>
-      <Header name={page.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
+      <Header primaryNavigation={page.primaryNavigation}></Header>
 
       {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />}
 

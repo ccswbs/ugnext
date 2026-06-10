@@ -2,7 +2,7 @@ import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery } from "@/lib/graphql/types";
-import { getMenuLinkByURI } from "@/data/drupal/menu";
+import { getMenuLinkByURI } from "@/data/drupal/primary-navigation";
 import { Link } from "@/lib/graphql/graphql";
 import { Metadata } from "next";
 import { cache } from "react";
