@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = new URLSearchParams(window.location.search);
+  const pathRevalidationUrl = `/api/disable-draft?path=${pathname}`;
   const shareableLink = searchParams.get("secret")
     ? `${window.location.origin}/api/draft/?${searchParams.toString()}`
     : null;
@@ -18,8 +19,8 @@ export function DraftModeBanner() {
         Disable Draft Mode
       </Button>
 
-      <Button color="yellow" className="p-2" href={`/api/revalidate?path=${pathname}`} as="a">
-        Revalidate Page
+      <Button color="yellow" className="p-2" href={pathRevalidationUrl} as="a">
+        Rebuild Page
       </Button>
 
       <div id="uofg-draft-mode-banner-extra-buttons" className="contents"></div>
