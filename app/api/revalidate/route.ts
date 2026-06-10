@@ -40,7 +40,7 @@ async function handler(request: NextRequest) {
   }
 
   for (const tag of tags) {
-    revalidateTag(tag, "max");
+    revalidateTag(tag, { expire: 0 });
   }
 
   for (const path of paths) {
