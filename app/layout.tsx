@@ -11,6 +11,7 @@ import { Button } from "@uoguelph/react-components/button";
 import { WebComponentsLoader, WebComponentsLoaderProps } from "@/components/client/web-components-loader";
 import { BackToTop } from "@uoguelph/react-components/back-to-top";
 import { DraftModeBanner } from "@/components/client/draft-mode/draft-mode-banner";
+import { Toaster } from "@uoguelph/react-components/toaster";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -44,6 +45,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className="h-full">
       <body className="flex flex-col min-h-full">
+        <Toaster />
+
         {process.env.WEB_COMPONENTS_CDN_PROVIDER === "jsdelivr" ||
         process.env.WEB_COMPONENTS_CDN_PROVIDER === "unpkg" ? (
           <WebComponentsLoader
