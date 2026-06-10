@@ -88,6 +88,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
   }
 
   const cacheTags = getBasicPageLinkedCacheTags(page);
+  console.log(cacheTags);
   cacheTag(...cacheTags);
 
   const customFooterID: string = page.primaryNavigation?.customFooter?.id ?? "";
