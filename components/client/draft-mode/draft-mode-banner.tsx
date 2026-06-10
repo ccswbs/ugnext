@@ -1,17 +1,21 @@
 "use client";
 
 import { Button } from "@uoguelph/react-components/button";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "@uoguelph/react-components/toaster";
 
 export function DraftModeBanner() {
   const pathname = usePathname();
-  const searchParams = new URLSearchParams(window.location.search);
-  const shareableLink = searchParams.get("secret")
-    ? `${window.location.origin}/api/draft/?${searchParams.toString()}`
-    : null;
+  const searchParams = useSearchParams();
+  const [shareableLink, setSharableLink] = useState("");
   const [revalidating, setRevalidating] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("secret")) {
+      setSharableLink(`${window.location.origin}/api/draft/?${searchParams.toString()}`);
+    }
+  }, []);
 
   const revalidatePage = async () => {
     setRevalidating(true);
