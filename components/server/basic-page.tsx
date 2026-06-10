@@ -14,7 +14,7 @@ import { CustomFooter } from "@/components/server/custom-footer";
 import { cacheTag } from "next/cache";
 import { DraftModeSiteButton } from "@/components/client/draft-mode/draft-mode-site-button";
 import { toTitleCase } from "@/lib/string-utils";
-import { getBasicPageLinkedCacheTags } from "@/data/drupal/cache";
+import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
 
 export type BasicPageProps = {
   id: string;
@@ -88,7 +88,6 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
   }
 
   const cacheTags = getBasicPageLinkedCacheTags(page);
-  console.log(cacheTags);
   cacheTag(...cacheTags);
 
   const customFooterID: string = page.primaryNavigation?.customFooter?.id ?? "";

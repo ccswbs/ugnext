@@ -3,7 +3,7 @@
 import { createPortal } from "react-dom";
 import { Button } from "@uoguelph/react-components/button";
 import { useEffect, useState } from "react";
-import { getCacheTag } from "@/data/drupal/cache";
+import { getCacheTag } from "@/data/drupal/linked-revalidation";
 
 export function DraftModeSiteButton({ primaryNavigation }: { primaryNavigation: { __typename: string; id: string } }) {
   const [containerExists, setContainerExists] = useState<boolean>(false);

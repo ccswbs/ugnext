@@ -1,5 +1,6 @@
 import { type ProcessedBasicPage } from "@/data/drupal/basic-page";
 import { RouteEntity } from "@/data/drupal/route";
+import { revalidatePath } from "next/cache";
 
 /*
  * Cache tags are used to determine if cache entries are related to a specific entity.
@@ -69,4 +70,16 @@ export function getBasicPageLinkedCacheTags(page: ProcessedBasicPage) {
 
   // Remove duplicates
   return Array.from(new Set(tags));
+}
+
+export function getPathsByEntity(entity: RouteEntity) {
+  const paths = [];
+
+  switch (entity.__typename) {
+    case "NodeUndergraduateRequirement":
+      paths.push("/programs/undergraduate/requirements/[...slug]");
+      break;
+  }
+
+  return paths;
 }

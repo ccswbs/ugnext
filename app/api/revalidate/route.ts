@@ -1,23 +1,8 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
-import { getRoute, RouteEntity } from "@/data/drupal/route";
+import { getRoute } from "@/data/drupal/route";
 import { draftMode } from "next/headers";
-import { getTagsToRevalidateByEntity } from "@/data/drupal/cache";
-
-function revalidateEntity(entity: RouteEntity) {
-  const tags = getTagsToRevalidateByEntity(entity);
-  console.log("Revalidating tags:", tags);
-
-  for (const tag of tags) {
-    revalidateTag(tag, "max");
-  }
-
-  switch (entity.__typename) {
-    case "NodeUndergraduateRequirement":
-      revalidatePath("/programs/undergraduate/requirements/[...slug]", "page");
-      break;
-  }
-}
+import { getPathsByEntity, getTagsToRevalidateByEntity } from "@/data/drupal/linked-revalidation";
 
 async function handler(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -29,29 +14,40 @@ async function handler(request: NextRequest) {
     return new Response("Invalid secret or you are not in draft mode.", { status: 401 });
   }
 
-  const path = searchParams.get("path");
-  const tags = searchParams.get("tags");
+  const pathParam = searchParams.get("path");
+  const tagsParam = searchParams.get("tags");
 
-  // Either tags or path must be provided.
-  if (!path && !tags) {
+  if (!pathParam && !tagsParam) {
     return new Response("Missing path or tags.", { status: 400 });
   }
 
-  if (path) {
-    const route = await getRoute(path);
+  const paths: string[] = [];
+  const tags: string[] = [];
+
+  if (pathParam) {
+    paths.push(pathParam);
+
+    const route = await getRoute(pathParam);
 
     if (route && route.__typename === "RouteInternal" && route.entity) {
-      revalidateEntity(route.entity);
+      tags.push(...getTagsToRevalidateByEntity(route.entity));
+      paths.push(...getPathsByEntity(route.entity));
     }
-
-    revalidatePath(path);
   }
 
-  if (tags) {
-    tags.split(",").forEach((tag) => revalidateTag(tag, "max"));
+  if (tagsParam) {
+    tags.push(...tagsParam.split(","));
   }
 
-  return new Response("Revalidated.");
+  for (const tag of tags) {
+    revalidateTag(tag, "max");
+  }
+
+  for (const path of paths) {
+    revalidatePath(path, "page");
+  }
+
+  return Response.json({ tags, paths });
 }
 
 export { handler as GET, handler as POST };
