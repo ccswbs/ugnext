@@ -1,6 +1,5 @@
 import { type ProcessedBasicPage } from "@/data/drupal/basic-page";
 import { RouteEntity } from "@/data/drupal/route";
-import { revalidatePath } from "next/cache";
 
 /*
  * Cache tags are used to determine if cache entries are related to a specific entity.
