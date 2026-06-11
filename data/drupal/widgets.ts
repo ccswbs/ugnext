@@ -543,8 +543,9 @@ export type FullFeaturedNews = Omit<FeaturedNewsFragment, "units"> & {
   isFull: true;
 };
 
-export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
+export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags" | "byTitle"> & {
   isFull: true;
+  byTitle: TestimonialFragment[];
   byTags: TestimonialFragment[];
 };
 
@@ -674,6 +675,15 @@ export class WidgetProcessor {
   }
 
   private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider> {
+    const showUnpublished = await showUnpublishedContent();
+
+    const byTitle = (data.byTitle ?? []).filter((testimonial) => {
+      if (testimonial.__typename === "NodeTestimonial") {
+        return testimonial.status !== false || showUnpublished;
+      }
+      return false;
+    }) as TestimonialFragment[];
+
     const tags =
       data.byTags
         ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
@@ -683,6 +693,7 @@ export class WidgetProcessor {
       return {
         ...data,
         isFull: true,
+        byTitle,
         byTags: [],
       };
     }
@@ -690,6 +701,7 @@ export class WidgetProcessor {
     return {
       ...data,
       isFull: true,
+      byTitle,
       byTags: await getTestimonialByTag(tags),
     } as FullTestimonialSlider;
   }
