@@ -23,6 +23,18 @@ const classes = tv({
   },
 })();
 
+function areAllMapValuesIdentical(map: Map<string, string[]>): boolean {
+  if (map.size <= 1) return true;
+  
+  const [firstValue] = map.values();
+  const firstStr = JSON.stringify(firstValue);
+  
+  for (const value of map.values()) {
+    if (JSON.stringify(value) !== firstStr) return false;
+  }
+  return true;
+}
+
 function GraduateProgramTypes({ types }: { types: GraduateProgramType[] }) {
   return (
     <ul className={classes.sectionList()}>
@@ -77,37 +89,42 @@ function GraduateProgramDelivery({ delivery }: { delivery: GraduateProgramDelive
   );
 }
 
-function GraduateProgramSummarySectionMap({ map }: { map: Map<string, string[]> }) {
-  const combined = map
-    .entries()
-    .toArray()
-    .reduce((acc, [title, items]) => {
-      for (const item of items) {
-        const existing = acc.get(item) ?? [];
+function GraduateProgramSummarySectionMap({ map, shouldCombine = true, showCombinedTitle = true }: { map: Map<string, string[]>, shouldCombine?: Boolean, showCombinedTitle?: Boolean }) {
+  const listItems = 
+    shouldCombine ?
+        // combine values under combined heading (e.g., Domestic & International)
+        map
+        .entries()
+        .toArray()
+        .reduce((acc, [title, items]) => {
+          for (const item of items) {
+            const existing = acc.get(item) ?? [];
 
-        acc.set(item, [...existing, title]);
-      }
+            acc.set(item, [...existing, title]);
+          }
 
-      return acc;
-    }, new Map<string, string[]>())
-    .entries()
-    .toArray()
-    .reduce((acc, [value, keys]) => {
-      const combinedKey = toTitleCase(keys.join(" & "));
-      const existing = acc.get(combinedKey) ?? [];
+          return acc;
+        }, new Map<string, string[]>())
+        .entries()
+        .toArray()
+        .reduce((acc, [value, keys]) => {
+          const combinedKey = showCombinedTitle ? toTitleCase(keys.join(" & ")) : "";
+          const existing = acc.get(combinedKey) ?? [];
 
-      acc.set(combinedKey, [...existing, value]);
+          acc.set(combinedKey, [...existing, value]);
 
-      return acc;
-    }, new Map<string, string[]>());
+          return acc;
+        }, new Map<string, string[]>()) 
+        // keep values under separate headings
+        : map;
 
-  const noTitleItems = combined.get("");
+  const noTitleItems = listItems.get("");
 
   return (
     <ul className={classes.sectionList()}>
       {noTitleItems && noTitleItems.map((item) => <li key={item}>{item}</li>)}
 
-      {combined
+      {listItems
         .entries()
         .toArray()
         .filter(([title]) => title != "")
@@ -173,7 +190,7 @@ function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApp
     return acc;
   }, new Map<string, string[]>());
 
-  return firstMap.size > 0 ? <GraduateProgramSummarySectionMap map={firstMap} /> : "Coming Soon";
+  return firstMap.size > 0 ? <GraduateProgramSummarySectionMap map={firstMap} shouldCombine={areAllMapValuesIdentical(firstMap)} showCombinedTitle={false} /> : "Coming Soon";
 }
 
 export function GraduateProgramSummary({ program }: { program: GraduateProgramVariant }) {
