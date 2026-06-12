@@ -73,7 +73,7 @@ function GraduateProgramAdmissionAverage({ average, hasFootnote = false }: { ave
   }
 
   if (letterGrade && percentageText) {
-    return <span>{`${letterGrade} (${percentageText})`}</span>;
+    return <span>{`${letterGrade} (${percentageText})`}{footnote}</span>;
   }
 
   return <span>{letterGrade || percentageText || "Coming Soon"}{footnote}</span>;
