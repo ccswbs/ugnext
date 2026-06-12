@@ -674,7 +674,7 @@ export class WidgetProcessor {
     };
   }
 
-  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider> {
+  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider | null> {
     const showUnpublished = await showUnpublishedContent();
 
     const byTitle = (data.byTitle ?? []).filter((testimonial) => {
@@ -690,6 +690,9 @@ export class WidgetProcessor {
         .filter((tag) => typeof tag === "string") ?? [];
 
     if (tags.length === 0) {
+      if (byTitle.length === 0) {
+        return null;
+      }
       return {
         ...data,
         isFull: true,
@@ -698,11 +701,17 @@ export class WidgetProcessor {
       };
     }
 
+    const byTags = await getTestimonialByTag(tags);
+
+    if (byTitle.length === 0 && byTags.length === 0) {
+      return null;
+    }
+
     return {
       ...data,
       isFull: true,
       byTitle,
-      byTags: await getTestimonialByTag(tags),
+      byTags,
     } as FullTestimonialSlider;
   }
 
