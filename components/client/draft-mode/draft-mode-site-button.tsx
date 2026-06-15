@@ -41,7 +41,7 @@ export function DraftModeSiteButton({
       {containerExists &&
         createPortal(
           <Button color="yellow" className="p-2" onClick={revalidatePage} disabled={revalidating} as="button">
-            Rebuild {primaryNavigation.name} Pages
+            Rebuild All {primaryNavigation.name} Pages
           </Button>,
           // @ts-expect-error We check the element exists in the useEffect, so this will never be null but TypeScript doesn't know that
           document.getElementById("uofg-draft-mode-banner-extra-buttons")
