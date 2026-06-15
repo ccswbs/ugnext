@@ -55,7 +55,7 @@ export function DraftModeBanner() {
 
       {shareableLink && (
         <Button color="yellow" className="p-2" onClick={copyShareableLinkToClipboard} as="button">
-          Copy Shareable Link
+          Copy Temporary Link
         </Button>
       )}
     </div>
