@@ -9,6 +9,7 @@ import { RouteEntity } from "@/data/drupal/route";
  */
 
 const CACHE_TAG_FEATURED_NEWS = "Featured-News";
+const CACHE_TAG_GRADUATE_PROGRAM_VARIANTS = "Graduate-Program-Variants";
 
 /*
  * Gets the cache tag that can be used to link an arbitrary entity to a cache entry by combining its typename and id
@@ -34,6 +35,11 @@ export function getTagsToRevalidateByEntity(entity: RouteEntity) {
        * Although, since there will most likely only be a few pages with featured news widgets, this is not a major issue.
        */
       tags.push(CACHE_TAG_FEATURED_NEWS);
+      break;
+    case "NodeGraduateProgramVariant":
+      /* Update any pages that use graduate program summary widget.
+       */
+      tags.push(CACHE_TAG_GRADUATE_PROGRAM_VARIANTS);
       break;
     default:
       break;
@@ -61,6 +67,9 @@ export function getBasicPageLinkedCacheTags(page: ProcessedBasicPage) {
     switch (widget.__typename) {
       case "ParagraphFeaturedNews":
         tags.push(CACHE_TAG_FEATURED_NEWS);
+        break;
+      case "ParagraphGraduateProgramSummary":
+        tags.push(CACHE_TAG_GRADUATE_PROGRAM_VARIANTS);
         break;
       default:
         break;
