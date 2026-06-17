@@ -3,7 +3,8 @@ import { handleGraphQLError, query } from "@/lib/apollo";
 import { drupal } from "@/lib/drupal";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { parse, type LinksetInterface } from "@drupal/linkset";
-import type { MenuFragment } from "@/lib/graphql/types";
+import type { MenuFragment, NavigationFragment } from "@/lib/graphql/types";
+import { getCacheTag } from "@/data/drupal/linked-revalidation";
 
 export const MENU_CONTENT_FRAGMENT = gql(/* gql */ `
   fragment MenuItem on MenuItem {
@@ -23,11 +24,36 @@ export const MENU_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export async function getPrimaryNavigation(id: string) {
+  const { data, error } = await query({
+    query: gql(/* gql */ `
+      query PrimaryNavigationByID($id: ID!) {
+        termPrimaryNavigation(id: $id) {
+          ...Navigation
+        }
+      }
+    `),
+    variables: {
+      id: id,
+    },
+  });
+
+  if (error) {
+    handleGraphQLError(error);
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  return data.termPrimaryNavigation;
+}
+
 export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
   const { data, error } = await query({
     query: gql(/* gql */ `
       query MenuLinkByURI($link_uri: String!, $menu_name: String!) {
-        menuLinkContent(filter: {link__uri: $link_uri, menu_name: $menu_name}) {
+        menuLinkContent(filter: { link__uri: $link_uri, menu_name: $menu_name }) {
           results {
             id
           }
@@ -52,8 +78,8 @@ export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
   return data.menuLinkContent?.results;
 }
 
-export async function getMenuByName(name: string) {
-  if (name === "NO_MENU") {
+export async function getMenuByPrimaryNavigation(primaryNavigation?: NavigationFragment | null) {
+  if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "NO_MENU") {
     return null;
   }
 
@@ -67,7 +93,7 @@ export async function getMenuByName(name: string) {
     `),
     variables: {
       // @ts-ignore
-      name: name,
+      name: primaryNavigation.menuName.toUpperCase().replaceAll("-", "_"),
     },
   });
 
@@ -82,16 +108,19 @@ export async function getMenuByName(name: string) {
   return data.menu;
 }
 
-export async function getMenuByNameLinkset(menuName: string) {
-  const name = menuName.toLowerCase().replaceAll("_", "-");
-  const showUnpublished = await showUnpublishedContent();
-
-  if (!name || name === "no-menu") {
+export async function getMenuByPrimaryNavigationLinkset(primaryNavigation?: NavigationFragment | null) {
+  if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "NO_MENU") {
     return null;
   }
 
+  const name = primaryNavigation.menuName?.toLowerCase().replaceAll("_", "-");
+  const showUnpublished = await showUnpublishedContent();
+
   const response = await drupal.fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/system/menu/${name}/linkset`, {
     withAuth: Boolean(showUnpublished),
+    next: {
+      tags: [getCacheTag(primaryNavigation)],
+    },
   });
 
   if (!response.ok) {

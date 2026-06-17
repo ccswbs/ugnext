@@ -84,6 +84,12 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
       query: {
         errorPolicy: "all",
       },
+      watchQuery: {
+        errorPolicy: "all",
+      },
+      mutate: {
+        errorPolicy: "all",
+      },
     },
   });
 });

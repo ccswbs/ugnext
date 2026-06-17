@@ -1,13 +1,17 @@
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { RouteQuery, RouteBreadcrumbsQuery, NodePage } from "@/lib/graphql/types";
-import { getMenuLinkByURI } from "@/data/drupal/menu";
-import { Link, RouteEntityUnion } from "@/lib/graphql/graphql";
+import { RouteQuery } from "@/lib/graphql/types";
+import { getMenuLinkByURI } from "@/data/drupal/primary-navigation";
+import { Link } from "@/lib/graphql/graphql";
 import { Metadata } from "next";
 import { cache } from "react";
 
 export type Route = NonNullable<RouteQuery["route"]>;
+
+export type RouteEntity = NonNullable<
+  (Awaited<ReturnType<typeof getRoute>> & { __typename: "RouteInternal" })["entity"]
+>;
 
 const METATAGS_PROPERTY_FRAGMENT = gql(/* gql */ `
   fragment MetaProperty on MetaTagProperty {
@@ -112,6 +116,15 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         metatag {
           __typename
           ...MetaProperty
+        }
+      }
+      ... on TermPrimaryNavigation {
+        uuid
+        id
+        name
+        customFooter {
+          __typename
+          id
         }
       }
       ... on TermUndergraduateStudentType {
@@ -378,8 +391,8 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
     }
   `);
 
-  const { data, error } = await client.query<RouteBreadcrumbsQuery>({
-    query: breadcrumbsQuery as any,
+  const { data, error } = await client.query({
+    query: breadcrumbsQuery,
     variables: {
       path: url,
       revision: (await showUnpublishedContent()) ? "latest" : "current",
@@ -391,6 +404,10 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
   }
 
   if (!data) {
+    return null;
+  }
+
+  if (!data.route) {
     return null;
   }
 
