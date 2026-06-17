@@ -10,6 +10,12 @@ async function HeaderSubNavigationItem({ item }: { item: MenuItem }) {
   if (item.children && item.children.length > 0) {
     return (
       <HeaderMenu title={item.title}>
+        {item.url && (
+          <HeaderMenuItem>
+            <HeaderLink href={item.url}>{item.title}</HeaderLink>
+          </HeaderMenuItem>
+        )}
+
         {item.children.map((child, index) => (
           <HeaderMenuItem key={index}>
             <HeaderSubNavigationItem item={child as MenuItem} />
