@@ -1,4 +1,6 @@
 @import "@uoguelph/tailwind-theme";
+@import "../node_modules/@uoguelph/web-components/dist/uofg-web-components/uofg-web-components.css";
+
 @source '../node_modules/@uoguelph/react-components';
 @plugin '@headlessui/tailwindcss';
 

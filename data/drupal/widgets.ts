@@ -537,7 +537,7 @@ export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export type FullFeaturedNews = Omit<FeaturedNewsFragment, "units"> & {
+export type FullFeaturedNews = FeaturedNewsFragment & {
   isFull: true;
 };
 
