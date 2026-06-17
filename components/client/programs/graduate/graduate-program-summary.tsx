@@ -49,7 +49,7 @@ function GraduateDegree({ degrees }: { degrees: GraduateDegree[] }) {
   return (
     <ul className={classes.sectionList()}>
       {degrees.map((degree) => (
-        <li>{degree.acronym ? `${degree.acronym} (${degree.name})` : degree.name}</li>
+        <li key={`degree-${degree.id}`}>{degree.acronym ? `${degree.acronym} (${degree.name})` : degree.name}</li>
       ))}
     </ul>
   );
