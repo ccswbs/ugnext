@@ -85,7 +85,7 @@ export async function getPageContent(id: string): Promise<ProcessedBasicPage | n
     return null;
   }
 
-  if (data.nodePage.status === false && !showUnpublished) {
+  if (!data.nodePage.status && !showUnpublished) {
     return null;
   }
 

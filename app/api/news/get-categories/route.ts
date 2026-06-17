@@ -5,14 +5,7 @@ export async function GET(request: NextRequest) {
   const categories = await getAllNewsCategories();
 
   if (!categories) {
-    return NextResponse.json(
-      {
-        error: "Failed to fetch news categories.",
-      },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json({ error: "Failed to fetch news categories." }, { status: 500 });
   }
 
   try {
