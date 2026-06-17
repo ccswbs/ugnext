@@ -79,7 +79,7 @@ export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
 }
 
 export async function getMenuByPrimaryNavigation(primaryNavigation?: NavigationFragment | null) {
-  if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "NO_MENU") {
+  if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "no-menu") {
     return null;
   }
 
