@@ -1,7 +1,9 @@
 import { Header as HeaderComponent, HeaderLink, HeaderMenu, HeaderMenuItem } from "@uoguelph/react-components/header";
-import { getMenuByName, getMenuByNameLinkset } from "@/data/drupal/menu";
+import { getMenuByPrimaryNavigation, getMenuByPrimaryNavigationLinkset } from "@/data/drupal/primary-navigation";
+import { type NavigationFragment } from "@/lib/graphql/types";
+import { Nullable } from "@orama/orama";
 
-type Menu = NonNullable<Awaited<ReturnType<typeof getMenuByName>>>;
+type Menu = NonNullable<Awaited<ReturnType<typeof getMenuByPrimaryNavigation>>>;
 type MenuItem = Menu["items"][number];
 
 async function HeaderSubNavigationItem({ item }: { item: MenuItem }) {
@@ -20,8 +22,10 @@ async function HeaderSubNavigationItem({ item }: { item: MenuItem }) {
   return <HeaderLink href={item.url ?? "#"}>{item.title}</HeaderLink>;
 }
 
-export async function Header({ name }: { name?: string }) {
-  const menu = name ? await getMenuByNameLinkset(name) : null;
+type HeaderProps = { primaryNavigation?: Nullable<NavigationFragment> };
+
+export async function Header({ primaryNavigation }: HeaderProps) {
+  const menu = await getMenuByPrimaryNavigation(primaryNavigation);
 
   if (!menu) {
     return <HeaderComponent></HeaderComponent>;
@@ -31,7 +35,11 @@ export async function Header({ name }: { name?: string }) {
   const topic = menuItems.shift() ?? null;
 
   return (
-    <HeaderComponent title={topic?.title} url={topic?.url ?? undefined}>
+    <HeaderComponent
+      title={topic?.title}
+      url={topic?.url ?? undefined}
+      variant={primaryNavigation?.headerVariant ?? "guelph"}
+    >
       {menuItems.map((item, index) => (
         <HeaderSubNavigationItem key={index} item={item} />
       ))}

@@ -14,9 +14,12 @@ export const GOAL_FRAGMENT = gql(/* gql */ `
 export const NAVIGATION_FRAGMENT = gql(/* gql */ `
   fragment Navigation on TermPrimaryNavigation {
     __typename
+    id
+    name
     menuName
     headerVariant
     customFooter {
+      __typename
       id
     }
     newsHomePage {

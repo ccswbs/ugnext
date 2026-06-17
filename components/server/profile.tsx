@@ -54,7 +54,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
 
   return (
     <Layout>
-      <Header name={content.primaryNavigation?.menuName?.toUpperCase().replaceAll("-", "_")}></Header>
+      <Header primaryNavigation={content.primaryNavigation}></Header>
 
       <LayoutContent container={false}>
         <Breadcrumbs url={content.path ?? undefined} />
@@ -107,16 +107,16 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                 <div className="mb-4">
                   {/* Email links first */}
                   {content.customLink
-                    .filter(link => link.url.startsWith("mailto:"))
+                    .filter((link) => link.url.startsWith("mailto:"))
                     .map((link, idx) => (
                       <div key={`email-${idx}`}>
                         <ContactEmail email={link.url.replace("mailto:", "")} />
                       </div>
                     ))}
-                  
+
                   {/* Tel links second */}
                   {content.customLink
-                    .filter(link => link.url.startsWith("tel:"))
+                    .filter((link) => link.url.startsWith("tel:"))
                     .map((link, idx) => (
                       <div key={`tel-${idx}`}>
                         {(() => {
@@ -125,10 +125,10 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                         })()}
                       </div>
                     ))}
-                  
+
                   {/* Other links last */}
                   {content.customLink
-                    .filter(link => !link.url.startsWith("mailto:") && !link.url.startsWith("tel:"))
+                    .filter((link) => !link.url.startsWith("mailto:") && !link.url.startsWith("tel:"))
                     .map((link, idx) => (
                       <div key={`other-${idx}`}>
                         <div className="flex items-center gap-2">
@@ -153,7 +153,11 @@ export async function Profile({ id, pre, post }: ProfileProps) {
                         </div>
                       )}
                       {field.value && (
-                        <HtmlParser html={getDisplayText(field.value)} instructions={undefined} useContentsClass={false} />
+                        <HtmlParser
+                          html={getDisplayText(field.value)}
+                          instructions={undefined}
+                          useContentsClass={false}
+                        />
                       )}
                     </React.Fragment>
                   ))}
