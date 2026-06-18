@@ -157,7 +157,7 @@ function normalizeWhitespace(html: string): string {
   );
 }
 
-export function HtmlParser({ html, instructions = [] }: { html: string; instructions?: HTMLParserInstruction[] }) {
+export function HtmlParser({ html, instructions = [], useContentsClass = true }: { html: string; instructions?: HTMLParserInstruction[]; useContentsClass?: boolean }) {
   const normalizedHtml = useMemo(() => normalizeWhitespace(html), [html]);
 
   const options: HTMLReactParserOptions = useMemo(() => {
@@ -229,6 +229,6 @@ export function HtmlParser({ html, instructions = [] }: { html: string; instruct
 
   const content = useMemo(() => parse(normalizedHtml, options), [normalizedHtml, options]);
 
-  return <div className="contents group/html-parser">{content}</div>;
+  return <div className={useContentsClass ? "contents group/html-parser" : "group/html-parser"}>{content}</div>;
 }
 

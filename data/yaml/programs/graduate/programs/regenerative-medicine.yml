@@ -10,46 +10,46 @@ degrees:
 types:
   - collaborative-specialization
 tags:
-  - biol*
-  - science*
-  - life*
-  - living
-  - research*
-  - biochem*
-  - biomedic*
-  - health*
-  - molecu*
-  - cell*
-  - medic*
-  - biomolecu*
-  - disease
-  - gene*
-  - clinic*
-  - patho*
-  - micro*
-  - bacteria*
-  - immun*
-  - virolog*
-  - virus
-  - evolution*
-  - infect*
-  - dna
-  - pharma*
   - applied modeling
+  - bacteria
+  - biochemistry
   - biology
+  - biomedical
+  - biomolecule
+  - cell
+  - clinic
+  - disease
   - disease modeling
   - disease treatment
   - disorders
+  - dna
   - endogenous regeneration
   - engineering
+  - evolution
+  - gene
   - genetics
+  - health
   - illness
+  - immunology
+  - infection
   - innovation
-  - medicine*
+  - life
+  - living
+  - medicine
+  - microbiology
+  - molecule
   - outreach
+  - pathology
+  - pet
+  - pharmacy
   - public health
+  - research
+  - science
+  - stem cell
   - stem cell biology
-  - stem cell*
-  - teach*
+  - teacher
   - tissue engineering
-  - vet*
+  - vet
+  - veterinary
+  - virology
+  - virus

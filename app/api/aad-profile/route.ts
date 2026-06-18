@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from 'next/headers';
 import jwt from 'jsonwebtoken';
+import { ValidationService, createValidationErrorResponse } from "@/lib/validation-utils";
 
 // Production-ready configuration with intelligent rate limiting
 const CONFIG = {
@@ -318,29 +319,6 @@ class AuthorizationService {
   }
 }
 
-// Input validation service
-class ValidationService {
-  static validateEmail(email: string): { valid: boolean; error?: string } {
-    if (!email) {
-      return { valid: false, error: 'Email is required' };
-    }
-    
-    if (email.length > CONFIG.validation.maxEmailLength) {
-      return { valid: false, error: 'Email too long' };
-    }
-    
-    if (!CONFIG.validation.emailRegex.test(email)) {
-      return { valid: false, error: 'Invalid email format' };
-    }
-    
-    return { valid: true };
-  }
-  
-  static sanitizeEmail(email: string): string {
-    return email.trim().toLowerCase();
-  }
-}
-
 // Safe GraphQL filter construction
 class GraphQLService {
   static buildSafeFilter(email: string): string {
@@ -434,7 +412,7 @@ class CacheService {
 export async function GET(req: NextRequest) {
   const startTime = Date.now();
   let clientIP = 'unknown';
-  let email = '';
+  let validatedEmail: string | undefined;
   
   try {
     // Check request size to prevent DoS attacks
@@ -496,19 +474,14 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // Sanitize and validate email
-    email = ValidationService.sanitizeEmail(rawEmail);
-    const validation = ValidationService.validateEmail(email);
+    // Validate and sanitize email using shared utility
+    const { email: validatedEmailResult, validation } = ValidationService.processEmail(rawEmail);
     
-    if (!validation.valid) {
-      return new NextResponse(JSON.stringify({ error: validation.error }), {
-        status: 400,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-store'
-        }
-      });
+    if (!validation.valid || !validatedEmailResult) {
+      return createValidationErrorResponse(validation.error!);
     }
+    
+    validatedEmail = validatedEmailResult;
 
     // Check authorization with proper async handling
     const authResult = await AuthorizationService.isAuthorized(req);
@@ -517,7 +490,7 @@ export async function GET(req: NextRequest) {
         userAgent: req.headers.get('user-agent'),
         referer: req.headers.get('referer'),
         timestamp: new Date().toISOString(),
-        email: email.replace(/(.{2}).*(@.*)/, '$1***$2')
+        email: validatedEmail.replace(/(.{2}).*(@.*)/, '$1***$2')
       });
       
       return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
@@ -531,13 +504,13 @@ export async function GET(req: NextRequest) {
 
     // Check rate limiting with validated email
     const userAgent = req.headers.get('user-agent') || '';
-    const rateLimitResult = IntelligentRateLimiter.check(clientIP, email, userAgent);
+    const rateLimitResult = IntelligentRateLimiter.check(clientIP, validatedEmail, userAgent);
     
     if (!rateLimitResult.allowed) {
       const logData = {
         clientIP,
         userAgent,
-        email: email.replace(/(.{2}).*(@.*)/, '$1***$2'),
+        email: validatedEmail.replace(/(.{2}).*(@.*)/, '$1***$2'),
         reason: rateLimitResult.reason,
         isLegitimate: rateLimitResult.isLegitimate,
         timestamp: new Date().toISOString()
@@ -571,7 +544,7 @@ export async function GET(req: NextRequest) {
     }
     
     // Check cache first
-    const cacheKey = CacheService.generateKey(email);
+    const cacheKey = CacheService.generateKey(validatedEmail);
     const cachedResult = CacheService.get(cacheKey);
     
     if (cachedResult) {
@@ -636,7 +609,7 @@ export async function GET(req: NextRequest) {
     const selectFields = 'id,displayName,mail,userPrincipalName,givenName,surname,jobTitle,department,officeLocation';
     
     // First try direct lookup by userPrincipalName
-    let userResponse = await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(email)}?$select=${selectFields}`, {
+    let userResponse = await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(validatedEmail)}?$select=${selectFields}`, {
       headers: { 
         Authorization: `Bearer ${access_token}`,
         'User-Agent': 'UGNext-AAD-Profile/1.0'
@@ -647,7 +620,7 @@ export async function GET(req: NextRequest) {
     if (!userResponse.ok && userResponse.status === 404) {
       console.log(`Direct lookup failed for email, trying search (IP: ${clientIP})`);
       
-      const safeFilter = GraphQLService.buildSafeFilter(email);
+      const safeFilter = GraphQLService.buildSafeFilter(validatedEmail);
       const searchUrl = `https://graph.microsoft.com/v1.0/users?$filter=${encodeURIComponent(safeFilter)}&$select=${selectFields}&$top=1`;
       
       const searchResponse = await fetch(searchUrl, {
@@ -663,7 +636,7 @@ export async function GET(req: NextRequest) {
           statusText: searchResponse.statusText,
           timestamp: new Date().toISOString(),
           clientIP,
-          email: email.replace(/(.{2}).*(@.*)/, '$1***$2') // Partially mask email in logs
+          email: validatedEmail.replace(/(.{2}).*(@.*)/, '$1***$2') // Partially mask email in logs
         });
         
         // Prevent timing attacks
@@ -723,7 +696,7 @@ export async function GET(req: NextRequest) {
         statusText: userResponse.statusText,
         timestamp: new Date().toISOString(),
         clientIP,
-        email: email.replace(/(.{2}).*(@.*)/, '$1***$2')
+        email: validatedEmail.replace(/(.{2}).*(@.*)/, '$1***$2')
       });
       
       const status = userResponse.status >= 500 ? 503 : 400;
@@ -768,7 +741,7 @@ export async function GET(req: NextRequest) {
       stack: error instanceof Error ? error.stack : undefined,
       timestamp: new Date().toISOString(),
       clientIP,
-      email: email ? email.replace(/(.{2}).*(@.*)/, '$1***$2') : 'unknown',
+      email: validatedEmail ? validatedEmail.replace(/(.{2}).*(@.*)/, '$1***$2') : 'unknown',
       duration
     });
     

@@ -1,7 +1,18 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { query } from "@/lib/apollo";
-import { getFullTestimonialSlider } from "@/data/drupal/widgets";
+import { getClient, handleGraphQLError, query } from "@/lib/apollo";
+import { cache } from "react";
+import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
+import { BasicPageFragment } from "@/lib/graphql/types";
+
+export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
+  fragment BasicPageMinimal on NodePage {
+    status
+    id
+    title
+    path
+  }
+`);
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
@@ -25,6 +36,8 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...GeneralText
       ...Links
       ...MediaText
+      ...NewsSearch
+      ...FeaturedNews
       ...Tabs
       ...Statistics
       ...TestimonialSlider
@@ -32,7 +45,6 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...ImageOverlay
       ...Section
       ...ProfileBlock
-      ...ProfileCard
     }
     tags {
       ...Tag
@@ -41,7 +53,11 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export async function getPageContent(id: string) {
+export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets"> & {
+  widgets: ProcessedWidget[];
+};
+
+export async function getPageContent(id: string): Promise<ProcessedBasicPage | null> {
   const showUnpublished = await showUnpublishedContent();
 
   const { data, error } = await query({
@@ -67,26 +83,79 @@ export async function getPageContent(id: string) {
     return null;
   }
 
-  if (data.nodePage.status === false && !showUnpublished) {
+  if (!data.nodePage.status && !showUnpublished) {
     return null;
   }
 
   if (!data.nodePage.widgets) {
-    return data.nodePage;
+    return {
+      ...data.nodePage,
+      widgets: [] as ProcessedWidget[],
+    };
   }
 
-  // We need to resolve testimonials by tag.
+  const processor = new WidgetProcessor();
   return {
     ...data.nodePage,
-    widgets: await Promise.all(
-      data.nodePage.widgets.map(async (widget) => {
-        switch (widget.__typename) {
-          case "ParagraphTestimonialSlider":
-            return await getFullTestimonialSlider(widget);
-          default:
-            return widget;
-        }
-      })
-    ),
+    widgets: await processor.processWidgets(data.nodePage.widgets),
   };
 }
+
+async function getAllBasicPagePathsUncached() {
+  const client = getClient();
+
+  const pathQuery = gql(/* gql */ `
+    query BasicPagePaths($cursor: Cursor) {
+      nodePages(after: $cursor, first: 100) {
+        nodes {
+          __typename
+          id
+          status
+          path
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `);
+
+  let cursor = "";
+  let hasNextPage = true;
+  const paths: string[] = [];
+
+  while (hasNextPage) {
+    const { data, error } = await client.query({
+      query: pathQuery,
+      variables: {
+        cursor,
+      },
+    });
+
+    if (error) {
+      handleGraphQLError(error);
+    }
+
+    if (!data) {
+      return paths;
+    }
+
+    if (!data.nodePages.nodes.length) {
+      return paths;
+    }
+
+    const currentPaths = data.nodePages.nodes
+      .filter((page) => page.status)
+      .map((page) => page.path)
+      .filter((path) => typeof path === "string");
+
+    paths.push(...currentPaths);
+
+    cursor = data.nodePages.pageInfo.endCursor;
+    hasNextPage = data.nodePages.pageInfo.hasNextPage;
+  }
+
+  return paths;
+}
+export const getAllBasicPagePaths = cache(getAllBasicPagePathsUncached);

@@ -6,26 +6,25 @@ degrees:
 types:
   - course-based
 tags:
+  - analysis
   - biology
-  - science
-  - health
-  - medical
-  - analy*
-  - biomedical*
+  - biomedical
   - disease
-  - enviro*
+  - environment
   - forensic
   - genetics
   - government policy
-  - health*
+  - health
   - insecticides
-  - law*
-  - medicine*
-  - molecular*
+  - law
+  - medical
+  - medicine
+  - molecular biology
   - pesticides
-  - pharma*
-  - physiolog*
+  - pharmacy
+  - physiology
   - plant diseases
   - pollutants
-  - toxic*
-  - toxin*
+  - science
+  - toxic
+  - toxin

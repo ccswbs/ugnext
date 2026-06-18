@@ -242,11 +242,11 @@ export function getIconForUrl(url: string) {
           return 'fa-solid fa-microscope';
         }
         
-        return 'fa-solid fa-earth-americas'; // Default icon for other URLs
+        return 'fa-regular fa-globe'; // Default icon for other URLs
     }
   } catch {
     // Fallback for invalid URLs
-    return 'fa-solid fa-external-link';
+    return 'fa-regular fa-globe';
   }
 }
 

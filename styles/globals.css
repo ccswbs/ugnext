@@ -1,4 +1,6 @@
 @import "@uoguelph/tailwind-theme";
+@import "../node_modules/@uoguelph/web-components/dist/uofg-web-components/uofg-web-components.css";
+
 @source '../node_modules/@uoguelph/react-components';
 @plugin '@headlessui/tailwindcss';
 
@@ -129,6 +131,7 @@
   --color-instagram-pink: #d62976;
   --color-linkedin-blue: #0a66c2;
   --color-youtube-red: #ff0000;
+  --color-bluesky-blue: #0f73ff;
   --color-dark: #000;
 }
 

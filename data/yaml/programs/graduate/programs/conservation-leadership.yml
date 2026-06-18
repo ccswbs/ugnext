@@ -6,26 +6,24 @@ degrees:
 types:
   - course-based
 tags:
-  - geograph*
-  - environment
-  - climat*
-  - conserv*
-  - natur*
-  - resource
-  - land
-  - water
-  - sustain*
-  - science
+  - climate
   - communications
-  - conservation*
+  - conservation
   - emerging infectious diseases
+  - environment
+  - geography
+  - health
   - health inequalities
-  - health*
   - indigenous studies
   - indigenous-led conservation
-  - management*
-  - organization*
+  - land
+  - management
+  - nature
+  - organization
   - private lands conservation
   - project management
   - public communication
-  - sustainab*
+  - resource
+  - science
+  - sustainable
+  - water

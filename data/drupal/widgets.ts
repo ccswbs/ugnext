@@ -3,14 +3,19 @@ import {
   AccordionFragment,
   BlockFragment,
   ButtonSectionFragment,
+  ButtonsFragment,
   CallToActionFragment,
+  FeaturedNewsFragment,
   GeneralTextFragment,
   ImageOverlayFragment,
   LinksFragment,
   MediaTextFragment,
   ModalVideoFragment,
+  NewsSearchFragment,
+  NewsWithoutContentFragment,
   ProfileBlockFragment,
   ProfileCardFragment,
+  RelatedContentFragment,
   SectionFragment,
   SocialMediaFragment,
   StatisticsFragment,
@@ -22,6 +27,8 @@ import {
   TestimonialSliderFragment,
 } from "@/lib/graphql/types";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
+import { getFilteredNews } from "@/data/drupal/news";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -141,6 +148,33 @@ export const CALL_TO_ACTION_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const FEATURED_NEWS_FRAGMENT = gql(/* gql */ `
+  fragment FeaturedNews on ParagraphFeaturedNews {
+    __typename
+    uuid
+    id
+    count
+    title: newsSearchTitle
+    hideImages
+    headingLevel
+    sectionColumn {
+      ...SectionColumn
+    }
+    articles {
+      ...NewsWithoutContent
+    }
+    categories {
+      ...NewsCategory
+    }
+    units {
+      ...Unit
+    }
+    tags {
+      ...Tag
+    }
+  }
+`);
+
 export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
   fragment GeneralText on ParagraphGeneralText {
     __typename
@@ -248,6 +282,18 @@ export const MODAL_VIDEO_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+export const NEWS_SEARCH_FRAGMENT = gql(/* gql */ `
+  fragment NewsSearch on ParagraphNewsSearch {
+    __typename
+    uuid
+    id
+    newsSearchTitle
+    units {
+      ...Unit
+    }
+  }
+`);
+
 export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
   fragment ProfileBlock on ParagraphProfileBlock {
     __typename
@@ -274,6 +320,8 @@ export const PROFILE_BLOCK_FRAGMENT = gql(/* gql */ `
         acronym
       }
     }
+    acceptingNewGrads
+    enableAcceptingNewGrad
     enableNameSearch
     enableResearchFilter
     enableTypeFilter
@@ -288,6 +336,7 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
     profileInfo {
       ... on NodeProfile {
         id
+        status
         title
         centralLoginId
         customLink {
@@ -298,22 +347,17 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
         directoryOffice
         directoryPhone
         profileJobTitle
+        profileFirstName
         path
         profilePicture {
           ...Image
         }
-        profileFields {
-          label {
-            processed
-            value
-          }
-          value {
-            processed
-            value
-          }
-        }
       }
     }
+    sectionColumn {
+      ...SectionColumn
+    }
+    showProfileLink
   }
 `);
 
@@ -329,6 +373,7 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
       __typename
       ...Accordion
       ...Block
+      ...FeaturedNews
       ...GeneralText
       ...Links
       ...MediaText
@@ -480,36 +525,60 @@ export const TESTIMONIAL_SLIDER_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export async function getFullTestimonialSlider(data: TestimonialSliderFragment) {
-  const tags =
-    data.byTags
-      ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
-      .filter((tag) => typeof tag === "string") ?? [];
-
-  if (tags.length === 0) {
-    return data;
+export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
+  fragment RelatedContent on ParagraphRelatedContent {
+    __typename
+    uuid
+    id
+    relatedContentHeadingLevel: headingLevel
+    content {
+      __typename
+      ...BasicPageMinimal
+    }
+    label: contentLabel
   }
+`);
 
-  return {
-    ...data,
-    byTags: await getTestimonialByTag(tags),
-  } as FullTestimonialSlider;
-}
+export type FullFeaturedNews = FeaturedNewsFragment & {
+  isFull: true;
+};
 
-export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
+export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags" | "byTitle"> & {
+  isFull: true;
+  byTitle: TestimonialFragment[];
   byTags: TestimonialFragment[];
 };
 
-export type Widgets =
+export type SectionWidget =
   | AccordionFragment
   | BlockFragment
   | ButtonSectionFragment
+  | FeaturedNewsFragment
+  | GeneralTextFragment
+  | ImageOverlayFragment
+  | LinksFragment
+  | MediaTextFragment
+  | ProfileBlockFragment
+  | ProfileCardFragment
+  | StatisticsFragment
+  | TabsFragment
+  | {
+      __typename: "ParagraphYamlWidget";
+    };
+
+export type Widget =
+  | AccordionFragment
+  | BlockFragment
+  | ButtonsFragment
+  | ButtonSectionFragment
   | CallToActionFragment
+  | FeaturedNewsFragment
   | GeneralTextFragment
   | ImageOverlayFragment
   | LinksFragment
   | MediaTextFragment
   | ModalVideoFragment
+  | NewsSearchFragment
   | ProfileBlockFragment
   | ProfileCardFragment
   | SectionFragment
@@ -520,10 +589,193 @@ export type Widgets =
   | StoryQuoteFragment
   | TabsFragment
   | TestimonialSliderFragment
-  | FullTestimonialSlider
+  | RelatedContentFragment
   | {
       __typename: "ParagraphYamlWidget";
     }
   | {
       __typename?: "ParagraphCallToAction";
     };
+
+export type ProcessedSectionWidget = Exclude<SectionWidget, FeaturedNewsFragment> | FullFeaturedNews;
+
+export type ProcessedSection = Omit<SectionFragment, "content"> & {
+  content: ProcessedSectionWidget[];
+};
+
+export type ProcessedWidget =
+  | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment>
+  | FullTestimonialSlider
+  | FullFeaturedNews
+  | ProcessedSection;
+
+export class WidgetProcessor {
+  public excludeNewsArticles: Set<string>;
+
+  constructor() {
+    this.excludeNewsArticles = new Set();
+  }
+
+  private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<FullFeaturedNews> {
+    const showUnpublished = await showUnpublishedContent();
+    const units = data.units?.map((unit) => unit.id) ?? [];
+    const categories = data.categories?.map((category) => category.id) ?? [];
+    const tags = data.tags?.map((tag) => tag.id) ?? [];
+    const allArticles = [];
+    let articlesNeeded = data.count - (data.articles?.length ?? 0);
+
+    for (const article of data.articles ?? []) {
+      if (article.status === false && !showUnpublished) {
+        continue;
+      }
+
+      if (allArticles.length === 7) {
+        break;
+      }
+
+      allArticles.push(article);
+      this.excludeNewsArticles.add(article.id);
+    }
+
+    let page = 0;
+    let totalPages = 1;
+
+    while (articlesNeeded > 0 && allArticles.length < data.count && page < totalPages) {
+      const extra = await getFilteredNews({
+        page: page,
+        pageSize: 10,
+        units,
+        categories,
+        tags,
+      });
+
+      for (const article of extra.results) {
+        if (this.excludeNewsArticles.has(article.id)) {
+          continue;
+        }
+
+        if (allArticles.length >= data.count) {
+          break;
+        }
+
+        allArticles.push(article);
+        this.excludeNewsArticles.add(article.id);
+        articlesNeeded--;
+      }
+
+      page++;
+      totalPages = extra.totalPages;
+    }
+
+    return {
+      ...data,
+      isFull: true,
+      articles: allArticles as NewsWithoutContentFragment[],
+    };
+  }
+
+  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider | null> {
+    const showUnpublished = await showUnpublishedContent();
+
+    const byTitle = (data.byTitle ?? []).filter((testimonial) => {
+      if (testimonial.__typename === "NodeTestimonial") {
+        return testimonial.status !== false || showUnpublished;
+      }
+      return false;
+    }) as TestimonialFragment[];
+
+    const tags =
+      data.byTags
+        ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
+        .filter((tag) => typeof tag === "string") ?? [];
+
+    if (tags.length === 0) {
+      if (byTitle.length === 0) {
+        return null;
+      }
+      return {
+        ...data,
+        isFull: true,
+        byTitle,
+        byTags: [],
+      };
+    }
+
+    const byTags = await getTestimonialByTag(tags);
+
+    if (byTitle.length === 0 && byTags.length === 0) {
+      return null;
+    }
+
+    return {
+      ...data,
+      isFull: true,
+      byTitle,
+      byTags,
+    } as FullTestimonialSlider;
+  }
+
+  public async processSectionWidget(widget: SectionWidget): Promise<ProcessedSectionWidget | null> {
+    switch (widget.__typename) {
+      case "ParagraphFeaturedNews":
+        return await this.getFullFeaturedNews(widget);
+      case "ParagraphProfileCard": {
+        const showUnpublished = await showUnpublishedContent();
+        const profile = widget.profileInfo;
+        if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
+          return null;
+        }
+        return widget;
+      }
+      default:
+        return widget;
+    }
+  }
+
+  public async processWidget(widget: Widget): Promise<ProcessedWidget | null> {
+    switch (widget.__typename) {
+      case "ParagraphTestimonialSlider":
+        return await this.getFullTestimonialSlider(widget);
+      case "ParagraphSection": {
+        const sectionContent: ProcessedSectionWidget[] = [];
+
+        for (const sectionWidget of widget.content) {
+          const processed = await this.processSectionWidget(sectionWidget);
+          if (processed !== null) {
+            sectionContent.push(processed);
+          }
+        }
+
+        return {
+          ...widget,
+          content: sectionContent,
+        };
+      }
+      case "ParagraphFeaturedNews":
+        return await this.getFullFeaturedNews(widget);
+      case "ParagraphProfileCard": {
+        const showUnpublished = await showUnpublishedContent();
+        const profile = widget.profileInfo;
+        if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
+          return null;
+        }
+        return widget;
+      }
+      default:
+        return widget;
+    }
+  }
+
+  public async processWidgets(widgets: Widget[]): Promise<ProcessedWidget[]> {
+    const processed: ProcessedWidget[] = [];
+
+    for (const widget of widgets) {
+      const result = await this.processWidget(widget);
+      if (result !== null) {
+        processed.push(result);
+      }
+    }
+
+    return processed;
+  }
+}

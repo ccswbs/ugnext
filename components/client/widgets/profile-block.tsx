@@ -105,6 +105,11 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
       params.set("types", typesForSearch.join(","));
     }
     
+    // Apply accepting new grad students filter if configured in backend
+    if (data.acceptingNewGrads) {
+      params.set("isAcceptingGraduateStudents", "true");
+    }
+    
     // Set page size to 20 and page to 0 for first 20 results
     params.set("size", "20");
     params.set("page", "0");
@@ -183,9 +188,11 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
   return (
     <>
       {sectionContext ? renderTitle() : (
-        <Container>
-          {renderTitle()}
-        </Container>
+        data.profileBlockTitle?.trim() && (
+          <Container>
+            {renderTitle()}
+          </Container>
+        )
       )}
       {data.enableTypeFilter && typesToShowInFilter.length > 0 && (
         <ProfileTypeFilter 
@@ -211,7 +218,29 @@ export const ProfileBlock = ({ data }: { data: ProfileBlockFragment }) => {
           defaultValue: typesForSearch,
         }}
         isAcceptingGraduateStudents={{
-          enabled: false,
+          enabled: (() => {
+            // Hide checkbox if backend is already filtering to only show faculty accepting new grad students
+            if (data.acceptingNewGrads && backendSelectedTypes.length === 1 && 
+                backendSelectedTypes[0]?.toLowerCase() === 'faculty') {
+              return false;
+            }
+            
+            // Only show "Accepting new graduate students" checkbox for "All" or "Faculty" tabs
+            if (!data.enableAcceptingNewGrad) return false;
+            
+            // If no type filter is enabled, always show the checkbox
+            if (!data.enableTypeFilter) return true;
+            
+            // Show checkbox when "All" tab is selected (selectedTypeId is null)
+            if (selectedTypeId === null) return true;
+            
+            // Show checkbox when "Faculty" tab is selected
+            const facultyType = profileTypes?.find(type => type.name.toLowerCase() === 'faculty');
+            if (facultyType && selectedTypeId === facultyType.id) return true;
+            
+            return false;
+          })(),
+          defaultValue: data.acceptingNewGrads ? true : undefined,
         }}
         availableUnits={availableUnits}
       />

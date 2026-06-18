@@ -3,6 +3,7 @@ import React from "react";
 import { type DOMNode, Element } from "html-react-parser";
 import { Contact, ContactEmail, ContactName, ContactPhone, ContactTitle } from "@uoguelph/react-components/contact";
 import { nanoid } from "nanoid";
+import { parseTelUrl } from "@/lib/string-utils";
 
 export const ContactInstruction: HTMLParserInstruction = {
   shouldProcessNode: (node, props) => {
@@ -51,9 +52,9 @@ export const ContactInstruction: HTMLParserInstruction = {
             const href = node.attribs.href;
 
             if (href.startsWith("tel:")) {
-              const tokens = href.replace("tel:", "").split(/[;p]/);
-              phone = tokens[0];
-              extension = tokens[1] || "";
+              const { number, extension: ext } = parseTelUrl(href);
+              phone = number;
+              extension = ext;
             } else if (href.startsWith("mailto:")) {
               email = href.replace("mailto:", "");
             }

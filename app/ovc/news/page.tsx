@@ -6,15 +6,18 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Container } from "@uoguelph/react-components/container";
 import { Metadata } from "next";
 import { CustomFooter } from "@/components/server/custom-footer";
+import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 export const metadata: Metadata = {
   title: "Ontario Veterinary College News Hub",
 };
 
 export default async function OVCNewsHub() {
+  const primaryNavigation = await getPrimaryNavigation("520");
+
   return (
     <Layout>
-      <Header name="OVC_MAIN"></Header>
+      <Header primaryNavigation={primaryNavigation}></Header>
 
       <LayoutContent container={false}>
         <Container>
@@ -26,7 +29,7 @@ export default async function OVCNewsHub() {
         <OvcNewsGrid />
       </LayoutContent>
 
-      <CustomFooter units={["273"]} />
+      <CustomFooter id="758" />
       <Footer></Footer>
     </Layout>
   );

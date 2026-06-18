@@ -1,6 +1,8 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { handleGraphQLError, query } from "@/lib/apollo";
+import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
+import { CustomFooterFragment } from "@/lib/graphql/types";
 
 export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
   fragment CustomFooter on NodeCustomFooter {
@@ -22,6 +24,10 @@ export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
+
+export type ProcessedCustomFooter = Omit<CustomFooterFragment, "widgets"> & {
+  widgets: ProcessedWidget[];
+};
 
 async function getCustomFooterID(tags: string[], units: string[]) {
   const showUnpublished = await showUnpublishedContent();
@@ -72,7 +78,7 @@ async function getCustomFooterID(tags: string[], units: string[]) {
   return data.customFooterByUnitOrTag.results[0].id;
 }
 
-export async function getCustomFooterByID(id: string) {
+async function getCustomFooterByID(id: string): Promise<ProcessedCustomFooter | null> {
   const showUnpublished = await showUnpublishedContent();
 
   const { data, error } = await query({
@@ -105,16 +111,21 @@ export async function getCustomFooterByID(id: string) {
     return null;
   }
 
-  return data.nodeCustomFooter;
+  const processor = new WidgetProcessor();
+
+  return {
+    ...data.nodeCustomFooter,
+    widgets: await processor.processWidgets(data.nodeCustomFooter.widgets ?? []),
+  };
 }
 
-export async function getCustomFooterByTagsOrUnits(tags: string[], units: string[]) {
+export async function getCustomFooter(tags: string[], units: string[], id: string) {
   const showUnpublished = await showUnpublishedContent();
-  const id = await getCustomFooterID(tags, units);
+  const resolvedID = id === "" ? await getCustomFooterID(tags, units) : id;
 
-  if (!id) {
+  if (!resolvedID) {
     return null;
   }
 
-  return await getCustomFooterByID(id);
+  return await getCustomFooterByID(resolvedID);
 }

@@ -35,8 +35,8 @@ export function FacultySearch(props: FacultySearchProps) {
   });
 
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(
-    props.queryByUnit.defaultValue && props.availableUnits 
-      ? props.availableUnits.find(unit => unit.id === props.queryByUnit.defaultValue) || null
+    props.queryByUnit.defaultValue && props.availableUnits
+      ? props.availableUnits.find((unit) => unit.id === props.queryByUnit.defaultValue) || null
       : null
   );
 
@@ -71,7 +71,7 @@ export function FacultySearch(props: FacultySearchProps) {
     }
 
     const finalUrl = `/api/profiles/get-profiles?${params.toString()}`;
-    
+
     return finalUrl;
   }, [options, selectedUnit]);
 
@@ -139,7 +139,7 @@ export function FacultySearch(props: FacultySearchProps) {
                       if (!a.parent && !b.parent) {
                         return a.name.localeCompare(b.name);
                       }
-                      
+
                       // If one is parent and one is child, parent comes first
                       if (!a.parent && b.parent) {
                         return a.name.localeCompare(b.parent.name) || -1;
@@ -147,7 +147,7 @@ export function FacultySearch(props: FacultySearchProps) {
                       if (a.parent && !b.parent) {
                         return a.parent.name.localeCompare(b.name) || 1;
                       }
-                      
+
                       // If both are children, first sort by parent name, then by child name
                       if (a.parent && b.parent) {
                         const parentComparison = a.parent.name.localeCompare(b.parent.name);
@@ -156,10 +156,10 @@ export function FacultySearch(props: FacultySearchProps) {
                         }
                         return a.name.localeCompare(b.name);
                       }
-                      
+
                       return 0;
                     });
-                    
+
                     return sortedUnits.map((unit, index) => (
                       <SelectOption value={unit} key={`unit-${unit.id}-${index}`}>
                         {unit.parent ? `${unit.parent.acronym || unit.parent.name} - ${unit.name}` : unit.name}
