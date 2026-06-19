@@ -17,6 +17,11 @@ export const toTitleCase = (str: string) => {
     "with",
   ];
 
+  const uppercaseToFollow = [
+    "(",
+    "[",
+  ];
+
   const specialCases = {
     "co-op": "Co-op",
     "thesis-based": "Thesis-based",
@@ -31,8 +36,13 @@ export const toTitleCase = (str: string) => {
     str
       ?.toLowerCase()
       ?.split(/\s+|-|_+/)
-      ?.map((word, index) =>
-        index === 0 || !lowercaseWords.includes(word) ? word.charAt(0).toUpperCase() + word.slice(1) : word
+      ?.map((word, index) => {
+          if(uppercaseToFollow.includes(word.charAt(0))){
+            return word.charAt(0) + word.charAt(1).toUpperCase() + word.slice(2);
+          }
+
+          return index === 0 || !lowercaseWords.includes(word) ? word.charAt(0).toUpperCase() + word.slice(1) : word
+        }
       )
       ?.join(" ") ?? ""
   );
