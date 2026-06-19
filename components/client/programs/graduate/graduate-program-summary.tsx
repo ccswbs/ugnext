@@ -223,7 +223,7 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgramVa
         {/* Deadlines & Entry Terms Section */}
         {/* TO DO - if only entry term and no content, do not render anything */}
         <div className={classes.section()}>
-          <h2 className={classes.sectionTitle()}>Deadlines & Entry Terms</h2>
+          <h2 className={classes.sectionTitle()}>Entry Terms & Deadlines</h2>
           <GraduateProgramDeadlines deadlines={program.deadlines} />
         </div>
       </div>
