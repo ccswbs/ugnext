@@ -200,16 +200,16 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgramVa
   return (
     <Container className={classes.container()}>
       <div className={classes.column()}>
-        {/* Program Type Section */}
-        <div className={classes.section()}>
-          <h2 className={classes.sectionTitle()}>Program Type</h2>
-          <GraduateProgramTypes types={program.type} />
-        </div>
-
         {/* Degree Section */}
         <div className={classes.section()}>
           <h2 className={classes.sectionTitle()}>Degree</h2>
           <GraduateDegree degrees={program.degrees} />
+        </div>
+        
+        {/* Program Type Section */}
+        <div className={classes.section()}>
+          <h2 className={classes.sectionTitle()}>Program Type</h2>
+          <GraduateProgramTypes types={program.type} />
         </div>
 
         {/* Delivery Section*/}
