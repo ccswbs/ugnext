@@ -184,7 +184,7 @@ export async function getNewsArticle(id: string) {
     return null;
   }
 
-  if (data.nodeNews.status === false && !showUnpublished) {
+  if (!data.nodeNews.status && !showUnpublished) {
     return null;
   }
 
