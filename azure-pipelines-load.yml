@@ -1,0 +1,60 @@
+# azure-pipelines-load.yml
+#
+# Runs the k6 load test suite against a running staging environment.
+# Trigger manually or on a schedule – NOT on every PR.
+#
+# Required pipeline variable (set in the "ugnext" variable group or inline):
+#   LOAD_TEST_BASE_URL  – e.g. https://staging.yourdomain.com
+
+trigger: none   # manual / scheduled only
+
+pr: none
+
+schedules:
+  - cron: "0 3 * * 1"   # every Monday at 03:00 UTC
+    displayName: Weekly load test
+    branches:
+      include:
+        - main
+    always: true
+
+variables:
+  - group: ugnext
+  - name: K6_VERSION
+    value: "0.54.0"
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  # ── Install k6 ──────────────────────────────────────────────────────────────
+  - script: |
+      sudo gpg -k
+      sudo gpg --no-default-keyring \
+        --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
+        --keyserver hkp://keyserver.ubuntu.com:80 \
+        --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+      echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
+        | sudo tee /etc/apt/sources.list.d/k6.list
+      sudo apt-get update
+      sudo apt-get install -y k6
+    displayName: "Install k6"
+
+  # ── Run load test ────────────────────────────────────────────────────────────
+  - script: |
+      mkdir -p test-results
+      k6 run \
+        --out json=test-results/k6-raw.json \
+        --env BASE_URL=$(LOAD_TEST_BASE_URL) \
+        tests/load/graphql-load.js
+    displayName: "Run k6 load test"
+    # Allow the step to fail so we still publish results
+    continueOnError: true
+
+  # ── Publish results ──────────────────────────────────────────────────────────
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish k6 results"
+    inputs:
+      pathToPublish: "test-results"
+      artifactName: "k6-load-results"
+    condition: always()
