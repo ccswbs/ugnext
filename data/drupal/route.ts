@@ -326,7 +326,7 @@ function filterBreadcrumbs(breadcrumbs: Link[], currentPage: { title: string }) 
 }
 
 // Route assumes we are using Menu-generated Breadcrumbs instead of Path-based Breadcrumbs
-export async function getRouteBreadcrumbs(url: string, primary_navigation: string | undefined) {
+async function getRouteBreadcrumbsUncached(url: string, primary_navigation: string | undefined) {
   const client = getClient();
   const breadcrumbsQuery = gql(/* gql */ `
     query RouteBreadcrumbs($path: String!, $revision: ID = "current") {
@@ -466,3 +466,5 @@ export async function getRouteBreadcrumbs(url: string, primary_navigation: strin
       return null;
   }
 }
+
+export const getRouteBreadcrumbs = cache(getRouteBreadcrumbsUncached);

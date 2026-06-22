@@ -1,16 +1,8 @@
 import { CombinedGraphQLErrors, HttpLink } from "@apollo/client";
 import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { PersistedQueryLink } from "@apollo/client/link/persisted-queries";
 import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
-import crypto from "node:crypto";
-
-function sha256(data: string) {
-  const hash = crypto.createHash("sha256");
-  hash.update(data);
-  return hash.digest("hex");
-}
 
 const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev").replace(
   /\/+(?=\?|#|$)/g,
@@ -64,22 +56,24 @@ CombinedGraphQLErrors.formatMessage = (errors, options) => {
   return `${formatted || options.defaultFormatMessage(errors)}`;
 };
 
-const persistedQuerylink = new PersistedQueryLink({
-  sha256,
-});
-
-const httpLink = new HttpLink({
-  // this needs to be an absolute url, as relative urls cannot be used in SSR
-  uri: `${DRUPAL_BASE_URL}/graphql`,
-  headers: {
-    "api-key": process.env.DRUPAL_API_KEY ?? "",
-  },
-});
-
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
+  const httpLink = new HttpLink({
+    // this needs to be an absolute url, as relative urls cannot be used in SSR
+    uri: `${DRUPAL_BASE_URL}/graphql`,
+    headers: {
+      "api-key": process.env.DRUPAL_API_KEY ?? "",
+    },
+    // Cache GraphQL responses in the Next.js data cache for 60 seconds.
+    // This prevents every page render from issuing a fresh POST to the Drupal
+    // GraphQL endpoint. The cache is keyed on the full request body, so
+    // draft-mode queries (which use revision:"latest" variables) stay in
+    // separate cache entries and are revalidated independently.
+    fetchOptions: { next: { revalidate: 60 } },
+  });
+
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: persistedQuerylink.concat(httpLink),
+    link: httpLink,
     defaultOptions: {
       query: {
         errorPolicy: "all",
