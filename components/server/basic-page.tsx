@@ -13,8 +13,8 @@ import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
 import { cacheTag } from "next/cache";
 import { DraftModeSiteButton } from "@/components/client/draft-mode/draft-mode-site-button";
-import { toTitleCase } from "@/lib/string-utils";
 import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export type BasicPageProps = {
   id: string;
@@ -70,8 +70,15 @@ function PageHero({ content }: { content: ProcessedBasicPage }) {
 }
 
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
-  "use cache: remote";
-  const page = await getPageContent(id);
+  const showUnpublished = await showUnpublishedContent();
+  const revision = showUnpublished ? "latest" : "current";
+
+  return <CachedBasicPage id={id} pre={pre} post={post} revision={revision} />;
+}
+
+async function CachedBasicPage({ id, pre, post, revision }: BasicPageProps & { revision: string }) {
+  "use cache";
+  const page = await getPageContent(id, revision);
 
   // Couldn't fetch content for this id.
   if (!page) {

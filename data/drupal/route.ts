@@ -6,6 +6,7 @@ import { getMenuLinkByURI } from "@/data/drupal/primary-navigation";
 import { Link } from "@/lib/graphql/graphql";
 import { Metadata } from "next";
 import { cache } from "react";
+import { cacheLife } from "next/cache";
 
 export type Route = NonNullable<RouteQuery["route"]>;
 

@@ -57,9 +57,7 @@ export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets"> & {
   widgets: ProcessedWidget[];
 };
 
-export async function getPageContent(id: string): Promise<ProcessedBasicPage | null> {
-  const showUnpublished = await showUnpublishedContent();
-
+export async function getPageContent(id: string, revision: string): Promise<ProcessedBasicPage | null> {
   const { data, error } = await query({
     query: gql(/* gql */ `
       query BasicPageContent($id: ID!, $revision: ID = "current") {
@@ -70,7 +68,7 @@ export async function getPageContent(id: string): Promise<ProcessedBasicPage | n
     `),
     variables: {
       id: id,
-      revision: showUnpublished ? "latest" : "current",
+      revision: revision,
     },
   });
 
@@ -80,10 +78,6 @@ export async function getPageContent(id: string): Promise<ProcessedBasicPage | n
   }
 
   if (!data?.nodePage) {
-    return null;
-  }
-
-  if (!data.nodePage.status && !showUnpublished) {
     return null;
   }
 
