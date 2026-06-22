@@ -70,8 +70,7 @@ function PageHero({ content }: { content: ProcessedBasicPage }) {
 }
 
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
-  "use cache";
-
+  "use cache: remote";
   const page = await getPageContent(id);
 
   // Couldn't fetch content for this id.
