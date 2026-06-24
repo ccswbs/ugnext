@@ -8,8 +8,8 @@ const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api
 );
 const CPU_COUNT = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
 const cacheHandlersRoot = path.resolve(__dirname, "lib", "cache");
-const cacheHandlerPath = path.resolve(cacheHandlersRoot, "cache-handler.ts");
-const useCacheHandlerPath = path.resolve(cacheHandlersRoot, "use-cache-handler.ts");
+const cacheHandlerPath = path.resolve(cacheHandlersRoot, "cache-handler.mjs");
+const useCacheHandlerPath = path.resolve(cacheHandlersRoot, "use-cache-handler.mjs");
 
 const nextConfig: NextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
