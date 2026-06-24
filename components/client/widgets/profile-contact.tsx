@@ -25,9 +25,9 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
   // Determine if we should use grid layout (photo beside text) or stacked layout (photo on top)
   const useGridLayout = !isSecondary && !isPrimaryWithSecondary;
 
-  // Add defensive check to prevent errors if profileInfo is undefined
-  if (!profileInfo) {
-    console.error("ProfileCard: profileInfo is undefined. Full data object:", data);
+  // Narrow type to NodeProfile — profileInfo can be one of many node union types
+  if (!profileInfo || profileInfo.__typename !== 'NodeProfile') {
+    console.error("ProfileCard: profileInfo is not a NodeProfile. Full data object:", data);
     return <div>Profile data not available - missing profileInfo</div>;
   }
 
@@ -42,7 +42,7 @@ export const ProfileContact = ({ data }: { data: ProfileCardFragment }) => {
   };
 
   return (
-    <div key={profileInfo.id} className={twJoin(
+    <div key={data.id} className={twJoin(
       "my-5",
       isSecondary && "first:my-0",
       !isSecondary && "lg:w-[calc(50%-2rem)] lg:inline-block lg:align-top lg:me-5 lg:p-0"

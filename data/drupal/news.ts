@@ -32,7 +32,7 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
         url
         width
         height
-        variations(styles: FOCAL_POINT600X400) {
+        variations(styles: [FOCAL_POINT600X400, FOCAL_POINT900X506]) {
           url
           width
           height
