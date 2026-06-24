@@ -93,7 +93,7 @@ export async function getMenuByPrimaryNavigation(primaryNavigation?: NavigationF
     `),
     variables: {
       // @ts-ignore
-      name: primaryNavigation.menuName.toUpperCase().replaceAll("-", "_"),
+      name: primaryNavigation.menuName.toUpperCase().replaceAll(/-+/g, "_"),
     },
   });
 

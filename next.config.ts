@@ -11,7 +11,8 @@ const CPU_COUNT = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
 const nextConfig: NextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
   reactStrictMode: true,
-  cacheComponents: process.env.NEXT_STATIC_OUTPUT !== "true",
+  /* TODO: Re-enable this once caching for linked revalidation is fixed. */
+  cacheComponents: false /*process.env.NEXT_STATIC_OUTPUT !== "true"*/,
   experimental: isNaN(CPU_COUNT)
     ? undefined
     : {

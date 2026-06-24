@@ -31,6 +31,7 @@ import { getTestimonialByTag } from "@/data/drupal/testimonial";
 import { getFilteredNews } from "@/data/drupal/news";
 import { GraduateProgramVariant } from "@/lib/types/graduate-program-variant";
 import { parseGraduateProgramVariant } from "@/data/drupal/graduate-program";
+import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -349,6 +350,7 @@ export const PROFILE_CARD_FRAGMENT = gql(/* gql */ `
     profileInfo {
       ... on NodeProfile {
         id
+        status
         title
         centralLoginId
         customLink {
@@ -555,8 +557,9 @@ export type FullFeaturedNews = FeaturedNewsFragment & {
   isFull: true;
 };
 
-export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags"> & {
+export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags" | "byTitle"> & {
   isFull: true;
+  byTitle: TestimonialFragment[];
   byTags: TestimonialFragment[];
 };
 
@@ -634,6 +637,7 @@ export class WidgetProcessor {
   }
 
   private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<FullFeaturedNews> {
+    const showUnpublished = await showUnpublishedContent();
     const units = data.units?.map((unit) => unit.id) ?? [];
     const categories = data.categories?.map((category) => category.id) ?? [];
     const tags = data.tags?.map((tag) => tag.id) ?? [];
@@ -641,6 +645,10 @@ export class WidgetProcessor {
     let articlesNeeded = data.count - (data.articles?.length ?? 0);
 
     for (const article of data.articles ?? []) {
+      if (article.status === false && !showUnpublished) {
+        continue;
+      }
+
       if (allArticles.length === 7) {
         break;
       }
@@ -686,60 +694,106 @@ export class WidgetProcessor {
     };
   }
 
-  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider> {
+  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider | null> {
+    const showUnpublished = await showUnpublishedContent();
+
+    const byTitle = (data.byTitle ?? []).filter((testimonial) => {
+      if (testimonial.__typename === "NodeTestimonial") {
+        return testimonial.status !== false || showUnpublished;
+      }
+      return false;
+    }) as TestimonialFragment[];
+
     const tags =
       data.byTags
         ?.map((tag) => (tag.__typename === "TermTag" ? tag.id : null))
         .filter((tag) => typeof tag === "string") ?? [];
 
     if (tags.length === 0) {
+      if (byTitle.length === 0) {
+        return null;
+      }
       return {
         ...data,
         isFull: true,
+        byTitle,
         byTags: [],
       };
+    }
+
+    const byTags = await getTestimonialByTag(tags);
+
+    if (byTitle.length === 0 && byTags.length === 0) {
+      return null;
     }
 
     return {
       ...data,
       isFull: true,
-      byTags: await getTestimonialByTag(tags),
+      byTitle,
+      byTags,
     } as FullTestimonialSlider;
   }
 
-  public async processSectionWidget(widget: SectionWidget): Promise<ProcessedSectionWidget> {
+  public async processSectionWidget(widget: SectionWidget): Promise<ProcessedSectionWidget | null> {
     switch (widget.__typename) {
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
+      case "ParagraphProfileCard": {
+        const showUnpublished = await showUnpublishedContent();
+        const profile = widget.profileInfo;
+        if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
+          return null;
+        }
+        return widget;
+      }
       default:
         return widget;
     }
   }
 
-  public async processWidget(widget: Widget): Promise<ProcessedWidget> {
+  public async processWidget(widget: Widget): Promise<ProcessedWidget | null> {
+    const showUnpublished = await showUnpublishedContent();
+
     switch (widget.__typename) {
       case "ParagraphTestimonialSlider":
         return await this.getFullTestimonialSlider(widget);
-      case "ParagraphSection":
+      case "ParagraphSection": {
         const sectionContent: ProcessedSectionWidget[] = [];
 
         for (const sectionWidget of widget.content) {
-          sectionContent.push(await this.processSectionWidget(sectionWidget));
+          const processed = await this.processSectionWidget(sectionWidget);
+          if (processed !== null) {
+            sectionContent.push(processed);
+          }
         }
 
         return {
           ...widget,
           content: sectionContent,
         };
+      }
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
-      case "ParagraphGraduateProgramSummary":
+      case "ParagraphGraduateProgramSummary": {
+        const variant = widget.graduateProgramVariation;
+        if (variant?.__typename === "NodeGraduateProgramVariant" && variant?.status === false && !showUnpublished) {
+          return null;
+        }
         return {
           __typename: widget.__typename,
           id: widget.id,
           uuid: widget.uuid,
           program: parseGraduateProgramVariant(widget.graduateProgramVariation) ?? undefined,
         };
+      }
+      case "ParagraphProfileCard": {
+        const profile = widget.profileInfo;
+        if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
+          return null;
+        }
+        return widget;
+      }
       default:
         return widget;
     }
@@ -749,7 +803,10 @@ export class WidgetProcessor {
     const processed: ProcessedWidget[] = [];
 
     for (const widget of widgets) {
-      processed.push(await this.processWidget(widget));
+      const result = await this.processWidget(widget);
+      if (result !== null) {
+        processed.push(result);
+      }
     }
 
     return processed;

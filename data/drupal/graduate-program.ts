@@ -99,7 +99,7 @@ async function getDraftGraduateProgramVariants() {
 
   const sortedVariants = sortVariants(variants);
 
-  return sortedVariants.map(parse);
+  return sortedVariants.filter((variant) => variant.programUrl?.url).map(parse);
 }
 
 async function getPublishedGraduateProgramVariants() {
@@ -145,7 +145,7 @@ async function getPublishedGraduateProgramVariants() {
 
   const sortedVariants = sortVariants(variants);
 
-  return sortedVariants.filter((variant) => variant.status).map(parse);
+  return sortedVariants.filter((variant) => variant.status && variant.programUrl?.url).map(parse);
 }
 
 export async function getGraduateProgramVariants() {
@@ -296,6 +296,9 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
     } 
     graduateProgramType {
       ...GraduateProgramType
+    }
+    gradProgDescLists {
+      ...GraduateProgramDescriptionList
     }
     graduateDelivery {
       ...GraduateDelivery
@@ -453,6 +456,7 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
     },
     duration: duration,
     deadlines: deadlines,
+    descriptionLists: variant.gradProgDescLists,
     additionalRequirements: additionalRequirements ?? undefined,
     programStructure: programStructure ?? undefined,
     status: variant.status,
