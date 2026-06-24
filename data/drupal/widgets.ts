@@ -753,6 +753,8 @@ export class WidgetProcessor {
   }
 
   public async processWidget(widget: Widget): Promise<ProcessedWidget | null> {
+    const showUnpublished = await showUnpublishedContent();
+
     switch (widget.__typename) {
       case "ParagraphTestimonialSlider":
         return await this.getFullTestimonialSlider(widget);
@@ -773,15 +775,19 @@ export class WidgetProcessor {
       }
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
-      case "ParagraphGraduateProgramSummary":
+      case "ParagraphGraduateProgramSummary": {
+        const variant = widget.graduateProgramVariation;
+        if (variant?.__typename === "NodeGraduateProgramVariant" && variant?.status === false && !showUnpublished) {
+          return null;
+        }
         return {
           __typename: widget.__typename,
           id: widget.id,
           uuid: widget.uuid,
           program: parseGraduateProgramVariant(widget.graduateProgramVariation) ?? undefined,
         };
+      }
       case "ParagraphProfileCard": {
-        const showUnpublished = await showUnpublishedContent();
         const profile = widget.profileInfo;
         if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
           return null;
