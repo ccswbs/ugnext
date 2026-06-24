@@ -1,17 +1,19 @@
 import type { NextConfig } from "next";
-import withPlaiceholder from "@plaiceholder/next";
+//import withPlaiceholder from "@plaiceholder/next";
+import path from "path";
 
 const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev").replace(
   /\/+(?=\?|#|$)/g,
   ""
 );
-
 const CPU_COUNT = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
+const cacheHandlerPath = path.resolve(__dirname, "lib", "cache-handler.ts");
 
 const nextConfig: NextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
   reactStrictMode: true,
   cacheComponents: process.env.NEXT_STATIC_OUTPUT !== "true",
+  cacheHandler: process.env.NEXT_STATIC_OUTPUT === "true" ? cacheHandlerPath : undefined,
   experimental: isNaN(CPU_COUNT)
     ? undefined
     : {
