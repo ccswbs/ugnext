@@ -7,13 +7,18 @@ const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api
   ""
 );
 const CPU_COUNT = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
-const cacheHandlerPath = path.resolve(__dirname, "lib", "cache-handler.ts");
+const cacheHandlersRoot = path.resolve(__dirname, "lib", "cache");
+const cacheHandlerPath = path.resolve(cacheHandlersRoot, "cache-handler.ts");
+const useCacheHandlerPath = path.resolve(cacheHandlersRoot, "use-cache-handler.ts");
 
 const nextConfig: NextConfig = {
   output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
   reactStrictMode: true,
   cacheComponents: process.env.NEXT_STATIC_OUTPUT !== "true",
-  cacheHandler: process.env.NEXT_STATIC_OUTPUT === "true" ? cacheHandlerPath : undefined,
+  cacheHandler: process.env.NEXT_STATIC_OUTPUT !== "true" ? cacheHandlerPath : undefined,
+  cacheHandlers: {
+    default: process.env.NEXT_STATIC_OUTPUT !== "true" ? useCacheHandlerPath : undefined,
+  },
   experimental: isNaN(CPU_COUNT)
     ? undefined
     : {
