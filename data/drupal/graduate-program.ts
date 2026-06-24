@@ -99,7 +99,7 @@ async function getDraftGraduateProgramVariants() {
 
   const sortedVariants = sortVariants(variants);
 
-  return sortedVariants.map(parse);
+  return sortedVariants.filter((variant) => variant.programUrl?.url).map(parse);
 }
 
 async function getPublishedGraduateProgramVariants() {
@@ -145,7 +145,7 @@ async function getPublishedGraduateProgramVariants() {
 
   const sortedVariants = sortVariants(variants);
 
-  return sortedVariants.filter((variant) => variant.status).map(parse);
+  return sortedVariants.filter((variant) => variant.status && variant.programUrl?.url).map(parse);
 }
 
 export async function getGraduateProgramVariants() {
