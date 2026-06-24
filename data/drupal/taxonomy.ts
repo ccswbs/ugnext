@@ -48,6 +48,20 @@ export const GRADUATE_PROGRAM_TYPE = gql(/* gql */ `
   }
 `);
 
+export const GRADUATE_PROGRAM_DESCRIPTION_LIST = gql(/* gql */ `
+  fragment GraduateProgramDescriptionList on TermGradProgramDescriptionList {
+    id
+    name
+    parent {
+      __typename
+      ... on TermGradProgramDescriptionList {
+        id
+        name
+      }
+    }
+  }
+`);
+
 export const GRADUATE_PROGRAM = gql(/* gql */ `
   fragment GraduateProgram on TermGraduateProgram {
     id

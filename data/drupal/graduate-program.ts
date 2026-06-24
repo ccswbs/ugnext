@@ -297,6 +297,9 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
     graduateProgramType {
       ...GraduateProgramType
     }
+    gradProgDescLists {
+      ...GraduateProgramDescriptionList
+    }
     graduateDelivery {
       ...GraduateDelivery
     }
@@ -453,6 +456,7 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
     },
     duration: duration,
     deadlines: deadlines,
+    descriptionLists: variant.gradProgDescLists,
     additionalRequirements: additionalRequirements ?? undefined,
     programStructure: programStructure ?? undefined,
     status: variant.status,

@@ -1,3 +1,5 @@
+import { GraduateProgramDescriptionListFragment } from "../graphql/graphql";
+
 export type GraduateProgramType = {
   id: string;
   name: string;
@@ -16,6 +18,12 @@ export type GraduateDegree = {
 export type GraduateProgramDelivery = {
   id: string;
   name: string;
+};
+
+export type GraduateProgramDescriptionList = {
+  id: string;
+  name: string;
+  parent: GraduateProgramDescriptionList | null;
 };
 
 export type GraduateProgramApplicationDeadline = {
@@ -54,6 +62,7 @@ export type GraduateProgramVariant = {
   degrees: GraduateDegree[];
   type: GraduateProgramType[];
   delivery: GraduateProgramDelivery[];
+  descriptionLists: GraduateProgramDescriptionList[];
   average: GraduateProgramAdmissionAverage;
   duration: GraduateProgramDuration[];
   deadlines: GraduateProgramApplicationDeadline[];

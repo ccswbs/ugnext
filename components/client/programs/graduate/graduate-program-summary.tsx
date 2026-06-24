@@ -6,6 +6,7 @@ import {
   type GraduateProgramDelivery,
   type GraduateProgramDuration,
   type GraduateProgramType,
+  GraduateProgramDescriptionList,
 } from "@/lib/types/graduate-program-variant";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
@@ -171,6 +172,30 @@ function GraduateProgramDuration({ duration }: { duration: GraduateProgramDurati
   return map.size > 0 ? <GraduateProgramSummarySectionMap map={map} /> : "Coming Soon";
 }
 
+function GraduateProgramDescriptionLists({ lists }: { lists: GraduateProgramDescriptionList[]}){
+  const sortedList = lists.reduce((acc, item) => {
+    if(item.parent?.name){
+      const existing = acc.get(item.parent?.name ?? "") ?? [];
+      acc.set(item.parent?.name, [...existing, item.name]);
+    }
+    return acc;
+  }, new Map<string, string[]>());
+
+  return sortedList.size > 0 ? (
+    <ul className={classes.sectionList()}>
+      {sortedList.entries().toArray().map(([title, items]) => (
+        <li key={title}>
+          <h2 className={classes.sectionTitle()}>{title}</h2>
+          <ul>
+            {items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>): null;
+}
+
 function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApplicationDeadline[] }) {
   const firstMap = deadlines.reduce((acc, item) => {
     const date = item.ongoing
@@ -212,14 +237,18 @@ export function GraduateProgramSummary({ program }: { program: GraduateProgramVa
           <GraduateProgramTypes types={program.type} />
         </div>
 
+        {/* Description Lists Section */}
+        {program.descriptionLists && <div className={classes.section()}>
+          <GraduateProgramDescriptionLists lists={program.descriptionLists} />
+        </div>}
+      </div>
+
+    <div className={classes.column()}>
         {/* Delivery Section*/}
         <div className={classes.section()}>
           <h2 className={classes.sectionTitle()}>Delivery</h2>
           <GraduateProgramDelivery delivery={program.delivery} />
         </div>
-      </div>
-
-    <div className={classes.column()}>
         {/* Deadlines & Entry Terms Section */}
         {/* TO DO - if only entry term and no content, do not render anything */}
         <div className={classes.section()}>
