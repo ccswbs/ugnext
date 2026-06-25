@@ -21,7 +21,9 @@
     "update-snapshots:docker": "docker compose up",
     "docker:clean": "docker compose down -v",
     "codegen:compile": "graphql-codegen",
-    "codegen:watch": "graphql-codegen -w"
+    "codegen:watch": "graphql-codegen -w",
+    "load-test": "k6 run tests/load/graphql-load.js",
+    "load-test:staging": "k6 run --env BASE_URL=$LOAD_TEST_BASE_URL tests/load/graphql-load.js"
   },
   "dependencies": {
     "@awesome.me/kit-7993323d0c": "^1.0.11",
@@ -73,6 +75,7 @@
     "@parcel/watcher": "^2.5.6",
     "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4.3.0",
+    "@types/k6": "^2.0.0",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
