@@ -10,13 +10,13 @@ trigger: none   # manual / scheduled only
 
 pr: none
 
-schedules:
-  - cron: "0 3 * * 1"   # every Monday at 03:00 UTC
-    displayName: Weekly load test
-    branches:
-      include:
-        - main
-    always: true
+#schedules:
+#  - cron: "0 3 * * 1"   # every Monday at 03:00 UTC
+#   displayName: Weekly load test
+#    branches:
+#      include:
+#        - main
+#    always: true
 
 variables:
   - group: ugnext
