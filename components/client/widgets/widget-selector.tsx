@@ -24,6 +24,7 @@ import { ButtonWidget } from "@/components/client/widgets/button";
 import { FeaturedNews } from "@/components/client/widgets/featured-news";
 import { NewsSearch } from "@/components/client/widgets/news-search";
 import type { NavigationFragment } from "@/lib/graphql/types";
+import { GraduateProgramSummaryWidget } from "@/components/client/widgets/graduate-program-summary";
 
 export const PrimaryNavigationContext = createContext<NavigationFragment | null>(null);
 
@@ -77,6 +78,8 @@ export function WidgetSelector({
         return <FeaturedNews data={data} />;
       case "ParagraphGeneralText":
         return <GeneralTextWidget data={data} />;
+      case "ParagraphGraduateProgramSummary":
+        return <GraduateProgramSummaryWidget data={data} />;
       case "ParagraphLinksWidget":
         return <LinksWidget data={data} />;
       case "ParagraphMediaText":
