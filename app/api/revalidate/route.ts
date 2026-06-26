@@ -1,6 +1,8 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
 import { getRoute } from "@/data/drupal/route";
+
+/* TODO: Re-enable this once caching for linked revalidation is fixed. */
 // import { draftMode } from "next/headers";
 // import { getPathsByEntity, getTagsToRevalidateByEntity } from "@/data/drupal/linked-revalidation";
 
@@ -42,6 +44,8 @@ async function handler(request: NextRequest) {
   }
 
   // --- Code for LINKED REVALIDATION
+  /* TODO: Re-enable this once caching for linked revalidation is fixed. */
+  
   // const searchParams = request.nextUrl.searchParams;
   // const secret = searchParams.get("secret");
   // const { isEnabled } = await draftMode();

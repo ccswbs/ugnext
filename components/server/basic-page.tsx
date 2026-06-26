@@ -116,7 +116,8 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     <Layout>
       <Header primaryNavigation={page.primaryNavigation}></Header>
 
-      {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />}
+      {/* TODO: Re-enable this once caching for linked revalidation is fixed. */ }
+      {/* {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />} */}
 
       <LayoutContent container={false}>
         <PageHero content={page} />
