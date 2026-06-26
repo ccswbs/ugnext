@@ -30,7 +30,7 @@ const BASE_URL = __ENV.BASE_URL || "http://localhost:3000";
 // These drive Next.js SSR which in turn calls Drupal /graphql.
 const PAGES = [
   "/",
-  "/news",
+  "/ovc/news-hub",
   "/programs/undergraduate",
   "/programs/graduate",
   "/faculty/search",
