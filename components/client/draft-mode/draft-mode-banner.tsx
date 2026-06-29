@@ -47,10 +47,9 @@ export function DraftModeBanner() {
         Disable Draft Mode
       </Button>
 
-      {/* TODO: Re-enable this once caching for linked revalidation is fixed. */ }
-      {/* <Button color="yellow" className="p-2" onClick={revalidatePage} disabled={revalidating} as="button">
+      <Button color="yellow" className="p-2" onClick={revalidatePage} disabled={revalidating} as="button">
         Rebuild Page
-      </Button> */}
+      </Button>
 
       <div id="uofg-draft-mode-banner-extra-buttons" className="contents"></div>
 
