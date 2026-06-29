@@ -52,18 +52,32 @@ function getNextConfig(): NextConfig {
       ],
     },
     async headers() {
+      const defaultHeaders = [
+        {
+          key: "X-Content-Type-Options",
+          value: "nosniff",
+        },
+        {
+          key: "Referrer-Policy",
+          value: "strict-origin-when-cross-origin",
+        },
+      ];
+
       return [
+        {
+          source: "/api/((?!revalidate(?:/|$)|disable-draft(?:/|$)|draft(?:/|$)).*)",
+          headers: [
+            ...defaultHeaders,
+            {
+              key: "Content-Security-Policy",
+              value: "default-src 'self'",
+            },
+          ],
+        },
         {
           source: "/(.*)",
           headers: [
-            {
-              key: "X-Content-Type-Options",
-              value: "nosniff",
-            },
-            {
-              key: "Referrer-Policy",
-              value: "strict-origin-when-cross-origin",
-            },
+            ...defaultHeaders,
             {
               key: "Content-Security-Policy",
               value: `frame-ancestors 'self' ${drupalDomains.map((domain) => domain.toString()).join(" ")}`,
