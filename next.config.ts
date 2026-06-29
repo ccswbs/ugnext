@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 import path from "path";
-import { RemotePattern } from "next/dist/shared/lib/image-config";
+import type { RemotePattern } from "next/dist/shared/lib/image-config";
 
 function getNextConfig(): NextConfig {
   const cpuCount = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
