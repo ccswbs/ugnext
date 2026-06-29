@@ -1,75 +1,128 @@
 import type { NextConfig } from "next";
-//import withPlaiceholder from "@plaiceholder/next";
 import path from "path";
+import { RemotePattern } from "next/dist/shared/lib/image-config";
 
-const DRUPAL_BASE_URL = (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "https://api.liveugconthub.uoguelph.dev").replace(
-  /\/+(?=\?|#|$)/g,
-  ""
-);
-const CPU_COUNT = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
-const cacheHandlersRoot = path.resolve(__dirname, "lib", "cache");
-const cacheHandlerPath = path.resolve(cacheHandlersRoot, "cache-handler.mjs");
-const useCacheHandlerPath = path.resolve(cacheHandlersRoot, "use-cache-handler.mjs");
+function getNextConfig(): NextConfig {
+  const cpuCount = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
+  const drupalDomains = [
+    new URL("https://api.liveugconthub.uoguelph.dev"),
+    new URL("https://api.testugconthub.uoguelph.dev"),
+    new URL("https://api.devugconthub.uoguelph.dev"),
+  ];
 
-const nextConfig: NextConfig = {
-  output: process.env.NEXT_STATIC_OUTPUT === "true" ? "export" : undefined,
-  reactStrictMode: true,
-  cacheComponents: process.env.NEXT_STATIC_OUTPUT !== "true",
-  cacheHandler: process.env.NEXT_STATIC_OUTPUT !== "true" ? cacheHandlerPath : undefined,
-  cacheHandlers: {
-    default: process.env.NEXT_STATIC_OUTPUT !== "true" ? useCacheHandlerPath : undefined,
-  },
-  experimental: isNaN(CPU_COUNT)
-    ? undefined
-    : {
-        cpus: CPU_COUNT,
-      },
-  images: {
-    unoptimized: process.env.NEXT_STATIC_OUTPUT === "true",
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: new URL(DRUPAL_BASE_URL).hostname,
-        port: "",
-        pathname: "/sites/default/files/**",
-      },
-      {
-        protocol: "https",
-        hostname: "api.liveugconthub.uoguelph.dev",
-        port: "",
-        pathname: "/sites/default/files/**",
-      },
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-        port: "",
-        pathname: "/**",
-      },
-    ],
-  },
-  async redirects() {
-    return [
-      // Basic redirect
-      {
-        source: "/ens-test",
-        destination: "/?ens-test=true",
-        permanent: true,
-      },
-      {
-        source: "/sites/default/files/:path*",
-        destination: `${DRUPAL_BASE_URL}/sites/default/files/:path*`,
-        permanent: false,
-      },
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/sitemap-next.xml",
-        destination: "/sitemap.xml",
-      },
-    ];
-  },
-};
+  if (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL) {
+    const noTrailingSlash = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL.replace(/\/+(?=\?|#|$)/g, "");
+    const url = new URL(noTrailingSlash);
+    const duplicateIndex = drupalDomains.findIndex((domain) => {
+      return domain.toString() === url.toString();
+    });
 
-export default nextConfig;
+    if (duplicateIndex !== -1) {
+      drupalDomains.splice(duplicateIndex, 1);
+    }
+
+    // Ensure the env variable set URL is added to the beginning of the array
+    drupalDomains.unshift(url);
+  }
+
+  // Base config
+  const config: NextConfig = {
+    reactStrictMode: true,
+    images: {
+      remotePatterns: [
+        ...drupalDomains.map(
+          (domain) =>
+            ({
+              protocol: domain.protocol.replace(":", ""),
+              hostname: domain.hostname,
+              port: domain.port,
+              pathname: "/sites/default/files/**",
+            }) as RemotePattern
+        ),
+        {
+          protocol: "https",
+          hostname: "cdn.uoguelph.ca",
+          port: "",
+          pathname: "*",
+        },
+        {
+          protocol: "https",
+          hostname: "picsum.photos",
+          port: "",
+          pathname: "/**",
+        },
+      ],
+    },
+    async headers() {
+      return [
+        {
+          source: "/(.*)",
+          headers: [
+            {
+              key: "X-Content-Type-Options",
+              value: "nosniff",
+            },
+            {
+              key: "Referrer-Policy",
+              value: "strict-origin-when-cross-origin",
+            },
+            {
+              key: "Content-Security-Policy",
+              value: `frame-ancestors 'self' ${drupalDomains.map((domain) => domain.toString()).join(" ")}`,
+            },
+          ],
+        },
+      ];
+    },
+    async redirects() {
+      return [
+        {
+          source: "/ens-test",
+          destination: "/?ens-test=true",
+          permanent: true,
+        },
+        {
+          source: "/sites/default/files/:path*",
+          destination: `${drupalDomains[0].toString()}sites/default/files/:path*`,
+          permanent: false,
+        },
+      ];
+    },
+    async rewrites() {
+      return [
+        {
+          source: "/sitemap-next.xml",
+          destination: "/sitemap.xml",
+        },
+      ];
+    },
+  };
+
+  // Set number of worker threads used when building pages.
+  // Sometimes Drupal struggles to keep up with the load if many requests are made at once,
+  // so we can lower the number of threads to reduce the number of requests made in parallel.
+  if (!isNaN(cpuCount)) {
+    config.experimental = {
+      cpus: cpuCount,
+    };
+  }
+
+  if (process.env.NEXT_STATIC_OUTPUT === "true") {
+    // Static build
+    config.output = "export";
+    config.cacheComponents = false;
+    config.images ??= {};
+    config.images.unoptimized = true;
+  } else {
+    // Normal build
+    config.cacheComponents = true;
+    config.cacheHandler = path.resolve(__dirname, "lib", "cache", "cache-handler.mjs");
+    config.cacheHandlers = {
+      default: path.resolve(__dirname, "lib", "cache", "use-cache-handler.mjs"),
+    };
+  }
+
+  return config;
+}
+
+export default getNextConfig();
