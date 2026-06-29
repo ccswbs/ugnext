@@ -12,11 +12,8 @@ import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
 import { DraftModeSiteButton } from "@/components/client/draft-mode/draft-mode-site-button";
-
-/* TODO: Re-enable this once caching for linked revalidation is fixed. */
-//import { cacheTag } from "next/cache";
-//import { toTitleCase } from "@/lib/string-utils";
-//import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
+import { cacheTag } from "next/cache";
+import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
 
 export type BasicPageProps = {
   id: string;
@@ -72,8 +69,7 @@ function PageHero({ content }: { content: ProcessedBasicPage }) {
 }
 
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
-  /* TODO: Re-enable this once caching for linked revalidation is fixed. */
-  //"use cache";
+  "use cache";
 
   const page = await getPageContent(id);
 
@@ -90,9 +86,8 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     notFound();
   }
 
-  /* TODO: Re-enable this once caching for linked revalidation is fixed. */
-  //const cacheTags = getBasicPageLinkedCacheTags(page);
-  //cacheTag(...cacheTags);
+  const cacheTags = getBasicPageLinkedCacheTags(page);
+  cacheTag(...cacheTags);
 
   const customFooterID: string = page.primaryNavigation?.customFooter?.id ?? "";
   const { tags, units } = (page.tags ?? []).reduce(
