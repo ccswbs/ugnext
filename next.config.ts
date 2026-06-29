@@ -30,15 +30,14 @@ function getNextConfig(): NextConfig {
     reactStrictMode: true,
     images: {
       remotePatterns: [
-        ...drupalDomains.map(
-          (domain) =>
-            ({
-              protocol: domain.protocol.replace(":", ""),
-              hostname: domain.hostname,
-              port: domain.port,
-              pathname: "/sites/default/files/**",
-            }) as RemotePattern
-        ),
+        ...drupalDomains.map((domain) => {
+          return {
+            protocol: domain.protocol.replace(":", ""),
+            hostname: domain.hostname,
+            port: domain.port,
+            pathname: "/sites/default/files/**",
+          } as RemotePattern;
+        }),
         {
           protocol: "https",
           hostname: "cdn.uoguelph.ca",
