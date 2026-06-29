@@ -3,13 +3,13 @@ import path from "path";
 import type { RemotePattern } from "next/dist/shared/lib/image-config";
 
 function getNextConfig(): NextConfig {
-  const cpuCount = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
   const drupalDomains = [
     new URL("https://api.liveugconthub.uoguelph.dev"),
     new URL("https://api.testugconthub.uoguelph.dev"),
     new URL("https://api.devugconthub.uoguelph.dev"),
   ];
 
+  // Add the environment set Drupal base URL to the beginning of the drupal domains array, ensuring no duplicates
   if (process.env.NEXT_PUBLIC_DRUPAL_BASE_URL) {
     const noTrailingSlash = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL.replace(/\/+(?=\?|#|$)/g, "");
     const url = new URL(noTrailingSlash);
@@ -21,7 +21,6 @@ function getNextConfig(): NextConfig {
       drupalDomains.splice(duplicateIndex, 1);
     }
 
-    // Ensure the env variable set URL is added to the beginning of the array
     drupalDomains.unshift(url);
   }
 
@@ -105,6 +104,7 @@ function getNextConfig(): NextConfig {
   // Set number of worker threads used when building pages.
   // Sometimes Drupal struggles to keep up with the load if many requests are made at once,
   // so we can lower the number of threads to reduce the number of requests made in parallel.
+  const cpuCount = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
   if (!isNaN(cpuCount)) {
     config.experimental = {
       cpus: cpuCount,
