@@ -82,6 +82,11 @@ function getNextConfig(): NextConfig {
           permanent: true,
         },
         {
+          source: "/api/v1/aad-profile",
+          destination: "/api/aad-profile",
+          permanent: false,
+        },
+        {
           source: "/sites/default/files/:path*",
           destination: `${drupalDomains[0].toString()}sites/default/files/:path*`,
           permanent: false,
