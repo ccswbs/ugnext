@@ -138,6 +138,7 @@ function getNextConfig(): NextConfig {
     config.cacheHandlers = {
       default: path.resolve(__dirname, "lib", "cache", "use-cache-handler.mjs"),
     };
+    config.cacheMaxMemorySize = 0;
   }
 
   return config;
