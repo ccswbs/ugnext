@@ -12,8 +12,8 @@ import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
 import { DraftModeSiteButton } from "@/components/client/draft-mode/draft-mode-site-button";
-import { cacheTag } from "next/cache";
-import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
+//import { cacheTag } from "next/cache";
+//import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
 
 export type BasicPageProps = {
   id: string;
@@ -69,7 +69,7 @@ function PageHero({ content }: { content: ProcessedBasicPage }) {
 }
 
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
-  "use cache";
+  //"use cache";
 
   const page = await getPageContent(id);
 
@@ -86,8 +86,8 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     notFound();
   }
 
-  const cacheTags = getBasicPageLinkedCacheTags(page);
-  cacheTag(...cacheTags);
+  //const cacheTags = getBasicPageLinkedCacheTags(page);
+  //cacheTag(...cacheTags);
 
   const customFooterID: string = page.primaryNavigation?.customFooter?.id ?? "";
   const { tags, units } = (page.tags ?? []).reduce(
@@ -111,8 +111,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     <Layout>
       <Header primaryNavigation={page.primaryNavigation}></Header>
 
-      {/* TODO: Re-enable this once caching for linked revalidation is fixed. */ }
-      {/* {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />} */}
+      {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />}
 
       <LayoutContent container={false}>
         <PageHero content={page} />

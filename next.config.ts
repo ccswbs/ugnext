@@ -133,12 +133,18 @@ function getNextConfig(): NextConfig {
     config.images.unoptimized = true;
   } else {
     // Normal build
-    config.cacheComponents = true;
+
+    // Regular ISR and route cache handler
     config.cacheHandler = path.resolve(__dirname, "lib", "cache", "cache-handler.mjs");
+    config.cacheMaxMemorySize = 0;
+
+    // For cache components
+    /*
+    config.cacheComponents = true;
     config.cacheHandlers = {
       default: path.resolve(__dirname, "lib", "cache", "use-cache-handler.mjs"),
     };
-    config.cacheMaxMemorySize = 0;
+     */
   }
 
   return config;
