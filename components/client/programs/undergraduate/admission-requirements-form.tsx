@@ -25,6 +25,7 @@ import {
   UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH,
   UNDERGRADUATE_PROGRAMS_NODE_PATH,
 } from "@/lib/undergraduate-admission-requirements";
+import { RadioGroup, Radio } from "@uoguelph/react-components/radio-group";
 
 type AdmissionRequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
@@ -140,18 +141,15 @@ export default function AdmissionRequirementsForm({
           <SelectOptions anchor="bottom">
             <SelectOption value="domestic">Within Canada</SelectOption>
             <SelectOption value="international">Outside of Canada</SelectOption>
-            <SelectOption value="curriculum">Under a Specific Curriculum of Study</SelectOption>
           </SelectOptions>
         </Select>
       </Field>
 
-      {locationType && (
+      {locationType === "domestic" && (
         <Field>
           <Label>
             <Typography type={"h3"} as={"h2"}>
-              {locationType === "domestic" && "My province/territory of study is/was"}
-              {locationType === "international" && "My country of study is/was"}
-              {locationType === "curriculum" && "My curriculum of study is/was"}
+              My province/territory of study is/was
             </Typography>
           </Label>
 
@@ -169,7 +167,7 @@ export default function AdmissionRequirementsForm({
 
             <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
               {locations
-                .filter((location) => location.type === locationType)
+                .filter((location) => location.type === "domestic")
                 .filter((location) => location.name.toLowerCase().includes(locationQuery))
                 .map((location) => (
                   <AutocompleteOption key={location.id} value={location} className="flex flex-col">
@@ -179,6 +177,71 @@ export default function AdmissionRequirementsForm({
             </AutocompleteOptions>
           </Autocomplete>
         </Field>
+      )}
+
+      {locationType !== "domestic" && (
+        <>
+          <Typography type={"h3"} as={"h2"}>
+            My Curriculum or Country of study is/was
+          </Typography>
+
+          <Field>
+            <Label>
+              <Typography type={"h3"} as={"h3"}>
+                Curriculum
+              </Typography>
+            </Label>
+
+            <RadioGroup onChange={setLocation}>
+              {locations
+                .filter((location) => location.type === "curriculum")
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((location) => (
+                  <Radio key={location.id} value={location}>
+                    {location.name}
+                  </Radio>
+                ))}
+            </RadioGroup>
+          </Field>
+
+          <Typography type={"h3"} as={"span"}>
+            or
+          </Typography>
+
+          <Field>
+            <Label>
+              <Typography type={"h3"} as={"h3"}>
+                Country
+              </Typography>
+            </Label>
+
+            <Autocomplete
+              value={location}
+              multiple={false}
+              onClose={() => setLocationQuery("")}
+              onChange={setLocation}
+              immediate
+            >
+              <AutocompleteInput
+                onChange={(event) => setLocationQuery(event.target.value.toLowerCase())}
+                displayValue={(selected: UndergraduateAdmissionLocation | null) =>
+                  selected?.type === "international" ? (selected?.name ?? "") : ""
+                }
+              />
+
+              <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
+                {locations
+                  .filter((location) => location.type === "international")
+                  .filter((location) => location.name.toLowerCase().includes(locationQuery))
+                  .map((location) => (
+                    <AutocompleteOption key={location.id} value={location} className="flex flex-col">
+                      {location.name}
+                    </AutocompleteOption>
+                  ))}
+              </AutocompleteOptions>
+            </Autocomplete>
+          </Field>
+        </>
       )}
 
       <Field>
