@@ -6,7 +6,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { ProgramSearch } from "@/components/client/programs/program-search";
 
-// PHASE 1 - YAML-BASED
+// PHASE 1 - YAML-BASED (to be commented out during Phase 2)
 import { getGraduateDegreeTypes, getGraduateProgramTypes, getGraduatePrograms } from "@/data/yaml/programs/graduate";
 
 // PHASE 2 - DRUPAL-BASED (also update imports in components/client/programs/program-search)

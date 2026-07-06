@@ -11,6 +11,7 @@ import type { UndergraduateProgram, UndergraduateProgramType } from "@/data/drup
 import type { UndergraduateDegree, UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree";
 
 // PHASE 1 - YAML-BASED (Graduate) - also update /apps/programs/graduate/page
+// To be commented out during Phase 2
 import type { GraduateDegreeType, GraduateProgram, GraduateProgramType } from "@/data/yaml/programs/graduate";
 
 // PHASE 2 - DRUPAL-BASED (Graduate) - also update /apps/programs/graduate/page
