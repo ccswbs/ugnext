@@ -196,9 +196,9 @@ export default function AdmissionRequirementsForm({
               {locations
                 .filter((location) => location.type === "curriculum")
                 .sort((a, b) => a.name.localeCompare(b.name))
-                .map((location) => (
-                  <Radio key={location.id} value={location}>
-                    {location.name}
+                .map((loc) => (
+                  <Radio key={loc.id} value={loc} selected={loc.id === location?.id}>
+                    {loc.name}
                   </Radio>
                 ))}
             </RadioGroup>
@@ -231,6 +231,7 @@ export default function AdmissionRequirementsForm({
 
               <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
                 {locations
+                  .sort((a, b) => a.name.localeCompare(b.name))
                   .filter((location) => location.type === "international")
                   .filter((location) => location.name.toLowerCase().includes(locationQuery))
                   .map((location) => (
