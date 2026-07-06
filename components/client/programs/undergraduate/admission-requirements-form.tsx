@@ -107,11 +107,13 @@ export default function AdmissionRequirementsForm({
           <SelectButton>{studentType ? studentType.name : <span>&nbsp;</span>}</SelectButton>
 
           <SelectOptions anchor="bottom">
-            {studentTypes.map((type) => (
-              <SelectOption key={type.id} value={type}>
-                {type.name}
-              </SelectOption>
-            ))}
+            {studentTypes
+              .sort((a, b) => a.weight - b.weight)
+              .map((type) => (
+                <SelectOption key={type.id} value={type}>
+                  {type.name}
+                </SelectOption>
+              ))}
           </SelectOptions>
         </Select>
       </Field>

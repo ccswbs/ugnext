@@ -125,6 +125,7 @@ export const ADMISSION_STUDENT_TYPE = gql(/* gql */ `
     id
     name
     path
+    weight
   }
 `);
 
