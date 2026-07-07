@@ -38,13 +38,12 @@ function PageHero({ content }: { content: ProcessedBasicPage }) {
           as={Image}
         >
           <HeroTitle>{content.title}</HeroTitle>
-          {content.heroWidgets?.video && (
-            <HeroVideo
-              src={content.heroWidgets.video.url}
-              title={content.heroWidgets.video.name}
-              transcript={content.heroWidgets.video.transcript?.url}
-            />
-          )}
+          {content.heroWidgets
+            ?.filter((widget) => widget.__typename === "ParagraphModalVideoWidget")
+            .slice(0, 1)
+            .map((widget) => (
+              <HeroVideo key={`hero-video-${widget.video.name}`} src={widget.video.url} title={widget.video.name} transcript={widget.video.transcript?.url} />
+            ))}
         </Hero>
 
         <Breadcrumbs
@@ -121,6 +120,12 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
       <LayoutContent container={false}>
         <PageHero content={page} />
+        {page?.heroWidgets
+          ?.filter((widget) => widget.__typename === "ParagraphGraduateProgramSummary")
+          .slice(0, 1)
+          .map((widget, index) => (
+            <WidgetSelector key={index} data={widget} primaryNavigation={page.primaryNavigation} />
+          ))}
 
         {pre && pre}
 

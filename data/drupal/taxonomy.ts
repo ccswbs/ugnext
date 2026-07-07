@@ -2,12 +2,87 @@ import { gql } from "@/lib/graphql";
 import { query } from "@/lib/apollo";
 import { slugify } from "@/lib/string-utils";
 import { UnitFragment } from "@/lib/graphql/types";
+import { GRADUATE_PROGRAM_LINK } from "./graduate-program";
 
 export const GOAL_FRAGMENT = gql(/* gql */ `
   fragment Goal on TermGoal {
     id
     name
     action
+  }
+`);
+
+export const GRADUATE_DEGREE = gql(/* gql */ `
+  fragment GraduateDegree on TermGraduateDegree {
+    id
+    name
+    degreeType: graduateDegreeTypes {
+      name
+    }
+    acronym: acronymDegree
+  }
+`);
+
+export const GRADUATE_PROGRAM_DEGREE_TYPE = gql(/* gql */ `
+  fragment GraduateProgramDegreeType on TermGraduateProgramDegreeType {
+    id
+    name
+  }
+`);
+
+export const GRADUATE_DELIVERY_TYPE = gql(/* gql */ `
+  fragment GraduateDelivery on TermGraduateProgramDelivery {
+    id
+    name
+  }
+`);
+
+export const GRADUATE_PROGRAM_TYPE = gql(/* gql */ `
+  fragment GraduateProgramType on TermGraduateProgramType {
+    id
+    name
+    searchableType {
+      id
+      name
+    }
+  }
+`);
+
+export const GRADUATE_PROGRAM_DESCRIPTION_LIST = gql(/* gql */ `
+  fragment GraduateProgramDescriptionList on TermGradProgramDescriptionList {
+    id
+    name
+    parent {
+      __typename
+      ... on TermGradProgramDescriptionList {
+        id
+        name
+      }
+    }
+  }
+`);
+
+export const GRADUATE_PROGRAM = gql(/* gql */ `
+  fragment GraduateProgram on TermGraduateProgram {
+    id
+    name
+    url: graduateProgramUrl {
+      title
+      url
+    }
+    tags: programSearchTags {
+      name
+    }
+    relatedLinks {
+      ...GraduateProgramLink
+    }
+  }
+`);
+
+export const GRADUATE_PROGRAM_SEARCHABLE_TYPE = gql(/* gql */ `
+  fragment GraduateProgramSearchableType on TermGraduateProgramSearchableType {
+    id
+    name
   }
 `);
 
@@ -43,6 +118,13 @@ export const PROFILE_TYPE_FRAGMENT = gql(/* gql */ `
     id
     name
     path
+  }
+`);
+
+export const PROGRAM_SEARCH_TAG = gql(/* gql */ `
+  fragment ProgramSearchTag on TermProgramSearchTag {
+    __typename
+    name
   }
 `);
 

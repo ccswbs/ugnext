@@ -55,6 +55,13 @@ export function getBasicPageLinkedCacheTags(page: ProcessedBasicPage) {
     if (page.primaryNavigation.customFooter) {
       tags.push(getCacheTag(page.primaryNavigation.customFooter));
     }
+    if (page.heroWidgets) {
+      page.heroWidgets
+        .filter((widget) => widget.__typename === "ParagraphGraduateProgramSummary")
+        .map((widget, index) => (
+            tags.push(getCacheTag(widget))
+        ));
+    }
   }
 
   for (const widget of page.widgets) {
