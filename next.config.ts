@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import path from "path";
 import type { RemotePattern } from "next/dist/shared/lib/image-config";
+import { fileURLToPath } from "url";
 
 function getNextConfig(): NextConfig {
   const drupalDomains = [
@@ -117,7 +118,12 @@ function getNextConfig(): NextConfig {
     // Normal build
 
     // Regular ISR and route cache handler
-    config.cacheHandler = path.resolve(__dirname, "lib", "cache", "cache-handler.mjs");
+    config.cacheHandler = path.resolve(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "lib",
+      "cache",
+      "cache-handler.mjs"
+    );
 
     // For cache components
     /*
