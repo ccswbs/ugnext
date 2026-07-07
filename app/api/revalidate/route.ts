@@ -6,6 +6,8 @@ import { draftMode } from "next/headers";
 // import { getRoute } from "@/data/drupal/route";
 // import { getPathsByEntity, getTagsToRevalidateByEntity } from "@/data/drupal/linked-revalidation";
 
+export const dynamic = "force-dynamic";
+
 async function handler(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const secret = searchParams.get("secret");
