@@ -67,32 +67,15 @@ function getNextConfig(): NextConfig {
 
       return [
         {
-          source: "/api/((?!revalidate(?:/|$)|disable-draft(?:/|$)|draft(?:/|$)).*)",
+          source: "*",
           headers: [
-            ...defaultHeaders,
             {
-              key: "Content-Security-Policy",
-              value: "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+              key: "X-Content-Type-Options",
+              value: "nosniff",
             },
-          ],
-        },
-        {
-          source: "/api/:path((?:draft|disable-draft|revalidate)(?:/.*)?)",
-          headers: [
-            ...defaultHeaders,
             {
-              key: "Content-Security-Policy",
-              value: `default-src 'self'; frame-ancestors 'self' ${drupalFrameAncestors}; base-uri 'none'`,
-            },
-          ],
-        },
-        {
-          source: "/((?!api(?:/|$)).*)",
-          headers: [
-            ...defaultHeaders,
-            {
-              key: "Content-Security-Policy",
-              value: `frame-ancestors 'self' ${drupalFrameAncestors}`,
+              key: "Referrer-Policy",
+              value: "strict-origin-when-cross-origin",
             },
           ],
         },
