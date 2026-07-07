@@ -2,6 +2,7 @@ import { drupal } from "@/lib/drupal";
 import { enableDraftMode } from "next-drupal/draft";
 import { NextRequest, NextResponse } from "next/server";
 import { draftMode } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function GET(request: NextRequest): Promise<Response | never> {
   const searchParams = request.nextUrl.searchParams;
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest): Promise<Response | never> {
     const draft = await draftMode();
     draft.enable();
 
-    return NextResponse.redirect(new URL(path, request.nextUrl.basePath));
+    redirect(path);
   }
 
   // @ts-ignore
