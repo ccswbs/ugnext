@@ -63,6 +63,8 @@ function getNextConfig(): NextConfig {
         },
       ];
 
+      const drupalFrameAncestors = drupalDomains.map((domain) => domain.origin).join(" ");
+
       return [
         {
           source: "/api/((?!revalidate(?:/|$)|disable-draft(?:/|$)|draft(?:/|$)).*)",
@@ -70,17 +72,27 @@ function getNextConfig(): NextConfig {
             ...defaultHeaders,
             {
               key: "Content-Security-Policy",
-              value: "default-src 'self'",
+              value: "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
             },
           ],
         },
         {
-          source: "/(.*)",
+          source: "/api/:path((?:draft|disable-draft|revalidate)(?:/.*)?)",
           headers: [
             ...defaultHeaders,
             {
               key: "Content-Security-Policy",
-              value: `frame-ancestors 'self' ${drupalDomains.map((domain) => domain.toString()).join(" ")}`,
+              value: `default-src 'self'; frame-ancestors 'self' ${drupalFrameAncestors}; base-uri 'none'`,
+            },
+          ],
+        },
+        {
+          source: "/((?!api(?:/|$)).*)",
+          headers: [
+            ...defaultHeaders,
+            {
+              key: "Content-Security-Policy",
+              value: `frame-ancestors 'self' ${drupalFrameAncestors}`,
             },
           ],
         },
