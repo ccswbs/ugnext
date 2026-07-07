@@ -27,7 +27,7 @@ export async function GET(request: NextRequest): Promise<Response | never> {
     const draft = await draftMode();
     draft.enable();
 
-    return NextResponse.redirect(new URL(path, request.url));
+    return NextResponse.redirect(new URL(path, request.nextUrl.basePath));
   }
 
   // @ts-ignore
