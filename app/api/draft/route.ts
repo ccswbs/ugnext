@@ -9,7 +9,16 @@ export async function GET(request: NextRequest): Promise<Response | never> {
   let path = searchParams.get("path");
 
   // Manually enter draft mode if provided DRUPAL_PREVIEW_SECRET directly in the URL.
-  if (secret === process.env.DRUPAL_PREVIEW_SECRET && path) {
+  if (secret === process.env.DRUPAL_PREVIEW_SECRET) {
+    if (!path) {
+      return NextResponse.json(
+        {
+          message: "Field 'path' is missing",
+        },
+        { status: 400 }
+      );
+    }
+
     if (URL.canParse(path)) {
       const url = new URL(path);
       path = url.pathname;
