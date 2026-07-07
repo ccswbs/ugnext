@@ -194,12 +194,12 @@ export default function AdmissionRequirementsForm({
               </Typography>
             </Label>
 
-            <RadioGroup onChange={setLocation} value={location?.type === "curriculum" ? location : null}>
+            <RadioGroup onChange={setLocation} value={location?.type === "curriculum" ? location : null} by="name">
               {locations
                 .filter((location) => location.type === "curriculum")
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((loc) => (
-                  <Radio key={loc.id} value={loc} by="name">
+                  <Radio key={loc.id} value={loc}>
                     {loc.name}
                   </Radio>
                 ))}
