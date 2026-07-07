@@ -117,12 +117,12 @@ function getNextConfig(): NextConfig {
   } else {
     // Normal build
     // Regular ISR and route cache handler
-    /*config.cacheHandler = path.resolve(
+    config.cacheHandler = path.resolve(
       path.dirname(fileURLToPath(import.meta.url)),
       "lib",
       "cache",
       "cache-handler.mjs"
-    );*/
+    );
     // For cache components
     /*
     config.cacheComponents = true;
