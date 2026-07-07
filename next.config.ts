@@ -136,7 +136,6 @@ function getNextConfig(): NextConfig {
 
     // Regular ISR and route cache handler
     config.cacheHandler = path.resolve(__dirname, "lib", "cache", "cache-handler.mjs");
-    config.cacheMaxMemorySize = 0;
 
     // For cache components
     /*
