@@ -52,22 +52,9 @@ function getNextConfig(): NextConfig {
       ],
     },
     async headers() {
-      const defaultHeaders = [
-        {
-          key: "X-Content-Type-Options",
-          value: "nosniff",
-        },
-        {
-          key: "Referrer-Policy",
-          value: "strict-origin-when-cross-origin",
-        },
-      ];
-
-      const drupalFrameAncestors = drupalDomains.map((domain) => domain.origin).join(" ");
-
       return [
         {
-          source: "*",
+          source: "/:path*",
           headers: [
             {
               key: "X-Content-Type-Options",
