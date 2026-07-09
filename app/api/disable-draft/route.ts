@@ -7,8 +7,7 @@ export async function GET(request: NextRequest) {
   // let path = searchParams.get("path") ?? "/";
   let path = searchParams.get("path");
 
-  console.log("-1path------------>>>>")
-  console.log(path);
+  console.log("-1path----->>>>" + path);
 
   if (!path) {
     return NextResponse.json(
@@ -23,8 +22,11 @@ export async function GET(request: NextRequest) {
     path = url.pathname;
   }
 
-  console.log("-2path------------>>>>")
-  console.log(path);
+  console.log("-2path------>>>>" + path);
+
+  const originalUrl = request.nextUrl.protocol + request.headers.get('host') + request.nextUrl.pathname;
+
+  console.log("-3originalURL------>>>>" + originalUrl);
 
 
   await disableDraftMode();
@@ -39,8 +41,7 @@ export async function GET(request: NextRequest) {
     sameSite: "none",
   });
 
-  console.log("REQUEST.url");
-  console.log(request.url);
+  console.log("-4REQUEST.url ------>>>>" + request.url);
 
   return NextResponse.redirect(new URL(path, request.url));
 }
