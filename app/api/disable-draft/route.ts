@@ -1,5 +1,6 @@
 import { disableDraftMode } from "next-drupal/draft";
 import { NextRequest, NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
@@ -43,6 +44,8 @@ export async function GET(request: NextRequest) {
 
   console.log("-4REQUEST.url ------>>>>" + request.url);
 
-  return NextResponse.redirect(new URL(path, request.url));
+  // return NextResponse.redirect(new URL(path, request.url));
+  // return NextResponse.redirect(new URL(path, originalUrl));
+  return redirect(path);
 }
 
