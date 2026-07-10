@@ -11,10 +11,12 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
 import { CustomFooter } from "@/components/server/custom-footer";
-import { cacheTag } from "next/cache";
 import { DraftModeSiteButton } from "@/components/client/draft-mode/draft-mode-site-button";
-import { toTitleCase } from "@/lib/string-utils";
-import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
+
+/* TODO: Re-enable this once caching for linked revalidation is fixed. */
+//import { cacheTag } from "next/cache";
+//import { toTitleCase } from "@/lib/string-utils";
+//import { getBasicPageLinkedCacheTags } from "@/data/drupal/linked-revalidation";
 
 export type BasicPageProps = {
   id: string;
@@ -36,13 +38,12 @@ function PageHero({ content }: { content: ProcessedBasicPage }) {
           as={Image}
         >
           <HeroTitle>{content.title}</HeroTitle>
-          {content.heroWidgets?.video && (
-            <HeroVideo
-              src={content.heroWidgets.video.url}
-              title={content.heroWidgets.video.name}
-              transcript={content.heroWidgets.video.transcript?.url}
-            />
-          )}
+          {content.heroWidgets
+            ?.filter((widget) => widget.__typename === "ParagraphModalVideoWidget")
+            .slice(0, 1)
+            .map((widget) => (
+              <HeroVideo key={`hero-video-${widget.video.name}`} src={widget.video.url} title={widget.video.name} transcript={widget.video.transcript?.url} />
+            ))}
         </Hero>
 
         <Breadcrumbs
@@ -70,7 +71,8 @@ function PageHero({ content }: { content: ProcessedBasicPage }) {
 }
 
 export async function BasicPage({ id, pre, post }: BasicPageProps) {
-  "use cache";
+  /* TODO: Re-enable this once caching for linked revalidation is fixed. */
+  //"use cache";
 
   const page = await getPageContent(id);
 
@@ -87,8 +89,9 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     notFound();
   }
 
-  const cacheTags = getBasicPageLinkedCacheTags(page);
-  cacheTag(...cacheTags);
+  /* TODO: Re-enable this once caching for linked revalidation is fixed. */
+  //const cacheTags = getBasicPageLinkedCacheTags(page);
+  //cacheTag(...cacheTags);
 
   const customFooterID: string = page.primaryNavigation?.customFooter?.id ?? "";
   const { tags, units } = (page.tags ?? []).reduce(
@@ -112,10 +115,17 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
     <Layout>
       <Header primaryNavigation={page.primaryNavigation}></Header>
 
-      {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />}
+      {/* TODO: Re-enable this once caching for linked revalidation is fixed. */ }
+      {/* {page.primaryNavigation && <DraftModeSiteButton primaryNavigation={page.primaryNavigation} />} */}
 
       <LayoutContent container={false}>
         <PageHero content={page} />
+        {page?.heroWidgets
+          ?.filter((widget) => widget.__typename === "ParagraphGraduateProgramSummary")
+          .slice(0, 1)
+          .map((widget, index) => (
+            <WidgetSelector key={index} data={widget} primaryNavigation={page.primaryNavigation} />
+          ))}
 
         {pre && pre}
 

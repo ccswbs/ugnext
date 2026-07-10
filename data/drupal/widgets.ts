@@ -7,6 +7,7 @@ import {
   CallToActionFragment,
   FeaturedNewsFragment,
   GeneralTextFragment,
+  GraduateProgramSummaryFragment,
   ImageOverlayFragment,
   LinksFragment,
   MediaTextFragment,
@@ -28,6 +29,8 @@ import {
 } from "@/lib/graphql/types";
 import { getTestimonialByTag } from "@/data/drupal/testimonial";
 import { getFilteredNews } from "@/data/drupal/news";
+import { GraduateProgramVariant } from "@/lib/types/graduate-program-variant";
+import { parseGraduateProgramVariant } from "@/data/drupal/graduate-program";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
@@ -185,6 +188,17 @@ export const GENERAL_TEXT_FRAGMENT = gql(/* gql */ `
     }
     body {
       processed
+    }
+  }
+`);
+
+export const GRADUATE_PROGRAM_SUMMARY = gql(/* gql */ `
+  fragment GraduateProgramSummary on ParagraphGraduateProgramSummary {
+    __typename
+    uuid
+    id
+    graduateProgramVariation {
+      ...GraduateProgramVariant
     }
   }
 `);
@@ -549,6 +563,10 @@ export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags" | "
   byTags: TestimonialFragment[];
 };
 
+export type FullGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
+  program?: GraduateProgramVariant;
+};
+
 export type SectionWidget =
   | AccordionFragment
   | BlockFragment
@@ -574,6 +592,7 @@ export type Widget =
   | CallToActionFragment
   | FeaturedNewsFragment
   | GeneralTextFragment
+  | GraduateProgramSummaryFragment
   | ImageOverlayFragment
   | LinksFragment
   | MediaTextFragment
@@ -604,9 +623,10 @@ export type ProcessedSection = Omit<SectionFragment, "content"> & {
 };
 
 export type ProcessedWidget =
-  | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment>
+  | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment | GraduateProgramSummaryFragment>
   | FullTestimonialSlider
   | FullFeaturedNews
+  | FullGraduateProgramSummary
   | ProcessedSection;
 
 export class WidgetProcessor {
@@ -733,6 +753,8 @@ export class WidgetProcessor {
   }
 
   public async processWidget(widget: Widget): Promise<ProcessedWidget | null> {
+    const showUnpublished = await showUnpublishedContent();
+
     switch (widget.__typename) {
       case "ParagraphTestimonialSlider":
         return await this.getFullTestimonialSlider(widget);
@@ -753,8 +775,19 @@ export class WidgetProcessor {
       }
       case "ParagraphFeaturedNews":
         return await this.getFullFeaturedNews(widget);
+      case "ParagraphGraduateProgramSummary": {
+        const variant = widget.graduateProgramVariation;
+        if (variant?.__typename === "NodeGraduateProgramVariant" && variant?.status === false && !showUnpublished) {
+          return null;
+        }
+        return {
+          __typename: widget.__typename,
+          id: widget.id,
+          uuid: widget.uuid,
+          program: parseGraduateProgramVariant(widget.graduateProgramVariation) ?? undefined,
+        };
+      }
       case "ParagraphProfileCard": {
-        const showUnpublished = await showUnpublishedContent();
         const profile = widget.profileInfo;
         if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
           return null;

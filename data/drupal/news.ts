@@ -32,7 +32,7 @@ export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
         url
         width
         height
-        variations(styles: FOCAL_POINT600X400) {
+        variations(styles: [FOCAL_POINT600X400, FOCAL_POINT900X506]) {
           url
           width
           height
@@ -347,51 +347,6 @@ export async function getAllNewsCategories() {
 
   return data.termNewsCategories.nodes;
 }
-
-export async function getPageContent(id: string): Promise<ProcessedBasicPage | null> {
-  const showUnpublished = await showUnpublishedContent();
-
-  const { data, error } = await query({
-    query: gql(/* gql */ `
-      query BasicPageContent($id: ID!, $revision: ID = "current") {
-        nodePage(id: $id, revision: $revision) {
-          ...BasicPage
-        }
-      }
-    `),
-    variables: {
-      id: id,
-      revision: showUnpublished ? "latest" : "current",
-    },
-  });
-
-  if (error) {
-    console.error(`GraphQL Error: failed to retrieve content for basic page ${id}:\n\t${error}\n`);
-    return null;
-  }
-
-  if (!data?.nodePage) {
-    return null;
-  }
-
-  if (data.nodePage.status === false && !showUnpublished) {
-    return null;
-  }
-
-  if (!data.nodePage.widgets) {
-    return {
-      ...data.nodePage,
-      widgets: [] as ProcessedWidget[],
-    };
-  }
-
-  const processor = new WidgetProcessor();
-  return {
-    ...data.nodePage,
-    widgets: await processor.processWidgets(data.nodePage.widgets),
-  };
-}
-
 async function getAllNewsArticlePathsUncached() {
   const client = getClient();
 
