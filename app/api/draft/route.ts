@@ -1,8 +1,19 @@
+// import { drupal } from "@/lib/drupal";
+// import { enableDraftMode } from "next-drupal/draft";
+// import type { NextRequest } from "next/server";
+
+// export async function GET(request: NextRequest): Promise<Response | never> {
+//   // @ts-ignore
+//   return enableDraftMode(request, drupal);
+// }
+
+
 import { drupal } from "@/lib/drupal";
 import { enableDraftMode } from "next-drupal/draft";
 import { NextRequest, NextResponse } from "next/server";
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
+import { cookies } from 'next/headers';
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +32,6 @@ export async function GET(request: NextRequest): Promise<Response | never> {
         { status: 400 }
       );
     }
-
     if (URL.canParse(path)) {
       const url = new URL(path);
       path = url.pathname;
@@ -30,8 +40,27 @@ export async function GET(request: NextRequest): Promise<Response | never> {
     const draft = await draftMode();
     draft.enable();
 
+    (await cookies()).set({
+      name: "STYXKEY_draft",
+      value: "1",
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+
     redirect(path);
   }
+
+  (await cookies()).set({
+    name: "STYXKEY_draft",
+    value: "1",
+    path: "/",
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
 
   // @ts-ignore
   return enableDraftMode(request, drupal);
