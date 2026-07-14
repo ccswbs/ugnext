@@ -23,16 +23,33 @@ export const FontAwesomeInstruction: HTMLParserInstruction = {
     const hasInlinePreSibling =
       node.prev?.type === "text" || (node.prev?.type === ElementType.Tag && inlineTags.has(node.prev?.tagName));
 
+    // Detect CKEditor's &nbsp; spacing hack: whitespace-only children inside the icon
+    const hasWhitespaceOnlyChildren =
+      (node.children?.length ?? 0) > 0 &&
+      node.children.every((child) => child.type === "text" && (child as any).data?.trim() === "");
+
+    // Map legacy Bootstrap/custom color class names to Tailwind equivalents
+    const colorClassMap: Record<string, string> = {
+      green: "text-green-600",
+      red: "text-red-600",
+      blue: "text-blue-600",
+      yellow: "text-yellow-500",
+    };
+    const remappedClassName = className
+      .split(/\s+/)
+      .map((cls) => colorClassMap[cls] ?? cls)
+      .join(" ");
+
     const classes = twMerge(
-      props.className as string,
+      remappedClassName,
       className.includes("fs-1") && "sm:text-3xl p-0",
-      hasInlineNextSibling && "mr-[0.3em]",
+      (hasInlineNextSibling || hasWhitespaceOnlyChildren) && "mr-[0.3em]",
       hasInlinePreSibling && "ml-[0.3em]"
     );
 
     return (
       <i {...props} key={nanoid()} aria-hidden="true" className={classes}>
-        {children}
+        {hasWhitespaceOnlyChildren ? null : children}
       </i>
     );
   },
