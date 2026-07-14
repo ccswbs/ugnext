@@ -160,7 +160,7 @@ function GraduateProgramSummarySectionMap({ map, shouldCombine = true, showCombi
 
 function GraduateProgramDuration({ duration }: { duration: GraduateProgramDuration[] }) {
   const map = duration.reduce((acc, item) => {
-    const range = item.min ? `${item.min}-${item.max} months` : `${item.max} months`;
+    const range = item.max ? `${item.min}-${item.max} months` : `${item.min} months`;
     const value = `${toTitleCase(item.type)}: ${range}`;
 
     const existing = acc.get(item.programType?.name ?? "") ?? [];
