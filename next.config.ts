@@ -114,7 +114,7 @@ function getNextConfig(): NextConfig {
     config.cacheComponents = false;
     config.images ??= {};
     config.images.unoptimized = true;
-  } else if (process.env.USE_PANTHEON_CACHE_HANDLERS === "true") {
+  } else if (process.env.USE_PANTHEON_CACHE_HANDLERS !== "false") {
     // Normal build
     // Regular ISR and route cache handler
     config.cacheHandler = path.resolve(
