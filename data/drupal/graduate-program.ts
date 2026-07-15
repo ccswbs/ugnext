@@ -378,8 +378,8 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
       if (!item.durationType) {
         duration.push({
           type: durationType,
-          min: item.durationMinimum ?? undefined,
-          max: item.durationMaximum,
+          min: item.durationMinimum,
+          max: item.durationMaximum ?? undefined,
         });
       }
 
