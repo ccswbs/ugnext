@@ -28,12 +28,18 @@ export const FontAwesomeInstruction: HTMLParserInstruction = {
       (node.children?.length ?? 0) > 0 &&
       node.children.every((child) => child.type === "text" && (child as any).data?.trim() === "");
 
+    // Skip margin when inside a heading — the heading flex gap handles spacing instead
+    const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+    const isInHeading =
+      headingTags.has((node.parent as any)?.tagName ?? "") ||
+      headingTags.has((node.parent as any)?.parent?.tagName ?? "");
+
     // Map legacy Bootstrap/custom color class names to Tailwind equivalents
     const colorClassMap: Record<string, string> = {
-      green: "text-green-600",
-      red: "text-red-600",
-      blue: "text-blue-600",
-      yellow: "text-yellow-500",
+      green: "text-green",
+      red: "text-red",
+      blue: "text-blue",
+      yellow: "text-yellow",
     };
     const remappedClassName = className
       .split(/\s+/)
@@ -43,8 +49,8 @@ export const FontAwesomeInstruction: HTMLParserInstruction = {
     const classes = twMerge(
       remappedClassName,
       className.includes("fs-1") && "sm:text-3xl p-0",
-      (hasInlineNextSibling || hasWhitespaceOnlyChildren) && "mr-[0.3em]",
-      hasInlinePreSibling && "ml-[0.3em]"
+      (hasInlineNextSibling || hasWhitespaceOnlyChildren) && !isInHeading && "mr-[0.3em]",
+      hasInlinePreSibling && !isInHeading && "ml-[0.3em]"
     );
 
     return (
