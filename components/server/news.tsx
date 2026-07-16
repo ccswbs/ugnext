@@ -11,7 +11,7 @@ import Image from "next/image";
 import { Section } from "@/components/client/section";
 import { Info } from "@uoguelph/react-components/info";
 import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import { Link as UofGLink } from "@uoguelph/react-components/link";
 import { NewsTimeEstimate } from "@/components/client/news/news-time-estimate";
 import { ProcessedWidget } from "@/data/drupal/widgets";

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import { tv } from "tailwind-variants";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import type {
   UndergraduateAdmissionLocation,
   UndergraduateAdmissionRequirementSidebar,

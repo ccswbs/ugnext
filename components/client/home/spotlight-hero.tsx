@@ -4,7 +4,7 @@ import { Hero, HeroCaption, HeroLink, type HeroProps, HeroTitle } from "@uoguelp
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 import type { SpotlightHero as SpotlightHeroData } from "@/data/drupal/spotlight";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 
 export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
   const classes = tv({

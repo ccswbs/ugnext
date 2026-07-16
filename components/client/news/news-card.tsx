@@ -1,7 +1,7 @@
 "use client";
 
 import { NewsWithoutContentFragment } from "@/lib/graphql/types";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import Image from "next/image";
 import defaultImage from "@/img/university-of-guelph-logo-16x9.jpeg";
 import { twMerge } from "tailwind-merge";
