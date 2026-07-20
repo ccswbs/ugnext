@@ -4,6 +4,7 @@ import { ButtonSectionWidget } from "@/components/client/widgets/button-section"
 import { MediaCaption, MediaCaptionProps } from "@uoguelph/react-components/media-caption";
 import { useContext } from "react";
 import { SectionContext, SectionContextValue } from "@/components/client/section";
+import { MediaGridContext } from "@/components/client/widgets/media-grid-context";
 import { tv } from "tailwind-variants";
 import { twMerge } from "tailwind-merge";
 import Image from "next/image";
@@ -73,6 +74,7 @@ const getPosition = (data: MediaTextFragment, column?: SectionContextValue["colu
 
 export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
   const context = useContext(SectionContext);
+  const inGrid = useContext(MediaGridContext);
   const background = getBackground(data);
   const size = getSize(data);
   const media = getMedia(data);
@@ -140,6 +142,8 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
     size,
     position,
     className: twMerge(classes.base(), data.description ? null : classes.no_body()),
+    //mediaAspectRatio: inGrid && position === "above" ? "16/9" : undefined,
+    matchCaptionHeight: inGrid && position === "above" ? true : undefined,
     transcript: media?.transcript?.url,
   } as const;
 
