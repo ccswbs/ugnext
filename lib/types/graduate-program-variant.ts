@@ -39,8 +39,8 @@ export type GraduateProgramApplicationDeadline = {
 
 export type GraduateProgramDuration = {
   type: string;
-  min?: number;
-  max: number;
+  min: number;
+  max?: number;
   programType?: GraduateProgramType;
 };
 
