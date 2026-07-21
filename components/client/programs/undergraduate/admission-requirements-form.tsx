@@ -8,7 +8,7 @@ import type {
   UndergraduateAdmissionLocationType,
   UndergraduateAdmissionStudentType,
 } from "@/data/drupal/undergraduate-admission-requirements";
-import { SubmitEventHandler, useEffect, useMemo, useState, useTransition } from "react";
+import { Fragment, SubmitEventHandler, useEffect, useMemo, useState, useTransition } from "react";
 import { Select, SelectButton, SelectOption, SelectOptions } from "@uoguelph/react-components/select";
 import {
   Autocomplete,
@@ -278,11 +278,20 @@ export default function AdmissionRequirementsForm({
             />
 
             <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
-              {filteredPrograms.map((program) => (
-                <AutocompleteOption key={program.id} value={program}>
-                  {program.title}
-                </AutocompleteOption>
-              ))}
+              {filteredPrograms
+                .sort((a, b) => (a.degree?.title ?? "").localeCompare(b.degree?.title ?? ""))
+                .map((program, index) => (
+                  <Fragment key={program.id}>
+                    {program.degree?.title && filteredPrograms[index - 1]?.degree?.title !== program.degree?.title && (
+                      <div className="p-2 w-full text-body-copy-on-light border-b border-grey-dark">
+                        {program?.degree?.title}
+                      </div>
+                    )}
+                    <AutocompleteOption value={program} className="pl-6">
+                      {program.title}
+                    </AutocompleteOption>
+                  </Fragment>
+                ))}
             </AutocompleteOptions>
           </Autocomplete>
         </Field>
