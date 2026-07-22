@@ -53,27 +53,37 @@ export function renderMediaGrid(widgetGroup: MediaTextFragment | MediaTextFragme
 
 type GroupableWidget = { __typename?: string | null; id?: string; mediaImageSize?: string | null };
 
-// Groups consecutive ParagraphMediaText widgets of the same mediaImageSize into arrays.
-// All other widget types are left ungrouped.
-export function groupMediaWidgets<T extends GroupableWidget>(widgets: T[]): Array<T | MediaTextFragment[]> {
+// Register widget types that should be grouped into a grid layout when consecutive.
+// Each type listed here will be grouped by consecutive same-typename runs.
+// Add new groupable types here as needed; rendering logic lives in GroupedWidgets.
+const GRID_GROUPED_TYPES = new Set(["ParagraphMediaText"]);
+
+// Groups consecutive widgets of the same grid-groupable type into arrays.
+// ParagraphMediaText widgets are additionally sub-grouped by mediaImageSize.
+// All other widget types are left ungrouped (passed through as-is).
+export function groupWidgetsForGrid<T extends GroupableWidget>(widgets: T[]): Array<T | T[]> {
   return widgets.reduce(
     (acc, widget) => {
-      if (widget?.__typename !== "ParagraphMediaText") {
+      if (!widget?.__typename || !GRID_GROUPED_TYPES.has(widget.__typename)) {
         acc.push(widget);
         return acc;
       }
 
       const previous = acc[acc.length - 1];
 
-      if (Array.isArray(previous) && widget?.mediaImageSize === (previous[0] as GroupableWidget)?.mediaImageSize) {
-        previous.push(widget as unknown as MediaTextFragment);
+      if (
+        Array.isArray(previous) &&
+        previous[0]?.__typename === widget.__typename &&
+        widget?.mediaImageSize === (previous[0] as GroupableWidget)?.mediaImageSize
+      ) {
+        previous.push(widget);
         return acc;
       }
 
-      acc.push([widget as unknown as MediaTextFragment]);
+      acc.push([widget]);
       return acc;
     },
-    [] as Array<T | MediaTextFragment[]>
+    [] as Array<T | T[]>
   );
 }
 
@@ -88,7 +98,7 @@ interface GroupedWidgetsProps {
 // Grid grouping only applies when rendered inside a Section.
 export function GroupedWidgets({ widgets, sectionClasses, neverWrap = false }: GroupedWidgetsProps) {
   const context = useContext(SectionContext);
-  const grouped = context ? groupMediaWidgets(widgets) : widgets;
+  const grouped = context ? groupWidgetsForGrid(widgets) : widgets;
 
   return (
     <>
@@ -101,7 +111,7 @@ export function GroupedWidgets({ widgets, sectionClasses, neverWrap = false }: G
           if (widget[0].__typename === "ParagraphMediaText") {
             return (
               <MediaGridContext.Provider key={index} value={true}>
-                <Grid className="gap-4 items-stretch" template={renderMediaGrid(widget, sectionClasses)}>
+                <Grid className="py-2 gap-4 items-stretch" template={renderMediaGrid(widget as MediaTextFragment[], sectionClasses)}>
                   {widget.map((w, i) => (
                     <WidgetSelector data={w as any} key={i} neverWrap={neverWrap} />
                   ))}

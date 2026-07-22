@@ -2,7 +2,7 @@ import React from "react";
 import { Section } from "@/components/client/section";
 import { Typography } from "@uoguelph/react-components/typography";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
-import { GroupedWidgets } from "@/components/client/widgets/media-widget-group";
+import { GroupedWidgets } from "@/components/client/widgets/grouped-widgets";
 import type { ProcessedSection, ProcessedSectionWidget, ProcessedWidget, Widget } from "@/data/drupal/widgets";
 import { slugify } from "@/lib/string-utils";
 

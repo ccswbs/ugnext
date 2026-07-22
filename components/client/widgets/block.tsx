@@ -2,7 +2,7 @@
 
 import { HtmlParser } from "@/components/client/html-parser";
 import { BasicBlockFragment, BlockFragment, WidgetBlockFragment } from "@/lib/graphql/types";
-import { GroupedWidgets } from "@/components/client/widgets/media-widget-group";
+import { GroupedWidgets } from "@/components/client/widgets/grouped-widgets";
 
 const BasicBlock = ({ data }: { data: BasicBlockFragment }) => {
   return <HtmlParser key={data.id} html={data.body?.processed ?? ""} />;
