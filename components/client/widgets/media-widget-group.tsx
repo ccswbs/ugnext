@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Grid } from "@uoguelph/react-components/grid";
 import { SectionContext } from "@/components/client/section";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
