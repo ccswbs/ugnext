@@ -61,7 +61,7 @@ const getPosition = (data: MediaTextFragment, column?: SectionContextValue["colu
       switch (data.mediaImageSize) {
         case "small":
         case "medium":
-          return "left";
+          return (data.mediaAlignment as MediaCaptionProps["position"]) ?? "left";
         default:
           return "above";
       }
