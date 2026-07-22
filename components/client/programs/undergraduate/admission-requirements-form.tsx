@@ -280,18 +280,23 @@ export default function AdmissionRequirementsForm({
             <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
               {filteredPrograms
                 .sort((a, b) => (a.degree?.title ?? "").localeCompare(b.degree?.title ?? ""))
-                .map((program, index) => (
-                  <Fragment key={program.id}>
-                    {program.degree?.title && filteredPrograms[index - 1]?.degree?.title !== program.degree?.title && (
-                      <div className="p-2 w-full text-body-copy-on-light border-b border-grey-dark">
-                        {program?.degree?.title}
-                      </div>
-                    )}
-                    <AutocompleteOption value={program} className="pl-6">
-                      {program.title}
-                    </AutocompleteOption>
-                  </Fragment>
-                ))}
+                .map((program, index) => {
+                  const showDegree =
+                    program.degree?.title && filteredPrograms[index - 1]?.degree?.title !== program.degree?.title;
+
+                  return (
+                    <Fragment key={program.id}>
+                      {showDegree && (
+                        <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
+                          {program?.degree?.title}
+                        </div>
+                      )}
+                      <AutocompleteOption value={program} className="pl-6 border-grey-light border-b">
+                        {program.title}
+                      </AutocompleteOption>
+                    </Fragment>
+                  );
+                })}
             </AutocompleteOptions>
           </Autocomplete>
         </Field>
