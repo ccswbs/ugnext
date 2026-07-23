@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation";
 import { Navigation, NavigationLink } from "@uoguelph/react-components/navigation";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 
 export function ProgramSearchNavigation() {
   const pathname = usePathname();
