@@ -8,6 +8,7 @@ import { ButtonSectionWidget } from "@/components/client/widgets/button-section"
 import { GeneralTextWidget } from "@/components/client/widgets/general-text";
 import { LinksWidget } from "@/components/client/widgets/links";
 import { MediaTextWidget } from "@/components/client/widgets/media-text";
+import { MediaGridContext } from "@/components/client/widgets/media-grid-context";
 import { SectionWidget } from "@/components/client/widgets/section-widget";
 import { StatisticsWidget } from "@/components/client/widgets/statistics";
 import { ImageOverlayWidget } from "@/components/client/widgets/image-overlay";
@@ -41,6 +42,7 @@ export function WidgetSelector({
 
   // If this widget is within a section, we don't want to render a container around it
   const context = useContext(SectionContext);
+  const inGrid = useContext(MediaGridContext);
 
   // Some widgets don't need extra vertical padding
   const noSpaceWidgets = [
@@ -122,7 +124,7 @@ export function WidgetSelector({
 
   // Add spacing wrapper for certain widgets within sections
   const SpacingWrapper = ({ children }: { children: React.ReactNode }) => {
-    if (noSpaceWidgets.includes(data.__typename || "") || !context) {
+    if (noSpaceWidgets.includes(data.__typename || "") || !context || (inGrid && data.__typename === "ParagraphMediaText")) {
       return <>{children}</>;
     }
     return <div className="py-4">{children}</div>;
