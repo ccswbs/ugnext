@@ -14,6 +14,7 @@ import NextLink from "next/link";
 import { Link } from "@uoguelph/react-components/link";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
+import { tv } from "tailwind-variants";
 
 export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
   const context = useContext(SectionContext);
@@ -24,6 +25,27 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
     .replace("colour", "color")
     .replace("gradient-of-solid-colors", context === null ? "solid-colors-full" : "solid-colors-no-gap")
     .replace("light-blue", "light-grey") as StatisticsProps["variant"];
+
+  const classes = tv({
+    slots: {
+      link: "text-inherit! outline-inherit!",
+    },
+    variants: {
+      variant: {
+        "light-grey": {
+          link: "text-body-copy-link-on-light!",
+        },
+        "solid-colors-full": "",
+        "solid-colors-no-gap": "",
+        "left-border": {
+          link: "text-body-copy-link-on-light!",
+        },
+        "solid-colors": "",
+      },
+    },
+  });
+
+  const { link: linkClasses } = classes({ variant: variant });
 
   return (
     <StatisticsComponent id={`statistics-${data.uuid}`} variant={variant}>
@@ -43,7 +65,7 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
                     processNode: (node, props, children) => {
                       return (
                         <Link
-                          className="text-inherit! outline-inherit!"
+                          className={linkClasses({ variant: variant })}
                           {...props}
                           key={nanoid()}
                           href={props.href as string}
