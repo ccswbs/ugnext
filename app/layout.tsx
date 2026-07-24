@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const gtmId =
-    process.env.NODE_ENV === "development" || process.env.PANTHEON_ENVIRONMENT !== "live" ? process.env.NEXT_PUBLIC_GTM_ID_DEV : process.env.NEXT_PUBLIC_GTM_ID;
+    process.env.NODE_ENV === "development" && process.env.PANTHEON_ENVIRONMENT !== "live" ? process.env.NEXT_PUBLIC_GTM_ID_DEV : process.env.NEXT_PUBLIC_GTM_ID;
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
