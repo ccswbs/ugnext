@@ -195,7 +195,7 @@ export default function AdmissionRequirementsForm({
         {locationType && locationType !== "domestic" && (
           <>
             <Typography type={"h3"} as={"h2"}>
-              My Curriculum or Country of study is/was
+              Select a curriculum or country:
             </Typography>
 
             <Field>
