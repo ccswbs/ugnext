@@ -217,10 +217,6 @@ export default function AdmissionRequirementsForm({
               </RadioGroup>
             </Field>
 
-            <Typography type={"h3"} as={"span"}>
-              or
-            </Typography>
-
             <Field>
               <Label>
                 <Typography type={"h3"} as={"h3"}>
