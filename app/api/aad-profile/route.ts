@@ -760,14 +760,14 @@ export async function OPTIONS(req: NextRequest) {
   const origin = req.headers.get('origin');
   
   // Default to localhost for development, require explicit configuration for production
-  const defaultOrigins = process.env.NODE_ENV === 'development' 
+  const defaultOrigins = process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live" 
     ? ['http://localhost:3000', 'http://localhost:3001']
     : [];
   
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || defaultOrigins;
   
   // Never allow wildcard in production
-  if (process.env.NODE_ENV === 'production' && allowedOrigins.includes('*')) {
+  if ((process.env.NODE_ENV === 'production' || process.env.APP_ENV === "live") && allowedOrigins.includes('*')) {
     console.error('CORS wildcard (*) not allowed in production. Set ALLOWED_ORIGINS environment variable.');
     return new NextResponse(JSON.stringify({ error: 'CORS misconfiguration' }), {
       status: 500,
