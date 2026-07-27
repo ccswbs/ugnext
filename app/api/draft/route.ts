@@ -12,7 +12,7 @@ export async function GET(request: NextRequest): Promise<Response | never> {
 
   // Manually enter draft mode if provided DRUPAL_PREVIEW_SECRET directly in the URL and in development mode.
   // This is useful for testing draft mode locally.
-  if (secret === process.env.DRUPAL_PREVIEW_SECRET && process.env.NODE_ENV !== "production" && process.env.APP_ENV !== "live") {
+  if (secret === process.env.DRUPAL_PREVIEW_SECRET && (process.env.NODE_ENV !== "production" || process.env.APP_ENV !== "live")) {
     if (!path) {
       return NextResponse.json(
         {

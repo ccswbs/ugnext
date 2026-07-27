@@ -28,7 +28,7 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt',
   },
-  debug: process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live",
+  debug: process.env.NODE_ENV === "development" || process.env.APP_ENV !== "live",
 }
 
 const handler = NextAuth(authOptions)

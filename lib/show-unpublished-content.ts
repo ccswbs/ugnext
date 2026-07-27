@@ -13,7 +13,7 @@ export async function showUnpublishedContent() {
     return null;
   }
 
-  if (process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live") {
+  if (process.env.NODE_ENV === "development" || process.env.APP_ENV !== "live") {
     return true;
   }
 

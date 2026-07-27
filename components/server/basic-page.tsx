@@ -78,7 +78,7 @@ export async function BasicPage({ id, pre, post }: BasicPageProps) {
 
   // Couldn't fetch content for this id.
   if (!page) {
-    if (process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live") {
+    if (process.env.NODE_ENV === "development" || process.env.APP_ENV !== "live") {
       console.warn(`Couldn't find content for basic page with id ${id}`);
 
       if (process.env.ALWAYS_SHOW_PUBLISHED_CONTENT) {
