@@ -194,7 +194,7 @@ export default function AdmissionRequirementsForm({
 
         {locationType && locationType !== "domestic" && (
           <>
-            <Typography type={"h3"} as={"h2"}>
+            <Typography type={"h3"} as={"h2"} className="mb-0">
               Select a curriculum or country:
             </Typography>
 
