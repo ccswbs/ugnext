@@ -12,11 +12,13 @@ type Props = {
 
 export async function generateStaticParams() {
   if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
-    return [
-      {
-        slug: ["ovc"],
-      },
-    ];
+    return [];
+    // Linked revalidation requires a return value
+    // return [
+    //   {
+    //     slug: ["ovc"],
+    //   },
+    // ];
   }
 
   const paths = await getAllBasicPagePaths();

@@ -136,7 +136,10 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
         onClick={analyticsHandler}
       >
         {icon && icon.data && <i className={classes.icon()} aria-hidden="true"></i>}
-        <HtmlParser html={title} />
+        <HtmlParser
+          html={title}
+          {...(icon ? { useContentsClass: false } : {})}
+        />
       </Button>
     </div>
   );

@@ -66,6 +66,7 @@ export function NewsCard({
   const { card, imageContainer, image, content, title, category } = newsCard({ variant });
 
   const img = data.hero?.image.variations?.[0];
+  const imgLarge = data.hero?.image.variations?.[1];
 
   if (variant === "no-image") {
     return (
@@ -83,10 +84,11 @@ export function NewsCard({
     <Link key={data.id} href={url} className={twMerge(card(), className)}>
       <div className={imageContainer()}>
         <Image
-          src={img?.url ?? defaultImage.src}
+          src={(variant === "spotlight" ? imgLarge?.url : img?.url) ?? defaultImage.src}
           alt=""
-          width={`${img?.width ?? 800}`}
-          height={`${img?.height ?? 450}`}
+          width={`${(variant === "spotlight" ? imgLarge?.width : img?.width) ?? 800}`}
+          height={`${(variant === "spotlight" ? imgLarge?.height : img?.height) ?? 450}`}
+          loading={variant === "spotlight" ? "eager" : undefined}
           className={image()}
         />
       </div>

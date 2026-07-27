@@ -25,10 +25,6 @@ export function DraftModeSiteButton({
       toast.error("Failed to rebuild pages.");
     }
 
-    const json = await res.json();
-
-    console.log(json);
-
     setRevalidating(false);
   };
 
