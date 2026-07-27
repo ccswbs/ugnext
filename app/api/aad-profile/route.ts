@@ -767,7 +767,7 @@ export async function OPTIONS(req: NextRequest) {
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || defaultOrigins;
   
   // Never allow wildcard in production
-  if ((process.env.NODE_ENV === 'production' || process.env.APP_ENV === "live") && allowedOrigins.includes('*')) {
+  if ((process.env.NODE_ENV === "production" || process.env.APP_ENV === "live") && allowedOrigins.includes('*')) {
     console.error('CORS wildcard (*) not allowed in production. Set ALLOWED_ORIGINS environment variable.');
     return new NextResponse(JSON.stringify({ error: 'CORS misconfiguration' }), {
       status: 500,
