@@ -41,7 +41,7 @@ export async function Profile({ id, pre, post }: ProfileProps) {
 
   // Couldn't fetch content for this id.
   if (!content) {
-    if (process.env.NODE_ENV === "development" || process.env.APP_ENV !== "live") {
+    if (process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live") {
       console.warn(`Couldn't find content for profile with id ${id}`);
 
       if (process.env.ALWAYS_SHOW_PUBLISHED_CONTENT) {

@@ -760,7 +760,7 @@ export async function OPTIONS(req: NextRequest) {
   const origin = req.headers.get('origin');
   
   // Default to localhost for development, require explicit configuration for production
-  const defaultOrigins = process.env.NODE_ENV === "development" || process.env.APP_ENV !== "live" 
+  const defaultOrigins = process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live" 
     ? ['http://localhost:3000', 'http://localhost:3001']
     : [];
   

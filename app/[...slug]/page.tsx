@@ -93,7 +93,7 @@ export default async function Page({ params }: Props) {
       permanentRedirect("/programs/undergraduate/requirements/");
       break;
     default:
-      if (process.env.NODE_ENV === "development" || process.env.APP_ENV !== "live") {
+      if (process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live") {
         console.warn(
           `Attempted to render a page with an entity type ${route.entity.__typename} but no component is set to render that type in app/[...slug]/page.tsx.`
         );
