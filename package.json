@@ -13,7 +13,7 @@
     "analyze": "ANALYZE=true next dev",
     "export": "next build && next export",
     "format": "prettier -w ./",
-    "test": "next build && bunx playwright test",
+    "test": "bun run build && bunx playwright test",
     "test:update-snapshots": "next build && bunx playwright test --update-snapshots",
     "docker:test:update-snapshots": "docker compose run --rm playwright-update-snapshots",
     "docker:clean": "docker compose down -v",
