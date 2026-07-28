@@ -9,8 +9,8 @@ services:
     ipc: host
     volumes:
       - .:/workspace
-      - /workspace/node_modules
-      - /workspace/.next
+      - node_modules:/workspace/node_modules
+      - next_cache:/workspace/.next
       - ./test-results:/workspace/test-results
       - ./playwright-report:/workspace/playwright-report
     env_file:
@@ -19,4 +19,4 @@ services:
       HOME: /tmp
       CI: "true"
       USE_TESTING_DATA: "true"
-    command: sh -c "bun run build && bunx playwright test --update-snapshots"
+    command: ["bun", "run", "test:update-snapshots"]
