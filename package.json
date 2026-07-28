@@ -15,10 +15,7 @@
     "format": "prettier -w ./",
     "test": "next build && bunx playwright test",
     "test:update-snapshots": "next build && bunx playwright test --update-snapshots",
-    "docker:dev": "docker compose up nextjs",
-    "docker:prod": "docker compose --profile prod up nextjs-prod",
-    "docker:test": "docker compose --profile test run --rm playwright",
-    "docker:test:update-snapshots": "docker compose --profile test run --rm playwright-update-snapshots",
+    "docker:test:update-snapshots": "docker compose run --rm playwright-update-snapshots",
     "docker:clean": "docker compose down -v",
     "codegen:compile": "graphql-codegen",
     "codegen:watch": "graphql-codegen -w"

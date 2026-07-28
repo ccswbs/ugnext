@@ -1,73 +1,4 @@
 services:
-  nextjs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        FONTAWESOME_PACKAGE_TOKEN: ${FONTAWESOME_PACKAGE_TOKEN}
-    working_dir: /workspace
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/workspace
-      - /workspace/node_modules
-      - /workspace/.next
-    env_file:
-      - .env
-    environment:
-      HOME: /tmp
-      HOSTNAME: 0.0.0.0
-      PORT: 3000
-    command: bun run dev
-
-  nextjs-prod:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        FONTAWESOME_PACKAGE_TOKEN: ${FONTAWESOME_PACKAGE_TOKEN}
-    working_dir: /workspace
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/workspace
-      - /workspace/node_modules
-      - /workspace/.next
-    env_file:
-      - .env
-    environment:
-      HOME: /tmp
-      HOSTNAME: 0.0.0.0
-      PORT: 3000
-      USE_TESTING_DATA: "true"
-    command: sh -c "bun run build && bun run start"
-    profiles:
-      - prod
-
-  playwright:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        FONTAWESOME_PACKAGE_TOKEN: ${FONTAWESOME_PACKAGE_TOKEN}
-    working_dir: /workspace
-    ipc: host
-    volumes:
-      - .:/workspace
-      - /workspace/node_modules
-      - /workspace/.next
-      - ./test-results:/workspace/test-results
-      - ./playwright-report:/workspace/playwright-report
-    env_file:
-      - .env
-    environment:
-      HOME: /tmp
-      CI: "true"
-      USE_TESTING_DATA: "true"
-    command: sh -c "bun run build && bunx playwright test"
-    profiles:
-      - test
-
   playwright-update-snapshots:
     build:
       context: .
@@ -89,5 +20,3 @@ services:
       CI: "true"
       USE_TESTING_DATA: "true"
     command: sh -c "bun run build && bunx playwright test --update-snapshots"
-    profiles:
-      - test
