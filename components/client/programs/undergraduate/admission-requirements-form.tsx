@@ -64,7 +64,11 @@ export default function AdmissionRequirementsForm({
   });
 
   const filteredPrograms = useMemo(() => {
-    if (programQuery === "") return programs;
+    if (programQuery === "") {
+      return programs.sort((a, b) => {
+        return (a.degree?.title ?? "").localeCompare(b.degree?.title ?? "");
+      });
+    }
 
     const results = programSearch({
       term: programQuery,
@@ -274,25 +278,23 @@ export default function AdmissionRequirementsForm({
             />
 
             <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
-              {filteredPrograms
-                .sort((a, b) => (a.degree?.title ?? "").localeCompare(b.degree?.title ?? ""))
-                .map((program, index) => {
-                  const showDegree =
-                    program.degree?.title && filteredPrograms[index - 1]?.degree?.title !== program.degree?.title;
+              {filteredPrograms.map((program, index) => {
+                const showDegree =
+                  program.degree?.title && filteredPrograms[index - 1]?.degree?.title !== program.degree?.title;
 
-                  return (
-                    <Fragment key={program.id}>
-                      {showDegree && (
-                        <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
-                          {program?.degree?.title}
-                        </div>
-                      )}
-                      <AutocompleteOption value={program} className="pl-6 border-grey-light border-b">
-                        {program.title}
-                      </AutocompleteOption>
-                    </Fragment>
-                  );
-                })}
+                return (
+                  <Fragment key={program.id}>
+                    {showDegree && (
+                      <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
+                        {program?.degree?.title}
+                      </div>
+                    )}
+                    <AutocompleteOption value={program} className="pl-6 border-grey-light border-b">
+                      {program.title}
+                    </AutocompleteOption>
+                  </Fragment>
+                );
+              })}
             </AutocompleteOptions>
           </Autocomplete>
         </Field>
