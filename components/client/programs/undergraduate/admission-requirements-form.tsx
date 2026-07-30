@@ -33,7 +33,20 @@ type AdmissionRequirementsFormProps = {
   locations: UndergraduateAdmissionLocation[];
   programs: UndergraduateProgram[];
 };
+//declare ovc program and url
+const OVC_DVM_APPLICATION_URL = "https://www.uoguelph.ca/ovc/dvm-program-application/";
 
+const VETERINARY_MEDICINE_PROGRAM = {
+  id: "veterinary-medicine-dvm",
+  title: "Veterinary Medicine",                        
+  path: "veterinary-medicine-dvm",
+  tags: ["veterinary", "vet", "dvm", "animal", "ovc"],
+  degree: { title: "Doctor of Veterinary Medicine" },
+} as UndergraduateProgram;
+
+function isVeterinaryMedicine(program: UndergraduateProgram | null): boolean {
+  return program?.id === VETERINARY_MEDICINE_PROGRAM.id;
+}
 export default function AdmissionRequirementsForm({
   studentTypes,
   locations,
@@ -64,25 +77,34 @@ export default function AdmissionRequirementsForm({
   });
 
   const filteredPrograms = useMemo(() => {
-    if (programQuery === "") {
-      return programs.sort((a, b) => {
-        return (a.degree?.title ?? "").localeCompare(b.degree?.title ?? "");
-      });
-    }
+    const results =
+      programQuery === ""
+        ? programs.sort((a, b) => {
+            return (a.degree?.title ?? "").localeCompare(b.degree?.title ?? "");
+          })
+        : programSearch({
+            term: programQuery,
+            properties: ["title", "tags"],
+            boost: {
+              title: 4,
+            },
+            tolerance: 2,
+          }).hits.map((hit) => hit.document as UndergraduateProgram);
 
-    const results = programSearch({
-      term: programQuery,
-      properties: ["title", "tags"],
-      boost: {
-        title: 4,
-      },
-      tolerance: 2,
-    });
+    // manually pin Veterinary Medicine
+    const query = programQuery.trim();
+    const matchesVetMed =
+      query === "" ||
+      VETERINARY_MEDICINE_PROGRAM.title.toLowerCase().includes(query) ||
+      VETERINARY_MEDICINE_PROGRAM.tags?.some((tag) => tag.toLowerCase().includes(query));
 
-    return results.hits.map((hit) => hit.document as UndergraduateProgram);
+    return matchesVetMed ? [VETERINARY_MEDICINE_PROGRAM, ...results] : results;
   }, [programQuery, programSearch, programs]);
 
   const url = useMemo(() => {
+    // redirect to OVC, bypassing studentType/location
+    if (isVeterinaryMedicine(program)) return OVC_DVM_APPLICATION_URL;
+
     if (!studentType || !location || !program) return null;
 
     const studentTypePath = studentType.path?.replace(UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH, "");
@@ -92,10 +114,18 @@ export default function AdmissionRequirementsForm({
     return `/programs/undergraduate/requirements/${studentTypePath}/${locationPath}/${programPath}`;
   }, [studentType, location, program]);
 
+  const isVetMedSelected = isVeterinaryMedicine(program);
+
   const onSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     if (!url) return;
+
+    // external redirect for Veterinary Medicine
+    if (isVetMedSelected) {
+      window.location.href = url;
+      return;
+    }
 
     startTransition(() => {
       router.push(url);
