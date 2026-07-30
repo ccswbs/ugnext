@@ -17,13 +17,10 @@ export const ImageInstruction: HTMLParserInstruction = {
     let src = props.src as string;
 
     if (src.startsWith("/sites/default/files")) {
-      src = `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${props.src}`;
-    } else if (src.startsWith("/_next/image?url=")) {
-      // Next.js optimizer format: /_next/image?url=<encoded>&w=...&q=...
-      const encodedUrl = src.match(/[?&]url=([^&]+)/)?.[1];
-      if (encodedUrl) {
-        src = decodeURIComponent(encodedUrl);
-      }
+      src = new URL(
+        src,
+        process.env.NEXT_PUBLIC_DRUPAL_BASE_URL
+      ).toString();
     }
 
     const ImageComponent = props.width && props.height ? Image : "img";
