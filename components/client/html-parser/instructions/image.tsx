@@ -18,8 +18,12 @@ export const ImageInstruction: HTMLParserInstruction = {
 
     if (src.startsWith("/sites/default/files")) {
       src = `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${props.src}`;
-    } else if (src.startsWith("/.netlify/images?url=")) {
-      src = src.replace("/.netlify/images?url=", "");
+    } else if (src.startsWith("/_next/image?url=")) {
+      // Next.js optimizer format: /_next/image?url=<encoded>&w=...&q=...
+      const encodedUrl = src.match(/[?&]url=([^&]+)/)?.[1];
+      if (encodedUrl) {
+        src = decodeURIComponent(encodedUrl);
+      }
     }
 
     const ImageComponent = props.width && props.height ? Image : "img";
