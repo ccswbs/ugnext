@@ -17,9 +17,10 @@ export const ImageInstruction: HTMLParserInstruction = {
     let src = props.src as string;
 
     if (src.startsWith("/sites/default/files")) {
-      src = `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${props.src}`;
-    } else if (src.startsWith("/.netlify/images?url=")) {
-      src = src.replace("/.netlify/images?url=", "");
+      src = new URL(
+        src,
+        process.env.NEXT_PUBLIC_DRUPAL_BASE_URL
+      ).toString();
     }
 
     const ImageComponent = props.width && props.height ? Image : "img";
