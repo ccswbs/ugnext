@@ -16,11 +16,12 @@ export const ImageInstruction: HTMLParserInstruction = {
 
     let src = props.src as string;
 
+    if (src.startsWith("/.netlify/images?url=")) {
+      src = new URLSearchParams(src.slice(src.indexOf("?"))).get("url") ?? src;
+    }
+
     if (src.startsWith("/sites/default/files")) {
-      src = new URL(
-        src,
-        process.env.NEXT_PUBLIC_DRUPAL_BASE_URL
-      ).toString();
+      src = new URL(src, process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).toString();
     }
 
     const ImageComponent = props.width && props.height ? Image : "img";
