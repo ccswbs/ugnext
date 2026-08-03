@@ -1,6 +1,6 @@
 import type { PartialProfileData } from "@/data/drupal/profile";
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import Image from "next/image";
 import defaultImage from "@/img/university-of-guelph-logo.png";
 
