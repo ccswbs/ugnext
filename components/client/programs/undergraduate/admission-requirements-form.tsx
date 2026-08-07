@@ -97,8 +97,7 @@ export default function AdmissionRequirementsForm({
       query === "" ||
       VETERINARY_MEDICINE_PROGRAM.title.toLowerCase().includes(query) ||
       VETERINARY_MEDICINE_PROGRAM.tags?.some((tag) => tag.toLowerCase().includes(query));
-
-    return matchesVetMed ? [VETERINARY_MEDICINE_PROGRAM, ...results] : results;
+    return matchesVetMed ? [...results, VETERINARY_MEDICINE_PROGRAM] : results;     
   }, [programQuery, programSearch, programs]);
 
   const url = useMemo(() => {
