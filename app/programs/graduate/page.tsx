@@ -12,6 +12,8 @@ import { ProgramSearch } from "@/components/client/programs/program-search";
 // PHASE 2 - DRUPAL-BASED (also update imports in components/client/programs/program-search)
 // To switch to Drupal, uncomment all the commented-out types and remove YAML-BASED imports
 
+// Comment added to trigger a new PR build
+
 import { 
   getGraduateProgramDegreeTypes as getGraduateDegreeTypesDrupal, 
   getGraduateProgramSearchableTypes,
