@@ -64,6 +64,10 @@ export default function AdmissionRequirementsForm({
   });
 
   const filteredPrograms = useMemo(() => {
+    if (!programQuery) {
+      return programs;
+    }
+
     const results = programSearch({
       term: programQuery,
       properties: ["title", "tags"],
@@ -75,6 +79,34 @@ export default function AdmissionRequirementsForm({
 
     return results.hits.map((hit) => hit.document as UndergraduateProgram);
   }, [programQuery, programSearch, programs]);
+
+  const groupedPrograms = useMemo(() => {
+    const grouped = new Map<string, UndergraduateProgram[]>();
+
+    for (const program of filteredPrograms) {
+      for (const degree of program.degree ?? []) {
+        if (grouped.has(degree.title)) {
+          grouped.get(degree.title)?.push(program);
+        } else {
+          grouped.set(degree.title, [program]);
+        }
+      }
+    }
+
+    return grouped
+      .entries()
+      .toArray()
+      .map(([key, value]) => ({ degree: key, programs: value }))
+      .sort((a, b) => {
+        const aStartsWithBachelor = a.degree.toLowerCase().startsWith("bachelor");
+        const bStartsWithBachelor = b.degree.toLowerCase().startsWith("bachelor");
+
+        if (aStartsWithBachelor && !bStartsWithBachelor) return -1;
+        if (!aStartsWithBachelor && bStartsWithBachelor) return 1;
+
+        return a.degree.localeCompare(b.degree);
+      });
+  }, [filteredPrograms]);
 
   const url = useMemo(() => {
     if (!studentType || !location || !program) return null;
@@ -272,20 +304,19 @@ export default function AdmissionRequirementsForm({
             />
 
             <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
-              {filteredPrograms.map((program, index) => {
-                const showDegree = false;
-
+              {groupedPrograms.map(({ degree, programs }) => {
                 return (
-                  <Fragment key={program.id}>
-                    {showDegree && (
-                      <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
-                        {"program?.degree?.title"}
-                      </div>
-                    )}
-                    <AutocompleteOption value={program} className="pl-6 border-grey-light border-b">
-                      {program.title}
-                    </AutocompleteOption>
-                  </Fragment>
+                  <>
+                    <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
+                      {degree}
+                    </div>
+
+                    {programs.map((program) => (
+                      <AutocompleteOption key={program.id} value={program} className="pl-6 border-grey-light border-b">
+                        {program.title}
+                      </AutocompleteOption>
+                    ))}
+                  </>
                 );
               })}
             </AutocompleteOptions>
