@@ -21,7 +21,6 @@
     "codegen:watch": "graphql-codegen -w",
     "load-test": "k6 run tests/load/graphql-load.js",
     "load-test:test": "k6 run --env BASE_URL=$LOAD_TEST_BASE_URL tests/load/graphql-load.js"
-
   },
   "dependencies": {
     "@awesome.me/kit-7993323d0c": "^1.0.11",
@@ -74,6 +73,7 @@
     "@parcel/watcher": "^2.6.0",
     "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.3.3",
+    "@types/k6": "^2.0.1",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
