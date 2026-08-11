@@ -85,7 +85,11 @@ export default async function ProgramsUndergraduate({ params }: Props) {
   const title = getPageTitle(studentType, location, program);
 
   const showPaths = await showUnpublishedContent();
-  const content = await getUndergraduateAdmissionRequirementPageContent(studentType, location, program);
+  const { sidebar, sections, paths } = await getUndergraduateAdmissionRequirementPageContent(
+    studentType,
+    location,
+    program
+  );
 
   return (
     <Layout>
@@ -107,16 +111,24 @@ export default async function ProgramsUndergraduate({ params }: Props) {
               {title}
             </Typography>
 
-            <AdmissionRequirementsSections
-              sections={content.sections}
-              program={program}
-              studentType={studentType}
-              location={location}
-            />
+            {sections.length <= 0 ? (
+              <Typography type="body" as="p">
+                Please contact{" "}
+                <LinkComponent href="/admission/undergraduate/contact">Undergraduate Admission Services</LinkComponent>{" "}
+                for more information on how to apply.
+              </Typography>
+            ) : (
+              <AdmissionRequirementsSections
+                sections={sections}
+                program={program}
+                studentType={studentType}
+                location={location}
+              />
+            )}
           </div>
 
           <AdmissionRequirementsSidebar
-            sidebar={content?.sidebar}
+            sidebar={sidebar}
             program={program}
             studentType={studentType}
             location={location}
@@ -132,7 +144,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
             </Typography>
 
             <List as="ol">
-              {content.paths.map((path) => (
+              {paths.map((path) => (
                 <ListItem key={path.url}>
                   <LinkComponent href={path.url}>{path.title}</LinkComponent>
                 </ListItem>
