@@ -123,6 +123,11 @@ export default function AdmissionRequirementsForm({
 
     if (!url) return;
 
+    // Fallback for DVM program
+    if (Array.isArray(program?.degree) && program.degree.some((degree) => degree.id === "5225")) {
+      window.location.href = "https://www.uoguelph.ca/ovc/dvm-program-application/";
+    }
+
     startTransition(() => {
       router.push(url);
     });
@@ -306,8 +311,11 @@ export default function AdmissionRequirementsForm({
             <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
               {groupedPrograms.map(({ degree, programs }) => {
                 return (
-                  <>
-                    <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
+                  <Fragment key={degree + program?.id}>
+                    <div
+                      key={degree}
+                      className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark"
+                    >
                       {degree}
                     </div>
 
@@ -316,7 +324,7 @@ export default function AdmissionRequirementsForm({
                         {program.title}
                       </AutocompleteOption>
                     ))}
-                  </>
+                  </Fragment>
                 );
               })}
             </AutocompleteOptions>
