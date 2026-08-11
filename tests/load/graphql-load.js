@@ -124,7 +124,7 @@ export default function () {
 export function handleSummary(data) {
   // Emit a JUnit-compatible summary for Azure Pipelines
   return {
-    "test-results/k6-load-results.json": JSON.stringify(data, null, 2),
+    // "test-results/k6-load-results.json": JSON.stringify(data, null, 2),
     stdout: textSummary(data),
   };
 }
