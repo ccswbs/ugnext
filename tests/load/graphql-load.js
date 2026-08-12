@@ -44,6 +44,7 @@ const p99Duration = new Trend("page_duration_p99", true);
 // ── Thresholds (test fails if these are breached) ──────────────────────────────
 
 export const options = {
+  summaryTrendStats: ["avg", "min", "med", "p(90)", "p(95)", "p(99)"],
   scenarios: {
     baseline: {
       executor: "constant-vus",
