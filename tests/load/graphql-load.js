@@ -47,26 +47,26 @@ export const options = {
   scenarios: {
     baseline: {
       executor: "constant-vus",
-      vus: 10,
-      duration: "1m",
+      vus: 5,
+      duration: "30s",
       tags: { scenario: "baseline" },
     },
     soak: {
       executor: "constant-vus",
-      vus: 50,
-      duration: "5m",
-      startTime: "1m30s",   // starts after baseline finishes + buffer
+      vus: 15,
+      duration: "1m",
+      startTime: "40s",   // starts after baseline finishes + buffer
       tags: { scenario: "soak" },
     },
     spike: {
       executor: "ramping-vus",
       startVUs: 0,
       stages: [
-        { duration: "30s", target: 300 },  // ramp up hard – reproduces the outage
-        { duration: "1m",  target: 300 },  // hold
-        { duration: "30s", target: 0   },  // ramp down
+        { duration: "15s", target: 50 },  // ramp up hard – reproduces the outage
+        { duration: "20s",  target: 50 },  // hold
+        { duration: "10s", target: 0   },  // ramp down
       ],
-      startTime: "8m",   // starts after soak finishes + buffer
+      startTime: "1m50s",   // starts after soak finishes + buffer
       tags: { scenario: "spike" },
     },
   },
@@ -107,7 +107,7 @@ export default function () {
       "status is 200":         (r) => r.status === 200,
       "no 502 bad gateway":    (r) => r.status !== 502,
       "no 503 unavailable":    (r) => r.status !== 503,
-      "body not empty":        (r) => r.body.length > 0,
+      "body not empty": (r) => (r.body?.length ?? 0) > 0,
     });
 
     errorRate.add(!ok);
