@@ -2,6 +2,7 @@ import path from "path";
 import { z } from "zod";
 import { getYamlData } from "@/lib/file-utils";
 import { UndergraduateAdmissionLocation } from "@/data/drupal/undergraduate-admission-requirements";
+import { slugify } from "@/lib/string-utils";
 
 const directory = path.join(process.cwd(), "data", "yaml", "programs", "undergraduate");
 
@@ -60,7 +61,10 @@ export async function getUndergraduateAdmissionLocations() {
     ),
     postProcessor: (data) =>
       data.flat().map((item) => {
-        return { __typename: "TermAdmissionLocation", ...item } as UndergraduateAdmissionLocation;
+        return {
+          __typename: "TermAdmissionLocation",
+          ...item,
+        } as UndergraduateAdmissionLocation;
       }),
   });
 

@@ -27,6 +27,7 @@ import {
 } from "@/lib/undergraduate-admission-requirements";
 import { RadioGroup, Radio } from "@uoguelph/react-components/radio-group";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
+import { slugify } from "@/lib/string-utils";
 
 type AdmissionRequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
@@ -112,7 +113,8 @@ export default function AdmissionRequirementsForm({
     if (!studentType || !location || !program) return null;
 
     const studentTypePath = studentType.path?.replace(UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH, "");
-    const locationPath = location.path?.replace(UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH, "");
+    const locationPath =
+      location.path?.replace(UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH, "") ?? slugify(location.name);
     const programPath = program.path?.replace(UNDERGRADUATE_PROGRAMS_NODE_PATH, "");
 
     return `/programs/undergraduate/requirements/${studentTypePath}/${locationPath}/${programPath}`;

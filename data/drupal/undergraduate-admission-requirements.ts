@@ -407,9 +407,9 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 }
 
 export async function getUndergraduateAdmissionRequirementPageContent(
-  studentType: UndergraduateAdmissionStudentType,
-  location: UndergraduateAdmissionLocation,
-  program: UndergraduateProgram
+  studentType?: UndergraduateAdmissionStudentType,
+  location?: UndergraduateAdmissionLocation,
+  program?: UndergraduateProgram
 ) {
   const ids = await getUndergraduateAdmissionRequirementIDs(studentType, location, program);
   return await getUndergraduateAdmissionRequirementPageContentByID(ids);
