@@ -48,26 +48,26 @@ export const options = {
   scenarios: {
     baseline: {
       executor: "constant-vus",
-      vus: 5,
-      duration: "30s",
+      vus: 10,
+      duration: "1m",
       tags: { scenario: "baseline" },
     },
     soak: {
       executor: "constant-vus",
-      vus: 15,
-      duration: "1m",
-      startTime: "40s",   // starts after baseline finishes + buffer
+      vus: 50,
+      duration: "5m",
+      startTime: "1m30s",   // starts after baseline finishes + buffer
       tags: { scenario: "soak" },
     },
     spike: {
       executor: "ramping-vus",
       startVUs: 0,
       stages: [
-        { duration: "15s", target: 50 },  // ramp up hard – reproduces the outage
-        { duration: "20s",  target: 50 },  // hold
-        { duration: "10s", target: 0   },  // ramp down
+        { duration: "30s", target: 300 },  // ramp up hard – reproduces the outage
+        { duration: "1m",  target: 300 },  // hold
+        { duration: "30s", target: 0   },  // ramp down
       ],
-      startTime: "1m50s",   // starts after soak finishes + buffer
+      startTime: "8m",   // starts after soak finishes + buffer
       tags: { scenario: "spike" },
     },
   },
