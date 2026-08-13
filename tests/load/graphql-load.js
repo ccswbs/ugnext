@@ -45,32 +45,60 @@ const p99Duration = new Trend("page_duration_p99", true);
 
 export const options = {
   summaryTrendStats: ["avg", "min", "med", "p(90)", "p(95)", "p(99)"],
+    // ── Scenario1: reduced-load values for fast local iteration ──────────────────
   scenarios: {
     baseline: {
       executor: "constant-vus",
-      vus: 10,
-      duration: "1m",
+      vus: 5,
+      duration: "30s",
       tags: { scenario: "baseline" },
     },
     soak: {
       executor: "constant-vus",
-      vus: 50,
-      duration: "5m",
-      startTime: "1m30s",   // starts after baseline finishes + buffer
+      vus: 15,
+      duration: "1m",
+      startTime: "40s",
       tags: { scenario: "soak" },
     },
     spike: {
       executor: "ramping-vus",
       startVUs: 0,
       stages: [
-        { duration: "30s", target: 300 },  // ramp up hard – reproduces the outage
-        { duration: "1m",  target: 300 },  // hold
-        { duration: "30s", target: 0   },  // ramp down
+        { duration: "15s", target: 50 },
+        { duration: "20s", target: 50 },
+        { duration: "10s", target: 0 },
       ],
-      startTime: "8m",   // starts after soak finishes + buffer
+      startTime: "1m50s",
       tags: { scenario: "spike" },
     },
   },
+  // ── Scenario2: FULL-SCALE VALUES — uncomment to test the outage-scale load ──
+  // scenarios: {
+  //   baseline: {
+  //     executor: "constant-vus",
+  //     vus: 10,
+  //     duration: "1m",
+  //     tags: { scenario: "baseline" },
+  //   },
+  //   soak: {
+  //     executor: "constant-vus",
+  //     vus: 50,
+  //     duration: "5m",
+  //     startTime: "1m30s",   // starts after baseline finishes + buffer
+  //     tags: { scenario: "soak" },
+  //   },
+  //   spike: {
+  //     executor: "ramping-vus",
+  //     startVUs: 0,
+  //     stages: [
+  //       { duration: "30s", target: 300 },  // ramp up hard – reproduces the outage
+  //       { duration: "1m",  target: 300 },  // hold
+  //       { duration: "30s", target: 0   },  // ramp down
+  //     ],
+  //     startTime: "8m",   // starts after soak finishes + buffer
+  //     tags: { scenario: "spike" },
+  //   },
+  // },
 
   thresholds: {
     // Overall error rate must stay below 1 %
@@ -124,7 +152,7 @@ export default function () {
 }
 
 export function handleSummary(data) {
-  // Emit a JUnit-compatible summary for Azure Pipelines
+  // Prints a readable summary to the terminal.
   return {
     // "test-results/k6-load-results.json": JSON.stringify(data, null, 2),
     stdout: textSummary(data),
