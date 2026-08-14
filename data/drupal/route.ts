@@ -138,6 +138,7 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         id
         name
         weight
+        path
       }
       ... on NodeUndergraduateRequirement {
         uuid
