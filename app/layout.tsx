@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full scroll-smooth">
       <body className="flex flex-col min-h-full">
         <Toaster />
 
