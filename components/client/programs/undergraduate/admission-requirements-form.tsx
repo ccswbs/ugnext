@@ -28,6 +28,7 @@ import {
 import { RadioGroup, Radio } from "@uoguelph/react-components/radio-group";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import { slugify } from "@/lib/string-utils";
+import { twJoin } from "tailwind-merge";
 
 type AdmissionRequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
@@ -321,8 +322,12 @@ export default function AdmissionRequirementsForm({
                       {degree}
                     </div>
 
-                    {programs.map((program) => (
-                      <AutocompleteOption key={program.id} value={program} className="pl-6 border-grey-light border-b">
+                    {programs.map((program, index) => (
+                      <AutocompleteOption
+                        key={program.id}
+                        value={program}
+                        className={twJoin("pl-6 border-grey-light border-b", index === 0 && "scroll-m-10")}
+                      >
                         {program.title}
                       </AutocompleteOption>
                     ))}
