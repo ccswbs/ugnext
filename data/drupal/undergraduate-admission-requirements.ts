@@ -66,19 +66,6 @@ export type UndergraduateAdmissionLocation = AdmissionLocationFragment & {
   type: UndergraduateAdmissionLocationType;
 };
 
-function getAdmissionLocationType(location: TermAdmissionLocation): UndergraduateAdmissionLocationType {
-  switch (location.parent?.name) {
-    case "Countries":
-      return "international";
-    case "Curriculums":
-      return "curriculum";
-    case "Provinces and Territories":
-      return "domestic";
-    default:
-      return "international";
-  }
-}
-
 export async function getUndergraduateAdmissionLocations() {
   const locationsQuery = gql(/* gql */ `
     query UndergraduateAdmissionLocations($after: Cursor = "") {
