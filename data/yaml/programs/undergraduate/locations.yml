@@ -1082,10 +1082,6 @@
   name: American Curriculum
   type: curriculum
 
-- id: british-patterned-education-gce
-  name: British Patterned Education (GCE)
-  type: curriculum
-
 - id: chinese-curriculum
   name: Chinese Curriculum
   type: curriculum
