@@ -1026,10 +1026,6 @@
   name: United Kingdom
   type: international
 
-- id: united-states
-  name: United States
-  type: international
-
 - id: united-states-of-america
   name: United States of America
   type: international

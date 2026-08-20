@@ -113,13 +113,13 @@ export async function getUndergraduateAdmissionLocations() {
 
     if (data) {
       const values = data.termAdmissionLocations.nodes
-        .filter((node) => !!node.parent)
-        .map((node) => {
-          return {
-            ...node,
-            type: getAdmissionLocationType(node as TermAdmissionLocation),
-          };
-        });
+        .filter(
+          (node) => node.name != "Provinces and Territories" && node.name != "Curriculums" && node.name != "Countries"
+        )
+        .map((node) => ({
+          ...node,
+          type: node.type as UndergraduateAdmissionLocationType,
+        }));
 
       locations.push(...values);
       hasNextPage = data.termAdmissionLocations.pageInfo.hasNextPage;
@@ -152,10 +152,7 @@ export async function getUndergraduateAdmissionLocationByPath(path: string) {
     return null;
   }
 
-  return {
-    ...route.entity,
-    type: getAdmissionLocationType(route.entity as TermAdmissionLocation),
-  } as UndergraduateAdmissionLocation;
+  return route.entity as UndergraduateAdmissionLocation;
 }
 
 export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SIDEBAR_BUTTON_FRAGMENT = gql(/* gql */ `
