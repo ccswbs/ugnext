@@ -9,6 +9,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { Select, SelectOptions, SelectButton, SelectOption } from "@uoguelph/react-components/select";
 import type { UndergraduateProgram, UndergraduateProgramType } from "@/data/drupal/undergraduate-program";
 import type { UndergraduateDegree, UndergraduateDegreeType } from "@/data/drupal/undergraduate-degree";
+import { useSearchParams } from "next/navigation";
 
 // PHASE 1 - YAML-BASED (Graduate) - also update /apps/programs/graduate/page
 // To be commented out during Phase 2
@@ -71,6 +72,8 @@ async function fetcher(...args: Parameters<typeof fetch>) {
 export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym = false }: ProgramSearchProps) => {
   const [input, setInput] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<ProgramType[]>(types);
+  const searchParams = useSearchParams();
+  const searchTags = searchParams.getAll('tags') 
 
   // The fuzzy search function
   const search = useFuzzySearch({
@@ -102,6 +105,14 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
   }, [input, programs, search]);
 
   const filtered = useMemo(() => {
+    if (Array.isArray(searchTags) && searchTags.length > 0) {
+      return fuzzyMatches.filter((program) => {
+        if(Array.isArray(program.tags)) {
+          return program.tags.some((tag) => searchTags.some((t) => t === tag));
+        }
+      })
+    }
+
     if (selectedTypes.length === 0) return fuzzyMatches;
 
     return fuzzyMatches.filter((program) => {

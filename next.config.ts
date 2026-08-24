@@ -123,6 +123,7 @@ function getNextConfig(): NextConfig {
       "cache",
       "cache-handler.mjs"
     );
+    config.cacheMaxMemorySize = 0; // Disable in-memory caching to use custom handler
     // For cache components
     /*
     config.cacheComponents = true;

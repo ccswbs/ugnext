@@ -27,13 +27,26 @@ export function AdmissionRequirementsSections({
   program,
   sections,
 }: AdmissionRequirementsSectionsProps) {
+  const isCoop = program.type.some((type) => type.name === "Co-op");
+  const isTransfer = studentType.id === "682" || studentType.id === "681";
+
   return (
     <>
-      {program.type.some((type) => type.name === "Co-op") && (
-        <Typography type="body" as="span" className="block! italic">
-          This subject is offered with and without{" "}
-          <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
-        </Typography>
+      {isCoop && (
+        <>
+          <Typography type="body" as="span" className="block! italic">
+            This subject is offered with and without{" "}
+            <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
+          </Typography>
+
+          {isTransfer && (
+            <Typography type="body" as="span" className="block! italic">
+              Transfer students are not eligible for direct admission to co-op programs. You{" "}
+              <Link href="/future-students/co-op-admission#external-transfer-students">may be eligible to apply</Link>{" "}
+              once you start your studies.
+            </Typography>
+          )}
+        </>
       )}
 
       {sections
@@ -90,7 +103,7 @@ export function AdmissionRequirementsSections({
                     of applicants and available space. Meeting the range does not guarantee admission.
                   </Typography>
 
-                  {program.type.some((type) => type.name === "Co-op") && (
+                  {isCoop && !isTransfer && (
                     <Typography type="body" as="p" className="italic">
                       Co-op cut-offs are usually higher. If you don’t qualify, you’ll be considered for the regular
                       program.
