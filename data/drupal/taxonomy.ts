@@ -217,11 +217,7 @@ export const ADMISSION_LOCATION = gql(/* gql */ `
     id
     name
     weight
-    parent {
-      ... on TermAdmissionLocation {
-        name
-      }
-    }
+    type
     path
   }
 `);

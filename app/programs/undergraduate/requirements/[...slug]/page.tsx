@@ -5,6 +5,7 @@ import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
 import { Metadata, ResolvingMetadata } from "next";
 import {
+  getGeneralAdmissionRequirementPageContent,
   getUndergraduateAdmissionLocationByPath,
   getUndergraduateAdmissionRequirementPageContent,
   getUndergraduateAdmissionStudentTypeByPath,
@@ -26,6 +27,8 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import React from "react";
 import { Divider } from "@uoguelph/react-components/divider";
 import { AdmissionRequirementsSections } from "@/components/client/programs/undergraduate/admission-requirements-sections";
+import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsYaml } from "@/data/yaml/programs/undergraduate";
+import { slugify } from "@/lib/string-utils";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -40,12 +43,21 @@ async function slugToData(slug: string[]) {
     notFound();
   }
 
-  const location = await getUndergraduateAdmissionLocationByPath(
+  let location = await getUndergraduateAdmissionLocationByPath(
     `${UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH}${slug[1]}`
   );
 
   if (!location) {
-    notFound();
+    const locationsYaml = await getUndergraduateAdmissionLocationsYaml();
+    const fallback = locationsYaml.find((l) => {
+      return slugify(l.name) === slug[1];
+    });
+
+    if (fallback) {
+      location = fallback;
+    } else {
+      notFound();
+    }
   }
 
   const program = await getUndergraduateProgramByPath(`${UNDERGRADUATE_PROGRAMS_NODE_PATH}${slug[2]}`);
@@ -79,13 +91,17 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   };
 }
 
-export default async function ProgramsUndergraduate({ params }: Props) {
+export default async function ProgramsUndergraduateRequirementsContent({ params }: Props) {
   const { slug } = await params;
   const { studentType, location, program } = await slugToData(slug);
   const title = getPageTitle(studentType, location, program);
 
   const showPaths = await showUnpublishedContent();
-  const content = await getUndergraduateAdmissionRequirementPageContent(studentType, location, program);
+  const { sidebar, sections, paths } = await getUndergraduateAdmissionRequirementPageContent(
+    studentType,
+    location.path ? location : undefined,
+    program
+  );
 
   return (
     <Layout>
@@ -107,16 +123,24 @@ export default async function ProgramsUndergraduate({ params }: Props) {
               {title}
             </Typography>
 
-            <AdmissionRequirementsSections
-              sections={content.sections}
-              program={program}
-              studentType={studentType}
-              location={location}
-            />
+            {sections.length <= 0 ? (
+              <Typography type="body" as="p">
+                Please contact{" "}
+                <LinkComponent href="/admission/undergraduate/contact">Undergraduate Admission Services</LinkComponent>{" "}
+                for more information on how to apply.
+              </Typography>
+            ) : (
+              <AdmissionRequirementsSections
+                sections={sections}
+                program={program}
+                studentType={studentType}
+                location={location}
+              />
+            )}
           </div>
 
           <AdmissionRequirementsSidebar
-            sidebar={content?.sidebar}
+            sidebar={sidebar}
             program={program}
             studentType={studentType}
             location={location}
@@ -132,7 +156,7 @@ export default async function ProgramsUndergraduate({ params }: Props) {
             </Typography>
 
             <List as="ol">
-              {content.paths.map((path) => (
+              {paths.map((path) => (
                 <ListItem key={path.url}>
                   <LinkComponent href={path.url}>{path.title}</LinkComponent>
                 </ListItem>
