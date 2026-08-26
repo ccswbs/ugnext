@@ -27,6 +27,8 @@ import {
 } from "@/lib/undergraduate-admission-requirements";
 import { RadioGroup, Radio } from "@uoguelph/react-components/radio-group";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
+import { slugify } from "@/lib/string-utils";
+import { twJoin } from "tailwind-merge";
 
 type AdmissionRequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
@@ -64,10 +66,8 @@ export default function AdmissionRequirementsForm({
   });
 
   const filteredPrograms = useMemo(() => {
-    if (programQuery === "") {
-      return programs.sort((a, b) => {
-        return (a.degree?.title ?? "").localeCompare(b.degree?.title ?? "");
-      });
+    if (!programQuery) {
+      return programs;
     }
 
     const results = programSearch({
@@ -82,11 +82,40 @@ export default function AdmissionRequirementsForm({
     return results.hits.map((hit) => hit.document as UndergraduateProgram);
   }, [programQuery, programSearch, programs]);
 
+  const groupedPrograms = useMemo(() => {
+    const grouped = new Map<string, UndergraduateProgram[]>();
+
+    for (const program of filteredPrograms) {
+      for (const degree of program.degree ?? []) {
+        if (grouped.has(degree.title)) {
+          grouped.get(degree.title)?.push(program);
+        } else {
+          grouped.set(degree.title, [program]);
+        }
+      }
+    }
+
+    return grouped
+      .entries()
+      .toArray()
+      .map(([key, value]) => ({ degree: key, programs: value }))
+      .sort((a, b) => {
+        const aStartsWithBachelor = a.degree.toLowerCase().startsWith("bachelor");
+        const bStartsWithBachelor = b.degree.toLowerCase().startsWith("bachelor");
+
+        if (aStartsWithBachelor && !bStartsWithBachelor) return -1;
+        if (!aStartsWithBachelor && bStartsWithBachelor) return 1;
+
+        return a.degree.localeCompare(b.degree);
+      });
+  }, [filteredPrograms]);
+
   const url = useMemo(() => {
     if (!studentType || !location || !program) return null;
 
     const studentTypePath = studentType.path?.replace(UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH, "");
-    const locationPath = location.path?.replace(UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH, "");
+    const locationPath =
+      location.path?.replace(UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH, "") ?? slugify(location.name);
     const programPath = program.path?.replace(UNDERGRADUATE_PROGRAMS_NODE_PATH, "");
 
     return `/programs/undergraduate/requirements/${studentTypePath}/${locationPath}/${programPath}`;
@@ -96,6 +125,11 @@ export default function AdmissionRequirementsForm({
     e.preventDefault();
 
     if (!url) return;
+
+    // Fallback for DVM program
+    if (Array.isArray(program?.degree) && program.degree.some((degree) => degree.id === "5225")) {
+      window.location.href = "https://www.uoguelph.ca/ovc/dvm-program-application/";
+    }
 
     startTransition(() => {
       router.push(url);
@@ -278,20 +312,25 @@ export default function AdmissionRequirementsForm({
             />
 
             <AutocompleteOptions anchor="bottom" className="max-h-[20rem]!">
-              {filteredPrograms.map((program, index) => {
-                const showDegree =
-                  program.degree?.title && filteredPrograms[index - 1]?.degree?.title !== program.degree?.title;
-
+              {groupedPrograms.map(({ degree, programs }) => {
                 return (
-                  <Fragment key={program.id}>
-                    {showDegree && (
-                      <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
-                        {program?.degree?.title}
-                      </div>
-                    )}
-                    <AutocompleteOption value={program} className="pl-6 border-grey-light border-b">
-                      {program.title}
-                    </AutocompleteOption>
+                  <Fragment key={degree + program?.id}>
+                    <div
+                      key={degree}
+                      className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark"
+                    >
+                      {degree}
+                    </div>
+
+                    {programs.map((program, index) => (
+                      <AutocompleteOption
+                        key={program.id}
+                        value={program}
+                        className={twJoin("pl-6 border-grey-light border-b", index === 0 && "scroll-m-10")}
+                      >
+                        {program.title}
+                      </AutocompleteOption>
+                    ))}
                   </Fragment>
                 );
               })}

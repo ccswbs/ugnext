@@ -9,7 +9,7 @@ import type { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Typography } from "@uoguelph/react-components/typography";
 import { HtmlParser } from "@/components/client/html-parser";
 import React, { Fragment } from "react";
-import { List } from "@uoguelph/react-components/list";
+import { List, ListItem } from "@uoguelph/react-components/list";
 import { nanoid } from "nanoid";
 import { ElementType } from "domelementtype";
 import { Link } from "@uoguelph/react-components/link";
@@ -46,6 +46,22 @@ export function AdmissionRequirementsSections({
               once you start your studies.
             </Typography>
           )}
+        </>
+      )}
+
+      {Array.isArray(program.degree) && program.degree.length > 1 && (
+        <>
+          <Typography type="body" as="p" className="block!">
+            This subject is offered under multiple degrees:
+          </Typography>
+
+          <List>
+            {program.degree.map((degree) => (
+              <ListItem key={degree.id}>
+                {degree.url.url ? <Link href={degree.url.url}>{degree.title}</Link> : degree.title}
+              </ListItem>
+            ))}
+          </List>
         </>
       )}
 
