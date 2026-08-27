@@ -31,9 +31,12 @@ const BASE_URL = __ENV.BASE_URL || "http://localhost:3000";
 const PAGES = [
   "/",
   "/about",
-  "/programs/undergraduate",
-  "/widget-examples",
+  "/csahs/people",
+  "/ovc/news-hub",
+  "/programs/undergraduate",  
   "/studentexperience",
+  "/webadvisor",
+  "/widget-examples",
 ];
 
 // ── Custom metrics ─────────────────────────────────────────────────────────────
