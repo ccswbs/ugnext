@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 1,
   "workspaces": {
     "": {
       "name": "ugnext",
@@ -56,6 +55,7 @@
         "@parcel/watcher": "^2.6.0",
         "@playwright/test": "^1.61.1",
         "@tailwindcss/postcss": "^4.3.3",
+        "@types/k6": "^2.0.1",
         "@types/node": "^24.13.3",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
@@ -533,6 +533,8 @@
     "@types/json5": ["@types/json5@0.0.29", "", {}, "sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ=="],
 
     "@types/jsonwebtoken": ["@types/jsonwebtoken@9.0.10", "", { "dependencies": { "@types/ms": "*", "@types/node": "*" } }, "sha512-asx5hIG9Qmf/1oStypjanR7iKTv0gXQ1Ov/jfrX6kS/EO0OFni8orbmGCn0672NHR3kXHwpAwR+B368ZGN/2rA=="],
+
+    "@types/k6": ["@types/k6@2.2.0", "", {}, "sha512-wuHM+JLcpV0VL2G8ltu0N3ZDbbq1GHkP5ypeMzTZcFFqpN8ioV0DojxQFKvlbnVzuhgnY7Yy+Hhl8LzstdplhQ=="],
 
     "@types/ms": ["@types/ms@2.1.0", "", {}, "sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA=="],
 
