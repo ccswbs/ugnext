@@ -427,10 +427,6 @@ export default function UndergraduateAdmissionRequirementsForm({
     });
   };
 
-  useEffect(() => {
-    console.log(studentType, location, program);
-  }, [studentType, location, program]);
-
   return (
     <UndergraduateAdmissionRequirementsFormContext.Provider
       value={{
