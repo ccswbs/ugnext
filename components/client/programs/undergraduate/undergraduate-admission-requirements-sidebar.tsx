@@ -49,7 +49,7 @@ type AdmissionRequirementsSidebarProps = {
   sidebar: UndergraduateAdmissionRequirementSidebar;
 };
 
-export function AdmissionRequirementsSidebar({
+export function UndergraduateAdmissionRequirementsSidebar({
   sidebar,
   program,
   studentType,

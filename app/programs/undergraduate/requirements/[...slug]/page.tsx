@@ -21,12 +21,12 @@ import { notFound } from "next/navigation";
 import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Grid } from "@uoguelph/react-components/grid";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
-import { AdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/admission-requirements-sidebar";
+import { UndergraduateAdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sidebar";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import React from "react";
 import { Divider } from "@uoguelph/react-components/divider";
-import { AdmissionRequirementsSections } from "@/components/client/programs/undergraduate/admission-requirements-sections";
+import { UndergraduateAdmissionRequirementsSections } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sections";
 import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsYaml } from "@/data/yaml/programs/undergraduate";
 import { slugify } from "@/lib/string-utils";
 
@@ -130,7 +130,7 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
                 for more information on how to apply.
               </Typography>
             ) : (
-              <AdmissionRequirementsSections
+              <UndergraduateAdmissionRequirementsSections
                 sections={sections}
                 program={program}
                 studentType={studentType}
@@ -139,7 +139,7 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
             )}
           </div>
 
-          <AdmissionRequirementsSidebar
+          <UndergraduateAdmissionRequirementsSidebar
             sidebar={sidebar}
             program={program}
             studentType={studentType}

@@ -21,7 +21,7 @@ type AdmissionRequirementsSectionsProps = {
   sections: UndergraduateAdmissionRequirementSection[];
 };
 
-export function AdmissionRequirementsSections({
+export function UndergraduateAdmissionRequirementsSections({
   studentType,
   location,
   program,
