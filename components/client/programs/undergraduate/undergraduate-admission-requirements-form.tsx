@@ -73,6 +73,7 @@ type UndergraduateAdmissionRequirementsFormProps = {
   studentTypes: UndergraduateAdmissionStudentType[];
   locations: UndergraduateAdmissionLocation[];
   programs: UndergraduateProgram[];
+  isDomesticOnly?: boolean;
 };
 
 function UndergraduateAdmissionRequirementsStudentTypeField() {
@@ -377,6 +378,7 @@ export default function UndergraduateAdmissionRequirementsForm({
   studentTypes,
   locations,
   programs,
+  isDomesticOnly,
 }: UndergraduateAdmissionRequirementsFormProps) {
   const router = useRouter();
 
@@ -427,6 +429,14 @@ export default function UndergraduateAdmissionRequirementsForm({
     });
   };
 
+  if (isPending) {
+    return (
+      <div className="fixed top-0 left-0 w-screen z-10000 h-screen bg-white flex items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
   return (
     <UndergraduateAdmissionRequirementsFormContext.Provider
       value={{
@@ -443,16 +453,14 @@ export default function UndergraduateAdmissionRequirementsForm({
         setProgram,
       }}
     >
-      {isPending && (
-        <div className="fixed top-0 left-0 w-screen z-10000 h-screen bg-white flex items-center justify-center">
-          <LoadingIndicator />
-        </div>
-      )}
-
       <form className="w-full flex flex-col" onSubmit={onSubmit}>
         <UndergraduateAdmissionRequirementsStudentTypeField />
 
-        <UndergraduateAdmissionRequirementsLocationField />
+        {isDomesticOnly ? (
+          <UndergraduateAdmissionRequirementsLocationDomesticField />
+        ) : (
+          <UndergraduateAdmissionRequirementsLocationField />
+        )}
 
         <UndergraduateAdmissionRequirementsProgramField />
 
