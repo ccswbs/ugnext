@@ -177,7 +177,9 @@ function UndergraduateAdmissionRequirementsLocationDomesticField() {
       <Autocomplete value={location} multiple={false} onClose={() => setQuery("")} onChange={setLocation} immediate>
         <AutocompleteInput
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
-          displayValue={(selected: UndergraduateAdmissionLocation | null) => selected?.name ?? ""}
+          displayValue={(selected: UndergraduateAdmissionLocation | null) =>
+            selected?.type === "domestic" ? (selected?.name ?? "") : ""
+          }
         />
 
         <AutocompleteOptions anchor="bottom" className="max-h-50!">
