@@ -68,7 +68,7 @@ export function UndergraduateAdmissionRequirementsSidebar({
       {sidebar?.map((button) => (
         <AdmissionRequirementsSidebarButton
           key={button.id}
-          color={button.link.title === "Apply Now!" ? "red" : "black"}
+          color={button.link.title === "Apply Now!" ? "primary" : "secondary"}
           url={button.link.url ?? ""}
           title={button.link.title ?? ""}
           icon={button.fontAwesomeIcon ?? ""}
@@ -78,7 +78,7 @@ export function UndergraduateAdmissionRequirementsSidebar({
       {program && (
         <AdmissionRequirementsSidebarButton
           key={program.id}
-          color="black"
+          color="secondary"
           url={program.url.url ?? ""}
           title={`Learn more about ${program.title}`}
           icon={faCircleInfo}
