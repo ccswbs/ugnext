@@ -458,13 +458,10 @@ export default function UndergraduateAdmissionRequirementsForm({
     >
       {isDomesticOnly && (
         <Info color="red">
-          <Typography type="body" as="p">
+          <Typography type="body" as="p" className="m-0 font-bold">
             This page is for students who are applying within Canada. For all students applying outside of Canada,
             please visit the{" "}
-            <LinkComponent
-              as={Link}
-              href="/https://www.uoguelph.ca/admission/undergraduate/international/requirements/"
-            >
+            <LinkComponent as={Link} href="https://www.uoguelph.ca/admission/undergraduate/international/requirements/">
               International Undergraduate Admission Requirements
             </LinkComponent>{" "}
             page.
@@ -472,7 +469,7 @@ export default function UndergraduateAdmissionRequirementsForm({
         </Info>
       )}
 
-      <form className="w-full flex flex-col" onSubmit={onSubmit}>
+      <form className="w-full flex flex-col max-w-[90rem]" onSubmit={onSubmit}>
         <UndergraduateAdmissionRequirementsStudentTypeField />
 
         {isDomesticOnly ? (

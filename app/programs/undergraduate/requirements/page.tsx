@@ -58,7 +58,7 @@ export default async function ProgramsUndergraduateRequirements() {
           }}
         >
           <div>
-            <Typography type="h1" as="h1" className="block">
+            <Typography type="h1" as="h1" className="block mb-4">
               Undergraduate Admission Requirements
             </Typography>
 
