@@ -1,0 +1,53 @@
+trigger:
+  - main
+
+pr: none
+
+variables:
+  - group: ugnext
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "install -g bun"
+      verbose: true
+    displayName: "Install bun using npm"
+
+  - script: |
+      bun install --frozen-lockfile
+    displayName: "Install dependencies using bun"
+
+  # - task: Cache@2
+  #   inputs:
+  #     key: 'next | "$(Agent.OS)" | bun.lock | "$(Build.SourceBranch)"'
+  #     path: "$(System.DefaultWorkingDirectory)/.next/cache"
+  #   displayName: "Cache .next/cache"
+
+  - script: |
+      find app -mindepth 1 ! -name "error.tsx" ! -name "layout.tsx" ! -name "loading.tsx" ! -name "not-found.tsx" ! -name "opengraph-image.alt.txt" ! -name "opengraph-image.jpg" ! -name "page.tsx" ! -name "twitter-image.alt.txt" ! -name "twitter-image.jpg" -exec rm -rf {} +
+    displayName: "Remove all files and folder in app dir except for home, template and error pages"
+
+  - script: |
+      bun run static-build
+    displayName: "Build site"
+
+  - script: |
+      find out/_next -mindepth 1 -maxdepth 1 ! -name "static" -exec rm -rf {} +
+    displayName: "Remove all folders in _next except static"
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: "out"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      replaceExistingArchive: true
+    displayName: "Archive output folder"
+
+  - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+    artifact: zipOutput
+    displayName: "Publish Artifact"
