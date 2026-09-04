@@ -28,7 +28,7 @@ export function UndergraduateAdmissionRequirementsSections({
   sections,
 }: AdmissionRequirementsSectionsProps) {
   const isCoop = program.type.some((type) => type.name === "Co-op");
-  const isTransfer = studentType.id === "682" || studentType.id === "681";
+  const isTransfer = studentType.id === "682" || studentType.id === "681" || studentType.id === "683";
 
   return (
     <>
