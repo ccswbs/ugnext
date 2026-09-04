@@ -59,15 +59,20 @@ const downloadSemaphore = new Semaphore(MAX_DOWNLOAD_CONCURRENCY);
 
 async function downloadRemoteImage(image: RemoteImage) {
   await downloadSemaphore.run(async () => {
-    const response = await fetch(image.remote);
+    try {
+      const response = await fetch(image.remote);
 
-    if (!response.ok) {
-      throw new Error(`Failed to download ${image.remote}: ${response.status} ${response.statusText}`);
+      if (!response.ok) {
+        console.log(`Failed to download image: ${image.remote} (${response.status} ${response.statusText})`);
+        return;
+      }
+
+      const outputPath = `${OUTPUT_DIR}${image.local}`;
+
+      await Bun.write(outputPath, response);
+    } catch (error) {
+      console.log(`Failed to download image: ${image.remote}`, error);
     }
-
-    const outputPath = `${OUTPUT_DIR}${image.local}`;
-
-    await Bun.write(outputPath, response);
   });
 }
 
@@ -125,11 +130,10 @@ async function processRemoteImages() {
     );
   }
 
-  // File scanning/rewriting and downloads have been occurring
-  // concurrently up to this point.
+  // File scanning/rewriting and downloads occur concurrently.
   await Promise.all(filePromises);
 
-  // Wait for any outstanding downloads.
+  // Failed downloads resolve normally, so they don't abort post-processing.
   await Promise.all(downloads.values());
 
   return Array.from(images.values());
@@ -141,9 +145,7 @@ await time(
 
     const images = await processRemoteImages();
 
-    console.log(
-      `Processed and downloaded ${images.length} remote image(s) to ` + `${OUTPUT_DIR}/${REMOTE_IMAGE_OUTPUT_DIR}.`
-    );
+    console.log(`Processed ${images.length} remote image(s) into ${OUTPUT_DIR}/${REMOTE_IMAGE_OUTPUT_DIR}.`);
   },
   "Starting static build post processing...",
   "Post processing complete."
