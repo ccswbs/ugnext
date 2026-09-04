@@ -5,6 +5,7 @@ import { Profile } from "@/components/server/profile";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getAllBasicPagePaths } from "@/data/drupal/basic-page";
 import { News } from "@/components/server/news";
+import { map } from "eslint-config-next";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -23,7 +24,7 @@ export async function generateStaticParams() {
 
   const paths = await getAllBasicPagePaths();
 
-  return paths.map((path) => ({
+  return paths.slice(0, 50).map((path) => ({
     slug: path.split("/").slice(1),
   }));
 }
