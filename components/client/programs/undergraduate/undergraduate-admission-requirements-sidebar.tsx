@@ -56,7 +56,7 @@ export function UndergraduateAdmissionRequirementsSidebar({
   location,
 }: AdmissionRequirementsSidebarProps) {
   return (
-    <div className="flex flex-col gap-4 mt-7.5">
+    <div className="flex flex-col gap-4 mt-7.5 w-full">
       {(program || studentType || location) && (
         <AdmissionRequirementsSidebarButton
           url="/programs/undergraduate/requirements"
