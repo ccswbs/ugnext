@@ -29,15 +29,24 @@ export function UndergraduateAdmissionRequirementsSections({
 }: AdmissionRequirementsSectionsProps) {
   const isCoop = program.type.some((type) => type.name === "Co-op");
   const isTransfer = studentType.id === "682" || studentType.id === "681" || studentType.id === "683";
+  const isCoopOnly = program.degree?.some((degree) => degree.id === "5218");
+  const isHighSchool = studentType.id === "684";
 
   return (
     <>
       {isCoop && (
         <>
-          <Typography type="body" as="span" className="block! italic">
-            This subject is offered with and without{" "}
-            <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
-          </Typography>
+          {isCoopOnly && isHighSchool ? (
+            <Typography type="body" as="span" className="block! italic">
+              This subject is <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link> admission
+              only.
+            </Typography>
+          ) : (
+            <Typography type="body" as="span" className="block! italic">
+              This subject is offered with and without{" "}
+              <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
+            </Typography>
+          )}
 
           {isTransfer && (
             <Typography type="body" as="span" className="block! italic">
@@ -75,6 +84,7 @@ export function UndergraduateAdmissionRequirementsSections({
             <Fragment key={section.title}>
               <Typography type="h3" as="h2">
                 {section.title}
+                {section.weight}
               </Typography>
 
               <HtmlParser
