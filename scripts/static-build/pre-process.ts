@@ -15,4 +15,12 @@ async function removeExcludedPaths() {
   }
 }
 
-await time(async () => {});
+await time(
+  async () => {
+    console.log("Removing excluded/incompatible paths from app directory...");
+    await removeExcludedPaths();
+    console.log("Done.");
+  },
+  "Starting static build pre-processing...",
+  "Pre-processing complete."
+);
