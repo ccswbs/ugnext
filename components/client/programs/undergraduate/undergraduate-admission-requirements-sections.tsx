@@ -84,7 +84,6 @@ export function UndergraduateAdmissionRequirementsSections({
             <Fragment key={section.title}>
               <Typography type="h3" as="h2">
                 {section.title}
-                {section.weight}
               </Typography>
 
               <HtmlParser
