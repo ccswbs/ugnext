@@ -21,23 +21,19 @@ steps:
       bun install --frozen-lockfile
     displayName: "Install dependencies using bun"
 
-  # - task: Cache@2
-  #   inputs:
-  #     key: 'next | "$(Agent.OS)" | bun.lock | "$(Build.SourceBranch)"'
-  #     path: "$(System.DefaultWorkingDirectory)/.next/cache"
-  #   displayName: "Cache .next/cache"
+  - script: |
+      bun run scripts/static-build/pre-process.ts
+    displayName: "Run pre-processing script before static build"
 
   - script: |
-      find app -mindepth 1 ! -name "error.tsx" ! -name "layout.tsx" ! -name "loading.tsx" ! -name "not-found.tsx" ! -name "opengraph-image.alt.txt" ! -name "opengraph-image.jpg" ! -name "page.tsx" ! -name "twitter-image.alt.txt" ! -name "twitter-image.jpg" -exec rm -rf {} +
-    displayName: "Remove all files and folder in app dir except for home, template and error pages"
+      bun run build
+    env:
+      NEXT_STATIC_OUTPUT: "true"
+    displayName: "Build site with static export"
 
   - script: |
-      bun run static-build
-    displayName: "Build site"
-
-  - script: |
-      find out/_next -mindepth 1 -maxdepth 1 ! -name "static" -exec rm -rf {} +
-    displayName: "Remove all folders in _next except static"
+      bun run scripts/static-build/post-process.ts
+    displayName: "Run post-processing script after static build"
 
   - task: ArchiveFiles@2
     inputs:
@@ -49,5 +45,5 @@ steps:
     displayName: "Archive output folder"
 
   - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
-    artifact: zipOutput
+    artifact: ugnext-static
     displayName: "Publish Artifact"
