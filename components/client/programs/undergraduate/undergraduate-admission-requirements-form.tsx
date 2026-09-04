@@ -180,6 +180,8 @@ function UndergraduateAdmissionRequirementsLocationDomesticField() {
 
       <Autocomplete value={location} multiple={false} onClose={() => setQuery("")} onChange={setLocation} immediate>
         <AutocompleteInput
+          as="input"
+          autoComplete="off"
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateAdmissionLocation | null) =>
             selected?.type === "domestic" ? (selected?.name ?? "") : ""
@@ -219,6 +221,8 @@ function UndergraduateAdmissionRequirementsLocationInternationalField() {
 
       <Autocomplete value={location} multiple={false} onClose={() => setQuery("")} onChange={setLocation} immediate>
         <AutocompleteInput
+          as="input"
+          autoComplete="off"
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateAdmissionLocation | null) =>
             selected?.type === "international" ? (selected?.name ?? "") : ""
@@ -347,6 +351,8 @@ function UndergraduateAdmissionRequirementsProgramField() {
         immediate
       >
         <AutocompleteInput
+          as="input"
+          autoComplete="off"
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateProgram | null) => selected?.title ?? ""}
         />
