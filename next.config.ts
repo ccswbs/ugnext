@@ -114,6 +114,11 @@ function getNextConfig(): NextConfig {
     config.cacheComponents = false;
     config.images ??= {};
     config.images.unoptimized = true;
+
+    // Remove headers, redirects, and rewrites to avoid conflicts with static build.
+    config.headers = undefined;
+    config.redirects = undefined;
+    config.rewrites = undefined;
   } else if (process.env.USE_PANTHEON_CACHE_HANDLERS !== "false") {
     // Normal build
     // Regular ISR and route cache handler
