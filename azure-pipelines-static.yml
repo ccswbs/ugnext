@@ -5,6 +5,10 @@ pr: none
 
 variables:
   - group: ugnext
+  - name: BUN_VERSION
+    value: "1.3.10"
+  - name: BUN_INSTALL_CACHE_DIR
+    value: "$(Pipeline.Workspace)/.bun/install/cache"
 
 pool:
   vmImage: ubuntu-latest
@@ -13,12 +17,21 @@ steps:
   - task: Npm@1
     inputs:
       command: "custom"
-      customCommand: "install -g bun"
-      verbose: true
+      customCommand: "install --global bun@$(BUN_VERSION)"
     displayName: "Install bun using npm"
+
+  - task: Cache@2
+    inputs:
+      key: '"bun" | "$(Agent.OS)" | "$(BUN_VERSION)" | bun.lock'
+      restoreKeys: |
+        "bun" | "$(Agent.OS)" | "$(BUN_VERSION)"
+      path: "$(BUN_INSTALL_CACHE_DIR)"
+    displayName: "Cache bun packages"
 
   - script: |
       bun install --frozen-lockfile
+    env:
+      BUN_INSTALL_CACHE_DIR: "$(BUN_INSTALL_CACHE_DIR)"
     displayName: "Install dependencies using bun"
 
   - script: |
