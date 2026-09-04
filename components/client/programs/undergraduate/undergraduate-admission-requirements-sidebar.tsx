@@ -24,7 +24,7 @@ type AdmissionRequirementsSidebarButtonProps = {
 function AdmissionRequirementsSidebarButton({ url, title, icon, color }: AdmissionRequirementsSidebarButtonProps) {
   const classes = tv({
     slots: {
-      button: "w-full font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1",
+      button: "w-full font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
       icon: "pe-3 text-3xl inline-block align-middle",
     },
   })();
