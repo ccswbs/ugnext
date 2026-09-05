@@ -21,23 +21,32 @@ type AdmissionRequirementsSectionsProps = {
   sections: UndergraduateAdmissionRequirementSection[];
 };
 
-export function AdmissionRequirementsSections({
+export function UndergraduateAdmissionRequirementsSections({
   studentType,
   location,
   program,
   sections,
 }: AdmissionRequirementsSectionsProps) {
   const isCoop = program.type.some((type) => type.name === "Co-op");
-  const isTransfer = studentType.id === "682" || studentType.id === "681";
+  const isTransfer = studentType.id === "682" || studentType.id === "681" || studentType.id === "683";
+  const isCoopOnly = program.degree?.some((degree) => degree.id === "5218");
+  const isHighSchool = studentType.id === "684";
 
   return (
     <>
       {isCoop && (
         <>
-          <Typography type="body" as="span" className="block! italic">
-            This subject is offered with and without{" "}
-            <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
-          </Typography>
+          {isCoopOnly && isHighSchool ? (
+            <Typography type="body" as="span" className="block! italic">
+              This subject is <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link> admission
+              only.
+            </Typography>
+          ) : (
+            <Typography type="body" as="span" className="block! italic">
+              This subject is offered with and without{" "}
+              <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link>.
+            </Typography>
+          )}
 
           {isTransfer && (
             <Typography type="body" as="span" className="block! italic">
@@ -115,14 +124,16 @@ export function AdmissionRequirementsSections({
               {section.title === "Estimated Cut-off Range" && section.content !== "" && (
                 <>
                   <Typography type="body" as="p" className="italic">
-                    Cut-off ranges are estimates based on past years. Actual cut-offs depend on the number and strength
-                    of applicants and available space. Meeting the range does not guarantee admission.
+                    Estimated cut-off ranges are based on admission averages from previous years and are provided as a
+                    point of reference. Exact cut-offs are determined by the quantity and quality of applications
+                    received and the space available in the program. Having an average within this range does not
+                    guarantee admission
                   </Typography>
 
                   {isCoop && !isTransfer && (
                     <Typography type="body" as="p" className="italic">
-                      Co-op cut-offs are usually higher. If you don’t qualify, you’ll be considered for the regular
-                      program.
+                      Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to co-op
+                      will be automatically considered for the regular program.
                     </Typography>
                   )}
                 </>
