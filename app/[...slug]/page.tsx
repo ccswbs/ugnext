@@ -24,7 +24,7 @@ export async function generateStaticParams() {
 
   const paths = await getAllBasicPagePaths();
 
-  return paths.slice(0, 50).map((path) => ({
+  return paths.map((path) => ({
     slug: path.split("/").slice(1),
   }));
 }

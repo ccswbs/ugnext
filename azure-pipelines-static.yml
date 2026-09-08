@@ -4,7 +4,7 @@ trigger:
 pr: none
 
 variables:
-  - group: ugnext
+  - group: ugnext-static
   - name: BUN_VERSION
     value: "1.4.1"
   - name: BUN_INSTALL_CACHE_DIR
