@@ -1,5 +1,5 @@
 import { Layout } from "@uoguelph/react-components/layout";
-import { Header } from "@uoguelph/react-components/header";
+import { Header } from "@/components/server/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
@@ -29,6 +29,7 @@ import { Divider } from "@uoguelph/react-components/divider";
 import { UndergraduateAdmissionRequirementsSections } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sections";
 import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsYaml } from "@/data/yaml/programs/undergraduate";
 import { slugify } from "@/lib/string-utils";
+import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -103,9 +104,11 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
     program
   );
 
+  const primaryNavigation = await getPrimaryNavigation(location?.type === "domestic" ? "499" : "508");
+
   return (
     <Layout>
-      <Header></Header>
+      <Header primaryNavigation={primaryNavigation}></Header>
 
       <LayoutContent className="pb-8">
         <Grid
