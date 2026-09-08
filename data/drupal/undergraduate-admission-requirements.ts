@@ -160,6 +160,7 @@ export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SECTION_FRAGMENT = gql(/* gql *
     type {
       ... on TermUndergradReqSecType {
         name
+        weight
       }
     }
     overrides
@@ -314,6 +315,7 @@ export type UndergraduateAdmissionRequirementSidebar = NonNullable<Undergraduate
 export type UndergraduateAdmissionRequirementSection = {
   title: string;
   content: string;
+  weight: number;
 };
 
 async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]) {
@@ -380,13 +382,14 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
     sections.push({
       title: entry[0],
       content: content,
+      weight: entry[1][0].type.weight,
     });
   }
 
   return {
     sidebar: sidebar,
     paths: paths,
-    sections: sections,
+    sections: sections.sort((a, b) => a.weight - b.weight),
   };
 }
 

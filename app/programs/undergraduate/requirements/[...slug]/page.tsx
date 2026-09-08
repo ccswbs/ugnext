@@ -1,5 +1,5 @@
 import { Layout } from "@uoguelph/react-components/layout";
-import { Header } from "@uoguelph/react-components/header";
+import { Header } from "@/components/server/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
@@ -21,14 +21,15 @@ import { notFound } from "next/navigation";
 import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Grid } from "@uoguelph/react-components/grid";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
-import { AdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/admission-requirements-sidebar";
+import { UndergraduateAdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sidebar";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import React from "react";
 import { Divider } from "@uoguelph/react-components/divider";
-import { AdmissionRequirementsSections } from "@/components/client/programs/undergraduate/admission-requirements-sections";
+import { UndergraduateAdmissionRequirementsSections } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sections";
 import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsYaml } from "@/data/yaml/programs/undergraduate";
 import { slugify } from "@/lib/string-utils";
+import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -103,9 +104,11 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
     program
   );
 
+  const primaryNavigation = await getPrimaryNavigation(location?.type === "domestic" ? "499" : "508");
+
   return (
     <Layout>
-      <Header></Header>
+      <Header primaryNavigation={primaryNavigation}></Header>
 
       <LayoutContent className="pb-8">
         <Grid
@@ -130,7 +133,7 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
                 for more information on how to apply.
               </Typography>
             ) : (
-              <AdmissionRequirementsSections
+              <UndergraduateAdmissionRequirementsSections
                 sections={sections}
                 program={program}
                 studentType={studentType}
@@ -139,7 +142,7 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
             )}
           </div>
 
-          <AdmissionRequirementsSidebar
+          <UndergraduateAdmissionRequirementsSidebar
             sidebar={sidebar}
             program={program}
             studentType={studentType}

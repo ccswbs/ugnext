@@ -11,9 +11,9 @@ import {
   getUndergraduateAdmissionStudentTypes,
 } from "@/data/drupal/undergraduate-admission-requirements";
 import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationYaml } from "@/data/yaml/programs/undergraduate";
-import AdmissionRequirementsForm from "@/components/client/programs/undergraduate/admission-requirements-form";
+import UndergraduateAdmissionRequirementsForm from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-form";
 import { getUndergraduateMajors } from "@/data/drupal/undergraduate-program";
-import { AdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/admission-requirements-sidebar";
+import { UndergraduateAdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sidebar";
 import { slugify } from "@/lib/string-utils";
 
 async function getUndergraduateAdmissionLocations() {
@@ -58,14 +58,19 @@ export default async function ProgramsUndergraduateRequirements() {
           }}
         >
           <div>
-            <Typography type="h1" as="h1" className="block">
+            <Typography type="h1" as="h1" className="block mb-4">
               Undergraduate Admission Requirements
             </Typography>
 
-            <AdmissionRequirementsForm studentTypes={studentTypes} locations={locations} programs={programs} />
+            <UndergraduateAdmissionRequirementsForm
+              studentTypes={studentTypes}
+              locations={locations}
+              programs={programs}
+              isDomesticOnly // Remove when international admission requirements are ready.
+            />
           </div>
 
-          <AdmissionRequirementsSidebar sidebar={sidebar} />
+          <UndergraduateAdmissionRequirementsSidebar sidebar={sidebar} />
         </Grid>
       </LayoutContent>
 

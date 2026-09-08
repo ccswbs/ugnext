@@ -24,7 +24,7 @@ type AdmissionRequirementsSidebarButtonProps = {
 function AdmissionRequirementsSidebarButton({ url, title, icon, color }: AdmissionRequirementsSidebarButtonProps) {
   const classes = tv({
     slots: {
-      button: "w-full font-medium flex items-center justify-start! gap-x-1 leading-6 mx-1",
+      button: "w-full font-medium flex items-center justify-start! gap-x-1 leading-6 mx-0",
       icon: "pe-3 text-3xl inline-block align-middle",
     },
   })();
@@ -49,14 +49,14 @@ type AdmissionRequirementsSidebarProps = {
   sidebar: UndergraduateAdmissionRequirementSidebar;
 };
 
-export function AdmissionRequirementsSidebar({
+export function UndergraduateAdmissionRequirementsSidebar({
   sidebar,
   program,
   studentType,
   location,
 }: AdmissionRequirementsSidebarProps) {
   return (
-    <div className="flex flex-col gap-4 mt-7.5">
+    <div className="flex flex-col gap-4 mt-7.5 w-full">
       {(program || studentType || location) && (
         <AdmissionRequirementsSidebarButton
           url="/programs/undergraduate/requirements"
@@ -68,7 +68,7 @@ export function AdmissionRequirementsSidebar({
       {sidebar?.map((button) => (
         <AdmissionRequirementsSidebarButton
           key={button.id}
-          color={button.link.title === "Apply Now!" ? "red" : "black"}
+          color={button.link.title === "Apply Now!" ? "primary" : "secondary"}
           url={button.link.url ?? ""}
           title={button.link.title ?? ""}
           icon={button.fontAwesomeIcon ?? ""}
@@ -78,7 +78,7 @@ export function AdmissionRequirementsSidebar({
       {program && (
         <AdmissionRequirementsSidebarButton
           key={program.id}
-          color="black"
+          color="secondary"
           url={program.url.url ?? ""}
           title={`Learn more about ${program.title}`}
           icon={faCircleInfo}
