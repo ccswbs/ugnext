@@ -147,7 +147,6 @@ export async function News({ id }: { id: string }) {
 
   const tags: string[] = [];
   const units: string[] = [];
-  const customFooterID: string = article.primaryNavigation?.customFooter?.id ?? "";
 
   article.tags?.forEach((tag) => {
     if (tag.__typename === "TermTag") {
@@ -184,6 +183,8 @@ export async function News({ id }: { id: string }) {
 
     primaryWidgets.push(widget);
   }
+
+  console.log(article);
 
   return (
     <Layout>

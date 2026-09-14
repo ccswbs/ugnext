@@ -197,7 +197,7 @@ export async function getNewsArticle(id: string) {
 
   return {
     ...(data.nodeNews as NewsFragment),
-    primaryNavigation: article.primaryNavigation ? processPrimaryNavigation(article.primaryNavigation) : null,
+    primaryNavigation: article.primaryNavigation ? await processPrimaryNavigation(article.primaryNavigation) : null,
     unitHome: unitHome,
     newsHome: newsHome,
     directory: directory,
