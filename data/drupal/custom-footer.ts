@@ -7,6 +7,7 @@ import { CustomFooterFragment } from "@/lib/graphql/types";
 export const CUSTOM_FOOTER_FRAGMENT = gql(/* gql */ `
   fragment CustomFooter on NodeCustomFooter {
     __typename
+    id
     status
     title
     body {
