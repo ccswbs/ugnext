@@ -23,6 +23,12 @@ steps:
       npx playwright install --with-deps
     displayName: 'Install Playwright browsers'
 
+  - task: Cache@2
+    displayName: 'Cache .next/cache'
+    inputs:
+      key: next | $(Agent.OS) | bun.lock
+      path: '$(System.DefaultWorkingDirectory)/.next/cache'
+
   - script: |
       bun run test
     displayName: "Run playwright tests"

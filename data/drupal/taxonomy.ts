@@ -207,6 +207,7 @@ export const ADMISSION_STUDENT_TYPE = gql(/* gql */ `
     id
     name
     path
+    weight
   }
 `);
 
@@ -216,11 +217,7 @@ export const ADMISSION_LOCATION = gql(/* gql */ `
     id
     name
     weight
-    parent {
-      ... on TermAdmissionLocation {
-        name
-      }
-    }
+    type
     path
   }
 `);

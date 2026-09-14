@@ -1,94 +1,63 @@
 import { revalidatePath, revalidateTag } from "next/cache";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { draftMode } from "next/headers";
 import { getRoute } from "@/data/drupal/route";
+import { getPathsByEntity /*getTagsToRevalidateByEntity*/ } from "@/data/drupal/linked-revalidation";
 
-/* TODO: Re-enable this once caching for linked revalidation is fixed. */
-// import { draftMode } from "next/headers";
-// import { getPathsByEntity, getTagsToRevalidateByEntity } from "@/data/drupal/linked-revalidation";
+export const dynamic = "force-dynamic";
 
-async function handler(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const secret = searchParams.get("secret");
-  const path = searchParams.get("path");
-  const tags = searchParams.get("tags");
-
-  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET) {
-    return new Response("Invalid secret.", { status: 401 });
-  }
-
-  // Either tags or path must be provided.
-  if (!path && !tags) {
-    return new Response("Missing path or tags.", { status: 400 });
-  }
-
-  // Some node types might require some custom revalidation logic.
-  if (path) {
+async function revalidate(paths: string[] = [], tags: string[] = []) {
+  for (const path of paths) {
     const route = await getRoute(path);
 
     if (route && route.__typename === "RouteInternal" && route.entity) {
-      switch (route.entity.__typename) {
-        case "NodeUndergraduateRequirement":
-          revalidatePath("/programs/undergraduate/requirements/[...slug]", "page");
-          break;
-      }
+      // TODO: Enable when linked revalidation is fixed.
+      //tags.push(...getTagsToRevalidateByEntity(route.entity));
+      paths.push(...getPathsByEntity(route.entity));
     }
   }
 
-  try {
-    path && revalidatePath(path);
-    tags?.split(",").forEach((tag) => revalidateTag(tag, "max"));
-
-    return new Response("Revalidated.");
-  } catch (error) {
-    return new Response((error as Error).message, { status: 500 });
+  for (const tag of tags) {
+    revalidateTag(tag, "max");
   }
 
-  // --- Code for LINKED REVALIDATION
-  /* TODO: Re-enable this once caching for linked revalidation is fixed. */
-  
-  // const searchParams = request.nextUrl.searchParams;
-  // const secret = searchParams.get("secret");
-  // const { isEnabled } = await draftMode();
+  for (const path of paths) {
+    if (/(^|\/)\[(?:\.\.\.)?[A-Za-z0-9_-]+](?=\/|$)/.test(path)) {
+      revalidatePath(path, "page");
+    } else {
+      revalidatePath(path);
+    }
+  }
 
-  // User must provide a valid secret or be in draft mode to revalidate.
-  // if (secret !== process.env.DRUPAL_REVALIDATE_SECRET && !isEnabled) {
-  //   return new Response("Invalid secret or you are not in draft mode.", { status: 401 });
-  // }
-
-  // const pathParam = searchParams.get("path");
-  // const tagsParam = searchParams.get("tags");
-
-  // if (!pathParam && !tagsParam) {
-  //   return new Response("Missing path or tags.", { status: 400 });
-  // }
-
-  // const paths: string[] = [];
-  // const tags: string[] = [];
-
-  // if (pathParam) {
-  //   paths.push(pathParam);
-
-  //   const route = await getRoute(pathParam);
-
-  //   if (route && route.__typename === "RouteInternal" && route.entity) {
-  //     tags.push(...getTagsToRevalidateByEntity(route.entity));
-  //     paths.push(...getPathsByEntity(route.entity));
-  //   }
-  // }
-
-  // if (tagsParam) {
-  //   tags.push(...tagsParam.split(","));
-  // }
-
-  // for (const tag of tags) {
-  //   revalidateTag(tag, { expire: 0 });
-  // }
-
-  // for (const path of paths) {
-  //   revalidatePath(path, "page");
-  // }
-
-  // return Response.json({ tags, paths });
+  return NextResponse.json({ message: "Revalidation successful.", tags, paths });
 }
 
-export { handler as GET, handler as POST };
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const secret = searchParams.get("secret");
+  const { isEnabled } = await draftMode();
+
+  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET && !isEnabled) {
+    return NextResponse.json({ message: "Invalid secret or you are not in draft mode." }, { status: 401 });
+  }
+
+  const pathParam = searchParams.get("path");
+  const tagsParam = searchParams.get("tags");
+
+  return await revalidate(pathParam ? [pathParam] : [], tagsParam?.split(",").filter(Boolean) ?? []);
+}
+
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+  const secret = body.secret;
+  const { isEnabled } = await draftMode();
+
+  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET && !isEnabled) {
+    return NextResponse.json({ message: "Invalid secret or you are not in draft mode." }, { status: 401 });
+  }
+
+  return await revalidate(
+    typeof body.path === "string" ? [body.path] : [],
+    typeof body.tags === "string" ? body.tags.filter(Boolean) : []
+  );
+}

@@ -17,7 +17,7 @@ export function ProgramCard({ program, useDegreeAcronym = false }: { program: Pr
 
   function getProgramDegrees() {
     if (program.__typename === "NodeUndergraduateProgram" && program.degree) {
-      return [program.degree];
+      return program.degree;
     }
 
     if (program.__typename === "GraduateProgram") {
