@@ -5,6 +5,7 @@ import { NewsFragment, NewsWithoutContentFragment } from "@/lib/graphql/types";
 import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
 import { cache } from "react";
 import { ProcessedBasicPage } from "@/data/drupal/basic-page";
+import { ProcessedPrimaryNavigation, processPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 export const NEWS_WITHOUT_CONTENT = gql(/* gql */ `
   fragment NewsWithoutContent on NodeNews {
@@ -141,7 +142,8 @@ export function getNewsBreadcrumb(article: NewsFragment) {
   return values;
 }
 
-export type FullNewsArticle = Omit<NewsFragment, "widgets"> & {
+export type FullNewsArticle = Omit<NewsFragment, "widgets" | "primaryNavigation"> & {
+  primaryNavigation: ProcessedPrimaryNavigation | null;
   unitHome: {
     url: string;
     title: string;
@@ -188,11 +190,14 @@ export async function getNewsArticle(id: string) {
     return null;
   }
 
+  const article = data.nodeNews;
+
   const { unitHome, newsHome, directory } = getNewsBreadcrumb(data.nodeNews);
   const processor = new WidgetProcessor();
 
   return {
     ...(data.nodeNews as NewsFragment),
+    primaryNavigation: article.primaryNavigation ? processPrimaryNavigation(article.primaryNavigation) : null,
     unitHome: unitHome,
     newsHome: newsHome,
     directory: directory,

@@ -224,7 +224,7 @@ export async function News({ id }: { id: string }) {
         </div>
       </LayoutContent>
 
-      <CustomFooter id={customFooterID} />
+      <CustomFooter primaryNavigation={article.primaryNavigation} />
       <Footer></Footer>
     </Layout>
   );

@@ -6,6 +6,7 @@
  */
 
 import { NavigationFragment } from "@/lib/graphql/types";
+import { ProcessedPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 /**
  * Base profile interface with core fields that most profile representations need
@@ -97,7 +98,7 @@ export interface ProfileField {
 export interface FullProfile extends ProfileWithImage {
   uniwebId?: string;
   acceptingNewGrads?: boolean;
-  primaryNavigation?: NavigationFragment;
+  primaryNavigation?: ProcessedPrimaryNavigation;
   body?: {
     processed?: string;
     summary?: string;
