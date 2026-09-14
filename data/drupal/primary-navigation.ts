@@ -5,6 +5,8 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { parse, type LinksetInterface } from "@drupal/linkset";
 import type { MenuFragment, NavigationFragment } from "@/lib/graphql/types";
 import { getCacheTag } from "@/data/drupal/linked-revalidation";
+import { WidgetProcessor } from "@/data/drupal/widgets";
+import { type ProcessedCustomFooter, processCustomFooter } from "@/data/drupal/custom-footer";
 
 export const MENU_CONTENT_FRAGMENT = gql(/* gql */ `
   fragment MenuItem on MenuItem {
@@ -24,7 +26,25 @@ export const MENU_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export async function getPrimaryNavigation(id: string) {
+export type ProcessedPrimaryNavigation = Omit<NavigationFragment, "customFooter"> & {
+  customFooter: ProcessedCustomFooter | null;
+};
+
+export async function processPrimaryNavigation(data: NavigationFragment): Promise<ProcessedPrimaryNavigation> {
+  if (!data.customFooter) {
+    return {
+      ...data,
+      customFooter: null,
+    };
+  }
+
+  return {
+    ...data,
+    customFooter: await processCustomFooter(data.customFooter),
+  };
+}
+
+export async function getPrimaryNavigation(id: string): Promise<ProcessedPrimaryNavigation | null> {
   const { data, error } = await query({
     query: gql(/* gql */ `
       query PrimaryNavigationByID($id: ID!) {
@@ -46,7 +66,11 @@ export async function getPrimaryNavigation(id: string) {
     return null;
   }
 
-  return data.termPrimaryNavigation;
+  if (!data.termPrimaryNavigation) {
+    return null;
+  }
+
+  return processPrimaryNavigation(data.termPrimaryNavigation);
 }
 
 export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
@@ -78,7 +102,7 @@ export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
   return data.menuLinkContent?.results;
 }
 
-export async function getMenuByPrimaryNavigation(primaryNavigation?: NavigationFragment | null) {
+export async function getMenuByPrimaryNavigation(primaryNavigation?: ProcessedPrimaryNavigation | null) {
   if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "no-menu") {
     return null;
   }
@@ -108,7 +132,7 @@ export async function getMenuByPrimaryNavigation(primaryNavigation?: NavigationF
   return data.menu;
 }
 
-export async function getMenuByPrimaryNavigationLinkset(primaryNavigation?: NavigationFragment | null) {
+export async function getMenuByPrimaryNavigationLinkset(primaryNavigation?: ProcessedPrimaryNavigation | null) {
   if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "NO_MENU") {
     return null;
   }
