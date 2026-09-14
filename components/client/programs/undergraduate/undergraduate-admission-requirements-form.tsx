@@ -191,6 +191,13 @@ function UndergraduateAdmissionRequirementsLocationDomesticField() {
         <AutocompleteOptions anchor="bottom" className="max-h-50!">
           {domestic
             .filter((location) => location.name.toLowerCase().includes(query))
+            .sort((a, b) => {
+              if (a.name === "Ontario") {
+                return -1;
+              }
+
+              return a.name.localeCompare(b.name);
+            })
             .map((location) => (
               <AutocompleteOption key={location.id} value={location} className="flex flex-col">
                 {location.name}
