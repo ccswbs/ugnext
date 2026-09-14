@@ -79,6 +79,15 @@ async function getCustomFooterID(tags: string[], units: string[]) {
   return data.customFooterByUnitOrTag.results[0].id;
 }
 
+export async function processCustomFooter(data: CustomFooterFragment): Promise<ProcessedCustomFooter> {
+  const processor = new WidgetProcessor();
+
+  return {
+    ...data,
+    widgets: await processor.processWidgets(data.widgets ?? []),
+  };
+}
+
 async function getCustomFooterByID(id: string): Promise<ProcessedCustomFooter | null> {
   const showUnpublished = await showUnpublishedContent();
 
@@ -112,12 +121,7 @@ async function getCustomFooterByID(id: string): Promise<ProcessedCustomFooter | 
     return null;
   }
 
-  const processor = new WidgetProcessor();
-
-  return {
-    ...data.nodeCustomFooter,
-    widgets: await processor.processWidgets(data.nodeCustomFooter.widgets ?? []),
-  };
+  return processCustomFooter(data.nodeCustomFooter);
 }
 
 export async function getCustomFooter(tags: string[], units: string[], id: string) {

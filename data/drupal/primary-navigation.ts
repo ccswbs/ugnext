@@ -6,7 +6,7 @@ import { parse, type LinksetInterface } from "@drupal/linkset";
 import type { MenuFragment, NavigationFragment } from "@/lib/graphql/types";
 import { getCacheTag } from "@/data/drupal/linked-revalidation";
 import { WidgetProcessor } from "@/data/drupal/widgets";
-import { ProcessedCustomFooter } from "@/data/drupal/custom-footer";
+import { type ProcessedCustomFooter, processCustomFooter } from "@/data/drupal/custom-footer";
 
 export const MENU_CONTENT_FRAGMENT = gql(/* gql */ `
   fragment MenuItem on MenuItem {
@@ -27,8 +27,22 @@ export const MENU_FRAGMENT = gql(/* gql */ `
 `);
 
 export type ProcessedPrimaryNavigation = Omit<NavigationFragment, "customFooter"> & {
-  customFooter?: ProcessedCustomFooter;
+  customFooter: ProcessedCustomFooter | null;
 };
+
+export async function processPrimaryNavigation(data: NavigationFragment): Promise<ProcessedPrimaryNavigation> {
+  if (!data.customFooter) {
+    return {
+      ...data,
+      customFooter: null,
+    };
+  }
+
+  return {
+    ...data,
+    customFooter: await processCustomFooter(data.customFooter),
+  };
+}
 
 export async function getPrimaryNavigation(id: string): Promise<ProcessedPrimaryNavigation | null> {
   const { data, error } = await query({
@@ -56,22 +70,7 @@ export async function getPrimaryNavigation(id: string): Promise<ProcessedPrimary
     return null;
   }
 
-  const navigation = data.termPrimaryNavigation;
-
-  // Process custom footer widgets if available
-  if (navigation.customFooter) {
-    const processor = new WidgetProcessor();
-
-    return {
-      ...navigation,
-      customFooter: {
-        ...navigation.customFooter,
-        widgets: await processor.processWidgets(navigation.customFooter.widgets ?? []),
-      } as ProcessedCustomFooter,
-    };
-  }
-
-  return { ...navigation, customFooter: undefined };
+  return processPrimaryNavigation(data.termPrimaryNavigation);
 }
 
 export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
