@@ -7,6 +7,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import {
   getGeneralAdmissionRequirementPageContent,
   getUndergraduateAdmissionLocationByPath,
+  getUndergraduateAdmissionPrimaryNavigation,
   getUndergraduateAdmissionRequirementPageContent,
   getUndergraduateAdmissionStudentTypeByPath,
   UndergraduateAdmissionLocation,
@@ -30,6 +31,7 @@ import { UndergraduateAdmissionRequirementsSections } from "@/components/client/
 import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsYaml } from "@/data/yaml/programs/undergraduate";
 import { slugify } from "@/lib/string-utils";
 import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
+import { CustomFooter } from "@/components/server/custom-footer";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -110,7 +112,7 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
     program
   );
 
-  const primaryNavigation = await getPrimaryNavigation(location?.type === "domestic" ? "499" : "508");
+  const primaryNavigation = await getUndergraduateAdmissionPrimaryNavigation();
 
   return (
     <Layout>
@@ -174,6 +176,8 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
           </div>
         )}
       </LayoutContent>
+
+      <CustomFooter primaryNavigation={primaryNavigation} />
 
       <Footer></Footer>
     </Layout>

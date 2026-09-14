@@ -1,5 +1,5 @@
 import { Layout } from "@uoguelph/react-components/layout";
-import { Header } from "@uoguelph/react-components/header";
+import { Header } from "@/components/server/header";
 import { LayoutContent } from "@uoguelph/react-components/layout";
 import { Typography } from "@uoguelph/react-components/typography";
 import { Footer } from "@uoguelph/react-components/footer";
@@ -8,6 +8,7 @@ import { Grid } from "@uoguelph/react-components/grid";
 import {
   getGeneralAdmissionRequirementPageContent,
   getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsDrupal,
+  getUndergraduateAdmissionPrimaryNavigation,
   getUndergraduateAdmissionStudentTypes,
 } from "@/data/drupal/undergraduate-admission-requirements";
 import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationYaml } from "@/data/yaml/programs/undergraduate";
@@ -15,6 +16,7 @@ import UndergraduateAdmissionRequirementsForm from "@/components/client/programs
 import { getUndergraduateMajors } from "@/data/drupal/undergraduate-program";
 import { UndergraduateAdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sidebar";
 import { slugify } from "@/lib/string-utils";
+import { CustomFooter } from "@/components/server/custom-footer";
 
 async function getUndergraduateAdmissionLocations() {
   const locationsDrupal = await getUndergraduateAdmissionLocationsDrupal();
@@ -41,10 +43,11 @@ export default async function ProgramsUndergraduateRequirements() {
   const locations = await getUndergraduateAdmissionLocations();
   const programs = await getUndergraduateMajors();
   const { sidebar } = await getGeneralAdmissionRequirementPageContent();
+  const primaryNavigation = await getUndergraduateAdmissionPrimaryNavigation();
 
   return (
     <Layout>
-      <Header></Header>
+      <Header primaryNavigation={primaryNavigation}></Header>
 
       <LayoutContent>
         <Grid
@@ -73,6 +76,8 @@ export default async function ProgramsUndergraduateRequirements() {
           <UndergraduateAdmissionRequirementsSidebar sidebar={sidebar} />
         </Grid>
       </LayoutContent>
+
+      <CustomFooter primaryNavigation={primaryNavigation} />
 
       <Footer></Footer>
     </Layout>
