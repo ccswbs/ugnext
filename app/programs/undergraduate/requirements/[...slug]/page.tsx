@@ -17,7 +17,7 @@ import {
   UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH,
   UNDERGRADUATE_PROGRAMS_NODE_PATH,
 } from "@/lib/undergraduate-admission-requirements";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Grid } from "@uoguelph/react-components/grid";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
@@ -95,6 +95,12 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 export default async function ProgramsUndergraduateRequirementsContent({ params }: Props) {
   const { slug } = await params;
   const { studentType, location, program } = await slugToData(slug);
+
+  // DVM Redirect
+  if (Array.isArray(program.degree) && program.degree.some((degree) => degree.id === "5225")) {
+    redirect("/ovc/dvm-program-application/");
+  }
+
   const title = getPageTitle(studentType, location, program);
 
   const showPaths = await showUnpublishedContent();
