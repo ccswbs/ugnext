@@ -1,9 +1,11 @@
 /**
  * Shared profile domain types
- * 
+ *
  * This file contains common profile-related interfaces that are shared across multiple components.
  * Component-specific interfaces should remain in their respective component files.
  */
+
+import { NavigationFragment } from "@/lib/graphql/types";
 
 /**
  * Base profile interface with core fields that most profile representations need
@@ -95,9 +97,7 @@ export interface ProfileField {
 export interface FullProfile extends ProfileWithImage {
   uniwebId?: string;
   acceptingNewGrads?: boolean;
-  primaryNavigation?: {
-    menuName?: string;
-  };
+  primaryNavigation?: NavigationFragment;
   body?: {
     processed?: string;
     summary?: string;

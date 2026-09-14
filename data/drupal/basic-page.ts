@@ -28,6 +28,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
     }
     heroWidgets {
       ...ModalVideo
+      ...GraduateProgramSummary
     }
     widgets {
       __typename
@@ -53,7 +54,8 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets"> & {
+export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets" | "heroWidgets"> & {
+  heroWidgets: ProcessedWidget[];
   widgets: ProcessedWidget[];
 };
 
@@ -83,21 +85,18 @@ export async function getPageContent(id: string): Promise<ProcessedBasicPage | n
     return null;
   }
 
-  if (data.nodePage.status === false && !showUnpublished) {
+  if (!data.nodePage.status && !showUnpublished) {
     return null;
   }
 
-  if (!data.nodePage.widgets) {
-    return {
-      ...data.nodePage,
-      widgets: [] as ProcessedWidget[],
-    };
-  }
-
   const processor = new WidgetProcessor();
+  const processedHeroWidgets = await processor.processWidgets(data.nodePage.heroWidgets ?? []);
+  const processedWidgets = await processor.processWidgets(data.nodePage.widgets ?? []);
+
   return {
     ...data.nodePage,
-    widgets: await processor.processWidgets(data.nodePage.widgets),
+    heroWidgets: processedHeroWidgets,
+    widgets: processedWidgets,
   };
 }
 

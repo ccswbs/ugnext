@@ -23,16 +23,39 @@ export const FontAwesomeInstruction: HTMLParserInstruction = {
     const hasInlinePreSibling =
       node.prev?.type === "text" || (node.prev?.type === ElementType.Tag && inlineTags.has(node.prev?.tagName));
 
+    // Detect CKEditor's &nbsp; spacing hack: whitespace-only children inside the icon
+    const hasWhitespaceOnlyChildren =
+      (node.children?.length ?? 0) > 0 &&
+      node.children.every((child) => child.type === "text" && (child as any).data?.trim() === "");
+
+    // Skip margin when inside a heading — the heading flex gap handles spacing instead
+    const headingTags = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+    const isInHeading =
+      headingTags.has((node.parent as any)?.tagName ?? "") ||
+      headingTags.has((node.parent as any)?.parent?.tagName ?? "");
+
+    // Map legacy Bootstrap/custom color class names to Tailwind equivalents
+    const colorClassMap: Record<string, string> = {
+      green: "text-green",
+      red: "text-red",
+      blue: "text-blue",
+      yellow: "text-yellow",
+    };
+    const remappedClassName = className
+      .split(/\s+/)
+      .map((cls) => colorClassMap[cls] ?? cls)
+      .join(" ");
+
     const classes = twMerge(
-      props.className as string,
+      remappedClassName,
       className.includes("fs-1") && "sm:text-3xl p-0",
-      hasInlineNextSibling && "mr-[0.3em]",
-      hasInlinePreSibling && "ml-[0.3em]"
+      (hasInlineNextSibling || hasWhitespaceOnlyChildren) && !isInHeading && "mr-[0.3em]",
+      hasInlinePreSibling && !isInHeading && "ml-[0.3em]"
     );
 
     return (
       <i {...props} key={nanoid()} aria-hidden="true" className={classes}>
-        {children}
+        {hasWhitespaceOnlyChildren ? null : children}
       </i>
     );
   },

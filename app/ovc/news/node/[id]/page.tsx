@@ -11,6 +11,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { Metadata, ResolvingMetadata } from "next";
 import { getRoute } from "@/data/drupal/route";
 import { CustomFooter } from "@/components/server/custom-footer";
+import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 export default async function OVCNewsArticle({ params }: Props) {
   const { id } = await params;
   const content = await getLegacyNewsArticle(id);
+  const primaryNavigation = await getPrimaryNavigation("520");
 
   if (!content) {
     notFound();
@@ -41,7 +43,7 @@ export default async function OVCNewsArticle({ params }: Props) {
 
   return (
     <Layout>
-      <Header name="OVC_MAIN"></Header>
+      <Header primaryNavigation={primaryNavigation}></Header>
 
       <LayoutContent container={false}>
         {content.heroImage && !content.doNotDisplayImage ? (

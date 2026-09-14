@@ -1,7 +1,3 @@
-- id: ontario
-  name: Ontario
-  type: domestic
-
 - id: alberta
   name: Alberta
   type: domestic
@@ -26,6 +22,10 @@
   name: Nova Scotia
   type: domestic
 
+- id: ontario
+  name: Ontario
+  type: domestic
+
 - id: prince-edward-island
   name: Prince Edward Island
   type: domestic
@@ -42,8 +42,52 @@
   name: Afghanistan
   type: international
 
+- id: aland-islands
+  name: Aland Islands
+  type: international
+
+- id: albania
+  name: Albania
+  type: international
+
+- id: algeria
+  name: Algeria
+  type: international
+
+- id: andorra
+  name: Andorra
+  type: international
+
+- id: angola
+  name: Angola
+  type: international
+
+- id: anguilla
+  name: Anguilla
+  type: international
+
+- id: antigua-and-barbuda
+  name: Antigua and Barbuda
+  type: international
+
 - id: argentina
   name: Argentina
+  type: international
+
+- id: armenia
+  name: Armenia
+  type: international
+
+- id: aruba
+  name: Aruba
+  type: international
+
+- id: ashmore-and-cartier-islands
+  name: Ashmore and Cartier Islands
+  type: international
+
+- id: australia
+  name: Australia
   type: international
 
 - id: austria
@@ -54,12 +98,12 @@
   name: Azerbaijan
   type: international
 
-- id: bahrain
-  name: Bahrain
-  type: international
-
 - id: bahamas
   name: Bahamas
+  type: international
+
+- id: bahrain
+  name: Bahrain
   type: international
 
 - id: bangladesh
@@ -70,28 +114,108 @@
   name: Barbados
   type: international
 
+- id: bassas-da-india
+  name: Bassas Da India
+  type: international
+
+- id: belarus
+  name: Belarus
+  type: international
+
+- id: belgium
+  name: Belgium
+  type: international
+
+- id: belize
+  name: Belize
+  type: international
+
+- id: benin
+  name: Benin
+  type: international
+
 - id: bermuda
   name: Bermuda
+  type: international
+
+- id: bhutan
+  name: Bhutan
   type: international
 
 - id: bolivia
   name: Bolivia
   type: international
 
+- id: bonaire-sint-eustatius-and-saba
+  name: Bonaire, Sint Eustatius, and Saba
+  type: international
+
+- id: bosnia-and-herzegovina
+  name: Bosnia and Herzegovina
+  type: international
+
 - id: botswana
   name: Botswana
+  type: international
+
+- id: bouvet-island
+  name: Bouvet Island
   type: international
 
 - id: brazil
   name: Brazil
   type: international
 
+- id: british-indian-ocean-territory
+  name: British Indian Ocean Territory
+  type: international
+
+- id: british-virgin-islands
+  name: British Virgin Islands
+  type: international
+
+- id: brunei
+  name: Brunei
+  type: international
+
+- id: bulgaria
+  name: Bulgaria
+  type: international
+
+- id: burkina-faso
+  name: Burkina Faso
+  type: international
+
+- id: burundi
+  name: Burundi
+  type: international
+
+- id: cambodia
+  name: Cambodia
+  type: international
+
 - id: cameroon
   name: Cameroon
   type: international
 
+- id: cape-verde
+  name: Cape Verde
+  type: international
+
 - id: caribbean
   name: Caribbean
+  type: international
+
+- id: cayman-islands
+  name: Cayman Islands
+  type: international
+
+- id: central-african-republic
+  name: Central African Republic
+  type: international
+
+- id: chad
+  name: Chad
   type: international
 
 - id: chile
@@ -102,12 +226,80 @@
   name: China
   type: international
 
+- id: christmas-island
+  name: Christmas Island
+  type: international
+
+- id: clipperton-island
+  name: Clipperton Island
+  type: international
+
+- id: cocos-islands-keeling-islands
+  name: Cocos Islands (Keeling Islands)
+  type: international
+
 - id: colombia
   name: Colombia
   type: international
 
+- id: comoros
+  name: Comoros
+  type: international
+
+- id: congo-brazzaville
+  name: Congo (Brazzaville)
+  type: international
+
+- id: congo-kinshasa
+  name: Congo (Kinshasa)
+  type: international
+
+- id: cook-islands
+  name: Cook Islands
+  type: international
+
+- id: coral-sea-islands
+  name: Coral Sea Islands
+  type: international
+
 - id: costa-rica
   name: Costa Rica
+  type: international
+
+- id: cote-divoire
+  name: Cote D'Ivoire
+  type: international
+
+- id: croatia
+  name: Croatia
+  type: international
+
+- id: cuba
+  name: Cuba
+  type: international
+
+- id: curacao
+  name: Curacao
+  type: international
+
+- id: cyprus
+  name: Cyprus
+  type: international
+
+- id: czech-republic
+  name: Czech Republic
+  type: international
+
+- id: denmark
+  name: Denmark
+  type: international
+
+- id: djibouti
+  name: Djibouti
+  type: international
+
+- id: dominica
+  name: Dominica
   type: international
 
 - id: dominican-republic
@@ -122,16 +314,76 @@
   name: Egypt
   type: international
 
-- id: el-savador
-  name: El Savador
+- id: el-salvador
+  name: El Salvador
+  type: international
+
+- id: equatorial-guinea
+  name: Equatorial Guinea
+  type: international
+
+- id: eritrea
+  name: Eritrea
+  type: international
+
+- id: estonia
+  name: Estonia
+  type: international
+
+- id: eswatini
+  name: Eswatini
   type: international
 
 - id: ethiopia
   name: Ethiopia
   type: international
 
+- id: europa-island
+  name: Europa Island
+  type: international
+
+- id: falkland-islands-islas-malvinas
+  name: Falkland Islands (Islas Malvinas)
+  type: international
+
+- id: faroe-islands
+  name: Faroe Islands
+  type: international
+
+- id: federated-states-of-micronesia
+  name: Federated States of Micronesia
+  type: international
+
+- id: fiji
+  name: Fiji
+  type: international
+
+- id: finland
+  name: Finland
+  type: international
+
 - id: france
   name: France
+  type: international
+
+- id: french-guiana
+  name: French Guiana
+  type: international
+
+- id: french-polynesia
+  name: French Polynesia
+  type: international
+
+- id: french-southern-and-antarctic-lands
+  name: French Southern and Antarctic Lands
+  type: international
+
+- id: gabon
+  name: Gabon
+  type: international
+
+- id: georgia
+  name: Georgia
   type: international
 
 - id: germany
@@ -142,20 +394,76 @@
   name: Ghana
   type: international
 
+- id: gibraltar
+  name: Gibraltar
+  type: international
+
+- id: glorioso-islands
+  name: Glorioso Islands
+  type: international
+
 - id: greece
   name: Greece
+  type: international
+
+- id: greenland
+  name: Greenland
+  type: international
+
+- id: grenada
+  name: Grenada
+  type: international
+
+- id: guadeloupe
+  name: Guadeloupe
   type: international
 
 - id: guatemala
   name: Guatemala
   type: international
 
-- id: hong-kong
-  name: Hong Kong
+- id: guernsey
+  name: Guernsey
+  type: international
+
+- id: guinea
+  name: Guinea
+  type: international
+
+- id: guinea-bissau
+  name: Guinea-Bissau
+  type: international
+
+- id: guyana
+  name: Guyana
   type: international
 
 - id: haiti
   name: Haiti
+  type: international
+
+- id: heard-island-and-mcdonald-islands
+  name: Heard Island and McDonald Islands
+  type: international
+
+- id: honduras
+  name: Honduras
+  type: international
+
+- id: hong-kong
+  name: Hong Kong
+  type: international
+
+- id: hong-kong-s.a.r.
+  name: Hong Kong S.A.R.
+  type: international
+
+- id: hungary
+  name: Hungary
+  type: international
+
+- id: iceland
+  name: Iceland
   type: international
 
 - id: india
@@ -178,20 +486,40 @@
   name: Ireland
   type: international
 
-- id: italy
-  name: Italy
+- id: isle-of-man
+  name: Isle of Man
   type: international
 
-- id: japan
-  name: Japan
+- id: israel
+  name: Israel
+  type: international
+
+- id: italy
+  name: Italy
   type: international
 
 - id: jamaica
   name: Jamaica
   type: international
 
+- id: jan-mayen
+  name: Jan Mayen
+  type: international
+
+- id: japan
+  name: Japan
+  type: international
+
+- id: jersey
+  name: Jersey
+  type: international
+
 - id: jordan
   name: Jordan
+  type: international
+
+- id: juan-de-nova-island
+  name: Juan De Nova Island
   type: international
 
 - id: kazakhstan
@@ -202,8 +530,24 @@
   name: Kenya
   type: international
 
+- id: kiribati
+  name: Kiribati
+  type: international
+
+- id: kosovo
+  name: Kosovo
+  type: international
+
 - id: kuwait
   name: Kuwait
+  type: international
+
+- id: kyrgyzstan
+  name: Kyrgyzstan
+  type: international
+
+- id: laos
+  name: Laos
   type: international
 
 - id: latvia
@@ -214,16 +558,76 @@
   name: Lebanon
   type: international
 
+- id: lesotho
+  name: Lesotho
+  type: international
+
+- id: liberia
+  name: Liberia
+  type: international
+
 - id: libya
   name: Libya
+  type: international
+
+- id: liechtenstein
+  name: Liechtenstein
+  type: international
+
+- id: lithuania
+  name: Lithuania
+  type: international
+
+- id: luxembourg
+  name: Luxembourg
+  type: international
+
+- id: macau-s.a.r.
+  name: Macau S.A.R.
+  type: international
+
+- id: madagascar
+  name: Madagascar
+  type: international
+
+- id: malawi
+  name: Malawi
   type: international
 
 - id: malaysia
   name: Malaysia
   type: international
 
+- id: maldives
+  name: Maldives
+  type: international
+
+- id: mali
+  name: Mali
+  type: international
+
+- id: malta
+  name: Malta
+  type: international
+
+- id: marshall-islands
+  name: Marshall Islands
+  type: international
+
+- id: martinique
+  name: Martinique
+  type: international
+
+- id: mauritania
+  name: Mauritania
+  type: international
+
 - id: mauritius
   name: Mauritius
+  type: international
+
+- id: mayotte
+  name: Mayotte
   type: international
 
 - id: mexico
@@ -234,16 +638,88 @@
   name: Middle East
   type: international
 
+- id: moldova
+  name: Moldova
+  type: international
+
+- id: monaco
+  name: Monaco
+  type: international
+
+- id: mongolia
+  name: Mongolia
+  type: international
+
+- id: montenegro
+  name: Montenegro
+  type: international
+
+- id: montserrat
+  name: Montserrat
+  type: international
+
+- id: morocco
+  name: Morocco
+  type: international
+
+- id: mozambique
+  name: Mozambique
+  type: international
+
+- id: myanmar
+  name: Myanmar
+  type: international
+
+- id: namibia
+  name: Namibia
+  type: international
+
+- id: nauru
+  name: Nauru
+  type: international
+
+- id: nepal
+  name: Nepal
+  type: international
+
 - id: netherlands
   name: Netherlands
+  type: international
+
+- id: new-caledonia
+  name: New Caledonia
   type: international
 
 - id: new-zealand
   name: New Zealand
   type: international
 
+- id: nicaragua
+  name: Nicaragua
+  type: international
+
+- id: niger
+  name: Niger
+  type: international
+
 - id: nigeria
   name: Nigeria
+  type: international
+
+- id: niue
+  name: Niue
+  type: international
+
+- id: norfolk-island
+  name: Norfolk Island
+  type: international
+
+- id: north-korea
+  name: North Korea
+  type: international
+
+- id: north-macedonia
+  name: North Macedonia
   type: international
 
 - id: norway
@@ -258,6 +734,10 @@
   name: Pakistan
   type: international
 
+- id: palau-the-pacific-islands-of
+  name: Palau, the Pacific Islands of
+  type: international
+
 - id: palestine
   name: Palestine
   type: international
@@ -266,12 +746,24 @@
   name: Panama
   type: international
 
+- id: papua-new-guinea
+  name: Papua New Guinea
+  type: international
+
+- id: paraguay
+  name: Paraguay
+  type: international
+
 - id: peru
   name: Peru
   type: international
 
 - id: philippines
   name: Philippines
+  type: international
+
+- id: pitcairn-islands
+  name: Pitcairn Islands
   type: international
 
 - id: poland
@@ -286,28 +778,148 @@
   name: Qatar
   type: international
 
+- id: reunion
+  name: Reunion
+  type: international
+
+- id: romania
+  name: Romania
+  type: international
+
 - id: russia
   name: Russia
+  type: international
+
+- id: rwanda
+  name: Rwanda
+  type: international
+
+- id: saint-barthelemy
+  name: Saint Barthelemy
+  type: international
+
+- id: saint-helena
+  name: Saint Helena
+  type: international
+
+- id: saint-kitts-and-nevis
+  name: Saint Kitts and Nevis
+  type: international
+
+- id: saint-lucia
+  name: Saint Lucia
+  type: international
+
+- id: saint-martin
+  name: Saint Martin
+  type: international
+
+- id: saint-pierre-and-miquelon
+  name: Saint Pierre and Miquelon
+  type: international
+
+- id: saint-vincent-and-the-grenadines
+  name: Saint Vincent and the Grenadines
+  type: international
+
+- id: samoa
+  name: Samoa
+  type: international
+
+- id: san-marino
+  name: San Marino
+  type: international
+
+- id: sao-tome-and-principe
+  name: Sao Tome and Principe
+  type: international
+
+- id: saudi-arabia
+  name: Saudi Arabia
   type: international
 
 - id: saudia-arabia
   name: Saudia Arabia
   type: international
 
+- id: senegal
+  name: Senegal
+  type: international
+
+- id: serbia
+  name: Serbia
+  type: international
+
+- id: seychelles
+  name: Seychelles
+  type: international
+
+- id: sierra-leone
+  name: Sierra Leone
+  type: international
+
 - id: singapore
   name: Singapore
+  type: international
+
+- id: sint-maarten
+  name: Sint Maarten
+  type: international
+
+- id: slovakia
+  name: Slovakia
+  type: international
+
+- id: slovenia
+  name: Slovenia
+  type: international
+
+- id: solomon-islands
+  name: Solomon Islands
+  type: international
+
+- id: somalia
+  name: Somalia
   type: international
 
 - id: south-africa
   name: South Africa
   type: international
 
+- id: south-georgia-and-the-south-sandwich-islands
+  name: South Georgia and the South Sandwich Islands
+  type: international
+
 - id: south-korea
   name: South Korea
   type: international
 
+- id: south-sudan
+  name: South Sudan
+  type: international
+
+- id: spain
+  name: Spain
+  type: international
+
+- id: spratly-islands
+  name: Spratly Islands
+  type: international
+
 - id: sri-lanka
   name: Sri Lanka
+  type: international
+
+- id: sudan
+  name: Sudan
+  type: international
+
+- id: suriname
+  name: Suriname
+  type: international
+
+- id: svalbard
+  name: Svalbard
   type: international
 
 - id: sweden
@@ -326,6 +938,10 @@
   name: Taiwan
   type: international
 
+- id: tajikistan
+  name: Tajikistan
+  type: international
+
 - id: tanzania
   name: Tanzania
   type: international
@@ -334,12 +950,60 @@
   name: Thailand
   type: international
 
+- id: the-bahamas
+  name: The Bahamas
+  type: international
+
+- id: the-gambia
+  name: The Gambia
+  type: international
+
+- id: timor-leste
+  name: Timor-Leste
+  type: international
+
+- id: togo
+  name: Togo
+  type: international
+
+- id: tokelau
+  name: Tokelau
+  type: international
+
+- id: tonga
+  name: Tonga
+  type: international
+
 - id: trinidad
   name: Trinidad
   type: international
 
+- id: trinidad-and-tobago
+  name: Trinidad and Tobago
+  type: international
+
+- id: tromelin-island
+  name: Tromelin Island
+  type: international
+
+- id: tunisia
+  name: Tunisia
+  type: international
+
 - id: turkey
   name: Turkey
+  type: international
+
+- id: turkmenistan
+  name: Turkmenistan
+  type: international
+
+- id: turks-and-caicos-islands
+  name: Turks and Caicos Islands
+  type: international
+
+- id: tuvalu
+  name: Tuvalu
   type: international
 
 - id: uae
@@ -354,16 +1018,32 @@
   name: Ukraine
   type: international
 
-- id: united-states-of-america
-  name: United States of America
+- id: united-arab-emirates
+  name: United Arab Emirates
   type: international
 
 - id: united-kingdom
   name: United Kingdom
   type: international
 
+- id: united-states-of-america
+  name: United States of America
+  type: international
+
+- id: uruguay
+  name: Uruguay
+  type: international
+
 - id: uzbekistan
   name: Uzbekistan
+  type: international
+
+- id: vanuatu
+  name: Vanuatu
+  type: international
+
+- id: vatican-city
+  name: Vatican City
   type: international
 
 - id: venezuela
@@ -372,6 +1052,14 @@
 
 - id: vietnam
   name: Vietnam
+  type: international
+
+- id: wallis-and-futuna-islands
+  name: Wallis and Futuna Islands
+  type: international
+
+- id: western-sahara
+  name: Western Sahara
   type: international
 
 - id: yemen
@@ -410,6 +1098,3 @@
   name: International Baccalaureate
   type: curriculum
 
-- id: british-patterned-education-gce
-  name: British Patterned Education (GCE)
-  type: curriculum

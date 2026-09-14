@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import React from "react";
 import { Typography } from "@uoguelph/react-components/typography";
 import { twMerge } from "tailwind-merge";
 import { clamp } from "@uoguelph/react-components";
@@ -24,6 +25,17 @@ export const HeadingInstruction: HTMLParserInstruction = {
     const headingClass = className.match(/\bh\d\b/g);
     const displayClass = /\bdisplay-(\d)\b/g.exec(className);
     const cleanedChildren = unwrapTags(children);
+
+    const isFAIconNode = (child: any) =>
+      child?.type === "tag" && child.tagName === "i" && /\b(fa[srlbdt]?|fa-[a-z0-9-]+)\b/.test(child.attribs?.class ?? "");
+    const firstMeaningfulDOMChild = node.children?.find(
+      (child) => !(child.type === "text" && (child as any).data?.trim() === "")
+    );
+    const startsWithIcon =
+      isFAIconNode(firstMeaningfulDOMChild) ||
+      ((firstMeaningfulDOMChild as any)?.tagName === "em" &&
+        (firstMeaningfulDOMChild as any)?.children?.some(isFAIconNode));
+
     let type = level;
     let emphasize = false;
 
@@ -48,7 +60,7 @@ export const HeadingInstruction: HTMLParserInstruction = {
         type={type}
         as={level}
         emphasize={emphasize}
-        className={twMerge("group-first/html-parser:first:mt-0", className)}
+        className={twMerge("group-first/html-parser:first:mt-0", startsWithIcon && "flex items-baseline gap-[0.4em]", className)}
       >
         {cleanedChildren}
       </Typography>

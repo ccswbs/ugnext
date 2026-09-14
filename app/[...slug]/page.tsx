@@ -13,6 +13,12 @@ type Props = {
 export async function generateStaticParams() {
   if (process.env.NEXT_PREBUILD_BASIC_PAGES !== "true") {
     return [];
+    // Linked revalidation requires a return value
+    // return [
+    //   {
+    //     slug: ["ovc"],
+    //   },
+    // ];
   }
 
   const paths = await getAllBasicPagePaths();
@@ -87,7 +93,7 @@ export default async function Page({ params }: Props) {
       permanentRedirect("/programs/undergraduate/requirements/");
       break;
     default:
-      if (process.env.NODE_ENV === "development") {
+      if (process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live") {
         console.warn(
           `Attempted to render a page with an entity type ${route.entity.__typename} but no component is set to render that type in app/[...slug]/page.tsx.`
         );

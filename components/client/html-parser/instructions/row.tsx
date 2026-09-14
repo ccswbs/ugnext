@@ -17,13 +17,46 @@ export const RowInstruction: HTMLParserInstruction = {
 
     let convertedGrid: string[] = [];
 
-    {
+    // Check for row-cols-* classes on the row element itself first.
+    // e.g. "row-cols-1 row-cols-md-3" defines layout without per-child col classes.
+    const rowColsPattern = /^row-cols-(?:(xs|sm|md|lg|xl|xxl)-)?(\d+)$/;
+    const rowClasses = (props.className as string).split(/\s+/);
+    let hasRowCols = false;
+
+    rowClasses.forEach((cls) => {
+      const match = cls.match(rowColsPattern);
+      if (match) {
+        hasRowCols = true;
+        const viewport = match[1];
+        const numCols = parseInt(match[2]);
+        const gridCols = Array(numCols).fill("1fr");
+
+        if (!viewport) {
+          templateValues.base = gridCols;
+        } else {
+          switch (viewport) {
+            case "xs":
+            case "sm":
+              templateValues.sm = gridCols;
+              break;
+            case "md":
+            case "lg":
+              templateValues.md = gridCols;
+              break;
+            case "xl":
+            case "xxl":
+              templateValues.xl = gridCols;
+              break;
+          }
+        }
+      }
+    });
+
+    if (!hasRowCols) {
       React.Children.map(children, (child) => {
         // Parse divs with Boostrap column classes
         if (typeof child !== "string" && child.type === "div") {
           let bsClasses = child.props.className;
-
-          // console.log("Converting:" + bsClasses);
 
           // Assumes Bootstrap format can be col, col-6, col-md, or col-md-6
           if (bsClasses?.includes("col")) {
@@ -41,10 +74,10 @@ export const RowInstruction: HTMLParserInstruction = {
                 // Convert bootstrap columns
                 switch (bootstrapNumColumns[0]) {
                   case "3":
-                    convertedGrid = ["1fr", "1fr", "1fr"];
+                    convertedGrid = ["1fr", "1fr", "1fr", "1fr"];
                     break;
                   case "4":
-                    convertedGrid = ["1fr", "1fr", "1fr", "1fr"];
+                    convertedGrid = ["1fr", "1fr", "1fr"];
                     break;
                   case "6":
                     convertedGrid = ["1fr", "1fr"];
@@ -89,10 +122,8 @@ export const RowInstruction: HTMLParserInstruction = {
       }
     });
 
-    // console.log(templateValues);
-
     return (
-      <Grid className="gap-4 pb-4" template={templateValues}>
+      <Grid className="gap-4 py-4" template={templateValues}>
         {children}
       </Grid>
     );

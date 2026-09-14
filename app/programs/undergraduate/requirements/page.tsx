@@ -7,18 +7,36 @@ import { Metadata } from "next";
 import { Grid } from "@uoguelph/react-components/grid";
 import {
   getGeneralAdmissionRequirementPageContent,
-  getUndergraduateAdmissionLocations,
+  getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsDrupal,
   getUndergraduateAdmissionStudentTypes,
 } from "@/data/drupal/undergraduate-admission-requirements";
-import AdmissionRequirementsForm from "@/components/client/programs/undergraduate/admission-requirements-form";
+import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationYaml } from "@/data/yaml/programs/undergraduate";
+import UndergraduateAdmissionRequirementsForm from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-form";
 import { getUndergraduateMajors } from "@/data/drupal/undergraduate-program";
-import { AdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/admission-requirements-sidebar";
+import { UndergraduateAdmissionRequirementsSidebar } from "@/components/client/programs/undergraduate/undergraduate-admission-requirements-sidebar";
+import { slugify } from "@/lib/string-utils";
+
+async function getUndergraduateAdmissionLocations() {
+  const locationsDrupal = await getUndergraduateAdmissionLocationsDrupal();
+  const locationsYaml = await getUndergraduateAdmissionLocationYaml();
+  const locations = [...locationsDrupal];
+
+  const drupalSlugs = new Set(locationsDrupal.map((location) => slugify(location.name)));
+
+  for (const locationYaml of locationsYaml) {
+    if (!drupalSlugs.has(slugify(locationYaml.name))) {
+      locations.push(locationYaml);
+    }
+  }
+
+  return locations;
+}
 
 export const metadata: Metadata = {
   title: "Undergraduate Admission Requirements",
 };
 
-export default async function ProgramsUndergraduate() {
+export default async function ProgramsUndergraduateRequirements() {
   const studentTypes = await getUndergraduateAdmissionStudentTypes();
   const locations = await getUndergraduateAdmissionLocations();
   const programs = await getUndergraduateMajors();
@@ -40,14 +58,19 @@ export default async function ProgramsUndergraduate() {
           }}
         >
           <div>
-            <Typography type="h1" as="h1" className="block">
+            <Typography type="h1" as="h1" className="block mb-4">
               Undergraduate Admission Requirements
             </Typography>
 
-            <AdmissionRequirementsForm studentTypes={studentTypes} locations={locations} programs={programs} />
+            <UndergraduateAdmissionRequirementsForm
+              studentTypes={studentTypes}
+              locations={locations}
+              programs={programs}
+              isDomesticOnly // Remove when international admission requirements are ready.
+            />
           </div>
 
-          <AdmissionRequirementsSidebar sidebar={sidebar} />
+          <UndergraduateAdmissionRequirementsSidebar sidebar={sidebar} />
         </Grid>
       </LayoutContent>
 
