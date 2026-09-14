@@ -17,7 +17,10 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
 
   // Reporter to use
-  reporter: [["junit", { outputFile: "test-results/e2e-junit-results.xml" }]],
+  reporter: [
+    ["html", { outputFolder: "playwright-report", open: "never" }],
+    ["junit", { outputFile: "test-results/e2e-junit-results.xml" }],
+  ],
 
   use: {
     // Base URL to use in actions like `await page.goto('/')`.
@@ -25,6 +28,12 @@ export default defineConfig({
 
     // Collect trace when retrying the failed test.
     trace: "on-first-retry",
+
+    // Capture screenshots when a test fails.
+    screenshot: "only-on-failure",
+
+    // Keep video only when a test fails.
+    video: "retain-on-failure",
   },
   // Configure projects for major browsers.
   projects: [
