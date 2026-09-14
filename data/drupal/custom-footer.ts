@@ -30,7 +30,16 @@ export type ProcessedCustomFooter = Omit<CustomFooterFragment, "widgets"> & {
   widgets: ProcessedWidget[];
 };
 
-async function getCustomFooterID(tags: string[], units: string[]) {
+export async function processCustomFooter(data: CustomFooterFragment): Promise<ProcessedCustomFooter> {
+  const processor = new WidgetProcessor();
+
+  return {
+    ...data,
+    widgets: await processor.processWidgets(data.widgets ?? []),
+  };
+}
+
+export async function getCustomFooter(tags: string[], units: string[]) {
   const showUnpublished = await showUnpublishedContent();
 
   if (tags.length === 0 && units.length === 0) {
@@ -39,12 +48,10 @@ async function getCustomFooterID(tags: string[], units: string[]) {
 
   const { data, error } = await query({
     query: gql(/* gql */ `
-      query GetCustomFooterID($tags: [String], $units: [String], $status: Boolean) {
+      query GetCustomFooter($tags: [String], $units: [String], $status: Boolean) {
         customFooterByUnitOrTag(filter: { tag: $tags, unit: $units, status: $status }) {
           results {
-            ... on NodeCustomFooter {
-              id
-            }
+            ...CustomFooter
           }
         }
       }
@@ -76,61 +83,5 @@ async function getCustomFooterID(tags: string[], units: string[]) {
     return null;
   }
 
-  return data.customFooterByUnitOrTag.results[0].id;
-}
-
-export async function processCustomFooter(data: CustomFooterFragment): Promise<ProcessedCustomFooter> {
-  const processor = new WidgetProcessor();
-
-  return {
-    ...data,
-    widgets: await processor.processWidgets(data.widgets ?? []),
-  };
-}
-
-async function getCustomFooterByID(id: string): Promise<ProcessedCustomFooter | null> {
-  const showUnpublished = await showUnpublishedContent();
-
-  const { data, error } = await query({
-    query: gql(/* gql */ `
-      query CustomFooterContent($id: ID!, $revision: ID = "current") {
-        nodeCustomFooter(id: $id, revision: $revision) {
-          ...CustomFooter
-        }
-      }
-    `),
-    variables: {
-      id: id,
-      revision: showUnpublished ? "latest" : "current",
-    },
-  });
-
-  if (error) {
-    handleGraphQLError(error);
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  if (!data.nodeCustomFooter) {
-    return null;
-  }
-
-  if (data.nodeCustomFooter.status === false && !showUnpublished) {
-    return null;
-  }
-
-  return processCustomFooter(data.nodeCustomFooter);
-}
-
-export async function getCustomFooter(tags: string[], units: string[], id: string) {
-  const showUnpublished = await showUnpublishedContent();
-  const resolvedID = id === "" ? await getCustomFooterID(tags, units) : id;
-
-  if (!resolvedID) {
-    return null;
-  }
-
-  return await getCustomFooterByID(resolvedID);
+  return processCustomFooter(data.customFooterByUnitOrTag.results[0]);
 }

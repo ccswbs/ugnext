@@ -10,17 +10,16 @@ import type { ProcessedPrimaryNavigation } from "@/data/drupal/primary-navigatio
 export type CustomFooterProps = {
   tags?: string[];
   units?: string[];
-  id?: string;
   primaryNavigation?: ProcessedPrimaryNavigation | null;
 };
 
-export async function CustomFooter({ tags, units, id, primaryNavigation }: CustomFooterProps) {
+export async function CustomFooter({ tags, units, primaryNavigation }: CustomFooterProps) {
   let content: ProcessedCustomFooter | null = null;
 
   if (primaryNavigation?.customFooter) {
     content = primaryNavigation.customFooter;
   } else {
-    content = await getCustomFooter(tags ?? [], units ?? [], id ?? "");
+    content = await getCustomFooter(tags ?? [], units ?? []);
   }
 
   if (!content) {
