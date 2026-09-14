@@ -273,6 +273,8 @@ function UndergraduateAdmissionRequirementsLocationCurriculumField() {
 }
 
 function UndergraduateAdmissionRequirementsProgramField() {
+  type UndergraduateProgramWithSearchScore = UndergraduateProgram & { score?: number };
+
   const { program, programs, setProgram } = useContext(UndergraduateAdmissionRequirementsFormContext);
 
   const search = useFuzzySearch({
@@ -290,7 +292,7 @@ function UndergraduateAdmissionRequirementsProgramField() {
 
   const filtered = useMemo(() => {
     if (!query) {
-      return programs;
+      return programs as UndergraduateProgramWithSearchScore[];
     }
 
     const results = search({
@@ -302,11 +304,16 @@ function UndergraduateAdmissionRequirementsProgramField() {
       tolerance: 2,
     });
 
-    return results.hits.map((hit) => hit.document as UndergraduateProgram);
+    return results.hits.map((hit) => {
+      return {
+        ...hit.document,
+        score: hit.score,
+      } as UndergraduateProgramWithSearchScore;
+    });
   }, [query, search, programs]);
 
   const grouped = useMemo(() => {
-    const grouped = new Map<string, UndergraduateProgram[]>();
+    const grouped = new Map<string, UndergraduateProgramWithSearchScore[]>();
 
     for (const program of filtered) {
       for (const degree of program.degree ?? []) {
@@ -353,6 +360,7 @@ function UndergraduateAdmissionRequirementsProgramField() {
         <AutocompleteInput
           as="input"
           autoComplete="off"
+          placeholder="Search by program title, ex. Computer Science, Engineering, etc."
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateProgram | null) => selected?.title ?? ""}
         />
@@ -475,7 +483,7 @@ export default function UndergraduateAdmissionRequirementsForm({
         </Info>
       )}
 
-      <form className="w-full flex flex-col max-w-[90rem]" onSubmit={onSubmit}>
+      <form className="w-full flex flex-col max-w-225" onSubmit={onSubmit}>
         <UndergraduateAdmissionRequirementsStudentTypeField />
 
         {isDomesticOnly ? (
