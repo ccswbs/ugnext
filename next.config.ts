@@ -98,14 +98,26 @@ function getNextConfig(): NextConfig {
     },
   };
 
+  // Cap the optimized-image cache. On Cloud Run the "disk" cache is memory-backed
+  // and maximumDiskCacheSize defaults to unbounded. Ignored under static export.
+  (config.images as Record<string, unknown>).maximumDiskCacheSize = Number(
+    process.env.IMAGE_OPT_MAX_DISK_CACHE_BYTES || 300 * 1024 * 1024
+  );
+
+  // Cap sharp's native decode concurrency to the container's CPU budget. Assigned
+  // unconditionally (the worker-cpu key below layers on) so it always applies;
+  // see server.js for the admission gate that bounds requests reaching /_next/image.
+  config.experimental = { ...config.experimental };
+  (config.experimental as Record<string, unknown>).imgOptConcurrency = Number(
+    process.env.IMAGE_OPT_CONCURRENCY || 2
+  );
+
   // Set number of worker threads used when building pages.
   // Sometimes Drupal struggles to keep up with the load if many requests are made at once,
   // so we can lower the number of threads to reduce the number of requests made in parallel.
   const cpuCount = parseInt(process.env.NEXT_WORKER_CPU_COUNT ?? "");
   if (!isNaN(cpuCount)) {
-    config.experimental = {
-      cpus: cpuCount,
-    };
+    config.experimental.cpus = cpuCount;
   }
 
   if (process.env.NEXT_STATIC_OUTPUT === "true") {
