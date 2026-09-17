@@ -320,6 +320,24 @@ function UndergraduateAdmissionRequirementsProgramField() {
   }, [query, search, programs]);
 
   const grouped = useMemo(() => {
+    if (query) {
+      const sections: { degree: string; group: UndergraduateProgramWithSearchScore[] }[] = [];
+
+      // Only group adjacent matches so degree headings never override search rank.
+      for (const program of [...filtered].sort((a, b) => (b.score ?? 0) - (a.score ?? 0))) {
+        for (const degree of program.degree ?? []) {
+          const previous = sections.at(-1);
+          if (previous?.degree === degree.title) {
+            previous.group.push(program);
+          } else {
+            sections.push({ degree: degree.title, group: [program] });
+          }
+        }
+      }
+
+      return sections;
+    }
+
     const grouped = new Map<string, UndergraduateProgramWithSearchScore[]>();
 
     for (const program of filtered) {
@@ -345,7 +363,7 @@ function UndergraduateAdmissionRequirementsProgramField() {
 
         return a.degree.localeCompare(b.degree);
       });
-  }, [filtered]);
+  }, [filtered, query]);
 
   return (
     <Field>
@@ -373,9 +391,9 @@ function UndergraduateAdmissionRequirementsProgramField() {
         />
 
         <AutocompleteOptions anchor="bottom" className="max-h-50!">
-          {grouped.map(({ degree, group }) => {
+          {grouped.map(({ degree, group }, sectionIndex) => {
             return (
-              <Fragment key={degree}>
+              <Fragment key={`${degree}-${sectionIndex}`}>
                 <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
                   {degree}
                 </div>
