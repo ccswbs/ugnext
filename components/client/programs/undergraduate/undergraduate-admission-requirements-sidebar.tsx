@@ -65,10 +65,10 @@ export function UndergraduateAdmissionRequirementsSidebar({
         />
       )}
 
-      {sidebar?.map((button) => (
+      {sidebar?.map((button, index) => (
         <AdmissionRequirementsSidebarButton
           key={button.id}
-          color={button.link.title === "Apply Now!" ? "primary" : "secondary"}
+          color={index === 0 ? "primary" : "secondary"}
           url={button.link.url ?? ""}
           title={button.link.title ?? ""}
           icon={button.fontAwesomeIcon ?? ""}

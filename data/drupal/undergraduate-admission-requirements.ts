@@ -10,6 +10,7 @@ import type {
 import { getRoute } from "@/data/drupal/route";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
+import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 export type UndergraduateAdmissionStudentType = UndergraduateAdmissionStudentTypeFragment;
 
@@ -405,4 +406,8 @@ export async function getUndergraduateAdmissionRequirementPageContent(
 export async function getGeneralAdmissionRequirementPageContent() {
   const ids = await getUndergraduateAdmissionRequirementIDs();
   return await getUndergraduateAdmissionRequirementPageContentByID(ids);
+}
+
+export async function getUndergraduateAdmissionPrimaryNavigation() {
+  return await getPrimaryNavigation("499");
 }
