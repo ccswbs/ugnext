@@ -182,6 +182,7 @@ function UndergraduateAdmissionRequirementsLocationDomesticField() {
         <AutocompleteInput
           as="input"
           autoComplete="off"
+          placeholder="Search by province or territory name."
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateAdmissionLocation | null) =>
             selected?.type === "domestic" ? (selected?.name ?? "") : ""
@@ -230,6 +231,7 @@ function UndergraduateAdmissionRequirementsLocationInternationalField() {
         <AutocompleteInput
           as="input"
           autoComplete="off"
+          placeholder="Search by country name."
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateAdmissionLocation | null) =>
             selected?.type === "international" ? (selected?.name ?? "") : ""
@@ -385,7 +387,7 @@ function UndergraduateAdmissionRequirementsProgramField() {
         <AutocompleteInput
           as="input"
           autoComplete="off"
-          placeholder="Search by program title, ex. Computer Science, Engineering, etc."
+          placeholder="Search by title or keywords, ex. Computer Science, Engineering, etc."
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateProgram | null) => selected?.title ?? ""}
         />
