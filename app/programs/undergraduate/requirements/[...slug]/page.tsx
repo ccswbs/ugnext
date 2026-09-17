@@ -7,6 +7,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import {
   getGeneralAdmissionRequirementPageContent,
   getUndergraduateAdmissionLocationByPath,
+  getUndergraduateAdmissionPrimaryNavigation,
   getUndergraduateAdmissionRequirementPageContent,
   getUndergraduateAdmissionStudentTypeByPath,
   UndergraduateAdmissionLocation,
@@ -17,7 +18,7 @@ import {
   UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH,
   UNDERGRADUATE_PROGRAMS_NODE_PATH,
 } from "@/lib/undergraduate-admission-requirements";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getUndergraduateProgramByPath, UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Grid } from "@uoguelph/react-components/grid";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
@@ -30,6 +31,7 @@ import { UndergraduateAdmissionRequirementsSections } from "@/components/client/
 import { getUndergraduateAdmissionLocations as getUndergraduateAdmissionLocationsYaml } from "@/data/yaml/programs/undergraduate";
 import { slugify } from "@/lib/string-utils";
 import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
+import { CustomFooter } from "@/components/server/custom-footer";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -95,6 +97,12 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 export default async function ProgramsUndergraduateRequirementsContent({ params }: Props) {
   const { slug } = await params;
   const { studentType, location, program } = await slugToData(slug);
+
+  // DVM Redirect
+  if (Array.isArray(program.degree) && program.degree.some((degree) => degree.id === "5225")) {
+    redirect("/ovc/dvm-program-application/");
+  }
+
   const title = getPageTitle(studentType, location, program);
 
   const showPaths = await showUnpublishedContent();
@@ -104,7 +112,7 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
     program
   );
 
-  const primaryNavigation = await getPrimaryNavigation(location?.type === "domestic" ? "499" : "508");
+  const primaryNavigation = await getUndergraduateAdmissionPrimaryNavigation();
 
   return (
     <Layout>
@@ -168,6 +176,8 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
           </div>
         )}
       </LayoutContent>
+
+      {primaryNavigation?.customFooter && <CustomFooter id={primaryNavigation.customFooter.id} />}
 
       <Footer></Footer>
     </Layout>
