@@ -24,10 +24,10 @@ import { usePathname } from "next/navigation";
 import { ButtonWidget } from "@/components/client/widgets/button";
 import { FeaturedNews } from "@/components/client/widgets/featured-news";
 import { NewsSearch } from "@/components/client/widgets/news-search";
-import type { NavigationFragment } from "@/lib/graphql/types";
 import { GraduateProgramSummaryWidget } from "@/components/client/widgets/graduate-program-summary";
+import { ProcessedPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
-export const PrimaryNavigationContext = createContext<NavigationFragment | null>(null);
+export const PrimaryNavigationContext = createContext<ProcessedPrimaryNavigation | null>(null);
 
 export function WidgetSelector({
   data,
@@ -35,7 +35,7 @@ export function WidgetSelector({
   neverWrap = false,
 }: {
   data: ProcessedWidget | ProcessedSectionWidget;
-  primaryNavigation?: NavigationFragment | null;
+  primaryNavigation?: ProcessedPrimaryNavigation | null;
   neverWrap?: boolean;
 }) {
   const pathname = usePathname();
@@ -124,7 +124,11 @@ export function WidgetSelector({
 
   // Add spacing wrapper for certain widgets within sections
   const SpacingWrapper = ({ children }: { children: React.ReactNode }) => {
-    if (noSpaceWidgets.includes(data.__typename || "") || !context || (inGrid && data.__typename === "ParagraphMediaText")) {
+    if (
+      noSpaceWidgets.includes(data.__typename || "") ||
+      !context ||
+      (inGrid && data.__typename === "ParagraphMediaText")
+    ) {
       return <>{children}</>;
     }
     return <div className="py-4">{children}</div>;

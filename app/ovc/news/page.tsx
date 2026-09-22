@@ -29,7 +29,7 @@ export default async function OVCNewsHub() {
         <OvcNewsGrid />
       </LayoutContent>
 
-      <CustomFooter id="758" />
+      <CustomFooter primaryNavigation={primaryNavigation} />
       <Footer></Footer>
     </Layout>
   );

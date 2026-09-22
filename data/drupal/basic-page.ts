@@ -4,6 +4,7 @@ import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { cache } from "react";
 import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
 import { BasicPageFragment } from "@/lib/graphql/types";
+import { ProcessedPrimaryNavigation, processPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
   fragment BasicPageMinimal on NodePage {
@@ -54,7 +55,8 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets" | "heroWidgets"> & {
+export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets" | "heroWidgets" | "primaryNavigation"> & {
+  primaryNavigation: ProcessedPrimaryNavigation | null;
   heroWidgets: ProcessedWidget[];
   widgets: ProcessedWidget[];
 };
@@ -85,18 +87,19 @@ export async function getPageContent(id: string): Promise<ProcessedBasicPage | n
     return null;
   }
 
-  if (!data.nodePage.status && !showUnpublished) {
+  const page = data.nodePage;
+
+  if (!page.status && !showUnpublished) {
     return null;
   }
 
   const processor = new WidgetProcessor();
-  const processedHeroWidgets = await processor.processWidgets(data.nodePage.heroWidgets ?? []);
-  const processedWidgets = await processor.processWidgets(data.nodePage.widgets ?? []);
 
   return {
-    ...data.nodePage,
-    heroWidgets: processedHeroWidgets,
-    widgets: processedWidgets,
+    ...page,
+    primaryNavigation: page.primaryNavigation ? await processPrimaryNavigation(page.primaryNavigation) : null,
+    heroWidgets: await processor.processWidgets(data.nodePage.heroWidgets ?? []),
+    widgets: await processor.processWidgets(data.nodePage.widgets ?? []),
   };
 }
 

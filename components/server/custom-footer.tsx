@@ -1,19 +1,26 @@
-import { getCustomFooter } from "@/data/drupal/custom-footer";
+import { getCustomFooter, ProcessedCustomFooter } from "@/data/drupal/custom-footer";
 import { tv } from "tailwind-variants";
 import { Container } from "@uoguelph/react-components/container";
 import { HtmlParser } from "@/components/client/html-parser";
 import Image from "next/image";
 import { WidgetSelector } from "@/components/client/widgets/widget-selector";
 import React from "react";
+import type { ProcessedPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 export type CustomFooterProps = {
   tags?: string[];
   units?: string[];
-  id?: string;
+  primaryNavigation?: ProcessedPrimaryNavigation | null;
 };
 
-export async function CustomFooter({ tags, units, id }: CustomFooterProps) {
-  const content = await getCustomFooter(tags ?? [], units ?? [], id ?? "");
+export async function CustomFooter({ tags, units, primaryNavigation }: CustomFooterProps) {
+  let content: ProcessedCustomFooter | null = null;
+
+  if (primaryNavigation?.customFooter) {
+    content = primaryNavigation.customFooter;
+  } else {
+    content = await getCustomFooter(tags ?? [], units ?? []);
+  }
 
   if (!content) {
     return <></>;
