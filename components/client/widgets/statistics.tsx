@@ -51,7 +51,7 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
     <StatisticsComponent id={`statistics-${data.uuid}`} variant={variant}>
       {data?.content.map((statistic, index) => {
         return (
-          <StatisticsItem key={index}>
+          <StatisticsItem key={index} className={`${statistic?.image && "justify-between"}`}>
             {statistic?.fontAwesomeIcon && variant === "light-grey" && (
               <i className={`${statistic.fontAwesomeIcon} fa-4x pt-6 -mb-6`}></i>
             )}
