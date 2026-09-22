@@ -177,7 +177,7 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
         )}
       </LayoutContent>
 
-      {primaryNavigation?.customFooter && <CustomFooter id={primaryNavigation.customFooter.id} />}
+      {primaryNavigation?.customFooter && <CustomFooter primaryNavigation={primaryNavigation} />}
 
       <Footer></Footer>
     </Layout>
