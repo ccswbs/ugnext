@@ -46,7 +46,7 @@ export async function getPrimaryNavigation(id: string) {
     return null;
   }
 
-  return data.termPrimaryNavigation;
+  return data.termPrimaryNavigation as NavigationFragment;
 }
 
 export async function getMenuLinkByURI(link_uri: string, menu_name: string) {
