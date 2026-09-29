@@ -46,19 +46,15 @@ export function StudyHere() {
       <LinkCarouselContent>
         <LinkCarouselItem id="undergraduate-programs" className={item()}>
           <Image className={image()} src={undergraduate} alt="" />
-          {/*<span className={caption()}>Leah Weller - Environmental Engineering</span>*/}
         </LinkCarouselItem>
         <LinkCarouselItem id="graduate-programs" className={item()}>
           <Image className={image()} src={graduate} alt="" />
-          {/*<span className={caption()}>Leah Weller - Environmental Engineering</span>*/}
         </LinkCarouselItem>
         <LinkCarouselItem id="international" className={item()}>
           <Image className={image()} src={international} alt="" />
-          {/*<span className={caption()}>Leah Weller - Environmental Engineering</span>*/}
         </LinkCarouselItem>
         <LinkCarouselItem id="lifelong-learning" className={item()}>
           <Image className={image()} src={lifelong} alt="" />
-          {/*<span className={caption()}>Leah Weller - Environmental Engineering</span>*/}
         </LinkCarouselItem>
       </LinkCarouselContent>
     </LinkCarousel>
