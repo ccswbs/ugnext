@@ -182,6 +182,7 @@ function UndergraduateAdmissionRequirementsLocationDomesticField() {
         <AutocompleteInput
           as="input"
           autoComplete="off"
+          placeholder="Search by province or territory name."
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateAdmissionLocation | null) =>
             selected?.type === "domestic" ? (selected?.name ?? "") : ""
@@ -191,6 +192,13 @@ function UndergraduateAdmissionRequirementsLocationDomesticField() {
         <AutocompleteOptions anchor="bottom" className="max-h-50!">
           {domestic
             .filter((location) => location.name.toLowerCase().includes(query))
+            .sort((a, b) => {
+              if (a.name === "Ontario") {
+                return -1;
+              }
+
+              return a.name.localeCompare(b.name);
+            })
             .map((location) => (
               <AutocompleteOption key={location.id} value={location} className="flex flex-col">
                 {location.name}
@@ -223,6 +231,7 @@ function UndergraduateAdmissionRequirementsLocationInternationalField() {
         <AutocompleteInput
           as="input"
           autoComplete="off"
+          placeholder="Search by country name."
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateAdmissionLocation | null) =>
             selected?.type === "international" ? (selected?.name ?? "") : ""
@@ -273,6 +282,8 @@ function UndergraduateAdmissionRequirementsLocationCurriculumField() {
 }
 
 function UndergraduateAdmissionRequirementsProgramField() {
+  type UndergraduateProgramWithSearchScore = UndergraduateProgram & { score?: number };
+
   const { program, programs, setProgram } = useContext(UndergraduateAdmissionRequirementsFormContext);
 
   const search = useFuzzySearch({
@@ -290,7 +301,7 @@ function UndergraduateAdmissionRequirementsProgramField() {
 
   const filtered = useMemo(() => {
     if (!query) {
-      return programs;
+      return programs as UndergraduateProgramWithSearchScore[];
     }
 
     const results = search({
@@ -302,11 +313,34 @@ function UndergraduateAdmissionRequirementsProgramField() {
       tolerance: 2,
     });
 
-    return results.hits.map((hit) => hit.document as UndergraduateProgram);
+    return results.hits.map((hit) => {
+      return {
+        ...hit.document,
+        score: hit.score,
+      } as UndergraduateProgramWithSearchScore;
+    });
   }, [query, search, programs]);
 
   const grouped = useMemo(() => {
-    const grouped = new Map<string, UndergraduateProgram[]>();
+    if (query) {
+      const sections: { degree: string; group: UndergraduateProgramWithSearchScore[] }[] = [];
+
+      // Only group adjacent matches so degree headings never override search rank.
+      for (const program of [...filtered].sort((a, b) => (b.score ?? 0) - (a.score ?? 0))) {
+        for (const degree of program.degree ?? []) {
+          const previous = sections.at(-1);
+          if (previous?.degree === degree.title) {
+            previous.group.push(program);
+          } else {
+            sections.push({ degree: degree.title, group: [program] });
+          }
+        }
+      }
+
+      return sections;
+    }
+
+    const grouped = new Map<string, UndergraduateProgramWithSearchScore[]>();
 
     for (const program of filtered) {
       for (const degree of program.degree ?? []) {
@@ -331,7 +365,7 @@ function UndergraduateAdmissionRequirementsProgramField() {
 
         return a.degree.localeCompare(b.degree);
       });
-  }, [filtered]);
+  }, [filtered, query]);
 
   return (
     <Field>
@@ -353,14 +387,15 @@ function UndergraduateAdmissionRequirementsProgramField() {
         <AutocompleteInput
           as="input"
           autoComplete="off"
+          placeholder="Search by title or keywords, ex. Computer Science, Engineering, etc."
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           displayValue={(selected: UndergraduateProgram | null) => selected?.title ?? ""}
         />
 
         <AutocompleteOptions anchor="bottom" className="max-h-50!">
-          {grouped.map(({ degree, group }) => {
+          {grouped.map(({ degree, group }, sectionIndex) => {
             return (
-              <Fragment key={degree}>
+              <Fragment key={`${degree}-${sectionIndex}`}>
                 <div className="peer uofg-degree-title p-2 w-full text-grey-dark font-bold border-y border-grey-dark">
                   {degree}
                 </div>
@@ -475,7 +510,7 @@ export default function UndergraduateAdmissionRequirementsForm({
         </Info>
       )}
 
-      <form className="w-full flex flex-col max-w-[90rem]" onSubmit={onSubmit}>
+      <form className="w-full flex flex-col max-w-225" onSubmit={onSubmit}>
         <UndergraduateAdmissionRequirementsStudentTypeField />
 
         {isDomesticOnly ? (

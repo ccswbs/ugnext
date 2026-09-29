@@ -51,7 +51,9 @@ export function UndergraduateAdmissionRequirementsSections({
           {isTransfer && (
             <Typography type="body" as="span" className="block! italic">
               Transfer students are not eligible for direct admission to co-op programs. You{" "}
-              <Link href="/future-students/co-op-admission#external-transfer-students">may be eligible to apply</Link>{" "}
+              <Link href="/experiential-learning/future-students/co-op-admission#external-transfer-students">
+                may be eligible to apply
+              </Link>{" "}
               once you start your studies.
             </Typography>
           )}
