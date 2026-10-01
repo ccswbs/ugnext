@@ -18,7 +18,7 @@ export function OvcNewsGrid() {
               key={index}
               as={Link}
               href={`/ovc/news/node/${item.id}`}
-              className="border border-grey-light rounded shadow"
+              className="h-full border border-grey-light rounded shadow"
             >
               <CardImage
                 as={Image}
