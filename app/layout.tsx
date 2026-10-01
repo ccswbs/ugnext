@@ -10,6 +10,7 @@ import { WebComponentsLoader } from "@/components/client/web-components-loader";
 import { BackToTop } from "@uoguelph/react-components/back-to-top";
 import { DraftModeBanner } from "@/components/client/draft-mode/draft-mode-banner";
 import { Toaster } from "@uoguelph/react-components/toaster";
+import ScrollToTop from "@/components/client/scroll-to-top";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className="h-full scroll-smooth" data-scroll-behavior="smooth">
       <body className="flex flex-col min-h-full">
+        <ScrollToTop />
         <Toaster />
 
         {process.env.WEB_COMPONENTS_CDN_PROVIDER === "jsdelivr" ||
