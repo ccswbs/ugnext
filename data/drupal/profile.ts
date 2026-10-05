@@ -4,6 +4,7 @@ import { getClient, handleGraphQLError } from "@/lib/apollo";
 import type { FullProfile } from "@/lib/types";
 import type { PartialProfileFragment, ProfileTypeFragment } from "@/lib/graphql/types";
 import { cache } from "react";
+import { processPrimaryNavigation } from "@/data/drupal/primary-navigation";
 
 // GraphQL Response Types
 interface PageInfo {
@@ -112,16 +113,19 @@ export async function getProfileContent(id: string) {
     handleGraphQLError(error);
   }
 
-  if (!(data as any)?.nodeProfile) {
+  if (!data?.nodeProfile) {
     return null;
   }
 
-  if ((data as any).nodeProfile.status === false && !showUnpublished) {
+  const profile = data.nodeProfile;
+
+  if (profile.status === false && !showUnpublished) {
     return null;
   }
 
   return {
-    ...(data as any).nodeProfile,
+    ...profile,
+    primaryNavigation: await processPrimaryNavigation(profile.primaryNavigation),
   };
 }
 

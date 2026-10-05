@@ -83,7 +83,7 @@ export default async function OVCNewsArticle({ params }: Props) {
         </Container>
       </LayoutContent>
 
-      <CustomFooter id="758" />
+      <CustomFooter primaryNavigation={primaryNavigation} />
       <Footer></Footer>
     </Layout>
   );
