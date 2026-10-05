@@ -36,7 +36,7 @@ export async function Header({ primaryNavigation }: HeaderProps) {
   const menu = await getMenuByPrimaryNavigation(primaryNavigation);
 
   if (!menu) {
-    return <HeaderComponent></HeaderComponent>;
+    return <HeaderComponent variant={primaryNavigation?.headerVariant ?? "guelph"}></HeaderComponent>;
   }
 
   const menuItems = [...menu.items];
