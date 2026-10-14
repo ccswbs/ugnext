@@ -149,7 +149,7 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
       ? true
       : undefined,
     transcript: media?.transcript?.url,
-    } as const;
+  } as const;
 
   const title = data.heading?.trim();
 
