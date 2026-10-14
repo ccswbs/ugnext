@@ -143,9 +143,13 @@ export function MediaTextWidget({ data }: { data: MediaTextFragment }) {
     position,
     className: twMerge(classes.base(), data.description ? null : classes.no_body()),
     //mediaAspectRatio: inGrid && position === "above" ? "16/9" : undefined,
-    matchCaptionHeight: inGrid && position === "above" ? true : undefined,
+    matchCaptionHeight:
+      (inGrid && position === "above") ||
+      (!inGrid && media.__typename === "image" && (position === "left" || position === "right"))
+      ? true
+      : undefined,
     transcript: media?.transcript?.url,
-  } as const;
+    } as const;
 
   const title = data.heading?.trim();
 
