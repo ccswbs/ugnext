@@ -552,17 +552,14 @@ export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export type ProcessedFeaturedNews = FeaturedNewsFragment & {
-  isFull: true;
-};
+export type ProcessedFeaturedNews = FeaturedNewsFragment;
 
 export type ProcessedTestimonialSlider = Omit<TestimonialSliderFragment, "byTags" | "byTitle"> & {
-  isFull: true;
   byTitle: TestimonialFragment[];
   byTags: TestimonialFragment[];
 };
 
-export type FullGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
+export type ProcessedGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
   program?: GraduateProgramVariant;
 };
 
@@ -625,7 +622,7 @@ export type ProcessedWidget =
   | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment | GraduateProgramSummaryFragment>
   | ProcessedTestimonialSlider
   | ProcessedFeaturedNews
-  | FullGraduateProgramSummary
+  | ProcessedGraduateProgramSummary
   | ProcessedSection;
 
 export class WidgetProcessor {
@@ -689,7 +686,6 @@ export class WidgetProcessor {
 
     return {
       ...data,
-      isFull: true,
       articles: allArticles as NewsWithoutContentFragment[],
     };
   }
@@ -715,7 +711,6 @@ export class WidgetProcessor {
       }
       return {
         ...data,
-        isFull: true,
         byTitle,
         byTags: [],
       };
@@ -729,7 +724,6 @@ export class WidgetProcessor {
 
     return {
       ...data,
-      isFull: true,
       byTitle,
       byTags,
     } as ProcessedTestimonialSlider;
