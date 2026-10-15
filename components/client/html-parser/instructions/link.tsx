@@ -42,7 +42,7 @@ export const LinkInstruction: HTMLParserInstruction = {
       });
 
       // Exclude certain classes
-      const classes = twMerge("mr-3 mb-3", updatedClassname);
+      const classes = twMerge("mr-3 mb-3 [&_strong]:!text-inherit [&_em]:!text-inherit [&_*]:!text-inherit", updatedClassname);
 
       switch (className.match(/btn-(?:outline-)?(\w*)/)?.[1]) {
         case "primary":

@@ -5,11 +5,8 @@ import Image from "next/image";
 import { tv } from "tailwind-variants";
 import type { SpotlightHero as SpotlightHeroData } from "@/data/drupal/spotlight";
 import Link from "next/link";
-import { useMediaQuery } from "@/lib/use-media-query";
 
 export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
-  const showLargeImage = useMediaQuery("(min-width: 768px)");
-
   const classes = tv({
     slots: {
       hero: "w-full [&_.uofg-hero-img]:object-cover",
@@ -22,15 +19,15 @@ export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
   return (
     <Hero
       variant="spotlight"
-      src={showLargeImage ? data.image.url : data.thumbnail.url}
+      src={data.image.url}
       alt={data.image.alt}
-      width={showLargeImage ? data.image.width : data.thumbnail.width}
-      height={showLargeImage ? data.image.height : data.thumbnail.height}
+      width={data.image.width}
+      height={data.image.height}
       sizes="100vw"
       as={Image}
+      priority
       alignment={(data.captionAlignment ?? "left") as HeroProps["alignment"]}
       className={hero()}
-      preload={true}
     >
       <HeroTitle as="h2" className={title()}>
         {data.title}

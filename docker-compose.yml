@@ -1,18 +1,22 @@
 services:
-  playwright:
+  playwright-update-snapshots:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        - FONTAWESOME_PACKAGE_TOKEN=${FONTAWESOME_PACKAGE_TOKEN}
+        FONTAWESOME_PACKAGE_TOKEN: ${FONTAWESOME_PACKAGE_TOKEN}
     working_dir: /workspace
     ipc: host
-    # Use a named volume for node_modules to prevent host-mismatch issues
     volumes:
       - .:/workspace
       - /workspace/node_modules
-    environment:
-      - HOME=/tmp
+      - /workspace/.next
+      - ./test-results:/workspace/test-results
+      - ./playwright-report:/workspace/playwright-report
     env_file:
       - .env
-    command: bunx playwright test --update-snapshots
+    environment:
+      HOME: /tmp
+      CI: "true"
+      USE_TESTING_DATA: "true"
+    command: sh -c "bun run build && bunx playwright test --update-snapshots"

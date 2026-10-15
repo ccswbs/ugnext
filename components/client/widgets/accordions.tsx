@@ -24,7 +24,7 @@ export function AccordionWidget({ data }: { data: AccordionFragment }) {
       {description && <HtmlParser html={description} />}
 
       {data?.items.map((item, index) => (
-        <Accordion id={`accordion-${item.uuid}`} key={index}>
+        <Accordion id={slugify(item.accordionTitle)} key={index}>
           <AccordionButton>{item.accordionTitle}</AccordionButton>
           <AccordionContent>
             <HtmlParser html={item.text.processed} />

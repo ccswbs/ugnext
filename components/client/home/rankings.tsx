@@ -42,7 +42,7 @@ export function Rankings() {
   return (
     <Statistics variant="solid-colors-no-gap">
       {rankings.map((ranking, index) => (
-        <StatisticsItem>
+        <StatisticsItem key={index}>
           <StatisticsItemValue>{ranking.title}</StatisticsItemValue>
           <StatisticsItemRepresents>
             <Link className="text-inherit! outline-inherit!" href={ranking.link}>

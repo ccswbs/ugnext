@@ -9,8 +9,8 @@ export async function Breadcrumbs({ url, primary_navigation }: { url?: string, p
   const breadcrumbs = url ? await getRouteBreadcrumbs(url, primary_navigation) : [];
 
   return (
-    <BreadcrumbsComponent className="text-base">
-      <BreadcrumbHome href="/" />
+    <BreadcrumbsComponent className="text-base"> 
+      {breadcrumbs && breadcrumbs?.length > 0 && <BreadcrumbHome href="/" />}
 
       {breadcrumbs?.map((breadcrumb, index) => {
         if ("url" in breadcrumb && breadcrumb.url) {

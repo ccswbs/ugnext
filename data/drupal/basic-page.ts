@@ -1,8 +1,18 @@
 import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
-import { getFullTestimonialSlider } from "@/data/drupal/widgets";
 import { cache } from "react";
+import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
+import { BasicPageFragment } from "@/lib/graphql/types";
+
+export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
+  fragment BasicPageMinimal on NodePage {
+    status
+    id
+    title
+    path
+  }
+`);
 
 export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   fragment BasicPage on NodePage {
@@ -18,6 +28,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
     }
     heroWidgets {
       ...ModalVideo
+      ...GraduateProgramSummary
     }
     widgets {
       __typename
@@ -26,6 +37,8 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...GeneralText
       ...Links
       ...MediaText
+      ...NewsSearch
+      ...FeaturedNews
       ...Tabs
       ...Statistics
       ...TestimonialSlider
@@ -41,7 +54,12 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export async function getPageContent(id: string) {
+export type ProcessedBasicPage = Omit<BasicPageFragment, "widgets" | "heroWidgets"> & {
+  heroWidgets: ProcessedWidget[];
+  widgets: ProcessedWidget[];
+};
+
+export async function getPageContent(id: string): Promise<ProcessedBasicPage | null> {
   const showUnpublished = await showUnpublishedContent();
 
   const { data, error } = await query({
@@ -67,27 +85,18 @@ export async function getPageContent(id: string) {
     return null;
   }
 
-  if (data.nodePage.status === false && !showUnpublished) {
+  if (!data.nodePage.status && !showUnpublished) {
     return null;
   }
 
-  if (!data.nodePage.widgets) {
-    return data.nodePage;
-  }
+  const processor = new WidgetProcessor();
+  const processedHeroWidgets = await processor.processWidgets(data.nodePage.heroWidgets ?? []);
+  const processedWidgets = await processor.processWidgets(data.nodePage.widgets ?? []);
 
-  // We need to resolve testimonials by tag.
   return {
     ...data.nodePage,
-    widgets: await Promise.all(
-      data.nodePage.widgets.map(async (widget) => {
-        switch (widget.__typename) {
-          case "ParagraphTestimonialSlider":
-            return await getFullTestimonialSlider(widget);
-          default:
-            return widget;
-        }
-      })
-    ),
+    heroWidgets: processedHeroWidgets,
+    widgets: processedWidgets,
   };
 }
 

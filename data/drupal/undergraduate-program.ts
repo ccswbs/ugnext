@@ -57,6 +57,9 @@ export const UNDERGRADUATE_PROGRAM = gql(/* gql */ `
     degree {
       id
       title
+      url {
+        url
+      }
     }
     path
     type {

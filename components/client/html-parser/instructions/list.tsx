@@ -9,13 +9,18 @@ import { SectionContext } from "@/components/client/section";
 // Create a proper React component that uses the hook
 function ListRenderer({ node, props, children }: any) {
   const context = useContext(SectionContext);
+  const hasColumns =
+    node.attribs?.class?.includes("columns-3")
+    && (!context || ( context?.column !== "secondary" && context?.hasSecondary === false))
+      ? true
+      : false;
   
   return (
     <List
       {...props}
       key={nanoid()}
       as={node.tagName as "ul" | "ol"}
-      columns={context?.column == "secondary" || node.attribs?.class?.includes("columns-1") ? false : true}
+      columns={hasColumns}
       className={"group-first/html-parser:first:pt-0 list-outside pl-4 pt-3 text-lg"}
     >
       {children}

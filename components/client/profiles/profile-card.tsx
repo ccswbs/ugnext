@@ -6,7 +6,7 @@ import defaultImage from "@/img/university-of-guelph-logo.png";
 
 export function ProfileCard({ data }: { data: PartialProfileData }) {
   return (
-    <Card key={data.id} as={Link} href={data.path ?? ""}>
+    <Card key={data.id} as={Link} href={data.path ?? ""} className="h-full">
       <CardImage
         as={Image}
         src={data.profilePicture?.image?.variations?.[0]?.url ?? defaultImage.src}
