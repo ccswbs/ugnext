@@ -553,17 +553,17 @@ export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
   }
 `);
 
-export type FullFeaturedNews = FeaturedNewsFragment & {
+export type ProcessedFeaturedNews = FeaturedNewsFragment & {
   isFull: true;
 };
 
-export type FullTestimonialSlider = Omit<TestimonialSliderFragment, "byTags" | "byTitle"> & {
+export type ProcessedTestimonialSlider = Omit<TestimonialSliderFragment, "byTags" | "byTitle"> & {
   isFull: true;
   byTitle: TestimonialFragment[];
   byTags: TestimonialFragment[];
 };
 
-export type FullGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
+export type ProcessedGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
   program?: GraduateProgramVariant;
 };
 
@@ -616,7 +616,7 @@ export type Widget =
       __typename?: "ParagraphCallToAction";
     };
 
-export type ProcessedSectionWidget = Exclude<SectionWidget, FeaturedNewsFragment> | FullFeaturedNews;
+export type ProcessedSectionWidget = Exclude<SectionWidget, FeaturedNewsFragment> | ProcessedFeaturedNews;
 
 export type ProcessedSection = Omit<SectionFragment, "content"> & {
   content: ProcessedSectionWidget[];
@@ -624,9 +624,9 @@ export type ProcessedSection = Omit<SectionFragment, "content"> & {
 
 export type ProcessedWidget =
   | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment | GraduateProgramSummaryFragment>
-  | FullTestimonialSlider
-  | FullFeaturedNews
-  | FullGraduateProgramSummary
+  | ProcessedTestimonialSlider
+  | ProcessedFeaturedNews
+  | ProcessedGraduateProgramSummary
   | ProcessedSection;
 
 export class WidgetProcessor {
@@ -636,7 +636,7 @@ export class WidgetProcessor {
     this.excludeNewsArticles = new Set();
   }
 
-  private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<FullFeaturedNews> {
+  private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<ProcessedFeaturedNews> {
     const showUnpublished = await showUnpublishedContent();
     const units = data.units?.map((unit) => unit.id) ?? [];
     const categories = data.categories?.map((category) => category.id) ?? [];
@@ -694,7 +694,7 @@ export class WidgetProcessor {
     };
   }
 
-  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<FullTestimonialSlider | null> {
+  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<ProcessedTestimonialSlider | null> {
     const showUnpublished = await showUnpublishedContent();
 
     const byTitle = (data.byTitle ?? []).filter((testimonial) => {
@@ -732,7 +732,7 @@ export class WidgetProcessor {
       isFull: true,
       byTitle,
       byTags,
-    } as FullTestimonialSlider;
+    } as ProcessedTestimonialSlider;
   }
 
   public async processSectionWidget(widget: SectionWidget): Promise<ProcessedSectionWidget | null> {
