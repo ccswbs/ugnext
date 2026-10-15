@@ -10,6 +10,7 @@ import { WebComponentsLoader } from "@/components/client/web-components-loader";
 import { BackToTop } from "@uoguelph/react-components/back-to-top";
 import { DraftModeBanner } from "@/components/client/draft-mode/draft-mode-banner";
 import { Toaster } from "@uoguelph/react-components/toaster";
+import ScrollToTop from "@/components/client/scroll-to-top";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -37,12 +38,15 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const gtmId =
-    process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live" ? process.env.NEXT_PUBLIC_GTM_ID_DEV : process.env.NEXT_PUBLIC_GTM_ID;
+    process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live"
+      ? process.env.NEXT_PUBLIC_GTM_ID_DEV
+      : process.env.NEXT_PUBLIC_GTM_ID;
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full scroll-smooth" data-scroll-behavior="smooth">
       <body className="flex flex-col min-h-full">
+        <ScrollToTop />
         <Toaster />
 
         {process.env.WEB_COMPONENTS_CDN_PROVIDER === "jsdelivr" ||

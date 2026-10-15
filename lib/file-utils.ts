@@ -1,12 +1,34 @@
 import { join } from "path";
-import * as objectHash from "object-hash";
+import objectHash from "object-hash";
 import { glob } from "glob";
 import { readdir, readFile, stat } from "fs/promises";
 import * as YAML from "yaml";
+import type { ZodSchema } from "zod";
 
-const cache = new Map();
+type CachedValue<T> = {
+  hash: string;
+  data: T;
+};
 
-export async function getYamlData({ id, path, schema, parser, postProcessor, listen }) {
+type GetYamlDataOptions<TInput = unknown, TParsed = TInput, TResult = TParsed[]> = {
+  id?: string;
+  path: string;
+  schema?: ZodSchema<TInput>;
+  parser?: (data: TInput) => TParsed;
+  postProcessor?: (data: TParsed[]) => TResult;
+  listen?: string;
+};
+
+const cache = new Map<string, CachedValue<unknown>>();
+
+export async function getYamlData<TInput = unknown, TParsed = TInput, TResult = TParsed[]>({
+  id,
+  path,
+  schema,
+  parser,
+  postProcessor,
+  listen,
+}: GetYamlDataOptions<TInput, TParsed, TResult>): Promise<TResult | TParsed[]> {
   // Find all the paths that match the glob pattern the caller gave.
   const paths = await glob(path);
 
@@ -18,7 +40,7 @@ export async function getYamlData({ id, path, schema, parser, postProcessor, lis
   }
 
   // This function will read and parse all the YAML files that matched the glob.
-  const getData = async () => {
+  const getData = async (): Promise<TResult | TParsed[]> => {
     const files = await Promise.all(
       paths.map(async (path) => {
         try {
@@ -26,25 +48,28 @@ export async function getYamlData({ id, path, schema, parser, postProcessor, lis
           const file = await readFile(path, "utf8");
 
           // Parse the YAML
-          const content = YAML.parse(file.toString());
+          const content = YAML.parse(file.toString()) as unknown;
 
-          return { path: path, content: content };
-        } catch (e) {
-          throw new Error(`Failed to parse yaml file ${path}: ${e.toString()}`);
+          return { path, content };
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          throw new Error(`Failed to parse yaml file ${path}: ${message}`);
         }
       })
     );
 
     const data = files.map(({ path, content }) => {
-      const validated = schema?.safeParse(content) ?? content;
+      const validated = schema?.safeParse(content);
 
       // If the caller passed a zod schema, and zod wasn't able to validate the data against it, then we throw an error
-      if (schema && !validated.success) {
+      if (schema && validated && !validated.success) {
         throw new Error(`Failed to parse yaml file ${path}: ${validated.error.toString()}`);
       }
 
+      const parsedData = schema && validated?.success ? validated.data : (content as TInput);
+
       // If the caller passed their own parser function, use it on the data.
-      return typeof parser === "function" ? parser(validated.data) : validated.data;
+      return typeof parser === "function" ? parser(parsedData) : (parsedData as unknown as TParsed);
     });
 
     // If the caller pass a post-processor function, use it on all the data.
@@ -66,29 +91,27 @@ export async function getYamlData({ id, path, schema, parser, postProcessor, lis
 
   // We calculate a hash from the last modified times,
   // this will let us know if our cache is out of date, and needs to be updated
-  const hash = objectHash?.(modifiedTimes);
-  const cached = cache.get(id);
+  const hash = objectHash(modifiedTimes);
+  const cached = cache.get(id) as CachedValue<TResult | TParsed[]> | undefined;
 
   // The cache is up to date, so we don't need to reread and reparse the data.
   if (cached && cached.hash === hash && cached.data) {
-    //console.log(`Cache is up to date for ${id}, using cached data. (hash: ${hash}, cached hash: ${cached?.hash})`);
     return cached.data;
   }
 
   // Cache is out of date, reread and reparse the data, and update the cache.
-  //console.log(`Cache is out of date for ${id}, re-reading and re-parsing the data. (hash: ${hash}, cached hash: ${cached?.hash})`);
   const data = await getData();
   cache.set(id, { hash, data });
   return data;
 }
 
-export const listFiles = async (directory) => {
+export const listFiles = async (directory: string): Promise<string[]> => {
   const dirents = await readdir(directory, { withFileTypes: true, recursive: true });
-  const fileNames = dirents.filter((dirent) => dirent.isFile()).map((dirent) => join(dirent.path, dirent.name));
-  return fileNames;
+
+  return dirents.filter((dirent) => dirent.isFile()).map((dirent) => join(dirent.parentPath, dirent.name));
 };
 
-export async function* yaml(globPattern) {
+export async function* yaml(globPattern: string): AsyncGenerator<unknown | Error> {
   try {
     const filePaths = await glob(globPattern);
 
@@ -101,13 +124,15 @@ export async function* yaml(globPattern) {
       try {
         const fileContent = await readFile(filePath, "utf8");
         const text = fileContent.toString();
-        const parsedYaml = YAML.parse(text);
+        const parsedYaml = YAML.parse(text) as unknown;
         yield parsedYaml;
       } catch (error) {
-        yield new Error(`Error processing file ${filePath}:`, error);
+        const message = error instanceof Error ? error.message : String(error);
+        yield new Error(`Error processing file ${filePath}: ${message}`);
       }
     }
   } catch (error) {
-    yield new Error(`Error finding files for glob pattern ${globPattern}:`, error);
+    const message = error instanceof Error ? error.message : String(error);
+    yield new Error(`Error finding files for glob pattern ${globPattern}: ${message}`);
   }
 }
