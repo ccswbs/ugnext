@@ -31,7 +31,6 @@ import { getTestimonialByTag } from "@/data/drupal/testimonial";
 import { getFilteredNews } from "@/data/drupal/news";
 import { GraduateProgramVariant } from "@/lib/types/graduate-program-variant";
 import { parseGraduateProgramVariant } from "@/data/drupal/graduate-program";
-import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 
 export const ACCORDION_FRAGMENT = gql(/* gql */ `
   fragment Accordion on ParagraphAccordionSection {
@@ -563,7 +562,7 @@ export type ProcessedTestimonialSlider = Omit<TestimonialSliderFragment, "byTags
   byTags: TestimonialFragment[];
 };
 
-export type ProcessedGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
+export type FullGraduateProgramSummary = Pick<GraduateProgramSummaryFragment, "uuid" | "id" | "__typename"> & {
   program?: GraduateProgramVariant;
 };
 
@@ -626,18 +625,19 @@ export type ProcessedWidget =
   | Exclude<Widget, TestimonialSliderFragment | FeaturedNewsFragment | SectionFragment | GraduateProgramSummaryFragment>
   | ProcessedTestimonialSlider
   | ProcessedFeaturedNews
-  | ProcessedGraduateProgramSummary
+  | FullGraduateProgramSummary
   | ProcessedSection;
 
 export class WidgetProcessor {
   public excludeNewsArticles: Set<string>;
+  private readonly draft: boolean;
 
-  constructor() {
+  constructor(draft: boolean = false) {
     this.excludeNewsArticles = new Set();
+    this.draft = draft;
   }
 
-  private async getFullFeaturedNews(data: FeaturedNewsFragment): Promise<ProcessedFeaturedNews> {
-    const showUnpublished = await showUnpublishedContent();
+  private async processFeaturedNews(data: FeaturedNewsFragment): Promise<ProcessedFeaturedNews> {
     const units = data.units?.map((unit) => unit.id) ?? [];
     const categories = data.categories?.map((category) => category.id) ?? [];
     const tags = data.tags?.map((tag) => tag.id) ?? [];
@@ -645,7 +645,7 @@ export class WidgetProcessor {
     let articlesNeeded = data.count - (data.articles?.length ?? 0);
 
     for (const article of data.articles ?? []) {
-      if (article.status === false && !showUnpublished) {
+      if (!article.status && !this.draft) {
         continue;
       }
 
@@ -694,12 +694,12 @@ export class WidgetProcessor {
     };
   }
 
-  private async getFullTestimonialSlider(data: TestimonialSliderFragment): Promise<ProcessedTestimonialSlider | null> {
-    const showUnpublished = await showUnpublishedContent();
+  private async processTestimonialSlider(data: TestimonialSliderFragment): Promise<ProcessedTestimonialSlider | null> {
+    const showUnpublished = this.draft;
 
     const byTitle = (data.byTitle ?? []).filter((testimonial) => {
       if (testimonial.__typename === "NodeTestimonial") {
-        return testimonial.status !== false || showUnpublished;
+        return testimonial.status || showUnpublished;
       }
       return false;
     }) as TestimonialFragment[];
@@ -735,80 +735,73 @@ export class WidgetProcessor {
     } as ProcessedTestimonialSlider;
   }
 
-  public async processSectionWidget(widget: SectionWidget): Promise<ProcessedSectionWidget | null> {
-    switch (widget.__typename) {
-      case "ParagraphFeaturedNews":
-        return await this.getFullFeaturedNews(widget);
-      case "ParagraphProfileCard": {
-        const showUnpublished = await showUnpublishedContent();
-        const profile = widget.profileInfo;
-        if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
-          return null;
-        }
-        return widget;
-      }
-      default:
-        return widget;
+  private async processProfileCard(data: ProfileCardFragment) {
+    const profile = data.profileInfo;
+
+    if (profile?.__typename === "NodeProfile" && !profile.status && !this.draft) {
+      return null;
     }
+
+    return data;
+  }
+
+  private async processGraduateProgramSummary(data: GraduateProgramSummaryFragment) {
+    const variant = data.graduateProgramVariation;
+
+    if (variant?.__typename === "NodeGraduateProgramVariant" && !variant?.status && !this.draft) {
+      return null;
+    }
+
+    return {
+      __typename: data.__typename,
+      id: data.id,
+      uuid: data.uuid,
+      program: parseGraduateProgramVariant(variant) ?? undefined,
+    };
+  }
+
+  private async processSection(data: SectionFragment) {
+    const promises = data.content.map(async (widget) => {
+      switch (widget.__typename) {
+        case "ParagraphFeaturedNews":
+          return this.processFeaturedNews(widget);
+        case "ParagraphProfileCard":
+          return this.processProfileCard(widget);
+        default:
+          return widget;
+      }
+    });
+
+    const processed = await Promise.all(promises);
+
+    return {
+      ...data,
+      content: processed.filter((widget) => widget !== null),
+    } as ProcessedSection;
   }
 
   public async processWidget(widget: Widget): Promise<ProcessedWidget | null> {
-    const showUnpublished = await showUnpublishedContent();
-
     switch (widget.__typename) {
       case "ParagraphTestimonialSlider":
-        return await this.getFullTestimonialSlider(widget);
-      case "ParagraphSection": {
-        const sectionContent: ProcessedSectionWidget[] = [];
-
-        for (const sectionWidget of widget.content) {
-          const processed = await this.processSectionWidget(sectionWidget);
-          if (processed !== null) {
-            sectionContent.push(processed);
-          }
-        }
-
-        return {
-          ...widget,
-          content: sectionContent,
-        };
-      }
+        return await this.processTestimonialSlider(widget);
+      case "ParagraphSection":
+        return await this.processSection(widget);
       case "ParagraphFeaturedNews":
-        return await this.getFullFeaturedNews(widget);
-      case "ParagraphGraduateProgramSummary": {
-        const variant = widget.graduateProgramVariation;
-        if (variant?.__typename === "NodeGraduateProgramVariant" && variant?.status === false && !showUnpublished) {
-          return null;
-        }
-        return {
-          __typename: widget.__typename,
-          id: widget.id,
-          uuid: widget.uuid,
-          program: parseGraduateProgramVariant(widget.graduateProgramVariation) ?? undefined,
-        };
-      }
-      case "ParagraphProfileCard": {
-        const profile = widget.profileInfo;
-        if (profile?.__typename === "NodeProfile" && profile.status === false && !showUnpublished) {
-          return null;
-        }
-        return widget;
-      }
+        return await this.processFeaturedNews(widget);
+      case "ParagraphGraduateProgramSummary":
+        return this.processGraduateProgramSummary(widget);
+      case "ParagraphProfileCard":
+        return this.processProfileCard(widget);
       default:
         return widget;
     }
   }
 
   public async processWidgets(widgets: Widget[]): Promise<ProcessedWidget[]> {
-    const processed: ProcessedWidget[] = [];
+    const promises = widgets.map((widget) => this.processWidget(widget));
 
-    for (const widget of widgets) {
-      const result = await this.processWidget(widget);
-      if (result !== null) {
-        processed.push(result);
-      }
-    }
+    const processed = await Promise.all(promises);
 
-    return processed;
+    return processed.filter((widget) => widget !== null);
   }
 }
