@@ -1,4 +1,4 @@
-import { FullFeaturedNews } from "@/data/drupal/widgets";
+import { ProcessedFeaturedNews } from "@/data/drupal/widgets";
 import { FeaturedNewsFragment } from "@/lib/graphql/types";
 import { NewsCard } from "@/components/client/news/news-card";
 import { Grid, GridProps } from "@uoguelph/react-components/grid";
@@ -10,7 +10,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { Button } from "@uoguelph/react-components/button";
 import { PrimaryNavigationContext } from "@/components/client/widgets/widget-selector";
 
-function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+function FeaturedNewsList({ data }: { data: ProcessedFeaturedNews | FeaturedNewsFragment }) {
   return (
     <ul className="peer flex flex-col gap-4 py-4">
       {data.articles?.map((article) => (
@@ -22,7 +22,7 @@ function FeaturedNewsList({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
   );
 }
 
-function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+function FeaturedNewsSingleColumn({ data }: { data: ProcessedFeaturedNews | FeaturedNewsFragment }) {
   return (
     <Container className="peer flex flex-col gap-4 px-0 [.uofg-container]:px-0">
       {data.articles?.map((article, index) => (
@@ -32,7 +32,7 @@ function FeaturedNewsSingleColumn({ data }: { data: FullFeaturedNews | FeaturedN
   );
 }
 
-function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+function FeaturedNewsGrid({ data }: { data: ProcessedFeaturedNews | FeaturedNewsFragment }) {
   const gridTemplate: GridProps["template"] = {
     base: ["1fr"],
   };
@@ -72,7 +72,7 @@ function FeaturedNewsGrid({ data }: { data: FullFeaturedNews | FeaturedNewsFragm
   );
 }
 
-function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+function FeaturedNewsSpotlight({ data }: { data: ProcessedFeaturedNews | FeaturedNewsFragment }) {
   if (!Array.isArray(data.articles) || (data.articles.length !== 3 && data.articles.length < 6)) {
     throw new Error("FeaturedNewsSpotlight must have exactly 3 or more than 5 articles");
   }
@@ -100,7 +100,7 @@ function FeaturedNewsSpotlight({ data }: { data: FullFeaturedNews | FeaturedNews
   );
 }
 
-export function FeaturedNews({ data }: { data: FullFeaturedNews | FeaturedNewsFragment }) {
+export function FeaturedNews({ data }: { data: ProcessedFeaturedNews | FeaturedNewsFragment }) {
   const sectionContext = useContext(SectionContext);
   const primaryNavigationContext = useContext(PrimaryNavigationContext);
 

@@ -1,10 +1,11 @@
-import { CombinedGraphQLErrors, HttpLink } from "@apollo/client";
+import { CombinedGraphQLErrors } from "@apollo/client";
 import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { PersistedQueryLink } from "@apollo/client/link/persisted-queries";
 import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
 import crypto from "node:crypto";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
 
 function sha256(data: string) {
   const hash = crypto.createHash("sha256");
@@ -64,22 +65,24 @@ CombinedGraphQLErrors.formatMessage = (errors, options) => {
   return `${formatted || options.defaultFormatMessage(errors)}`;
 };
 
-const persistedQuerylink = new PersistedQueryLink({
+const persistedQueryLink = new PersistedQueryLink({
   sha256,
 });
 
-const httpLink = new HttpLink({
+const httpLink = new BatchHttpLink({
   // this needs to be an absolute url, as relative urls cannot be used in SSR
   uri: `${DRUPAL_BASE_URL}/graphql`,
   headers: {
     "api-key": process.env.DRUPAL_API_KEY ?? "",
   },
+  batchMax: 5, // No more than 5 operations per batch
+  batchInterval: 20, // Wait no more than 20ms after first batched operation
 });
 
-export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
+export const { getClient, query } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: persistedQuerylink.concat(httpLink),
+    link: persistedQueryLink.concat(httpLink),
     defaultOptions: {
       query: {
         errorPolicy: "all",
@@ -93,10 +96,6 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
     },
   });
 });
-
-export async function onlyPublished() {
-  return (await showUnpublishedContent()) ? null : true;
-}
 
 export function handleGraphQLError(error: ErrorLike | undefined): never {
   if (!error) {
