@@ -269,6 +269,7 @@ export async function getRouteMetadata(url: string): Promise<Metadata> {
   }
 
   // Convert metatags to appropriate Next.js compatible metadata
+  let metatag_count = 0; // only retrieve description + title, then break
   for (const metatag of route.entity.metatag) {
     if (
       metatag.__typename === "MetaTagProperty" &&
@@ -276,6 +277,19 @@ export async function getRouteMetadata(url: string): Promise<Metadata> {
       metatag.attributes.content
     ) {
       metadata.description = metatag.attributes.content;
+      metatag_count++;
+    }
+
+    if (
+      metatag.__typename === "MetaTagProperty" &&
+      metatag.attributes.property === "og:title" &&
+      metatag.attributes.content
+    ) {
+      metadata.title = metatag.attributes.content;
+      metatag_count++;
+    }
+
+    if(metatag_count === 2){
       break;
     }
   }
