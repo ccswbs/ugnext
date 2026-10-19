@@ -1,5 +1,9 @@
 import React from "react";
 
+export function isExternalUrl(url?: string | null): boolean {
+  return /^https?:\/\//i.test(url?.trim() ?? "");
+}
+
 // Source: https://www.labnol.org/code/19797-regex-youtube-id
 
 export function extractVideoID(url: string) {
