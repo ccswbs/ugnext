@@ -6,6 +6,7 @@ import NextLink from "next/link";
 import type { LinksFragment } from "@/lib/graphql/types";
 import { Typography } from "@uoguelph/react-components/typography";
 import { slugify } from "@/lib/string-utils";
+import { isExternalUrl } from "@/lib/ug-utils";
 
 export function LinksWidget({ data }: { data: LinksFragment }) {
   if (!data.links || data.links.length === 0) return null;
@@ -43,7 +44,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
             return (
               <Card
-                as={NextLink}
+                as={isExternalUrl(url) ? "a" : NextLink}
                 id={`link-${data.uuid}`}
                 href={url}
                 className={cardClass}
@@ -81,7 +82,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
             return (
               <ListItem key={url + index}>
-                <Link as={NextLink} href={url}>
+                <Link as={isExternalUrl(url) ? "a" : NextLink} href={url}>
                   {title}
                 </Link>
               </ListItem>

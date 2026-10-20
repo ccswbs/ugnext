@@ -4,6 +4,7 @@ import { Link } from "@uoguelph/react-components/link";
 import NextLink from "next/link";
 import { twMerge } from "tailwind-merge";
 import { collapseSlashes } from "@/lib/string-utils";
+import { isExternalUrl } from "@/lib/ug-utils";
 import { hasAncestorWithClass, HTMLParserInstruction } from "@/components/client/html-parser";
 
 export const LinkInstruction: HTMLParserInstruction = {
@@ -79,7 +80,7 @@ export const LinkInstruction: HTMLParserInstruction = {
           color={color ?? "red"}
           outlined={outlined}
           href={href}
-          as={NextLink}
+          as={isExternalUrl(href) ? "a" : NextLink}
         >
           {children}
         </Button>
@@ -93,7 +94,7 @@ export const LinkInstruction: HTMLParserInstruction = {
     );
 
     return (
-      <Link {...props} key={nanoid()} href={href} as={NextLink} className={linkClassName}>
+      <Link {...props} key={nanoid()} href={href} as={isExternalUrl(href) ? "a" : NextLink} className={linkClassName}>
         {children}
       </Link>
     );

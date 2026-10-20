@@ -5,6 +5,7 @@ import Image from "next/image";
 import { tv } from "tailwind-variants";
 import type { SpotlightHero as SpotlightHeroData } from "@/data/drupal/spotlight";
 import Link from "next/link";
+import { isExternalUrl } from "@/lib/ug-utils";
 
 export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
   const classes = tv({
@@ -34,7 +35,7 @@ export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
       </HeroTitle>
       <HeroCaption>{data.caption}</HeroCaption>
       {/* @ts-ignore */}
-      <HeroLink id="uofg-homepage-spotlight-hero" href={data.url} as={Link}>
+      <HeroLink id="uofg-homepage-spotlight-hero" href={data.url} as={isExternalUrl(data.url) ? "a" : Link}>
         {data.button}
       </HeroLink>
     </Hero>

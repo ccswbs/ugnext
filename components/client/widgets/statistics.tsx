@@ -15,6 +15,7 @@ import { Link } from "@uoguelph/react-components/link";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { tv } from "tailwind-variants";
+import { isExternalUrl } from "@/lib/ug-utils";
 
 export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
   const context = useContext(SectionContext);
@@ -69,7 +70,7 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
                           {...props}
                           key={nanoid()}
                           href={props.href as string}
-                          as={NextLink}
+                          as={isExternalUrl(props.href as string) ? "a" : NextLink}
                         >
                           {children}
                         </Link>

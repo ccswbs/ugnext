@@ -12,6 +12,7 @@ import { Section } from "@/components/client/section";
 import { Info } from "@uoguelph/react-components/info";
 import { Breadcrumb, BreadcrumbHome, Breadcrumbs } from "@uoguelph/react-components/breadcrumbs";
 import Link from "next/link";
+import { isExternalUrl } from "@/lib/ug-utils";
 import { Link as UofGLink } from "@uoguelph/react-components/link";
 import { NewsTimeEstimate } from "@/components/client/news/news-time-estimate";
 import { ProcessedWidget } from "@/data/drupal/widgets";
@@ -22,19 +23,19 @@ function NewsBreadcrumbs({ article }: { article: FullNewsArticle }) {
     <Breadcrumbs>
       <BreadcrumbHome href="/" />
       {article.unitHome.title && (
-        <Breadcrumb href={article.unitHome.url} as={Link}>
+        <Breadcrumb href={article.unitHome.url} as={isExternalUrl(article.unitHome.url) ? "a" : Link}>
           {article.unitHome.title}
         </Breadcrumb>
       )}
 
       {article.newsHome.title && (
-        <Breadcrumb href={article.newsHome.url} as={Link}>
+        <Breadcrumb href={article.newsHome.url} as={isExternalUrl(article.newsHome.url) ? "a" : Link}>
           {article.newsHome.title}
         </Breadcrumb>
       )}
 
       {article.directory.title && (
-        <Breadcrumb href={article.directory.url} as={Link}>
+        <Breadcrumb href={article.directory.url} as={isExternalUrl(article.directory.url) ? "a" : Link}>
           {article.directory.title}
         </Breadcrumb>
       )}

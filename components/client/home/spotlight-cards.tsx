@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 import type { SpotlightCard } from "@/data/drupal/spotlight";
+import { isExternalUrl } from "@/lib/ug-utils";
 
 export const SpotlightCards = ({ cards }: { cards: SpotlightCard[] }) => {
   const classes = tv({
@@ -25,7 +26,7 @@ export const SpotlightCards = ({ cards }: { cards: SpotlightCard[] }) => {
         <Card
           id={`uofg-homepage-spotlight-card-${index + 2}`}
           key={data.id}
-          as={Link}
+          as={isExternalUrl(data.url) ? "a" : Link}
           href={data.url}
           className={`uofg-spotlight-card ${card()}`}
           centered

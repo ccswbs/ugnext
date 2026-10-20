@@ -15,6 +15,7 @@ import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { MediaCaption } from "@uoguelph/react-components/media-caption";
 import { twMerge } from "tailwind-merge";
+import { isExternalUrl } from "@/lib/ug-utils";
 
 function TestimonialType(types) {
   const typeList = types.map((testimonialType) => testimonialType.name);
@@ -82,7 +83,7 @@ export function TestimonialSliderWidget({ data }) {
                     )}
 
                     {testimonial?.profile && (
-                      <BlockquoteAuthorLink href={testimonial.profile.url} as={Link}>
+                      <BlockquoteAuthorLink href={testimonial.profile.url} as={isExternalUrl(testimonial.profile.url) ? "a" : Link}>
                         {testimonial.profile.title}
                       </BlockquoteAuthorLink>
                     )}

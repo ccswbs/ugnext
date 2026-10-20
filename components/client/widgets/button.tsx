@@ -8,6 +8,7 @@ import { HtmlParser } from "@/components/client/html-parser";
 import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import Link from "next/link";
 import { collapseSlashes } from "@/lib/string-utils";
+import { isExternalUrl } from "@/lib/ug-utils";
 import { twMerge } from "tailwind-merge";
 import { usePathname } from "next/navigation";
 
@@ -129,7 +130,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
       <Button
         id={`button-${data.uuid}`}
         className={twMerge(classes.button(), column === "call-to-action" && "text-2xl")}
-        as={Link}
+        as={isExternalUrl(url) ? "a" : Link}
         href={url}
         color={color as ButtonProps["color"]}
         outlined={outlined}
