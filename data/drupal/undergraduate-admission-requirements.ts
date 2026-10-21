@@ -162,6 +162,13 @@ export const UNDERGRADUATE_ADMISSION_REQUIREMENT_SECTION_FRAGMENT = gql(/* gql *
       ... on TermUndergradReqSecType {
         name
         weight
+        parent {
+          __typename
+          ... on TermUndergradReqSecType {
+            name
+            weight
+          }
+        }
       }
     }
     overrides
@@ -317,6 +324,7 @@ export type UndergraduateAdmissionRequirementSection = {
   title: string;
   content: string;
   weight: number;
+  subSections: UndergraduateAdmissionRequirementSection[];
 };
 
 async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]) {
@@ -326,7 +334,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
   const paths: { title: string; url: string }[] = [];
   const sidebarTitles = new Set<string>();
   const sidebar: UndergraduateAdmissionRequirementSidebar = [];
-  const sectionsMap = new Map<string, NonNullable<UndergraduateAdmissionRequirement["sections"]>>();
+  const sectionsMap = new Map<string, UndergraduateAdmissionRequirementSectionFragment[]>();
 
   for (const requirement of requirements) {
     if (requirement === null) {
@@ -354,10 +362,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 
     if (requirement.sections && requirement.sections.length > 0) {
       for (const section of requirement.sections) {
-        const type =
-          section.type.name === "General Requirements" || section.type.name === "Program Requirements"
-            ? "Admission Requirements"
-            : section.type.name;
+        const type = section.type.name;
 
         if (!sectionsMap.has(type)) {
           sectionsMap.set(type, []);
@@ -368,7 +373,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
     }
   }
 
-  const sections: UndergraduateAdmissionRequirementSection[] = [];
+  const sectionsByType = new Map<string, UndergraduateAdmissionRequirementSection>();
 
   for (const entry of sectionsMap.entries()) {
     const overrideIndex = entry[1].findIndex((section) => section.overrides === true);
@@ -380,17 +385,53 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
       .map((section) => (section.content?.processed as string) ?? "")
       .join("");
 
-    sections.push({
+    sectionsByType.set(entry[0], {
       title: entry[0],
       content: content,
       weight: entry[1][0].type.weight,
+      subSections: [],
     });
+  }
+
+  const subsectionTitles = new Set<string>();
+
+  for (const [type, sectionGroup] of sectionsMap) {
+    const parent = sectionGroup[0].type.parent;
+
+    if (parent?.__typename !== "TermUndergradReqSecType") {
+      continue;
+    }
+
+    let parentSection = sectionsByType.get(parent.name);
+
+    if (!parentSection) {
+      parentSection = {
+        title: parent.name,
+        content: "",
+        weight: parent.weight,
+        subSections: [],
+      };
+      sectionsByType.set(parent.name, parentSection);
+    }
+
+    const section = sectionsByType.get(type);
+
+    if (section) {
+      parentSection.subSections.push(section);
+      subsectionTitles.add(type);
+    }
+  }
+
+  const sections = Array.from(sectionsByType.values());
+
+  for (const section of sections) {
+    section.subSections.sort((a, b) => a.weight - b.weight);
   }
 
   return {
     sidebar: sidebar,
     paths: paths,
-    sections: sections.sort((a, b) => a.weight - b.weight),
+    sections: sections.filter((section) => !subsectionTitles.has(section.title)).sort((a, b) => a.weight - b.weight),
   };
 }
 
