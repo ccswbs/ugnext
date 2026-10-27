@@ -23,6 +23,16 @@ const METATAGS_PROPERTY_FRAGMENT = gql(/* gql */ `
   }
 `);
 
+const METATAGS_VALUE_FRAGMENT = gql(/* gql */ `
+  fragment MetaValue on MetaTagValue {
+    __typename
+    attributes {
+      name
+      content
+    }
+  }
+`);
+
 const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
   fragment InternalRoute on RouteInternal {
     entity {
@@ -69,6 +79,7 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         metatag {
           __typename
           ...MetaProperty
+          ...MetaValue
         }
         image {
           image {
@@ -279,7 +290,20 @@ export async function getRouteMetadata(url: string): Promise<Metadata> {
       break;
     }
   }
-
+  // If a basic page has a primary navigation, use the basic "title" metatag
+    if ("primaryNavigation" in route.entity && route.entity.primaryNavigation) {
+    for (const metatag of route.entity.metatag) {
+      if (
+        metatag.__typename === "MetaTagValue" &&
+        metatag.attributes.name === "title" &&
+        metatag.attributes.content
+      ) {
+        metadata.title = metatag.attributes.content;
+        break;
+      }
+    }
+  }
+  
   return metadata;
 }
 
