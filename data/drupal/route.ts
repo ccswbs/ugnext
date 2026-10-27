@@ -291,19 +291,19 @@ export async function getRouteMetadata(url: string): Promise<Metadata> {
     }
   }
   // If a basic page has a primary navigation, use the basic "title" metatag
-    if ("primaryNavigation" in route.entity && route.entity.primaryNavigation) {
+  if ("primaryNavigation" in route.entity && route.entity.primaryNavigation) {
     for (const metatag of route.entity.metatag) {
       if (
         metatag.__typename === "MetaTagValue" &&
+        "attributes" in metatag &&
         metatag.attributes.name === "title" &&
         metatag.attributes.content
       ) {
-        metadata.title = metatag.attributes.content;
+        metadata.title = { absolute: metatag.attributes.content };
         break;
       }
     }
   }
-  
   return metadata;
 }
 
