@@ -9,13 +9,9 @@ import {
 import { HtmlParser } from "@/components/client/html-parser";
 import Image from "next/image";
 import type { StatisticsFragment } from "@/lib/graphql/types";
-import { nanoid } from "nanoid";
-import NextLink from "next/link";
-import { Link } from "@uoguelph/react-components/link";
 import { useContext } from "react";
 import { SectionContext } from "@/components/client/section";
 import { tv } from "tailwind-variants";
-import { isExternalUrl } from "@/lib/ug-utils";
 
 export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
   const context = useContext(SectionContext);
@@ -58,27 +54,7 @@ export function StatisticsWidget({ data }: { data: StatisticsFragment }) {
             )}
             <StatisticsItemValue>{statistic?.value}</StatisticsItemValue>
             <StatisticsItemRepresents>
-              <HtmlParser
-                html={statistic?.represents?.processed}
-                instructions={[
-                  {
-                    shouldProcessNode: (node) => node.tagName === "a",
-                    processNode: (node, props, children) => {
-                      return (
-                        <Link
-                          className={linkClasses({ variant: variant })}
-                          {...props}
-                          key={nanoid()}
-                          href={props.href as string}
-                          as={isExternalUrl(props.href as string) ? "a" : NextLink}
-                        >
-                          {children}
-                        </Link>
-                      );
-                    },
-                  },
-                ]}
-              />
+              <HtmlParser html={statistic?.represents?.processed} linkClassName={linkClasses()} />
             </StatisticsItemRepresents>
             {statistic?.image && (
               <StatisticsItemImage
