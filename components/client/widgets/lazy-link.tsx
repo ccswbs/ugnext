@@ -10,6 +10,18 @@ import { isExternalUrl } from "@/lib/ug-utils";
 type LazyLinkProps = ComponentProps<typeof NextLink>
 
 export function LazyLink(props: LazyLinkProps) {
+  // Destructure props so we can exclude Next.js props from anchor
+  const { 
+    as,
+    href, 
+    passHref, 
+    prefetch, 
+    replace, 
+    scroll, 
+    shallow, 
+    onLoadCapture, 
+    onNavigate, 
+    ...anchorProps } = props;
   const [active, setActive] = useState(false)
 
   const onPointerEnter: LazyLinkProps["onPointerEnter"] = (...args) => {
@@ -22,8 +34,10 @@ export function LazyLink(props: LazyLinkProps) {
   }
   
   return (
-    isExternalUrl(props.href.toString()) ? 
-    <a href={props.href.toString()} className={props.className}>{props.children}</a> : 
+    isExternalUrl(props.href.toString()) ?
+    <a href={props.href.toString()} {...anchorProps}>
+      {props.children}
+    </a> :
     <NextLink
       prefetch={active ? null : false}
       {...props}
