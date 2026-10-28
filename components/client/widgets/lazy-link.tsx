@@ -22,7 +22,8 @@ export function LazyLink(props: LazyLinkProps) {
   }
   
   return (
-    isExternalUrl(props.href.toString()) ? "a" : 
+    isExternalUrl(props.href.toString()) ? 
+    <a href={props.href.toString()} className={props.className}>{props.children}</a> : 
     <NextLink
       prefetch={active ? null : false}
       {...props}
