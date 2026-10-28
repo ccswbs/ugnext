@@ -269,28 +269,29 @@ export async function getRouteMetadata(url: string): Promise<Metadata> {
   }
 
   // Convert metatags to appropriate Next.js compatible metadata
-  let metatag_count = 0; // only retrieve description + title, then break
-  for (const metatag of route.entity.metatag) {
-    if (
-      metatag.__typename === "MetaTagProperty" &&
-      metatag.attributes.property === "og:description" &&
-      metatag.attributes.content
-    ) {
-      metadata.description = metatag.attributes.content;
-      metatag_count++;
-    }
+  const requiredTags = new Set(["og:description", "og:title"]);
+  const foundTags = new Set<string>();
 
-    if (
-      metatag.__typename === "MetaTagProperty" &&
-      metatag.attributes.property === "og:title" &&
-      metatag.attributes.content
-    ) {
-      metadata.title = metatag.attributes.content;
-      metatag_count++;
-    }
-
-    if(metatag_count === 2){
-      break;
+  if (Array.isArray(route.entity.metatag)) {
+    for (const metatag of route.entity.metatag) {
+      if (
+        metatag.__typename === "MetaTagProperty" &&
+        metatag.attributes.property &&
+        metatag.attributes.content &&
+        requiredTags.has(metatag.attributes.property)
+      ) {
+        if (metatag.attributes.property === "og:description") {
+          metadata.description = metatag.attributes.content;
+          foundTags.add(metatag.attributes.property);
+        }
+        if (metatag.attributes.property === "og:title") {
+          metadata.title = metatag.attributes.content;
+          foundTags.add(metatag.attributes.property);
+        }
+        if (foundTags.size === requiredTags.size) {
+          break;
+        }
+      }
     }
   }
 
