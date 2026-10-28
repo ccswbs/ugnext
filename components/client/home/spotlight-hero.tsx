@@ -4,8 +4,7 @@ import { Hero, HeroCaption, HeroLink, type HeroProps, HeroTitle } from "@uoguelp
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 import type { SpotlightHero as SpotlightHeroData } from "@/data/drupal/spotlight";
-import Link from "next/link";
-import { isExternalUrl } from "@/lib/ug-utils";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 
 export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
   const classes = tv({
@@ -35,7 +34,7 @@ export const SpotlightHero = ({ data }: { data: SpotlightHeroData }) => {
       </HeroTitle>
       <HeroCaption>{data.caption}</HeroCaption>
       {/* @ts-ignore */}
-      <HeroLink id="uofg-homepage-spotlight-hero" href={data.url} as={isExternalUrl(data.url) ? "a" : Link}>
+      <HeroLink id="uofg-homepage-spotlight-hero" href={data.url} as={Link}>
         {data.button}
       </HeroLink>
     </Hero>

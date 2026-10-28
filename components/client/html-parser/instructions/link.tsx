@@ -1,10 +1,9 @@
 import { nanoid } from "nanoid";
 import { Button, type ButtonProps } from "@uoguelph/react-components/button";
 import { Link } from "@uoguelph/react-components/link";
-import NextLink from "next/link";
+import { LazyLink as NextLink } from "@/components/client/widgets/lazy-link";
 import { twMerge } from "tailwind-merge";
 import { collapseSlashes } from "@/lib/string-utils";
-import { isExternalUrl } from "@/lib/ug-utils";
 import { hasAncestorWithClass, HTMLParserInstruction } from "@/components/client/html-parser";
 
 const defaultLinkColorClasses =
@@ -87,7 +86,7 @@ export const createLinkInstruction = (linkClassName?: string): HTMLParserInstruc
           color={color ?? "red"}
           outlined={outlined}
           href={href}
-          as={isExternalUrl(href) ? "a" : NextLink}
+          as={NextLink}
         >
           {children}
         </Button>
@@ -98,7 +97,7 @@ export const createLinkInstruction = (linkClassName?: string): HTMLParserInstruc
     const mergedLinkClassName = twMerge(linkClassName ?? defaultLinkColorClasses, className);
 
     return (
-      <Link {...props} key={nanoid()} href={href} as={isExternalUrl(href) ? "a" : NextLink} className={mergedLinkClassName}>
+      <Link {...props} key={nanoid()} href={href} as={NextLink} className={mergedLinkClassName}>
         {children}
       </Link>
     );

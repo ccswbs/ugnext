@@ -6,9 +6,8 @@ import { MouseEventHandler } from "react";
 import { Typography } from "@uoguelph/react-components/typography";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Button, ButtonProps } from "@uoguelph/react-components/button";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import { collapseSlashes } from "@/lib/string-utils";
-import { isExternalUrl } from "@/lib/ug-utils";
 import { twMerge } from "tailwind-merge";
 import { usePathname } from "next/navigation";
 
@@ -130,7 +129,7 @@ export const ButtonWidget = ({ data, column }: { data: ButtonsFragment; column: 
       <Button
         id={`button-${data.uuid}`}
         className={twMerge(classes.button(), column === "call-to-action" && "text-2xl")}
-        as={isExternalUrl(url) ? "a" : Link}
+        as={Link}
         href={url}
         color={color as ButtonProps["color"]}
         outlined={outlined}
