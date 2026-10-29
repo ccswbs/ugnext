@@ -23,6 +23,7 @@ export function LazyLink(props: LazyLinkProps) {
     onNavigate, 
     ...anchorProps } = props;
   const [active, setActive] = useState(false)
+  const url = props.href.toString();
 
   const onPointerEnter: LazyLinkProps["onPointerEnter"] = (...args) => {
     props.onPointerEnter?.(...args)
@@ -34,8 +35,8 @@ export function LazyLink(props: LazyLinkProps) {
   }
   
   return (
-    isExternalUrl(props.href.toString()) ?
-    <a href={props.href.toString()} {...anchorProps}>
+    isExternalUrl(url) ?
+    <a href={url} {...anchorProps}>
       {props.children}
     </a> :
     <NextLink
