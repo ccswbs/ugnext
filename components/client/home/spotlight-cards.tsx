@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardImage, CardTitle } from "@uoguelph/react-components/card";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 import type { SpotlightCard } from "@/data/drupal/spotlight";

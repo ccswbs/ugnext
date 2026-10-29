@@ -9,7 +9,7 @@ import {
   BlockquoteAuthorTitle,
   BlockquoteAuthorLink,
 } from "@uoguelph/react-components/blockquote";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Container } from "@uoguelph/react-components/container";
 import { useMediaQuery } from "@/lib/use-media-query";
