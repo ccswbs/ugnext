@@ -1,8 +1,7 @@
 "use client";
 
 import { NewsWithoutContentFragment } from "@/lib/graphql/types";
-import Link from "next/link";
-import { isExternalUrl } from "@/lib/ug-utils";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import Image from "next/image";
 import defaultImage from "@/img/university-of-guelph-logo-16x9.jpeg";
 import { twMerge } from "tailwind-merge";
@@ -69,22 +68,20 @@ export function NewsCard({
   const img = data.hero?.image.variations?.[0];
   const imgLarge = data.hero?.image.variations?.[1];
 
-  const LinkElement = isExternalUrl(url) ? "a" : Link;
-
   if (variant === "no-image") {
     return (
-      <LinkElement href={url} className="group">
+      <Link href={url} className="group">
         <Info color="yellow">
           <Typography as="span" type="h4" className={title()}>
             {data.title}
           </Typography>
         </Info>
-      </LinkElement>
+      </Link>
     );
   }
 
   return (
-    <LinkElement key={data.id} href={url} className={twMerge(card(), className)}>
+    <Link key={data.id} href={url} className={twMerge(card(), className)}>
       <div className={imageContainer()}>
         <Image
           src={(variant === "spotlight" ? imgLarge?.url : img?.url) ?? defaultImage.src}
@@ -109,6 +106,6 @@ export function NewsCard({
 
         {data.leadParagraph && variant === "spotlight" && <Info color="yellow">{data.leadParagraph}</Info>}
       </div>
-    </LinkElement>
+    </Link>
   );
 }

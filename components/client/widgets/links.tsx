@@ -2,11 +2,10 @@ import Image from "next/image";
 import { Card, CardContent, CardTitle, CardImage } from "@uoguelph/react-components/card";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { Link } from "@uoguelph/react-components/link";
-import NextLink from "next/link";
+import { LazyLink as NextLink } from "@/components/client/widgets/lazy-link";
 import type { LinksFragment } from "@/lib/graphql/types";
 import { Typography } from "@uoguelph/react-components/typography";
 import { slugify } from "@/lib/string-utils";
-import { isExternalUrl } from "@/lib/ug-utils";
 
 export function LinksWidget({ data }: { data: LinksFragment }) {
   if (!data.links || data.links.length === 0) return null;
@@ -44,7 +43,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
             return (
               <Card
-                as={isExternalUrl(url) ? "a" : NextLink}
+                as={NextLink}
                 id={`link-${data.uuid}`}
                 href={url}
                 className={cardClass}
@@ -82,7 +81,7 @@ export function LinksWidget({ data }: { data: LinksFragment }) {
 
             return (
               <ListItem key={url + index}>
-                <Link as={isExternalUrl(url) ? "a" : NextLink} href={url}>
+                <Link as={NextLink} href={url}>
                   {title}
                 </Link>
               </ListItem>

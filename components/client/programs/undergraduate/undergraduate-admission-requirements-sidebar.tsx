@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, ButtonProps } from "@uoguelph/react-components/button";
 import { tv } from "tailwind-variants";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import Link from "next/link";
-import { isExternalUrl } from "@/lib/ug-utils";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import type {
   UndergraduateAdmissionLocation,
   UndergraduateAdmissionRequirementSidebar,
@@ -31,7 +30,7 @@ function AdmissionRequirementsSidebarButton({ url, title, icon, color }: Admissi
   })();
 
   return (
-    <Button color={color} className={classes.button()} as={isExternalUrl(url) ? "a" : Link} href={url}>
+    <Button color={color} className={classes.button()} as={Link} href={url}>
       {typeof icon === "string" ? (
         <i className={`${classes.icon()} ${icon}`} aria-hidden="true"></i>
       ) : (

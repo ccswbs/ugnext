@@ -2,7 +2,7 @@
 
 import type { ProfileType } from "@/data/drupal/profile";
 import { Navigation, NavigationLink } from "@uoguelph/react-components/navigation";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import { Container } from "@uoguelph/react-components/container";
 import { usePathname } from "next/navigation";
 
