@@ -14,7 +14,7 @@ import { FontAwesomeInstruction } from "@/components/client/html-parser/instruct
 import { HeadingInstruction } from "@/components/client/html-parser/instructions/heading";
 import { ImageInstruction } from "@/components/client/html-parser/instructions/image";
 import { InputInstruction } from "@/components/client/html-parser/instructions/input";
-import { LinkInstruction } from "@/components/client/html-parser/instructions/link";
+import { createLinkInstruction, LinkInstruction } from "@/components/client/html-parser/instructions/link";
 import { ListInstruction } from "@/components/client/html-parser/instructions/list";
 import { ListItemInstruction } from "@/components/client/html-parser/instructions/list-item";
 import { ParagraphInstruction } from "@/components/client/html-parser/instructions/paragraph";
@@ -157,10 +157,26 @@ function normalizeWhitespace(html: string): string {
   );
 }
 
-export function HtmlParser({ html, instructions = [], useContentsClass = true }: { html: string; instructions?: HTMLParserInstruction[]; useContentsClass?: boolean }) {
+export function HtmlParser({
+  html,
+  instructions = [],
+  useContentsClass = true,
+  linkClassName,
+}: {
+  html: string;
+  instructions?: HTMLParserInstruction[];
+  useContentsClass?: boolean;
+  linkClassName?: string;
+}) {
   const normalizedHtml = useMemo(() => normalizeWhitespace(html), [html]);
 
   const options: HTMLReactParserOptions = useMemo(() => {
+    const linkInstruction = linkClassName ? createLinkInstruction(linkClassName) : LinkInstruction;
+    const allInstructions = [
+      ...instructions,
+      ...defaultInstructions.map((instruction) => (instruction === LinkInstruction ? linkInstruction : instruction)),
+    ];
+
     return {
       replace: (node, index) => {
         // Handle text nodes to preserve necessary spacing
@@ -202,7 +218,7 @@ export function HtmlParser({ html, instructions = [], useContentsClass = true }:
 
         const children = domToReact(node.children as DOMNode[], options);
 
-        for (const instruction of [...instructions, ...defaultInstructions]) {
+        for (const instruction of allInstructions) {
           if (instruction.shouldProcessNode(node, props, children, index)) {
             return instruction.processNode(node, props, children, index, (children) =>
               domToReact(children as DOMNode[], options)
@@ -225,7 +241,7 @@ export function HtmlParser({ html, instructions = [], useContentsClass = true }:
       },
       trim: false,
     };
-  }, [instructions]);
+  }, [instructions, linkClassName]);
 
   const content = useMemo(() => parse(normalizedHtml, options), [normalizedHtml, options]);
 

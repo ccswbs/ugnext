@@ -38,7 +38,6 @@ import { RadioGroup, Radio } from "@uoguelph/react-components/radio-group";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
 import { slugify } from "@/lib/string-utils";
 import { twJoin } from "tailwind-merge";
-import Link from "next/link";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
 import { Info } from "@uoguelph/react-components/info";
 
@@ -502,7 +501,7 @@ export default function UndergraduateAdmissionRequirementsForm({
           <Typography type="body" as="p" className="m-0 font-bold">
             This page is for students who are applying within Canada. For all students applying outside of Canada,
             please visit the{" "}
-            <LinkComponent as={Link} href="https://www.uoguelph.ca/admission/undergraduate/international/requirements/">
+            <LinkComponent href="https://www.uoguelph.ca/admission/undergraduate/international/requirements/">
               International Undergraduate Admission Requirements
             </LinkComponent>{" "}
             page.
