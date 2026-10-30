@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 import Image from "next/image";
 import defaultImage from "@/img/ovc/OVC_front_entrance.jpeg";
 import { Link } from "@uoguelph/react-components/link";
-import NextLink from "next/link";
+import { LazyLink as NextLink } from "@/components/client/widgets/lazy-link";
 
 function FeaturedNewsArticle({ data, index }) {
   const date = new Date(data.created.time);
