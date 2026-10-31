@@ -33,6 +33,21 @@ export const EVENT_FRAGMENT = gql(/* gql */ `
         }
       }
     }
+    eventCost
+    eventLocation {
+      ... on TermLocation {
+        id
+        name
+      }
+    }
+    customLink {
+      title
+      url
+    }
+    body {
+      processed
+      summary
+    }
   }
 `);
 

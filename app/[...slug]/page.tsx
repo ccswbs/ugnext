@@ -5,6 +5,8 @@ import { Profile } from "@/components/server/profile";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getAllBasicPagePaths } from "@/data/drupal/basic-page";
 import { News } from "@/components/server/news";
+import { Events } from "@/components/server/events";
+
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -85,6 +87,8 @@ export default async function Page({ params }: Props) {
       return <News id={route.entity.id} />;
     case "NodeProfile":
       return <Profile id={route.entity.uuid} />;
+    case "NodeEvent":
+      return <Events id={route.entity.id} />;
     case "NodeUndergraduateProgram":
     case "NodeUndergraduateDegree":
       permanentRedirect("/programs/undergraduate/");
