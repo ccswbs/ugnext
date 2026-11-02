@@ -2,7 +2,6 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { draftMode } from "next/headers";
 import { getRoute } from "@/data/drupal/route";
-import { getPathsByEntity /*getTagsToRevalidateByEntity*/ } from "@/data/drupal/linked-revalidation";
 
 export const dynamic = "force-dynamic";
 
@@ -11,9 +10,11 @@ async function revalidate(paths: string[] = [], tags: string[] = []) {
     const route = await getRoute(path);
 
     if (route && route.__typename === "RouteInternal" && route.entity) {
-      // TODO: Enable when linked revalidation is fixed.
-      //tags.push(...getTagsToRevalidateByEntity(route.entity));
-      paths.push(...getPathsByEntity(route.entity));
+      switch (route.entity.__typename) {
+        case "NodeUndergraduateRequirement":
+          paths.push("/programs/undergraduate/requirements/[...slug]");
+          break;
+      }
     }
   }
 

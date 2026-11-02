@@ -4,7 +4,6 @@ import { drupal } from "@/lib/drupal";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { parse, type LinksetInterface } from "@drupal/linkset";
 import type { MenuFragment, NavigationFragment } from "@/lib/graphql/types";
-import { getCacheTag } from "@/data/drupal/linked-revalidation";
 
 export const MENU_CONTENT_FRAGMENT = gql(/* gql */ `
   fragment MenuItem on MenuItem {
@@ -108,7 +107,7 @@ export async function getMenuByPrimaryNavigation(primaryNavigation?: NavigationF
   return data.menu;
 }
 
-export async function getMenuByPrimaryNavigationLinkset(primaryNavigation?: NavigationFragment | null) {
+/*export async function getMenuByPrimaryNavigationLinkset(primaryNavigation?: NavigationFragment | null) {
   if (!primaryNavigation || !primaryNavigation?.menuName || primaryNavigation.menuName === "NO_MENU") {
     return null;
   }
@@ -182,4 +181,4 @@ export async function getMenuByPrimaryNavigationLinkset(primaryNavigation?: Navi
   }
 
   return menu;
-}
+}*/
