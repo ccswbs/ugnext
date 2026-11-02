@@ -21,11 +21,6 @@ function getImage(heroImage: unknown): EventImage | null {
   return (heroImage as { image?: EventImage | null } | null)?.image ?? null;
 }
 
-function toList<T>(value: unknown): T[] {
-  if (!value) return [];
-  return (Array.isArray(value) ? value : [value]) as T[];
-}
-
 const TIME_ZONE = "America/Toronto";
 
 function formatDate(time: string) {
@@ -116,18 +111,16 @@ export async function Events({ id }: EventsProps) {
                 </EventDetail>
               )}
               {eventLocation?.name && <EventDetail label="Location">{eventLocation.name}</EventDetail>}
+              {content.body?.summary && (
+                <div className="mb-4">
+                  <HtmlParser key="profile-summary" html={content.body.summary} instructions={undefined} />
+                </div>
+              )}
+              <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
             </div>
           </div>
-          {content.body?.summary && (
-          <div className="mb-4">
-            <HtmlParser key="profile-summary" html={content.body.summary} instructions={undefined} />
-          </div>
-        )}
-        <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
-      
         </Container>
       </LayoutContent>
-
       <Footer></Footer>
     </Layout>
   );
