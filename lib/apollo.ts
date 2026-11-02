@@ -71,41 +71,29 @@ function parseIntEnv(value: string | undefined, fallback: number) {
   return isNaN(parsed) ? fallback : parsed;
 }
 
-function isRetryableError(error: ErrorLike) {
-  const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504]);
-
-  // GraphQL errors are returned with a successful response and won't succeed on retry.
-  if (CombinedGraphQLErrors.is(error)) return false;
-
-  if (ServerError.is(error)) {
-    return RETRYABLE_STATUS_CODES.has(error.statusCode);
-  }
-
-  // Anything else is a network level failure (connection reset, DNS, timeout, etc.).
-  return true;
-}
-
 const persistedQueryLink = new PersistedQueryLink({
   sha256,
 });
 
 const retryLink = new RetryLink({
   delay: {
-    initial: parseIntEnv(process.env.GRAPHQL_RETRY_INITIAL_DELAY, 500),
-    max: parseIntEnv(process.env.GRAPHQL_RETRY_MAX_DELAY, 10000),
+    initial: parseInt(process.env.GRAPHQL_RETRY_INITIAL_DELAY as string) ?? 500,
+    max: parseInt(process.env.GRAPHQL_RETRY_MAX_DELAY as string) ?? 10000,
     jitter: true,
   },
   attempts: {
-    max: parseIntEnv(process.env.GRAPHQL_RETRY_MAX_ATTEMPTS, 5),
+    max: parseInt(process.env.GRAPHQL_RETRY_MAX_ATTEMPTS as string) ?? 5,
     retryIf: (error, operation) => {
-      const retryable = isRetryableError(error);
+      const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504]);
 
-      if (retryable) {
-        const status = ServerError.is(error) ? ` (status ${error.statusCode})` : "";
-        console.warn(`GraphQL Warning: retrying ${operation.operationName ?? "operation"}${status}: ${error.message}`);
+      if (ServerError.is(error) && RETRYABLE_STATUS_CODES.has(error.statusCode)) {
+        console.warn(
+          `GraphQL Warning: retrying ${operation.operationName ?? "operation"} (status ${error.statusCode}): ${error.message}`
+        );
+        return true;
       }
 
-      return retryable;
+      return false;
     },
   },
 });
