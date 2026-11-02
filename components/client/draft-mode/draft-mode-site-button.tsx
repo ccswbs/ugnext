@@ -3,7 +3,6 @@
 import { createPortal } from "react-dom";
 import { Button } from "@uoguelph/react-components/button";
 import { useEffect, useState } from "react";
-import { getCacheTag } from "@/data/drupal/linked-revalidation";
 import { toast } from "@uoguelph/react-components/toaster";
 
 export function DraftModeSiteButton({
@@ -13,7 +12,7 @@ export function DraftModeSiteButton({
 }) {
   const [containerExists, setContainerExists] = useState<boolean>(false);
   const [revalidating, setRevalidating] = useState(false);
-  const tag = getCacheTag(primaryNavigation);
+  const tag = `${primaryNavigation.__typename}-${primaryNavigation.id}`;
 
   const revalidatePage = async () => {
     setRevalidating(true);
