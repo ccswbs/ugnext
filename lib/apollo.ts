@@ -1,4 +1,4 @@
-import { CombinedGraphQLErrors, HttpLink, ServerError } from "@apollo/client";
+import { CombinedGraphQLErrors, ServerError } from "@apollo/client";
 import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { PersistedQueryLink } from "@apollo/client/link/persisted-queries";
@@ -6,6 +6,7 @@ import { RetryLink } from "@apollo/client/link/retry";
 import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
 import crypto from "node:crypto";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
 
 function sha256(data: string) {
   const hash = crypto.createHash("sha256");
@@ -65,19 +66,14 @@ CombinedGraphQLErrors.formatMessage = (errors, options) => {
   return `${formatted || options.defaultFormatMessage(errors)}`;
 };
 
-const persistedQuerylink = new PersistedQueryLink({
-  sha256,
-});
-
 function parseIntEnv(value: string | undefined, fallback: number) {
   const parsed = parseInt(value ?? "");
   return isNaN(parsed) ? fallback : parsed;
 }
 
-// Status codes that indicate a transient upstream problem worth retrying (e.g. Pantheon 502 networking failures).
-const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504]);
-
 function isRetryableError(error: ErrorLike) {
+  const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504]);
+
   // GraphQL errors are returned with a successful response and won't succeed on retry.
   if (CombinedGraphQLErrors.is(error)) return false;
 
@@ -89,8 +85,10 @@ function isRetryableError(error: ErrorLike) {
   return true;
 }
 
-// Retries failed requests with exponential backoff and jitter so a transient upstream failure
-// doesn't fail an entire build or request.
+const persistedQueryLink = new PersistedQueryLink({
+  sha256,
+});
+
 const retryLink = new RetryLink({
   delay: {
     initial: parseIntEnv(process.env.GRAPHQL_RETRY_INITIAL_DELAY, 500),
@@ -112,18 +110,20 @@ const retryLink = new RetryLink({
   },
 });
 
-const httpLink = new HttpLink({
+const httpLink = new BatchHttpLink({
   // this needs to be an absolute url, as relative urls cannot be used in SSR
   uri: `${DRUPAL_BASE_URL}/graphql`,
   headers: {
     "api-key": process.env.DRUPAL_API_KEY ?? "",
   },
+  batchMax: 5, // No more than 5 operations per batch
+  batchInterval: 20, // Wait no more than 20ms after first batched operation
 });
 
-export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
+export const { getClient, query } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: retryLink.concat(persistedQuerylink).concat(httpLink),
+    link: retryLink.concat(persistedQueryLink).concat(httpLink),
     defaultOptions: {
       query: {
         errorPolicy: "all",
@@ -137,10 +137,6 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
     },
   });
 });
-
-export async function onlyPublished() {
-  return (await showUnpublishedContent()) ? null : true;
-}
 
 export function handleGraphQLError(error: ErrorLike | undefined): never {
   if (!error) {

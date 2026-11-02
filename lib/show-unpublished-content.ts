@@ -10,12 +10,8 @@ export async function showUnpublishedContent() {
   }
 
   if (process.env.ALWAYS_SHOW_PUBLISHED_CONTENT === "true") {
-    return null;
+    return false;
   }
 
-  if (process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live") {
-    return true;
-  }
-
-  return null;
+  return process.env.NODE_ENV === "development" && process.env.APP_ENV !== "live";
 }
