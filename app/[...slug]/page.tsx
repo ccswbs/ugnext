@@ -28,6 +28,9 @@ export async function generateStaticParams() {
       slug: path.split("/").slice(1),
     }));
   } catch (error) {
+    if (process.env.NEXT_STATIC_OUTPUT === "true") {
+      throw error;
+    }
     // If Drupal can't provide the list of paths, skip prebuilding and let pages render on demand instead of failing the build.
     console.error(`GraphQL Error: failed to retrieve basic page paths, pages will be rendered on demand:\n\t${error}\n`);
     return [];
