@@ -66,11 +66,6 @@ CombinedGraphQLErrors.formatMessage = (errors, options) => {
   return `${formatted || options.defaultFormatMessage(errors)}`;
 };
 
-function parseIntEnv(value: string | undefined, fallback: number) {
-  const parsed = parseInt(value ?? "");
-  return isNaN(parsed) ? fallback : parsed;
-}
-
 const persistedQueryLink = new PersistedQueryLink({
   sha256,
 });
