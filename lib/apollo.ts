@@ -1,7 +1,8 @@
-import { CombinedGraphQLErrors } from "@apollo/client";
+import { CombinedGraphQLErrors, ServerError } from "@apollo/client";
 import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { PersistedQueryLink } from "@apollo/client/link/persisted-queries";
+import { RetryLink } from "@apollo/client/link/retry";
 import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
 import crypto from "node:crypto";
@@ -69,6 +70,29 @@ const persistedQueryLink = new PersistedQueryLink({
   sha256,
 });
 
+const retryLink = new RetryLink({
+  delay: {
+    initial: parseInt(process.env.GRAPHQL_RETRY_INITIAL_DELAY as string) ?? 500,
+    max: parseInt(process.env.GRAPHQL_RETRY_MAX_DELAY as string) ?? 10000,
+    jitter: true,
+  },
+  attempts: {
+    max: parseInt(process.env.GRAPHQL_RETRY_MAX_ATTEMPTS as string) ?? 5,
+    retryIf: (error, operation) => {
+      const RETRYABLE_STATUS_CODES = new Set([408, 425, 429, 500, 502, 503, 504]);
+
+      if (ServerError.is(error) && RETRYABLE_STATUS_CODES.has(error.statusCode)) {
+        console.warn(
+          `GraphQL Warning: retrying ${operation.operationName ?? "operation"} (status ${error.statusCode}): ${error.message}`
+        );
+        return true;
+      }
+
+      return false;
+    },
+  },
+});
+
 const httpLink = new BatchHttpLink({
   // this needs to be an absolute url, as relative urls cannot be used in SSR
   uri: `${DRUPAL_BASE_URL}/graphql`,
@@ -82,7 +106,7 @@ const httpLink = new BatchHttpLink({
 export const { getClient, query } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: persistedQueryLink.concat(httpLink),
+    link: retryLink.concat(persistedQueryLink).concat(httpLink),
     defaultOptions: {
       query: {
         errorPolicy: "all",
