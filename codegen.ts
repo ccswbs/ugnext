@@ -36,6 +36,12 @@ const config: CodegenConfig = {
     "./lib/graphql/types.ts": {
       plugins: ["typescript", "typescript-operations"],
     },
+    "./lib/graphql/possible-types.ts": {
+      plugins: ["fragment-matcher"],
+      config: {
+        deterministic: true,
+      },
+    },
   },
   ignoreNoDocuments: true,
 };
