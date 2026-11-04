@@ -1,7 +1,7 @@
 import { gql } from "@/lib/graphql";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { NewsFragment, NewsWithoutContentFragment } from "@/lib/graphql/types";
+import type { NewsFragment, NewsWithoutContentFragment, NewsPathsQueryVariables } from "@/lib/graphql/types";
 import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
 import { cache } from "react";
 import { ProcessedBasicPage } from "@/data/drupal/basic-page";
@@ -367,16 +367,15 @@ async function getAllNewsArticlePathsUncached() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const paths: string[] = [];
 
   while (hasNextPage) {
+    const variables: NewsPathsQueryVariables = { cursor };
     const { data, error } = await client.query({
       query: pathQuery,
-      variables: {
-        cursor,
-      },
+      variables,
     });
 
     if (error) {

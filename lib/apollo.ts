@@ -7,6 +7,7 @@ import type { ErrorLike } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql/error";
 import crypto from "node:crypto";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
+import introspection from "@/lib/graphql/possible-types";
 
 function sha256(data: string) {
   const hash = crypto.createHash("sha256");
@@ -105,7 +106,7 @@ const httpLink = new BatchHttpLink({
 
 export const { getClient, query } = registerApolloClient(() => {
   return new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({ possibleTypes: introspection.possibleTypes }),
     link: retryLink.concat(persistedQueryLink).concat(httpLink),
     defaultOptions: {
       query: {
