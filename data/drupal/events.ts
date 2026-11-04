@@ -4,8 +4,8 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { EventFragment } from "@/lib/graphql/types";
 import { cache } from "react";
 
-export const EVENT_FRAGMENT = gql(/* gql */ `
-  fragment Event on NodeEvent {
+export const EVENT_WITHOUT_CONTENT = gql(/* gql */ `
+  fragment EventWithoutContent on NodeEvent {
     id
     title
     path
@@ -19,34 +19,41 @@ export const EVENT_FRAGMENT = gql(/* gql */ `
       }
     }
     heroImage {
-      ... on MediaImage {
-        image {
-          alt
+      attribution {
+        url
+        title
+      }
+      image {
+        alt
+        url
+        width
+        height
+        variations(styles: [FOCAL_POINT600X400, FOCAL_POINT900X506]) {
           url
           width
           height
-          variations(styles: [FOCAL_POINT600X400, FOCAL_POINT900X506]) {
-            url
-            width
-            height
-          }
         }
       }
     }
-    eventCost
+  }
+`);
+export const EVENT_FRAGMENT = gql(/* gql */ `
+  fragment Event on NodeEvent {
+    ...EventWithoutContent
     eventLocation {
       ... on TermLocation {
         id
         name
       }
     }
-    customLink {
-      title
-      url
-    }
+    eventCost
     body {
       processed
       summary
+    }
+    customLink {
+      title
+      url
     }
   }
 `);
@@ -93,7 +100,10 @@ async function getAllEventsUncached() {
     query AllEvents($cursor: Cursor) {
       nodeEvents(after: $cursor, first: 100) {
         nodes {
-          ...Event
+        __typename
+          id
+          status
+          path
         }
         pageInfo {
           hasNextPage
