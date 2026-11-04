@@ -3,6 +3,7 @@ import { getClient, handleGraphQLError } from "@/lib/apollo";
 import { LegacyNewsWithoutBodyFragment } from "@/lib/graphql/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { cache } from "react";
+import type { LegacyNewsIDsQueryVariables } from "@/lib/graphql/types";
 
 export const LEGACY_NEWS_FRAGMENT = gql(/* gql */ `
   fragment LegacyNews on NodeArticle {
@@ -217,16 +218,15 @@ async function getAllNewsArticlePathsUncached() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const paths: string[] = [];
 
   while (hasNextPage) {
+    const variables: LegacyNewsIDsQueryVariables = { cursor };
     const { data, error } = await client.query({
       query: pathQuery,
-      variables: {
-        cursor,
-      },
+      variables,
     });
 
     if (error) {

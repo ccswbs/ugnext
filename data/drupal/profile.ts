@@ -2,7 +2,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError } from "@/lib/apollo";
 import type { FullProfile } from "@/lib/types";
-import type { PartialProfileFragment, ProfileTypeFragment } from "@/lib/graphql/types";
+import type { PartialProfileFragment, ProfileTypeFragment, ProfilePagePathsQueryVariables } from "@/lib/graphql/types";
 import { cache } from "react";
 
 // GraphQL Response Types
@@ -420,16 +420,15 @@ async function getAllProfilePathsUncached() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const paths: string[] = [];
 
   while (hasNextPage) {
+    const variables: ProfilePagePathsQueryVariables = { cursor };
     const { data, error } = await client.query({
       query: pathQuery,
-      variables: {
-        cursor,
-      },
+      variables,
     });
 
     if (error) {
