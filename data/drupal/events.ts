@@ -1,8 +1,7 @@
 import { gql } from "@/lib/graphql";
 import { getClient } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { EventFragment } from "@/lib/graphql/types";
-import { cache } from "react";
+import { EventFragment, EventWithoutContentFragment } from "@/lib/graphql/types";
 
 export const EVENT_WITHOUT_CONTENT = gql(/* gql */ `
   fragment EventWithoutContent on NodeEvent {
@@ -37,6 +36,7 @@ export const EVENT_WITHOUT_CONTENT = gql(/* gql */ `
     }
   }
 `);
+
 export const EVENT_FRAGMENT = gql(/* gql */ `
   fragment Event on NodeEvent {
     ...EventWithoutContent
@@ -46,7 +46,6 @@ export const EVENT_FRAGMENT = gql(/* gql */ `
         name
       }
     }
-    eventCost
     body {
       processed
       summary
@@ -54,6 +53,15 @@ export const EVENT_FRAGMENT = gql(/* gql */ `
     customLink {
       title
       url
+    }
+    eventSections {
+      ... on ParagraphEventPart {
+        id
+        eventPartLabel
+        eventPartText {
+          processed
+        }
+      }
     }
   }
 `);
@@ -92,83 +100,92 @@ export async function getEvent(id: string) {
   return data.nodeEvent as EventFragment;
 }
 
-async function getAllEventsUncached() {
-  const client = getClient();
-  const showUnpublished = await showUnpublishedContent();
-
-  const eventsQuery = gql(/* gql */ `
-    query AllEvents($cursor: Cursor) {
-      nodeEvents(after: $cursor, first: 100) {
-        nodes {
-        __typename
-          id
-          status
-          path
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-      }
-    }
-  `);
-
-  let cursor = "";
-  let hasNextPage = true;
-  const events: EventFragment[] = [];
-
-  while (hasNextPage) {
-    const { data, error } = await client.query({
-      query: eventsQuery,
-      variables: { cursor },
-    });
-
-    if (error) {
-      console.error(`GraphQL Error: failed to retrieve events:\n\t${error}\n`);
-      break;
-    }
-
-    if (!data || !data.nodeEvents.nodes.length) {
-      break;
-    }
-
-    const nodes = data.nodeEvents.nodes as EventFragment[];
-    events.push(...nodes.filter((event) => showUnpublished || event.status));
-
-    cursor = data.nodeEvents.pageInfo.endCursor;
-    hasNextPage = data.nodeEvents.pageInfo.hasNextPage;
-  }
-
-  return events;
-}
-
-export const getAllEvents = cache(getAllEventsUncached);
-
 export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
 
 export type EventSearchOptions = {
+  query?: string;
   page: number;
   pageSize: number;
 };
 
-function getStartTime(event: EventFragment) {
-  return event.date?.start?.time ? new Date(event.date.start.time).getTime() : 0;
-}
-
 export async function getFilteredEvents(options: EventSearchOptions) {
-  const { page = 0, pageSize = 20 } = options;
+  const { query, page = 0, pageSize = 20 } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
     console.error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
-    return { results: [], totalPages: 0, total: 0 };
+
+    return {
+      results: [],
+      totalPages: 0,
+      total: 0,
+    };
   }
 
-  const events = [...(await getAllEvents())].sort((a, b) => getStartTime(a) - getStartTime(b));
-  const total = events.length;
+  const client = getClient();
+  const showUnpublished = await showUnpublishedContent();
+
+  const { data, error } = await client.query({
+    query: gql(/* gql */ `
+      query EventsSearch($page: Int, $pageSize: Int, $query: String, $status: Boolean) {
+        eventsSearch(page: $page, pageSize: $pageSize, filter: { query: $query, status: $status }) {
+          results {
+            ...EventWithoutContent
+          }
+          pageInfo {
+            pageSize
+            total
+          }
+        }
+      }
+    `),
+    variables: {
+      page: page,
+      pageSize: pageSize,
+      query: query ?? "",
+      status: showUnpublished ? null : true,
+    },
+  });
+
+  if (error || !data || !data.eventsSearch) {
+    console.error(`GraphQL Error: failed to retrieve events:\n\t${error}\n`);
+    return {
+      results: [],
+      totalPages: 0,
+      total: 0,
+    };
+  }
+
+  let results = data.eventsSearch.results as EventWithoutContentFragment[];
+
+  if (showUnpublished) {
+    const latestRevisionQuery = gql(/* gql */ `
+      query LatestRevisionEvent($id: ID!) {
+        nodeEvent(id: $id, revision: "latest") {
+          ...EventWithoutContent
+        }
+      }
+    `);
+
+    results = await Promise.all(
+      results.map(async (result) => {
+        const { data } = await client.query({
+          query: latestRevisionQuery,
+          variables: { id: result.id },
+        });
+
+        if (!data || !data.nodeEvent) {
+          console.warn(`Failed to fetch latest revision for event ${result.id}, falling back to original result`);
+          return result;
+        }
+
+        return data.nodeEvent as EventWithoutContentFragment;
+      })
+    );
+  }
 
   return {
-    results: events.slice(page * pageSize, page * pageSize + pageSize),
-    totalPages: Math.ceil(total / pageSize),
-    total: total,
+    results: results,
+    totalPages: Math.ceil(data.eventsSearch.pageInfo.total / pageSize),
+    total: data.eventsSearch.pageInfo.total,
   };
 }

@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/components/server/breadcrumbs";
 import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
+import { slugify } from "@/lib/string-utils";
 
 export type EventsProps = {
   id: string;
@@ -95,8 +96,6 @@ export async function Events({ id }: EventsProps) {
               )}
               {/* Time */}
               {time && <EventDetail label="Time">{time}</EventDetail>}
-              {/* Cost */}
-              {content.eventCost && <EventDetail label="Cost">{content.eventCost}</EventDetail>}
               {content.customLink && content.customLink.length > 0 && (
                 <EventDetail label="Register">
                   {content.customLink?.map((link, idx) =>
@@ -111,12 +110,27 @@ export async function Events({ id }: EventsProps) {
                 </EventDetail>
               )}
               {eventLocation?.name && <EventDetail label="Location">{eventLocation.name}</EventDetail>}
-              {content.body?.summary && (
-                <div className="mb-4">
-                  <HtmlParser key="profile-summary" html={content.body.summary} instructions={undefined} />
-                </div>
-              )}
-              <HtmlParser key="profile-body" html={content.body?.processed ?? ""} instructions={undefined} />
+              <HtmlParser key="event-body" html={content.body?.processed ?? ""} instructions={undefined} />
+              {/* Render all Event Sections in order */}
+              {content.eventSections?.map((section, index) => {
+                // Event part with custom content
+                if (section.eventPartLabel) {
+                  return (
+                    <div key={section.id || index}>
+                      <Typography id={slugify(section.eventPartLabel)} type="h2" as="h2">
+                        {section.eventPartLabel}
+                      </Typography>
+                      <HtmlParser
+                        key={section.id}
+                        html={section.eventPartText?.processed ?? ""}
+                        instructions={undefined}
+                      />
+                    </div>
+                  );
+                }
+                // Empty section
+                return null;
+              })}
             </div>
           </div>
         </Container>
