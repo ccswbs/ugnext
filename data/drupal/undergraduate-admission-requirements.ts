@@ -334,9 +334,12 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
   const paths: { title: string; url: string }[] = [];
   const sidebarTitles = new Set<string>();
   const sidebar: UndergraduateAdmissionRequirementSidebar = [];
-  const sectionsMap = new Map<string, UndergraduateAdmissionRequirementSectionFragment[]>();
+  const sectionsMap = new Map<
+    string,
+    (UndergraduateAdmissionRequirementSectionFragment & { requirementIndex: number; sectionIndex: number })[]
+  >();
 
-  for (const requirement of requirements) {
+  for (const [requirementIndex, requirement] of requirements.entries()) {
     if (requirement === null) {
       continue;
     }
@@ -361,14 +364,14 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
     }
 
     if (requirement.sections && requirement.sections.length > 0) {
-      for (const section of requirement.sections) {
+      for (const [sectionIndex, section] of requirement.sections.entries()) {
         const type = section.type.name;
 
         if (!sectionsMap.has(type)) {
           sectionsMap.set(type, []);
         }
 
-        sectionsMap.get(type)?.push(section);
+        sectionsMap.get(type)?.push({ ...section, requirementIndex, sectionIndex });
       }
     }
   }
@@ -380,10 +383,13 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 
     const reducedSections = overrideIndex === -1 ? entry[1] : entry[1].slice(0, overrideIndex + 1);
 
-    const content = reducedSections
-      .reverse()
-      .map((section) => (section.content?.processed as string) ?? "")
-      .join("");
+    // Keep same-type subsections in Drupal order within each requirement, with base requirements first.
+    const orderedSections =
+      entry[1][0].type.parent?.__typename === "TermUndergradReqSecType"
+        ? reducedSections.toSorted((a, b) => b.requirementIndex - a.requirementIndex || a.sectionIndex - b.sectionIndex)
+        : reducedSections.toReversed();
+
+    const content = orderedSections.map((section) => (section.content?.processed as string) ?? "").join("");
 
     sectionsByType.set(entry[0], {
       title: entry[0],
