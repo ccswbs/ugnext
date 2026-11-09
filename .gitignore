@@ -50,4 +50,4 @@ public/@uoguelph
 lib/graphql
 /data/yaml/*.db
 /.cache
-!/tsconfig.tsbuildinfo
+/tsconfig.tsbuildinfo
