@@ -42,7 +42,7 @@ function formatTime(time: string) {
 
 function EventDetail({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="mb-2 break-words">
+    <div className="mb-2 wrap-break-word">
       <span className="font-bold">{label}:</span> {children}
     </div>
   );
@@ -101,7 +101,7 @@ export async function Events({ id }: EventsProps) {
                   {content.customLink?.map((link, idx) =>
                     link.url ? (
                       <div key={`link-${idx}`}>
-                        <Link href={link.url} className="min-w-0 break-words">
+                        <Link href={link.url} className="min-w-0 wrap-break-word">
                           {link.url}
                         </Link>
                       </div>
