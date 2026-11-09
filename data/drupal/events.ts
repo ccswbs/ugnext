@@ -104,12 +104,13 @@ export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
 
 export type EventSearchOptions = {
   query?: string;
+  units?: string[];
   page: number;
   pageSize: number;
 };
 
 export async function getFilteredEvents(options: EventSearchOptions) {
-  const { query, page = 0, pageSize = 20 } = options;
+  const { query, page = 0, pageSize = 20, units } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
     console.error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
@@ -126,8 +127,18 @@ export async function getFilteredEvents(options: EventSearchOptions) {
 
   const { data, error } = await client.query({
     query: gql(/* gql */ `
-      query EventsSearch($page: Int, $pageSize: Int, $query: String, $status: Boolean) {
-        eventsSearch(page: $page, pageSize: $pageSize, filter: { query: $query, status: $status }) {
+      query EventsSearch(
+        $page: Int
+        $pageSize: Int
+        $units: [String]
+        $query: String
+        $status: Boolean
+      ) {
+        eventsSearch(
+          page: $page
+          pageSize: $pageSize
+          filter: { units: $units, query: $query, status: $status }
+        ) {
           results {
             ...EventWithoutContent
           }
@@ -141,6 +152,7 @@ export async function getFilteredEvents(options: EventSearchOptions) {
     variables: {
       page: page,
       pageSize: pageSize,
+      units: units ?? [],
       query: query ?? "",
       status: showUnpublished ? null : true,
     },

@@ -110,29 +110,28 @@ export async function Events({ id }: EventsProps) {
                 </EventDetail>
               )}
               {eventLocation?.name && <EventDetail label="Location">{eventLocation.name}</EventDetail>}
-              <HtmlParser key="event-body" html={content.body?.processed ?? ""} instructions={undefined} />
-              {/* Render all Event Sections in order */}
-              {content.eventSections?.map((section, index) => {
-                // Event part with custom content
-                if (section.eventPartLabel) {
-                  return (
-                    <div key={section.id || index}>
-                      <Typography id={slugify(section.eventPartLabel)} type="h2" as="h2">
-                        {section.eventPartLabel}
-                      </Typography>
-                      <HtmlParser
-                        key={section.id}
-                        html={section.eventPartText?.processed ?? ""}
-                        instructions={undefined}
-                      />
-                    </div>
-                  );
-                }
-                // Empty section
-                return null;
-              })}
             </div>
           </div>
+          <HtmlParser key="event-body" html={content.body?.processed ?? ""} instructions={undefined} />
+          {/* Render all Event Sections in order */}
+          {content.eventSections?.map((section, index) => {
+            // Event part with custom content
+            if (section.eventPartLabel) {
+              return (
+                <div key={section.id || index}>
+                  <Typography id={slugify(section.eventPartLabel)} type="h2" as="h2">
+                    {section.eventPartLabel}
+                  </Typography>
+                  <HtmlParser
+                    key={section.id}
+                    html={section.eventPartText?.processed ?? ""}
+                    instructions={undefined}
+                  />
+                </div>
+              );
+            }
+            return null;
+          })}
         </Container>
       </LayoutContent>
       <Footer></Footer>
