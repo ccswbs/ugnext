@@ -43,7 +43,7 @@
     "jsonwebtoken": "^9.0.3",
     "ldapts": "^8.2.0",
     "nanoid": "^6.0.2",
-    "next": "^16.4.1",
+    "next": "^16.4.5",
     "next-auth": "^4.24.15",
     "next-drupal": "^2.0.1",
     "object-hash": "^3.0.0",
