@@ -112,8 +112,6 @@ export default async function ProgramsUndergraduateRequirementsContent({ params 
     program
   );
 
-  console.log(sections);
-
   const primaryNavigation = await getUndergraduateAdmissionPrimaryNavigation();
 
   return (
