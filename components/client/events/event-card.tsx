@@ -3,7 +3,7 @@
 import { EventWithoutContentFragment } from "@/lib/graphql/types";
 import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import Image from "next/image";
-import defaultImage from "@/img/university-of-guelph-logo-16x9.jpeg";
+//import defaultImage from "@/img/university-of-guelph-logo-16x9.jpeg";
 import { twMerge } from "tailwind-merge";
 import { Typography } from "@uoguelph/react-components/typography";
 
@@ -30,7 +30,7 @@ export function getEventDateLabel(event: EventWithoutContentFragment) {
 }
 
 export function EventCard({ data, className }: { data: EventWithoutContentFragment; className?: string }) {
-  const img = data.heroImage?.image.variations?.[0];
+  //const img = data.heroImage?.image.variations?.[0];
   const dateLabel = getEventDateLabel(data);
   const start = data.date?.start?.time;
 
@@ -40,16 +40,6 @@ export function EventCard({ data, className }: { data: EventWithoutContentFragme
       href={data.path ?? ""}
       className={twMerge("w-full flex flex-col gap-3 transition-colors group", className)}
     >
-      <div className="overflow-hidden w-full">
-        <Image
-          src={img?.url ?? defaultImage.src}
-          alt=""
-          width={img?.width ?? 800}
-          height={img?.height ?? 450}
-          className="aspect-video w-full object-cover transition-transform duration-200 ease-in-out group-hover:scale-110"
-        />
-      </div>
-
       <div className="w-full flex-col flex gap-3">
         {dateLabel && (
           <Typography as="span" type="body" className="text-lg m-0 uppercase">

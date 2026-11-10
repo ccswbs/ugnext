@@ -34,19 +34,19 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       __typename
       ...Accordion
       ...Block
-      ...GeneralText
-      ...Links
-      ...MediaText
-      ...NewsSearch
       ...EventSearch
       ...FeaturedNews
-      ...Tabs
-      ...Statistics
-      ...TestimonialSlider
-      ...Story
+      ...GeneralText
       ...ImageOverlay
-      ...Section
+      ...Links
+      ...MediaText
+      ...NewsSearch      
       ...ProfileBlock
+      ...Section
+      ...Statistics
+      ...Story
+      ...Tabs      
+      ...TestimonialSlider      
     }
     tags {
       ...Tag

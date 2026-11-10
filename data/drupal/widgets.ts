@@ -156,8 +156,12 @@ export const EVENT_SEARCH_FRAGMENT = gql(/* gql */ `
     uuid
     id
     eventSearchTitle
+    headingLevel
     units {
       ...Unit
+    }
+    sectionColumn {
+      ...SectionColumn
     }
   }
 `);
@@ -397,16 +401,17 @@ export const SECTION_FRAGMENT = gql(/* gql */ `
       __typename
       ...Accordion
       ...Block
+      ...ButtonSection
+      ...EventSearch
       ...FeaturedNews
       ...GeneralText
-      ...Links
-      ...MediaText
-      ...ButtonSection
-      ...Tabs
-      ...Statistics
       ...ImageOverlay
+      ...Links
+      ...MediaText      
       ...ProfileBlock
       ...ProfileCard
+      ...Tabs
+      ...Statistics
     }
   }
 `);
