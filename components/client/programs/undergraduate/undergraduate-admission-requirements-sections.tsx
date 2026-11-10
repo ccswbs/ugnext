@@ -8,25 +8,121 @@ import type {
 import type { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { Typography } from "@uoguelph/react-components/typography";
 import { HtmlParser } from "@/components/client/html-parser";
-import React, { Fragment } from "react";
+import React from "react";
 import { List, ListItem } from "@uoguelph/react-components/list";
 import { nanoid } from "nanoid";
 import { ElementType } from "domelementtype";
 import { Link } from "@uoguelph/react-components/link";
 
-type AdmissionRequirementsSectionsProps = {
+type UndergraduateAdmissionRequirementsSectionsProps = {
   studentType: UndergraduateAdmissionStudentType;
   location: UndergraduateAdmissionLocation;
   program: UndergraduateProgram;
   sections: UndergraduateAdmissionRequirementSection[];
 };
 
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+type UndergraduateAdmissionRequirementsSectionProps = {
+  section: UndergraduateAdmissionRequirementSection;
+  headingLevel?: HeadingLevel;
+  isCoop: boolean;
+  isTransfer: boolean;
+};
+
+function UndergraduateAdmissionRequirementsSection({
+  section,
+  headingLevel = 2,
+  isCoop,
+  isTransfer,
+}: UndergraduateAdmissionRequirementsSectionProps) {
+  if (!section.content && section.subSections.length === 0) {
+    return null;
+  }
+
+  const childHeadingLevel = Math.min(headingLevel + 1, 6) as HeadingLevel;
+  const heading = `h${headingLevel}` as const;
+  const headingStyle = `h${childHeadingLevel}` as const;
+
+  return (
+    <>
+      <Typography type={headingStyle} as={heading}>
+        {section.title}
+      </Typography>
+
+      {section.content && (
+        <HtmlParser
+          html={section.content}
+          instructions={[
+            {
+              shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
+              processNode: (node, props, children, index, childParser) => {
+                // Merge lists that are next to each other
+                const tag = node.tagName;
+
+                if (node.previousSibling?.type === ElementType.Tag && node.previousSibling.tagName === tag) {
+                  return <></>;
+                }
+
+                const neighboringLists = [];
+                let current = node.nextSibling;
+
+                while (current?.type === ElementType.Tag && current.tagName === tag) {
+                  neighboringLists.push(...current.children);
+                  current = current.nextSibling;
+                }
+
+                return (
+                  <List {...props} key={nanoid()} as={tag as "ul" | "ol"}>
+                    {children}
+                    {
+                      // @ts-ignore
+                      childParser(neighboringLists as Element[])
+                    }
+                  </List>
+                );
+              },
+            },
+          ]}
+        />
+      )}
+
+      {section.title === "Estimated Cut-off Range" && section.content !== "" && (
+        <>
+          <Typography type="body" as="p" className="italic">
+            Estimated cut-off ranges are based on admission averages from previous years and are provided as a point of
+            reference. Exact cut-offs are determined by the quantity and quality of applications received and the space
+            available in the program. Having an average within this range does not guarantee admission
+          </Typography>
+
+          {isCoop && !isTransfer && (
+            <Typography type="body" as="p" className="italic">
+              Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to co-op will be
+              automatically considered for the regular program.
+            </Typography>
+          )}
+        </>
+      )}
+
+      {section.subSections.map((subSection) => (
+        <UndergraduateAdmissionRequirementsSection
+          key={subSection.title}
+          section={subSection}
+          headingLevel={childHeadingLevel}
+          isCoop={isCoop}
+          isTransfer={isTransfer}
+        />
+      ))}
+    </>
+  );
+}
+
 export function UndergraduateAdmissionRequirementsSections({
   studentType,
   location,
   program,
   sections,
-}: AdmissionRequirementsSectionsProps) {
+}: UndergraduateAdmissionRequirementsSectionsProps) {
   const isCoop = program.type.some((type) => type.name === "Co-op");
   const isTransfer = studentType.id === "682" || studentType.id === "681" || studentType.id === "683";
   const isCoopOnly = program.degree?.some((degree) => degree.id === "5218");
@@ -76,74 +172,14 @@ export function UndergraduateAdmissionRequirementsSections({
         </>
       )}
 
-      {sections
-        ?.map((section) => {
-          if (!section.content) {
-            return null;
-          }
-
-          return (
-            <Fragment key={section.title}>
-              <Typography type="h3" as="h2">
-                {section.title}
-              </Typography>
-
-              <HtmlParser
-                html={section.content}
-                instructions={[
-                  {
-                    shouldProcessNode: (node) => node.tagName === "ul" || node.tagName === "ol",
-                    processNode: (node, props, children, index, childParser) => {
-                      // Merge lists that are next to each other
-                      const tag = node.tagName;
-
-                      if (node.previousSibling?.type === ElementType.Tag && node.previousSibling.tagName === tag) {
-                        return <></>;
-                      }
-
-                      const neighboringLists = [];
-                      let current = node.nextSibling;
-
-                      while (current?.type === ElementType.Tag && current.tagName === tag) {
-                        neighboringLists.push(...current.children);
-                        current = current.nextSibling;
-                      }
-
-                      return (
-                        <List {...props} key={nanoid()} as={tag as "ul" | "ol"}>
-                          {children}
-                          {
-                            // @ts-ignore
-                            childParser(neighboringLists as Element[])
-                          }
-                        </List>
-                      );
-                    },
-                  },
-                ]}
-              />
-
-              {section.title === "Estimated Cut-off Range" && section.content !== "" && (
-                <>
-                  <Typography type="body" as="p" className="italic">
-                    Estimated cut-off ranges are based on admission averages from previous years and are provided as a
-                    point of reference. Exact cut-offs are determined by the quantity and quality of applications
-                    received and the space available in the program. Having an average within this range does not
-                    guarantee admission
-                  </Typography>
-
-                  {isCoop && !isTransfer && (
-                    <Typography type="body" as="p" className="italic">
-                      Co-op averages will often exceed the estimated cut-off ranges. Students not admissible to co-op
-                      will be automatically considered for the regular program.
-                    </Typography>
-                  )}
-                </>
-              )}
-            </Fragment>
-          );
-        })
-        .filter((section) => section !== null)}
+      {sections?.map((section) => (
+        <UndergraduateAdmissionRequirementsSection
+          key={section.title}
+          section={section}
+          isCoop={isCoop}
+          isTransfer={isTransfer}
+        />
+      ))}
     </>
   );
 }
