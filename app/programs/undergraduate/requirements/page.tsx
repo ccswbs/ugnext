@@ -70,7 +70,6 @@ export default async function ProgramsUndergraduateRequirements() {
               studentTypes={studentTypes}
               locations={locations}
               programs={programs}
-              isDomesticOnly // Remove when international admission requirements are ready.
             />
           </div>
 
