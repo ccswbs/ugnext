@@ -19,6 +19,8 @@ import { slugify } from "@/lib/string-utils";
 import { CustomFooter } from "@/components/server/custom-footer";
 import React from "react";
 
+export const dynamic = "force-dynamic"; // REMOVE BEFORE MERGING
+
 async function getUndergraduateAdmissionLocations() {
   const locationsDrupal = await getUndergraduateAdmissionLocationsDrupal();
   const locationsYaml = await getUndergraduateAdmissionLocationYaml();
