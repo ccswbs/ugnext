@@ -65,6 +65,26 @@ export const EVENT_FRAGMENT = gql(/* gql */ `
         }
       }
     }
+    relatedContent {
+      content {        
+        ... on NodeEvent {
+          path
+          title
+        }
+        ... on NodeNews {
+          path
+          title
+        }
+        ... on NodePage {
+          title
+          path
+        }
+        ... on NodeProfile {
+          title
+          path
+        }
+      }
+    }
   }
 `);
 

@@ -101,10 +101,10 @@ export function EventCard({
   const day = start ? new Date(start).toLocaleDateString("en-US", { day: "numeric", timeZone: TIME_ZONE }) : "";
 
   return (
-    <div key={data.id} className={twMerge("w-full flex gap-4 px-4 py-4 sm:gap-6 sm:px-6", className)}>
+    <div key={data.id} className={twMerge("w-full flex gap-4 px-4 py-4 sm:gap-6", className)}>
       {start && (
         <time dateTime={start} aria-label={dateLabel} className="flex flex-col items-center shrink-0 w-12 leading-none">
-          <span aria-hidden="true" className="text-sm font-bold uppercase">
+          <span aria-hidden="true" className="text-md font-bold uppercase">
             {month}
           </span>
           <span aria-hidden="true" className="text-4xl font-bold">
