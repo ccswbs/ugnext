@@ -4,7 +4,6 @@ import { Card, CardImage, CardContent, CardTitle } from "@uoguelph/react-compone
 import guelph from "@/img/home/guelph.png";
 import ridgetown from "@/img/home/ridgetown.png";
 import guelphHumber from "@/img/home/guelph-humber.png";
-import Link from "next/link";
 import Image from "next/image";
 import { tv } from "tailwind-variants";
 
@@ -23,7 +22,7 @@ export function ThreeCampuses() {
 
   return (
     <div className={container()}>
-      <Card as={Link} href="https://www.uoguelph.ca/admission/undergraduate/tours/" className={card()} centered>
+      <Card as="a" href="https://www.uoguelph.ca/admission/undergraduate/tours/" className={card()} centered>
         <CardImage
           src={guelph.src}
           width={guelph.width}
@@ -39,7 +38,7 @@ export function ThreeCampuses() {
         </CardContent>
       </Card>
 
-      <Card as={Link} href="https://www.ridgetownc.com/" className={card()} centered>
+      <Card as="a" href="https://www.ridgetownc.com/" className={card()} centered>
         <CardImage
           src={ridgetown.src}
           width={ridgetown.width}
@@ -55,7 +54,7 @@ export function ThreeCampuses() {
         </CardContent>
       </Card>
 
-      <Card as={Link} href="https://www.guelphhumber.ca/" className={card()} centered>
+      <Card as="a" href="https://www.guelphhumber.ca/" className={card()} centered>
         <CardImage
           src={guelphHumber.src}
           width={guelphHumber.width}

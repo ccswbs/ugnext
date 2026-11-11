@@ -1,12 +1,19 @@
 import { nanoid } from "nanoid";
 import { Button, type ButtonProps } from "@uoguelph/react-components/button";
 import { Link } from "@uoguelph/react-components/link";
-import NextLink from "next/link";
+import { LazyLink as NextLink } from "@/components/client/widgets/lazy-link";
 import { twMerge } from "tailwind-merge";
 import { collapseSlashes } from "@/lib/string-utils";
 import { hasAncestorWithClass, HTMLParserInstruction } from "@/components/client/html-parser";
 
-export const LinkInstruction: HTMLParserInstruction = {
+const defaultLinkColorClasses =
+  "!text-body-copy-link hover:!text-body-copy-link-hover dark:!text-body-copy-link-on-dark dark:hover:!text-body-copy-link-hover-on-dark light:!text-body-copy-link-on-light light:hover:!text-body-copy-link-on-light [&_*]:!text-body-copy-link [&_*:hover]:!text-body-copy-link-hover [&_*]:dark:!text-body-copy-link-on-dark [&_*]:light:!text-body-copy-link-on-light";
+
+/**
+ * Creates the link instruction. When `linkClassName` is provided, it replaces the default link colour classes
+ * (useful when links must inherit their colour from a coloured background).
+ */
+export const createLinkInstruction = (linkClassName?: string): HTMLParserInstruction => ({
   shouldProcessNode: (node, props) => {
     // Skip links that are inside vcard elements - let vcard processor handle them
     if (hasAncestorWithClass(node, "vcard")) {
@@ -87,15 +94,14 @@ export const LinkInstruction: HTMLParserInstruction = {
     }
 
     // Ensure link color is preserved even when content is bold
-    const linkClassName = twMerge(
-      "!text-body-copy-link hover:!text-body-copy-link-hover dark:!text-body-copy-link-on-dark dark:hover:!text-body-copy-link-hover-on-dark light:!text-body-copy-link-on-light light:hover:!text-body-copy-link-on-light [&_*]:!text-body-copy-link [&_*:hover]:!text-body-copy-link-hover [&_*]:dark:!text-body-copy-link-on-dark [&_*]:light:!text-body-copy-link-on-light",
-      className
-    );
+    const mergedLinkClassName = twMerge(linkClassName ?? defaultLinkColorClasses, className);
 
     return (
-      <Link {...props} key={nanoid()} href={href} as={NextLink} className={linkClassName}>
+      <Link {...props} key={nanoid()} href={href} as={NextLink} className={mergedLinkClassName}>
         {children}
       </Link>
     );
   },
-};
+});
+
+export const LinkInstruction = createLinkInstruction();

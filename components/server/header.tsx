@@ -1,5 +1,5 @@
 import { Header as HeaderComponent, HeaderLink, HeaderMenu, HeaderMenuItem } from "@uoguelph/react-components/header";
-import { getMenuByPrimaryNavigation, getMenuByPrimaryNavigationLinkset } from "@/data/drupal/primary-navigation";
+import { getMenuByPrimaryNavigation } from "@/data/drupal/primary-navigation";
 import { type NavigationFragment } from "@/lib/graphql/types";
 import { Nullable } from "@orama/orama";
 

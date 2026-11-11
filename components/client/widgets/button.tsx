@@ -6,7 +6,7 @@ import { MouseEventHandler } from "react";
 import { Typography } from "@uoguelph/react-components/typography";
 import { HtmlParser } from "@/components/client/html-parser";
 import { Button, ButtonProps } from "@uoguelph/react-components/button";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/client/widgets/lazy-link";
 import { collapseSlashes } from "@/lib/string-utils";
 import { twMerge } from "tailwind-merge";
 import { usePathname } from "next/navigation";
