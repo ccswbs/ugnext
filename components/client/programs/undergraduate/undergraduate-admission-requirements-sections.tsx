@@ -135,7 +135,8 @@ export function UndergraduateAdmissionRequirementsSections({
           {isCoopOnly && isHighSchool ? (
             <Typography type="body" as="span" className="block! italic">
               This subject is <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link> admission
-              only.
+              only. A regular stream is available, and students not interested in co-op may request a transfer once they
+              begin their program.
             </Typography>
           ) : (
             <Typography type="body" as="span" className="block! italic">
@@ -144,7 +145,7 @@ export function UndergraduateAdmissionRequirementsSections({
             </Typography>
           )}
 
-          {isTransfer && (
+          {isTransfer && !isCoopOnly && (
             <Typography type="body" as="span" className="block! italic">
               Transfer students are not eligible for direct admission to co-op programs. You{" "}
               <Link href="/experiential-learning/future-students/co-op-admission#external-transfer-students">
