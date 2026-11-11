@@ -132,7 +132,7 @@ export function UndergraduateAdmissionRequirementsSections({
     <>
       {isCoop && (
         <>
-          {isCoopOnly && isHighSchool ? (
+          {isCoopOnly ? (
             <Typography type="body" as="span" className="block! italic">
               This subject is <Link href="/experiential-learning/future-students/co-op-programs">co-op</Link> admission
               only. A regular stream is available, and students not interested in co-op may request a transfer once they
