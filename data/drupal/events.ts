@@ -1,10 +1,10 @@
 import { gql } from "@/lib/graphql";
 import { getClient } from "@/lib/apollo";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
-import { EventFragment, EventWithoutContentFragment } from "@/lib/graphql/types";
+import { EventFragment, EventSummaryFragment } from "@/lib/graphql/types";
 
-export const EVENT_WITHOUT_CONTENT = gql(/* gql */ `
-  fragment EventWithoutContent on NodeEvent {
+export const EVENT_SUMMARY = gql(/* gql */ `
+  fragment EventSummary on NodeEvent {
     id
     title
     path
@@ -16,6 +16,28 @@ export const EVENT_WITHOUT_CONTENT = gql(/* gql */ `
       end {
         time
       }
+    }
+    eventLocation {
+      ... on TermLocation {
+        id
+        name
+      }
+    }
+    body {
+      summary
+    }
+  }
+`);
+
+export const EVENT_FRAGMENT = gql(/* gql */ `
+  fragment Event on NodeEvent {
+    ...EventSummary
+    body {
+      processed
+    }
+    customLink {
+      title
+      url
     }
     heroImage {
       attribution {
@@ -33,26 +55,6 @@ export const EVENT_WITHOUT_CONTENT = gql(/* gql */ `
           height
         }
       }
-    }
-  }
-`);
-
-export const EVENT_FRAGMENT = gql(/* gql */ `
-  fragment Event on NodeEvent {
-    ...EventWithoutContent
-    eventLocation {
-      ... on TermLocation {
-        id
-        name
-      }
-    }
-    body {
-      processed
-      summary
-    }
-    customLink {
-      title
-      url
     }
     eventSections {
       ... on ParagraphEventPart {
@@ -140,7 +142,7 @@ export async function getFilteredEvents(options: EventSearchOptions) {
           filter: { units: $units, query: $query, status: $status }
         ) {
           results {
-            ...EventWithoutContent
+            ...EventSummary
           }
           pageInfo {
             pageSize
@@ -167,13 +169,13 @@ export async function getFilteredEvents(options: EventSearchOptions) {
     };
   }
 
-  let results = data.eventsSearch.results as EventWithoutContentFragment[];
+  let results = data.eventsSearch.results as EventSummaryFragment[];
 
   if (showUnpublished) {
     const latestRevisionQuery = gql(/* gql */ `
       query LatestRevisionEvent($id: ID!) {
         nodeEvent(id: $id, revision: "latest") {
-          ...EventWithoutContent
+          ...EventSummary
         }
       }
     `);
@@ -190,7 +192,7 @@ export async function getFilteredEvents(options: EventSearchOptions) {
           return result;
         }
 
-        return data.nodeEvent as EventWithoutContentFragment;
+        return data.nodeEvent as EventSummaryFragment;
       })
     );
   }

@@ -1,4 +1,4 @@
-import { EventSearchFragment, EventWithoutContentFragment } from "@/lib/graphql/types";
+import { EventSearchFragment, EventSummaryFragment } from "@/lib/graphql/types";
 import { useMemo } from "react";
 import { FilterablePaginatedGrid } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid";
 import { EventCard } from "@/components/client/events/event-card";
@@ -22,8 +22,8 @@ export function EventSearch({ data }: { data: EventSearchFragment }) {
 
       <FilterablePaginatedGrid
         url={url}
-        render={(item: EventWithoutContentFragment) => <EventCard key={item.id} data={item} />}
-        layout="grid"
+        render={(item: EventSummaryFragment) => <EventCard key={item.id} data={item} />}
+        layout="list"
       >
         <FilterablePaginatedGridTextBox id="query" label="Search by keywords" />
       </FilterablePaginatedGrid>
