@@ -101,7 +101,7 @@ export function EventCard({
   const day = start ? new Date(start).toLocaleDateString("en-US", { day: "numeric", timeZone: TIME_ZONE }) : "";
 
   return (
-    <div key={data.id} className={twMerge("w-full flex gap-4 px-4 py-4 sm:gap-6", className)}>
+    <Link key={data.id} href={data.path ?? ""} className={twMerge("w-full flex gap-6 p-4 hover:bg-grey-light-bg focus:bg-grey-light-bg focus:outline-none transition-colors", className)}>
       {start && (
         <time dateTime={start} aria-label={dateLabel} className="flex flex-col items-center shrink-0 w-12 leading-none">
           <span aria-hidden="true" className="text-md font-bold uppercase">
@@ -115,12 +115,7 @@ export function EventCard({
 
       <div className="flex flex-col gap-1 min-w-0">
         <Typography as="h3" type="h4" className="font-bold m-0">
-          <Link
-            href={data.path ?? ""}
-            className="underline decoration-transparent hover:decoration-black focus-visible:decoration-black transition-colors"
-          >
-            {data.title}
-          </Link>
+          {data.title}          
         </Typography>
 
         {(timeLabel || location) && (
@@ -151,6 +146,6 @@ export function EventCard({
           </Typography>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

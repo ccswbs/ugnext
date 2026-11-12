@@ -72,8 +72,6 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
   // Render simple list layout (for secondary column)
   return (
     <>
-      {sectionContext ? renderTitle() : data.eventSearchTitle?.trim() && <Container>{renderTitle()}</Container>}
-
       {isLoading && (
         <div className="flex w-full items-center justify-center flex-1 py-5">
           <LoadingIndicator />
@@ -90,11 +88,12 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
       )}
 
       {events && (
-        <Container>
-          <div className="grid grid-cols-1 gap-5 py-8">
+        <Container className="px-0">
+          {data.eventSearchTitle && renderTitle()}
+          <div className={`grid grid-cols-1 gap-5 ${data.eventSearchTitle ? "pt-0 pb-8" : "py-8"}`}>
             {events.results?.length > 0 ? (
               events.results.map((event) => (
-                <EventCard key={event.id} data={event} showSummary={false} className="px-0" />
+                <EventCard key={event.id} data={event} showSummary={false} />
               ))
             ) : (
               <div className="flex w-full items-center justify-center flex-1 py-5">
