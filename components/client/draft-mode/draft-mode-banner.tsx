@@ -9,7 +9,7 @@ export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [revalidating, setRevalidating] = useState(false);
-  //const [shareableLink, setSharableLink] = useState("");
+  const [shareableLink, setSharableLink] = useState("");
 
   const revalidatePage = async () => {
     setRevalidating(true);
@@ -24,7 +24,6 @@ export function DraftModeBanner() {
     setRevalidating(false);
   };
 
-  /*
   useEffect(() => {
     if (searchParams.get("secret")) {
       setSharableLink(`${window.location.origin}/api/draft/?${searchParams.toString()}`);
@@ -39,7 +38,6 @@ export function DraftModeBanner() {
       toast.error("Failed to copy link to clipboard. Try again later.");
     }
   };
-  */
 
   return (
     <div className="sticky left-0 top-0 z-1000 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
@@ -55,11 +53,11 @@ export function DraftModeBanner() {
 
       <div id="uofg-draft-mode-banner-extra-buttons" className="contents"></div>
 
-      {/*shareableLink && (
+      {shareableLink && (
         <Button color="yellow" className="p-2" onClick={copyShareableLinkToClipboard} as="button">
           Copy Temporary Link
         </Button>
-      )*/}
+      )}
     </div>
   );
 }
