@@ -33,6 +33,8 @@ import { slugify } from "@/lib/string-utils";
 import { getPrimaryNavigation } from "@/data/drupal/primary-navigation";
 import { CustomFooter } from "@/components/server/custom-footer";
 
+export const dynamic = "force-dynamic"; // REMOVE BEFORE MERGING
+
 type Props = {
   params: Promise<{ slug: string[] }>;
 };
