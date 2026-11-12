@@ -559,12 +559,7 @@ export const RELATED_CONTENT_FRAGMENT = gql(/* gql */ `
     __typename
     uuid
     id
-    relatedContentHeadingLevel: headingLevel
-    content {
-      __typename
-      ...BasicPageMinimal
-    }
-    label: contentLabel
+    ...RelatedContentGroup
   }
 `);
 

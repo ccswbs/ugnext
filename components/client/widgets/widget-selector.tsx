@@ -19,6 +19,7 @@ import { TestimonialSliderWidget } from "@/components/client/widgets/testimonial
 import { SocialMediaWidget } from "@/components/client/widgets/social-media";
 import { ProfileBlock } from "@/components/client/widgets/profile-block";
 import { ProfileContact } from "@/components/client/widgets/profile-contact";
+import { RelatedContent } from "@/components/client/related-content";
 import type { ProcessedSectionWidget, ProcessedWidget, Widget } from "@/data/drupal/widgets";
 import { usePathname } from "next/navigation";
 import { ButtonWidget } from "@/components/client/widgets/button";
@@ -112,6 +113,8 @@ export function WidgetSelector({
         return <ProfileBlock data={data} />;
       case "ParagraphProfileCard":
         return <ProfileContact data={data} />;
+      case "ParagraphRelatedContent":
+        return <RelatedContent relatedContent={[data]} />;
       default:
         console.error(`Widget Error: ${data.__typename} is not a supported widget\n\t@ ${pathname}\n`);
         return <></>;

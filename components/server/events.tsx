@@ -11,7 +11,7 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { slugify } from "@/lib/string-utils";
-import { RelatedContent } from "@/components/server/related-content";
+import { RelatedContent } from "@/components/client/related-content";
 
 export type EventsProps = {
   id: string;
