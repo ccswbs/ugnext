@@ -3,6 +3,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import type {
   UndergraduateProgramsQuery,
+  UndergraduateProgramsQueryVariables,
   UndergraduateProgramFragment,
   UndergraduateProgramTypeFragment,
 } from "@/lib/graphql/types";
@@ -132,16 +133,15 @@ async function getPublishedUndergraduatePrograms() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const programs: UndergraduateProgramsQuery["nodeUndergraduatePrograms"]["nodes"] = [];
 
   while (hasNextPage) {
+    const variables: UndergraduateProgramsQueryVariables = { after: cursor };
     const { data, error } = await query({
       query: programsQuery,
-      variables: {
-        after: cursor,
-      },
+      variables,
     });
 
     if (error) {

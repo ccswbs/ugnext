@@ -163,12 +163,12 @@ export function HtmlParser({
   useContentsClass = true,
   linkClassName,
 }: {
-  html: string;
+  html: string | null | undefined;
   instructions?: HTMLParserInstruction[];
   useContentsClass?: boolean;
   linkClassName?: string;
 }) {
-  const normalizedHtml = useMemo(() => normalizeWhitespace(html), [html]);
+  const normalizedHtml = useMemo(() => normalizeWhitespace(html ?? ""), [html]);
 
   const options: HTMLReactParserOptions = useMemo(() => {
     const linkInstruction = linkClassName ? createLinkInstruction(linkClassName) : LinkInstruction;

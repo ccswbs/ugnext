@@ -25,6 +25,20 @@ schema[`${DRUPAL_BASE_URL}/graphql`] = {
 const config: CodegenConfig = {
   schema: schema,
   documents: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "data/**/*.{ts,tsx}", "!./lib/graphql/"],
+  config: {
+    nonOptionalTypename: true,
+    scalars: {
+      Cursor: "string",
+      Email: "string",
+      Html: "string",
+      PhoneNumber: "string",
+      Time: "string",
+      TimeZone: "string",
+      Timestamp: "number",
+      UtcOffset: "string",
+      UntypedStructuredData: "unknown",
+    },
+  },
   generates: {
     "./lib/graphql/": {
       preset: "client",
@@ -33,8 +47,20 @@ const config: CodegenConfig = {
         fragmentMasking: false,
       },
     },
+    "./lib/graphql/schema-types.ts": {
+      plugins: ["typescript"],
+    },
     "./lib/graphql/types.ts": {
-      plugins: ["typescript", "typescript-operations"],
+      plugins: ["typescript-operations"],
+      config: {
+        importSchemaTypesFrom: "./lib/graphql/schema-types",
+      },
+    },
+    "./lib/graphql/possible-types.ts": {
+      plugins: ["fragment-matcher"],
+      config: {
+        deterministic: true,
+      },
     },
   },
   ignoreNoDocuments: true,
