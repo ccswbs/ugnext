@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { slugify } from "@/lib/string-utils";
+import { RelatedContent } from "@/components/server/related-content";
 
 export type EventsProps = {
   id: string;
@@ -21,13 +22,6 @@ type EventImage = { alt?: string | null; url: string; width: number; height: num
 function getImage(heroImage: unknown): EventImage | null {
   return (heroImage as { image?: EventImage | null } | null)?.image ?? null;
 }
-
-const RELATED_CONTENT_TYPES = {
-  NodePage: "Page",
-  NodeEvent: "Event",
-  NodeNews: "News",
-  NodeProfile: "Profile",
-} as const;
 
 const TIME_ZONE = "America/Toronto";
 
@@ -74,9 +68,6 @@ export async function Events({ id }: EventsProps) {
   const date = endDate && endDate !== startDate ? `${startDate} - ${endDate}` : startDate;
   const time = start ? (end ? `${formatTime(start)} - ${formatTime(end)}` : formatTime(start)) : "";
   const eventLocation = content.eventLocation as { id: string; name: string } | null | undefined;
-  const relatedLinks = (content.relatedContent?.content ?? []).flatMap(({ __typename, title, path }) =>
-    title && path ? [{ title, path, type: __typename ? RELATED_CONTENT_TYPES[__typename] : undefined }] : []
-  );
 
   return (
     <Layout>
@@ -142,21 +133,7 @@ export async function Events({ id }: EventsProps) {
             }
             return null;
           })}
-          {relatedLinks.length > 0 && (
-            <>
-              <Typography id="related-content" type="h2" as="h2">
-                Related Content
-              </Typography>
-              <ul className="list-disc list-inside space-y-1 mb-4">
-                {relatedLinks.map((related) => (
-                  <li key={related.path}>
-                    <Link href={related.path}>{related.title}</Link>
-                    {related.type && ` (${related.type})`}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+          <RelatedContent relatedContent={content.relatedContent} />
         </Container>
       </LayoutContent>
       <Footer></Footer>
