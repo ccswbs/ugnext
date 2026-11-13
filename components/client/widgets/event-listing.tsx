@@ -13,6 +13,7 @@ import { FilterablePaginatedGrid } from "@/components/client/filterable-paginate
 import { EventCard } from "@/components/client/events/event-card";
 import { FilterablePaginatedGridTextBox } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-textbox";
 import { FilterablePaginatedGridSelect } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-select";
+import { EVENT_COST_OPTIONS } from "@/lib/event-cost";
 
 // Fetcher function for SWR
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -69,10 +70,7 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
             id="cost"
             label="Filter by cost"
             multiple={true}
-            options={[
-              { id: "free", name: "Free" },
-              { id: "paid", name: "Paid" },
-            ]}
+            options={EVENT_COST_OPTIONS}
           />
         </FilterablePaginatedGrid>
       </div>

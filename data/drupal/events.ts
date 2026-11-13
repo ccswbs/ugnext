@@ -114,13 +114,13 @@ export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
 export type EventSearchOptions = {
   query?: string;
   units?: string[];
-  cost?: string;
+  cost?: string[];
   page: number;
   pageSize: number;
 };
 
 export async function getFilteredEvents(options: EventSearchOptions) {
-  const { query, page = 0, pageSize = 20, units, cost } = options;
+  const { query, page = 0, pageSize = 20, units, cost = [] } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
     console.error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
@@ -143,11 +143,12 @@ export async function getFilteredEvents(options: EventSearchOptions) {
         $units: [String]
         $query: String
         $status: Boolean
+        $cost: [String]
       ) {
         eventsSearch(
           page: $page
           pageSize: $pageSize
-          filter: { units: $units, query: $query, status: $status }
+          filter: { units: $units, query: $query, status: $status, field_cost: $cost }
         ) {
           results {
             ...EventSummary
@@ -165,6 +166,7 @@ export async function getFilteredEvents(options: EventSearchOptions) {
       units: units ?? [],
       query: query ?? "",
       status: showUnpublished ? null : true,
+      cost: cost,
     },
   });
 
@@ -178,23 +180,6 @@ export async function getFilteredEvents(options: EventSearchOptions) {
   }
 
   let results = data.eventsSearch.results as EventSummaryFragment[];
-
-  // Filter by cost if provided
-  if (cost) {
-    const costOptions = cost.split(",").map(c => c.trim()).filter(Boolean);
-    if (costOptions.length > 0) {
-      results = results.filter(event => {
-        return costOptions.some(costOption => {
-          if (costOption === "free") {
-            return event.cost.length === 0 || event.cost.every(c => c === 0);
-          } else if (costOption === "paid") {
-            return event.cost.length > 0 && event.cost.some(c => c > 0);
-          }
-          return false;
-        });
-      });
-    }
-  }
 
   if (showUnpublished) {
     const latestRevisionQuery = gql(/* gql */ `

@@ -75,6 +75,10 @@ function formatCost(costArray: number[] | null | undefined): string | null {
         return null;
       case 10:
         return "Under $10";
+      case 50:
+        return "$10 - $50";
+      case 100:
+        return "$50 - $100";
       case 101:
         return "Over $100";
     }

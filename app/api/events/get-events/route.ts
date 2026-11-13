@@ -10,7 +10,10 @@ export async function GET(request: NextRequest) {
       .split(",")
       .map((type) => type.trim())
       .filter(Boolean);
-  const cost: string = params.get("cost") ?? "";
+  const cost: string[] = (params.get("cost") ?? "")
+      .split(",")
+      .map((tier) => tier.trim())
+      .filter(Boolean);
 
   try {
     const data = await getFilteredEvents({
