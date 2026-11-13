@@ -31,9 +31,19 @@ function formatShortDate(time: string) {
   return new Date(time).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: TIME_ZONE });
 }
 
+// Events can have multiple dates (recurring); only the earliest is displayed
+export function getFirstEventDate(event: EventSummaryFragment) {
+  return (event.date ?? []).reduce<EventSummaryFragment["date"][number] | undefined>((earliest, current) => {
+    if (!current?.start?.time) return earliest;
+    if (!earliest?.start?.time) return current;
+    return new Date(current.start.time).getTime() < new Date(earliest.start.time).getTime() ? current : earliest;
+  }, undefined);
+}
+
 export function getEventDateLabel(event: EventSummaryFragment) {
-  const start = event.date?.start?.time;
-  const end = event.date?.end?.time;
+  const firstDate = getFirstEventDate(event);
+  const start = firstDate?.start?.time;
+  const end = firstDate?.end?.time;
 
   if (!start) return "";
 
@@ -44,8 +54,9 @@ export function getEventDateLabel(event: EventSummaryFragment) {
 }
 
 export function getEventTimeLabel(event: EventSummaryFragment) {
-  const start = event.date?.start?.time;
-  const end = event.date?.end?.time;
+  const firstDate = getFirstEventDate(event);
+  const start = firstDate?.start?.time;
+  const end = firstDate?.end?.time;
 
   if (!start) return "";
 
@@ -89,7 +100,7 @@ export function EventCard({
   className?: string;
   showSummary?: boolean;
 }) {
-  const start = data.date?.start?.time;
+  const start = getFirstEventDate(data)?.start?.time;
   const dateLabel = getEventDateLabel(data);
   const timeLabel = getEventTimeLabel(data);
   const location = data.eventLocation && "name" in data.eventLocation ? data.eventLocation.name : "";

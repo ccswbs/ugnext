@@ -11,7 +11,9 @@ import Image from "next/image";
 import { Container } from "@uoguelph/react-components/container";
 import { Typography } from "@uoguelph/react-components/typography";
 import { slugify } from "@/lib/string-utils";
+import { EventDates, EventOccurrence } from "@/components/client/events/event-dates";
 import { RelatedContent } from "@/components/client/related-content";
+import { getIconForUrl } from "@/lib/ug-utils";
 
 export type EventsProps = {
   id: string;
@@ -41,6 +43,26 @@ function formatTime(time: string) {
     .toLowerCase();
 }
 
+function getOccurrences(dates: { start?: { time: any } | null; end?: { time: any } | null }[]) {
+  return dates
+    .flatMap((range) => {
+      const start = range.start?.time as string | undefined;
+      const end = range.end?.time as string | undefined;
+
+      if (!start) return [];
+
+      const startDate = formatDate(start);
+      const endDate = end ? formatDate(end) : "";
+
+      return {
+        start,
+        date: endDate && endDate !== startDate ? `${startDate} - ${endDate}` : startDate,
+        time: end ? `${formatTime(start)} - ${formatTime(end)}` : formatTime(start),
+      } satisfies EventOccurrence;
+    })
+    .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+}
+
 function EventDetail({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mb-2 wrap-break-word">
@@ -61,12 +83,7 @@ export async function Events({ id }: EventsProps) {
   }
 
   const image = getImage(content.heroImage);
-  const start = content.date?.start?.time;
-  const end = content.date?.end?.time;
-  const startDate = start ? formatDate(start) : "";
-  const endDate = end ? formatDate(end) : "";
-  const date = endDate && endDate !== startDate ? `${startDate} - ${endDate}` : startDate;
-  const time = start ? (end ? `${formatTime(start)} - ${formatTime(end)}` : formatTime(start)) : "";
+  const occurrences = getOccurrences(content.date ?? []);
   const eventLocation = content.eventLocation as { id: string; name: string } | null | undefined;
 
   return (
@@ -91,26 +108,33 @@ export async function Events({ id }: EventsProps) {
               />
             )}
             <div className="md:flex-1">
-              {/* Date */}
-              {date && (
-                <EventDetail label="Date">{start ? <time dateTime={start}>{date}</time> : date}</EventDetail>
+              {occurrences.length === 1 && (
+                <>
+                  <EventDetail label="Date">
+                    <time dateTime={occurrences[0].start}>{occurrences[0].date}</time>
+                  </EventDetail>
+                  <EventDetail label="Time">{occurrences[0].time}</EventDetail>
+                </>
               )}
-              {/* Time */}
-              {time && <EventDetail label="Time">{time}</EventDetail>}
+              {eventLocation?.name && <EventDetail label="Location">{eventLocation.name}</EventDetail>}
+              {occurrences.length > 1 && <EventDates occurrences={occurrences} />}
               {content.customLink && content.customLink.length > 0 && (
-                <EventDetail label="Register">
+                <>
                   {content.customLink?.map((link, idx) =>
                     link.url ? (
                       <div key={`link-${idx}`}>
-                        <Link href={link.url} className="min-w-0 wrap-break-word">
-                          {link.url}
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <i className={`${getIconForUrl(link.url)} fa-fw shrink-0`} aria-hidden="true"></i>
+                          <Link href={link.url} className="min-w-0 break-words">
+                            {link.title}
+                          </Link>
+                        </div>
                       </div>
                     ) : null
                   )}
-                </EventDetail>
+                </>
               )}
-              {eventLocation?.name && <EventDetail label="Location">{eventLocation.name}</EventDetail>}
+              
             </div>
           </div>
           <HtmlParser key="event-body" html={content.body?.processed ?? ""} instructions={undefined} />
