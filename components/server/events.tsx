@@ -63,6 +63,33 @@ function getOccurrences(dates: { start?: { time: any } | null; end?: { time: any
     .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 }
 
+function formatCost(costArray: number[] | null | undefined): string | null {
+  if (!costArray || costArray.length === 0) return null;
+
+  const sorted = [...costArray].sort((a, b) => a - b);
+  const unique = Array.from(new Set(sorted));
+
+  if (unique.length === 1) {
+    switch (unique[0]) {
+      case 0:
+        return null;
+      case 10:
+        return "Under $10";
+      case 101:
+        return "Over $100";
+    }
+  }
+
+  const lowest = unique[0];
+  const highest = unique[unique.length - 1];
+
+  if (highest === 101) {
+    return `$${lowest} and above`;
+  }
+
+  return `$${lowest} - $${highest}`;
+}
+
 function EventDetail({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mb-2 wrap-break-word">
@@ -118,8 +145,13 @@ export async function Events({ id }: EventsProps) {
               )}
               {eventLocation?.name && <EventDetail label="Location">{eventLocation.name}</EventDetail>}
               {occurrences.length > 1 && <EventDates occurrences={occurrences} />}
+              {content.costDetails?.processed ? (
+                <HtmlParser key="event-cost-details" html={content.costDetails.processed} instructions={undefined} />
+              ) : formatCost(content.cost) ? (
+                <EventDetail label="Cost">{formatCost(content.cost)}</EventDetail>
+              ) : null}
               {content.customLink && content.customLink.length > 0 && (
-                <>
+                <div className="mt-4">
                   {content.customLink?.map((link, idx) =>
                     link.url ? (
                       <div key={`link-${idx}`}>
@@ -132,7 +164,7 @@ export async function Events({ id }: EventsProps) {
                       </div>
                     ) : null
                   )}
-                </>
+                </div>
               )}
               
             </div>

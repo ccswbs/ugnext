@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
       .split(",")
       .map((type) => type.trim())
       .filter(Boolean);
+  const cost: string = params.get("cost") ?? "";
 
   try {
     const data = await getFilteredEvents({
@@ -17,6 +18,7 @@ export async function GET(request: NextRequest) {
       pageSize,
       query,
       units,
+      cost,
     });
 
     return NextResponse.json(data);

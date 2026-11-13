@@ -12,6 +12,7 @@ import type { EventSummaryFragment, EventSearchFragment } from "@/lib/graphql/ty
 import { FilterablePaginatedGrid } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid";
 import { EventCard } from "@/components/client/events/event-card";
 import { FilterablePaginatedGridTextBox } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-textbox";
+import { FilterablePaginatedGridSelect } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-select";
 
 // Fetcher function for SWR
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -64,6 +65,15 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
           layout="list"
         >
           <FilterablePaginatedGridTextBox id="query" label="Search by keywords" />
+          <FilterablePaginatedGridSelect
+            id="cost"
+            label="Filter by cost"
+            multiple={true}
+            options={[
+              { id: "free", name: "Free" },
+              { id: "paid", name: "Paid" },
+            ]}
+          />
         </FilterablePaginatedGrid>
       </div>
     );
