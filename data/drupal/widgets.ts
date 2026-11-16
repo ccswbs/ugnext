@@ -163,6 +163,7 @@ export const EVENT_SEARCH_FRAGMENT = gql(/* gql */ `
     sectionColumn {
       ...SectionColumn
     }
+    simplifiedView
   }
 `);
 export const FEATURED_NEWS_FRAGMENT = gql(/* gql */ `

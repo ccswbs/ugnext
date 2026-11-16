@@ -91,14 +91,40 @@ function getSummaryText(summary?: string | null) {
   return text.length > SUMMARY_MAX_LENGTH ? `${text.slice(0, SUMMARY_MAX_LENGTH).trimEnd()}…` : text;
 }
 
+// Classes that switch the date to a single large line once the "events" container (the listing grid) reaches
+// the given width; written out in full for Tailwind
+const STACKED_DATE_CLASSES = {
+  "3xl": {
+    row: "@3xl/events:flex-col @3xl/events:gap-3",
+    time: "@3xl/events:w-auto @3xl/events:items-start",
+    compact: "@3xl/events:hidden",
+    stacked: "@3xl/events:block",
+  },
+  "4xl": {
+    row: "@4xl/events:flex-col @4xl/events:gap-3",
+    time: "@4xl/events:w-auto @4xl/events:items-start",
+    compact: "@4xl/events:hidden",
+    stacked: "@4xl/events:block",
+  },
+} as const;
+
 export function EventCard({
   data,
   className,
   showSummary = true,
+  simplifiedLayout = false,
+  stackedDateFrom,
+  stackMeta = false,
 }: {
   data: EventSummaryFragment;
   className?: string;
   showSummary?: boolean;
+  // Larger padding
+  simplifiedLayout?: boolean;
+  // Show the date on a single large line once the parent "events" container reaches this width
+  stackedDateFrom?: keyof typeof STACKED_DATE_CLASSES;
+  // Always list time and location on separate lines instead of side by side on wider screens
+  stackMeta?: boolean;
 }) {
   const start = getFirstEventDate(data)?.start?.time;
   const dateLabel = getEventDateLabel(data);
@@ -111,51 +137,80 @@ export function EventCard({
     : "";
   const day = start ? new Date(start).toLocaleDateString("en-US", { day: "numeric", timeZone: TIME_ZONE }) : "";
 
+  const stacked = stackedDateFrom ? STACKED_DATE_CLASSES[stackedDateFrom] : null;
+
   return (
-    <Link key={data.id} href={data.path ?? ""} className={twMerge("w-full flex gap-6 p-4 hover:bg-grey-light-bg focus:bg-grey-light-bg focus:outline-none transition-colors", className)}>
-      {start && (
-        <time dateTime={start} aria-label={dateLabel} className="flex flex-col items-center shrink-0 w-12 leading-none">
-          <span aria-hidden="true" className="text-md font-bold uppercase">
-            {month}
-          </span>
-          <span aria-hidden="true" className="text-4xl font-bold">
-            {day}
-          </span>
-        </time>
+    <Link
+      key={data.id}
+      href={data.path ?? ""}
+      className={twMerge(
+        "w-full block hover:bg-grey-light-bg focus:bg-grey-light-bg focus:outline-none transition-colors",
+        simplifiedLayout ? "p-6" : "p-4",
+        className
       )}
-
-      <div className="flex flex-col gap-1 min-w-0">
-        <Typography as="h3" type="h4" className="font-bold m-0">
-          {data.title}          
-        </Typography>
-
-        {(timeLabel || location) && (
-          <div className="flex flex-col gap-1 text-sm sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
-            {timeLabel && (
-              <span className="flex items-center gap-1.5">
-                <FontAwesomeIcon icon={faClock} aria-hidden="true" />
-                {timeLabel}
+    >
+      <div className={twMerge("flex gap-6", stacked?.row)}>
+        {start && (
+          <time
+            dateTime={start}
+            aria-label={dateLabel}
+            className={twMerge(
+              "flex flex-col items-center shrink-0 w-12 leading-none",
+              stacked?.time
+            )}
+          >
+            <span aria-hidden="true" className={twMerge("text-md font-bold uppercase", stacked?.compact)}>
+              {month}
+            </span>
+            <span aria-hidden="true" className={twMerge("text-4xl font-bold", stacked?.compact)}>
+              {day}
+            </span>
+            {stacked && (
+              <span aria-hidden="true" className={twMerge("hidden text-4xl font-bold", stacked.stacked)}>
+                {`${month.charAt(0)}${month.slice(1).toLowerCase()} ${day}`}
               </span>
             )}
-            {timeLabel && location && (
-              <span aria-hidden="true" className="hidden sm:inline">
-                |
-              </span>
-            )}
-            {location && (
-              <span className="flex items-baseline gap-1.5">
-                <FontAwesomeIcon icon={faLocationDot} aria-hidden="true" />
-                {location}
-              </span>
-            )}
-          </div>
+          </time>
         )}
 
-        {summary && (
-          <Typography as="p" type="body">
-            {summary}
+        <div className="flex flex-col gap-1 min-w-0">
+          <Typography as="h3" type="h4" className="font-bold m-0">
+            {data.title}
           </Typography>
-        )}
+
+          {(timeLabel || location) && (
+            <div
+              className={twMerge(
+                "flex flex-col gap-1 text-sm",
+                !stackMeta && "sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3"
+              )}
+            >
+              {timeLabel && (
+                <span className="flex items-center gap-1.5">
+                  <FontAwesomeIcon icon={faClock} aria-hidden="true" />
+                  {timeLabel}
+                </span>
+              )}
+              {timeLabel && location && (
+                <span aria-hidden="true" className={stackMeta ? "hidden" : "hidden sm:inline"}>
+                  |
+                </span>
+              )}
+              {location && (
+                <span className="flex items-baseline gap-1.5">
+                  <FontAwesomeIcon icon={faLocationDot} aria-hidden="true" />
+                  {location}
+                </span>
+              )}
+            </div>
+          )}
+
+          {summary && (
+            <Typography as="p" type="body">
+              {summary}
+            </Typography>
+          )}
+        </div>
       </div>
     </Link>
   );

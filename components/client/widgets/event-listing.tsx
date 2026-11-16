@@ -24,10 +24,36 @@ type EventsResponse = {
   total: number;
 };
 
+const MAX_SIMPLIFIED_EVENTS = 8;
+// The events API only accepts certain page sizes (see VALID_PAGE_SIZES), so fetch 10 and show the first 8
+const FETCH_PAGE_SIZE = 10;
+
+// Column classes by number of columns, switching on the parent's width; written out in full for Tailwind
+const GRID_COLUMN_CLASSES: Record<number, string> = {
+  1: "",
+  2: "@xl:grid-cols-2",
+  3: "@xl:grid-cols-2 @3xl:grid-cols-3",
+  4: "@xl:grid-cols-2 @4xl:grid-cols-4",
+};
+
+// Fewer than 4 events fill the row. Otherwise use whichever of 3 or 4 columns leaves the fullest last row
+// (4 events -> 4, 5 or 6 -> 3, 7 or 8 -> 4), preferring 4 on a tie.
+function getWideColumns(count: number, maxColumns: number) {
+  if (count <= 3) return Math.max(1, Math.min(count, maxColumns));
+  if (maxColumns <= 3) return 3;
+
+  const lastRowFill = (columns: number) => (count % columns || columns) / columns;
+  return lastRowFill(4) >= lastRowFill(3) ? 4 : 3;
+}
+
 export const EventListing = ({ data }: { data: EventSearchFragment }) => {
   // Check if this is a secondary column using SectionContext
   const sectionContext = useContext(SectionContext) as SectionContextType | null;
   const isSecondaryColumn = sectionContext?.column === "secondary";
+  // The primary column shares its row with a secondary column, so it never gets 4 cards per row
+  const maxColumns = sectionContext?.hasSecondary ? 3 : 4;
+  // Check if simplified view is true
+  const simplifiedView = (data.simplifiedView || isSecondaryColumn ? true : false);
 
   // Helper function to render the Event Listing title
   const renderTitle = () => {
@@ -50,12 +76,12 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
     return `/api/events/get-events?units=${data.units.map((units) => units.id).join(",")}`;
   }, [data.units]);
 
-  // The simple list only runs in the secondary column; the grid fetches its own data
-  const listUrl = useMemo(() => `${url}${url.includes("?") ? "&" : "?"}page=0&size=20`, [url]);
-  const { data: events, error, isLoading } = useSWR<EventsResponse>(isSecondaryColumn ? listUrl : null, fetcher);
+  // The simple list only runs when simplifiedView is true; the grid fetches its own data
+  const listUrl = useMemo(() => `${url}${url.includes("?") ? "&" : "?"}page=0&size=${FETCH_PAGE_SIZE}`, [url]);
+  const { data: events, error, isLoading } = useSWR<EventsResponse>(simplifiedView ? listUrl : null, fetcher);
 
-  // Render search grid layout (when NOT in secondary column)
-  if (!isSecondaryColumn) {
+  // Render search grid layout (when simplifiedView is false)
+  if (!simplifiedView) {
     return (
       <div>
         {data.eventSearchTitle && renderTitle()}
@@ -77,7 +103,13 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
     );
   }
 
-  // Render simple list layout (for secondary column)
+  // Render simple list layout
+  const visibleEvents = events?.results?.slice(0, MAX_SIMPLIFIED_EVENTS) ?? [];
+  const eventCount = visibleEvents.length;
+  const columns = isSecondaryColumn ? 1 : getWideColumns(eventCount, maxColumns);
+  // 4 across (or 3 across next to a secondary column) is too tight for the side-by-side date
+  const stackedDateFrom = columns === 4 ? "4xl" : columns === 3 && sectionContext?.hasSecondary ? "3xl" : undefined;
+
   return (
     <>
       {isLoading && (
@@ -98,18 +130,33 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
       {events && (
         <Container className="px-0">
           {data.eventSearchTitle && renderTitle()}
-          <div className={`grid grid-cols-1 gap-5 ${data.eventSearchTitle ? "pt-0 pb-8" : "py-8"}`}>
-            {events.results?.length > 0 ? (
-              events.results.map((event) => (
-                <EventCard key={event.id} data={event} showSummary={false} />
-              ))
-            ) : (
-              <div className="flex w-full items-center justify-center flex-1 py-5">
-                <Typography type="body" className="text-body-copy-bold font-bold text-center w-full">
-                  No events found.
-                </Typography>
-              </div>
-            )}
+          {/* Columns follow the parent's width (container queries); the secondary column is always narrow */}
+          <div className="@container/events">
+            <div
+              className={`grid grid-cols-1 gap-5 ${GRID_COLUMN_CLASSES[columns]} ${
+                data.eventSearchTitle ? "pt-0 pb-8" : "py-8"
+              }`}
+            >
+              {eventCount > 0 ? (
+                visibleEvents.map((event) => (
+                  <EventCard
+                    key={event.id}
+                    data={event}
+                    showSummary={!isSecondaryColumn && eventCount === 1}
+                    simplifiedLayout={!isSecondaryColumn}
+                    stackedDateFrom={stackedDateFrom}
+                    stackMeta={isSecondaryColumn || eventCount > 1}
+                    className={isSecondaryColumn ? "" : "border border-grey-light hover:border-grey-light-bg"}
+                  />
+                ))
+              ) : (
+                <div className="flex w-full items-center justify-center flex-1 py-5 col-span-full">
+                  <Typography type="body" className="text-body-copy-bold font-bold text-center w-full">
+                    No events found.
+                  </Typography>
+                </div>
+              )}
+            </div>
           </div>
         </Container>
       )}
