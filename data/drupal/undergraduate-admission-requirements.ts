@@ -5,8 +5,9 @@ import type {
   UndergraduateAdmissionRequirementFragment,
   UndergraduateAdmissionStudentTypeFragment,
   UndergraduateAdmissionRequirementSectionFragment,
-  TermAdmissionLocation,
+  UndergraduateAdmissionLocationsQueryVariables,
 } from "@/lib/graphql/types";
+import type { TermAdmissionLocation } from "@/lib/graphql/schema-types";
 import { getRoute } from "@/data/drupal/route";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
@@ -83,16 +84,15 @@ export async function getUndergraduateAdmissionLocations() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const locations: UndergraduateAdmissionLocation[] = [];
 
   while (hasNextPage) {
+    const variables: UndergraduateAdmissionLocationsQueryVariables = { after: cursor };
     const { data, error } = await query({
       query: locationsQuery,
-      variables: {
-        after: cursor,
-      },
+      variables,
     });
 
     if (error) {

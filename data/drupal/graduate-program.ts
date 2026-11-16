@@ -8,6 +8,7 @@ import {
   GraduateProgramTypeFragment,
   GraduateProgramVariantFragment,
   GraduateProgramVariantsQuery,
+  GraduateProgramVariantsQueryVariables,
   GraduateProgramDurationFragment,
   GraduateProgramLinkFragment,
   GraduateEntryApplicationDeadlineFragment,
@@ -18,7 +19,7 @@ export type GraduateDegreeType = GraduateProgramDegreeTypeFragment;
 export type GraduateProgramSearchableType = GraduateProgramSearchableTypeFragment;
 export type GraduateProgramType = GraduateProgramTypeFragment;
 
-export type GraduateProgramVariantResult = GraduateProgramVariant & {
+export type GraduateProgramVariantResult = Pick<GraduateProgramVariant, "degrees" | "type"> & {
   __typename: "GraduateProgram",
   id: string;
   title: string;
@@ -33,7 +34,7 @@ function sortVariants(variants: GraduateProgramVariantFragment[]) {
   return sortedVariants;
 }
 
-function parse(variant: GraduateProgramVariantFragment) {
+function parse(variant: GraduateProgramVariantFragment): GraduateProgramVariantResult {
   const uniqueTypes = [...new Set(variant.graduateProgramType.flatMap(
     item => item.searchableType !== null ? item.searchableType : []))];
 
@@ -48,10 +49,10 @@ function parse(variant: GraduateProgramVariantFragment) {
       id: degree.id,
       name: degree.name,
       title: degree.name,
-      acronym: degree.acronym,
+      acronym: degree.acronym ?? undefined,
     })) ?? [],
     tags: variant?.graduateProgramGrouping.tags?.map((tag) => tag.name) ?? [],
-  } as GraduateProgramVariantResult;
+  };
 }
 
 async function getDraftGraduateProgramVariants() {
@@ -117,16 +118,15 @@ async function getPublishedGraduateProgramVariants() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const variants: GraduateProgramVariantsQuery["nodeGraduateProgramVariants"]["nodes"] = [];
 
   while (hasNextPage) {
+    const variables: GraduateProgramVariantsQueryVariables = { after: cursor };
     const { data, error } = await query({
       query: variantsQuery,
-      variables: {
-        after: cursor,
-      },
+      variables,
     });
 
     if (error) {
@@ -323,7 +323,9 @@ export const GRADUATE_PROGRAM_VARIANT = gql(/* gql */ `
   }
 `);
 
-export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragment | null | undefined) {
+export function parseGraduateProgramVariant(
+  variant: GraduateProgramVariantFragment | null | undefined
+): GraduateProgramVariant | null {
   if (!variant) {
     return null;
   }
@@ -401,9 +403,9 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
       }
 
       const currentYear = new Date().getFullYear();
-      const domesticDate = new Date(item.domesticMonthDay?.time);
+      const domesticDate = new Date(item.domesticMonthDay?.time ?? NaN);
       const isValidDomesticDate = !isNaN(domesticDate.getTime());
-      const internationalDate = new Date(item.internationalMonthDay?.time);
+      const internationalDate = new Date(item.internationalMonthDay?.time ?? NaN);
       const isValidInternationalDate = !isNaN(internationalDate.getTime());
 
       isValidDomesticDate && domesticDate.setFullYear(Number.parseInt(item.domesticYear?.name ?? "") || currentYear);
@@ -456,14 +458,21 @@ export function parseGraduateProgramVariant(variant: GraduateProgramVariantFragm
     },
     duration: duration,
     deadlines: deadlines,
-    descriptionLists: variant.gradProgDescLists,
+    descriptionLists: (variant.gradProgDescLists ?? []).map((list) => ({
+      id: list.id,
+      name: list.name,
+      parent:
+        list.parent?.__typename === "TermGradProgramDescriptionList"
+          ? { id: list.parent.id, name: list.parent.name, parent: null }
+          : null,
+    })),
     additionalRequirements: additionalRequirements ?? undefined,
     programStructure: programStructure ?? undefined,
     status: variant.status,
-  } as GraduateProgramVariantResult;
+  };
 }
 
-async function getGraduateProgramVariantById(id: string): Promise<GraduateProgramVariantResult | null> {
+async function getGraduateProgramVariantById(id: string): Promise<GraduateProgramVariant | null> {
   const showUnpublished = await showUnpublishedContent();
   const client = getClient();
 

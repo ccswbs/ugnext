@@ -1,5 +1,6 @@
 import { handleGraphQLError, query } from "@/lib/apollo";
 import { gql } from "@/lib/graphql";
+import type { UndergraduateDegreesQueryVariables } from "@/lib/graphql/types";
 import type {
   UndergraduateDegreeFragment,
   UndergraduateDegreesQuery,
@@ -124,16 +125,15 @@ async function getPublishedUndergraduateDegrees() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const degrees: UndergraduateDegreesQuery["nodeUndergraduateDegrees"]["nodes"] = [];
 
   while (hasNextPage) {
+    const variables: UndergraduateDegreesQueryVariables = { after: cursor };
     const { data, error } = await query({
       query: degreesQuery,
-      variables: {
-        after: cursor,
-      },
+      variables,
     });
 
     if (error) {
