@@ -77,7 +77,7 @@ function GraduateProgramAdmissionAverage({ average, hasFootnote = false }: { ave
     return <span>{`${letterGrade} (${percentageText})`}{footnote}</span>;
   }
 
-  return <span>{letterGrade || percentageText || "Currently not accepting applications"}{footnote}</span>;
+  return <span>{letterGrade || percentageText || "To be confirmed"}{footnote}</span>;
 }
 
 function GraduateProgramDelivery({ delivery }: { delivery: GraduateProgramDelivery[] }) {
@@ -169,7 +169,7 @@ function GraduateProgramDuration({ duration }: { duration: GraduateProgramDurati
     return acc;
   }, new Map<string, string[]>());
 
-  return map.size > 0 ? <GraduateProgramSummarySectionMap map={map} /> : "Currently not accepting applications";
+  return map.size > 0 ? <GraduateProgramSummarySectionMap map={map} /> : "To be confirmed";
 }
 
 function GraduateProgramDescriptionLists({ lists }: { lists: GraduateProgramDescriptionList[]}){
