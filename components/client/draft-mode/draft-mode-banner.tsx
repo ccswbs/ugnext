@@ -5,6 +5,14 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "@uoguelph/react-components/toaster";
 
+function isInIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
 export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -35,7 +43,13 @@ export function DraftModeBanner() {
       await navigator.clipboard.writeText(shareableLink);
       toast.success("Link copied to clipboard! This link will expire after some time.");
     } catch (err) {
-      toast.error("Failed to copy link to clipboard as your browser does not support clipboard access.");
+      if (isInIframe()) {
+        toast.error(
+          "Failed to copy link to clipboard as you are in an iframe. Please click the purple view button to view the page outside of the iframe and try again."
+        );
+      } else {
+        toast.error("Failed to copy link to clipboard as your browser does not support clipboard access.");
+      }
     }
   };
 
