@@ -77,7 +77,7 @@ function GraduateProgramAdmissionAverage({ average, hasFootnote = false }: { ave
     return <span>{`${letterGrade} (${percentageText})`}{footnote}</span>;
   }
 
-  return <span>{letterGrade || percentageText || "Coming Soon"}{footnote}</span>;
+  return <span>{letterGrade || percentageText || "To be confirmed"}{footnote}</span>;
 }
 
 function GraduateProgramDelivery({ delivery }: { delivery: GraduateProgramDelivery[] }) {
@@ -169,7 +169,7 @@ function GraduateProgramDuration({ duration }: { duration: GraduateProgramDurati
     return acc;
   }, new Map<string, string[]>());
 
-  return map.size > 0 ? <GraduateProgramSummarySectionMap map={map} /> : "Coming Soon";
+  return map.size > 0 ? <GraduateProgramSummarySectionMap map={map} /> : "To be confirmed";
 }
 
 function GraduateProgramDescriptionLists({ lists }: { lists: GraduateProgramDescriptionList[]}){
@@ -215,7 +215,7 @@ function GraduateProgramDeadlines({ deadlines }: { deadlines: GraduateProgramApp
     return acc;
   }, new Map<string, string[]>());
 
-  return firstMap.size > 0 ? <GraduateProgramSummarySectionMap map={firstMap} shouldCombine={areAllMapValuesIdentical(firstMap)} showCombinedTitle={false} /> : "Coming Soon";
+  return firstMap.size > 0 ? <GraduateProgramSummarySectionMap map={firstMap} shouldCombine={areAllMapValuesIdentical(firstMap)} showCombinedTitle={false} /> : "Currently not accepting applications";
 }
 
 export function GraduateProgramSummary({ program }: { program: GraduateProgramVariant }) {
