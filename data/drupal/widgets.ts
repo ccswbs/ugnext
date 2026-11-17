@@ -157,7 +157,7 @@ export const EVENT_SEARCH_FRAGMENT = gql(/* gql */ `
     id
     eventSearchTitle
     headingLevel
-    units {
+    eventSearchUnits: units {
       ...Unit
     }
     sectionColumn {

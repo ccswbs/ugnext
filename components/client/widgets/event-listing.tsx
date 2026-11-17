@@ -72,9 +72,9 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
 
   // Build API URL with units filter if provided
   const url = useMemo(() => {
-    if (!data.units || data.units.length === 0) return `/api/events/get-events`;
-    return `/api/events/get-events?units=${data.units.map((units) => units.id).join(",")}`;
-  }, [data.units]);
+    if (!data.eventSearchUnits || data.eventSearchUnits.length === 0) return `/api/events/get-events`;
+    return `/api/events/get-events?units=${data.eventSearchUnits.map((units) => units.id).join(",")}`;
+  }, [data.eventSearchUnits]);
 
   // The simple list only runs when simplifiedView is true; the grid fetches its own data
   const listUrl = useMemo(() => `${url}${url.includes("?") ? "&" : "?"}page=0&size=${FETCH_PAGE_SIZE}`, [url]);

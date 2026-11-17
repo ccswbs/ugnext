@@ -7,9 +7,9 @@ import { Typography } from "@uoguelph/react-components/typography";
 
 export function EventSearch({ data }: { data: EventSearchFragment }) {
   const url = useMemo(() => {
-    if (!data.units || data.units.length === 0) return `/api/events/get-events`;
+    if (!data.eventSearchUnits || data.eventSearchUnits.length === 0) return `/api/events/get-events`;
 
-    return `/api/events/get-events?units=${data.units.map((units) => units.id).join(",")}`;
+    return `/api/events/get-events?units=${data.eventSearchUnits.map((units) => units.id).join(",")}`;
   }, [data]);
 
   return (
