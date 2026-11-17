@@ -3,7 +3,7 @@ import { gql } from "@/lib/graphql";
 import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { RouteQuery } from "@/lib/graphql/types";
 import { getMenuLinkByURI } from "@/data/drupal/primary-navigation";
-import { Link } from "@/lib/graphql/graphql";
+import type { Link } from "@/lib/graphql/schema-types";
 import { Metadata } from "next";
 import { cache } from "react";
 
@@ -132,6 +132,7 @@ const ROUTE_INTERNAL_FRAGMENT = gql(/* gql */ `
         id
         name
         weight
+        path
       }
       ... on TermAdmissionLocation {
         uuid
