@@ -28,14 +28,14 @@ export function DraftModeBanner() {
     if (searchParams.get("secret")) {
       setSharableLink(`${window.location.origin}/api/draft/?${searchParams.toString()}`);
     }
-  }, []);
+  }, [searchParams]);
 
   const copyShareableLinkToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(shareableLink);
       toast.success("Link copied to clipboard! NOTE: This link will expire after some time.");
     } catch (err) {
-      toast.error("Failed to copy link to clipboard. Try again later.");
+      toast.error("Failed to copy link to clipboard as your browser does not support clipboard access.");
     }
   };
 
