@@ -9,10 +9,61 @@ List all significant changes to the Drupal site (e.g., new fields, content types
 
 ## Checklist
 
-- [ ] My changes are accessible (at minimum WCAG 2.0 Level AA)
-- [ ] My changes are responsive and appear as expected on mobile and desktop views.
-- [ ] My changes have been reviewed to ensure they do not break an existing analytics trigger
-- [ ] After merging, I will update the [Content Hub documentation](https://uoguelphca.sharepoint.com/sites/UniversityContentHubInformationGroup) and ensure the Content Hub trainer understands how my changes will affect users.
+<details>
+<summary>Accessibility</summary>
+### Accessibility
+- [ ] Changes are accessible (at minimum WCAG 2.0 Level AA)
+- [ ] No errors show up on an Accessibility Insights FastPass
+- [ ] Screen reader testing performed for new components
+- [ ] Colour is not used as the only means of conveying information
+</details>
+
+<details>
+<summary>Performance</summary>
+### Performance
+- [ ] No unnecessary re-renders or performance regressions
+- [ ] Images are optimized and using appropriate formats (WebP, etc.)
+- [ ] Bundle size impact has been considered
+- [ ] Large content is lazy-loaded where appropriate
+- [ ] Core Web Vitals are not negatively impacted
+</details>
+
+<details>
+<summary>Responsive Design</summary>
+### Responsive Design
+- [ ] Changes are responsive and appear as expected on mobile, tablet, and desktop views
+- [ ] Touch targets are appropriately sized (minimum 44x44px)
+- [ ] Text readability is maintained across all breakpoints
+</details>
+
+<details>
+<summary>Analytics</summary>
+### Analytics
+- [ ] Changes do not break existing analytics triggers
+</details>
+
+<details>
+<summary>Security</summary>
+### Security
+- [ ] No sensitive data is exposed in client-side code
+- [ ] User inputs are properly sanitized and validated
+</details>
+
+<details>
+<summary>SEO & Metadata</summary>
+### SEO & Metadata
+- [ ] Sitemap is updated if new pages or routes were added
+- [ ] Structured data/schema markup is added for rich snippets if applicable
+</details>
+
+<details>
+<summary>Documentation & Training</summary>
+### Documentation & Training
+- [ ] Code changes are documented and comments explain complex logic
+- [ ] Component prop documentation is updated
+- [ ] After merging, I will update the [Content Hub documentation](https://uoguelphca.sharepoint.com/sites/UniversityContentHubInformationGroup)
+- [ ] Content Hub trainer has been notified of changes that affect end-users
+</details>
 
 # Test Plan
 
