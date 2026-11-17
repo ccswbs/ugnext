@@ -17,7 +17,7 @@ export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [revalidating, setRevalidating] = useState(false);
-  const [shareableLink, setSharableLink] = useState("");
+  const [draftLink, setDraftLink] = useState("");
 
   const revalidatePage = async () => {
     setRevalidating(true);
@@ -34,13 +34,13 @@ export function DraftModeBanner() {
 
   useEffect(() => {
     if (searchParams.get("secret")) {
-      setSharableLink(`${window.location.origin}/api/draft/?${searchParams.toString()}`);
+      setDraftLink(`${window.location.origin}/api/draft/?${searchParams.toString()}`);
     }
   }, [searchParams]);
 
-  const copyShareableLinkToClipboard = async () => {
+  const copyDraftLinkToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(shareableLink);
+      await navigator.clipboard.writeText(draftLink);
       toast.success("Link copied to clipboard! This link will expire after some time.", 5000);
     } catch (err) {
       if (isInIframe()) {
@@ -68,9 +68,9 @@ export function DraftModeBanner() {
 
       <div id="uofg-draft-mode-banner-extra-buttons" className="contents"></div>
 
-      {shareableLink && (
-        <Button color="yellow" className="p-2" onClick={copyShareableLinkToClipboard} as="button">
-          Copy Temporary Link
+      {draftLink && (
+        <Button color="yellow" className="p-2" onClick={copyDraftLinkToClipboard} as="button">
+          Copy Draft Link
         </Button>
       )}
     </div>
