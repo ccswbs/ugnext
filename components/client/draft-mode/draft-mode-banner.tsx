@@ -41,7 +41,7 @@ export function DraftModeBanner() {
   const copyShareableLinkToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(shareableLink);
-      toast.success("Link copied to clipboard! This link will expire after some time.");
+      toast.success("Link copied to clipboard! This link will expire after some time.", 5000);
     } catch (err) {
       if (isInIframe()) {
         toast.error(
@@ -49,7 +49,7 @@ export function DraftModeBanner() {
           20000
         );
       } else {
-        toast.error("Failed to copy link to clipboard as your browser does not support clipboard access.");
+        toast.error("Failed to copy link to clipboard as your browser does not support clipboard access.", 5000);
       }
     }
   };
