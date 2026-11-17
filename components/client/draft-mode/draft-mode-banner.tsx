@@ -45,7 +45,8 @@ export function DraftModeBanner() {
     } catch (err) {
       if (isInIframe()) {
         toast.error(
-          "Failed to copy link to clipboard as you are in an iframe. Please click the purple view button to view the page outside of the iframe and try again."
+          "Failed to copy link to clipboard as you are in an iframe. Please click the purple view button to view the page outside of the iframe and try again.",
+          20000
         );
       } else {
         toast.error("Failed to copy link to clipboard as your browser does not support clipboard access.");
