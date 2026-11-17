@@ -3,7 +3,7 @@ import { showUnpublishedContent } from "@/lib/show-unpublished-content";
 import { getClient, handleGraphQLError, query } from "@/lib/apollo";
 import { cache } from "react";
 import { ProcessedWidget, WidgetProcessor } from "@/data/drupal/widgets";
-import { BasicPageFragment } from "@/lib/graphql/types";
+import type { BasicPageFragment, BasicPagePathsQueryVariables } from "@/lib/graphql/types";
 
 export const BASIC_PAGE_MINIMAL_FRAGMENT = gql(/* gql */ `
   fragment BasicPageMinimal on NodePage {
@@ -120,16 +120,15 @@ async function getAllBasicPagePathsUncached() {
     }
   `);
 
-  let cursor = "";
+  let cursor: string | null = "";
   let hasNextPage = true;
   const paths: string[] = [];
 
   while (hasNextPage) {
+    const variables: BasicPagePathsQueryVariables = { cursor };
     const { data, error } = await client.query({
       query: pathQuery,
-      variables: {
-        cursor,
-      },
+      variables,
     });
 
     if (error) {
