@@ -151,8 +151,8 @@ export function FeaturedNews({ data }: { data: ProcessedFeaturedNews | FeaturedN
       <Button 
         as={Link}
         href={directory}
-        outlined={true} 
-        className="w-full md:w-fit mt-4">
+        outlined={true}
+        className="w-full md:w-fit mt-8">
         {Array.isArray(data.categories) && data.categories.length === 1
           ? `More ${data.categories[0].name}`
           : `More News`}
