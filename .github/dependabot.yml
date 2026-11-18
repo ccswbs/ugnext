@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    groups:
+      nextjs-ecosystem:
+        patterns:
+          - "next"
+          - "@next/*"
+          - "react"
+          - "react-dom"
+          - "eslint-config-next"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
