@@ -17,6 +17,10 @@ export const EVENT_SUMMARY = gql(/* gql */ `
         time
       }
     }
+    eventCategory {
+      id
+      name
+    }
     eventLocation {
       ... on TermLocation {
         id
@@ -109,18 +113,49 @@ export async function getEvent(id: string) {
   return data.nodeEvent as EventFragment;
 }
 
+export const EVENT_CATEGORY_FRAGMENT = gql(/* gql */ `
+  fragment EventCategory on TermEventCategory {
+    id
+    name
+  }
+`);
+
+export async function getAllEventCategories() {
+  const client = getClient();
+
+  const { data, error } = await client.query({
+    query: gql(/* gql */ `
+      query GetAllEventCategories {
+        termEventCategories(first: 100, sortKey: TITLE) {
+          nodes {
+            ...EventCategory
+          }
+        }
+      }
+    `),
+  });
+
+  if (error) {
+    console.error(`GraphQL Error: failed to retrieve event categories:\n\t${error}\n`);
+    return [];
+  }
+
+  return data?.termEventCategories?.nodes ?? [];
+}
+
 export const VALID_PAGE_SIZES = [5, 10, 20, 25, 50];
 
 export type EventSearchOptions = {
   query?: string;
   units?: string[];
   cost?: string[];
+  categories?: string[];
   page: number;
   pageSize: number;
 };
 
 export async function getFilteredEvents(options: EventSearchOptions) {
-  const { query, page = 0, pageSize = 20, units, cost = [] } = options;
+  const { query, page = 0, pageSize = 20, units, cost = [], categories = [] } = options;
 
   if (!VALID_PAGE_SIZES.includes(pageSize)) {
     console.error(`Invalid page size: ${pageSize}. Valid page sizes are: ${VALID_PAGE_SIZES.join(", ")}`);
@@ -144,11 +179,18 @@ export async function getFilteredEvents(options: EventSearchOptions) {
         $query: String
         $status: Boolean
         $cost: [String]
+        $categories: [String]
       ) {
         eventsSearch(
           page: $page
           pageSize: $pageSize
-          filter: { units: $units, query: $query, status: $status, field_cost: $cost }
+          filter: {
+            units: $units
+            query: $query
+            status: $status
+            field_cost: $cost
+            field_event_category: $categories
+          }
         ) {
           results {
             ...EventSummary
@@ -167,6 +209,7 @@ export async function getFilteredEvents(options: EventSearchOptions) {
       query: query ?? "",
       status: showUnpublished ? null : true,
       cost: cost,
+      categories: categories,
     },
   });
 

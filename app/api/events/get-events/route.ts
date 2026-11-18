@@ -15,6 +15,11 @@ export async function GET(request: NextRequest) {
       .map((tier) => tier.trim())
       .filter(Boolean);
 
+  const categories: string[] = (params.get("categories") ?? "")
+      .split(",")
+      .map((category) => category.trim())
+      .filter(Boolean);
+
   try {
     const data = await getFilteredEvents({
       page,
@@ -22,6 +27,7 @@ export async function GET(request: NextRequest) {
       query,
       units,
       cost,
+      categories,
     });
 
     return NextResponse.json(data);

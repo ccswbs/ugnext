@@ -8,7 +8,7 @@ import useSWR from "swr";
 import { useContext, useMemo } from "react";
 import { SectionContext } from "@/components/client/section";
 import type { SectionContextType } from "@/lib/types/section-context";
-import type { EventSummaryFragment, EventSearchFragment } from "@/lib/graphql/types";
+import type { EventSummaryFragment, EventSearchFragment, EventCategoryFragment } from "@/lib/graphql/types";
 import { FilterablePaginatedGrid } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid";
 import { EventCard } from "@/components/client/events/event-card";
 import { FilterablePaginatedGridTextBox } from "@/components/client/filterable-paginated-grid/filterable-paginated-grid-textbox";
@@ -79,6 +79,11 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
   // The simple list only runs when simplifiedView is true; the grid fetches its own data
   const listUrl = useMemo(() => `${url}${url.includes("?") ? "&" : "?"}page=0&size=${FETCH_PAGE_SIZE}`, [url]);
   const { data: events, error, isLoading } = useSWR<EventsResponse>(simplifiedView ? listUrl : null, fetcher);
+  // Categories are only needed for the filter in the search grid layout
+  const { data: categories } = useSWR<EventCategoryFragment[]>(
+    simplifiedView ? null : `/api/events/get-categories`,
+    fetcher
+  );
 
   // Render search grid layout (when simplifiedView is false)
   if (!simplifiedView) {
@@ -92,6 +97,14 @@ export const EventListing = ({ data }: { data: EventSearchFragment }) => {
           layout="list"
         >
           <FilterablePaginatedGridTextBox id="query" label="Search by keywords" />
+          {Array.isArray(categories) && categories.length > 0 && (
+            <FilterablePaginatedGridSelect
+              id="categories"
+              label="Filter by Type"
+              multiple={true}
+              options={categories.map((category) => ({ id: category.id, name: category.name }))}
+            />
+          )}
           <FilterablePaginatedGridSelect
             id="cost"
             label="Filter by cost"
