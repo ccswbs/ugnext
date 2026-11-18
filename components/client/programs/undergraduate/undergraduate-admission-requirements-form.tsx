@@ -5,7 +5,6 @@ import { Field, Label } from "@headlessui/react";
 import { UndergraduateProgram } from "@/data/drupal/undergraduate-program";
 import type {
   UndergraduateAdmissionLocation,
-  UndergraduateAdmissionLocationType,
   UndergraduateAdmissionStudentType,
 } from "@/data/drupal/undergraduate-admission-requirements";
 import {
@@ -34,9 +33,8 @@ import {
   UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH,
   UNDERGRADUATE_PROGRAMS_NODE_PATH,
 } from "@/lib/undergraduate-admission-requirements";
-import { RadioGroup, Radio } from "@uoguelph/react-components/radio-group";
+import { Radio, RadioGroup } from "@uoguelph/react-components/radio-group";
 import { LoadingIndicator } from "@uoguelph/react-components/loading-indicator";
-import { slugify } from "@/lib/string-utils";
 import { twJoin } from "tailwind-merge";
 import { Link as LinkComponent } from "@uoguelph/react-components/link";
 import { Info } from "@uoguelph/react-components/info";
@@ -53,6 +51,9 @@ type UndergraduateAdmissionRequirementsFormContextValue = {
   programs: UndergraduateProgram[];
   program: UndergraduateProgram | null;
   setProgram: (program: UndergraduateProgram | null) => void;
+
+  isCanadianCurriculum: boolean;
+  setIsCanadianCurriculum: (value: boolean) => void;
 };
 
 const UndergraduateAdmissionRequirementsFormContext = createContext<UndergraduateAdmissionRequirementsFormContextValue>(
@@ -68,6 +69,9 @@ const UndergraduateAdmissionRequirementsFormContext = createContext<Undergraduat
     programs: [],
     program: null,
     setProgram: () => {},
+
+    isCanadianCurriculum: false,
+    setIsCanadianCurriculum: (_value: boolean) => {},
   }
 );
 
@@ -107,7 +111,7 @@ function UndergraduateAdmissionRequirementsStudentTypeField() {
 }
 
 function UndergraduateAdmissionRequirementsLocationField() {
-  const { setLocation } = useContext(UndergraduateAdmissionRequirementsFormContext);
+  const { setLocation, isCanadianCurriculum } = useContext(UndergraduateAdmissionRequirementsFormContext);
 
   const [locationType, setLocationType] = useState<"international" | "domestic" | null>(null);
 
@@ -153,7 +157,11 @@ function UndergraduateAdmissionRequirementsLocationField() {
 
           <UndergraduateAdmissionRequirementsLocationCurriculumField />
 
-          <UndergraduateAdmissionRequirementsLocationInternationalField />
+          {isCanadianCurriculum ? (
+            <UndergraduateAdmissionRequirementsLocationDomesticField />
+          ) : (
+            <UndergraduateAdmissionRequirementsLocationInternationalField />
+          )}
         </>
       )}
     </>
@@ -253,11 +261,29 @@ function UndergraduateAdmissionRequirementsLocationInternationalField() {
 }
 
 function UndergraduateAdmissionRequirementsLocationCurriculumField() {
-  const { locations, location, setLocation } = useContext(UndergraduateAdmissionRequirementsFormContext);
+  const { locations, location, setLocation, isCanadianCurriculum, setIsCanadianCurriculum } = useContext(
+    UndergraduateAdmissionRequirementsFormContext
+  );
 
   const curriculum = useMemo(() => {
     return locations.filter((location) => location.type === "curriculum");
   }, [locations]);
+
+  const canadianCurriculum = useMemo(() => {
+    return curriculum.find((location) => location.name.toLowerCase() === "canadian curriculum") ?? null;
+  }, [curriculum]);
+
+  const updateLocation = (value: UndergraduateAdmissionLocation | null) => {
+    // Currently Canadian Curriculum should essentially act as a redirect to the domestic option, in future it may have its own requirements, so this will need to be updated.
+    if (value?.id === canadianCurriculum?.id) {
+      setIsCanadianCurriculum(true);
+      setLocation(null);
+      return;
+    }
+
+    setIsCanadianCurriculum(false);
+    setLocation(value);
+  };
 
   return (
     <Field>
@@ -267,7 +293,11 @@ function UndergraduateAdmissionRequirementsLocationCurriculumField() {
         </Typography>
       </Label>
 
-      <RadioGroup onChange={setLocation} value={location?.type === "curriculum" ? location : null} by="name">
+      <RadioGroup
+        onChange={updateLocation}
+        value={isCanadianCurriculum ? canadianCurriculum : location?.type === "curriculum" ? location : null}
+        by="name"
+      >
         {curriculum
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((loc) => (
@@ -428,6 +458,7 @@ export default function UndergraduateAdmissionRequirementsForm({
   const [studentType, setStudentType] = useState<UndergraduateAdmissionStudentType | null>(null);
   const [location, setLocation] = useState<UndergraduateAdmissionLocation | null>(null);
   const [program, setProgram] = useState<UndergraduateProgram | null>(null);
+  const [isCanadianCurriculum, setIsCanadianCurriculum] = useState<boolean>(false);
 
   const [isPending, startTransition] = useTransition();
 
@@ -494,6 +525,9 @@ export default function UndergraduateAdmissionRequirementsForm({
         programs,
         program,
         setProgram,
+
+        isCanadianCurriculum,
+        setIsCanadianCurriculum,
       }}
     >
       {isDomesticOnly && (
