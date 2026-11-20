@@ -5,11 +5,19 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "@uoguelph/react-components/toaster";
 
+function isInIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
 export function DraftModeBanner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [revalidating, setRevalidating] = useState(false);
-  //const [shareableLink, setSharableLink] = useState("");
+  const [draftLink, setDraftLink] = useState("");
 
   const revalidatePage = async () => {
     setRevalidating(true);
@@ -24,22 +32,27 @@ export function DraftModeBanner() {
     setRevalidating(false);
   };
 
-  /*
   useEffect(() => {
     if (searchParams.get("secret")) {
-      setSharableLink(`${window.location.origin}/api/draft/?${searchParams.toString()}`);
+      setDraftLink(`${window.location.origin}/api/draft/?${searchParams.toString()}`);
     }
-  }, []);
+  }, [searchParams]);
 
-  const copyShareableLinkToClipboard = async () => {
+  const copyDraftLinkToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(shareableLink);
-      toast.success("Link copied to clipboard! NOTE: This link will expire after some time.");
+      await navigator.clipboard.writeText(draftLink);
+      toast.success("Link copied to clipboard! This link will expire after some time.", 5000);
     } catch (err) {
-      toast.error("Failed to copy link to clipboard. Try again later.");
+      if (isInIframe()) {
+        toast.error(
+          "Failed to copy link to clipboard as you are in an iframe. Please click the purple view button to view the page outside of the iframe and try again.",
+          20000
+        );
+      } else {
+        toast.error("Failed to copy link to clipboard as your browser does not support clipboard access.", 5000);
+      }
     }
   };
-  */
 
   return (
     <div className="sticky left-0 top-0 z-1000 flex h-fit w-full items-center justify-center gap-2 bg-red p-2 text-center text-base font-bold text-white">
@@ -55,11 +68,11 @@ export function DraftModeBanner() {
 
       <div id="uofg-draft-mode-banner-extra-buttons" className="contents"></div>
 
-      {/*shareableLink && (
-        <Button color="yellow" className="p-2" onClick={copyShareableLinkToClipboard} as="button">
-          Copy Temporary Link
+      {draftLink && (
+        <Button color="yellow" className="p-2" onClick={copyDraftLinkToClipboard} as="button">
+          Copy Draft Link
         </Button>
-      )*/}
+      )}
     </div>
   );
 }
