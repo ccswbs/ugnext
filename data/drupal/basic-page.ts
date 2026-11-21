@@ -38,6 +38,7 @@ export const BASIC_PAGE_FRAGMENT = gql(/* gql */ `
       ...Links
       ...MediaText
       ...NewsSearch
+      ...EventSearch
       ...FeaturedNews
       ...Tabs
       ...Statistics

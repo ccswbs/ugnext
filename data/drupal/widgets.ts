@@ -5,6 +5,7 @@ import {
   ButtonSectionFragment,
   ButtonsFragment,
   CallToActionFragment,
+  EventSearchFragment,
   FeaturedNewsFragment,
   GeneralTextFragment,
   GraduateProgramSummaryFragment,
@@ -149,7 +150,17 @@ export const CALL_TO_ACTION_FRAGMENT = gql(/* gql */ `
     }
   }
 `);
-
+export const EVENT_SEARCH_FRAGMENT = gql(/* gql */ `
+  fragment EventSearch on ParagraphEventSearch {
+    __typename
+    uuid
+    id
+    eventSearchTitle
+    units {
+      ...Unit
+    }
+  }
+`);
 export const FEATURED_NEWS_FRAGMENT = gql(/* gql */ `
   fragment FeaturedNews on ParagraphFeaturedNews {
     __typename
@@ -586,6 +597,7 @@ export type Widget =
   | ButtonsFragment
   | ButtonSectionFragment
   | CallToActionFragment
+  | EventSearchFragment
   | FeaturedNewsFragment
   | GeneralTextFragment
   | GraduateProgramSummaryFragment

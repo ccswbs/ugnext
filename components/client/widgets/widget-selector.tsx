@@ -24,6 +24,7 @@ import { usePathname } from "next/navigation";
 import { ButtonWidget } from "@/components/client/widgets/button";
 import { FeaturedNews } from "@/components/client/widgets/featured-news";
 import { NewsSearch } from "@/components/client/widgets/news-search";
+import { EventSearch } from "@/components/client/widgets/event-search";
 import type { NavigationFragment } from "@/lib/graphql/types";
 import { GraduateProgramSummaryWidget } from "@/components/client/widgets/graduate-program-summary";
 
@@ -88,6 +89,8 @@ export function WidgetSelector({
         return <MediaTextWidget data={data} />;
       case "ParagraphNewsSearch":
         return <NewsSearch data={data} />;
+      case "ParagraphEventSearch":
+        return <EventSearch data={data} />;
       case "ParagraphTestimonialSlider":
         return <TestimonialSliderWidget data={data} />;
       case "ParagraphSection":
