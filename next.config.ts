@@ -28,6 +28,7 @@ function getNextConfig(): NextConfig {
   // Base config
   const config: NextConfig = {
     reactStrictMode: true,
+    staticPageGenerationTimeout: 180,
     images: {
       remotePatterns: [
         ...drupalDomains.map((domain) => {
