@@ -383,7 +383,7 @@ async function getUndergraduateAdmissionRequirementPageContentByID(ids: string[]
 
     const reducedSections = overrideIndex === -1 ? entry[1] : entry[1].slice(0, overrideIndex + 1);
 
-    // Keep same-type subsections in Drupal order within each requirement, with base requirements first.
+    // Keep subsections of the same type in Drupal order within each requirement, with base requirements first.
     const orderedSections =
       entry[1][0].type.parent?.__typename === "TermUndergradReqSecType"
         ? reducedSections.toSorted((a, b) => b.requirementIndex - a.requirementIndex || a.sectionIndex - b.sectionIndex)
