@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useFuzzySearch } from "@/lib/use-fuzzy-search";
 import { TextInput } from "@uoguelph/react-components/text-input";
 import { ProgramGrid } from "@/components/client/programs/program-grid";
 import { ProgramSearchNavigation } from "@/components/client/programs/program-search-navigation";
@@ -32,8 +31,8 @@ import type {
   ContinuingEducationProgram,
   ContinuingEducationProgramType,
 } from "@/data/yaml/programs/continuing-education";
-import { pluginQPS } from "@orama/plugin-qps";
 import { Field, Label } from "@headlessui/react";
+import { useProgramSearch } from "@/lib/use-program-search";
 
 export type ProgramType =
   | UndergraduateProgramType
@@ -75,34 +74,7 @@ export const ProgramSearch = ({ programs, types, degreeTypes, useDegreeAcronym =
   const searchParams = useSearchParams();
   const searchTags = searchParams.getAll('tags') 
 
-  // The fuzzy search function
-  const search = useFuzzySearch({
-    schema: {
-      id: "string",
-      title: "string",
-      tags: "string[]",
-    },
-    data: programs,
-    plugins: [pluginQPS()],
-    stemming: true,
-  });
-
-  const fuzzyMatches = useMemo(() => {
-    if (input === "") return programs;
-
-    const results = search({
-      term: input,
-      properties: ["title", "tags"],
-      boost: {
-        title: 4,
-      },
-      tolerance: 1,
-    });
-
-    // console.log(`Found ${results.count} results in ${results.elapsed.formatted}`);
-
-    return results.hits.map((hit) => hit.document as Program);
-  }, [input, programs, search]);
+  const fuzzyMatches = useProgramSearch(programs, input);
 
   const filtered = useMemo(() => {
     if (Array.isArray(searchTags) && searchTags.length > 0) {
