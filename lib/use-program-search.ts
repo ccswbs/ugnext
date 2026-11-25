@@ -22,10 +22,7 @@ function getDegreeTitles(degreeField: ProgramDegreeField | undefined) {
   return degrees.flatMap((degree) => (typeof degree?.title === "string" ? [degree.title] : []));
 }
 
-export function useProgramSearch<T extends ProgramSearchRecord>(
-  programs: T[],
-  query: string,
-) {
+export function useProgramSearch<T extends ProgramSearchRecord>(programs: T[], query: string) {
   type ProgramWithSearchScore = T & { score?: number };
 
   const { database, programsById } = useMemo(() => {
@@ -53,7 +50,7 @@ export function useProgramSearch<T extends ProgramSearchRecord>(
     const results = oramaSearch(database, {
       term: query,
       properties: ["title", "tags", "degreeTitles"],
-      tolerance: 0,
+      tolerance: 1,
     }) as Results<TypedDocument<typeof database>>;
 
     return results.hits.flatMap((hit) => {
