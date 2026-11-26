@@ -5,7 +5,7 @@ trigger:
 pr: none
 
 variables:
-  - group: ugnext
+  - group: ugnext-test
 
 pool:
   vmImage: ubuntu-latest
