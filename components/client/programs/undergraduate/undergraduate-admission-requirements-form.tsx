@@ -24,10 +24,9 @@ import {
   AutocompleteOption,
   AutocompleteOptions,
 } from "@uoguelph/react-components/autocomplete";
-import { useFuzzySearch } from "@/lib/use-fuzzy-search";
-import { pluginQPS } from "@orama/plugin-qps";
 import { Button } from "@uoguelph/react-components/button";
 import { useRouter } from "next/navigation";
+import { useProgramSearch } from "@/lib/use-program-search";
 import {
   UNDERGRADUATE_ADMISSION_LOCATIONS_NODE_PATH,
   UNDERGRADUATE_ADMISSION_STUDENT_TYPE_NODE_PATH,
@@ -314,41 +313,8 @@ function UndergraduateAdmissionRequirementsProgramField() {
   type UndergraduateProgramWithSearchScore = UndergraduateProgram & { score?: number };
 
   const { program, programs, setProgram } = useContext(UndergraduateAdmissionRequirementsFormContext);
-
-  const search = useFuzzySearch({
-    schema: {
-      id: "string",
-      title: "string",
-      tags: "string[]",
-    },
-    data: programs,
-    stemming: true,
-    plugins: [pluginQPS()],
-  });
-
   const [query, setQuery] = useState<string>("");
-
-  const filtered = useMemo(() => {
-    if (!query) {
-      return programs as UndergraduateProgramWithSearchScore[];
-    }
-
-    const results = search({
-      term: query,
-      properties: ["title", "tags"],
-      boost: {
-        title: 4,
-      },
-      tolerance: 2,
-    });
-
-    return results.hits.map((hit) => {
-      return {
-        ...hit.document,
-        score: hit.score,
-      } as UndergraduateProgramWithSearchScore;
-    });
-  }, [query, search, programs]);
+  const filtered = useProgramSearch(programs, query);
 
   const grouped = useMemo(() => {
     if (query) {
@@ -358,7 +324,7 @@ function UndergraduateAdmissionRequirementsProgramField() {
       for (const program of [...filtered].sort((a, b) => (b.score ?? 0) - (a.score ?? 0))) {
         for (const degree of program.degree ?? []) {
           const previous = sections.at(-1);
-          if (previous?.degree === degree.title) {
+          if (previous && previous.degree === degree.title) {
             previous.group.push(program);
           } else {
             sections.push({ degree: degree.title, group: [program] });
