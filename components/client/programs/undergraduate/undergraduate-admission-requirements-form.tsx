@@ -313,11 +313,6 @@ function UndergraduateAdmissionRequirementsProgramField() {
   type UndergraduateProgramWithSearchScore = UndergraduateProgram & { score?: number };
 
   const { program, programs, setProgram } = useContext(UndergraduateAdmissionRequirementsFormContext);
-
-  useEffect(() => {
-    console.log(programs);
-  }, [programs]);
-
   const [query, setQuery] = useState<string>("");
   const filtered = useProgramSearch(programs, query);
 
